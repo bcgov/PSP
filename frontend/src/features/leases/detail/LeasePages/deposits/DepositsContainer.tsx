@@ -2,14 +2,9 @@ import { FormSection } from 'components/common/form/styles';
 import GenericModal from 'components/common/GenericModal';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { getIn, useFormikContext } from 'formik';
-import {
-  FormLeaseDeposit,
-  FormLeaseDepositReturn,
-  IFormLease,
-  ILeaseSecurityDeposit,
-  ILeaseSecurityDepositReturn,
-} from 'interfaces';
+import { IFormLease } from 'interfaces';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { useContext, useState } from 'react';
 
 import DepositNotes from './components/DepositNotes/DepositNotes';
@@ -19,6 +14,8 @@ import { useLeaseDepositReturns } from './hooks/useDepositReturns';
 import { useLeaseDeposits } from './hooks/useDeposits';
 import ReceivedDepositModal from './modal/receivedDepositModal/ReceivedDepositModal';
 import ReturnedDepositModal from './modal/returnedDepositModal/ReturnedDepositModal';
+import { FormLeaseDeposit } from './models/FormLeaseDeposit';
+import { FormLeaseDepositReturn } from './models/FormLeaseDepositReturn';
 import * as Styled from './styles';
 
 export interface IDepositsContainerProps {}
@@ -26,8 +23,8 @@ export interface IDepositsContainerProps {}
 export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps> = () => {
   const { lease, setLease } = useContext(LeaseStateContext);
   const { values } = useFormikContext<IFormLease>();
-  const securityDeposits: ILeaseSecurityDeposit[] = getIn(values, 'securityDeposits') ?? [];
-  const depositReturns: ILeaseSecurityDepositReturn[] = securityDeposits.flatMap(
+  const securityDeposits: Api_SecurityDeposit[] = getIn(values, 'securityDeposits') ?? [];
+  const depositReturns: Api_SecurityDepositReturn[] = securityDeposits.flatMap(
     x => x.depositReturns,
   );
 
@@ -117,7 +114,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
    */
   const onSaveDeposit = async (depositForm: FormLeaseDeposit) => {
     if (lease && lease.id && lease.rowVersion) {
-      let request: IParentConcurrencyGuard<ILeaseSecurityDeposit> = {
+      let request: IParentConcurrencyGuard<Api_SecurityDeposit> = {
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
         payload: depositForm.toInterfaceModel(),
@@ -165,7 +162,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
    */
   const onSaveReturnDeposit = async (returnDepositForm: FormLeaseDepositReturn) => {
     if (lease && lease.id && lease.rowVersion) {
-      let request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn> = {
+      let request: IParentConcurrencyGuard<Api_SecurityDepositReturn> = {
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
         payload: returnDepositForm.toInterfaceModel(),

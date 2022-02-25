@@ -1,9 +1,9 @@
 import * as CommonStyled from 'components/common/styles';
 import { FormikProps } from 'formik';
-import { FormLeaseDepositReturn } from 'interfaces';
 import * as React from 'react';
 import { useRef } from 'react';
 
+import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import { ReturnDepositForm } from './ReturnDepositForm';
 
 export interface IReturnedDepositModalProps {

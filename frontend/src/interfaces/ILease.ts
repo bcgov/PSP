@@ -1,11 +1,10 @@
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import {
   IFormProperty,
   IInsurance,
   ILeaseImprovement,
-  ILeaseSecurityDeposit,
-  ILeaseSecurityDepositReturn,
   IOrganization,
   IPerson,
   IProperty,
@@ -58,8 +57,8 @@ export interface ILease {
   persons: IPerson[];
   organizations: IOrganization[];
   improvements: ILeaseImprovement[];
-  securityDeposits: ILeaseSecurityDeposit[];
-  securityDepositReturns: ILeaseSecurityDepositReturn[];
+  securityDeposits: Api_SecurityDeposit[];
+  securityDepositReturns: Api_SecurityDepositReturn[];
   rowVersion?: number;
 }
 
@@ -91,8 +90,8 @@ export interface IAddFormLease
       renewalCount: NumberFieldValue;
       landArea: NumberFieldValue;
       tfaFileNo: NumberFieldValue;
-      securityDeposits?: ILeaseSecurityDeposit[];
-      securityDepositReturn?: ILeaseSecurityDepositReturn[];
+      securityDeposits?: Api_SecurityDeposit[];
+      securityDepositReturn?: Api_SecurityDepositReturn[];
       paymentReceivableType?: string;
       categoryType?: string;
       purposeType?: string;

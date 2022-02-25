@@ -44,7 +44,7 @@ const setupMockSearch = (searchResults?: IContactSearchResult[]) => {
 };
 
 const defaultSearchResult: IContactSearchResult = {
-  id: 1,
+  id: '1',
   summary: 'summary',
   mailingAddress: '123 mock st',
   surname: 'last',

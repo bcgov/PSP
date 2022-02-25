@@ -1,13 +1,13 @@
 import { FormSection } from 'components/common/form/styles';
 import { Table } from 'components/Table';
-import { ILeaseSecurityDeposit, ILeaseSecurityDepositReturn } from 'interfaces';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 
 import * as Styled from '../../styles';
 import { getColumns, ReturnListEntry } from './columns';
 
 export interface IDepositsReturnedContainerProps {
-  securityDeposits: ILeaseSecurityDeposit[];
-  depositReturns: ILeaseSecurityDepositReturn[];
+  securityDeposits: Api_SecurityDeposit[];
+  depositReturns: Api_SecurityDepositReturn[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
@@ -20,7 +20,7 @@ const DepositsReturnedContainer: React.FC<IDepositsReturnedContainerProps> = ({
 }) => {
   const columns = getColumns({ onEdit, onDelete });
   const dataSource = depositReturns.reduce(
-    (accumulator: ReturnListEntry[], returnDeposit: ILeaseSecurityDepositReturn) => {
+    (accumulator: ReturnListEntry[], returnDeposit: Api_SecurityDepositReturn) => {
       var parentDeposit = securityDeposits.find(r => r.id === returnDeposit.parentDepositId);
       if (parentDeposit) {
         accumulator.push(new ReturnListEntry(returnDeposit, parentDeposit));

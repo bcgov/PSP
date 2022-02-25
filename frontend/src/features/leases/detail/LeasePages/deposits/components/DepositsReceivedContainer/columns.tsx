@@ -3,7 +3,8 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, renderDate, renderMoney } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { ILeaseSecurityDeposit, IOrganization, IPerson } from 'interfaces';
+import { Api_Contact } from 'models/api/Contact';
+import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdUndo } from 'react-icons/md';
 import { CellProps } from 'react-table';
@@ -15,11 +16,10 @@ export class DepositListEntry {
   public depositDescription: string;
   public amountPaid: number;
   public paidDate: string;
-  public personDepositHolder?: IPerson;
-  public organizationDepositHolder?: IOrganization;
+  public contactHolder?: Api_Contact;
   public depositReturnCount: number;
 
-  public constructor(baseDeposit: ILeaseSecurityDeposit) {
+  public constructor(baseDeposit: Api_SecurityDeposit) {
     this.id = baseDeposit.id || -1;
     if (baseDeposit.depositType.id === 'OTHER') {
       this.depositTypeDescription = (baseDeposit.otherTypeDescription || '') + ' (Other)';
@@ -29,14 +29,21 @@ export class DepositListEntry {
     this.depositDescription = baseDeposit.description;
     this.amountPaid = baseDeposit.amountPaid;
     this.paidDate = baseDeposit.depositDate || '';
-    this.personDepositHolder = baseDeposit.personDepositHolder;
-    this.organizationDepositHolder = baseDeposit.organizationDepositHolder;
+    this.contactHolder = baseDeposit.contactHolder;
     this.depositReturnCount = baseDeposit.depositReturns.length;
   }
 }
 
 function renderHolder({ row: { original } }: CellProps<DepositListEntry, string>) {
-  return original.personDepositHolder?.fullName || '';
+  if (original.contactHolder) {
+    if (original.contactHolder.person) {
+      return original.contactHolder.person.firstName + ' ' + original.contactHolder.person.surname;
+    } else if (original.contactHolder.organization) {
+      return original.contactHolder.organization.name;
+    }
+  }
+
+  return '';
 }
 
 function depositActions(
@@ -112,7 +119,7 @@ export const getColumns = ({
     },
     {
       Header: 'Deposit holder',
-      accessor: 'personDepositHolder',
+      accessor: 'contactHolder',
       maxWidth: 60,
       Cell: renderHolder,
     },

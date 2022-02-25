@@ -1,7 +1,6 @@
 using System;
-using Pims.Api.Models;
 
-namespace Pims.Api.Areas.Lease.Models.Lease
+namespace Pims.Api.Models.Concepts
 {
     public class SecurityDepositReturnModel : BaseModel
     {
@@ -41,23 +40,8 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public DateTime ReturnDate { get; set; }
 
         /// <summary>
-        /// get/set - Person deposit holder return holder.
+        /// get/set - Contact Holder.
         /// </summary>
-        public PersonModel PersonDepositReturnHolder { get; set; }
-
-        /// <summary>
-        /// get/set - Person deposit holder return id.
-        /// </summary>
-        public long? PersonDepositReturnHolderId { get; set; }
-
-        /// <summary>
-        /// get/set - Organization deposit return holder.
-        /// </summary>
-        public OrganizationModel OrganizationDepositReturnHolder { get; set; }
-
-        /// <summary>
-        /// get/set - Organization deposit return holder id.
-        /// </summary>
-        public long? OrganizationDepositReturnHolderId { get; set; }
+        public ContactModel ContactHolder { get; set; }
     }
 }
