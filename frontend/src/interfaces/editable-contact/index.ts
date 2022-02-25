@@ -144,7 +144,7 @@ export const defaultCreatePerson: IEditablePersonForm = {
   surname: '',
   preferredName: '',
   comment: '',
-  organization: undefined,
+  organization: null,
   useOrganizationAddress: false,
   emailContactMethods: [getDefaultContactMethod()],
   phoneContactMethods: [getDefaultContactMethod()],
