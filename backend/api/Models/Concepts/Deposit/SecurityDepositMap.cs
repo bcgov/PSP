@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
+using Model = Pims.Api.Models.Concepts;
 
-namespace Pims.Api.Areas.Lease.Mapping.Lease
+namespace Pims.Api.Models.Concepts
 {
     public class SecurityDepositMap : IRegister
     {
@@ -18,10 +16,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.DepositType, src => src.SecurityDepositTypeCodeNavigation)
                 .Map(dest => dest.OtherTypeDescription, src => src.OtherDepositTypeDesc)
                 .Map(dest => dest.DepositReturns, src => src.PimsSecurityDepositReturns)
-                .Map(dest => dest.PersonDepositHolder, src => src.PimsSecurityDepositHolder.Person)
-                .Map(dest => dest.PersonDepositHolderId, src => src.PimsSecurityDepositHolder.PersonId)
-                .Map(dest => dest.OrganizationDepositHolder, src => src.PimsSecurityDepositHolder.Organization)
-                .Map(dest => dest.OrganizationDepositHolderId, src => src.PimsSecurityDepositHolder.OrganizationId)
+                .Map(dest => dest.ContactHolder, src => src.PimsSecurityDepositHolder)
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<Model.SecurityDepositModel, Entity.PimsSecurityDeposit>()
@@ -31,17 +26,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.DepositDate, src => src.DepositDate)
                 .Map(dest => dest.SecurityDepositTypeCode, src => src.DepositType.Id)
                 .Map(dest => dest.OtherDepositTypeDesc, src => src.OtherTypeDescription)
-                .AfterMapping((src, dest) =>
-                {
-                    if (src.PersonDepositHolderId.HasValue)
-                    {
-                        dest.PimsSecurityDepositHolder = new Entity.PimsSecurityDepositHolder() { PersonId = src.PersonDepositHolderId };
-                    }
-                    else if (src.OrganizationDepositHolderId.HasValue)
-                    {
-                        dest.PimsSecurityDepositHolder = new Entity.PimsSecurityDepositHolder() { OrganizationId = src.OrganizationDepositHolderId };
-                    }
-                })
+                .Map(dest => dest.PimsSecurityDepositHolder, src => src.ContactHolder)
                 .Inherits<Api.Models.BaseModel, Entity.IBaseEntity>();
 
 

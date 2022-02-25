@@ -570,7 +570,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                           data-testid="selectrow-parent"
                           disabled=""
                           style="cursor: pointer;"
-                          title="Click to deselect all properties."
+                          title="Click to deselect all."
                           type="checkbox"
                         />
                       </div>

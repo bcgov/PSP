@@ -2,11 +2,11 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { FormLeaseDeposit } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
+import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import ReceivedDepositModal, { IReceivedDepositModalProps } from './ReceivedDepositModal';
 
 const history = createMemoryHistory();
@@ -71,6 +71,7 @@ describe('ReceivedDepositModal component', () => {
     await fillInput(document.body, 'description', 'Test description', 'textarea');
     await fillInput(document.body, 'amountPaid', '1235');
     await fillInput(document.body, 'depositDate', '2020-01-02', 'datepicker');
+    await fillInput(document.body, 'contactHolder.id', 'p1');
     const saveButton = getByText('Save');
     userEvent.click(saveButton);
     await waitFor(() => expect(onSave).toHaveBeenCalled());
@@ -80,9 +81,8 @@ describe('ReceivedDepositModal component', () => {
       depositTypeCode: 'SECURITY',
       description: 'Test description',
       id: undefined,
-      organizationDepositHolderId: '',
       otherTypeDescription: '',
-      personDepositHolderId: '',
+      contactHolder: { id: 'p1' },
       rowVersion: 0,
     });
   });
