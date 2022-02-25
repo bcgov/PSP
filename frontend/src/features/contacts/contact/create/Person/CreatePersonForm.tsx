@@ -199,8 +199,10 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
     // toggle is on - set mailing address values to match organization address
     if (useOrganizationAddress === true && organizationId) {
       getOrganization(organizationId)
-        .then(({ data }) => getApiMailingAddress(data))
-        .then(mailing => setFieldValue('mailingAddress', apiAddressToFormAddress(mailing)))
+        .then(({ data }) => {
+          const mailing = getApiMailingAddress(data);
+          setFieldValue('mailingAddress', apiAddressToFormAddress(mailing));
+        })
         .catch(() => {
           setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
           toast.error('Failed to get organization address.');
