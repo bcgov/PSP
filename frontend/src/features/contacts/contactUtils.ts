@@ -3,9 +3,12 @@ import { AddressTypes } from 'constants/index';
 import {
   getDefaultAddress,
   getDefaultContactMethod,
+  IBaseAddress,
   IEditableContactMethod,
   IEditableContactMethodForm,
   IEditableOrganization,
+  IEditableOrganizationAddress,
+  IEditableOrganizationAddressForm,
   IEditableOrganizationForm,
   IEditablePerson,
   IEditablePersonAddress,
@@ -148,6 +151,13 @@ export function apiOrganizationToFormOrganization(organization?: IEditableOrgani
   return formValues;
 }
 
+export function getApiMailingAddress(contact: IEditablePerson | IEditableOrganization) {
+  if (!contact) return undefined;
+
+  const addresses: IBaseAddress[] = contact.addresses || [];
+  return addresses.find(addr => addr.addressTypeId?.id === AddressTypes.Mailing);
+}
+
 function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boolean {
   if (!formContactMethod) return false;
 
@@ -172,22 +182,24 @@ function hasAddress(formAddress?: IEditablePersonAddressForm): boolean {
   );
 }
 
-function formAddressToApiAddress(formAddress: IEditablePersonAddressForm): IEditablePersonAddress {
+export function formAddressToApiAddress(
+  formAddress: IEditablePersonAddressForm | IEditableOrganizationAddressForm,
+) {
   return {
     ...formAddress,
     countryId: parseInt(formAddress.countryId.toString()) || 0,
     provinceId: parseInt(formAddress.provinceId.toString()) || 0,
     addressTypeId: stringToTypeCode(formAddress.addressTypeId),
-  } as IEditablePersonAddress;
+  } as IEditablePersonAddress | IEditableOrganizationAddress;
 }
 
-function apiAddressToFormAddress(address?: IEditablePersonAddress) {
+export function apiAddressToFormAddress(address?: IBaseAddress) {
   if (!address) return undefined;
 
   return {
     ...address,
     addressTypeId: typeCodeToString(address.addressTypeId),
-  } as IEditablePersonAddressForm;
+  } as IEditablePersonAddressForm | IEditableOrganizationAddressForm;
 }
 
 function formContactMethodToApiContactMethod(formContactMethod: IEditableContactMethodForm) {

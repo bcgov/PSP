@@ -15,6 +15,10 @@ import { ToastContainer } from 'react-toastify';
 
 import TestCommonWrapper from './TestCommonWrapper';
 
+// re-export everything from RTL
+export * from '@testing-library/react';
+export { default as userEvent } from '@testing-library/user-event';
+
 export const mockKeycloak = (
   props: {
     claims?: string[];
@@ -169,9 +173,6 @@ export function createMapContainer(
     );
   };
 }
-
-// re-export everything from RTL
-export * from '@testing-library/react';
 
 // override RenderOptions interface
 export interface RenderOptions extends RtlRenderOptions {
