@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -84,7 +85,6 @@ namespace Pims.Dal.Repositories
             person.ThrowIfNull(nameof(person));
             if (!userOverride)
             {
-
                 List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
                     p => EF.Functions.Collate(p.FirstName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.FirstName &&
                         EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname
@@ -103,6 +103,14 @@ namespace Pims.Dal.Repositories
             }
 
             this.Context.PimsPeople.Add(person);
+
+            // Ensure we don't add existing address from linked organization again
+            var mailing = person.GetMailingAddress();
+            if (person.UseOrganizationAddress == true && mailing != null)
+            {
+                this.Context.Entry(mailing).State = EntityState.Unchanged;
+            }
+
             return person;
         }
 
@@ -117,21 +125,30 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
 
             var personId = person.Id;
-            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == personId).FirstOrDefault()
+            var existingPerson = this.Context.PimsPeople.FirstOrDefault(p => p.PersonId == personId)
                  ?? throw new KeyNotFoundException();
 
+
             // update main entity - PimsPerson
-            Context.Entry(existingPerson).CurrentValues.SetValues(person);
+            this.Context.Entry(existingPerson).CurrentValues.SetValues(person);
 
             // update direct relationships - contact_methods, organizations
             this.Context.UpdateChild<PimsPerson, long, PimsContactMethod>(p => p.PimsContactMethods, personId, person.PimsContactMethods.ToArray());
             this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
 
             // update addresses via UpdateGrandchild method
-            this.Context.UpdateGrandchild<PimsPerson, long, PimsPersonAddress>(p => p.PimsPersonAddresses, pa => pa.Address, personId, person.PimsPersonAddresses.ToArray());
+            this.Context.UpdateGrandchild<PimsPerson, long, PimsPersonAddress>(
+                p => p.PimsPersonAddresses,
+                pa => pa.Address,
+                personId,
+                person.PimsPersonAddresses.ToArray(),
+                // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
+                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false
+            );
 
             return existingPerson;
         }
+
         #endregion
     }
 }
