@@ -1,6 +1,7 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { AddressTypes } from 'constants/index';
-import useAddContact from 'features/contacts/hooks/useAddContact';
+import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
+import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import { createMemoryHistory } from 'history';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
@@ -8,7 +9,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
-import CreatePersonForm from './CreatePersonForm';
+import UpdatePersonForm from './UpdatePersonForm';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -48,20 +49,19 @@ const mockOrganization: IEditableOrganization = {
 };
 
 const mockPerson: IEditablePerson = {
+  id: 1,
   isDisabled: false,
   firstName: 'Chester',
   middleNames: '',
   surname: 'Tester',
   preferredName: '',
-  comment: '',
-  organization: null,
+  comment: 'Lorem ipsum',
+  organization: { id: mockOrganization.id as number, text: mockOrganization.name },
   useOrganizationAddress: false,
   addresses: [],
   contactMethods: [
     {
-      contactMethodTypeCode: {
-        id: 'WORKEMAIL',
-      },
+      contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail },
       value: 'test@test.com',
     },
   ],
@@ -69,18 +69,21 @@ const mockPerson: IEditablePerson = {
 
 // Mock API service calls
 jest.mock('hooks/pims-api/useApiContacts');
-jest.mock('features/contacts/hooks/useAddContact');
+jest.mock('features/contacts/hooks/usePersonDetail');
+jest.mock('features/contacts/hooks/useUpdateContact');
 
 const getOrganization = jest.fn(() => mockOrganization);
 (useApiContacts as jest.Mock).mockReturnValue({ getOrganization });
 
-const addPerson = jest.fn();
-(useAddContact as jest.Mock).mockReturnValue({ addPerson });
+(usePersonDetail as jest.Mock).mockReturnValue({ person: mockPerson });
 
-describe('CreatePersonForm', () => {
-  const setup = (renderOptions?: RenderOptions) => {
+const updatePerson = jest.fn();
+(useUpdateContact as jest.Mock).mockReturnValue({ updatePerson });
+
+describe('UpdatePersonForm', () => {
+  const setup = (renderOptions: RenderOptions & { id: number } = { id: 1 }) => {
     // render component under test
-    const component = render(<CreatePersonForm />, {
+    const component = render(<UpdatePersonForm id={renderOptions.id} />, {
       ...renderOptions,
       store: storeState,
       history,
@@ -95,7 +98,7 @@ describe('CreatePersonForm', () => {
 
   beforeEach(() => {
     getOrganization.mockReset();
-    addPerson.mockReset();
+    updatePerson.mockReset();
   });
 
   it('renders as expected', async () => {
@@ -105,32 +108,57 @@ describe('CreatePersonForm', () => {
   });
 
   describe('when Cancel button is clicked', () => {
-    it('should cancel the form and navigate to Contacts List view', async () => {
+    it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup();
       const cancel = getCancelButton();
       userEvent.click(cancel);
-      await waitFor(() => expect(history.location.pathname).toBe('/contact/list'));
+      await waitFor(() => expect(history.location.pathname).toBe(`/contact/P${mockPerson.id}`));
     });
   });
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
+      const { getSaveButton } = setup();
+      const save = getSaveButton();
+      userEvent.click(save);
+
+      await waitFor(() => expect(updatePerson).toBeCalledWith(mockPerson));
+    });
+
+    it('should save the form with updated values', async () => {
       const { getSaveButton, container } = setup();
 
+      const newValues: IEditablePerson = {
+        ...mockPerson,
+        firstName: 'UpdatedName',
+        surname: 'UpdatedLastname',
+        contactMethods: [
+          {
+            contactMethodTypeCode: { id: ContactMethodTypes.PersonalEmail },
+            value: 'newaddress@test.com',
+          },
+        ],
+      };
+
       // provide required fields
-      await fillInput(container, 'firstName', 'Chester');
-      await fillInput(container, 'surname', 'Tester');
-      await fillInput(container, 'emailContactMethods.0.value', 'test@test.com');
+      await fillInput(container, 'firstName', newValues.firstName);
+      await fillInput(container, 'surname', newValues.surname);
+      await fillInput(
+        container,
+        'emailContactMethods.0.value',
+        newValues?.contactMethods?.[0].value,
+      );
       await fillInput(
         container,
         'emailContactMethods.0.contactMethodTypeCode',
-        ContactMethodTypes.WorkEmail,
+        newValues?.contactMethods?.[0].contactMethodTypeCode?.id,
         'select',
       );
 
       const save = getSaveButton();
       userEvent.click(save);
-      await waitFor(() => expect(addPerson).toBeCalledWith(mockPerson, expect.anything(), false));
+
+      await waitFor(() => expect(updatePerson).toBeCalledWith(newValues));
     });
   });
 });
