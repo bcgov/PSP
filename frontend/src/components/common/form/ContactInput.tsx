@@ -38,8 +38,20 @@ export const ContactInput: React.FC<ContactInputProps> = ({
   const { errors, touched, values } = useFormikContext<any>();
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
-  const value: IContactSearchResult | undefined = getIn(values, field);
+  const contactInfo: IContactSearchResult | undefined = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
+
+  var text = '';
+
+  if (contactInfo !== undefined) {
+    if (contactInfo.personId !== undefined) {
+      text = [contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]
+        .filter(x => x !== undefined)
+        .join(' ');
+    } else if (contactInfo.organizationId !== undefined) {
+      text = contactInfo.organizationName || '';
+    }
+  }
 
   return (
     <Form.Group
@@ -51,9 +63,7 @@ export const ContactInput: React.FC<ContactInputProps> = ({
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
         <Row className="align-items-center">
           <Col>
-            <StyledDiv className={!!touch && !!error ? 'is-invalid' : ''}>
-              {value?.summary}
-            </StyledDiv>
+            <StyledDiv className={!!touch && !!error ? 'is-invalid' : ''}>{text}</StyledDiv>
             <Input field={field + '.id'} className="d-none"></Input>
           </Col>
           <Col xs="auto" className="pl-0 align-self-center">
@@ -64,7 +74,7 @@ export const ContactInput: React.FC<ContactInputProps> = ({
               onClick={() => {
                 onClear();
               }}
-              disabled={value === undefined}
+              disabled={contactInfo === undefined}
             ></Button>
           </Col>
           <Col xs="auto" className="pl-0">
@@ -85,12 +95,13 @@ export const ContactInput: React.FC<ContactInputProps> = ({
 
 const StyledDiv = styled.div`
   border-radius: 0.3rem;
-  border: ${props => props.theme.css.dangerColor} solid 0.1rem;
   padding: 12px 6px 6px 12px;
-  background-color: ${props => props.theme.css.filterBackgroundColor};
   min-height: 2.5em;
-  :not(.is-invalid) {
-    background-image: none;
-    border-color: #606060;
+  background-image: none;
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+  border: #606060 solid 0.1rem;
+
+  &.is-invalid {
+    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
   }
 `;

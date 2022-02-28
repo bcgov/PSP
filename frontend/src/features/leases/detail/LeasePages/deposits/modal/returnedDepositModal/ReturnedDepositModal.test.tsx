@@ -33,6 +33,7 @@ const mockReturnedDeposit: Api_SecurityDepositReturn = {
       isDisabled: false,
       surname: 'User',
       firstName: 'Admin',
+      middleNames: '',
       organizations: [],
       addresses: [],
       contactMethods: [],

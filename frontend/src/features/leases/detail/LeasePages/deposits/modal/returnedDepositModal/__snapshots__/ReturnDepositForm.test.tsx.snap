@@ -71,14 +71,14 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 
 .c3 {
   border-radius: 0.3rem;
-  border: solid 0.1rem;
   padding: 12px 6px 6px 12px;
   min-height: 2.5em;
+  background-image: none;
+  border: #606060 solid 0.1rem;
 }
 
-.c3:not(.is-invalid) {
-  background-image: none;
-  border-color: #606060;
+.c3.is-invalid {
+  border: solid 0.1rem;
 }
 
 .c0 .form-group {
@@ -399,14 +399,14 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 
 .c3 {
   border-radius: 0.3rem;
-  border: solid 0.1rem;
   padding: 12px 6px 6px 12px;
   min-height: 2.5em;
+  background-image: none;
+  border: #606060 solid 0.1rem;
 }
 
-.c3:not(.is-invalid) {
-  background-image: none;
-  border-color: #606060;
+.c3.is-invalid {
+  border: solid 0.1rem;
 }
 
 .c0 .form-group {

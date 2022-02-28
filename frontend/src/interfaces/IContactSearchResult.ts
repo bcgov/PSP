@@ -11,6 +11,7 @@ export interface IContactSearchResult {
   summary: string;
   surname?: string;
   firstName?: string;
+  middleNames?: string;
   organizationName?: string;
   email: string;
   mailingAddress: string;
@@ -33,6 +34,7 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
         : baseModel.person?.firstName + ' ' + baseModel.person?.surname,
     surname: baseModel.person?.surname,
     firstName: baseModel.person?.firstName,
+    middleNames: baseModel.person?.middleNames,
     organizationName: baseModel.organization?.name,
     email: '',
     mailingAddress: '',
@@ -60,6 +62,7 @@ function toPerson(baseModel: IContactSearchResult): Api_Person {
   return {
     id: baseModel.personId || 0,
     firstName: baseModel.firstName || '',
+    middleNames: baseModel.middleNames || '',
     surname: baseModel.surname || '',
     preferredName: '',
     isDisabled: baseModel.isDisabled,

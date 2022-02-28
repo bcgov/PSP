@@ -38,15 +38,18 @@ export class ReturnListEntry {
 }
 
 function renderHolder({ row: { original } }: CellProps<ReturnListEntry, string>) {
-  if (original.contactHolder?.person !== undefined) {
-    var person = original.contactHolder?.person;
-    return person.firstName + ' ' + person.surname;
-  } else if (original.contactHolder?.organization !== undefined) {
-    var organization = original.contactHolder?.organization;
-    return organization.name;
-  } else {
-    return '';
+  if (original.contactHolder !== undefined) {
+    const holder = original.contactHolder;
+    if (holder.person !== undefined) {
+      return (
+        holder.person.firstName + ' ' + holder.person.middleNames + ' ' + holder.person.surname
+      );
+    } else if (holder.organization !== undefined) {
+      return holder.organization.name;
+    }
   }
+
+  return '';
 }
 
 function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => void) {

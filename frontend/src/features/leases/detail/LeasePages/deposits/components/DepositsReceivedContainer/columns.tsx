@@ -35,11 +35,14 @@ export class DepositListEntry {
 }
 
 function renderHolder({ row: { original } }: CellProps<DepositListEntry, string>) {
-  if (original.contactHolder) {
-    if (original.contactHolder.person) {
-      return original.contactHolder.person.firstName + ' ' + original.contactHolder.person.surname;
-    } else if (original.contactHolder.organization) {
-      return original.contactHolder.organization.name;
+  if (original.contactHolder !== undefined) {
+    const holder = original.contactHolder;
+    if (holder.person !== undefined) {
+      return (
+        holder.person.firstName + ' ' + holder.person.middleNames + ' ' + holder.person.surname
+      );
+    } else if (holder.organization !== undefined) {
+      return holder.organization.name;
     }
   }
 

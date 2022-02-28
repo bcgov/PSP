@@ -8,6 +8,7 @@ export interface Api_Person extends Api_ConcurrentVersion {
   isDisabled: boolean;
   surname: string;
   firstName: string;
+  middleNames: string;
   preferredName?: string;
   organizations?: Api_Organization[];
   addresses?: Api_ContactAddress[];
