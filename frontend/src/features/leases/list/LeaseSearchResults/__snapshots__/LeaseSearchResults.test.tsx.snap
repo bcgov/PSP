@@ -190,18 +190,6 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
                     <strong
                       class="pr-2"
                     >
-                      PID:
-                    </strong>
-                     N.A
-                  </div>
-                </div>
-                <div
-                  class="col-md-auto"
-                >
-                  <div>
-                    <strong
-                      class="pr-2"
-                    >
                       PIN:
                     </strong>
                      123
@@ -308,18 +296,6 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
                       PID:
                     </strong>
                      999
-                  </div>
-                </div>
-                <div
-                  class="col-md-auto"
-                >
-                  <div>
-                    <strong
-                      class="pr-2"
-                    >
-                      PIN:
-                    </strong>
-                     N.A
                   </div>
                 </div>
               </div>
