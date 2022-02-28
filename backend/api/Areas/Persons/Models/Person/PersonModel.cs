@@ -46,6 +46,11 @@ namespace Pims.Api.Areas.Persons.Models.Person
         public OrganizationLinkModel Organization { get; set; }
 
         /// <summary>
+        /// get/set - Whether to link the organization mailing address to this user.
+        /// </summary>
+        public bool UseOrganizationAddress { get; set; }
+
+        /// <summary>
         /// get/set - The primary key to identify the person-organization link (optional).
         /// </summary>
         public long? PersonOrganizationId { get; set; }

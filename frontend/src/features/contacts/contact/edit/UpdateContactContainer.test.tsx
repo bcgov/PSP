@@ -22,6 +22,8 @@ const mockPerson: IEditablePerson = {
   firstName: 'Chester',
   surname: 'Tester',
   comment: 'I got comments for you',
+  organization: null,
+  useOrganizationAddress: false,
   addresses: [],
   contactMethods: [
     { contactMethodTypeCode: { id: ContactMethodTypes.PersonalEmail }, value: 'foo@bar.com' },
@@ -35,6 +37,7 @@ const mockOrganization: IEditableOrganization = {
   alias: '',
   incorporationNumber: 'BC123456789',
   comment: 'I got comments for you',
+  persons: [],
   addresses: [],
   contactMethods: [
     { contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail }, value: 'foo@bar.com' },

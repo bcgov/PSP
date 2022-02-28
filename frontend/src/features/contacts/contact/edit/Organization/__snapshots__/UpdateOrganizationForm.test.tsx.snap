@@ -168,6 +168,15 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   text-decoration: none;
 }
 
+.c1#updateForm .form-group input.form-control:disabled,
+.c1#updateForm .form-group select.form-control:disabled,
+.c1#updateForm .form-group textarea.form-control:disabled,
+.c1#updateForm .form-group input.form-control[readonly],
+.c1#updateForm .form-group select.form-control[readonly],
+.c1#updateForm .form-group textarea.form-control[readonly] {
+  opacity: 1;
+}
+
 .c1#updateForm .form-group.required label:after {
   content: ' *';
   color: red;
@@ -794,23 +803,11 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-mailingAddress.provinceId"
-                >
-                  Province 
-                </label>
                 <select
                   class="form-select form-control"
                   id="input-mailingAddress.provinceId"
                   name="mailingAddress.provinceId"
-                >
-                  <option
-                    value=""
-                  >
-                    Select province
-                  </option>
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -823,12 +820,6 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-mailingAddress.postal"
-                >
-                  Postal Code 
-                </label>
                 <input
                   class="form-control"
                   id="input-mailingAddress.postal"
@@ -983,23 +974,11 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-propertyAddress.provinceId"
-                >
-                  Province 
-                </label>
                 <select
                   class="form-select form-control"
                   id="input-propertyAddress.provinceId"
                   name="propertyAddress.provinceId"
-                >
-                  <option
-                    value=""
-                  >
-                    Select province
-                  </option>
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -1012,12 +991,6 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-propertyAddress.postal"
-                >
-                  Postal Code 
-                </label>
                 <input
                   class="form-control"
                   id="input-propertyAddress.postal"
@@ -1172,23 +1145,11 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-billingAddress.provinceId"
-                >
-                  Province 
-                </label>
                 <select
                   class="form-select form-control"
                   id="input-billingAddress.provinceId"
                   name="billingAddress.provinceId"
-                >
-                  <option
-                    value=""
-                  >
-                    Select province
-                  </option>
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -1201,12 +1162,6 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-billingAddress.postal"
-                >
-                  Postal Code 
-                </label>
                 <input
                   class="form-control"
                   id="input-billingAddress.postal"
