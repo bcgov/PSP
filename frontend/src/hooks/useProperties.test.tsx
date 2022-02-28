@@ -4,18 +4,13 @@ import MockAdapter from 'axios-mock-adapter';
 import { IPaginateProperties } from 'constants/API';
 import find from 'lodash/find';
 import * as MOCK from 'mocks/dataMocks';
-import {
-  mockBuildingDetail,
-  mockParcel,
-  mockParcelDetail,
-  mockProperties,
-} from 'mocks/filterDataMock';
+import { mockParcel, mockParcelDetail, mockProperties } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { networkSlice } from 'store/slices/network/networkSlice';
 import { downloadFile as mockDownloadFile } from 'utils/download';
 
-import { networkSlice } from '../network/networkSlice';
 import { useProperties } from './useProperties';
 
 jest.mock('utils/download');
@@ -63,14 +58,9 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(currentStore.getActions()).toContainEqual({
-        payload: mockProperties,
-        type: 'properties/storeProperties',
-      });
     });
 
     it('Request failure, dispatches error with correct response', async () => {
-      const mockResponse = { data: mockProperties };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
 
       const { getProperties } = setup();
@@ -78,10 +68,6 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(currentStore.getActions()).not.toContainEqual({
-        payload: mockResponse,
-        type: 'properties/storeProperties',
-      });
     });
   });
 
@@ -97,18 +83,14 @@ describe('useProperties functions', () => {
       mockAxios.onGet(wfsUrl).reply(200, mockWfsResponse);
 
       const { getProperty } = setup();
-      await getProperty(1);
+      const response = await getProperty(1);
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(currentStore.getActions()).toContainEqual({
-        payload: { position: undefined, property: mockResponse },
-        type: 'properties/storeProperty',
-      });
+      expect(response).toEqual(mockResponse);
     });
 
     it('Request failure, dispatches error with correct response', async () => {
-      const mockResponse = { data: mockBuildingDetail };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
 
       const { getProperty } = setup();
@@ -116,10 +98,6 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(currentStore.getActions()).not.toContainEqual({
-        payload: { position: undefined, property: mockResponse },
-        type: 'properties/storeProperty',
-      });
     });
   });
 
@@ -134,14 +112,9 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(currentStore.getActions()).toContainEqual({
-        payload: mockResponse,
-        type: 'properties/storeProperty',
-      });
     });
 
     it('Request failure, dispatches error with correct response', async () => {
-      const mockResponse = { data: mockParcelDetail };
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
 
       const { createProperty } = setup();
@@ -149,10 +122,6 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(currentStore.getActions()).not.toContainEqual({
-        payload: mockResponse,
-        type: 'properties/storeProperty',
-      });
     });
   });
 
@@ -163,18 +132,14 @@ describe('useProperties functions', () => {
       mockAxios.onPut(url).reply(200, mockResponse);
 
       const { updateProperty } = setup();
-      await updateProperty(mockParcel);
+      const response = await updateProperty(mockParcel);
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(currentStore.getActions()).toContainEqual({
-        payload: mockResponse,
-        type: 'properties/storeProperty',
-      });
+      expect(response).toEqual(mockResponse);
     });
 
     it('Request failure, dispatches error with correct response', async () => {
-      const mockResponse = { data: mockParcel };
       mockAxios.onPut(url).reply(400, MOCK.ERROR);
 
       const { updateProperty } = setup();
@@ -182,10 +147,6 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(currentStore.getActions()).not.toContainEqual({
-        payload: mockResponse,
-        type: 'properties/storeProperty',
-      });
     });
   });
 
@@ -196,14 +157,11 @@ describe('useProperties functions', () => {
       mockAxios.onDelete(url).reply(200, mockResponse);
 
       const { deleteProperty } = setup();
-      await deleteProperty(mockParcel);
+      const response = await deleteProperty(mockParcel);
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(currentStore.getActions()).toContainEqual({
-        payload: null,
-        type: 'properties/storeProperty',
-      });
+      expect(response).toEqual(mockResponse);
     });
 
     it('Request failure, dispatches error with correct response', async () => {
@@ -214,10 +172,6 @@ describe('useProperties functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(currentStore.getActions()).not.toContainEqual({
-        payload: null,
-        type: 'properties/storeProperty',
-      });
     });
   });
 

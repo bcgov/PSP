@@ -11,7 +11,6 @@ import {
 } from 'constants/index';
 import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
-import { IPropertyDetail } from 'store/slices/properties';
 
 // TODO: This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [
@@ -211,12 +210,12 @@ export const mockParcel = mockProperties[0];
 
 export const mockBuilding = mockProperties[2];
 
-export const mockBuildingDetail: IPropertyDetail = {
+export const mockBuildingDetail = {
   propertyTypeId: PropertyTypes.Building,
   propertyDetail: mockBuilding,
 };
 
-export const mockParcelDetail: IPropertyDetail = {
+export const mockParcelDetail = {
   propertyTypeId: PropertyTypes.Land,
   propertyDetail: mockParcel,
 };

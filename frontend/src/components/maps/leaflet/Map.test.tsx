@@ -10,7 +10,6 @@ import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import Map from './Map';
@@ -30,7 +29,7 @@ jest.mock('hooks/useApi');
 jest.mock('hooks/pims-api');
 
 // This will spoof the active parcel (the one that will populate the popup details)
-const mockDetails: IPropertyDetail = {
+const mockDetails = {
   propertyTypeId: PropertyTypes.Land,
   propertyDetail: {
     ...mockParcel,
@@ -41,7 +40,6 @@ const mockDetails: IPropertyDetail = {
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: { propertyDetail: mockDetails, draftProperties: [] },
 };
 
 // To check for alert message
@@ -68,7 +66,7 @@ const baseMapLayers = {
 
 interface TestProps {
   properties: IProperty[];
-  selectedProperty: IPropertyDetail | null;
+  selectedProperty: IProperty | null;
   disableMapFilterBar: boolean;
   zoom?: number;
   done?: () => void;
@@ -79,7 +77,7 @@ interface TestProps {
 function createProps(): TestProps {
   return {
     properties: mockParcels,
-    selectedProperty: mockDetails,
+    selectedProperty: mockDetails.propertyDetail,
     disableMapFilterBar: false,
     renderOptions: {
       useMockAuthentication: true,
@@ -213,16 +211,6 @@ describe('MapProperties View', () => {
     await waitFor(() => ready);
     const propertyFilter = findFilterBar();
     expect(propertyFilter).toBeNull();
-  });
-
-  it('should render a marker for selected property', async () => {
-    const props = createProps();
-    const { ready, findMapMarker } = setup(props);
-    await waitFor(() => ready);
-    const marker = findMapMarker() as HTMLImageElement;
-    expect(marker).toBeVisible();
-    expect(marker.src).toContain('assets/images/pins/land-reg-highlight.png');
-    expect(marker.className).not.toContain('marker-cluster');
   });
 
   it(`should render 0 markers when there are no parcels`, async () => {

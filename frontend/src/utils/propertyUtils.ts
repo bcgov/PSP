@@ -18,6 +18,26 @@ export const pidFormatter = (pid?: string) => {
 };
 
 /**
+ * The pidParser is used to return a numeric pid value from a formatted pid.
+ * @param {string} pid This is the target PID to be parsed
+ */
+export const pidParser = (pid?: string | number): number | undefined => {
+  if (typeof pid === 'number') {
+    return pid;
+  }
+  if (pid !== undefined) {
+    const regex = /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d)/;
+    const format = pid.match(regex);
+    if (format !== null && format.length === 4) {
+      return parseInt(`${format[1]}${format[2]}${format[3]}`);
+    } else {
+      return parseInt(pid);
+    }
+  }
+  return undefined;
+};
+
+/**
  * Provides a formatted address as a string.
  * @param address Address object from property.
  * @returns Civic address string value.
