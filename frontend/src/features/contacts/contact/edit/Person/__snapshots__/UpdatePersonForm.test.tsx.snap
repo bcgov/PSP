@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateOrganizationForm renders as expected 1`] = `
+exports[`UpdatePersonForm renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -11,23 +11,13 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   <div
     class="container"
   />
-  .c4 {
+  .c3 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
 }
 
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c3 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -80,68 +70,21 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   justify-content: flex-start;
 }
 
-.c5 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(0,51,102);
-  text-decoration: none solid rgb(0,51,102);
-  line-height: 2.9rem;
+.c4 {
+  text-align: left;
 }
 
-.c10 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c1 {
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 100%;
   overflow: auto;
   padding-right: 1rem;
-}
-
-.c2#createForm .form-control.is-invalid {
-  border: 2px solid #d8292f;
-}
-
-.c2#createForm .invalid-feedback {
-  color: #d8292f;
-}
-
-.c2#createForm .form-group label {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c2#createForm .form-group input,
-.c2#createForm .form-group select,
-.c2#createForm .form-group textarea {
-  border: 2px solid #606060;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 1.6rem;
-  color: #000000;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c2#createForm .form-group input.form-control:disabled,
-.c2#createForm .form-group select.form-control:disabled,
-.c2#createForm .form-group textarea.form-control:disabled,
-.c2#createForm .form-group input.form-control[readonly],
-.c2#createForm .form-group select.form-control[readonly],
-.c2#createForm .form-group textarea.form-control[readonly] {
-  opacity: 1;
-}
-
-.c2#createForm .form-group.required label:after {
-  content: ' *';
-  color: red;
 }
 
 .c12 {
@@ -150,13 +93,6 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   -webkit-text-decoration: none solid rgb(33,37,41);
   text-decoration: none solid rgb(33,37,41);
   line-height: 2rem;
-}
-
-.c7 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 .c9.c9 {
@@ -188,23 +124,171 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c5 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c10 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c1#updateForm .form-control.is-invalid {
+  border: 2px solid #d8292f;
+}
+
+.c1#updateForm .invalid-feedback {
+  color: #d8292f;
+}
+
+.c1#updateForm .form-group label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c1#updateForm .form-group input,
+.c1#updateForm .form-group select,
+.c1#updateForm .form-group textarea {
+  border: 2px solid #606060;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 1.6rem;
+  color: #000000;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c1#updateForm .form-group input.form-control:disabled,
+.c1#updateForm .form-group select.form-control:disabled,
+.c1#updateForm .form-group textarea.form-control:disabled,
+.c1#updateForm .form-group input.form-control[readonly],
+.c1#updateForm .form-group select.form-control[readonly],
+.c1#updateForm .form-group textarea.form-control[readonly] {
+  opacity: 1;
+}
+
+.c1#updateForm .form-group.required label:after {
+  content: ' *';
+  color: red;
+}
+
+.c7 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 <div
-    class="c0 c1"
+    class="c0"
   >
     <form
       action="#"
-      class="c2"
-      id="createForm"
+      class="c1"
+      id="updateForm"
     >
       <div
-        class="c3"
+        class="c2"
       >
         <div
-          class="c4"
+          class="c3 py-2"
+        >
+          <div
+            class="c4 align-items-center row"
+          >
+            <div
+              class="d-flex col"
+            >
+              <span>
+                Individual
+              </span>
+            </div>
+            <div
+              class="d-flex ml-auto col-md-auto"
+            >
+              <div
+                class="mb-0 form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-isDisabled"
+                  name="isDisabled"
+                >
+                  <option
+                    class="option"
+                    value="true"
+                  >
+                    Inactive
+                  </option>
+                  <option
+                    class="option"
+                    value="false"
+                  >
+                    Active
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c3"
         >
           <div
             class="row"
           >
+            <div
+              class="col-md-4"
+            >
+              <div
+                class="required input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-firstName"
+                >
+                  First Name 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-firstName"
+                  name="firstName"
+                  title="Chester"
+                  value="Chester"
+                />
+              </div>
+            </div>
+            <div
+              class="col-md-3"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-middleNames"
+                >
+                  Middle 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-middleNames"
+                  name="middleNames"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
             <div
               class="col"
             >
@@ -213,16 +297,16 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
               >
                 <label
                   class="form-label"
-                  for="input-name"
+                  for="input-surname"
                 >
-                  Organization Name 
+                  Last Name 
                 </label>
                 <input
                   class="form-control"
-                  id="input-name"
-                  name="name"
-                  title=""
-                  value=""
+                  id="input-surname"
+                  name="surname"
+                  title="Tester"
+                  value="Tester"
                 />
               </div>
             </div>
@@ -231,46 +315,21 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
             class="row"
           >
             <div
-              class="col"
+              class="col-md-7"
             >
               <div
                 class="input form-group"
               >
                 <label
                   class="form-label"
-                  for="input-alias"
+                  for="input-preferredName"
                 >
-                  Alias 
+                  Preferred Name 
                 </label>
                 <input
                   class="form-control"
-                  id="input-alias"
-                  name="alias"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="col-md-6"
-            >
-              <div
-                class="input form-group"
-              >
-                <label
-                  class="form-label"
-                  for="input-incorporationNumber"
-                >
-                  Incorporation Number 
-                </label>
-                <input
-                  class="form-control"
-                  id="input-incorporationNumber"
-                  name="incorporationNumber"
+                  id="input-preferredName"
+                  name="preferredName"
                   title=""
                   value=""
                 />
@@ -282,7 +341,84 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c4"
+          class="c3"
+        >
+          <h2
+            class="c5"
+          >
+            Organization
+          </h2>
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-7"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="form-label"
+                  for="typeahead-organization"
+                >
+                  Link to an existing organization
+                </label>
+                <div
+                  class="rbt has-aux"
+                  style="outline: none; position: relative;"
+                  tabindex="-1"
+                >
+                  <div
+                    style="display: flex; flex: 1; height: 100%; position: relative;"
+                  >
+                    <input
+                      aria-autocomplete="both"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      autocomplete="off"
+                      class="rbt-input-main form-control rbt-input"
+                      id="typeahead-organization"
+                      name="typeahead-organization"
+                      role="combobox"
+                      type="text"
+                      value="FooBarBaz Property Management"
+                    />
+                    <input
+                      aria-hidden="true"
+                      class="rbt-input-hint"
+                      readonly=""
+                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 1.6rem; line-height: normal; padding: 1px 1px 1px 1px;"
+                      tabindex="-1"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="rbt-aux"
+                  >
+                    <button
+                      aria-label="Clear"
+                      class="close rbt-close"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                      <span
+                        class="sr-only"
+                      >
+                        Clear
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c3"
         >
           <h2
             class="c5"
@@ -336,8 +472,8 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
                   class="form-control"
                   id="input-emailContactMethods.0.value"
                   name="emailContactMethods.0.value"
-                  title=""
-                  value=""
+                  title="test@test.com"
+                  value="test@test.com"
                 />
               </div>
             </div>
@@ -564,7 +700,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           </button>
         </div>
         <div
-          class="c4"
+          class="c3"
         >
           <h2
             class="c5"
@@ -576,6 +712,31 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           >
             Mailing Address
           </h3>
+          <div
+            class="form-group"
+          >
+            <div
+              class="check-field"
+            >
+              <div
+                class="form-check"
+              >
+                <input
+                  class="form-check-input position-static"
+                  id="input-useOrganizationAddress"
+                  name="useOrganizationAddress"
+                  type="checkbox"
+                  value="false"
+                />
+              </div>
+              <label
+                class="text-wrap form-label"
+                for="input-useOrganizationAddress"
+              >
+                Use mailing address from organization
+              </label>
+            </div>
+          </div>
           <div
             class="row"
           >
@@ -740,7 +901,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c4"
+          class="c3"
         >
           <h3
             class="c10"
@@ -911,7 +1072,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c4"
+          class="c3"
         >
           <h3
             class="c10"
@@ -1082,7 +1243,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c4"
+          class="c3"
         >
           <div
             class="c11"
@@ -1106,8 +1267,10 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
               id="input-comment"
               name="comment"
               rows="5"
-              title=""
-            />
+              title="Lorem ipsum"
+            >
+              Lorem ipsum
+            </textarea>
           </div>
         </div>
       </div>
@@ -1161,8 +1324,5 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
       </div>
     </button>
   </div>
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;

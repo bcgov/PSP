@@ -1,5 +1,6 @@
 import { FormSection } from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
+import { PidCell } from 'components/Table/PidCell';
 import { getIn, useFormikContext } from 'formik';
 import { ILease, IProperty } from 'interfaces';
 import { prettyFormatDate } from 'utils';
@@ -17,6 +18,7 @@ const columns: ColumnWithProps<IDeclaration>[] = [
     Header: 'PID / Identifier',
     accessor: 'identifier',
     maxWidth: 40,
+    Cell: PidCell,
   },
   {
     Header: 'Surplus Declaration',
