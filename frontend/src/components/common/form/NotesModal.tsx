@@ -52,9 +52,13 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
         closeButton
         okButtonText="Save"
         cancelButtonText="Cancel"
-        handleOk={() => onSave && onSave(values)}
+        handleOk={() => {
+          onSave && onSave(values);
+          setShowNotes(false);
+        }}
         handleCancel={() => {
           setFieldValue(fieldWithNameSpace, currentNote);
+          setShowNotes(false);
         }}
       ></GenericModal>
     </>

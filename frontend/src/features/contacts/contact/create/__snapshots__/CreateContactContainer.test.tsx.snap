@@ -188,6 +188,15 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   text-decoration: none;
 }
 
+.c7#createForm .form-group input.form-control:disabled,
+.c7#createForm .form-group select.form-control:disabled,
+.c7#createForm .form-group textarea.form-control:disabled,
+.c7#createForm .form-group input.form-control[readonly],
+.c7#createForm .form-group select.form-control[readonly],
+.c7#createForm .form-group textarea.form-control[readonly] {
+  opacity: 1;
+}
+
 .c7#createForm .form-group.required label:after {
   content: ' *';
   color: red;
@@ -487,6 +496,8 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                         aria-haspopup="listbox"
                         autocomplete="off"
                         class="rbt-input-main form-control rbt-input"
+                        id="typeahead-organization"
+                        name="typeahead-organization"
                         role="combobox"
                         type="text"
                         value=""
@@ -820,6 +831,32 @@ exports[`CreateContactContainer component should render as expected 1`] = `
               Mailing Address
             </h3>
             <div
+              class="form-group"
+            >
+              <div
+                class="check-field"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input position-static"
+                    disabled=""
+                    id="input-useOrganizationAddress"
+                    name="useOrganizationAddress"
+                    type="checkbox"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="text-wrap form-label"
+                  for="input-useOrganizationAddress"
+                >
+                  Use mailing address from organization
+                </label>
+              </div>
+            </div>
+            <div
               class="row"
             >
               <div
@@ -954,23 +991,11 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 <div
                   class="form-group"
                 >
-                  <label
-                    class="form-label"
-                    for="input-mailingAddress.provinceId"
-                  >
-                    Province 
-                  </label>
                   <select
                     class="form-select form-control"
                     id="input-mailingAddress.provinceId"
                     name="mailingAddress.provinceId"
-                  >
-                    <option
-                      value=""
-                    >
-                      Select province
-                    </option>
-                  </select>
+                  />
                 </div>
               </div>
             </div>
@@ -983,12 +1008,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 <div
                   class="input form-group"
                 >
-                  <label
-                    class="form-label"
-                    for="input-mailingAddress.postal"
-                  >
-                    Postal Code 
-                  </label>
                   <input
                     class="form-control"
                     id="input-mailingAddress.postal"
@@ -1143,23 +1162,11 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 <div
                   class="form-group"
                 >
-                  <label
-                    class="form-label"
-                    for="input-propertyAddress.provinceId"
-                  >
-                    Province 
-                  </label>
                   <select
                     class="form-select form-control"
                     id="input-propertyAddress.provinceId"
                     name="propertyAddress.provinceId"
-                  >
-                    <option
-                      value=""
-                    >
-                      Select province
-                    </option>
-                  </select>
+                  />
                 </div>
               </div>
             </div>
@@ -1172,12 +1179,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 <div
                   class="input form-group"
                 >
-                  <label
-                    class="form-label"
-                    for="input-propertyAddress.postal"
-                  >
-                    Postal Code 
-                  </label>
                   <input
                     class="form-control"
                     id="input-propertyAddress.postal"
@@ -1332,23 +1333,11 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 <div
                   class="form-group"
                 >
-                  <label
-                    class="form-label"
-                    for="input-billingAddress.provinceId"
-                  >
-                    Province 
-                  </label>
                   <select
                     class="form-select form-control"
                     id="input-billingAddress.provinceId"
                     name="billingAddress.provinceId"
-                  >
-                    <option
-                      value=""
-                    >
-                      Select province
-                    </option>
-                  </select>
+                  />
                 </div>
               </div>
             </div>
@@ -1361,12 +1350,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 <div
                   class="input form-group"
                 >
-                  <label
-                    class="form-label"
-                    for="input-billingAddress.postal"
-                  >
-                    Postal Code 
-                  </label>
                   <input
                     class="form-control"
                     id="input-billingAddress.postal"

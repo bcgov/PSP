@@ -2,7 +2,7 @@ import { Button, Input, Select, SelectOption } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
 import * as Styled from 'features/contacts/contact/create/styles';
-import { useFormikContext } from 'formik';
+import { getIn, useFormikContext } from 'formik';
 import useCounter from 'hooks/useCounter';
 import { Dictionary } from 'interfaces/Dictionary';
 import React, { useCallback, useEffect } from 'react';
@@ -17,13 +17,17 @@ export { useAddressHelpers };
 
 export interface IAddressProps {
   namespace?: string;
+  disabled?: boolean;
 }
 
 /**
  * Displays addresses directly associated with this Contact Person.
  * @param {IAddressProps} param0
  */
-export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) => {
+export const Address: React.FunctionComponent<IAddressProps> = ({
+  namespace,
+  disabled = false,
+}) => {
   const {
     countries,
     provinces,
@@ -32,16 +36,20 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
     setSelectedCountryId,
   } = useAddressHelpers();
 
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
+  const countryId = getIn(values, withNameSpace(namespace, 'countryId'));
+
+  useEffect(() => {
+    setSelectedCountryId(countryId);
+  }, [countryId, namespace, setFieldValue, setSelectedCountryId]);
 
   // clear associated fields (province, other country name) whenever country value is changed
   const onCountryChanged = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelectedCountryId(e.target.value);
       setFieldValue(withNameSpace(namespace, 'provinceId'), '');
       setFieldValue(withNameSpace(namespace, 'countryOther'), '');
     },
-    [namespace, setFieldValue, setSelectedCountryId],
+    [namespace, setFieldValue],
   );
 
   // this counter determines how many address lines we render in the form; e.g. street1, street2, etc
@@ -61,16 +69,28 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
     <>
       <Row>
         <Col md={8}>
-          <Input field={withNameSpace(namespace, 'streetAddress1')} label="Address (line 1)" />
+          <Input
+            disabled={disabled}
+            field={withNameSpace(namespace, 'streetAddress1')}
+            label="Address (line 1)"
+          />
           {count > 1 && (
-            <Input field={withNameSpace(namespace, 'streetAddress2')} label="Address (line 2)" />
+            <Input
+              disabled={disabled}
+              field={withNameSpace(namespace, 'streetAddress2')}
+              label="Address (line 2)"
+            />
           )}
           {count > 2 && (
-            <Input field={withNameSpace(namespace, 'streetAddress3')} label="Address (line 3)" />
+            <Input
+              disabled={disabled}
+              field={withNameSpace(namespace, 'streetAddress3')}
+              label="Address (line 3)"
+            />
           )}
         </Col>
         <Col style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
-          {count > 1 && (
+          {count > 1 && !disabled && (
             <Stack justifyContent="flex-end" className="h-100">
               <Styled.RemoveButton onClick={decrement}>
                 <MdClose size="2rem" /> <span className="text">Remove</span>
@@ -79,7 +99,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
           )}
         </Col>
       </Row>
-      {count < 3 && (
+      {count < 3 && !disabled && (
         <Row style={{ marginTop: '-1rem', marginBottom: '1rem' }}>
           <Col>
             <Button variant="link" onClick={increment}>
@@ -91,6 +111,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
       <Row>
         <Col md={4}>
           <Select
+            disabled={disabled}
             label="Country"
             field={withNameSpace(namespace, 'countryId')}
             options={countries}
@@ -101,12 +122,17 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
       </Row>
       <Row>
         <Col md={4}>
-          <Input field={withNameSpace(namespace, 'municipality')} label="City" />
+          <Input
+            disabled={disabled}
+            field={withNameSpace(namespace, 'municipality')}
+            label="City"
+          />
         </Col>
       </Row>
       <Row>
         <Col md={4}>
           <ProvinceOrCountryName
+            disabled={disabled}
             namespace={namespace}
             selectedCountry={selectedCountryCode}
             provinces={provinces}
@@ -116,7 +142,11 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
       </Row>
       <Row>
         <Col md={4}>
-          <Input field={withNameSpace(namespace, 'postal')} label={formLabels.postal} />
+          <Input
+            disabled={disabled}
+            field={withNameSpace(namespace, 'postal')}
+            label={formLabels.postal}
+          />
         </Col>
       </Row>
     </>
@@ -128,6 +158,7 @@ interface IProvinceOrCountryName {
   provinces: SelectOption[];
   formLabels: Dictionary<string>;
   namespace?: string;
+  disabled?: boolean;
 }
 
 const ProvinceOrCountryName: React.FunctionComponent<IProvinceOrCountryName> = ({
@@ -135,13 +166,21 @@ const ProvinceOrCountryName: React.FunctionComponent<IProvinceOrCountryName> = (
   provinces,
   formLabels,
   namespace,
+  disabled = false,
 }) => {
   if (selectedCountry === CountryCodes.Other) {
-    return <Input field={withNameSpace(namespace, 'countryOther')} label="Country name" />;
+    return (
+      <Input
+        disabled={disabled}
+        field={withNameSpace(namespace, 'countryOther')}
+        label="Country name"
+      />
+    );
   }
 
   return (
     <Select
+      disabled={disabled}
       field={withNameSpace(namespace, 'provinceId')}
       options={provinces}
       label={formLabels.province}

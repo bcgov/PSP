@@ -120,6 +120,14 @@ export const sharedFormStyles = css`
       font-size: 1.6rem;
       color: #000000;
       text-decoration: none;
+
+      &.form-control {
+        &:disabled,
+        &[readonly] {
+          background-color: ${props => props.theme.css.disabledFieldBackgroundColor};
+          opacity: 1;
+        }
+      }
     }
 
     &.required {

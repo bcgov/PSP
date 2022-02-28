@@ -1,7 +1,7 @@
 import { SelectOption } from 'components/common/form';
 import { InlineSelect } from 'components/common/form/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { FlexRowDiv } from 'features/leases/detail/LeasePages/payment/styles';
+import { FlexRowDiv, UnOrderedListNoStyle } from 'features/leases/detail/LeasePages/payment/styles';
 import { useLeaseExport } from 'features/leases/hooks/useLeaseExport';
 import { Formik } from 'formik';
 import * as React from 'react';
@@ -34,16 +34,20 @@ export const ExportAggregatedLeasesContainer: React.FunctionComponent<IExportAgg
       }}
     >
       {({ submitForm }) => (
-        <FlexRowDiv>
-          <InlineSelect
-            label="Select fiscal year"
-            field="fiscalYear"
-            options={fiscalYearOptions}
-          ></InlineSelect>
-          <TooltipWrapper toolTipId="download-aggregated-lease-report" toolTip="Download">
-            <ClickableDownload title="Export Aggregated Report" onClick={() => submitForm()} />
-          </TooltipWrapper>
-        </FlexRowDiv>
+        <UnOrderedListNoStyle>
+          <li>
+            <FlexRowDiv>
+              <InlineSelect
+                label="Select fiscal year"
+                field="fiscalYear"
+                options={fiscalYearOptions}
+              ></InlineSelect>
+              <TooltipWrapper toolTipId="download-aggregated-lease-report" toolTip="Download">
+                <ClickableDownload title="Export Aggregated Report" onClick={() => submitForm()} />
+              </TooltipWrapper>
+            </FlexRowDiv>
+          </li>
+        </UnOrderedListNoStyle>
       )}
     </Formik>
   );

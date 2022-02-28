@@ -13,7 +13,8 @@ export interface IEditablePerson {
   preferredName?: string;
   comment?: string;
   isDisabled: boolean;
-  organization?: IOrganizationLink;
+  organization: IOrganizationLink | null;
+  useOrganizationAddress: boolean;
   personOrganizationId?: number;
   personOrganizationRowVersion?: number;
   addresses?: IEditablePersonAddress[];
@@ -34,7 +35,7 @@ export interface IEditableOrganization {
 }
 
 // internal interface - not meant to be imported/shared
-interface IBaseAddress {
+export interface IBaseAddress {
   id?: number;
   rowVersion?: number;
   addressTypeId: ITypeCode<string>;
@@ -143,7 +144,8 @@ export const defaultCreatePerson: IEditablePersonForm = {
   surname: '',
   preferredName: '',
   comment: '',
-  organization: undefined,
+  organization: null,
+  useOrganizationAddress: false,
   emailContactMethods: [getDefaultContactMethod()],
   phoneContactMethods: [getDefaultContactMethod()],
   mailingAddress: getDefaultAddress(AddressTypes.Mailing),

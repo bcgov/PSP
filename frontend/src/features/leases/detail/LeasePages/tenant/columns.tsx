@@ -3,6 +3,7 @@ import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
 import { NotesModal } from 'components/common/form/NotesModal';
 import { ColumnWithProps } from 'components/Table';
 import { IContactSearchResult } from 'interfaces';
+import noop from 'lodash/noop';
 import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -107,6 +108,7 @@ const columns = [
           </p>
         }
         title="Tenant Notes"
+        onSave={noop}
       />
     ),
   },

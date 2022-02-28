@@ -111,6 +111,10 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
         <BaseAsyncTypeahead<T>
           ref={ref} // forward the ref to the inner typeahead control to be able to call its methods; e.g. typeahead.clear(), .blur() etc
           id={`typeahead-${field}`}
+          inputProps={{
+            name: `typeahead-${field}`,
+            id: `typeahead-${field}`,
+          }}
           clearButton
           options={options}
           multiple={multiple}
