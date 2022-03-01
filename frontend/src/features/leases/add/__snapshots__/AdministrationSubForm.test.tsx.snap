@@ -917,7 +917,6 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
   -webkit-box-align: baseline;
   -ms-flex-align: baseline;
   align-items: baseline;
-  gap: 0.8rem;
 }
 
 .c2 .form-label {

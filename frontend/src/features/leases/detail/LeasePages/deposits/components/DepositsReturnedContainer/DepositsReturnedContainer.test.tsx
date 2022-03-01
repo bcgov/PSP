@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { ILeaseSecurityDeposit, ILeaseSecurityDepositReturn } from 'interfaces';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { formatMoney, prettyFormatDate } from 'utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
 
@@ -9,7 +9,7 @@ import DepositsReturnedContainer, {
 
 const mockCallback = (id: number): void => {};
 
-const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
+const mockDepositReturns: Api_SecurityDepositReturn[] = [
   {
     id: 1,
     parentDepositId: 7,
@@ -21,7 +21,7 @@ const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
   },
 ];
 
-const mockDeposit: ILeaseSecurityDeposit = {
+const mockDeposit: Api_SecurityDeposit = {
   id: 7,
   description: 'Test deposit 1',
   amountPaid: 1234.0,
