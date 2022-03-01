@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
-using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Dal.Helpers.Extensions
 {
@@ -78,9 +77,9 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(l => filter.Programs.Any(p => p == l.LeaseProgramTypeCode));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.LeaseStatusType))
+            if (filter.LeaseStatusTypes.Count > 0)
             {
-                query = query.Where(l => l.LeaseStatusTypeCode == filter.LeaseStatusType);
+                query = query.Where(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
             }
 
             if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
@@ -129,7 +128,7 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(t => t.Organization)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(l => l.PimsLeaseTerms);
-            
+
 
             if (loadPayments)
             {
