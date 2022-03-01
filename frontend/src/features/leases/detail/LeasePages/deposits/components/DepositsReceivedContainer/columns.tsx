@@ -9,6 +9,7 @@ import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdUndo } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+import { formatNames } from 'utils/personUtils';
 
 export class DepositListEntry {
   public id: number;
@@ -38,9 +39,11 @@ function renderHolder({ row: { original } }: CellProps<DepositListEntry, string>
   if (original.contactHolder !== undefined) {
     const holder = original.contactHolder;
     if (holder.person !== undefined) {
-      return (
-        holder.person.firstName + ' ' + holder.person.middleNames + ' ' + holder.person.surname
-      );
+      return formatNames([
+        holder.person.firstName,
+        holder.person.middleNames,
+        holder.person.surname,
+      ]);
     } else if (holder.organization !== undefined) {
       return holder.organization.name;
     }
