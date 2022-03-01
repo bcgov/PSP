@@ -11,7 +11,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue></initValue>
+      <initValue>''</initValue>
       <name>password</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>

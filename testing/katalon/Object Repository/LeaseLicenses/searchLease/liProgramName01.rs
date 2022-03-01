@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>EditButton</name>
+   <name>liProgramName01</name>
    <tag></tag>
-   <elementGuidId>8068b393-155f-4f78-b651-8011400503c8</elementGuidId>
+   <elementGuidId>3f1c5a29-e400-43de-b771-e70610e67052</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//body/div[@id='root']/div[2]/div[2]/div[1]/div[3]/div[1]/h2[1]/a[1]</value>
+         <value>//li[contains(text(),'Commercial Buildings')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
@@ -19,6 +20,6 @@
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <type>Main</type>
-      <value>/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[3]/div[1]/h2[1]/a[1]</value>
+      <value>/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/ul[1]/li[4]</value>
    </webElementXpaths>
 </WebElementEntity>
