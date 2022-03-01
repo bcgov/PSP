@@ -56,7 +56,7 @@ const idFilterOptions = [
 
 const idFilterPlaceholders = {
   pinOrPid: 'Enter a PID or PIN',
-  lFileNo: 'Enter an LIS File Number',
+  lFileNo: 'Enter an L-File number',
   address: 'Enter an address',
 };
 

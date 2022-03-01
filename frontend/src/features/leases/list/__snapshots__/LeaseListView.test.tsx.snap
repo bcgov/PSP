@@ -189,7 +189,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                                   class="form-control"
                                   id="input-lFileNo"
                                   name="lFileNo"
-                                  placeholder="Enter an LIS File Number"
+                                  placeholder="Enter an L-File number"
                                   title=""
                                   value=""
                                 />
