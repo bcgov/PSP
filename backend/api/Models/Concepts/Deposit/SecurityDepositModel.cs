@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Pims.Api.Models;
 
-namespace Pims.Api.Areas.Lease.Models.Lease
+namespace Pims.Api.Models.Concepts
 {
     public class SecurityDepositModel : BaseModel
     {
@@ -42,23 +41,8 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IList<SecurityDepositReturnModel> DepositReturns { get; set; }
 
         /// <summary>
-        /// get/set - Person deposit holder.
+        /// get/set - Contact Holder.
         /// </summary>
-        public PersonModel PersonDepositHolder { get; set; }
-
-        /// <summary>
-        /// get/set - Person deposit holder id.
-        /// </summary>
-        public long? PersonDepositHolderId { get; set; }
-
-        /// <summary>
-        /// get/set - Organization deposit holder.
-        /// </summary>
-        public OrganizationModel OrganizationDepositHolder { get; set; }
-
-        /// <summary>
-        /// get/set - Organization deposit holder id.
-        /// </summary>
-        public long? OrganizationDepositHolderId { get; set; }
+        public ContactModel ContactHolder { get; set; }
     }
 }

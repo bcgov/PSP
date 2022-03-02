@@ -2,14 +2,14 @@ import { FormSection } from 'components/common/form/styles';
 import { Table } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { ILeaseSecurityDeposit } from 'interfaces';
+import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { Button } from 'react-bootstrap';
 
 import * as Styled from '../../styles';
 import { DepositListEntry, getColumns } from './columns';
 
 export interface IDepositsReceivedContainerProps {
-  securityDeposits: ILeaseSecurityDeposit[];
+  securityDeposits: Api_SecurityDeposit[];
   onAdd: () => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;

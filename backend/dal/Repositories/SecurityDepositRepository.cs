@@ -33,7 +33,12 @@ namespace Pims.Dal.Repositories
 
         public PimsSecurityDeposit GetById(long id)
         {
-            var query = this.Context.PimsSecurityDeposits.AsNoTracking().Where(t => t.SecurityDepositId == id);
+            var query = this.Context.PimsSecurityDeposits.AsNoTracking()
+                .Where(t => t.SecurityDepositId == id)
+                .Include(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Person)
+                .Include(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Organization);
             return query.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
@@ -52,8 +57,14 @@ namespace Pims.Dal.Repositories
 
         public void Delete(long id)
         {
-            PimsSecurityDeposit term = this.Context.PimsSecurityDeposits.Find(id) ?? throw new KeyNotFoundException();
-            this.Context.Remove(term);
+            PimsSecurityDeposit deposit = this.Context.PimsSecurityDeposits
+                .Where(x => x.SecurityDepositId == id)
+                .Include(s => s.PimsSecurityDepositHolder).FirstOrDefault() ?? throw new KeyNotFoundException();
+            if (deposit.PimsSecurityDepositHolder != null)
+            {
+                this.Context.Remove(deposit.PimsSecurityDepositHolder);
+            }
+            this.Context.Remove(deposit);
         }
     }
 }

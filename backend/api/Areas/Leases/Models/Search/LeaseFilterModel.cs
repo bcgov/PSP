@@ -26,9 +26,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string Address { get; set; }
 
         /// <summary>
-        /// get/set - The lease status type.
+        /// get/set - The lease status types.
         /// </summary>
-        public string LeaseStatusType { get; set; }
+        public IList<string> LeaseStatusTypes { get; set; } = new List<string>();
 
         /// <summary>
         /// get/set - The value of the tenant name.
@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
             this.Address = filter.GetStringValue(nameof(this.Address));
-            this.LeaseStatusType = filter.GetStringValue(nameof(this.LeaseStatusType));
+            this.LeaseStatusTypes = filter.GetStringArrayValue(nameof(this.LeaseStatusTypes));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
             this.ExpiryStartDate = filter.GetDateTimeNullValue(nameof(this.ExpiryStartDate));
@@ -107,7 +107,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 PinOrPid = model.PinOrPid,
                 LFileNo = model.LFileNo,
                 Address = model.Address,
-                LeaseStatusType = model.LeaseStatusType,
+                LeaseStatusTypes = model.LeaseStatusTypes,
                 TenantName = model.TenantName,
                 Programs = model.Programs,
                 ExpiryStartDate = model.ExpiryStartDate,
@@ -136,7 +136,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 || !string.IsNullOrWhiteSpace(PinOrPid)
                 || !string.IsNullOrWhiteSpace(LFileNo)
                 || !string.IsNullOrWhiteSpace(Address)
-                || !string.IsNullOrWhiteSpace(LeaseStatusType)
+                || (LeaseStatusTypes.Count != 0)
                 || !string.IsNullOrWhiteSpace(TenantName)
                 || (Programs.Count != 0)
                 || ExpiryStartDate.HasValue

@@ -7,7 +7,7 @@ import { PropertyFilterOptions } from 'features/properties/filter';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -30,7 +30,7 @@ export const defaultFilter: ILeaseFilter = {
   pinOrPid: '',
   lFileNo: '',
   searchBy: 'lFileNo',
-  leaseStatusType: 'ACTIVE',
+  leaseStatusTypes: ['ACTIVE'],
   programs: [],
   tenantName: '',
   expiryStartDate: '',
@@ -56,7 +56,7 @@ const idFilterOptions = [
 
 const idFilterPlaceholders = {
   pinOrPid: 'Enter a PID or PIN',
-  lFileNo: 'Enter an LIS File Number',
+  lFileNo: 'Enter an L-File number',
   address: 'Enter an address',
 };
 
@@ -66,28 +66,56 @@ const idFilterPlaceholders = {
  */
 export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter, setFilter }) => {
   const onSearchSubmit = (values: ILeaseFilter, { setSubmitting }: any) => {
-    let selectedPrograms: MultiSelectOption[] = multiselectRef.current?.getSelectedItems();
-    let programIds = selectedPrograms.map<string>(x => x.id);
-    values = { ...values, programs: programIds };
+    const selectedPrograms: MultiSelectOption[] = multiselectProgramRef.current?.getSelectedItems();
+    const selectedStatuses: MultiSelectOption[] = multiselectStatusRef.current?.getSelectedItems();
+    const programIds = selectedPrograms.map<string>(x => x.id);
+    const statuses = selectedStatuses.map<string>(x => x.id);
+    values = { ...values, programs: programIds, leaseStatusTypes: statuses };
     setFilter(values);
     setSubmitting(false);
   };
   const resetFilter = () => {
-    multiselectRef.current?.resetSelectedValues();
+    multiselectProgramRef.current?.resetSelectedValues();
+    setInitialSelectedStatus(
+      statusFilterOptions.filter(x => defaultFilter.leaseStatusTypes.includes(x.id)),
+    );
+
     setFilter(defaultFilter);
   };
 
-  const multiselectRef = React.createRef<Multiselect>();
+  const multiselectProgramRef = React.createRef<Multiselect>();
+  const multiselectStatusRef = React.createRef<Multiselect>();
 
   const lookupCodes = useLookupCodeHelpers();
 
-  const leaseStatusOptions = lookupCodes.getByType(LEASE_STATUS_TYPES).map(c => mapLookupCode(c));
   const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
+
+  const leaseStatusOptions = lookupCodes.getByType(LEASE_STATUS_TYPES);
 
   const leaseProgramTypes = lookupCodes.getByType(LEASE_PROGRAM_TYPES);
   const programFilterOptions: MultiSelectOption[] = leaseProgramTypes.map<MultiSelectOption>(x => {
     return { id: x.id as string, text: x.name };
   });
+
+  const statusFilterOptions: MultiSelectOption[] = leaseStatusOptions.map<MultiSelectOption>(x => {
+    return { id: x.id as string, text: x.name };
+  });
+  const initialLeaseStatusList = statusFilterOptions.filter(x =>
+    defaultFilter.leaseStatusTypes.includes(x.id),
+  );
+
+  const [selectedStatus, setInitialSelectedStatus] = useState<MultiSelectOption[]>(
+    initialLeaseStatusList,
+  );
+
+  // Necessary since the lookup codes might have not been loaded before the first render
+  useEffect(() => {
+    setInitialSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
+  }, []);
+
+  function onSelectedStatusChange(selectedList: MultiSelectOption[]) {
+    setInitialSelectedStatus(selectedList);
+  }
 
   return (
     <Formik
@@ -99,32 +127,57 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col lg="6">
+            <Col xl="6">
               <Row>
                 <Col xl="auto">
                   <strong>Search by:</strong>
                 </Col>
                 <Col>
                   <Row>
-                    <Col lg="8">
+                    <Col xl="7">
                       <PropertyFilterOptions
                         options={idFilterOptions}
                         placeholders={idFilterPlaceholders}
                       />
                     </Col>
-                    <Col lg="4">
-                      <Select
-                        field="leaseStatusType"
-                        options={leaseStatusOptions}
-                        placeholder="Status"
+                    <Col xl="5">
+                      <Multiselect
+                        id="status-selector"
+                        ref={multiselectStatusRef}
+                        options={statusFilterOptions}
+                        onSelect={onSelectedStatusChange}
+                        onRemove={onSelectedStatusChange}
+                        selectedValues={selectedStatus}
+                        displayValue="text"
+                        placeholder="Select Status(s)"
+                        customCloseIcon={<FaTimes size="18px" className="ml-3" />}
+                        hidePlaceholder={true}
+                        style={{
+                          chips: {
+                            background: '#F2F2F2',
+                            borderRadius: '4px',
+                            color: 'black',
+                            fontSize: '16px',
+                            marginRight: '1em',
+                          },
+                          multiselectContainer: {
+                            width: 'auto',
+                            color: 'black',
+                            paddingBottom: '12px',
+                          },
+                          searchBox: {
+                            background: 'white',
+                            border: '1px solid #606060',
+                          },
+                        }}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg="8">
+                    <Col xl="7">
                       <Multiselect
                         id="properties-selector"
-                        ref={multiselectRef}
+                        ref={multiselectProgramRef}
                         options={programFilterOptions}
                         displayValue="text"
                         placeholder="Select Program(s)"
@@ -150,14 +203,14 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                         }}
                       />
                     </Col>
-                    <Col lg="4">
+                    <Col xl="5">
                       <Input field="tenantName" placeholder="Tenant Name" />
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Col>
-            <Col lg="5">
+            <Col xl="5">
               <Row>
                 <Col xl="auto">
                   <strong>Expiry date:</strong>
@@ -204,7 +257,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                 </Col>
               </Row>
             </Col>
-            <ColButtons lg="1">
+            <ColButtons xl="1">
               <Row>
                 <Col xs="auto" className="pr-0">
                   <SearchButton disabled={formikProps.isSubmitting} />

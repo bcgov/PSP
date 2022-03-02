@@ -21,6 +21,7 @@ export interface IContactResultComponentProps {
   selectedRows?: IContactSearchResult[];
   showSelectedRowCount?: boolean;
   isSummary?: boolean;
+  isSingleSelect?: boolean;
 }
 
 /**
@@ -72,6 +73,7 @@ export function ContactResultComponent(props: IContactResultComponentProps) {
       noRowsMessage="No Contacts match the search criteria"
       showSelectedRowCount={props.showSelectedRowCount}
       totalItems={props.totalItems}
+      isSingleSelect={props.isSingleSelect}
       {...rest}
     ></Table>
   );

@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v2
         with:
@@ -21,27 +23,22 @@ jobs:
           git config user.name "github-actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Build changelog
-        id: build_changelog
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get previous tag
         run: |
-          export CHANGELOG=$(gh api /repos/{owner}/{repo}/releases/generate-notes -f tag_name=${GITHUB_REF#refs/tags/} --jq '.body')
-          CHANGELOG="${CHANGELOG//'%'/'%25'}"
-          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
-          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
-          echo "::set-output name=changelog::$CHANGELOG"
+          PREV_TAG=$(git describe --abbrev=0 --tags "${{ github.ref }}^")
+          echo "Previous release found: $PREV_TAG"
+          echo "PREV_TAG=$PREV_TAG" >> $GITHUB_ENV
 
       - name: Create release
         id: create_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "${{ steps.build_changelog.outputs.changelog }}" > changelog.md
-          make release tag="${GITHUB_REF#refs/tags/}" changelog=changelog.md
+          gh api repos/{owner}/{repo}/releases/generate-notes -f tag_name='${{ github.ref_name }}' -f previous_tag_name='${{ env.PREV_TAG }}' --jq '.body' > changelog.md
+          make release tag="${{ github.ref_name }}" changelog=changelog.md
 
-          export RELEASE_VERSION=${GITHUB_REF#refs/tags/}
-          export RELEASE_URL=$(gh release view ${GITHUB_REF#refs/tags/} --json url --jq '.url')
+          RELEASE_VERSION=${{ github.ref_name }}
+          RELEASE_URL=$(gh release view ${{ github.ref_name }} --json url --jq '.url')
 
           echo "::set-output name=release_version::$RELEASE_VERSION"
           echo "::set-output name=release_url::$RELEASE_URL"

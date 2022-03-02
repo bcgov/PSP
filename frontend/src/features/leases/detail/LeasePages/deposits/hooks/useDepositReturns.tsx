@@ -1,6 +1,6 @@
 import { useApiLeaseDepositReturns } from 'hooks/pims-api/useApiLeaseDepositsReturn';
-import { ILeaseSecurityDepositReturn } from 'interfaces';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
+import { Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { useDispatch } from 'react-redux';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ export const useLeaseDepositReturns = () => {
   const dispatch = useDispatch();
 
   const updateLeaseDepositReturn = async (
-    request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn>,
+    request: IParentConcurrencyGuard<Api_SecurityDepositReturn>,
   ) => {
     try {
       const axiosPromise = request.payload.id
@@ -43,7 +43,7 @@ export const useLeaseDepositReturns = () => {
   };
 
   const removeLeaseDepositReturn = async (
-    request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn>,
+    request: IParentConcurrencyGuard<Api_SecurityDepositReturn>,
   ) => {
     try {
       const axiosPromise = deleteLeaseDepositReturn(request);

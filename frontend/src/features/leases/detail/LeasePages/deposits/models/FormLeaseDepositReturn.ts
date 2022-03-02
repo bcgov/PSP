@@ -1,22 +1,6 @@
+import { fromContact, IContactSearchResult, toContact } from 'interfaces';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-
-import { IBaseModel } from './IBaseModel';
-import { ILeaseSecurityDeposit } from './ILeaseSecurityDeposit';
-import { IOrganization } from './IOrganization';
-import { IPerson } from './IPerson';
-
-export interface ILeaseSecurityDepositReturn extends IBaseModel {
-  id?: number;
-  parentDepositId: number;
-  terminationDate?: string;
-  claimsAgainst?: number;
-  returnAmount: number;
-  returnDate?: string;
-  personDepositReturnHolder?: IPerson;
-  personDepositReturnHolderId?: number;
-  organizationDepositReturnHolder?: IOrganization;
-  organizationDepositReturnHolderId?: number;
-}
 
 export class FormLeaseDepositReturn {
   public id?: number;
@@ -28,8 +12,7 @@ export class FormLeaseDepositReturn {
   public claimsAgainst: NumberFieldValue;
   public returnAmount: NumberFieldValue;
   public returnDate: string;
-  public personDepositReturnHolderId: NumberFieldValue;
-  public organizationDepositReturnHolderId: NumberFieldValue;
+  public contactHolder?: IContactSearchResult;
   public rowVersion: number;
   public parentDepositAmount: number;
 
@@ -42,13 +25,11 @@ export class FormLeaseDepositReturn {
     this.claimsAgainst = '';
     this.returnAmount = '';
     this.returnDate = '';
-    this.personDepositReturnHolderId = '';
-    this.organizationDepositReturnHolderId = '';
     this.parentDepositAmount = 0;
     this.rowVersion = 0;
   }
 
-  public static createEmpty(deposit: ILeaseSecurityDeposit): FormLeaseDepositReturn {
+  public static createEmpty(deposit: Api_SecurityDeposit): FormLeaseDepositReturn {
     var returnDeposit = new FormLeaseDepositReturn();
     returnDeposit.parentDepositId = deposit.id || 0;
     returnDeposit.depositTypeCode = deposit.depositType.id;
@@ -59,8 +40,8 @@ export class FormLeaseDepositReturn {
   }
 
   public static createFromModel(
-    baseModel: ILeaseSecurityDepositReturn,
-    parentDeposit: ILeaseSecurityDeposit,
+    baseModel: Api_SecurityDepositReturn,
+    parentDeposit: Api_SecurityDeposit,
   ): FormLeaseDepositReturn {
     let model = new FormLeaseDepositReturn();
 
@@ -76,13 +57,13 @@ export class FormLeaseDepositReturn {
     model.claimsAgainst = baseModel.claimsAgainst || '';
     model.returnAmount = baseModel.returnAmount;
     model.returnDate = baseModel.returnDate || '';
-    model.personDepositReturnHolderId = baseModel.personDepositReturnHolderId || '';
-    model.organizationDepositReturnHolderId = baseModel.organizationDepositReturnHolderId || '';
+    model.contactHolder =
+      baseModel.contactHolder !== undefined ? fromContact(baseModel.contactHolder) : undefined;
     model.rowVersion = baseModel.rowVersion;
     return model;
   }
 
-  public toInterfaceModel(): ILeaseSecurityDepositReturn {
+  public toInterfaceModel(): Api_SecurityDepositReturn {
     return {
       id: this.id,
       parentDepositId: this.parentDepositId,
@@ -90,12 +71,7 @@ export class FormLeaseDepositReturn {
       claimsAgainst: this.claimsAgainst === '' ? undefined : this.claimsAgainst,
       returnAmount: this.returnAmount === '' ? 0 : this.returnAmount,
       returnDate: this.returnDate === '' ? undefined : this.returnDate,
-      personDepositReturnHolderId:
-        this.personDepositReturnHolderId === '' ? undefined : this.personDepositReturnHolderId,
-      organizationDepositReturnHolderId:
-        this.organizationDepositReturnHolderId === ''
-          ? undefined
-          : this.organizationDepositReturnHolderId,
+      contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : undefined,
       rowVersion: this.rowVersion,
     };
   }

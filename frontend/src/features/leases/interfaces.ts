@@ -2,7 +2,7 @@ export interface ILeaseFilter {
   pinOrPid: string;
   lFileNo: string;
   searchBy: string;
-  leaseStatusType: string;
+  leaseStatusTypes: string[];
   tenantName: string;
   programs: string[];
   expiryStartDate: string;
