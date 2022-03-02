@@ -27,9 +27,9 @@ namespace Pims.Dal.Entities.Models
         public string Address { get; set; }
 
         /// <summary>
-        /// get/set - The lease status type.
+        /// get/set - The lease status types.
         /// </summary>
-        public string LeaseStatusType { get; set; }
+        public IList<string> LeaseStatusTypes { get; set; } = new List<string>();
 
         /// <summary>
         /// get/set - The value of the tenant name.
@@ -117,7 +117,7 @@ namespace Pims.Dal.Entities.Models
                 || !string.IsNullOrWhiteSpace(PinOrPid)
                 || !string.IsNullOrWhiteSpace(LFileNo)
                 || !string.IsNullOrWhiteSpace(Address)
-                || !string.IsNullOrWhiteSpace(LeaseStatusType)
+                || (LeaseStatusTypes.Count != 0)
                 || !string.IsNullOrWhiteSpace(TenantName)
                 || (Programs.Count != 0)
                 || ExpiryStartDate.HasValue
