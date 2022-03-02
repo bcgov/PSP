@@ -1,12 +1,16 @@
 import { FastCurrencyInput } from 'components/common/form';
+import { ContactInput } from 'components/common/form/ContactInput';
 import { InlineFastDatePicker } from 'components/common/form/styles';
+import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import { Formik, FormikProps } from 'formik';
-import { FormLeaseDepositReturn } from 'interfaces';
+import { IContactSearchResult } from 'interfaces';
 import * as React from 'react';
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { formatMoney } from 'utils';
 
+import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import { ReturnDepositYupSchema } from './ReturnDepositYupSchema';
 
 export interface IReturnDepositFormProps {
@@ -24,6 +28,12 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
   formikRef,
   onSave,
 }) => {
+  const initialContacts =
+    initialValues.contactHolder !== undefined ? [initialValues.contactHolder] : [];
+  const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);
+
+  const [showContactManager, setShowContactManager] = useState(false);
+
   const typeDescription =
     initialValues.depositTypeCode === 'OTHER'
       ? 'Other - ' + initialValues.parentDepositOtherDescription
@@ -93,6 +103,30 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
                 />
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <ContactInput
+                  label="Deposit Holder:"
+                  field="contactHolder"
+                  setShowContactManager={setShowContactManager}
+                  onClear={() => {
+                    formikProps.setFieldValue('contactHolder', undefined);
+                    setSelectedContacts([]);
+                  }}
+                />
+              </Col>
+            </Row>
+            <ContactManagerModal
+              display={showContactManager}
+              setDisplay={setShowContactManager}
+              setSelectedRows={setSelectedContacts}
+              selectedRows={selectedContacts}
+              handleModalOk={() => {
+                formikProps.setFieldValue('contactHolder', selectedContacts[0]);
+                setShowContactManager(false);
+              }}
+              isSingleSelect
+            ></ContactManagerModal>
           </StyledFormBody>
         </>
       )}

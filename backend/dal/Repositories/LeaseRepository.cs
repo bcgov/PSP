@@ -125,7 +125,19 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsSecurityDeposits)
                     .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
                 .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Person)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositHolder)
+                    .ThenInclude(h => h.Organization)
+                .Include(l => l.PimsSecurityDeposits)
                     .ThenInclude(s => s.PimsSecurityDepositReturns)
+                    .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
+                    .ThenInclude(h => h.Person)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.PimsSecurityDepositReturns)
+                    .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
+                    .ThenInclude(s => s.Organization)
 
                 .Include(l => l.PimsLeaseTerms)
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
@@ -142,7 +154,8 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
-            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t => {
+            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t =>
+            {
                 t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
                 return t;
             }).ToArray();

@@ -41,6 +41,12 @@ namespace Pims.Api.Areas.Contact.Models.Search
         public string FirstName { get; set; }
 
         /// <summary>
+        /// get/set - The person's middle names (optional)
+        /// </summary>
+        /// <value></value>
+        public string MiddleNames { get; set; }
+
+        /// <summary>
         /// get/set - The organization
         /// </summary>
         /// <value></value>

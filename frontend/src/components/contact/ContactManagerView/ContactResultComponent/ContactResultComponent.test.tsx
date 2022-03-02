@@ -41,7 +41,7 @@ const setup = (
 };
 
 const defaultSearchResult: IContactSearchResult = {
-  id: 1,
+  id: '1',
   summary: 'summary',
   mailingAddress: '123 mock st',
   surname: 'last',
@@ -58,15 +58,15 @@ const mockResults: IContactSearchResult[] = [
   {
     ...defaultSearchResult,
     personId: 1,
-    id: 1,
+    id: '1',
   },
   {
     ...defaultSearchResult,
-    id: 2,
+    id: '2',
   },
   {
     ...defaultSearchResult,
-    id: 3,
+    id: '3',
     isDisabled: true,
   },
 ];

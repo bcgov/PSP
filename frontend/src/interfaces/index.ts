@@ -10,8 +10,6 @@ export * from './ILease';
 export * from './ILeaseImprovement';
 export * from './ILeasePayment';
 export * from './ILeaseSearchResult';
-export * from './ILeaseSecurityDeposit';
-export * from './ILeaseSecurityDepositReturn';
 export * from './ILeaseTerm';
 export * from './IOrganization';
 export * from './IPagedItems';
