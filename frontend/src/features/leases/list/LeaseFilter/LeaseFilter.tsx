@@ -108,7 +108,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
     initialLeaseStatusList,
   );
 
-  // Necessary since the lookup codes does not work properly with the multi-select on first render
+  // Necessary since the lookup codes might have not been loaded before the first render
   useEffect(() => {
     setInitialSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
   }, []);
@@ -127,20 +127,20 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col lg="6">
+            <Col xl="6">
               <Row>
                 <Col xl="auto">
                   <strong>Search by:</strong>
                 </Col>
                 <Col>
                   <Row>
-                    <Col lg="6">
+                    <Col xl="7">
                       <PropertyFilterOptions
                         options={idFilterOptions}
                         placeholders={idFilterPlaceholders}
                       />
                     </Col>
-                    <Col lg="6">
+                    <Col xl="5">
                       <Multiselect
                         id="status-selector"
                         ref={multiselectStatusRef}
@@ -174,7 +174,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg="6">
+                    <Col xl="7">
                       <Multiselect
                         id="properties-selector"
                         ref={multiselectProgramRef}
@@ -203,14 +203,14 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                         }}
                       />
                     </Col>
-                    <Col lg="6">
+                    <Col xl="5">
                       <Input field="tenantName" placeholder="Tenant Name" />
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Col>
-            <Col lg="5">
+            <Col xl="5">
               <Row>
                 <Col xl="auto">
                   <strong>Expiry date:</strong>
@@ -257,7 +257,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                 </Col>
               </Row>
             </Col>
-            <ColButtons lg="1">
+            <ColButtons xl="1">
               <Row>
                 <Col xs="auto" className="pr-0">
                   <SearchButton disabled={formikProps.isSubmitting} />

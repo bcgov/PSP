@@ -50,7 +50,7 @@ exports[`Lease Filter matches snapshot 1`] = `
       class="row"
     >
       <div
-        class="col-lg-6"
+        class="col-xl-6"
       >
         <div
           class="row"
@@ -69,7 +69,7 @@ exports[`Lease Filter matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="col-lg-6"
+                class="col-xl-7"
               >
                 <div
                   class="row"
@@ -129,7 +129,7 @@ exports[`Lease Filter matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="col-lg-6"
+                class="col-xl-5"
               >
                 <div
                   class="multiselect-container multiSelectContainer "
@@ -193,7 +193,7 @@ exports[`Lease Filter matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="col-lg-6"
+                class="col-xl-7"
               >
                 <div
                   class="multiselect-container multiSelectContainer "
@@ -229,7 +229,7 @@ exports[`Lease Filter matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="col-lg-6"
+                class="col-xl-5"
               >
                 <div
                   class="input form-group"
@@ -249,7 +249,7 @@ exports[`Lease Filter matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="col-lg-5"
+        class="col-xl-5"
       >
         <div
           class="row"
@@ -392,7 +392,7 @@ exports[`Lease Filter matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="c4 col-lg-1"
+        class="c4 col-xl-1"
       >
         <div
           class="row"
