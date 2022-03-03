@@ -1,6 +1,6 @@
-@import '../../../fonts.scss';
-@import '../../../variables';
-@import '../../../colors';
+@import '~assets/scss/fonts.scss';
+@import '~assets/scss/variables';
+@import '~assets/scss/colors';
 .map-filter-container {
   grid-area: filter;
   background-color: $filter-background-color;

@@ -9,6 +9,7 @@ import { FormControlProps } from 'react-bootstrap/FormControl';
 import { FaAddressBook } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
+import { formatNames } from 'utils/personUtils';
 
 import TooltipWrapper from '../TooltipWrapper';
 import { DisplayError } from './DisplayError';
@@ -45,9 +46,7 @@ export const ContactInput: React.FC<ContactInputProps> = ({
 
   if (contactInfo !== undefined) {
     if (contactInfo.personId !== undefined) {
-      text = [contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]
-        .filter(x => x !== undefined)
-        .join(' ');
+      text = formatNames([contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]);
     } else if (contactInfo.organizationId !== undefined) {
       text = contactInfo.organizationName || '';
     }
