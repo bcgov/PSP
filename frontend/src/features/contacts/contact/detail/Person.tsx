@@ -40,6 +40,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
   phoneTypes[ContactMethodTypes.PersonalMobile] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
+  phoneTypes[ContactMethodTypes.PersonalPhone] = 'Landline';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
 
