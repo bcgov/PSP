@@ -1,4 +1,4 @@
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
 import TooltipIcon from 'components/common/TooltipIcon';
 import React, { FunctionComponent } from 'react';
 import Button from 'react-bootstrap/Button';

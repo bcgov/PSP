@@ -1,5 +1,5 @@
-import variables from '_variables.module.scss';
 import profileUrl from 'assets/images/profile.svg';
+import variables from 'assets/scss/_variables.module.scss';
 import { useConfiguration } from 'hooks/useConfiguration';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import React from 'react';

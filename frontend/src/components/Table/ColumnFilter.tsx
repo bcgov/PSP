@@ -1,4 +1,4 @@
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
 import clsx from 'classnames';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { getIn, useFormikContext } from 'formik';
