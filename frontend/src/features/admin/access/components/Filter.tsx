@@ -32,13 +32,6 @@ export const AccessRequestFilter = (props: IProps) => {
     fetchLookupCodes();
   }, [fetchLookupCodes]);
 
-  const organizations: IMenuItemProps[] = lookupCodes.getByType('Organization').map(value => {
-    return {
-      label: value.name,
-      onClick: () => setFilterState({ ...filterState, organization: value.name }),
-    };
-  });
-
   const roles: IMenuItemProps[] = lookupCodes.getByType('Role').map(value => {
     return {
       label: value.name,
@@ -61,19 +54,6 @@ export const AccessRequestFilter = (props: IProps) => {
   return (
     <Container className="Access-Requests-filter">
       <Row className="filters">
-        <Col className="filter">
-          <Menu
-            searchPlaceholder="Filter organizations"
-            enableFilter={true}
-            alignLeft={true}
-            width="26.0rem"
-            options={organizations}
-            disableScrollToMenuElement={true}
-          >
-            {`Organization: ${filterState.organization || 'Show all'}`}&nbsp;&nbsp;
-            <FaCaretDown />
-          </Menu>
-        </Col>
         <Col>
           <Menu
             disableScrollToMenuElement={true}

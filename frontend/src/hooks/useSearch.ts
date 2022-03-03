@@ -83,7 +83,9 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
 
   // update search results whenever new data comes back from API endpoints
   useDeepCompareEffect(() => {
-    if (!filter) return;
+    if (!filter) {
+      return;
+    }
 
     async function callApi() {
       try {

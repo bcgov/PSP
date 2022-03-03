@@ -104,7 +104,21 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       ),
     },
   ],
-  [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
+  [
+    LeasePageNames.INSURANCE,
+    {
+      component: InsuranceContainer,
+      title: 'Insurance',
+      header: (
+        <>
+          Insurance
+          <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
+            <LeaseEditButton linkTo="?edit=true" />
+          </ProtectedComponent>
+        </>
+      ),
+    },
+  ],
   [LeasePageNames.DEPOSIT, { component: DepositsContainer, title: 'Deposit' }],
   [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
 ]);

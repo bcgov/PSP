@@ -22,6 +22,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { Col as ColBootstrap, Row as RowBootstrap } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
 import Spinner from 'react-bootstrap/Spinner';
 import { FaAngleDown, FaAngleRight, FaUndo } from 'react-icons/fa';
@@ -37,7 +38,6 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import styled from 'styled-components';
 
 import { TablePagination } from '.';
 import ColumnFilter from './ColumnFilter';
@@ -46,11 +46,6 @@ import { DEFAULT_PAGE_SELECTOR_OPTIONS, DEFAULT_PAGE_SIZE } from './constants';
 import { TablePageSizeSelector } from './PageSizeSelector';
 import { SortDirection, TableSort } from './TableSort';
 import { CellWithProps, ColumnInstanceWithProps } from './types';
-
-const TableToolbarText = styled.p`
-  flex: auto;
-  text-align: left;
-`;
 
 // these provide a way to inject custom CSS into table headers and cells
 const headerPropsGetter = <T extends object>(
@@ -126,6 +121,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   hideHeaders?: boolean;
   onRequestData?: (props: { pageIndex: number; pageSize: number }) => void;
   loading?: boolean; // TODO: Show loading indicator while fetching data from server
+  totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageSizeOptions?: number[];
@@ -144,6 +140,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   hideToolbar?: boolean;
   tableToolbarText?: string;
   manualPagination?: boolean;
+  isSingleSelect?: boolean;
   // Limit where you would like an expansion button to appear based off this props criteria
   canRowExpand?: (val: any) => boolean;
   className?: string;
@@ -166,12 +163,24 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
 }
 
 const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, setSelected, selectedRef, allDataRef, checked, row, ...rest }: any, ref) => {
+  (
+    {
+      indeterminate,
+      setSelected,
+      selectedRef,
+      allDataRef,
+      checked,
+      row,
+      isSingleSelect,
+      ...rest
+    }: any,
+    ref,
+  ) => {
     const defaultRef = React.useRef();
     const resolvedRef: any = ref || defaultRef;
     const isHeaderCheck = !!allDataRef?.current;
     if (isHeaderCheck) {
-      rest.title = 'Click to deselect all properties.';
+      rest.title = 'Click to deselect all.';
     }
 
     React.useEffect(() => {
@@ -192,10 +201,15 @@ const IndeterminateCheckbox = React.forwardRef(
       if (isHeaderCheck) {
         setSelected([]);
       } else {
-        if (currentSelected.find(selected => selected.id === row.original.id)) {
-          remove(currentSelected, row.original);
-        } else {
+        if (isSingleSelect === true) {
+          currentSelected.splice(0, currentSelected.length);
           currentSelected.push(row.original);
+        } else {
+          if (currentSelected.find(selected => selected.id === row.original.id)) {
+            remove(currentSelected, row.original);
+          } else {
+            currentSelected.push(row.original);
+          }
         }
         setSelected(uniq([...currentSelected]));
       }
@@ -207,7 +221,7 @@ const IndeterminateCheckbox = React.forwardRef(
     return (
       <>
         <input
-          type="checkbox"
+          type={isSingleSelect === true ? 'radio' : 'checkbox'}
           ref={resolvedRef}
           {...rest}
           disabled={isHeaderCheck && rest.checked === false && !indeterminate}
@@ -247,6 +261,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     columns,
     data,
     onRequestData,
+    totalItems,
     pageCount,
     selectedRows: externalSelectedRows,
     setSelectedRows: setExternalSelectedRows,
@@ -258,6 +273,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     filterable,
     renderBodyComponent,
     manualSortBy,
+    isSingleSelect,
   } = props;
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
   React.useEffect(() => {
@@ -278,15 +294,19 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const sortBy = useMemo(() => {
     return !!sort ? keys(sort).map(key => ({ id: key, desc: (sort as any)[key] === 'desc' })) : [];
   }, [sort]);
-  // Use the useTable hook to create your table configuration
 
-  const instance = useTable(
+  // Use the useTable hook to create your table configuration
+  const instance = useTable<T>(
     {
       columns,
       data,
       defaultColumn,
       initialState: pageSizeProp
-        ? { sortBy, pageIndex: pageIndexProp ?? 0, pageSize: pageSizeProp }
+        ? {
+            sortBy,
+            pageIndex: pageIndexProp ?? 0,
+            pageSize: pageSizeProp,
+          }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
       manualPagination: manualPagination ?? true, // Tell the usePagination hook
       manualSortBy: manualSortBy,
@@ -311,16 +331,18 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                 groupByBoundary: true,
                 // The header can use the table's getToggleAllRowsSelectedProps method
                 // to render a checkbox
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                  <div>
-                    <IndeterminateCheckbox
-                      {...getToggleAllRowsSelectedProps()}
-                      setSelected={setExternalSelectedRows}
-                      selectedRef={selectedRowsRef}
-                      allDataRef={dataRef}
-                    />
-                  </div>
-                ),
+                Header: ({ getToggleAllRowsSelectedProps }) =>
+                  isSingleSelect !== true && (
+                    <div>
+                      <IndeterminateCheckbox
+                        {...getToggleAllRowsSelectedProps()}
+                        isSingleSelect={isSingleSelect}
+                        setSelected={setExternalSelectedRows}
+                        selectedRef={selectedRowsRef}
+                        allDataRef={dataRef}
+                      />
+                    </div>
+                  ),
                 // The cell can use the individual row's getToggleRowSelectedProps method
                 // to the render a checkbox
                 Cell: ({ row }: { row: any }) => (
@@ -330,6 +352,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                       row={row}
                       setSelected={setExternalSelectedRows}
                       selectedRef={selectedRowsRef}
+                      isSingleSelect={isSingleSelect}
                     />
                   </div>
                 ),
@@ -648,6 +671,15 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     selectedFlatRows,
   ]);
 
+  var canShowTotals: boolean = false;
+  var initialCount: number = -1;
+  var finalCount: number = -1;
+  if (totalItems !== undefined && pageSize !== undefined && pageIndex !== undefined) {
+    canShowTotals = true;
+    initialCount = pageSize * pageIndex + 1;
+    finalCount = Math.min(pageSize * (pageIndex + 1), totalItems);
+  }
+
   // Render the UI for your table
   return (
     <>
@@ -684,26 +716,37 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         {renderBody}
         {renderFooter()}
       </div>
+
       {!props.hideToolbar && (
-        <div className="table-toolbar">
-          {props.pageSize !== -1 && <TablePagination<T> instance={instance} />}
+        <RowBootstrap>
+          <ColBootstrap xs="auto" className="align-self-center">
+            {canShowTotals && props.data.length > 0 && (
+              <span>{`${initialCount} - ${finalCount} of  ${totalItems}`}</span>
+            )}
+          </ColBootstrap>
+          <ColBootstrap xs="auto" className="ml-auto align-self-center">
+            {!!props.showSelectedRowCount && (
+              <SelectedText>{props.selectedRows?.length ?? '0'} selected</SelectedText>
+            )}
+            {props.tableToolbarText && <span>{props.tableToolbarText}</span>}
+          </ColBootstrap>
+
           {!props.lockPageSize && props.data.length > 0 && (
-            <TablePageSizeSelector
-              options={props.pageSizeOptions || DEFAULT_PAGE_SELECTOR_OPTIONS}
-              value={props.pageSize || DEFAULT_PAGE_SIZE}
-              onChange={onPageSizeChange}
-              alignTop={
-                props.pageSizeMenuDropUp ? props.pageSizeMenuDropUp : props.data.length >= 20
-              }
-            />
+            <ColBootstrap xs="auto" className="align-self-center">
+              <TablePageSizeSelector
+                options={props.pageSizeOptions || DEFAULT_PAGE_SELECTOR_OPTIONS}
+                value={props.pageSize || DEFAULT_PAGE_SIZE}
+                onChange={onPageSizeChange}
+                alignTop={
+                  props.pageSizeMenuDropUp ? props.pageSizeMenuDropUp : props.data.length >= 20
+                }
+              />
+            </ColBootstrap>
           )}
-          {props.tableToolbarText && <TableToolbarText>{props.tableToolbarText}</TableToolbarText>}
-          {!!props.showSelectedRowCount && (
-            <SelectedText className="mr-auto">
-              {props.selectedRows?.length ?? '0'} selected
-            </SelectedText>
-          )}
-        </div>
+          <ColBootstrap xs="auto" className="align-self-center">
+            {props.pageSize !== -1 && <TablePagination<T> instance={instance} />}
+          </ColBootstrap>
+        </RowBootstrap>
       )}
     </>
   );

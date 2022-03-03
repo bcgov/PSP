@@ -130,6 +130,15 @@ exports[`CreatePersonForm renders as expected 1`] = `
   text-decoration: none;
 }
 
+.c2#createForm .form-group input.form-control:disabled,
+.c2#createForm .form-group select.form-control:disabled,
+.c2#createForm .form-group textarea.form-control:disabled,
+.c2#createForm .form-group input.form-control[readonly],
+.c2#createForm .form-group select.form-control[readonly],
+.c2#createForm .form-group textarea.form-control[readonly] {
+  opacity: 1;
+}
+
 .c2#createForm .form-group.required label:after {
   content: ' *';
   color: red;
@@ -212,6 +221,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-firstName"
                   name="firstName"
+                  title=""
                   value=""
                 />
               </div>
@@ -232,6 +242,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-middleNames"
                   name="middleNames"
+                  title=""
                   value=""
                 />
               </div>
@@ -252,6 +263,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-surname"
                   name="surname"
+                  title=""
                   value=""
                 />
               </div>
@@ -276,6 +288,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-preferredName"
                   name="preferredName"
+                  title=""
                   value=""
                 />
               </div>
@@ -322,6 +335,8 @@ exports[`CreatePersonForm renders as expected 1`] = `
                       aria-haspopup="listbox"
                       autocomplete="off"
                       class="rbt-input-main form-control rbt-input"
+                      id="typeahead-organization"
+                      name="typeahead-organization"
                       role="combobox"
                       type="text"
                       value=""
@@ -414,6 +429,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-emailContactMethods.0.value"
                   name="emailContactMethods.0.value"
+                  title=""
                   value=""
                 />
               </div>
@@ -527,6 +543,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-phoneContactMethods.0.value"
                   name="phoneContactMethods.0.value"
+                  title=""
                   value=""
                 />
               </div>
@@ -653,6 +670,32 @@ exports[`CreatePersonForm renders as expected 1`] = `
             Mailing Address
           </h3>
           <div
+            class="form-group"
+          >
+            <div
+              class="check-field"
+            >
+              <div
+                class="form-check"
+              >
+                <input
+                  class="form-check-input position-static"
+                  disabled=""
+                  id="input-useOrganizationAddress"
+                  name="useOrganizationAddress"
+                  type="checkbox"
+                  value="false"
+                />
+              </div>
+              <label
+                class="text-wrap form-label"
+                for="input-useOrganizationAddress"
+              >
+                Use mailing address from organization
+              </label>
+            </div>
+          </div>
+          <div
             class="row"
           >
             <div
@@ -671,6 +714,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-mailingAddress.streetAddress1"
                   name="mailingAddress.streetAddress1"
+                  title=""
                   value=""
                 />
               </div>
@@ -771,6 +815,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-mailingAddress.municipality"
                   name="mailingAddress.municipality"
+                  title=""
                   value=""
                 />
               </div>
@@ -785,23 +830,11 @@ exports[`CreatePersonForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-mailingAddress.provinceId"
-                >
-                  Province 
-                </label>
                 <select
                   class="form-select form-control"
                   id="input-mailingAddress.provinceId"
                   name="mailingAddress.provinceId"
-                >
-                  <option
-                    value=""
-                  >
-                    Select province
-                  </option>
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -814,16 +847,11 @@ exports[`CreatePersonForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-mailingAddress.postal"
-                >
-                  Postal Code 
-                </label>
                 <input
                   class="form-control"
                   id="input-mailingAddress.postal"
                   name="mailingAddress.postal"
+                  title=""
                   value=""
                 />
               </div>
@@ -857,6 +885,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-propertyAddress.streetAddress1"
                   name="propertyAddress.streetAddress1"
+                  title=""
                   value=""
                 />
               </div>
@@ -957,6 +986,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-propertyAddress.municipality"
                   name="propertyAddress.municipality"
+                  title=""
                   value=""
                 />
               </div>
@@ -971,23 +1001,11 @@ exports[`CreatePersonForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-propertyAddress.provinceId"
-                >
-                  Province 
-                </label>
                 <select
                   class="form-select form-control"
                   id="input-propertyAddress.provinceId"
                   name="propertyAddress.provinceId"
-                >
-                  <option
-                    value=""
-                  >
-                    Select province
-                  </option>
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -1000,16 +1018,11 @@ exports[`CreatePersonForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-propertyAddress.postal"
-                >
-                  Postal Code 
-                </label>
                 <input
                   class="form-control"
                   id="input-propertyAddress.postal"
                   name="propertyAddress.postal"
+                  title=""
                   value=""
                 />
               </div>
@@ -1043,6 +1056,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-billingAddress.streetAddress1"
                   name="billingAddress.streetAddress1"
+                  title=""
                   value=""
                 />
               </div>
@@ -1143,6 +1157,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
                   class="form-control"
                   id="input-billingAddress.municipality"
                   name="billingAddress.municipality"
+                  title=""
                   value=""
                 />
               </div>
@@ -1157,23 +1172,11 @@ exports[`CreatePersonForm renders as expected 1`] = `
               <div
                 class="form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-billingAddress.provinceId"
-                >
-                  Province 
-                </label>
                 <select
                   class="form-select form-control"
                   id="input-billingAddress.provinceId"
                   name="billingAddress.provinceId"
-                >
-                  <option
-                    value=""
-                  >
-                    Select province
-                  </option>
-                </select>
+                />
               </div>
             </div>
           </div>
@@ -1186,16 +1189,11 @@ exports[`CreatePersonForm renders as expected 1`] = `
               <div
                 class="input form-group"
               >
-                <label
-                  class="form-label"
-                  for="input-billingAddress.postal"
-                >
-                  Postal Code 
-                </label>
                 <input
                   class="form-control"
                   id="input-billingAddress.postal"
                   name="billingAddress.postal"
+                  title=""
                   value=""
                 />
               </div>
@@ -1227,6 +1225,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               id="input-comment"
               name="comment"
               rows="5"
+              title=""
             />
           </div>
         </div>

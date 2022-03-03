@@ -8,11 +8,10 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface ISecurityDepositReturnRepository : IRepository<PimsSecurityDepositReturn>
     {
-        IEnumerable<PimsSecurityDepositReturn> GetByLeaseId(long leaseId);
         PimsSecurityDepositReturn GetById(long id);
         IEnumerable<PimsSecurityDepositReturn> GetByDepositId(long id);
-        PimsSecurityDepositReturn Add(PimsSecurityDepositReturn securityDeposit);
-        PimsSecurityDepositReturn Update(PimsSecurityDepositReturn securityDeposit);
+        PimsSecurityDepositReturn Add(PimsSecurityDepositReturn depositReturn);
+        PimsSecurityDepositReturn Update(PimsSecurityDepositReturn depositReturn);
         void Delete(long id);
     }
 }

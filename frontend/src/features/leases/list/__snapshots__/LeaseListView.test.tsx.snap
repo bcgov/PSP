@@ -8,35 +8,38 @@ exports[`Lease and License List View matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  .c5 {
-  font-size: 1.44rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
+  .c8.c8.form-control.is-valid {
+  background-image: none;
 }
 
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
+.c8.c8.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
-.c7 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+.c6 {
+  padding-right: 0;
+}
+
+.c6 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c7:not(:first-child) {
+  padding-left: 0;
+}
+
+.c7:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c5 {
+  border-radius: 0.5rem;
+}
+
+.c9 {
+  border-left: 2px solid white;
 }
 
 .c1 {
@@ -74,13 +77,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
 }
 
 .c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -89,45 +85,10 @@ exports[`Lease and License List View matches snapshot 1`] = `
   padding-bottom: 2rem;
 }
 
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-}
-
 .c10 {
   background-color: #fff !important;
   color: !important;
   padding: 6px 0.5rem;
-}
-
-.c6 {
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  padding: 1.5rem;
-}
-
-.c6 .form-check-label {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c6 .form-check-label p {
-  margin-left: 1rem;
-}
-
-.c8 {
-  -webkit-flex: 3 1 auto;
-  -ms-flex: 3 1 auto;
-  flex: 3 1 auto;
-  max-width: 31rem;
 }
 
 <div
@@ -144,204 +105,475 @@ exports[`Lease and License List View matches snapshot 1`] = `
       <div
         class="c4"
       >
-        <form
-          class="c5 c6"
-          novalidate=""
+        <div
+          class="row"
         >
-          <b
-            class="pr-3 text-nowrap"
-          >
-            Search by:
-          </b>
           <div
-            class="input-group"
+            class="col"
           >
-            <div
-              class="input-group-prepend"
+            <form
+              class="c5 p-3"
+              novalidate=""
             >
               <div
-                class="form-group"
+                class="row"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-searchBy"
-                  name="searchBy"
+                <div
+                  class="col-xl-6"
                 >
-                  <option
-                    class="option"
-                    value="pinOrPid"
+                  <div
+                    class="row"
                   >
-                    PID/PIN
-                  </option>
-                  <option
-                    class="option"
-                    value="lFileNo"
+                    <div
+                      class="col-xl-auto"
+                    >
+                      <strong>
+                        Search by:
+                      </strong>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col-xl-7"
+                        >
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="c6 col-auto"
+                            >
+                              <div
+                                class="input-group-prepend"
+                              >
+                                <div
+                                  class="form-group"
+                                >
+                                  <select
+                                    class="form-select form-control"
+                                    id="input-searchBy"
+                                    name="searchBy"
+                                  >
+                                    <option
+                                      class="option"
+                                      value="pinOrPid"
+                                    >
+                                      PID/PIN
+                                    </option>
+                                    <option
+                                      class="option"
+                                      value="lFileNo"
+                                    >
+                                      L-File #
+                                    </option>
+                                    <option
+                                      class="option"
+                                      value="address"
+                                    >
+                                      Address
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="c7 col"
+                            >
+                              <div
+                                class="input form-group"
+                              >
+                                <input
+                                  class="form-control"
+                                  id="input-lFileNo"
+                                  name="lFileNo"
+                                  placeholder="Enter an L-File number"
+                                  title=""
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="col-xl-5"
+                        >
+                          <div
+                            class="multiselect-container multiSelectContainer "
+                            id="status-selector"
+                            style="width: auto; color: black; padding-bottom: 12px;"
+                          >
+                            <div
+                              class="search-wrapper searchWrapper "
+                              style="background: white; border: 1px solid #606060;"
+                            >
+                              <span
+                                class="chip  false false"
+                                style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                              >
+                                Active
+                                <i
+                                  class="custom-close"
+                                >
+                                  <svg
+                                    class="ml-3"
+                                    fill="currentColor"
+                                    height="18px"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 352 512"
+                                    width="18px"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                    />
+                                  </svg>
+                                </i>
+                              </span>
+                              <input
+                                autocomplete="off"
+                                class="searchBox"
+                                id="status-selector_input"
+                                placeholder=""
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              class="optionListContainer displayNone"
+                            >
+                              <ul
+                                class="optionContainer"
+                              >
+                                <span
+                                  class="notFound"
+                                >
+                                  No Options Available
+                                </span>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col-xl-7"
+                        >
+                          <div
+                            class="multiselect-container multiSelectContainer "
+                            id="properties-selector"
+                            style="width: auto; color: black; padding-bottom: 12px;"
+                          >
+                            <div
+                              class="search-wrapper searchWrapper "
+                              style="background: white; border: 1px solid #606060;"
+                            >
+                              <input
+                                autocomplete="off"
+                                class="searchBox"
+                                id="properties-selector_input"
+                                placeholder="Select Program(s)"
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              class="optionListContainer displayNone"
+                            >
+                              <ul
+                                class="optionContainer"
+                              >
+                                <span
+                                  class="notFound"
+                                >
+                                  No Options Available
+                                </span>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="col-xl-5"
+                        >
+                          <div
+                            class="input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-tenantName"
+                              name="tenantName"
+                              placeholder="Tenant Name"
+                              title=""
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-xl-5"
+                >
+                  <div
+                    class="row"
                   >
-                    L-File #
-                  </option>
-                </select>
+                    <div
+                      class="col-xl-auto"
+                    >
+                      <strong>
+                        Expiry date:
+                      </strong>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="form-group"
+                          >
+                            <div
+                              class="react-datepicker-wrapper d-block"
+                            >
+                              <div
+                                class="react-datepicker__input-container"
+                              >
+                                <input
+                                  autocomplete="off"
+                                  class="c8 form-control date-picker"
+                                  id="datepicker-expiryStartDate"
+                                  name="expiryStartDate"
+                                  placeholder="from date"
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="form-group"
+                          >
+                            <div
+                              class="react-datepicker-wrapper d-block"
+                            >
+                              <div
+                                class="react-datepicker__input-container"
+                              >
+                                <input
+                                  autocomplete="off"
+                                  class="c8 form-control date-picker"
+                                  id="datepicker-expiryEndDate"
+                                  name="expiryEndDate"
+                                  placeholder="to date"
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="form-group"
+                          >
+                            <select
+                              class="form-select form-control"
+                              id="input-regionType"
+                              name="regionType"
+                            >
+                              <option
+                                value=""
+                              >
+                                All Regions
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="pr-0 mr-0 col-10"
+                            >
+                              <div
+                                class="input form-group"
+                              >
+                                <input
+                                  class="form-control"
+                                  id="input-details"
+                                  name="details"
+                                  placeholder="Keyword"
+                                  title=""
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="pl-0 ml-0 col-1"
+                            >
+                              <span
+                                class="tooltip-icon"
+                                data-testid="tooltip-icon"
+                              >
+                                <svg
+                                  class="tooltip-icon"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c9 col-xl-1"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="pr-0 col-auto"
+                    >
+                      <button
+                        class="Button Button--icon-only primary btn btn-primary"
+                        data-testid="search"
+                        id="search-button"
+                        type="submit"
+                      >
+                        <div
+                          class="Button__icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                    <div
+                      class="col-auto"
+                    >
+                      <button
+                        class="Button Button--icon-only btn btn-info"
+                        data-testid="reset-button"
+                        id="reset-button"
+                        type="reset"
+                      >
+                        <div
+                          class="Button__icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div
-              class="input-group-content"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-lFileNo"
-                  name="lFileNo"
-                  placeholder="Enter an LIS File Number"
-                  value=""
-                />
-              </div>
-            </div>
+            </form>
           </div>
           <div
-            class="c7 c8 ml-3 mr-5 input form-group"
+            class="px-0 col-md-auto"
           >
-            <label
-              class="form-label"
-              for="input-tenantName"
-            >
-              Tenant Name 
-            </label>
-            <input
-              class="form-control"
-              id="input-tenantName"
-              name="tenantName"
-              value=""
-            />
-          </div>
-          <span>
-            Program
-          </span>
-          <div
-            class="multiselect-container multiSelectContainer "
-            id="properties-selector"
-            style="width: auto; color: black; flex: 3 1 auto; max-width: 32em;"
-          >
-            <div
-              class="search-wrapper searchWrapper "
-              style="background: white; border: 1px solid #606060;"
-            >
-              <input
-                autocomplete="off"
-                class="searchBox"
-                id="properties-selector_input"
-                placeholder="Select Program(s)"
-                type="text"
-                value=""
-              />
-            </div>
-            <div
-              class="optionListContainer displayNone"
-            >
-              <ul
-                class="optionContainer"
-              >
-                <span
-                  class="notFound"
-                >
-                  No Options Available
-                </span>
-              </ul>
-            </div>
-          </div>
-          <button
-            class="Button Button--icon-only ml-5 btn btn-primary"
-            data-testid="search"
-            id="search-button"
-            type="submit"
-          >
-            <div
-              class="Button__icon"
+            <button
+              class="c10 btn btn-primary"
+              type="button"
             >
               <svg
+                data-testid="excel-icon"
                 fill="currentColor"
-                height="20"
+                height="36"
                 stroke="currentColor"
                 stroke-width="0"
-                viewBox="0 0 512 512"
-                width="20"
+                viewBox="0 0 384 512"
+                width="36"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                  d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
                 />
               </svg>
-            </div>
-          </button>
-          <button
-            class="Button Button--icon-only btn btn-info"
-            data-testid="reset-button"
-            id="reset-button"
-            type="reset"
+            </button>
+          </div>
+          <div
+            class="px-0 col-md-auto"
           >
-            <div
-              class="Button__icon"
+            <button
+              class="c10 btn btn-primary"
+              type="button"
             >
               <svg
+                data-testid="csv-icon"
                 fill="currentColor"
-                height="20"
+                height="36"
                 stroke="currentColor"
                 stroke-width="0"
-                viewBox="0 0 512 512"
-                width="20"
+                viewBox="0 0 384 512"
+                width="36"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                  d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
                 />
               </svg>
-            </div>
-          </button>
-        </form>
-        <div
-          class="c9"
-        />
-        <button
-          class="c10 btn btn-primary"
-          type="button"
-        >
-          <svg
-            data-testid="excel-icon"
-            fill="currentColor"
-            height="36"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 384 512"
-            width="36"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-            />
-          </svg>
-        </button>
-        <button
-          class="c10 btn btn-primary"
-          type="button"
-        >
-          <svg
-            data-testid="csv-icon"
-            fill="currentColor"
-            height="36"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 384 512"
-            width="36"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-            />
-          </svg>
-        </button>
-        <div
-          class="c9"
-        />
+            </button>
+          </div>
+        </div>
       </div>
       <div
         class="table"
@@ -354,13 +586,13 @@ exports[`Lease and License List View matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            style="display: flex; flex: 1 0 auto; min-width: 180px;"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -377,7 +609,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Tenant Names
+                Expiry Date
               </div>
             </div>
             <div
@@ -396,12 +628,36 @@ exports[`Lease and License List View matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Tenant Names
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
               style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Properties
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Status
               </div>
             </div>
           </div>
@@ -413,8 +669,18 @@ exports[`Lease and License List View matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="table-toolbar"
-      />
+        class="row"
+      >
+        <div
+          class="align-self-center col-auto"
+        />
+        <div
+          class="ml-auto align-self-center col-auto"
+        />
+        <div
+          class="align-self-center col-auto"
+        />
+      </div>
     </div>
   </div>
 </DocumentFragment>

@@ -37,7 +37,6 @@ const EditUserPage = (props: IEditUserPageProps) => {
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
-  const organizations = getByType(API.ORGANIZATION_TYPES);
   const roles = getByType(API.ROLE_TYPES);
 
   const user = useAppSelector(state => state.users.userDetail);
@@ -47,25 +46,11 @@ const EditUserPage = (props: IEditUserPageProps) => {
     selected: !!user?.roles?.find(x => x.id === code.id) ?? [],
   });
 
-  const selectOrganizations = organizations.map(c => mapLookupCode(c));
   const selectRoles = roles.map(c => mapLookupCode(c));
 
   // Arrays below are used to add the role/organization from the dropdown later in code
   let organizationsToUpdate: any[];
   let rolesToUpdate: any[];
-
-  const checkOrganizations = (
-    <Select
-      label="Organization"
-      field="organization"
-      data-testid="organization"
-      required={true}
-      options={selectOrganizations}
-      placeholder={
-        user?.organizations?.length && user?.organizations?.length > 0 ? undefined : 'Please Select'
-      }
-    />
-  );
 
   const checkRoles = (
     <Form.Group className={'check-roles'}>
@@ -202,8 +187,6 @@ const EditUserPage = (props: IEditUserPageProps) => {
                   placeholder={formikProps.values.email}
                   type="email"
                 />
-
-                {checkOrganizations}
 
                 <Label>Position</Label>
                 <Input

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -16,38 +15,66 @@ namespace Pims.Dal.Entities.Models
         public string PinOrPid { get; set; }
 
         /// <summary>
-        /// get/set - The value of the tenant name.
-        /// </summary>
-        /// <value></value>
-        public string TenantName { get; set; }
-
-        /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
+        /// get/set - The address to search by.
+        /// </summary>
+        /// <value></value>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// get/set - The lease status types.
+        /// </summary>
+        public IList<string> LeaseStatusTypes { get; set; } = new List<string>();
+
+        /// <summary>
+        /// get/set - The value of the tenant name.
+        /// </summary>
+        /// <value></value>
+        public string TenantName { get; set; }
+
+        /// <summary>
+        /// get/set - The Program(s) to filter by.
+        /// </summary>
+        public IList<string> Programs { get; set; } = new List<string>();
+
+        /// <summary>
         /// get/set - The Program(s) to filter by.
         /// </summary>
         /// <value></value>
-        public IList<string> Programs { get; set; } = new List<string>();
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// Creates a new instance of a LeaseFilter class.
-        /// </summary>
-        public LeaseFilter() { }
+        public IList<string> NotInStatus { get; set; } = new List<string>();
 
         /// <summary>
-        /// Creates a new instance of a LeaseFilter class, initializes it with the specified arguments.
+        /// get/set - Filter to return leases that have expired after or on a given date.
         /// </summary>
-        /// <param name="lFileNo"></param>
-        /// <param name="tenantName"></param>
-        /// <param name="pinOrPid"></param>
-        /// <param name="sort"></param>
-        /// <returns></returns>
+        /// <value></value>
+        public DateTime? ExpiryAfterDate { get; set; }
+
+        /// <summary>
+        /// get/set - Filter to return leases that had a start date before or on the given date.
+        /// </summary>
+        /// <value></value>
+        public DateTime? StartBeforeDate { get; set; }
+
+        /// <summary>
+        /// get/set - Filter to return only receivable leases.
+        /// </summary>
+        /// <value></value>
+        public bool? IsReceivable { get; set; }
+
+        /// <summary>
+        /// get/set - The expiry filter start date.
+        /// </summary>
+        public DateTime? ExpiryStartDate { get; set; }
+
+        /// <summary>
+        /// get/set - The expiry filter end date.
+        /// </summary>
+        public DateTime? ExpiryEndDate { get; set; }
         public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string[] sort)
         {
             this.LFileNo = lFileNo;
@@ -57,19 +84,21 @@ namespace Pims.Dal.Entities.Models
         }
 
         /// <summary>
-        /// Creates a new instance of a LeaseFilter class, initializes it with the specified arguments.
-        /// Extracts the properties from the query string to generate the filter.
+        /// get/set - The region type.
         /// </summary>
-        /// <param name="query"></param>
-        public LeaseFilter(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query) : base(query)
-        {
-            // We want case-insensitive query parameter properties.
-            var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
+        public int? RegionType { get; set; }
 
-            this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
-            this.TenantName = filter.GetStringValue(nameof(this.TenantName));
-            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
-        }
+        /// <summary>
+        /// get/set - Filter for additional lease details.
+        /// </summary>
+        public string Details { get; set; }
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Creates a new instance of a LeaseFilter class.
+        /// </summary>
+        public LeaseFilter() { }
         #endregion
 
         #region Methods
@@ -79,10 +108,22 @@ namespace Pims.Dal.Entities.Models
         /// <returns></returns>
         public override bool IsValid()
         {
+            if (ExpiryStartDate.HasValue && ExpiryEndDate.HasValue && this.ExpiryStartDate > this.ExpiryEndDate)
+            {
+                return false;
+            }
+
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.PinOrPid)
-                || !String.IsNullOrWhiteSpace(this.TenantName)
-                || !String.IsNullOrWhiteSpace(this.LFileNo);
+                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(LFileNo)
+                || !string.IsNullOrWhiteSpace(Address)
+                || (LeaseStatusTypes.Count != 0)
+                || !string.IsNullOrWhiteSpace(TenantName)
+                || (Programs.Count != 0)
+                || ExpiryStartDate.HasValue
+                || ExpiryEndDate.HasValue
+                || RegionType.HasValue
+                || !string.IsNullOrWhiteSpace(Details);
         }
         #endregion
     }

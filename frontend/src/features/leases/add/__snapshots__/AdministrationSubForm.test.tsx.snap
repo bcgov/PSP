@@ -138,6 +138,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
           class="form-control"
           id="input-motiName"
           name="motiName"
+          title=""
           value=""
         />
       </div>
@@ -916,7 +917,6 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
   -webkit-box-align: baseline;
   -ms-flex-align: baseline;
   align-items: baseline;
-  gap: 0.8rem;
 }
 
 .c2 .form-label {
@@ -999,7 +999,7 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
           Effective date of responsibility:
         </label>
         <div
-          class="react-datepicker-wrapper"
+          class="react-datepicker-wrapper d-block"
         >
           <div
             class="react-datepicker__input-container"

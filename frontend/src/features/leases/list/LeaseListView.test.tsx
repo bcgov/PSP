@@ -82,6 +82,11 @@ describe('Lease and License List View', () => {
         searchBy: 'pinOrPid',
         tenantName: '',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
 
@@ -138,6 +143,11 @@ describe('Lease and License List View', () => {
         searchBy: 'pinOrPid',
         tenantName: 'Chester',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
 
@@ -159,6 +169,11 @@ describe('Lease and License List View', () => {
         searchBy: 'pinOrPid',
         tenantName: '',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
     const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
@@ -181,6 +196,11 @@ describe('Lease and License List View', () => {
         searchBy: 'pinOrPid',
         tenantName: '',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
     const toasts = await findAllByText('network error');

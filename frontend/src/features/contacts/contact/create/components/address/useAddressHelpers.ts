@@ -35,19 +35,30 @@ export default function useAddressHelpers() {
     [countries],
   );
 
+  const otherCountryId = useMemo(
+    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
+    [countries],
+  );
+
   // adjust form labels and province/states based on selected country
   useEffect(() => {
     // find country code (e.g. 'CA' for currently selected country id)
-    const countryCode = countries.find(c => c.value === selectedCountryId)?.code as CountryCodes;
-    const labels = formLabelMap.get(countryCode) ?? formLabelMap.get(CountryCodes.Canada);
-    const filteredProvinces = allProvinces.filter(p => p.parentId === selectedCountryId);
-    setSelectedCountryCode(countryCode);
-    setFormLabels(labels as Dictionary<string>);
-    setProvinces(filteredProvinces);
+    if (selectedCountryId) {
+      const countryCode = countries.find(c => Number(c.value) === Number(selectedCountryId))
+        ?.code as CountryCodes;
+      const labels = formLabelMap.get(countryCode) ?? formLabelMap.get(CountryCodes.Canada);
+      const filteredProvinces = allProvinces.filter(
+        p => Number(p.parentId) === Number(selectedCountryId),
+      );
+      setSelectedCountryCode(countryCode);
+      setFormLabels(labels as Dictionary<string>);
+      setProvinces(filteredProvinces);
+    }
   }, [allProvinces, countries, selectedCountryId]);
 
   return {
     defaultCountryId,
+    otherCountryId,
     countries,
     provinces,
     formLabels,

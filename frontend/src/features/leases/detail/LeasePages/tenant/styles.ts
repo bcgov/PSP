@@ -1,4 +1,4 @@
-import { ContactListView } from 'features/contacts';
+import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
 import styled from 'styled-components';
 
 export const TenantH2 = styled.h2`
@@ -8,7 +8,7 @@ export const TenantH2 = styled.h2`
   color: ${props => props.theme.css.textColor};
 `;
 
-export const ContactListViewWrapper = styled(ContactListView)`
+export const ContactListViewWrapper = styled(ContactManagerView)`
   & > div {
     padding: 0;
   }

@@ -76,7 +76,6 @@ exports[`Update lease container component renders as expected 1`] = `
   -webkit-box-align: baseline;
   -ms-flex-align: baseline;
   align-items: baseline;
-  gap: 0.8rem;
 }
 
 .c9 .form-label {
@@ -188,7 +187,7 @@ exports[`Update lease container component renders as expected 1`] = `
             Start Date
           </label>
           <div
-            class="react-datepicker-wrapper"
+            class="react-datepicker-wrapper d-block"
           >
             <div
               class="react-datepicker__input-container"
@@ -216,7 +215,7 @@ exports[`Update lease container component renders as expected 1`] = `
             Expiry Date (if known)
           </label>
           <div
-            class="react-datepicker-wrapper"
+            class="react-datepicker-wrapper d-block"
           >
             <div
               class="react-datepicker__input-container"
@@ -369,6 +368,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-motiName"
             name="motiName"
+            title="Moti, Name, Name"
             value="Moti, Name, Name"
           />
         </div>
@@ -529,6 +529,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-otherProgramType"
             name="otherProgramType"
+            title=""
             value=""
           />
         </div>
@@ -1118,7 +1119,7 @@ exports[`Update lease container component renders as expected 1`] = `
             Effective date of responsibility:
           </label>
           <div
-            class="react-datepicker-wrapper"
+            class="react-datepicker-wrapper d-block"
           >
             <div
               class="react-datepicker__input-container"
@@ -1188,6 +1189,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-documentationReference"
             name="documentationReference"
+            title=""
           />
         </div>
       </div>
@@ -1211,6 +1213,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-tfaFileNo"
             name="tfaFileNo"
+            title=""
             type="number"
             value=""
           />
@@ -1236,6 +1239,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-psFileNo"
             name="psFileNo"
+            title=""
             value=""
           />
         </div>
@@ -1279,6 +1283,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-description"
             name="description"
+            title=""
           />
         </div>
       </div>
@@ -1302,6 +1307,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-note"
             name="note"
+            title=""
           />
         </div>
       </div>

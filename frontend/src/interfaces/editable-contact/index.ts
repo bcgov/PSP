@@ -1,4 +1,5 @@
 import { AddressTypes } from 'constants/addressTypes';
+import { IContactPerson } from 'interfaces/IContact';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import ITypeCode from '../ITypeCode';
@@ -12,26 +13,29 @@ export interface IEditablePerson {
   preferredName?: string;
   comment?: string;
   isDisabled: boolean;
-  organization?: IOrganizationLink;
+  organization: IOrganizationLink | null;
+  useOrganizationAddress: boolean;
   personOrganizationId?: number;
   personOrganizationRowVersion?: number;
   addresses?: IEditablePersonAddress[];
   contactMethods?: IEditableContactMethod[];
 }
 
-export interface ICreateOrganization {
+export interface IEditableOrganization {
   id?: number;
+  rowVersion?: number;
   name: string;
   alias?: string;
   incorporationNumber?: string;
   comment?: string;
   isDisabled: boolean;
+  persons?: Partial<IEditablePerson>[];
   addresses?: IEditableOrganizationAddress[];
   contactMethods?: IEditableContactMethod[];
 }
 
 // internal interface - not meant to be imported/shared
-interface IBaseAddress {
+export interface IBaseAddress {
   id?: number;
   rowVersion?: number;
   addressTypeId: ITypeCode<string>;
@@ -86,10 +90,11 @@ export interface IEditablePersonForm
     }
   > {}
 
-export interface ICreateOrganizationForm
+export interface IEditableOrganizationForm
   extends ExtendOverride<
-    ICreateOrganization,
+    IEditableOrganization,
     {
+      persons: Partial<IContactPerson>[];
       emailContactMethods: IEditableContactMethodForm[];
       phoneContactMethods: IEditableContactMethodForm[];
       mailingAddress: IEditableOrganizationAddressForm;
@@ -139,7 +144,8 @@ export const defaultCreatePerson: IEditablePersonForm = {
   surname: '',
   preferredName: '',
   comment: '',
-  organization: undefined,
+  organization: null,
+  useOrganizationAddress: false,
   emailContactMethods: [getDefaultContactMethod()],
   phoneContactMethods: [getDefaultContactMethod()],
   mailingAddress: getDefaultAddress(AddressTypes.Mailing),
@@ -147,12 +153,13 @@ export const defaultCreatePerson: IEditablePersonForm = {
   billingAddress: getDefaultAddress(AddressTypes.Billing),
 };
 
-export const defaultCreateOrganization: ICreateOrganizationForm = {
+export const defaultCreateOrganization: IEditableOrganizationForm = {
   isDisabled: false,
   name: '',
   alias: '',
   incorporationNumber: '',
   comment: '',
+  persons: [],
   emailContactMethods: [getDefaultContactMethod()],
   phoneContactMethods: [getDefaultContactMethod()],
   mailingAddress: getDefaultAddress(AddressTypes.Mailing),

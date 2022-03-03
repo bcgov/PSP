@@ -26,14 +26,12 @@ namespace Pims.Dal.Repositories
 
         #endregion
 
-        public IEnumerable<PimsSecurityDepositReturn> GetByLeaseId(long leaseId)
-        {
-            return this.Context.PimsSecurityDepositReturns.AsNoTracking().Where(t => t.LeaseId == leaseId).ToArray();
-        }
 
         public PimsSecurityDepositReturn GetById(long id)
         {
-            var query = this.Context.PimsSecurityDepositReturns.AsNoTracking().Where(t => t.SecurityDepositId == id);
+            var query = this.Context.PimsSecurityDepositReturns.AsNoTracking()
+                .Where(t => t.SecurityDepositReturnId == id)
+                .Include(r => r.PimsSecurityDepositReturnHolder);
             return query.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
@@ -44,62 +42,29 @@ namespace Pims.Dal.Repositories
             return depositReturns ?? throw new KeyNotFoundException();
         }
 
-        public PimsSecurityDepositReturn Add(PimsSecurityDepositReturn securityDeposit)
+        public PimsSecurityDepositReturn Add(PimsSecurityDepositReturn depositReturn)
         {
-            this.Context.Add(securityDeposit);
-            return securityDeposit;
+            this.Context.Add(depositReturn);
+            return depositReturn;
         }
 
 
-        public PimsSecurityDepositReturn Update(PimsSecurityDepositReturn securityDeposit)
+        public PimsSecurityDepositReturn Update(PimsSecurityDepositReturn depositReturn)
         {
-            this.Context.Update(securityDeposit);
-            return securityDeposit;
+            this.Context.Update(depositReturn);
+            return depositReturn;
         }
 
         public void Delete(long id)
         {
-            PimsSecurityDepositReturn term = this.Context.PimsSecurityDepositReturns.Find(id) ?? throw new KeyNotFoundException();
-            this.Context.Remove(term);
-        }
-
-        /*private PimsSecurityDepositReturn AssociateHolders(PimsSecurityDepositReturn securityDeposit)
-        {
-            foreach (PimsSecurityDepositReturnHolder holder in securityDeposit.PimsSecurityDepositReturnHolders)
+            PimsSecurityDepositReturn depositReturn = this.Context.PimsSecurityDepositReturns
+                .Where(x => x.SecurityDepositReturnId == id)
+                .Include(s => s.PimsSecurityDepositReturnHolder).FirstOrDefault() ?? throw new KeyNotFoundException();
+            if (depositReturn.PimsSecurityDepositReturnHolder != null)
             {
-                if (holder.PersonId != null)
-                {
-                    PimsPerson person = this.Context.PimsPeople
-                   .AsNoTracking()
-                   .FirstOrDefault(p => p.PersonId == holder.PersonId);
-
-                }
-                else if (holder.OrganizationId != null)
-                { }
-                PimsPerson property = this.Context.PimsProperties
-                    .Include(p => p.PimsPropertyLeases)
-                    .ThenInclude(l => l.Lease)
-                    .AsNoTracking()
-                    .FirstOrDefault(p => (propertyLease.Property != null && p.Pid == propertyLease.Property.Pid) ||
-                        (propertyLease.Property != null && propertyLease.Property.Pin != null && p.Pin == propertyLease.Property.Pin));
-                if (property?.PropertyId == null)
-                {
-                    throw new InvalidOperationException($"Property with PID {propertyLease?.Property?.Pid.ToString() ?? ""} does not exist");
-                }
-                if (property?.PimsPropertyLeases.Any(p => p.LeaseId != lease.Id) == true && !userOverride && newLeaseProperties)
-                {
-                    var genericOverrideErrorMsg = $"is attached to L-File # {property.PimsPropertyLeases.FirstOrDefault().Lease.LFileNo}";
-                    if (propertyLease?.Property?.Pin != null)
-                    {
-                        throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? ""} {genericOverrideErrorMsg}");
-                    }
-                    throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? ""} {genericOverrideErrorMsg}");
-                }
-                propertyLease.PropertyId = property.PropertyId;
-                propertyLease.Property = null; //Do not attempt to update the associated property, just refer to it by id.
+                this.Context.Remove(depositReturn.PimsSecurityDepositReturnHolder);
             }
-            return deposit;
-        }*/
-
+            this.Context.Remove(depositReturn);
+        }
     }
 }

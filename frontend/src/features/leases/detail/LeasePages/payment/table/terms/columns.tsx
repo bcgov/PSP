@@ -193,7 +193,7 @@ export const getColumns = ({
           GST ($)
           <TooltipIcon
             toolTipId="gstAmountTooltip"
-            toolTip="GST is calculated as (expected amount) x GST rate (5%). This calculation can be overridden by editing the payment row."
+            toolTip="GST is calculated as (expected amount) x GST rate (5%)."
           />
         </>
       ),

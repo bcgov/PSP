@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Extensions;
 using Pims.Dal.Helpers.Extensions;
 using System;
 using Entity = Pims.Dal.Entities;
@@ -11,16 +12,16 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
         private static void MapLease(Entity.PimsLease src, Model.LeaseModel dest)
         {
             dest.LFileNo = src.LFileNo;
-            dest.StartDate = src.OrigStartDate;
-            dest.EndDate = src.OrigExpiryDate;
-            dest.CurrentTermStartDate = src.GetCurrentTermStartDate();
-            dest.CurrentTermEndDate = src.GetCurrentTermEndDate();
+            dest.StartDate = src.OrigStartDate.FilterSqlMinDate();
+            dest.EndDate = src.OrigExpiryDate.FilterSqlMinDate();
+            dest.CurrentTermStartDate = src.GetCurrentTermStartDate().FilterSqlMinDate();
+            dest.CurrentTermEndDate = src.GetCurrentTermEndDate().FilterSqlMinDate();
             dest.ProgramName = src?.LeaseProgramTypeCodeNavigation?.Description;
             dest.PurposeType = src?.LeasePurposeTypeCodeNavigation?.Description;
             dest.StatusType = src?.LeaseStatusTypeCodeNavigation?.Description;
             dest.PsFileNo = src.PsFileNo;
             dest.InspectionNotes = src.InspectionNotes;
-            dest.InspectionDate = src.InspectionDate;
+            dest.InspectionDate = src.InspectionDate.FilterSqlMinDate();
             dest.LeaseNotes = src.LeaseNotes;
             dest.IsExpired = src.GetExpiryDate() < DateTime.Now;
         }
@@ -52,9 +53,9 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
                 .AfterMapping((src, dest) =>
                 {
                     var term = src.Item2;
-                    dest.TermStartDate = term?.TermStartDate;
-                    dest.TermExpiryDate = term?.TermExpiryDate;
-                    dest.TermRenewalDate = term?.TermRenewalDate;
+                    dest.TermStartDate = term?.TermStartDate.FilterSqlMinDate();
+                    dest.TermExpiryDate = term?.TermExpiryDate.FilterSqlMinDate();
+                    dest.TermRenewalDate = term?.TermRenewalDate.FilterSqlMinDate();
 
                     MapLease(src.Item1, dest);
                 });

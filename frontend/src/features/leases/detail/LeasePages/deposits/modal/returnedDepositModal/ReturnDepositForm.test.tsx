@@ -2,15 +2,16 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { FormLeaseDepositReturn, ILeaseSecurityDeposit } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
+import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import ReturnDepositForm, { IReturnDepositFormProps } from './ReturnDepositForm';
 
-const mockDeposit: ILeaseSecurityDeposit = {
+const mockDeposit: Api_SecurityDeposit = {
   id: 7,
   description: 'Test deposit 1',
   amountPaid: 1234.0,
@@ -20,6 +21,7 @@ const mockDeposit: ILeaseSecurityDeposit = {
     description: 'Pet deposit',
     isDisabled: false,
   },
+  depositReturns: [],
   rowVersion: 1,
 };
 

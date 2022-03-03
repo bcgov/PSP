@@ -161,7 +161,8 @@ namespace Pims.Api
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ValidAlgorithms = new List<string>() { "RS256" }
                     };
                     if (key.Length > 0) options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(key);
                     options.Events = new JwtBearerEvents()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
@@ -225,11 +226,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - A collection of Security Deposits associated to this Lease
         /// </summary>
         public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
-
-        /// <summary>
-        /// get/set - A collection of Security Deposit Returns associated to this Lease
-        /// </summary>
-        public IEnumerable<SecurityDepositReturnModel> SecurityDepositReturns { get; set; }
 
         /// <summary>
         /// get/set - Notes accompanying Lease.

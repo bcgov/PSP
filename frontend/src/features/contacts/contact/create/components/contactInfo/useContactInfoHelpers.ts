@@ -1,5 +1,5 @@
 import * as API from 'constants/API';
-import { emailContactMethods, phoneContactMethods } from 'constants/contactMethodType';
+import { EmailContactMethods, PhoneContactMethods } from 'constants/contactMethodType';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useMemo } from 'react';
 
@@ -12,7 +12,7 @@ export default function useContactInfoHelpers() {
   const phoneTypes = useMemo(
     () =>
       getOptionsByType(API.CONTACT_METHOD_TYPES).filter(
-        c => c.value && phoneContactMethods.includes(c.value as string),
+        c => c.value && PhoneContactMethods.includes(c.value as string),
       ),
     [getOptionsByType],
   );
@@ -20,7 +20,7 @@ export default function useContactInfoHelpers() {
   const emailTypes = useMemo(
     () =>
       getOptionsByType(API.CONTACT_METHOD_TYPES).filter(
-        c => c.value && emailContactMethods.includes(c.value as string),
+        c => c.value && EmailContactMethods.includes(c.value as string),
       ),
     [getOptionsByType],
   );

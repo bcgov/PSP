@@ -48,6 +48,7 @@ const PropertyListView: React.FC = () => {
   const [pageSize, setPageSize] = useState(10);
   const [pageIndex, setPageIndex] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [sort, setSort] = useState<TableSort<IProperty>>({});
 
   const fetchIdRef = useRef(0);
@@ -105,6 +106,8 @@ const PropertyListView: React.FC = () => {
         filter,
       );
       const { data } = await getPropertiesPaged(queryParams);
+
+      setTotalItems(data.total);
 
       // The server could send back total page count.
       // For now we'll just calculate it.
@@ -176,6 +179,7 @@ const PropertyListView: React.FC = () => {
           data={data || []}
           loading={data === undefined}
           sort={sort}
+          totalItems={totalItems}
           pageIndex={pageIndex}
           pageSize={pageSize}
           onRequestData={onRequestData}

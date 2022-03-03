@@ -46,6 +46,11 @@ describe('Lease Filter', () => {
         searchBy: 'pinOrPid',
         tenantName: '',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
   });
@@ -64,6 +69,11 @@ describe('Lease Filter', () => {
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
   });
@@ -82,6 +92,11 @@ describe('Lease Filter', () => {
         searchBy: 'pinOrPid',
         tenantName: 'Chester',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
   });
@@ -100,6 +115,11 @@ describe('Lease Filter', () => {
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
       }),
     );
   });

@@ -88,20 +88,20 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     >
       {({ isSubmitting, setFieldValue, values, resetForm }) => (
         <Form>
-          <Form.Row className="map-filter-bar m-0">
-            <Col className="bar-item filter-options">
-              <p className="m-0">Search: </p>
+          <Form.Row className="map-filter-bar pb-4">
+            <Col xs="auto">
+              <span>Search:</span>
             </Col>
-            <Col className="bar-item filter-options">
+            <Col xs="6" md="5" lg="4" xl="3">
               <PropertyFilterOptions />
             </Col>
-            <Col className="bar-item">
+            <Col xs="auto">
               <SearchButton
                 disabled={isSubmitting}
                 onClick={() => setTriggerFilterChanged && setTriggerFilterChanged(true)}
               />
             </Col>
-            <Col className="bar-item">
+            <Col xs="auto">
               <ResetButton
                 disabled={isSubmitting}
                 onClick={() => {
@@ -110,7 +110,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
                 }}
               />
             </Col>
-            <Col className="bar-item">
+            <Col xs="auto" className="bar-item">
               <SearchToggle onClick={handlePageToggle} toolId={'toggle'} toggle={toggle} />
             </Col>
           </Form.Row>

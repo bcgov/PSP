@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { ILeaseSecurityDeposit } from 'interfaces';
+import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { formatMoney, prettyFormatDate } from 'utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
 
@@ -10,7 +10,7 @@ import DepositsReceivedContainer, {
 const mockVoidCallback = (): void => {};
 const mockCallback = (id: number): void => {};
 
-const mockDeposits: ILeaseSecurityDeposit[] = [
+const mockDeposits: Api_SecurityDeposit[] = [
   {
     id: 1,
     description: 'Test deposit 1',
@@ -21,6 +21,7 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
       description: 'Pet deposit',
       isDisabled: false,
     },
+    depositReturns: [],
     rowVersion: 1,
   },
   {
@@ -34,6 +35,7 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
       isDisabled: false,
     },
     otherTypeDescription: 'TestCustomDeposit',
+    depositReturns: [],
     rowVersion: 1,
   },
 ];
@@ -54,7 +56,6 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) =
   const result = render(
     <DepositsReceivedContainer
       securityDeposits={renderOptions.securityDeposits}
-      depositReturns={renderOptions.depositReturns}
       onAdd={mockVoidCallback}
       onEdit={mockCallback}
       onDelete={mockCallback}
@@ -88,7 +89,6 @@ describe('DepositsReceivedContainer component', () => {
   it('renders as expected', () => {
     const { asFragment } = setup({
       securityDeposits: [...mockDeposits],
-      depositReturns: [],
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,
@@ -100,7 +100,6 @@ describe('DepositsReceivedContainer component', () => {
   it('renders one row for each security deposit', () => {
     const { getAllByRole } = setup({
       securityDeposits: [...mockDeposits],
-      depositReturns: [],
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,
@@ -114,7 +113,6 @@ describe('DepositsReceivedContainer component', () => {
     const deposit = mockDeposits[0];
     const { findFirstRow, findCell } = setup({
       securityDeposits: [deposit],
-      depositReturns: [],
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,

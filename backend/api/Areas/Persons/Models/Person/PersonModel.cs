@@ -1,22 +1,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Pims.Api.Models;
 using Pims.Api.Models.Contact;
 
 namespace Pims.Api.Areas.Persons.Models.Person
 {
-    public class PersonModel
+    public class PersonModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - The person's id.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The person's disabled status flag.
@@ -49,6 +44,11 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// get/set - The person's linked organization (optional).
         /// </summary>
         public OrganizationLinkModel Organization { get; set; }
+
+        /// <summary>
+        /// get/set - Whether to link the organization mailing address to this user.
+        /// </summary>
+        public bool UseOrganizationAddress { get; set; }
 
         /// <summary>
         /// get/set - The primary key to identify the person-organization link (optional).

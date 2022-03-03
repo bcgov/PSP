@@ -1,17 +1,13 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { Formik } from 'formik';
-import {
-  defaultFormLease,
-  IFormLease,
-  ILeaseSecurityDeposit,
-  ILeaseSecurityDepositReturn,
-} from 'interfaces';
+import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
 import DepositsContainer from './DepositsContainer';
 
-const mockDeposits: ILeaseSecurityDeposit[] = [
+const mockDeposits: Api_SecurityDeposit[] = [
   {
     id: 1,
     depositType: { id: 'PET' },
@@ -19,6 +15,7 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     amountPaid: 500.0,
     depositDate: '2021-09-15T00:00:00',
     rowVersion: 0,
+    depositReturns: [],
   },
   {
     id: 7,
@@ -28,24 +25,18 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     amountPaid: 2000.0,
     depositDate: '2019-03-01T00:00:00',
     rowVersion: 0,
+    depositReturns: [],
   },
 ];
 
-const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
+const mockDepositReturns: Api_SecurityDepositReturn[] = [
   {
     id: 1,
     parentDepositId: 7,
-    depositType: {
-      id: 'SECURITY',
-      description: 'Security deposit',
-      isDisabled: false,
-    },
     terminationDate: '2022-02-01',
     claimsAgainst: 1234.0,
     returnAmount: 123.0,
     returnDate: '2022-02-16',
-    payeeName: '',
-    payeeAddress: '',
     rowVersion: 1,
   },
 ];

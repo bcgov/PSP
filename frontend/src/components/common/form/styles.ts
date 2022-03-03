@@ -68,7 +68,6 @@ export const InlineCol = styled(Col)`
 export const InlineFastDatePicker = styled(FastDatePicker)`
   display: flex;
   align-items: baseline;
-  gap: 0.8rem;
   .form-label {
     flex-shrink: 0;
   }
@@ -120,6 +119,14 @@ export const sharedFormStyles = css`
       font-size: 1.6rem;
       color: #000000;
       text-decoration: none;
+
+      &.form-control {
+        &:disabled,
+        &[readonly] {
+          background-color: ${props => props.theme.css.disabledFieldBackgroundColor};
+          opacity: 1;
+        }
+      }
     }
 
     &.required {
