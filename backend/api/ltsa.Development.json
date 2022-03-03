@@ -1,5 +1,6 @@
 {
   "Ltsa": {
-    "HostUri": "https://tdtest3-x42b.ltsa.ca"
+    "HostUri": "https://tduat-x42b.ltsa.ca/titledirect/search/api",
+    "AuthUrl": "https://appsuat.ltsa.ca/iam/api/auth"
   }
 }
