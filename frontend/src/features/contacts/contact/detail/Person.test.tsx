@@ -180,13 +180,14 @@ describe('Contact PersonView component', () => {
     });
 
     var phoneValueElements = component.getAllByTestId('phone-value');
-    expect(phoneValueElements.length).toBe(4);
+    expect(phoneValueElements.length).toBe(5);
 
     // Verify that the display is in the correct order
     expect(phoneValueElements[0].textContent).toBe(phoneFormatter(workMobile.value));
     expect(phoneValueElements[1].textContent).toBe(phoneFormatter(workPhone.value));
     expect(phoneValueElements[2].textContent).toBe(phoneFormatter(personalMobile.value));
     expect(phoneValueElements[3].textContent).toBe(phoneFormatter(faxPhone.value));
+    expect(phoneValueElements[4].textContent).toBe(phoneFormatter(personalPhone.value));
   });
 
   it('Shows organization information', () => {
