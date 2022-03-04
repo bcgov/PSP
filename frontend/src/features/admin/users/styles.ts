@@ -1,4 +1,4 @@
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
