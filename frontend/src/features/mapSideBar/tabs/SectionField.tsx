@@ -8,7 +8,6 @@ interface ISectionFieldProps {
 }
 
 export const SectionField: React.FunctionComponent<ISectionFieldProps> = props => {
-  console.log(props.content);
   return (
     <Row className="pb-2">
       <Col xs="4">
