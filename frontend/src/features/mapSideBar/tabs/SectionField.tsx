@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 interface ISectionFieldProps {
   label: string;
-  content: string[];
-  isMultiLine?: boolean;
 }
 
 export const SectionField: React.FunctionComponent<ISectionFieldProps> = props => {
@@ -13,25 +11,11 @@ export const SectionField: React.FunctionComponent<ISectionFieldProps> = props =
       <Col xs="4">
         <StyledFieldLabel>{props.label}:</StyledFieldLabel>
       </Col>
-      <Col>
-        {props.content.map((item, index) =>
-          props.isMultiLine === true ? (
-            <Row key={`label ${props.label} ${index}`}>
-              <Col>
-                <span>{item}</span>
-              </Col>
-            </Row>
-          ) : (
-            <span key={`label ${props.label} ${index}`} className="mr-2">
-              {item}
-            </span>
-          ),
-        )}
-      </Col>
+      <Col>{props.children}</Col>
     </Row>
   );
 };
 
-const StyledFieldLabel = styled.div`
+const StyledFieldLabel = styled.label`
   font-weight: bold;
 `;

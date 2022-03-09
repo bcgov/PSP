@@ -31,28 +31,39 @@ export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({ Pr
         <StyledScrollable>
           <StyledFormSection>
             <StyledSectionHeader>Section Header</StyledSectionHeader>
-            <SectionField label="Single line" content={['A test description']} />
-            <SectionField
-              label="Many lines"
-              content={['Up', 'Down', 'Left', 'Right']}
-              isMultiLine
-            />
-            <SectionField label="Multiple inline" content={['Yes', 'No', "I dont't know"]} />
+            <SectionField label="Single line">A test description</SectionField>
+            <SectionField label="Many lines">
+              <div>Up</div> <div>Down</div>
+              <div>Left</div>
+              <div>Right</div>
+            </SectionField>
+            <SectionField label="Multiple inline">
+              <span>Up</span> <span>Down</span>
+              <span>Left</span>
+              <span>Right</span>
+            </SectionField>
           </StyledFormSection>
 
           <StyledFormSection>
             <StyledSectionHeader>Split section header</StyledSectionHeader>
             <Row>
               <Col>
-                <SectionField label="A single label" content={['A test description']} />
+                <SectionField label="Single line">A test description</SectionField>
               </Col>
               <Col>
-                <SectionField
-                  label="Many lines"
-                  content={['Up', 'Down', 'Left', 'Right']}
-                  isMultiLine
-                />
-                <SectionField label="Multiple inline" content={['Yes', 'No', "I dont't know"]} />
+                <Row>
+                  <Col>
+                    <SectionField label="Single line">A test description</SectionField>
+                  </Col>
+                  <Col>
+                    <SectionField label="Single line">A test description</SectionField>
+                    <SectionField label="Multiple inline">
+                      <span>Up</span> <span>Down</span>
+                      <span>Left</span>
+                      <span>Right</span>
+                    </SectionField>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </StyledFormSection>
