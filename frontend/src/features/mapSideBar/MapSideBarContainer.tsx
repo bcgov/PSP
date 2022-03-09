@@ -1,3 +1,4 @@
+import { InventoryPropertyDetails } from 'features/properties/property/detail/InventoryPropertyDetails/InventoryPropertyDetails';
 import { FormikProps, FormikValues } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
@@ -45,7 +46,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       setShowSideBar={setShowSideBar}
       hidePolicy={true}
     >
-      <InventoryTabs PropertyView={<></>} LtsaView={<LtsaTabView ltsaData={ltsaData} />} />
+      <InventoryTabs PropertyView={<InventoryPropertyDetails />} LtsaView={<LtsaTabView ltsaData={ltsaData} />} />
     </MapSideBarLayout>
   );
 };
