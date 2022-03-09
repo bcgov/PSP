@@ -1,8 +1,8 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Api.Helpers.Logging
 {
@@ -14,7 +14,7 @@ namespace Pims.Api.Helpers.Logging
         )
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (environment != null && !environment.EndsWith("Local"))
+            if (environment != null)
             {
 
                 Log.Logger = new LoggerConfiguration()

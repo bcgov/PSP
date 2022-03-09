@@ -36,6 +36,8 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
+using Pims.Api.Repositories.EDMS;
+using Pims.Api.Services;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Dal;
@@ -199,8 +201,10 @@ namespace Pims.Api
 
             services.AddHttpClient();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
-            services.AddPimsRepositories();
-            services.AddPimsServices();
+            services.AddPimsDalRepositories();
+            services.AddPimsDalServices();
+            AddPimsApiRepositories(services);
+            AddPimsApiServices(services);
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
@@ -277,6 +281,21 @@ namespace Pims.Api
                 options.AllowedHosts = this.Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
+        }
+
+        private static void AddPimsApiRepositories(IServiceCollection services)
+        {
+            services.AddSingleton<IDocumentRepository, MayanDocumentRepository>();
+        }
+
+        /// <summary>
+        /// Add PimsService objects to the dependency injection service collection.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        private static void AddPimsApiServices(IServiceCollection services)
+        {
+            services.AddScoped<IDocumentService, DocumentService>();
         }
 
         /// <summary>
