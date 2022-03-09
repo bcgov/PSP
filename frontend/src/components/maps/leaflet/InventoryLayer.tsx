@@ -1,5 +1,4 @@
 import { IGeoSearchParams } from 'constants/API';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { BBox, Feature } from 'geojson';
 import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
@@ -197,7 +196,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
           geometry: { type: 'Point', coordinates: getLatLng(feature) },
           properties: {
             ...feature.properties,
-            propertyTypeId: PropertyTypes.Land,
           },
         } as Feature;
       });

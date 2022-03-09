@@ -4,7 +4,6 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-  PropertyTypes,
 } from 'constants/index';
 import {
   IAddress,
@@ -20,14 +19,12 @@ import { ILease } from './ILease';
 import IPropertySurplus from './IPropertySurplus';
 
 /**
- * A property entity represents a land, building, subdivision, or other type of property.
+ * A property entity represents a land, or other type of property.
  */
 export interface IProperty {
   id?: number;
   pid: string;
   pin?: number | '';
-  propertyTypeId: PropertyTypes;
-  propertyType?: string;
   statusId?: PropertyStatusTypes;
   status?: string;
   dataSourceId?: PropertyDataSourceTypes;
@@ -82,7 +79,6 @@ export interface IFormProperty
     {
       areaUnitType?: string;
       address?: IAddress;
-      propertyTypeId?: PropertyTypes;
       landArea?: number;
       landLegalDescription?: string;
     }

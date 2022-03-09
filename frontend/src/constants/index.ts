@@ -15,5 +15,4 @@ export * from './propertyDataSourceTypes';
 export * from './propertyServiceFileTypes';
 export * from './propertyStatusTypes';
 export * from './propertyTenureTypes';
-export * from './propertyTypes';
 export * from './roles';

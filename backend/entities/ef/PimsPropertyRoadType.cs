@@ -8,20 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_AREA_UNIT_TYPE")]
-    public partial class PimsAreaUnitType
+    [Table("PIMS_PROPERTY_ROAD_TYPE")]
+    public partial class PimsPropertyRoadType
     {
-        public PimsAreaUnitType()
+        public PimsPropertyRoadType()
         {
-            PimsPropertyLeases = new HashSet<PimsPropertyLease>();
-            PimsPropertyPropertyAreaUnitTypeCodeNavigations = new HashSet<PimsProperty>();
-            PimsPropertyVolumetricUnitTypeCodeNavigations = new HashSet<PimsProperty>();
+            PimsProperties = new HashSet<PimsProperty>();
         }
 
         [Key]
-        [Column("AREA_UNIT_TYPE_CODE")]
+        [Column("PROPERTY_ROAD_TYPE_CODE")]
         [StringLength(20)]
-        public string AreaUnitTypeCode { get; set; }
+        public string PropertyRoadTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -46,11 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsPropertyLease.AreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
-        [InverseProperty(nameof(PimsProperty.PropertyAreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsPropertyPropertyAreaUnitTypeCodeNavigations { get; set; }
-        [InverseProperty(nameof(PimsProperty.VolumetricUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsPropertyVolumetricUnitTypeCodeNavigations { get; set; }
+        [InverseProperty(nameof(PimsProperty.PropertyRoadTypeCodeNavigation))]
+        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
     }
 }

@@ -92,6 +92,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsProperty> PimsProperties { get; set; }
         public virtual DbSet<PimsPropertyActivity> PimsPropertyActivities { get; set; }
         public virtual DbSet<PimsPropertyActivityHist> PimsPropertyActivityHists { get; set; }
+        public virtual DbSet<PimsPropertyAdjacentLandType> PimsPropertyAdjacentLandTypes { get; set; }
+        public virtual DbSet<PimsPropertyAnomalyType> PimsPropertyAnomalyTypes { get; set; }
         public virtual DbSet<PimsPropertyBoundaryVw> PimsPropertyBoundaryVws { get; set; }
         public virtual DbSet<PimsPropertyClassificationType> PimsPropertyClassificationTypes { get; set; }
         public virtual DbSet<PimsPropertyEvaluation> PimsPropertyEvaluations { get; set; }
@@ -107,6 +109,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropertyOrganizationHist> PimsPropertyOrganizationHists { get; set; }
         public virtual DbSet<PimsPropertyPropertyServiceFile> PimsPropertyPropertyServiceFiles { get; set; }
         public virtual DbSet<PimsPropertyPropertyServiceFileHist> PimsPropertyPropertyServiceFileHists { get; set; }
+        public virtual DbSet<PimsPropertyRoadType> PimsPropertyRoadTypes { get; set; }
         public virtual DbSet<PimsPropertyServiceFile> PimsPropertyServiceFiles { get; set; }
         public virtual DbSet<PimsPropertyServiceFileHist> PimsPropertyServiceFileHists { get; set; }
         public virtual DbSet<PimsPropertyServiceFileType> PimsPropertyServiceFileTypes { get; set; }
@@ -148,6 +151,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsUserOrganizationHist> PimsUserOrganizationHists { get; set; }
         public virtual DbSet<PimsUserRole> PimsUserRoles { get; set; }
         public virtual DbSet<PimsUserRoleHist> PimsUserRoleHists { get; set; }
+        public virtual DbSet<PimsVolumetricType> PimsVolumetricTypes { get; set; }
         public virtual DbSet<PimsWorkflowModel> PimsWorkflowModels { get; set; }
         public virtual DbSet<PimsWorkflowModelHist> PimsWorkflowModelHists { get; set; }
         public virtual DbSet<PimsWorkflowModelType> PimsWorkflowModelTypes { get; set; }
@@ -1952,6 +1956,8 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this a property of interest to the Ministry?");
 
+                entity.Property(e => e.IsProvincialPublicHwy).HasComment("Is this property a provincial public highway?");
+
                 entity.Property(e => e.IsSensitive)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this a sensitive property?");
@@ -1960,13 +1966,21 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is the property visible to other agencies?");
 
+                entity.Property(e => e.IsVolumetricParcel)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Is there a volumetric measurement for this parcel?");
+
                 entity.Property(e => e.LandArea).HasComment("Area occupied by property");
 
                 entity.Property(e => e.LandLegalDescription).HasComment("Legal description of property");
 
                 entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
 
+                entity.Property(e => e.MunicipalZoning).HasComment("Municipal zoning that applies this property.");
+
                 entity.Property(e => e.Name).HasComment("Property name");
+
+                entity.Property(e => e.Notes).HasComment("Notes about the property");
 
                 entity.Property(e => e.Pid).HasComment("Property ID");
 
@@ -1977,6 +1991,10 @@ namespace Pims.Dal
                 entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
 
                 entity.Property(e => e.SurplusDeclarationDate).HasComment("Date the property was declared surplus");
+
+                entity.Property(e => e.VolumetricMeasurement).HasComment("Volumetric measurement of the parcel.");
+
+                entity.Property(e => e.VolumetricUnitTypeCode).HasComment("Volumetric measurement unit of the parcel.");
 
                 entity.Property(e => e.Zoning).HasComment("Current property zoning");
 
@@ -1999,8 +2017,18 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.PropMgmtOrgId)
                     .HasConstraintName("PIM_ORG_PIM_PRPRTY_FK");
 
-                entity.HasOne(d => d.PropertyAreaUnitTypeCodeNavigation)
+                entity.HasOne(d => d.PropertyAdjacentLandTypeCodeNavigation)
                     .WithMany(p => p.PimsProperties)
+                    .HasForeignKey(d => d.PropertyAdjacentLandTypeCode)
+                    .HasConstraintName("PIM_PRADJL_PIM_PRPRTY_FK");
+
+                entity.HasOne(d => d.PropertyAnomalyTypeCodeNavigation)
+                    .WithMany(p => p.PimsProperties)
+                    .HasForeignKey(d => d.PropertyAnomalyTypeCode)
+                    .HasConstraintName("PIM_PRANOM_PIM_PRPRTY_FK");
+
+                entity.HasOne(d => d.PropertyAreaUnitTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropertyPropertyAreaUnitTypeCodeNavigations)
                     .HasForeignKey(d => d.PropertyAreaUnitTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_FK");
@@ -2021,6 +2049,11 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsProperties)
                     .HasForeignKey(d => d.PropertyManagerId)
                     .HasConstraintName("PIM_PERSON_PIM_PRPRTY_FK");
+
+                entity.HasOne(d => d.PropertyRoadTypeCodeNavigation)
+                    .WithMany(p => p.PimsProperties)
+                    .HasForeignKey(d => d.PropertyRoadTypeCode)
+                    .HasConstraintName("PIM_PRROAD_PIM_PRPRTY_FK");
 
                 entity.HasOne(d => d.PropertyStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsProperties)
@@ -2051,6 +2084,16 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.SurplusDeclarationTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_SPDCLT_PIM_PRPRTY_FK");
+
+                entity.HasOne(d => d.VolumetricTypeCodeNavigation)
+                    .WithMany(p => p.PimsProperties)
+                    .HasForeignKey(d => d.VolumetricTypeCode)
+                    .HasConstraintName("PIM_PRVOLT_PIM_PRPRTY_FK");
+
+                entity.HasOne(d => d.VolumetricUnitTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropertyVolumetricUnitTypeCodeNavigations)
+                    .HasForeignKey(d => d.VolumetricUnitTypeCode)
+                    .HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_VOL_FK");
             });
 
             modelBuilder.Entity<PimsPropertyActivity>(entity =>
@@ -2095,6 +2138,62 @@ namespace Pims.Dal
                 entity.Property(e => e.PropertyActivityHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsPropertyAdjacentLandType>(entity =>
+            {
+                entity.HasKey(e => e.PropertyAdjacentLandTypeCode)
+                    .HasName("PRADJL_PK");
+
+                entity.HasComment("Code table to describe property adjacent land type.");
+
+                entity.Property(e => e.PropertyAdjacentLandTypeCode).HasComment("Property adjacent land code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Property adjacent land code description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
+            modelBuilder.Entity<PimsPropertyAnomalyType>(entity =>
+            {
+                entity.HasKey(e => e.PropertyAnomalyTypeCode)
+                    .HasName("PRANOM_PK");
+
+                entity.HasComment("Code table to describe property anomalies.");
+
+                entity.Property(e => e.PropertyAnomalyTypeCode).HasComment("Property anomaly code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Property anomaly code description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
             });
 
             modelBuilder.Entity<PimsPropertyBoundaryVw>(entity =>
@@ -2414,6 +2513,34 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsPropertyRoadType>(entity =>
+            {
+                entity.HasKey(e => e.PropertyRoadTypeCode)
+                    .HasName("PRROAD_PK");
+
+                entity.HasComment("Code table to describe property highway/road type.");
+
+                entity.Property(e => e.PropertyRoadTypeCode).HasComment("Property highway/road code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Property highway/road code description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
             modelBuilder.Entity<PimsPropertyServiceFile>(entity =>
             {
                 entity.HasKey(e => e.PropertyServiceFileId)
@@ -2475,6 +2602,10 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyStatusTypeCode)
                     .HasName("PRPSTS_PK");
 
+                entity.HasComment("Code table to describe property status.");
+
+                entity.Property(e => e.PropertyStatusTypeCode).HasComment("Property status code.");
+
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -2485,7 +2616,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.Description).HasComment("Property status code description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
             });
 
             modelBuilder.Entity<PimsPropertyTax>(entity =>
@@ -3355,6 +3492,34 @@ namespace Pims.Dal
                 entity.Property(e => e.UserRoleHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsVolumetricType>(entity =>
+            {
+                entity.HasKey(e => e.VolumetricTypeCode)
+                    .HasName("PRVOLT_PK");
+
+                entity.HasComment("Code table to describe parcel/property volumetric type.");
+
+                entity.Property(e => e.VolumetricTypeCode).HasComment("Property parcel/property volumetric code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Property parcel/property volumetric code description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
             });
 
             modelBuilder.Entity<PimsWorkflowModel>(entity =>

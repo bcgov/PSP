@@ -133,5 +133,29 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("VOLUMETRIC_UNIT_TYPE_CODE")]
+        [StringLength(20)]
+        public string VolumetricUnitTypeCode { get; set; }
+        [Column("PROPERTY_ANOMALY_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyAnomalyTypeCode { get; set; }
+        [Column("PROPERTY_ROAD_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyRoadTypeCode { get; set; }
+        [Column("PROPERTY_ADJACENT_LAND_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyAdjacentLandTypeCode { get; set; }
+        [Column("VOLUMETRIC_TYPE_CODE")]
+        [StringLength(20)]
+        public string VolumetricTypeCode { get; set; }
+        [Column("MUNICIPAL_ZONING")]
+        [StringLength(100)]
+        public string MunicipalZoning { get; set; }
+        [Column("IS_VOLUMETRIC_PARCEL")]
+        public bool? IsVolumetricParcel { get; set; }
+        [Column("VOLUMETRIC_MEASUREMENT")]
+        public float? VolumetricMeasurement { get; set; }
+        [Column("IS_PROVINCIAL_PUBLIC_HWY")]
+        public bool? IsProvincialPublicHwy { get; set; }
     }
 }

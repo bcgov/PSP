@@ -4,7 +4,6 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-  PropertyTypes,
 } from 'constants/index';
 import {
   IAddress,
@@ -20,8 +19,6 @@ export interface IFlatProperty {
   id?: number | '';
   pid: string;
   pin?: number | '';
-  propertyTypeId: PropertyTypes;
-  propertyType?: string;
   statusId: PropertyStatusTypes;
   status?: string;
   dataSourceId: PropertyDataSourceTypes;

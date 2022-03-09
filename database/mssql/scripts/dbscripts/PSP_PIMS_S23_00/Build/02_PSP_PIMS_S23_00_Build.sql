@@ -3010,7 +3010,7 @@ CREATE TABLE "dbo"."PIMS_PROPERTY"  (
 	"ZONING"                             	nvarchar(50) NULL,
 	"ZONING_POTENTIAL"                   	nvarchar(50) NULL,
 	"CONCURRENCY_CONTROL_NUMBER"         	bigint NOT NULL CONSTRAINT "PRPRTY_CONCURRENCY_CONTROL_NUMBER_DEF"  DEFAULT ((1)),
-	"APP_CREATE_TIMESTAMP"               	datetime NULL CONSTRAINT "PRPRTY_APP_CREATE_TIMESTAMP_DEF"  DEFAULT (getutcdate()),
+	"APP_CREATE_TIMESTAMP"               	datetime NOT NULL CONSTRAINT "PRPRTY_APP_CREATE_TIMESTAMP_DEF"  DEFAULT (getutcdate()),
 	"APP_CREATE_USERID"                  	nvarchar(30) NOT NULL,
 	"APP_CREATE_USER_GUID"               	uniqueidentifier NULL,
 	"APP_CREATE_USER_DIRECTORY"          	nvarchar(30) NOT NULL,
