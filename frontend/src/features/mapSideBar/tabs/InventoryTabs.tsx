@@ -6,7 +6,8 @@ import { SectionField } from './SectionField';
 import { StyledFormSection, StyledScrollable, StyledSectionHeader } from './SectionStyles';
 
 interface IInventoryTabsProps {
-  PropertyForm: React.ReactNode;
+  PropertyView: React.ReactNode;
+  LtsaView: React.ReactNode;
 }
 
 export enum InventoryTabNames {
@@ -19,12 +20,17 @@ export enum InventoryTabNames {
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
  * @param param0 object containing all react components for the corresponding tabs.
  */
-export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({ PropertyForm }) => {
+export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
+  PropertyView,
+  LtsaView,
+}) => {
   const longText =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.';
   return (
     <TabView defaultActiveKey={InventoryTabNames.property}>
-      <Tab eventKey={InventoryTabNames.title} title="Title"></Tab>
+      <Tab eventKey={InventoryTabNames.title} title="Title">
+        {LtsaView}
+      </Tab>
       <Tab eventKey={InventoryTabNames.value} title="Value"></Tab>
       <Tab eventKey={InventoryTabNames.property} title="Property Details"></Tab>
       <Tab eventKey={InventoryTabNames.styles} title="STYLES">

@@ -57,6 +57,9 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
 
 const Content = styled.div`
   grid-area: content;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 `;
 
 const Header = styled.div`

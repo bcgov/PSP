@@ -48,7 +48,7 @@ namespace Pims.Ltsa.Models
         /// <summary>
         /// Gets or Sets LandLandDistrict
         /// </summary>
-        [DataMember(Name = "landLandDistrict", EmitDefaultValue = false)]
+        [DataMember(Name = "landTitleDistrict", EmitDefaultValue = false)]
         public LandTitleDistrict LandLandDistrict { get; set; }
     }
 }
