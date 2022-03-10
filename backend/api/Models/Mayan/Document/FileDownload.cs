@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Pims.Api.Models.Mayan.Document
 {
     /// <summary>

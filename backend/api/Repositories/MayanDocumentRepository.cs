@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Handlers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Config;
@@ -25,24 +24,28 @@ namespace Pims.Api.Repositories.EDMS
     /// </summary>
     public class MayanDocumentRepository : IDocumentRepository
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
         private const string MayanConfigSectionKey = "Mayan";
-        private readonly MayanConfig config;
-        private string CurrentToken;
+        private readonly MayanConfig _config;
+        private string _CurrentToken;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MayanDocumentRepository"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
+        /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         public MayanDocumentRepository(
             ILogger<MayanDocumentRepository> logger,
+            IHttpClientFactory httpClientFactory,
             IConfiguration configuration)
         {
-            this.logger = logger;
-            this.config = new MayanConfig();
-            configuration.Bind(MayanConfigSectionKey, this.config);
-            CurrentToken = "";
+            _logger = logger;
+            _httpClientFactory = httpClientFactory;
+            _config = new MayanConfig();
+            configuration.Bind(MayanConfigSectionKey, this._config);
+            _CurrentToken = "";
         }
 
         public async Task<ExternalResult<QueryResult<DocumentDetail>>> GetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null)
@@ -54,10 +57,8 @@ namespace Pims.Api.Repositories.EDMS
                 Status = ExternalResultStatus.Error,
             };
 
-            logger.LogDebug($"Retrieving document list...");
-            using HttpClientHandler clientHandler = new();
-            using LoggingHandler loggingHandler = new(clientHandler);
-            using HttpClient client = new(loggingHandler);
+            _logger.LogDebug("Retrieving document list...");
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
@@ -81,15 +82,15 @@ namespace Pims.Api.Repositories.EDMS
 
             try
             {
-                string endpointString = $"{this.config.BaseUri}/documents/";
+                string endpointString = $"{this._config.BaseUri}/documents/";
                 Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
                 string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                this.logger.LogTrace($"Response: {response}");
+                this._logger.LogTrace("Response: {response}", response);
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        this.logger.LogTrace($"Response payload: {payload}");
+                        this._logger.LogTrace("Response payload: {payload}", payload);
                         QueryResult<DocumentDetail> documentDetailsResult = JsonSerializer.Deserialize<QueryResult<DocumentDetail>>(payload);
                         if (documentDetailsResult != null)
                         {
@@ -121,10 +122,10 @@ namespace Pims.Api.Repositories.EDMS
             {
                 retVal.Status = ExternalResultStatus.Error;
                 retVal.Message = "Exception retrieving documents";
-                this.logger.LogError($"Unexpected exception retrieving document list {e}");
+                this._logger.LogError("Unexpected exception retrieving document list {e}", e);
             }
 
-            this.logger.LogDebug($"Finished retrieving document list");
+            this._logger.LogDebug("Finished retrieving document list");
             return retVal;
         }
 
@@ -138,20 +139,18 @@ namespace Pims.Api.Repositories.EDMS
                 Status = ExternalResultStatus.Error,
             };
 
-            logger.LogDebug($"Downloading file...");
-            using HttpClientHandler clientHandler = new();
-            using LoggingHandler loggingHandler = new(clientHandler);
-            using HttpClient client = new(loggingHandler);
+            _logger.LogDebug("Downloading file...");
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
 
             try
             {
 
-                Uri endpoint = new($"{this.config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
+                Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
                 string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                this.logger.LogTrace($"Response: {response}");
+                this._logger.LogTrace("Response: {response}", response);
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
@@ -186,16 +185,16 @@ namespace Pims.Api.Repositories.EDMS
             {
                 retVal.Status = ExternalResultStatus.Error;
                 retVal.Message = "Exception downloading file";
-                this.logger.LogError($"Unexpected exception downloading file {e}");
+                this._logger.LogError("Unexpected exception downloading file {e}", e);
             }
 
-            this.logger.LogDebug($"Finished downloading file");
+            this._logger.LogDebug($"Finished downloading file");
             return retVal;
         }
 
         private async Task<string> GetToken()
         {
-            if (string.IsNullOrEmpty(CurrentToken))
+            if (string.IsNullOrEmpty(_CurrentToken))
             {
                 ExternalResult<string> tokenResult = await RequestToken();
 
@@ -203,10 +202,10 @@ namespace Pims.Api.Repositories.EDMS
                 {
                     throw new AuthenticationException(tokenResult.Message);
                 }
-                CurrentToken = tokenResult.Payload;
+                _CurrentToken = tokenResult.Payload;
             }
 
-            return CurrentToken;
+            return _CurrentToken;
         }
 
         private async Task<ExternalResult<string>> RequestToken()
@@ -216,28 +215,26 @@ namespace Pims.Api.Repositories.EDMS
                 Status = ExternalResultStatus.Error
             };
 
-            logger.LogDebug($"Getting authentication token...");
-            using HttpClientHandler clientHandler = new();
-            using LoggingHandler loggingHandler = new(clientHandler);
-            using HttpClient client = new(loggingHandler);
+            _logger.LogDebug("Getting authentication token...");
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
             try
             {
                 using StringContent credentials = new(JsonSerializer.Serialize(new TokenRequest
                 {
-                    Username = config.ConnectionUser,
-                    Password = config.ConnectionPassword
+                    Username = _config.ConnectionUser,
+                    Password = _config.ConnectionPassword
                 }), Encoding.UTF8, MediaTypeNames.Application.Json);
 
-                Uri endpoint = new Uri($"{this.config.BaseUri}/auth/token/obtain/");
+                Uri endpoint = new Uri($"{this._config.BaseUri}/auth/token/obtain/");
                 HttpResponseMessage response = await client.PostAsync(endpoint, credentials).ConfigureAwait(true);
                 string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                this.logger.LogTrace($"Response: {response}");
+                this._logger.LogTrace("Response: {response}", response);
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        this.logger.LogDebug($"Response payload: {payload}");
+                        this._logger.LogTrace("Response payload: {payload}", payload);
                         TokenResult requestTokenResult = JsonSerializer.Deserialize<TokenResult>(payload);
                         tokenResult.Status = ExternalResultStatus.Success;
                         tokenResult.Payload = requestTokenResult.Token;
@@ -264,10 +261,10 @@ namespace Pims.Api.Repositories.EDMS
             {
                 tokenResult.Status = ExternalResultStatus.Error;
                 tokenResult.Message = "Exception obtaining a token";
-                this.logger.LogError($"Unexpected exception obtaining a token {e}");
+                this._logger.LogError("Unexpected exception obtaining a token {e}", e);
             }
 
-            this.logger.LogDebug($"Finished getting authentication token");
+            this._logger.LogDebug("Finished getting authentication token");
             return tokenResult;
         }
 
@@ -282,3 +279,4 @@ namespace Pims.Api.Repositories.EDMS
         }
     }
 }
+
