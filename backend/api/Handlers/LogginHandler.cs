@@ -1,36 +1,36 @@
-using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Pims.Api.Handlers
 {
     public class LoggingHandler : DelegatingHandler
     {
-        public LoggingHandler(HttpMessageHandler innerHandler)
-            : base(innerHandler)
+        private readonly ILogger _logger;
+
+        public LoggingHandler(ILogger<LoggingHandler> logger)
         {
+            _logger = logger;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("Request:");
-            Console.WriteLine(request.ToString());
+            _logger.LogTrace("Request:");
+            _logger.LogTrace(request.ToString());
             if (request.Content != null)
             {
-                Console.WriteLine(await request.Content.ReadAsStringAsync(cancellationToken));
+                _logger.LogTrace(await request.Content.ReadAsStringAsync(cancellationToken));
             }
-            Console.WriteLine();
 
             HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
 
-            Console.WriteLine("Response:");
-            Console.WriteLine(response.ToString());
+            _logger.LogTrace("Response:");
+            _logger.LogTrace(response.ToString());
             if (response.Content != null)
             {
-                Console.WriteLine(await response.Content.ReadAsStringAsync(cancellationToken));
+                _logger.LogTrace(await response.Content.ReadAsStringAsync(cancellationToken));
             }
-            Console.WriteLine();
 
             return response;
         }

@@ -29,6 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Pims.Api.Handlers;
 using Pims.Api.Helpers;
 using Pims.Api.Helpers.Authorization;
 using Pims.Api.Helpers.Exceptions;
@@ -199,7 +200,10 @@ namespace Pims.Api
                 csBuilder.Password = pwd;
             }
 
+
             services.AddHttpClient();
+            services.AddTransient<LoggingHandler>();
+            services.AddHttpClient("Pims.Api.Logging").AddHttpMessageHandler<LoggingHandler>();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
             services.AddPimsDalRepositories();
             services.AddPimsDalServices();
