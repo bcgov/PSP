@@ -5,7 +5,6 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-  PropertyTypes,
 } from 'constants/index';
 import { IProperty } from 'interfaces';
 import { DivIcon, LatLngExpression, Marker } from 'leaflet';
@@ -13,17 +12,13 @@ import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 import { ICluster, PointFeature } from '../types';
 import {
   asProperty,
-  buildingIcon,
-  buildingIconSelect,
   createClusterMarker,
   createPoints,
-  draftBuildingIcon,
-  draftParcelIcon,
   generateKey,
   getMarkerIcon,
+  parcelIcon,
   parcelIconSelect,
   pointToLayer,
-  subdivisionIconSelect,
 } from './mapUtils';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
@@ -39,7 +34,7 @@ describe('mapUtils tests', () => {
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
-      expect(pointToLayer(feature, latlng)).toEqual(new Marker(latlng, { icon: buildingIcon }));
+      expect(pointToLayer(feature, latlng)).toEqual(new Marker(latlng, { icon: parcelIcon }));
     });
 
     it('converts a cluster and latlng expression into a layer', () => {
@@ -88,48 +83,14 @@ describe('mapUtils tests', () => {
       properties: {
         cluster: false,
         point_count_abbreviated: 100,
-        propertyTypeId: PropertyTypes.DraftLand,
       },
     };
-    it('returns a draft parcel icon', () => {
-      expect(
-        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DraftLand } }),
-      ).toEqual(draftParcelIcon);
-    });
-    it('returns a draft building icon', () => {
-      expect(
-        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DraftBuilding } }),
-      ).toEqual(draftBuildingIcon);
-    });
-
-    it('returns a selected default subdivision icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.Subdivision },
-          },
-          true,
-        ),
-      ).toEqual(subdivisionIconSelect);
-    });
-    it('returns a default building icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.Building },
-          },
-          true,
-        ),
-      ).toEqual(buildingIconSelect);
-    });
     it('returns a default parcel icon', () => {
       expect(
         getMarkerIcon(
           {
             ...feature,
-            properties: { propertyTypeId: PropertyTypes.Land },
+            properties: {},
           },
           true,
         ),
@@ -139,7 +100,6 @@ describe('mapUtils tests', () => {
       const property: IProperty = {
         id: 1,
         pid: '000-000-0001',
-        propertyTypeId: PropertyTypes.Land,
         statusId: PropertyStatusTypes.UnderAdmin,
         classificationId: PropertyClassificationTypes.CoreOperational,
         tenureId: PropertyTenureTypes.TitledLandMOTI,
@@ -161,12 +121,8 @@ describe('mapUtils tests', () => {
         landArea: 0,
         landLegalDescription: '',
       };
-      it('generates building keys', () => {
-        const building: IProperty = { ...property, propertyTypeId: PropertyTypes.Building };
-        expect(generateKey(building)).toEqual('building-1');
-      });
       it('generates parcel keys', () => {
-        const parcel: IProperty = { ...property, propertyTypeId: PropertyTypes.Land };
+        const parcel: IProperty = { ...property };
         expect(generateKey(parcel)).toEqual('parcel-1');
       });
     });
@@ -175,7 +131,7 @@ describe('mapUtils tests', () => {
       const property: PointFeature = {
         type: 'Feature',
         geometry: { coordinates: [1, 2] } as any,
-        properties: { id: 1, propertyTypeId: PropertyTypes.Land, name: 'name' },
+        properties: { id: 1, name: 'name' },
       };
       it('does the conversion', () => {
         expect(asProperty(property)).toEqual({
@@ -183,7 +139,6 @@ describe('mapUtils tests', () => {
           latitude: 2,
           longitude: 1,
           name: 'name',
-          propertyTypeId: PropertyTypes.Land,
         });
       });
     });
@@ -192,7 +147,6 @@ describe('mapUtils tests', () => {
       const property: IProperty = {
         id: 1,
         pid: '000-000-001',
-        propertyTypeId: PropertyTypes.Land,
         statusId: PropertyStatusTypes.UnderAdmin,
         classificationId: PropertyClassificationTypes.CoreOperational,
         tenureId: PropertyTenureTypes.TitledLandMOTI,
@@ -243,7 +197,6 @@ describe('mapUtils tests', () => {
               landArea: 0,
               landLegalDescription: '',
               pid: '000-000-001',
-              propertyTypeId: PropertyTypes.Land,
             },
             type: 'Feature',
           },
@@ -274,7 +227,6 @@ describe('mapUtils tests', () => {
               landArea: 0,
               landLegalDescription: '',
               pid: '000-000-001',
-              propertyTypeId: PropertyTypes.Land,
             },
             type: 'Feature',
           },

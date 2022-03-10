@@ -81,7 +81,6 @@ const useActiveFeatureLayer = ({
 
   /**
    * If there is a selected property on the map, attempt to retrieve the corresponding parcel. If we find matching parcel data, use that to draw the active parcel.
-   * Note: currently this is limited to finding one parent in the case of a building. in the future, we may need to find/display all matching parcels.
    */
   useDeepCompareEffect(() => {
     const highlightSelectedProperty = async (latLng: LatLng) => {
