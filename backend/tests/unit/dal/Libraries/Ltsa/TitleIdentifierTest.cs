@@ -21,9 +21,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            TitleIdentifier obj = new("titleNumber", LandTitleDistrict.KAMLOOPS);
+            TitleIdentifier obj = new("titleNumber", "KAMLOOPS");
             obj.TitleNumber.Should().Be("titleNumber");
-            obj.LandLandDistrict.Should().Be(LandTitleDistrict.KAMLOOPS);
+            obj.LandTitleDistrict.Should().Be("KAMLOOPS");
         }
     }
 }
