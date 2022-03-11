@@ -1,10 +1,10 @@
-import AddLeaseFormButtons from 'features/leases/add/AddLeaseFormButtons';
 import { LeaseSchema } from 'features/leases/add/AddLeaseYupSchema';
 import AdministrationSubForm from 'features/leases/add/AdministrationSubForm';
 import LeaseDatesSubForm from 'features/leases/add/LeaseDatesSubForm';
 import PropertyInformationSubForm from 'features/leases/add/PropertyInformationSubForm';
 import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
 import * as Styled from 'features/leases/add/styles';
+import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import { defaultAddFormLease, IAddFormLease } from 'interfaces';
 import * as React from 'react';
@@ -45,7 +45,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
             <ReferenceSubForm />
             <PropertyInformationSubForm />
           </Styled.LeaseForm>
-          <AddLeaseFormButtons formikProps={formikProps} onCancel={onCancel} />
+          <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
         </>
       )}
     </Formik>

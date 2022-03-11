@@ -406,24 +406,47 @@ Integer nec odio.
     <div
       class="c1"
     >
-      <label
-        class="c2 form-label"
-      >
-        Deposit Notes
-      </label>
       <div
-        class="textarea input form-group"
+        class="row"
       >
-        <textarea
-          class="form-control"
-          disabled=""
-          id="input-returnNotes"
-          name="returnNotes"
-          rows="5"
-          title="Tenant no longer has a dog, deposit returned, less fee for carpet cleaning"
+        <div
+          class="col"
         >
-          Tenant no longer has a dog, deposit returned, less fee for carpet cleaning
-        </textarea>
+          <label
+            class="c2 form-label"
+          >
+            Deposit Notes
+          </label>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              disabled=""
+              id="input-returnNotes"
+              name="returnNotes"
+              rows="5"
+              title="Tenant no longer has a dog, deposit returned, less fee for carpet cleaning"
+            >
+              Tenant no longer has a dog, deposit returned, less fee for carpet cleaning
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        />
       </div>
     </div>
     <div

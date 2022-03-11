@@ -1,9 +1,20 @@
 import { useKeycloak } from '@react-keycloak/web';
+import { cleanup } from '@testing-library/react-hooks';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { Claims } from 'constants/claims';
 import { Formik } from 'formik';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
-import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+import {
+  fillInput,
+  render,
+  RenderOptions,
+  RenderResult,
+  userEvent,
+  waitFor,
+} from 'utils/test-utils';
 
 import DepositsContainer from './DepositsContainer';
 
@@ -41,6 +52,7 @@ const mockDepositReturns: Api_SecurityDepositReturn[] = [
   },
 ];
 
+const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
@@ -69,6 +81,10 @@ describe('DepositsContainer', () => {
   beforeEach(() => {
     Date.now = jest.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
   });
+  afterEach(() => {
+    mockAxios.reset();
+    cleanup();
+  });
   afterAll(() => {
     jest.restoreAllMocks();
   });
@@ -82,5 +98,46 @@ describe('DepositsContainer', () => {
       },
     });
     expect(result.asFragment()).toMatchSnapshot();
+  });
+
+  it('saves deposit notes', async () => {
+    mockAxios.onPost().reply(200, {});
+    const { getByText, getByTestId, container } = setup({
+      lease: {
+        ...defaultFormLease,
+        returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
+        securityDeposits: mockDeposits,
+        securityDepositReturns: mockDepositReturns,
+      },
+      claims: [Claims.LEASE_EDIT],
+    });
+    const editButton = getByTestId('edit-notes');
+    userEvent.click(editButton);
+    await fillInput(container, 'returnNotes', 'test note', 'textarea');
+    const saveButton = getByText('Save');
+    userEvent.click(saveButton);
+    await waitFor(() => {
+      expect(mockAxios.history.put).toHaveLength(1);
+    });
+  });
+
+  it('cancels an edited deposit note', async () => {
+    const { getByText, getByTestId, container } = await setup({
+      lease: {
+        ...defaultFormLease,
+        returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
+        securityDeposits: mockDeposits,
+        securityDepositReturns: mockDepositReturns,
+      },
+      claims: [Claims.LEASE_EDIT],
+    });
+    const editButton = getByTestId('edit-notes');
+    userEvent.click(editButton);
+    const noteField = await fillInput(container, 'returnNotes', 'test note', 'textarea');
+    const cancelButton = getByText('Cancel');
+    userEvent.click(cancelButton);
+    await waitFor(() => {
+      expect(noteField.input).toHaveValue('');
+    });
   });
 });

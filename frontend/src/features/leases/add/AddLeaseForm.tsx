@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
 import { addFormLeaseToApiLease } from '../leaseUtils';
-import AddLeaseFormButtons from './AddLeaseFormButtons';
+import SaveCancelButtons from '../SaveCancelButtons';
 import { LeaseSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import LeaseDatesSubForm from './LeaseDatesSubForm';
@@ -47,7 +47,7 @@ const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
             <ReferenceSubForm />
             <PropertyInformationSubForm />
-            <AddLeaseFormButtons formikProps={formikProps} onCancel={onCancel} />
+            <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
           </Styled.LeaseForm>
         </>
       )}
