@@ -2,7 +2,7 @@ import { Claims } from 'constants/claims';
 import { Formik } from 'formik';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { fillInput, prettyDOM, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { DepositNotes, IDepositNotesProps } from './DepositNotes';
 jest.mock('@react-keycloak/web');
