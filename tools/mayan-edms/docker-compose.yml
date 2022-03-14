@@ -28,6 +28,7 @@ services:
     <<: *mayan-container
     profiles:
       - all_in_one
+      - all
     ports:
       - "7080:8000"
 
@@ -47,6 +48,7 @@ services:
     #  - "9200:9200"
     profiles:
       - elasticsearch
+      - all
     restart: unless-stopped
     ulimits:
       memlock:
@@ -82,6 +84,7 @@ services:
     #  - "5432:5432"
     profiles:
       - postgresql
+      - all
     restart: unless-stopped
     volumes:
       - ${MAYAN_POSTGRES_VOLUME:-postgres}:/var/lib/postgresql/data
@@ -110,6 +113,7 @@ services:
       - psp
     profiles:
       - redis
+      - all
     restart: unless-stopped
     volumes:
       - ${MAYAN_REDIS_VOLUME:-redis}:/data
@@ -145,6 +149,7 @@ services:
       - "--prefetch-multiplier=1"
     profiles:
       - extra_worker_a
+      - all
 
   # Run a separate class B worker
   worker_b:
@@ -155,6 +160,7 @@ services:
       - "--prefetch-multiplier=1"
     profiles:
       - extra_worker_b
+      - all
 
   # Run a separate class C worker
   worker_c:
@@ -165,6 +171,7 @@ services:
       - "--prefetch-multiplier=1"
     profiles:
       - extra_worker_c
+      - all
 
   # Run a separate class D worker
   worker_d:
@@ -175,6 +182,7 @@ services:
       - "--concurrency=1 --prefetch-multiplier=1"
     profiles:
       - extra_worker_d
+      - all
 
   worker_custom_queue:
     <<: *mayan-container
@@ -184,6 +192,7 @@ services:
       - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
     profiles:
       - extra_worker_custom
+      - all
 
   # Run a separate Celery beat container
   celery_beat:
@@ -193,6 +202,7 @@ services:
       - "beat --pidfile= --loglevel=ERROR"
     profiles:
       - extra_celery_beat
+      - all
 
   command_initialsetup_or_performupgrade:
     <<: *mayan-container
@@ -215,6 +225,7 @@ services:
     #   - "15672:15672"
     profiles:
       - rabbitmq
+      - all
     restart: unless-stopped
     volumes:
       - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq

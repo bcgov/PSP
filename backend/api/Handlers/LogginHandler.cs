@@ -17,19 +17,19 @@ namespace Pims.Api.Handlers
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             _logger.LogTrace("Request:");
-            _logger.LogTrace(request.ToString());
+            _logger.LogTrace("{request}", request.ToString());
             if (request.Content != null)
             {
-                _logger.LogTrace(await request.Content.ReadAsStringAsync(cancellationToken));
+                _logger.LogTrace("{cancellationToken}", await request.Content.ReadAsStringAsync(cancellationToken));
             }
 
             HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
 
             _logger.LogTrace("Response:");
-            _logger.LogTrace(response.ToString());
+            _logger.LogTrace("{response}", response.ToString());
             if (response.Content != null)
             {
-                _logger.LogTrace(await response.Content.ReadAsStringAsync(cancellationToken));
+                _logger.LogTrace("{cancellationToken}", await response.Content.ReadAsStringAsync(cancellationToken));
             }
 
             return response;
