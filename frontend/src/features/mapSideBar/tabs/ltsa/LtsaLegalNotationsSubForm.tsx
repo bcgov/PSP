@@ -24,7 +24,7 @@ const LtsaLegalNotationsSubForm: React.FunctionComponent<ILtsaLegalNotationsSubF
               const innerNameSpace = withNameSpace(nameSpace, `legalNotationsOnTitle.${index}`);
               const legalNotationText = getIn(notation, 'legalNotation.legalNotationText');
               return (
-                <>
+                <React.Fragment key={`notation-row-${innerNameSpace}`}>
                   <Row className="pb-2">
                     <Col>
                       <InlineInput
@@ -51,7 +51,7 @@ const LtsaLegalNotationsSubForm: React.FunctionComponent<ILtsaLegalNotationsSubF
                       <p>{legalNotationText}</p>
                     </Col>
                   </Row>
-                </>
+                </React.Fragment>
               );
             })}
           </React.Fragment>

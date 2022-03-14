@@ -32,7 +32,7 @@ export const LtsaChargeOwnerSubForm: React.FunctionComponent<ILtsaChargeOwnerSub
             `chargeOwnershipGroups.${cogIndex}.chargeOwners.${coIndex}`,
           );
           return (
-            <>
+            <React.Fragment key={`charge-owner-sub-row-${innerNameSpace}`}>
               {getIn(values, withNameSpace(innerNameSpace, 'lastNameOrCorpName1')) && (
                 <SectionFieldWrapper label="Registered owner">
                   <Input field={`${withNameSpace(innerNameSpace, 'lastNameOrCorpName1')}`} />
@@ -91,7 +91,7 @@ export const LtsaChargeOwnerSubForm: React.FunctionComponent<ILtsaChargeOwnerSub
                   </Col>
                 </Row>
               )}
-            </>
+            </React.Fragment>
           );
         });
       })}

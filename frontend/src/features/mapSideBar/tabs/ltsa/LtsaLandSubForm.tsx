@@ -29,7 +29,7 @@ export const LtsaLandSubForm: React.FunctionComponent<ILtsaLandSubFormProps> = (
                 {lands.map((land: DescriptionOfLand, index: number) => {
                   const innerNameSpace = withNameSpace(nameSpace, `descriptionsOfLand.${index}`);
                   return (
-                    <>
+                    <React.Fragment key={`land-row-inner-${innerNameSpace}`}>
                       <SectionFieldWrapper label="PID">
                         <Input field={`${withNameSpace(innerNameSpace, 'parcelIdentifier')}`} />
                       </SectionFieldWrapper>
@@ -37,7 +37,7 @@ export const LtsaLandSubForm: React.FunctionComponent<ILtsaLandSubFormProps> = (
                         <p>{getIn(land, 'fullLegalDescription')}</p>
                       </SectionFieldWrapper>
                       {index < lands.length - 1 && <hr></hr>}
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </React.Fragment>
