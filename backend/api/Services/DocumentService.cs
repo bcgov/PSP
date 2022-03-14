@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -7,7 +8,7 @@ using Pims.Api.Repositories.EDMS;
 namespace Pims.Api.Services
 {
     /// <summary>
-    /// IDocumentRepository interface, defines the functionality for a document repository.
+    /// DocumentService implementation provides document managing capabilities.
     /// </summary>
     public class DocumentService : IDocumentService
     {
@@ -32,6 +33,11 @@ namespace Pims.Api.Services
             return task.Result;
         }
 
-
+        public ExternalResult<DocumentDetail> UploadDocument(int documentType, IFormFile fileRaw)
+        {
+            Task<ExternalResult<DocumentDetail>> task = documentRepository.UploadDocumentAsync(documentType, fileRaw);
+            task.Wait();
+            return task.Result;
+        }
     }
 }

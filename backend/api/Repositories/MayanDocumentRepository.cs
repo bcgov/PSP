@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -149,7 +151,7 @@ namespace Pims.Api.Repositories.EDMS
 
                 Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
-                string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                byte[] payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
                 this._logger.LogTrace("Response: {response}", response);
                 switch (response.StatusCode)
                 {
@@ -160,7 +162,7 @@ namespace Pims.Api.Repositories.EDMS
                         retVal.Status = ExternalResultStatus.Success;
                         retVal.Payload = new FileDownload()
                         {
-                            Payload = payload,
+                            FilePayload = payload,
                             Size = int.Parse(response.Content.Headers.GetValues("Content-Length").FirstOrDefault()),
                             Mimetype = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
                             FileName = fileName
@@ -190,6 +192,77 @@ namespace Pims.Api.Repositories.EDMS
 
             this._logger.LogDebug($"Finished downloading file");
             return retVal;
+        }
+
+        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file)
+        {
+            string authenticationToken = await GetToken();
+
+            ExternalResult<DocumentDetail> uploadDocumentResult = new()
+            {
+                Status = ExternalResultStatus.Error,
+            };
+
+            _logger.LogDebug("Uploading document...");
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
+
+            try
+            {
+
+                byte[] fileData;
+                using var byteReader = new BinaryReader(file.OpenReadStream());
+                fileData = byteReader.ReadBytes((int)file.OpenReadStream().Length);
+
+                using ByteArrayContent fileBytes = new ByteArrayContent(fileData);
+                using MultipartFormDataContent multiContent = new MultipartFormDataContent();
+                multiContent.Add(fileBytes, "file", file.FileName);
+
+                using HttpContent content = new StringContent(documentType.ToString());
+                multiContent.Add(content, "document_type_id");
+
+                Uri endpoint = new($"{this._config.BaseUri}/documents/");
+                using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpoint);
+                request.Content = multiContent;
+
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(true);
+                string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                this._logger.LogTrace("Response: {response}", response);
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.Created:
+                        this._logger.LogTrace("Response payload: {payload}", payload);
+                        uploadDocumentResult.Status = ExternalResultStatus.Success;
+                        uploadDocumentResult.Payload = JsonSerializer.Deserialize<DocumentDetail>(payload);
+                        break;
+                    case HttpStatusCode.NoContent:
+                        uploadDocumentResult.Status = ExternalResultStatus.Success;
+                        uploadDocumentResult.Message = "No content found";
+                        break;
+                    case HttpStatusCode.Forbidden:
+                        uploadDocumentResult.Status = ExternalResultStatus.Error;
+                        uploadDocumentResult.Message = "Forbiden";
+                        break;
+                    case HttpStatusCode.BadRequest:
+                        uploadDocumentResult.Status = ExternalResultStatus.Error;
+                        uploadDocumentResult.Message = payload;
+                        break;
+                    default:
+                        uploadDocumentResult.Status = ExternalResultStatus.Error;
+                        uploadDocumentResult.Message = $"Unable to contact endpoint {endpoint}. Http status {response.StatusCode}";
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                uploadDocumentResult.Status = ExternalResultStatus.Error;
+                uploadDocumentResult.Message = "Exception uploading file";
+                this._logger.LogError("Unexpected exception uploading file {e}", e);
+            }
+
+            this._logger.LogDebug($"Finished uploading file");
+            return uploadDocumentResult;
         }
 
         private async Task<string> GetToken()
@@ -277,6 +350,8 @@ namespace Pims.Api.Repositories.EDMS
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
             return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
         }
+
+
     }
 }
 

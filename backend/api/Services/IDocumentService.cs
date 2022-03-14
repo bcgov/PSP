@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -12,5 +13,7 @@ namespace Pims.Api.Services
         ExternalResult<QueryResult<DocumentDetail>> GetDocumentList(string ordering = "", int? page = null, int? pageSize = null);
 
         ExternalResult<FileDownload> DownloadFile(int documentId, int fileId);
+
+        ExternalResult<DocumentDetail> UploadDocument(int documentType, IFormFile fileRaw);
     }
 }

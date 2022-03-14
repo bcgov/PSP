@@ -12,6 +12,7 @@ import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
 import Test from 'pages/Test.ignore';
+import { TestFileManagement } from 'pages/TestFileManagement';
 import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
@@ -205,6 +206,13 @@ const AppRouter: React.FC = () => {
           claim={Claims.ADMIN_USERS}
           title={getTitle('Edit User')}
         />
+        <AppRoute
+          path="/testFileManagement"
+          title={getTitle('Test')}
+          component={TestFileManagement}
+          layout={AuthLayout}
+        />
+
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
       </Switch>
     </Suspense>

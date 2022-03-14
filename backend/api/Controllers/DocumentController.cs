@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -33,7 +36,7 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Retrieves a list of documents.
         /// </summary>
-        [HttpGet()]
+        [HttpGet]
         //[HasPermission(Permissions.PropertyAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), 200)]
@@ -49,7 +52,6 @@ namespace Pims.Api.Controllers
         /// </summary>
         [HttpGet("{documentId}/files/{fileId}/download")]
         //[HasPermission(Permissions.PropertyAdd)]
-        [Produces("application/json")]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult DownloadFile(int documentId, int fileId)
@@ -57,6 +59,20 @@ namespace Pims.Api.Controllers
             var ast = _documentService.DownloadFile(documentId, fileId);
             return new JsonResult(ast);
         }
+
+        /// <summary>
+        /// Retrieves a list of documents.
+        /// </summary>
+        [HttpPost]
+        //[HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(string), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public IActionResult UploadDocument([FromForm] IFormFile file)
+        {
+            var ast = _documentService.UploadDocument(1, file);
+            return new JsonResult(ast);
+        }
+
         #endregion
     }
 }
