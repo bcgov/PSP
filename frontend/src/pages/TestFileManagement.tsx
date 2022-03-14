@@ -1,7 +1,7 @@
 import { useAxiosApi } from 'hooks/pims-api';
 import { DocumentDetail, DocumentQueryResult, FileDownload } from 'models/api/DocumentManagement';
 import { ExternalResult } from 'models/api/ExternalResult';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { FaDownload, FaUpload } from 'react-icons/fa';
 import { formatApiDateTime } from 'utils';
@@ -15,10 +15,10 @@ export const TestFileManagement: React.FunctionComponent = () => {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  async function retrieveDocumentList() {
+  const retrieveDocumentList = useCallback(async () => {
     var { data } = await api.get<ExternalResult<DocumentQueryResult<DocumentDetail>>>(`/documents`);
     setDocumentList(data.payload);
-  }
+  }, [api]);
 
   async function DownloadFile(documentId: number, fileId: number) {
     var { data } = await api.get<ExternalResult<FileDownload>>(
@@ -34,7 +34,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
 
   useEffect(() => {
     retrieveDocumentList();
-  }, []);
+  }, [retrieveDocumentList]);
 
   const handleFileInput = (e: any) => {
     console.log(e);
