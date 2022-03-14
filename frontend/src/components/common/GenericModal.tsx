@@ -120,9 +120,6 @@ const GenericModal = (props: ModalProps) => {
         <Modal.Body>{props.message}</Modal.Body>
 
         <Modal.Footer>
-          <Button variant={props.okButtonVariant ?? 'primary'} onClick={ok}>
-            {props.okButtonText ?? 'Ok'}
-          </Button>
           {props.cancelButtonText && (
             <Button
               variant={props.cancelButtonVariant ?? 'secondary'}
@@ -132,6 +129,9 @@ const GenericModal = (props: ModalProps) => {
               {props.cancelButtonText}
             </Button>
           )}
+          <Button variant={props.okButtonVariant ?? 'primary'} onClick={ok}>
+            {props.okButtonText ?? 'Ok'}
+          </Button>
         </Modal.Footer>
       </Modal>
     </Container>
