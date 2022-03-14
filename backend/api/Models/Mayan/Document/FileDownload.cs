@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Mayan.Document
         /// <summary>
         /// get/set - The file contents. Could be encoded.
         /// </summary>
-        public string Payload { get; set; }
+        public byte[] FilePayload { get; set; }
 
         /// <summary>
         /// get/set - The file size
