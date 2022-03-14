@@ -1,8 +1,10 @@
-using System;
-using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -10,7 +12,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentController class, provides endpoints to handle document requests.
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]
@@ -37,7 +39,7 @@ namespace Pims.Api.Controllers
         /// Retrieves a list of documents.
         /// </summary>
         [HttpGet]
-        //[HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.PropertyAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
@@ -48,10 +50,10 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieves a list of documents.
+        /// Downloads the file for the correspoding file and document id.
         /// </summary>
         [HttpGet("{documentId}/files/{fileId}/download")]
-        //[HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult DownloadFile(int documentId, int fileId)
@@ -61,10 +63,10 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieves a list of documents.
+        /// Uploads the passed document.
         /// </summary>
         [HttpPost]
-        //[HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult UploadDocument([FromForm] IFormFile file)
