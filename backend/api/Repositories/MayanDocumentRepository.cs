@@ -210,7 +210,6 @@ namespace Pims.Api.Repositories.EDMS
 
             try
             {
-
                 byte[] fileData;
                 using var byteReader = new BinaryReader(file.OpenReadStream());
                 fileData = byteReader.ReadBytes((int)file.OpenReadStream().Length);
@@ -222,7 +221,7 @@ namespace Pims.Api.Repositories.EDMS
                 using HttpContent content = new StringContent(documentType.ToString());
                 multiContent.Add(content, "document_type_id");
 
-                Uri endpoint = new($"{this._config.BaseUri}/documents/");
+                Uri endpoint = new($"{this._config.BaseUri}/documents/upload/");
                 using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpoint);
                 request.Content = multiContent;
 
