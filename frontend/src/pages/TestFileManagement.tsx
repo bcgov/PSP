@@ -56,6 +56,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
         .then(() => {
           alert('File Upload success');
           retrieveDocumentList();
+          setSelectedFile(null);
         })
         .catch(err => alert('File Upload Error'));
     }
@@ -68,18 +69,25 @@ export const TestFileManagement: React.FunctionComponent = () => {
           <h1>File Management test page</h1>
         </Col>
       </Row>
-      <Row>
+      <Row className="py-5">
         <Col>
           <h2>Upload</h2>
           <form>
-            <input id="uploadInput" type="file" name="myFiles" onChange={handleFileInput} />
-            <Button onClick={submitForm}>
-              <FaUpload></FaUpload>
-            </Button>
+            <Row>
+              <Col>
+                <input id="uploadInput" type="file" name="myFiles" onChange={handleFileInput} />
+              </Col>
+              <Col xs="4">
+                <Button onClick={submitForm} disabled={selectedFile === null}>
+                  Upload File
+                  <FaUpload className="ml-3"></FaUpload>
+                </Button>
+              </Col>
+            </Row>
           </form>
         </Col>
       </Row>
-      <Row>
+      <Row className="py-5">
         <Col>
           <h2>File List</h2>
           <Row>
@@ -88,8 +96,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
                 <Row className="border" key={'document-' + index}>
                   <Col>{documentItem.label}</Col>
                   <Col>{formatApiDateTime(documentItem.datetime_created)}</Col>
-                  <Col>{documentItem.label}</Col>
-                  <Col>
+                  <Col xs="1">
                     <Button
                       onClick={() => {
                         DownloadFile(documentItem.id, documentItem.file_latest.id);
