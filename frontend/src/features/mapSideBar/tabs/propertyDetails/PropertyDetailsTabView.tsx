@@ -4,15 +4,18 @@ import {
   StyledScrollable,
   StyledSectionHeader,
 } from 'features/mapSideBar/tabs/SectionStyles';
+import { IProperty } from 'interfaces';
 import React from 'react';
 
-interface IInventoryPropertyDetailsProps {}
+interface IInventoryPropertyDetailsProps {
+  details?: IProperty;
+}
 
 /**
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const InventoryPropertyDetails: React.FC<IInventoryPropertyDetailsProps> = () => {
+export const PropertyDetailsTabView: React.FC<IInventoryPropertyDetailsProps> = ({ details }) => {
   return (
     <StyledScrollable>
       <Section title="Property attributes">

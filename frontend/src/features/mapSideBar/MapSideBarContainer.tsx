@@ -1,4 +1,3 @@
-import { InventoryPropertyDetails } from 'features/properties/property/detail/InventoryPropertyDetails/InventoryPropertyDetails';
 import { FormikProps, FormikValues } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
@@ -12,6 +11,8 @@ import useMapSideBarQueryParams from './hooks/useMapSideBarQueryParams';
 import MapSideBarLayout from './layout/MapSideBarLayout';
 import { InventoryTabs } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
+import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
+import { usePropertyDetails } from './tabs/propertyDetails/usePropertyDetails';
 
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
@@ -20,6 +21,8 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   const formikRef = React.useRef<FormikProps<FormikValues>>();
   const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams(formikRef);
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
+
+  const { propertyDetails } = usePropertyDetails(pid);
 
   const { getLtsaData } = useLtsa();
   const isMounted = useIsMounted();
@@ -46,7 +49,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       setShowSideBar={setShowSideBar}
       hidePolicy={true}
     >
-      <InventoryTabs PropertyView={<InventoryPropertyDetails />} LtsaView={<LtsaTabView ltsaData={ltsaData} />} />
+      <InventoryTabs PropertyView={<PropertyDetailsTabView details={propertyDetails} />} LtsaView={<LtsaTabView ltsaData={ltsaData} />} />
     </MapSideBarLayout>
   );
 };

@@ -9,6 +9,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
+import { pidFormatter, pidPadded } from 'utils';
 import { downloadFile } from 'utils/download';
 
 export const useProperties = () => {
@@ -16,13 +17,14 @@ export const useProperties = () => {
   const {
     getPropertiesPaged,
     getProperty,
+    getPropertyWithPid,
     postProperty,
     putProperty,
     deleteProperty,
     exportProperties: rawApiExportProperties,
   } = useApiProperties();
 
-  const { getPropertyWfs } = useGeoServer();
+  const { getPropertyWfs, getPropertyWithPidWfs } = useGeoServer();
 
   /**
    * fetch properties, passing the current bounds of the map.
@@ -89,6 +91,47 @@ export const useProperties = () => {
         .finally(() => dispatch(hideLoading()));
     },
     [dispatch, getProperty, getPropertyWfs],
+  );
+
+  /**
+   * Make an AJAX request to fetch the specified 'property' from inventory.
+   * @param params PID of the property
+   */
+  const fetchPropertyWithPid = useCallback(
+    async (pid: string): Promise<IProperty> => {
+      dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
+      dispatch(showLoading());
+      // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
+      //   1. to the REST API to fetch property field attributes (e.g. address, etc)
+      //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
+      return Promise.all([
+        getPropertyWithPid(pidFormatter(pid)),
+        getPropertyWithPidWfs(pidPadded(pid)),
+      ])
+        .then(([apiProperty, wfsResponse]) => {
+          const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
+          const property: IProperty = {
+            ...apiProperty.data,
+            latitude,
+            longitude,
+          };
+          dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
+          dispatch(hideLoading());
+          return property;
+        })
+        .catch(axiosError => {
+          dispatch(
+            logError({
+              name: actionTypes.GET_PARCEL_DETAIL,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
+          return Promise.reject(axiosError);
+        })
+        .finally(() => dispatch(hideLoading()));
+    },
+    [dispatch, getPropertyWithPid, getPropertyWithPidWfs],
   );
 
   /**
@@ -192,6 +235,7 @@ export const useProperties = () => {
   return {
     getProperties: fetchProperties,
     getProperty: fetchProperty,
+    getPropertyWithPid: fetchPropertyWithPid,
     createProperty,
     updateProperty,
     deleteProperty: removeProperty,
