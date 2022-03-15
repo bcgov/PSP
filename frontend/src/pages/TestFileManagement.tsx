@@ -28,7 +28,6 @@ export const TestFileManagement: React.FunctionComponent = () => {
     aElement.href = `data:${data.payload.mimetype};base64,` + data.payload.filePayload;
     aElement.download = data.payload.fileName;
     aElement.click();
-    //document.body.removeChild(a);
     window.URL.revokeObjectURL(aElement.href);
   }
 
@@ -37,12 +36,10 @@ export const TestFileManagement: React.FunctionComponent = () => {
   }, [retrieveDocumentList]);
 
   const handleFileInput = (e: any) => {
-    console.log(e);
     // handle validations
     if (e.target !== null) {
       var target = e.target as HTMLInputElement;
       if (target.files !== null) {
-        console.log(target.files[0]);
         setSelectedFile(target.files[0]);
       }
     }
@@ -56,8 +53,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
 
       api
         .post(`/documents/`, formData)
-        .then(res => {
-          console.log(res);
+        .then(() => {
           alert('File Upload success');
           retrieveDocumentList();
         })

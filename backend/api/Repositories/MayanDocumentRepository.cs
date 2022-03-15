@@ -112,7 +112,7 @@ namespace Pims.Api.Repositories.EDMS
                         break;
                     case HttpStatusCode.Forbidden:
                         retVal.Status = ExternalResultStatus.Error;
-                        retVal.Message = "Forbiden";
+                        retVal.Message = "Forbidden";
                         break;
                     default:
                         retVal.Status = ExternalResultStatus.Error;
@@ -175,7 +175,7 @@ namespace Pims.Api.Repositories.EDMS
                         break;
                     case HttpStatusCode.Forbidden:
                         retVal.Status = ExternalResultStatus.Error;
-                        retVal.Message = "Forbiden";
+                        retVal.Message = "Forbidden";
                         break;
                     default:
                         retVal.Status = ExternalResultStatus.Error;
@@ -242,7 +242,7 @@ namespace Pims.Api.Repositories.EDMS
                         break;
                     case HttpStatusCode.Forbidden:
                         uploadDocumentResult.Status = ExternalResultStatus.Error;
-                        uploadDocumentResult.Message = "Forbiden";
+                        uploadDocumentResult.Message = "Forbidden";
                         break;
                     case HttpStatusCode.BadRequest:
                         uploadDocumentResult.Status = ExternalResultStatus.Error;
@@ -318,7 +318,7 @@ namespace Pims.Api.Repositories.EDMS
                         break;
                     case HttpStatusCode.Forbidden:
                         tokenResult.Status = ExternalResultStatus.Error;
-                        tokenResult.Message = "Token request was forbiden";
+                        tokenResult.Message = "Token request was forbidden";
                         break;
                     case HttpStatusCode.BadRequest:
                         tokenResult.Status = ExternalResultStatus.Error;
@@ -354,4 +354,3 @@ namespace Pims.Api.Repositories.EDMS
 
     }
 }
-
