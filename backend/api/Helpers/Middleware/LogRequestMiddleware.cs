@@ -1,12 +1,12 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IO;
 using Pims.Core.Extensions;
 using Serilog;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Middleware
 {
@@ -55,10 +55,15 @@ namespace Pims.Api.Helpers.Middleware
                 body = streamReader.ReadToEnd();
             }
 
-            using (_logger.BeginScope("HTTP Response"))
+            using (_logger.BeginScope("HTTP Request"))
             {
-                if (!Log.IsEnabled(Serilog.Events.LogEventLevel.Debug)) _logger.LogInformation($"HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
-                _logger.LogDebug($"HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}" + (String.IsNullOrEmpty(body) ? String.Empty : $"{System.Environment.NewLine}Body: {body}"));
+                if (!Log.IsEnabled(Serilog.Events.LogEventLevel.Debug))
+                {
+                    _logger.LogInformation($"HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
+                }
+
+                _logger.LogDebug($"HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
+                _logger.LogTrace(string.IsNullOrEmpty(body) ? string.Empty : $"{System.Environment.NewLine}Body: {body}");
             }
 
 
