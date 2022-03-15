@@ -74,10 +74,10 @@ export const TestFileManagement: React.FunctionComponent = () => {
           <h2>Upload</h2>
           <form>
             <Row>
-              <Col xs="auto">
+              <Col>
                 <input id="uploadInput" type="file" name="myFiles" onChange={handleFileInput} />
               </Col>
-              <Col xs="auto">
+              <Col xs="4">
                 <Button onClick={submitForm} disabled={selectedFile === null}>
                   Upload File
                   <FaUpload className="ml-3"></FaUpload>
@@ -96,8 +96,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
                 <Row className="border" key={'document-' + index}>
                   <Col>{documentItem.label}</Col>
                   <Col>{formatApiDateTime(documentItem.datetime_created)}</Col>
-                  <Col>{documentItem.label}</Col>
-                  <Col>
+                  <Col xs="1">
                     <Button
                       onClick={() => {
                         DownloadFile(documentItem.id, documentItem.file_latest.id);
