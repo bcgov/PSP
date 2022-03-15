@@ -13,23 +13,46 @@ exports[`DepositNotes component renders as expected 1`] = `
   font-family: 'BCSans-Bold';
 }
 
-<label
-    class="c0 form-label"
+<div
+    class="row"
   >
-    Deposit Notes
-  </label>
-  <div
-    class="textarea input form-group"
-  >
-    <textarea
-      class="form-control"
-      id="input-returnNotes"
-      name="returnNotes"
-      rows="5"
-      title="security deposit notes"
+    <div
+      class="col"
     >
-      security deposit notes
-    </textarea>
+      <label
+        class="c0 form-label"
+      >
+        Deposit Notes
+      </label>
+    </div>
+  </div>
+  <div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-returnNotes"
+          name="returnNotes"
+          rows="5"
+          title="security deposit notes"
+        >
+          security deposit notes
+        </textarea>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row"
+  >
+    <div
+      class="col"
+    />
   </div>
 </DocumentFragment>
 `;

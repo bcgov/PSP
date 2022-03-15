@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -32,19 +31,6 @@ namespace Pims.Dal.Entities
         /// get/set - A collection of Improvements associated to this Lease
         /// </summary>
         public ICollection<PimsPropertyImprovement> GetImprovements() => PimsPropertyImprovements;
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Create a new instance of a Lease class.
-        /// </summary>
-        /// <param name="purposeType"></param>
-        public PimsLease(PimsLeasePurposeType purposeType)
-        {
-            this.LeasePurposeTypeCode = purposeType?.LeasePurposeTypeCode ?? throw new ArgumentNullException(nameof(purposeType));
-            this.LeasePurposeTypeCodeNavigation = purposeType;
-        }
         #endregion
     }
 }
