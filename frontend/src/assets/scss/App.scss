@@ -122,11 +122,6 @@
     padding-right: 1.2rem;
   }
 
-  .form-select:not(.is-invalid),
-  .form-control:not(.is-invalid) {
-    border: 0.1rem solid #606060;
-  }
-
   //by default, highlight dropdown options blue
   .dropdown-item,
   .dropdown-header {

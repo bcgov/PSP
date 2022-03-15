@@ -1,5 +1,6 @@
 import clsx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
+import { isArray } from 'lodash';
 import React from 'react';
 
 import { FastInput } from '.';
@@ -11,6 +12,7 @@ export type TextProps = InputProps & {
   fast?: boolean;
   rows?: number;
   cols?: number;
+  mapFunction?: (value: any) => any;
 };
 
 /**
@@ -26,10 +28,15 @@ export const TextArea: React.FC<TextProps> = ({
   custom,
   fast,
   innerClassName,
+  mapFunction,
   ...rest
 }) => {
   const formikProps = useFormikContext();
   const { values, handleChange, errors, touched } = formikProps;
+  let value = getIn(values, field);
+  if (isArray(value) && mapFunction !== undefined) {
+    value = value.map(mapFunction);
+  }
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
 
@@ -45,7 +52,7 @@ export const TextArea: React.FC<TextProps> = ({
       custom={custom}
       isInvalid={!!touch && !!error}
       {...rest}
-      value={getIn(values, field)}
+      value={value}
       placeholder={placeholder}
       onChange={handleChange}
     />
@@ -61,7 +68,7 @@ export const TextArea: React.FC<TextProps> = ({
       custom={custom}
       isInvalid={!!touch && !!error}
       {...rest}
-      value={getIn(values, field)}
+      value={value}
       placeholder={placeholder}
       onChange={handleChange}
     />

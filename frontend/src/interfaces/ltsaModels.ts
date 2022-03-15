@@ -2382,3 +2382,8 @@ export interface UnsubdividedShortLegalDescription {
    */
   marginalNotes?: string;
 }
+
+export interface LtsaOrders {
+  parcelInfo: ParcelInfoOrder;
+  titleOrders: TitleOrder[];
+}
