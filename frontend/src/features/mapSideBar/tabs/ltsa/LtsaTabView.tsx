@@ -1,7 +1,7 @@
 import { Input, TextArea } from 'components/common/form';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Form, Formik, getIn } from 'formik';
-import { LtsaOrders, TaxAuthority } from 'interfaces/ltsaModels';
+import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -23,7 +23,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
   return (
     <StyledScrollable>
       <LoadingBackdrop show={ltsaData === undefined} parentScreen={true} />
-      <Formik initialValues={ltsaData ?? {}} onSubmit={noop} enableReinitialize={true}>
+      <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
           <StyledFormSection>
             <StyledSectionHeader>Title Details</StyledSectionHeader>
@@ -90,5 +90,35 @@ export const StyledForm = styled(Form)`
     }
   }
 `;
+
+const defaultLtsaData: LtsaOrders = {
+  titleOrders: [
+    {
+      productType: OrderParent.ProductTypeEnum.Title,
+      orderedProduct: {
+        fieldedData: {
+          titleIdentifier: {
+            titleNumber: '',
+            landTitleDistrict: '',
+            taxAuthorities: [],
+          },
+        },
+      },
+    },
+  ],
+  parcelInfo: {
+    productType: OrderParent.ProductTypeEnum.ParcelInfo,
+    orderedProduct: {
+      fieldedData: {
+        parcelIdentifier: '',
+        status: ParcelInfo.StatusEnum.ACTIVE,
+        registeredTitlesCount: 0,
+        pendingApplicationCount: 0,
+        miscellaneousNotes: '',
+        legalDescription: [],
+      },
+    },
+  },
+};
 
 export default LtsaTabView;
