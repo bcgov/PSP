@@ -14,6 +14,7 @@ interface IMapSideBarLayoutProps {
   hidePolicy?: boolean;
   /** property name for title */
   propertyName?: string;
+  header: React.ReactNode;
 }
 
 /**
@@ -46,7 +47,7 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
                 <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
               </TooltipWrapper>
             </TitleBar>
-            <Header>Placeholder</Header>
+            <Header>{props.header}</Header>
             <Content>{isVisible ? props.children : null}</Content>
           </>
         )}
