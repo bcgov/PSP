@@ -12,11 +12,6 @@ namespace Pims.Api.Models.Concepts
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The address type.
-        /// </summary>
-        public TypeModel<string> AddressType { get; set; }
-
-        /// <summary>
         /// get/set - The street address.
         /// </summary>
         public string StreetAddress1 { get; set; }

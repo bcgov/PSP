@@ -14,11 +14,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Alias, src => src.OrganizationAlias)
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
-                .Map(dest => dest.Addresses, src => src.PimsOrganizationAddresses)
+                .Map(dest => dest.OrganizationAddresses, src => src.PimsOrganizationAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
-                .Map(dest => dest.Persons, src => src.GetPersons())
-                .Map(dest => dest.Comment, src => src.Comment);
-
+                .Map(dest => dest.PersonOrganizations, src => src.PimsPersonOrganizations)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.MiddleNames, src => src.MiddleNames)
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Comment, src => src.Comment)
-                .Map(dest => dest.Addresses, src => src.PimsPersonAddresses)
+                .Map(dest => dest.PersonAddresses, src => src.PimsPersonAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
-                .Map(dest => dest.Organizations, src => src.PimsPersonOrganizations)
+                .Map(dest => dest.PersonOrganizations, src => src.PimsPersonOrganizations)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.PersonModel, Entity.PimsPerson>()
@@ -29,9 +29,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.MiddleNames, src => src.MiddleNames)
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Comment, src => src.Comment)
-                .Map(dest => dest.PimsPersonAddresses, src => src.Addresses)
+                .Map(dest => dest.PimsPersonAddresses, src => src.PersonAddresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
-                .Map(dest => dest.PimsPersonOrganizations, src => src.Organizations)
+                .Map(dest => dest.PimsPersonOrganizations, src => src.PersonOrganizations)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
