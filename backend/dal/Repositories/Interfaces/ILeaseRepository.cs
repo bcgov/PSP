@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
         int Count();
         IEnumerable<PimsLease> Get(LeaseFilter filter, bool loadPayments = false);
         long GetRowVersion(long id);
-        PimsLease Get(long id, bool skipNavigations = false);
+        PimsLease Get(long id);
         Paged<PimsLease> GetPage(LeaseFilter filter);
         PimsLease Add(PimsLease lease, bool userOverride = false);
         PimsLease Update(PimsLease lease, bool commitTransaction = true);

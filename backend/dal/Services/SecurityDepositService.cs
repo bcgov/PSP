@@ -55,10 +55,11 @@ namespace Pims.Dal.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateServiceCall(leaseId, leaseRowVersion);
-            var lease = _leaseRepository.Get(leaseId, true);
+            var lease = _leaseRepository.Get(leaseId);
             lease.ReturnNotes = note;
             _leaseRepository.Update(lease);
             _leaseRepository.CommitTransaction();
+            
             return _leaseRepository.Get(leaseId);
         }
 
