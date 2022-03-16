@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -8,9 +7,8 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPersonAddress, Model.AddressModel>()
+            config.NewConfig<Entity.PimsPersonAddress, AddressModel>()
                 .Map(dest => dest.Id, src => src.AddressId)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.StreetAddress1, src => src.Address.StreetAddress1)
                 .Map(dest => dest.StreetAddress2, src => src.Address.StreetAddress2)
                 .Map(dest => dest.StreetAddress3, src => src.Address.StreetAddress3)
@@ -18,11 +16,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Province, src => src.Address.ProvinceState)
                 .Map(dest => dest.Country, src => src.Address.Country)
                 .Map(dest => dest.Postal, src => src.Address.PostalCode)
-                .Map(dest => dest.AddressType, src => src.AddressUsageTypeCodeNavigation);
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
-            config.NewConfig<Entity.PimsOrganizationAddress, Model.AddressModel>()
+            config.NewConfig<Entity.PimsOrganizationAddress, AddressModel>()
                 .Map(dest => dest.Id, src => src.AddressId)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.StreetAddress1, src => src.Address.StreetAddress1)
                 .Map(dest => dest.StreetAddress2, src => src.Address.StreetAddress2)
                 .Map(dest => dest.StreetAddress3, src => src.Address.StreetAddress3)
@@ -30,7 +27,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Province, src => src.Address.ProvinceState)
                 .Map(dest => dest.Country, src => src.Address.Country)
                 .Map(dest => dest.Postal, src => src.Address.PostalCode)
-                .Map(dest => dest.AddressType, src => src.AddressUsageTypeCodeNavigation);
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
         }
     }
 }
