@@ -64,14 +64,12 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
-        public PimsLease Get(long id, bool skipNavigations = false)
+        public PimsLease Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
 
-            IQueryable<PimsLease> leaseQuery = this.Context.PimsLeases.Where(l => l.LeaseId == id);
-            if (!skipNavigations)
-            {
-                leaseQuery = leaseQuery.Include(l => l.PimsPropertyLeases)
+            PimsLease lease = this.Context.PimsLeases
+                .Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
                     .ThenInclude(p => p.Country)
@@ -151,9 +149,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.LeasePaymentMethodTypeCodeNavigation)
                 .Include(t => t.PimsLeaseTerms)
                     .ThenInclude(t => t.PimsLeasePayments)
-                    .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation);
-            }
-            PimsLease lease = leaseQuery.FirstOrDefault() ?? throw new KeyNotFoundException();
+                    .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
+                .FirstOrDefault(l=>l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
