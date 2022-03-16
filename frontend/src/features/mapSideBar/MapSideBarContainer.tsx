@@ -8,7 +8,9 @@ import { useEffect } from 'react';
 import { pidFormatter } from 'utils';
 
 import useMapSideBarQueryParams from './hooks/useMapSideBarQueryParams';
+import { usePropertyDetails } from './hooks/usePropertyDetails';
 import MapSideBarLayout from './layout/MapSideBarLayout';
+import { MapSlideBarHeader } from './MapSlideBarHeader';
 import { InventoryTabs } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
@@ -35,6 +37,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
           isMounted() &&
           ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
         ) {
+          console.log(ltsaData);
           setLtsaData(ltsaData);
         }
       }
@@ -48,6 +51,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       show={showSideBar}
       setShowSideBar={setShowSideBar}
       hidePolicy={true}
+      header={<MapSlideBarHeader ltsaData={ltsaData} propertyDetails={propertyDetails} />}
     >
       <InventoryTabs
         PropertyView={<PropertyDetailsTabView details={propertyDetails} />}
