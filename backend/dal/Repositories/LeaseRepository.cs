@@ -68,7 +68,7 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
 
-            PimsLease lease = this.Context.PimsLeases
+            PimsLease lease = this.Context.PimsLeases.AsSplitQuery()
                 .Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
