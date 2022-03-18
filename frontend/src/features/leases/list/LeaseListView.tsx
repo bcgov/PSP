@@ -43,6 +43,7 @@ export const LeaseListView: React.FunctionComponent = () => {
     setSort,
     setCurrentPage,
     setPageSize,
+    loading,
   } = useSearch<ILeaseSearchResult, ILeaseFilter>(defaultFilter, getLeases);
 
   const { exportLeases } = useLeaseExport();
@@ -119,6 +120,7 @@ export const LeaseListView: React.FunctionComponent = () => {
           setSort={setSort}
           setPageSize={setPageSize}
           setPageIndex={setCurrentPage}
+          loading={loading}
         />
       </Styled.Scrollable>
     </Styled.ListPage>

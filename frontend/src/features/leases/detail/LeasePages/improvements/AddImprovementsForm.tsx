@@ -1,4 +1,4 @@
-import AddLeaseFormButtons from 'features/leases/add/AddLeaseFormButtons';
+import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import * as React from 'react';
@@ -35,7 +35,7 @@ export const AddImprovementsForm: React.FunctionComponent<IAddImprovementsFormPr
             />
             <StyledFormBody>
               <Improvements disabled={false} />
-              <AddLeaseFormButtons formikProps={formikProps} onCancel={onCancel} />
+              <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
             </StyledFormBody>
           </>
         )}

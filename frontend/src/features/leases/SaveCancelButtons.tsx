@@ -1,21 +1,26 @@
 import { Button } from 'components/common/form';
 import { FormikProps } from 'formik';
+import { ILease } from 'interfaces';
 import { isEqual } from 'lodash';
 import * as React from 'react';
 
-import * as Styled from './styles';
+import * as Styled from './add/styles';
 
-interface IAddLeaseFormButtonsProps {
+interface ISaveCancelButtonsProps {
   onCancel: () => void;
+  onSaveOverride?: () => Promise<ILease | undefined>;
   formikProps: FormikProps<any>;
+  className?: string;
 }
 
-const AddLeaseFormButtons: React.FunctionComponent<IAddLeaseFormButtonsProps> = ({
+const SaveCancelButtons: React.FunctionComponent<ISaveCancelButtonsProps> = ({
   onCancel,
   formikProps,
+  onSaveOverride,
+  className,
 }) => {
   return (
-    <Styled.FormButtons>
+    <Styled.FormButtons className={className}>
       <Button variant="secondary" onClick={onCancel}>
         Cancel
       </Button>
@@ -27,8 +32,12 @@ const AddLeaseFormButtons: React.FunctionComponent<IAddLeaseFormButtonsProps> = 
         }
         isSubmitting={formikProps.isSubmitting}
         onClick={async () => {
-          formikProps.setSubmitting(true);
-          formikProps.submitForm();
+          if (onSaveOverride) {
+            onSaveOverride();
+          } else {
+            formikProps.setSubmitting(true);
+            formikProps.submitForm();
+          }
         }}
       >
         Save
@@ -37,4 +46,4 @@ const AddLeaseFormButtons: React.FunctionComponent<IAddLeaseFormButtonsProps> = 
   );
 };
 
-export default AddLeaseFormButtons;
+export default SaveCancelButtons;
