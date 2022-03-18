@@ -49,7 +49,10 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       setShowSideBar={setShowSideBar}
       hidePolicy={true}
     >
-      <InventoryTabs PropertyView={<PropertyDetailsTabView details={propertyDetails} />} LtsaView={<LtsaTabView ltsaData={ltsaData} />} />
+      <InventoryTabs
+        PropertyView={<PropertyDetailsTabView details={propertyDetails} />}
+        LtsaView={<LtsaTabView ltsaData={ltsaData} />}
+      />
     </MapSideBarLayout>
   );
 };

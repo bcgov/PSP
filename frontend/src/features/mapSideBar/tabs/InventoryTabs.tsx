@@ -33,7 +33,7 @@ export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
       </Tab>
       <Tab eventKey={InventoryTabNames.value} title="Value"></Tab>
       <Tab eventKey={InventoryTabNames.property} title="Property Details">
-        {PropertyForm}
+        {PropertyView}
       </Tab>
       <Tab eventKey={InventoryTabNames.styles} title="STYLES">
         <StyledScrollable>

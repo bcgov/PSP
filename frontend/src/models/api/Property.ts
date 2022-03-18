@@ -9,8 +9,8 @@ export interface Api_Property extends Api_ConcurrentVersion {
   zoning: string;
   notes: string;
 
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   isSensitive: boolean;
   isProvincialPublicHwy?: boolean;
 
