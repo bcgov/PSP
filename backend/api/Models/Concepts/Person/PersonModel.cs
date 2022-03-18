@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
-    public class PersonModel : BaseAppModel
+    public class PersonModel : BaseModel
     {
         #region Properties
         /// <summary>

@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -8,17 +7,18 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPersonOrganization, Model.PersonOrganizationModel>()
-                .Map(dest => dest.Person, src => src.Person)
+            config.NewConfig<Entity.PimsPersonOrganization, PersonOrganizationModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Organization, src => src.Organization)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
-            config.NewConfig<Model.PersonOrganizationModel, Entity.PimsPersonOrganization>()
-                .Map(dest => dest.PersonId, src => src.Person.Id)
+            config.NewConfig<PersonOrganizationModel, Entity.PimsPersonOrganization>()
+                .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.Organization.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
+                .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }
 }

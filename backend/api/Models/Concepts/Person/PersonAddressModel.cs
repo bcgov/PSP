@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Concepts
 {
-    public class PersonAddressModel : BaseAppModel
+    public class PersonAddressModel : BaseModel
     {
         #region Properties
         /// <summary>
@@ -14,9 +14,9 @@ namespace Pims.Api.Models.Concepts
         public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The person associated with the address.
+        /// get/set - The person id associated with the address.
         /// </summary>
-        public PersonModel Person { get; set; }
+        public long PersonId { get; set; }
 
         /// <summary>
         /// get/set - The address for the relationship.

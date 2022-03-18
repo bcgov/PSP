@@ -30,7 +30,7 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
     isDisabled: baseModel.person?.isDisabled || baseModel.organization?.isDisabled || false,
     summary:
       baseModel.organization !== undefined
-        ? baseModel.organization.name
+        ? baseModel.organization.name || ''
         : baseModel.person?.firstName + ' ' + baseModel.person?.surname,
     surname: baseModel.person?.surname,
     firstName: baseModel.person?.firstName,

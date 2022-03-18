@@ -18,6 +18,7 @@ export interface ITenantPersonContactInfoProps {
  */
 export const TenantPersonContactInfo: React.FunctionComponent<ITenantPersonContactInfoProps &
   Partial<FieldArrayRenderProps>> = ({ nameSpace, disabled }) => {
+  console.log(nameSpace);
   return (
     <>
       <Styled.FormGrid>

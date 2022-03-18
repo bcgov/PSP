@@ -36,7 +36,7 @@ export class FormLeaseDeposit {
     model.contactHolder =
       baseModel.contactHolder !== undefined ? fromContact(baseModel.contactHolder) : undefined;
 
-    model.rowVersion = baseModel.rowVersion;
+    model.rowVersion = baseModel.rowVersion || 0;
     return model;
   }
 

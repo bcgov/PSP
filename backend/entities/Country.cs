@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Country class, provides an entity for the datamodel to manage a list of countries.
     /// </summary>
-    public partial class PimsCountry : IBaseEntity
+    public partial class PimsCountry
     {
         #region Properties
         [NotMapped]

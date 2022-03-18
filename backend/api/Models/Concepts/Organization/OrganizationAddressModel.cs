@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Concepts
 {
-    public class OrganizationAddressModel : BaseAppModel
+    public class OrganizationAddressModel : BaseModel
     {
         #region Properties
         /// <summary>
@@ -14,9 +14,9 @@ namespace Pims.Api.Models.Concepts
         public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The organization associated with the address.
+        /// get/set - The organization id associated with the address.
         /// </summary>
-        public OrganizationModel Organization { get; set; }
+        public long OrganizationId { get; set; }
 
         /// <summary>
         /// get/set - The address.

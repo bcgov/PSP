@@ -9,6 +9,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPerson, Model.PersonModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PersonId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Surname, src => src.Surname)
@@ -19,7 +20,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PersonAddresses, src => src.PimsPersonAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
                 .Map(dest => dest.PersonOrganizations, src => src.PimsPersonOrganizations)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<Model.PersonModel, Entity.PimsPerson>()
                 .Map(dest => dest.PersonId, src => src.Id)
@@ -32,7 +33,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PimsPersonAddresses, src => src.PersonAddresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
                 .Map(dest => dest.PimsPersonOrganizations, src => src.PersonOrganizations)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
+                .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }
 }
