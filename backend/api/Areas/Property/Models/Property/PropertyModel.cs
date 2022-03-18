@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Property.Models.Property
 {
     /// <summary>
     /// PropertyModel class, provides a model to represent the property whether Land or Building.
     /// </summary>
-    public class PropertyModel
+    public class PropertyModel : BaseAppModel
     {
         #region Properties
         #region Identification
@@ -16,65 +18,44 @@ namespace Pims.Api.Areas.Property.Models.Property
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the property type.
-        /// </summary>
-        public string PropertyTypeId { get; set; }
-
-        /// <summary>
         /// get/set - The property type description.
         /// </summary>
-        public string PropertyType { get; set; }
+        public TypeModel<string> PropertyType { get; set; }
 
         /// <summary>
-        /// get/set - The foreign key to the status type.
+        /// get/set - The property anomalies.
         /// </summary>
-        public string StatusId { get; set; }
+        public TypeModel<string> Anomalies { get; set; }
+
+        /// <summary>
+        /// get/set - The tenure description.
+        /// </summary>
+        public TypeModel<string> Tenure { get; set; }
+
+        /// <summary>
+        /// get/set - The road type description.
+        /// </summary>
+        public TypeModel<string> RoadType { get; set; }
+
+        /// <summary>
+        /// get/set - The adjacent land description.
+        /// </summary>
+        public TypeModel<string> AdjacentLand { get; set; }
 
         /// <summary>
         /// get/set - The status description.
         /// </summary>
-        public string Status { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the data source type.
-        /// </summary>
-        public string DataSourceId { get; set; }
+        public TypeModel<string> Status { get; set; }
 
         /// <summary>
         /// get/set - The data source description.
         /// </summary>
-        public string DataSource { get; set; }
+        public TypeModel<string> DataSource { get; set; }
 
         /// <summary>
         /// get/set - The data source effective date
         /// </summary>
         public DateTime DataSourceEffectiveDate { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the classification type.
-        /// </summary>
-        public string ClassificationId { get; set; }
-
-        /// <summary>
-        /// get/set - The classification description.
-        /// </summary>
-        public string Classification { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the tenure type.
-        /// </summary>
-        public string TenureId { get; set; }
-
-        /// <summary>
-        /// get/set - The tenure description.
-        /// </summary>
-        public string Tenure { get; set; }
 
         /// <summary>
         /// get/set - The GIS latitude location of the property.
@@ -100,13 +81,14 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// get/set - Whether the property is sensitive data.
         /// </summary>
         public bool IsSensitive { get; set; }
+
+        /// <summary>
+        /// get/set - Whether the property is a provincial highway.
+        /// </summary>
+        public bool? IsProvincialPublicHwy { get; set; }
         #endregion
 
         #region Address
-        /// <summary>
-        /// get/set - The foreign key to the address.
-        /// </summary>
-        public long AddressId { get; set; }
 
         /// <summary>
         /// get/set - The address of the property.
@@ -143,22 +125,37 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - A unique identifier for an untitled parcel.
         /// </summary>
-        public string PIN { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to the area unit type.
-        /// </summary>
-        public string AreaUnitId { get; set; }
+        public int PIN { get; set; }
 
         /// <summary>
         /// get/set - Area Unit name.
         /// </summary>
-        public string AreaUnit { get; set; }
+        public TypeModel<string>  AreaUnit { get; set; }
 
         /// <summary>
         /// get/set - The land area of the parcel.
         /// </summary>
         public Single LandArea { get; set; }
+
+        /// <summary>
+        /// get/set - Whether the property is a volumetric parcel.
+        /// </summary>
+        public bool? IsVolumetricParcel { get; set; }
+
+        /// <summary>
+        /// get/set - The volumetric measurement of the parcel. Only applies if IsVolumetricParcel is true.
+        /// </summary>
+        public Single VolumetricMeasurement { get; set; }
+
+        /// <summary>
+        /// get/set - Volumetric Unit name.
+        /// </summary>
+        public TypeModel<string>  VolumetricUnit { get; set; }
+
+        /// <summary>
+        /// get/set - Volumetric parcel type. e.g. airspace / sub-surface
+        /// </summary>
+        public TypeModel<string>  VolumetricType { get; set; }
 
         /// <summary>
         /// get/set - The land legal description of the parcel.
@@ -174,6 +171,11 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// get/set - The property zoning potential.
         /// </summary>
         public string ZoningPotential { get; set; }
+
+        /// <summary>
+        /// get/set - The property notes.
+        /// </summary>
+        public string Notes { get; set; }
         #endregion
 
         public IEnumerable<LeaseModel> Leases { get; set; } = new List<LeaseModel>();
