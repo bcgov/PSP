@@ -1,17 +1,17 @@
 namespace Pims.Api.Models.Concepts
 {
-    public class PersonOrganizationModel : BaseModel
+    public class OrganizationPersonModel : BaseModel
     {
         #region Properties
         /// <summary>
-        /// get/set - The relationship person id.
+        /// get/set - The relationship person.
         /// </summary>
-        public long PersonId { get; set; }
+        public PersonModel Person { get; set; }
 
         /// <summary>
-        /// get/set - The relationship organization.
+        /// get/set - The relationship organization id.
         /// </summary>
-        public OrganizationModel Organization { get; set; }
+        public long OrganizationId { get; set; }
 
         /// <summary>
         /// get/set - True if the model is disabled.

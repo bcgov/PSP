@@ -24,7 +24,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="code"></param>
         /// <param name="country"></param>
-        public PimsProvinceState(string code, PimsCountry country):this()
+        public PimsProvinceState(string code, PimsCountry country) : this()
         {
             if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
 

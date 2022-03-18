@@ -16,13 +16,6 @@ export interface PimsApiModelsConceptsAddressModel {
   /** @format int64 */
   rowVersion?: number;
 
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
-
   /**
    * get/set - The primary key to identify the address.
    * @format int64
@@ -40,29 +33,70 @@ export interface PimsApiModelsConceptsAddressModel {
 
   /** get/set - The name of the municipality name. */
   municipality?: string | null;
-  province?: PimsApiModelsConceptsProvinceStateModel;
-  country?: PimsApiModelsConceptsCountryModel;
+
+  /** A codified model. */
+  province?: PimsApiModelsConceptsCodeTypeModel;
+
+  /** A codified model. */
+  country?: PimsApiModelsConceptsCodeTypeModel;
+
+  /** A codified model. */
+  district?: PimsApiModelsConceptsCodeTypeModel;
+
+  /** A codified model. */
+  region?: PimsApiModelsConceptsCodeTypeModel;
 
   /** get/set - The free-form value of country when country code is "Other". */
   countryOther?: string | null;
 
   /** get/set - The postal code. */
   postal?: string | null;
+
+  /**
+   * get/set - Addresss latitude coordinate.
+   * @format double
+   */
+  latitude?: number | null;
+
+  /**
+   * get/set - Addresss longitude coordinate.
+   * @format double
+   */
+  longitude?: number | null;
+
+  /** get/set - Addresss comment. */
+  comment?: string | null;
 }
 
 /**
- * Provides a contact-oriented contact method model.
+ * A codified model.
+ */
+export interface PimsApiModelsConceptsCodeTypeModel {
+  /**
+   * get/set - The primary key to identify code type.
+   * @format int32
+   */
+  id?: number;
+
+  /** get/set - The model's code type. */
+  code?: string | null;
+
+  /** get/set - The description or long name. */
+  description?: string | null;
+
+  /**
+   * get/set - The display order
+   * @format int32
+   */
+  displayOrder?: number | null;
+}
+
+/**
+ * Provides a Contact method model.
  */
 export interface PimsApiModelsConceptsContactMethodModel {
   /** @format int64 */
   rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
 
   /**
    * get/set - The primary key to identify the contact method.
@@ -77,33 +111,9 @@ export interface PimsApiModelsConceptsContactMethodModel {
   value?: string | null;
 }
 
-export interface PimsApiModelsConceptsCountryModel {
-  /** @format int64 */
-  rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
-
-  /** @format int32 */
-  countryId?: number;
-  countryCode?: string | null;
-  description?: string | null;
-}
-
 export interface PimsApiModelsConceptsOrganizationAddressModel {
   /** @format int64 */
   rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
 
   /**
    * get/set - The relationship id.
@@ -114,8 +124,11 @@ export interface PimsApiModelsConceptsOrganizationAddressModel {
   /** get/set - The relationship's disabled status flag. */
   isDisabled?: boolean;
 
-  /** Provides a contact-oriented organization model. */
-  organization?: PimsApiModelsConceptsOrganizationModel;
+  /**
+   * get/set - The organization id associated with the address.
+   * @format int64
+   */
+  organizationId?: number;
 
   /** Provides a contact-oriented address model. */
   address?: PimsApiModelsConceptsAddressModel;
@@ -130,13 +143,6 @@ export interface PimsApiModelsConceptsOrganizationAddressModel {
 export interface PimsApiModelsConceptsOrganizationModel {
   /** @format int64 */
   rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
 
   /**
    * get/set - The organization's id.
@@ -157,7 +163,7 @@ export interface PimsApiModelsConceptsOrganizationModel {
   incorporationNumber?: string | null;
 
   /** get/set - The organization and person relationships. */
-  personOrganizations?: PimsApiModelsConceptsPersonOrganizationModel[] | null;
+  organizationPersons?: PimsApiModelsConceptsOrganizationPersonModel[] | null;
 
   /** get/set - The organization's addresses. */
   organizationAddresses?: PimsApiModelsConceptsOrganizationAddressModel[] | null;
@@ -169,16 +175,24 @@ export interface PimsApiModelsConceptsOrganizationModel {
   comment?: string | null;
 }
 
+export interface PimsApiModelsConceptsOrganizationPersonModel {
+  /** @format int64 */
+  rowVersion?: number;
+  person?: PimsApiModelsConceptsPersonModel;
+
+  /**
+   * get/set - The relationship organization id.
+   * @format int64
+   */
+  organizationId?: number;
+
+  /** get/set - True if the model is disabled. */
+  isDisabled?: boolean;
+}
+
 export interface PimsApiModelsConceptsPersonAddressModel {
   /** @format int64 */
   rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
 
   /**
    * get/set - The relationship id.
@@ -188,7 +202,12 @@ export interface PimsApiModelsConceptsPersonAddressModel {
 
   /** get/set - The relationship's disabled status flag. */
   isDisabled?: boolean;
-  person?: PimsApiModelsConceptsPersonModel;
+
+  /**
+   * get/set - The person id associated with the address.
+   * @format int64
+   */
+  personId?: number;
 
   /** Provides a contact-oriented address model. */
   address?: PimsApiModelsConceptsAddressModel;
@@ -200,13 +219,6 @@ export interface PimsApiModelsConceptsPersonAddressModel {
 export interface PimsApiModelsConceptsPersonModel {
   /** @format int64 */
   rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
 
   /**
    * get/set - The person's id.
@@ -246,36 +258,17 @@ export interface PimsApiModelsConceptsPersonOrganizationModel {
   /** @format int64 */
   rowVersion?: number;
 
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
-  person?: PimsApiModelsConceptsPersonModel;
+  /**
+   * get/set - The relationship person id.
+   * @format int64
+   */
+  personId?: number;
 
   /** Provides a contact-oriented organization model. */
   organization?: PimsApiModelsConceptsOrganizationModel;
 
   /** get/set - True if the model is disabled. */
   isDisabled?: boolean;
-}
-
-export interface PimsApiModelsConceptsProvinceStateModel {
-  /** @format int64 */
-  rowVersion?: number;
-
-  /** @format date-time */
-  appCreateTimestamp?: string;
-
-  /** @format date-time */
-  updatedOn?: string;
-  updatedByName?: string | null;
-
-  /** @format int32 */
-  provinceStateId?: number;
-  provinceStateCode?: string | null;
-  description?: string | null;
 }
 
 /**

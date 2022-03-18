@@ -3,16 +3,11 @@ import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import Api_TypeCode from './TypeCode';
 
-export interface Api_Country extends Api_ConcurrentVersion {
-  countryId?: number;
-  countryCode?: string;
+export interface Api_CodeType extends Api_ConcurrentVersion {
+  id?: number;
+  code?: string;
   description?: string;
-}
-
-export interface Api_ProvinceState extends Api_ConcurrentVersion {
-  provinceStateId?: number;
-  provinceStateCode?: string;
-  description?: string;
+  displayOrder?: number;
 }
 
 export interface Api_Address extends Api_ConcurrentVersion {
@@ -21,10 +16,15 @@ export interface Api_Address extends Api_ConcurrentVersion {
   streetAddress2?: string;
   streetAddress3?: string;
   municipality?: string;
-  province: Api_ProvinceState;
-  country?: Api_Country;
-  countryOther?: string | null;
+  province?: Api_CodeType;
+  country?: Api_CodeType;
+  district?: Api_CodeType;
+  region?: Api_CodeType;
+  countryOther?: string;
   postal?: string;
+  latitude?: number;
+  longitude?: number;
+  comment?: string;
 }
 
 export interface Api_OrganizationAddress extends Api_ConcurrentVersion {

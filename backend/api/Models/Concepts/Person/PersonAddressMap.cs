@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -8,21 +7,21 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPersonAddress, Model.PersonAddressModel>()
-                .Map(dest => dest.Id, src => src.PersonId)
+            config.NewConfig<Entity.PimsPersonAddress, PersonAddressModel>()
+                .Map(dest => dest.Id, src => src.PersonAddressId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Person, src => src.Person)
+                .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.AddressUsageType, src => src.AddressUsageTypeCodeNavigation)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
-            config.NewConfig<Model.PersonAddressModel, Entity.PimsPersonAddress>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<PersonAddressModel, Entity.PimsPersonAddress>()
+                .Map(dest => dest.PersonAddressId, src => src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.PersonId, src => src.Person.Id)
+                .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.AddressId, src => src.Address.Id)
                 .Map(dest => dest.AddressUsageTypeCode, src => src.AddressUsageType.Id)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
+                .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }
 }
