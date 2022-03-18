@@ -13,6 +13,11 @@ PSP_PIMS S24.00 Sprint 24 2022-Mar-17
     - Set PROPERTY_AREA_UNIT_TYPE_CODE to nullable
   - BCA_FOLIO_ADDRESS
     - Add column ADDRESS_ID
+  - BCA*VALUE tables
+    - DESCRIPTION columns increased from 16 to 255 bytes
+- Altered views:
+  - PIMS_CONTACT_MGR_VW
+    - Added the subquery to the PERSON portion of the view
 - Requires additional metadata to meet standards
 
 PSP_PIMS S23.01 Sprint 23 2022-Mar-10
