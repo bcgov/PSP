@@ -118,6 +118,7 @@ export interface ILeaseSearchResultsProps {
   setSort?: (value: TableSort<ILeaseSearchResult>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
+  loading?: boolean;
 }
 
 export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
