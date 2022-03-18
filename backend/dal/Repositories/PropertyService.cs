@@ -146,6 +146,8 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(p => p.VolumetricTypeCodeNavigation)
+                .Include(p => p.VolumetricUnitTypeCodeNavigation)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)

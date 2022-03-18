@@ -37,6 +37,8 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.VolumetricUnit, src => src.VolumetricUnitTypeCodeNavigation)
                 .Map(dest => dest.VolumetricType, src => src.VolumetricTypeCodeNavigation)
 
+                .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
+
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
                 .Map(dest => dest.Zoning, src => src.Zoning)
                 .Map(dest => dest.ZoningPotential, src => src.ZoningPotential)

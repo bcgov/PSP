@@ -163,6 +163,11 @@ namespace Pims.Api.Areas.Property.Models.Property
         public string LandLegalDescription { get; set; }
 
         /// <summary>
+        /// get/set - The property municipal zoning name.
+        /// </summary>
+        public string MunicipalZoning { get; set; }
+
+        /// <summary>
         /// get/set - The property zoning name.
         /// </summary>
         public string Zoning { get; set; }
