@@ -7,17 +7,17 @@ namespace Pims.Api.Models
     public class ParentConcurrencyGuardModel<T>
     {
         /// <summary>
-        /// get/set - The page number.
+        /// get/set - The model wrapped by this concurrency guard.
         /// </summary>
         public T Payload { get; set; }
 
         /// <summary>
-        /// get/set - The page number.
+        /// get/set - The id of the parent entity.
         /// </summary>
         public long ParentId { get; set; }
 
         /// <summary>
-        /// get/set - The page number.
+        /// get/set - The row version of the parent entity.
         /// </summary>
         public long ParentRowVersion { get; set; }
     }
