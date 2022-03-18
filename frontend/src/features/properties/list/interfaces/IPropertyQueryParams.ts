@@ -1,4 +1,4 @@
-import { PropertyClassificationTypes, PropertyTypes } from 'constants/index';
+import { PropertyClassificationTypes } from 'constants/index';
 
 /**
  * IPropertyQueryParams interface, provides a model for querying the API for properties.
@@ -11,7 +11,6 @@ export interface IPropertyQueryParams {
   name?: string;
   municipality?: string;
   classificationId?: PropertyClassificationTypes;
-  propertyType?: PropertyTypes;
   organizations?: number | number[];
   minLandArea?: number;
   maxLandArea?: number;

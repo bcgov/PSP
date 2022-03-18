@@ -7,7 +7,6 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-  PropertyTypes,
 } from 'constants/index';
 import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -118,7 +117,6 @@ export const mockProperties = [
     id: 1,
     pid: '000-000-000',
     pin: '',
-    propertyTypeId: PropertyTypes.Land,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
@@ -148,7 +146,6 @@ export const mockProperties = [
     id: 2,
     pid: '000-000-001',
     pin: '',
-    propertyTypeId: PropertyTypes.Land,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
@@ -178,7 +175,6 @@ export const mockProperties = [
     id: 100,
     pid: '000-000-000',
     pin: '',
-    propertyTypeId: PropertyTypes.Building,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
@@ -208,15 +204,7 @@ export const mockProperties = [
 
 export const mockParcel = mockProperties[0];
 
-export const mockBuilding = mockProperties[2];
-
-export const mockBuildingDetail = {
-  propertyTypeId: PropertyTypes.Building,
-  propertyDetail: mockBuilding,
-};
-
 export const mockParcelDetail = {
-  propertyTypeId: PropertyTypes.Land,
   propertyDetail: mockParcel,
 };
 

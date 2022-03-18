@@ -2,7 +2,6 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
@@ -21,8 +20,8 @@ jest.mock('@react-keycloak/web');
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
+  { id: 1, latitude: 53.917065, longitude: -122.749672 },
+  { id: 2, latitude: 53.917065, longitude: -122.749672 },
 ] as IProperty[];
 
 jest.mock('hooks/useApi');
@@ -30,7 +29,6 @@ jest.mock('hooks/pims-api');
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
-  propertyTypeId: PropertyTypes.Land,
   propertyDetail: {
     ...mockParcel,
     latitude: 48,

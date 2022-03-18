@@ -11,6 +11,7 @@ interface IMapSideBar {
   setShowSideBar: (show: boolean, property?: IProperty) => void;
   setDisabled: (disabled: boolean) => void;
   disabled?: boolean;
+  pid?: string;
 }
 
 /** control the state of the side bar via query params. */
@@ -54,6 +55,7 @@ export const useMapSideBarQueryParams = (formikRef?: any): IMapSideBar => {
       const pathName = '/mapview';
       history.replace({ pathname: pathName, search: queryString.stringify(queryParams) });
     },
+    pid: searchParams.pid as string,
   };
 };
 

@@ -1,5 +1,4 @@
 import { TableSort } from 'components/Table/TableSort';
-import { PropertyTypes } from 'constants/index';
 import _ from 'lodash';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -38,7 +37,6 @@ const defaultFilter = {
   address: '',
   pid: '',
   pin: '',
-  propertyType: '',
   searchBy: 'pid',
 };
 
@@ -86,20 +84,12 @@ export const useRouterFilter = <T extends object>({
       const filterProps = Object.keys(filter);
       if (_.intersection(Object.keys(params), filterProps).length) {
         let merged = { ...defaultFilter, ...extractProps(filterProps, params) };
-        if (!merged.propertyType) {
-          merged = { ...merged, propertyType: PropertyTypes.Land };
-        }
         // Only change state if the query parameters are different than the default filter.
-        if (!_.isEqual(_.omit(merged, 'propertyType'), _.omit(filter, 'propertyType')))
-          setFilter(merged);
+        if (!_.isEqual(merged, filter)) setFilter(merged);
       } else if (savedFilter?.hasOwnProperty(key)) {
         let merged = { ...defaultFilter, ...extractProps(filterProps, savedFilter[key]) };
-        if (!merged.propertyType) {
-          merged = { ...merged, propertyType: PropertyTypes.Land };
-        }
         // Only change state if the saved filter is different than the default filter.
-        if (!_.isEqual(_.omit(merged, 'propertyType'), _.omit(filter, 'propertyType')))
-          setFilter(merged);
+        if (!_.isEqual(merged, filter)) setFilter(merged);
       }
 
       if (params.sorting && setSorting) {

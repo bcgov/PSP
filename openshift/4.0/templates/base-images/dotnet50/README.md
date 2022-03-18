@@ -4,21 +4,21 @@ To speed up the build of the DotNet 5.0 API import the following images into the
 The images provided by Red Hat do not work, instead use the images provided by Microsoft.
 
 ```bash
-oc import-image dotnet-aspnet --from=mcr.microsoft.com/dotnet/aspnet:5.0 --confirm
-oc import-image dotnet-sdk --from=mcr.microsoft.com/dotnet/sdk:5.0 --confirm
+oc import-image dotnet-aspnet --from=mcr.microsoft.com/dotnet/aspnet:6.0 --confirm
+oc import-image dotnet-sdk --from=mcr.microsoft.com/dotnet/sdk:6.0 --confirm
 ```
 
 Tag them to identify their version.
 
 ```bash
-oc tag dotnet-aspnet:latest dotnet-aspnet:5.0
-oc tag dotnet-sdk:latest dotnet-sdk:5.0
+oc tag dotnet-aspnet:latest dotnet-aspnet:6.0
+oc tag dotnet-sdk:latest dotnet-sdk:6.0
 ```
 
 Update the Dockerfile that is in the backend that will be used by API Build Configuration.
 
-- image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/dotnet-aspnet:5.0
-- image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/dotnet-sdk:5.0
+- image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/dotnet-aspnet:6.0
+- image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/dotnet-sdk:6.0
 
 ## RedHat DotNet Images
 

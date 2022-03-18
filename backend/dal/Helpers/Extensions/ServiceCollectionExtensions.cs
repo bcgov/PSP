@@ -20,7 +20,7 @@ namespace Pims.Dal
         /// </summary>
         /// <param name="repositories"></param>
         /// <returns></returns>
-        public static IServiceCollection AddPimsRepositories(this IServiceCollection repositories)
+        public static IServiceCollection AddPimsDalRepositories(this IServiceCollection repositories)
         {
             repositories.AddScoped<IPimsRepository, PimsRepository>();
             repositories.AddScoped<Repositories.IPropertyService, Repositories.PropertyService>();
@@ -51,7 +51,7 @@ namespace Pims.Dal
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddPimsServices(this IServiceCollection services)
+        public static IServiceCollection AddPimsDalServices(this IServiceCollection services)
         {
             services.AddScoped<IPimsService, PimsService>();
             services.AddScoped<ILeaseService, LeaseService>();
