@@ -110,14 +110,13 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
   const { values: lease } = useFormikContext<ILease>();
   const persons: Api_Person[] = getIn(lease, withNameSpace(nameSpace, 'persons')) ?? [];
 
-  const initialValues = new FormTenant(lease);
-  console.log(initialValues);
+  const tenantForm = new FormTenant(lease);
   const organizations: IOrganization[] =
     getIn(lease, withNameSpace(nameSpace, 'organizations')) ?? [];
 
   return (
     <FormSectionOne>
-      <Formik initialValues={initialValues} onSubmit={() => {}} enableReinitialize>
+      <Formik initialValues={tenantForm} onSubmit={() => {}} enableReinitialize>
         <FieldArray
           name={withNameSpace(nameSpace, 'properties')}
           render={renderProps => (

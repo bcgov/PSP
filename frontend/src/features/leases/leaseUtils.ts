@@ -3,6 +3,7 @@ import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
 import { IAddFormLease, ILease } from 'interfaces';
 import { getContactMethodValue } from 'utils/contactMethodUtil';
 import { stringToNull, stringToTypeCode } from 'utils/formUtils';
+import { formatNames } from 'utils/personUtils';
 
 import { IFormLease } from './../../interfaces/ILease';
 
@@ -10,14 +11,10 @@ import { IFormLease } from './../../interfaces/ILease';
  * return all of the person tenant names and organization tenant names of this lease
  * @param lease
  */
-export const getAllNames = (lease?: ILease) => {
+export const getAllNames = (lease?: ILease): string => {
   const allNames =
     lease?.persons
-      ?.map<string[]>(p =>
-        [p.firstName, p.middleNames, p.surname].filter<string>(
-          (n): n is string => n !== null && n !== undefined && n.length > 0,
-        ),
-      )
+      ?.map<string>(p => formatNames([p.firstName, p.middleNames, p.surname]))
       .concat(lease?.organizations?.map(p => p.name)) ?? [];
   return allNames.join(', ');
 };
@@ -71,7 +68,7 @@ export const apiLeaseToFormLease = (lease?: ILease) => {
             id: !!tenant.personId ? `P${tenant.personId}` : `O${tenant.organizationId}`,
           };
         }),
-      } as IFormLease)
+      } as IFormLease) // TODO, Type coercion might be hiding type issues
     : undefined;
 };
 
