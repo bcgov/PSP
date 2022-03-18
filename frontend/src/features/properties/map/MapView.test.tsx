@@ -15,8 +15,8 @@ import {
   PropertyTenureTypes,
   PropertyTypes,
 } from 'constants/index';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
+import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
 import { IProperty } from 'interfaces';
@@ -25,12 +25,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import {
-  IPropertyDetail,
-  IPropertyState,
-  propertiesSlice,
-  useProperties,
-} from 'store/slices/properties';
 import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
@@ -41,14 +35,8 @@ jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');
-jest.mock('features/properties/common/slices/usePropertyNames');
-jest.mock('store/slices/properties/useProperties');
+jest.mock('hooks/useProperties');
 jest.mock('hooks/pims-api');
-
-const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
-(usePropertyNames as any).mockImplementation(() => ({
-  fetchPropertyNames,
-}));
 
 (useProperties as any).mockImplementation(() => ({
   deleteParcel: jest.fn(),
@@ -96,7 +84,7 @@ let findOneWhereContains = jest.fn();
 });
 
 // This will spoof the active parcel (the one that will populate the popup details)
-const mockDetails: IPropertyDetail = {
+const mockDetails = {
   propertyTypeId: PropertyTypes.Land,
   propertyDetail: {
     id: 1,
@@ -142,11 +130,6 @@ const mockDetails: IPropertyDetail = {
 
 const store = mockStore({
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: {
-    propertyDetail: mockDetails,
-    draftProperties: [],
-    properties: mockParcels,
-  } as IPropertyState,
   [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 });
 
@@ -196,11 +179,7 @@ describe('MapView', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     return (
       <TestCommonWrapper store={store} history={history}>
-        <MapView
-          disableMapFilterBar={false}
-          showParcelBoundaries={true}
-          onMarkerPopupClosed={noop}
-        />
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={noop} />
       </TestCommonWrapper>
     );
   };
@@ -251,27 +230,6 @@ describe('MapView', () => {
   it('Renders markers when provided', async () => {
     await waitFor(() => render(getMap()));
     expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
-  });
-
-  it('Rendered markers can be clicked', async () => {
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
-    const text = await screen.findByText('Property Info');
-    expect(text).toBeVisible();
-  });
-
-  it('Rendered markers can be clicked and displayed with permissions', async () => {
-    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
-    const text = await screen.findByText('Property Info');
-    expect(text).toBeVisible();
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
@@ -367,8 +325,8 @@ describe('MapView', () => {
       fireEvent.click(map!);
     });
     expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 48.004625021133904,
-      lng: 123.00292968750001,
+      lat: 52.81604319154934,
+      lng: -124.67285156250001,
     });
   });
 
@@ -391,8 +349,8 @@ describe('MapView', () => {
       userEvent.click(map!);
     });
     expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 48.004625021133904,
-      lng: 123.00292968750001,
+      lat: 52.81604319154934,
+      lng: -124.67285156250001,
     });
     const closeButton = container.querySelector('.leaflet-popup-close-button');
     fireEvent.click(closeButton!);
@@ -430,5 +388,38 @@ describe('MapView', () => {
       const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
       expect(polyline).toBeVisible();
     });
+  });
+
+  it('Rendered markers can be clicked', async () => {
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Information');
+    expect(text).toBeVisible();
+  });
+
+  it('Rendered markers can be clicked and displayed with permissions', async () => {
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Information');
+    expect(text).toBeVisible();
+  });
+
+  it('Rendered markers can be clicked which hides the filter', async () => {
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Information');
+    expect(text).toBeVisible();
+    const label = await screen.queryByText('Search:');
+    expect(label).toBeNull();
   });
 });

@@ -3,16 +3,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
 import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
-import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import Map from './Map';
@@ -21,12 +18,6 @@ import { createPoints } from './mapUtils';
 const mockAxios = new MockAdapter(axios);
 
 jest.mock('@react-keycloak/web');
-
-jest.mock('features/properties/common/slices/usePropertyNames');
-const fetchPropertyNames = jest.fn(() => Promise.resolve(['test']));
-(usePropertyNames as jest.Mock<ReturnType<typeof usePropertyNames>>).mockReturnValue({
-  fetchPropertyNames,
-});
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
@@ -38,7 +29,7 @@ jest.mock('hooks/useApi');
 jest.mock('hooks/pims-api');
 
 // This will spoof the active parcel (the one that will populate the popup details)
-const mockDetails: IPropertyDetail = {
+const mockDetails = {
   propertyTypeId: PropertyTypes.Land,
   propertyDetail: {
     ...mockParcel,
@@ -49,8 +40,6 @@ const mockDetails: IPropertyDetail = {
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: { propertyDetail: mockDetails, draftProperties: [] },
-  [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 };
 
 // To check for alert message
@@ -77,7 +66,7 @@ const baseMapLayers = {
 
 interface TestProps {
   properties: IProperty[];
-  selectedProperty: IPropertyDetail | null;
+  selectedProperty: IProperty | null;
   disableMapFilterBar: boolean;
   zoom?: number;
   done?: () => void;
@@ -88,7 +77,7 @@ interface TestProps {
 function createProps(): TestProps {
   return {
     properties: mockParcels,
-    selectedProperty: mockDetails,
+    selectedProperty: mockDetails.propertyDetail,
     disableMapFilterBar: false,
     renderOptions: {
       useMockAuthentication: true,
@@ -181,17 +170,6 @@ describe('MapProperties View', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('should open the slide out when clicked', async () => {
-    const props = createProps();
-    const { component, ready, findSlideOutButton } = setup({ ...props, disableMapFilterBar: true });
-    await waitFor(() => ready);
-    const infoButton = findSlideOutButton();
-    userEvent.dblClick(infoButton);
-    const { findByText } = component;
-    const expectedText = await findByText(/Click a pin to view the property details/i);
-    expect(expectedText).toBeVisible();
-  });
-
   it('should open the layer list when clicked', async () => {
     const props = createProps();
     const { ready, findLayerListButton, findLayerListContainer } = setup({
@@ -233,16 +211,6 @@ describe('MapProperties View', () => {
     await waitFor(() => ready);
     const propertyFilter = findFilterBar();
     expect(propertyFilter).toBeNull();
-  });
-
-  it('should render a marker for selected property', async () => {
-    const props = createProps();
-    const { ready, findMapMarker } = setup(props);
-    await waitFor(() => ready);
-    const marker = findMapMarker() as HTMLImageElement;
-    expect(marker).toBeVisible();
-    expect(marker.src).toContain('assets/images/pins/land-reg-highlight.png');
-    expect(marker.className).not.toContain('marker-cluster');
   });
 
   it(`should render 0 markers when there are no parcels`, async () => {

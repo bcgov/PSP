@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb, Button } from 'react-bootstrap';
+import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
 import GenericModal from './GenericModal';
@@ -91,4 +92,37 @@ export const FlexBox = styled.div<IFlexBoxProps>`
       align-items: center;
       justify-content: center;
     `}
+`;
+
+export const Tabs = styled(BsTabs)`
+  background-color: white;
+  color: ${props => props.theme.css.slideOutBlue};
+  font-size: 1.4rem;
+  border-color: transparent;
+  .nav-tabs {
+    height: 2.4rem;
+  }
+  .nav-item {
+    min-width: 7rem;
+    padding: 0.1rem 0.6rem;
+
+    &:hover {
+      border-color: transparent;
+    }
+    &.active {
+      background-color: ${props => props.theme.css.filterBackgroundColor};
+      font-family: 'BCSans-Bold';
+      color: ${props => props.theme.css.slideOutBlue};
+      border-color: transparent;
+    }
+  }
+`;
+
+export const H1 = styled.h1`
+  color: ${props => props.theme.css.textColor};
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem ${props => props.theme.css.primaryLightColor};
+  width: 100%;
+  text-align: left;
 `;

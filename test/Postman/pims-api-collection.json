@@ -1,7 +1,7 @@
 {
   "info": {
-    "_postman_id": "4cb84ac7-89ce-4b5d-9021-343ab49241d0",
-    "name": "PIMS",
+    "_postman_id": "b13e01e4-6c69-4795-9366-8cfea9d351a3",
+    "name": "PIMS Copy",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -2087,7 +2087,7 @@
                         "header": [],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\r\n  \"integratorUsername\": \"MOT_INTEGRATOR_TEST\",\r\n  \"integratorPassword\": \"M0+Int20!9\",\r\n  \"myLtsaUserName\": \"SOOKEKE\",\r\n  \"myLtsaUserPassword\": \"Password1!\"\r\n}",
+                          "raw": "{\r\n}",
                           "options": {
                             "raw": {
                               "language": "json"
@@ -2095,9 +2095,9 @@
                           }
                         },
                         "url": {
-                          "raw": "https://appstest3.ltsa.ca/iam/api/auth/login/integrator",
+                          "raw": "https://appsuat.ltsa.ca/iam/api/auth/login/integrator",
                           "protocol": "https",
-                          "host": ["appstest3", "ltsa", "ca"],
+                          "host": ["appsuat", "ltsa", "ca"],
                           "path": ["iam", "api", "auth", "login", "integrator"]
                         }
                       },
@@ -2125,9 +2125,9 @@
                           }
                         ],
                         "url": {
-                          "raw": "https://tdtest3-x42b.ltsa.ca/titledirect/search/api/titleSummaries/?filter=titleNumber:BN23592",
+                          "raw": "https://tduat-x42b.ltsa.ca/titledirect/search/api/titleSummaries/?filter=titleNumber:BN23592",
                           "protocol": "https",
-                          "host": ["tdtest3-x42b", "ltsa", "ca"],
+                          "host": ["tduat-x42b", "ltsa", "ca"],
                           "path": [
                             "titledirect",
                             "search",
@@ -2171,9 +2171,9 @@
                           }
                         },
                         "url": {
-                          "raw": "https://tdtest3-x42b.ltsa.ca/titledirect/search/api/orders",
+                          "raw": "https://tduat-x42b.ltsa.ca/titledirect/search/api/orders",
                           "protocol": "https",
-                          "host": ["tdtest3-x42b", "ltsa", "ca"],
+                          "host": ["tduat-x42b", "ltsa", "ca"],
                           "path": ["titledirect", "search", "api", "orders"]
                         }
                       },

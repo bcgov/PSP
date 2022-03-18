@@ -45,6 +45,10 @@ exports[`SideNavbar display and logic renders 1`] = `
   flex-shrink: 0;
 }
 
+.c1 .nav-link {
+  padding: 0.8rem 1.6rem;
+}
+
 .c0 {
   z-index: 1000;
   position: relative;
