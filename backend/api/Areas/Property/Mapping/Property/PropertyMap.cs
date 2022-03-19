@@ -47,10 +47,6 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
 
                 .Map(dest => dest.Address, src => src.Address)
-                .Map(dest => dest.RegionId, src => src.RegionCode)
-                .Map(dest => dest.Region, src => src.RegionCodeNavigation != null ? src.RegionCodeNavigation.RegionName : null)
-                .Map(dest => dest.DistrictId, src => src.DistrictCode)
-                .Map(dest => dest.District, src => src.DistrictCodeNavigation.DistrictName)
                 .Map(dest => dest.Leases, src => src.GetLeases())
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
         }

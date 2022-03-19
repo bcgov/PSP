@@ -94,26 +94,6 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// get/set - The address of the property.
         /// </summary>
         public AddressModel Address { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to the region.
-        /// </summary>
-        public int RegionId { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the region.
-        /// </summary>
-        public string Region { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to the district.
-        /// </summary>
-        public int DistrictId { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the district.
-        /// </summary>
-        public string District { get; set; }
         #endregion
 
         #region Parcel Properties

@@ -6,13 +6,17 @@ export interface Api_Property extends Api_ConcurrentVersion {
   id: number;
   pid?: string;
   pin?: number;
-  zoning: string;
-  notes: string;
+  zoning?: string;
+  municipalZoning?: string;
+  notes?: string;
 
   name?: string;
   description?: string;
   isSensitive: boolean;
   isProvincialPublicHwy?: boolean;
+
+  latitude?: number;
+  longitude?: number;
 
   landArea?: number;
   areaUnit?: Api_TypeCode<string>;

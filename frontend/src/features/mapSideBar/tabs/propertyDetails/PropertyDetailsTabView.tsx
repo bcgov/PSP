@@ -112,6 +112,11 @@ const defaultPropertyInfo: Api_Property = {
     description: 'Adjacent Land',
     isDisabled: false,
   },
+  roadType: {
+    id: 'GAZSURVD',
+    description: 'Gazetted (Surveyed)',
+    isDisabled: false,
+  },
   adjacentLand: {
     id: 'PRIVATE',
     description: 'Private (Fee Simple)',
@@ -137,16 +142,16 @@ const defaultPropertyInfo: Api_Property = {
     streetAddress3: 'A Hoot and a holler from the A&W',
     municipality: 'North Podunk',
     province: {
-      provinceStateId: 1,
-      provinceStateCode: 'BC',
+      id: 1,
+      code: 'BC',
       description: 'British Columbia',
-      rowVersion: 0,
+      displayOrder: 10,
     },
     country: {
-      countryId: 1,
-      countryCode: 'CA',
+      id: 1,
+      code: 'CA',
       description: 'Canada',
-      rowVersion: 1,
+      displayOrder: 1,
     },
     postal: 'IH8 B0B',
     rowVersion: 1,
@@ -159,9 +164,19 @@ const defaultPropertyInfo: Api_Property = {
     isDisabled: false,
   },
   landArea: 1,
-  isVolumetricParcel: false,
-  volumetricMeasurement: 0,
+  isVolumetricParcel: true,
+  volumetricMeasurement: 150,
+  volumetricUnit: {
+    id: 'FEET3',
+    description: 'Feet cubed',
+    isDisabled: false,
+  },
+  volumetricType: {
+    isDisabled: false,
+  },
+  municipalZoning: 'Some municipal zoning comments',
   zoning: 'Lorem ipsum',
-  notes: 'Lorem ipsum',
-  rowVersion: 5,
+  notes:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.',
+  rowVersion: 6,
 };
