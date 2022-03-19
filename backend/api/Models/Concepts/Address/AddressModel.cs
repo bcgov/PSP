@@ -1,11 +1,9 @@
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
-    /// Provides an address model.
-    /// Doesn't include the concept of address type (e.g. MAILING, BILLING etc).
-    /// For that you should use ContactAddressModel
+    /// Provides a contact-oriented address model.
     /// </summary>
-    public class AddressModel : BaseAppModel
+    public class AddressModel : BaseModel
     {
         #region Properties
         /// <summary>
@@ -36,13 +34,22 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The address's province.
         /// </summary>
-        public ProvinceStateModel Province { get; set; }
+        public CodeTypeModel Province { get; set; }
 
         /// <summary>
         /// get/set - The address's country.
         /// </summary>
-        public CountryModel Country { get; set; }
+        public CodeTypeModel Country { get; set; }
 
+        /// <summary>
+        /// get/set - The address's district.
+        /// </summary>
+        public CodeTypeModel District { get; set; }
+
+        /// <summary>
+        /// get/set - The address's region.
+        /// </summary>
+        public CodeTypeModel Region { get; set; }
         /// <summary>
         /// get/set - The free-form value of country when country code is "Other".
         /// </summary>
@@ -52,6 +59,21 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The postal code.
         /// </summary>
         public string Postal { get; set; }
+
+        /// <summary>
+        /// get/set - Addresss latitude coordinate.
+        /// </summary>
+        public decimal? Latitude { get; set; }
+
+        /// <summary>
+        /// get/set - Addresss longitude coordinate.
+        /// </summary>
+        public decimal? Longitude { get; set; }
+
+        /// <summary>
+        /// get/set - Addresss comment.
+        /// </summary>
+        public string Comment { get; set; }
         #endregion
     }
 }
