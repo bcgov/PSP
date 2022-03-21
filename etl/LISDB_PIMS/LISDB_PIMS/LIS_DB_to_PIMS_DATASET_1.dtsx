@@ -12,8 +12,8 @@
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="275"
-  DTS:VersionGUID="{13F7CCA3-2622-4996-8E5B-11D3B8A39DF5}">
+  DTS:VersionBuild="276"
+  DTS:VersionGUID="{0A0E39C6-3D1C-41E7-958B-F64507AF8B15}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -38,11 +38,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;User ID=PIMS_TST;Initial Catalog=PIMS_TST;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;User ID=PIMS_TST;Initial Catalog=PIMS_TST;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -10026,110 +10022,110 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   name="Data Conversion Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Amount to Currency.Outputs[Data Conversion Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
-                  endId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output]" />
-                <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output12]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 3]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match 2.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 3]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Handle &quot;Nominal&quot;.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No_Null.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
-                  endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Get PID.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Force Size of Caterogy and Purpose Codes.Inputs[Data Conversion Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Inputs[Lookup Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME LOOKUP TAG.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Amount to Currency.Inputs[Data Conversion Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
-                  endId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Inputs[Lookup Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PMT_FRQ_TP, PRGRM_TP, LS_NTS.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\Get PID.Inputs[Derived Column Input]"
                   name="Derived Column Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Outputs[Derived Column Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
+                  endId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Inputs[Lookup Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PMT_FRQ_TP, PRGRM_TP, LS_NTS.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Amount to Currency.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
+                  endId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Inputs[Lookup Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME LOOKUP TAG.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Force Size of Caterogy and Purpose Codes.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
+                  endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Get PID.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
                   endId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Inputs[Derived Column Input]"
                   name="Derived Column Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Handle &quot;Nominal&quot;.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 3]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 3]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match 2.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
+                  endId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No_Null.Outputs[Derived Column Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup No Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Inputs[Derived Column Input]"
@@ -10171,6 +10167,11 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   name="OLE DB Source Output"
                   startId="Package\Main Flow 1\LOAD LEASES\t_leasing + PID.Outputs[OLE DB Source Output]" />
                 <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+                  endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
+                  name="Union All Output 1"
+                  startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
+                <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
                   name="Union All Output 1"
@@ -10180,11 +10181,6 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
-                  endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
-                  name="Union All Output 1"
-                  startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
                   endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
@@ -13392,7 +13388,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
           TopLeft="842,1264">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13428,7 +13424,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
           TopLeft="485,654">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13464,7 +13460,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
           TopLeft="1464.42857142857,1809.60714285714">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13488,7 +13484,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
           TopLeft="770.642857142857,847">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13512,7 +13508,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
           TopLeft="482.5,412">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13536,7 +13532,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
           TopLeft="1214,1067">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13572,7 +13568,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
           TopLeft="1111.5,1401.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13608,7 +13604,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output12]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
           TopLeft="848,405">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13642,7 +13638,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
           TopLeft="1373.83333333333,1262">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13664,7 +13660,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
           TopLeft="1160.11111111111,1531.83333333333">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13686,7 +13682,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
           TopLeft="1476.64285714286,849">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13720,7 +13716,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
           TopLeft="1317.5,983">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13754,7 +13750,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
           TopLeft="820.5,655">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13788,7 +13784,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
           TopLeft="733,1640">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13810,7 +13806,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
           TopLeft="2016,1812.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13832,7 +13828,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
           TopLeft="1294,1616.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13854,7 +13850,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
           TopLeft="1112.42857142857,1812.57142857143">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13876,7 +13872,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
           TopLeft="734.714285714286,1742">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13898,7 +13894,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
           TopLeft="482.25,330">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13920,7 +13916,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output12]"
           TopLeft="1822.28571428572,1810.82142857143">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -14084,7 +14080,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1"
           TopLeft="2155,1562" />
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
           TopLeft="2063,1584">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -14168,6 +14164,29 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[t_leasingsubpurpose]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Main Flow 1\LOAD LEASES\TFA_File_Number">
     <Properties>
       <Property>
@@ -14191,23 +14210,8 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\PSFile_No">
+    design-time-name="Package\Main Flow 1\LOAD LEASES\t_leasing + PID">
     <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -14250,29 +14254,6 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[t_leasingsubpurpose]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON">
     <Properties>
       <Property>
@@ -14296,14 +14277,6 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\t_leasing + PID">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code">
     <Properties>
       <Property>
@@ -14315,6 +14288,29 @@ where [refTable].[PID] = ?</property>
         <Name>UsedTableName</Name>
         <Value
           type="q3:string">[dbo].[PIMS_LEASE_PURPOSE_TYPE]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Main Flow 1\LOAD LEASES\PSFile_No">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
