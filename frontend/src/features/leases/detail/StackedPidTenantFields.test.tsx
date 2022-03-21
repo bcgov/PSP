@@ -33,7 +33,7 @@ describe('StackedPidTenantFields component', () => {
       lease: {
         ...defaultLease,
         properties: [{ pid: '111-111-111' } as any],
-        persons: [{ fullName: 'first last' }],
+        persons: [{ firstName: 'First', surname: 'Last' }],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -54,7 +54,9 @@ describe('StackedPidTenantFields component', () => {
   it('renders tenant appropriately', () => {
     const {
       component: { getByText },
-    } = setup({ lease: { ...defaultLease, persons: [{ fullName: 'first last' }] } });
-    expect(getByText('first last')).toBeVisible();
+    } = setup({
+      lease: { ...defaultLease, persons: [{ firstName: 'tenantFirst', surname: 'tenantSurname' }] },
+    });
+    expect(getByText('tenantFirst tenantSurname')).toBeVisible();
   });
 });
