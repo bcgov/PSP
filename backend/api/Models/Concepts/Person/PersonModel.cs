@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
-    public class PersonModel : BaseAppModel
+    public class PersonModel : BaseModel
     {
         #region Properties
         /// <summary>
@@ -38,23 +38,12 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The person's organizations.
         /// </summary>
-        public IList<OrganizationModel> Organizations { get; set; }
-
-        /// <summary>
-        /// get/set - The primary key to identify the person-organization link (optional).
-        /// </summary>
-        public long? PersonOrganizationId { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version for the person-organization link (optional).
-        /// </summary>
-        /// <value></value>
-        public long? PersonOrganizationRowVersion { get; set; }
+        public IList<PersonOrganizationModel> PersonOrganizations { get; set; }
 
         /// <summary>
         /// get/set - The person's addresses.
         /// </summary>
-        public IList<AddressModel> Addresses { get; set; }
+        public IList<PersonAddressModel> PersonAddresses { get; set; }
 
         /// <summary>
         /// get/set - The person's contact methods.

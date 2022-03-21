@@ -22,11 +22,12 @@ export interface IDepositsContainerProps {}
 
 export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps> = () => {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const { values } = useFormikContext<IFormLease>();
+  const { values, setFieldValue } = useFormikContext<IFormLease>();
   const securityDeposits: Api_SecurityDeposit[] = getIn(values, 'securityDeposits') ?? [];
   const depositReturns: Api_SecurityDepositReturn[] = securityDeposits.flatMap(
     x => x.depositReturns,
   );
+  const [editNotes, setEditNotes] = useState<boolean>(false);
 
   const [showDepositEditModal, setShowEditModal] = useState<boolean>(false);
   const [deleteModalWarning, setDeleteModalWarning] = useState<boolean>(false);
@@ -46,7 +47,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
     undefined,
   );
 
-  const { updateLeaseDeposit, removeLeaseDeposit } = useLeaseDeposits();
+  const { updateLeaseDeposit, updateLeaseDepositNote, removeLeaseDeposit } = useLeaseDeposits();
   const { updateLeaseDepositReturn, removeLeaseDepositReturn } = useLeaseDepositReturns();
 
   const onAddDeposit = () => {
@@ -196,7 +197,26 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       />
 
       <FormSection>
-        <DepositNotes disabled={true} />
+        <DepositNotes
+          disabled={!editNotes}
+          onEdit={() => setEditNotes(true)}
+          onSave={async (notes: string) => {
+            const updatedLease = await updateLeaseDepositNote({
+              payload: { note: notes },
+              parentId: lease?.id,
+              parentRowVersion: lease?.rowVersion,
+            } as IParentConcurrencyGuard<{ note: string }>);
+            if (updatedLease?.id) {
+              setLease(updatedLease);
+              setEditNotes(false);
+            }
+            return updatedLease;
+          }}
+          onCancel={() => {
+            setEditNotes(false);
+            setFieldValue('returnNotes', lease?.returnNotes ?? '');
+          }}
+        />
       </FormSection>
 
       <GenericModal

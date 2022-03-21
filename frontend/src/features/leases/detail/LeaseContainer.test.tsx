@@ -15,7 +15,7 @@ const mockLease: ILease = {
   expiryDate: '2000-01-01',
   lFileNo: '111-222-333',
   properties: [{ pid: '987-654-321' } as any],
-  persons: [{ fullName: 'First Last' }],
+  persons: [{ firstName: 'First', surname: 'Last' }],
   organizations: [mockOrganization],
 };
 

@@ -1,5 +1,5 @@
 import { TableSelect } from 'components/common/form';
-import AddLeaseFormButtons from 'features/leases/add/AddLeaseFormButtons';
+import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import { defaultFormLease, IContactSearchResult, IFormLease } from 'interfaces';
 import * as React from 'react';
@@ -59,7 +59,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProp
                   selectedTenants={selectedTenants}
                 />
               </TableSelect>
-              <AddLeaseFormButtons formikProps={formikProps} onCancel={onCancel} />
+              <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
             </StyledFormBody>
           </>
         )}
