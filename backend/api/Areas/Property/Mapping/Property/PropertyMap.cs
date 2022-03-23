@@ -12,13 +12,14 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.Id, src => src.PropertyId)
                 .Map(dest => dest.PID, src => src.ParcelIdentity)
                 .Map(dest => dest.PIN, src => src.Pin)
-
-                .Map(dest => dest.PropertyType, src => src.PropertyTypeCodeNavigation)
-                .Map(dest => dest.Anomalies, src => src.PropertyAnomalyTypeCodeNavigation)
-                .Map(dest => dest.Tenure, src => src.PropertyTenureTypeCodeNavigation)
-                .Map(dest => dest.RoadType, src => src.PropertyRoadTypeCodeNavigation)
-                .Map(dest => dest.AdjacentLand, src => src.PropertyAdjacentLandTypeCodeNavigation)
                 .Map(dest => dest.Status, src => src.PropertyStatusTypeCodeNavigation)
+                .Map(dest => dest.PropertyType, src => src.PropertyTypeCodeNavigation)
+
+                // TODO: These navigation properties will be changed to many to many in next DB schema change
+                .Map(dest => dest.Anomalies, src => src.PropertyAnomalyTypeCodeNavigation != null ? new[] { src.PropertyAnomalyTypeCodeNavigation } : null)
+                .Map(dest => dest.Tenure, src => src.PropertyTenureTypeCodeNavigation != null ? new[] { src.PropertyTenureTypeCodeNavigation } : null)
+                .Map(dest => dest.RoadType, src => src.PropertyRoadTypeCodeNavigation != null ? new[] { src.PropertyRoadTypeCodeNavigation } : null)
+                .Map(dest => dest.AdjacentLand, src => src.PropertyAdjacentLandTypeCodeNavigation != null ? new[] { src.PropertyAdjacentLandTypeCodeNavigation } : null)
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
                 .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)

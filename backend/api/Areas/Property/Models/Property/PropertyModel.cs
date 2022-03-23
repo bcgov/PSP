@@ -25,22 +25,22 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - The property anomalies.
         /// </summary>
-        public TypeModel<string> Anomalies { get; set; }
+        public IList<TypeModel<string>> Anomalies { get; set; }
 
         /// <summary>
         /// get/set - The tenure description.
         /// </summary>
-        public TypeModel<string> Tenure { get; set; }
+        public IList<TypeModel<string>> Tenure { get; set; }
 
         /// <summary>
         /// get/set - The road type description.
         /// </summary>
-        public TypeModel<string> RoadType { get; set; }
+        public IList<TypeModel<string>> RoadType { get; set; }
 
         /// <summary>
         /// get/set - The adjacent land description.
         /// </summary>
-        public TypeModel<string> AdjacentLand { get; set; }
+        public IList<TypeModel<string>> AdjacentLand { get; set; }
 
         /// <summary>
         /// get/set - The status description.

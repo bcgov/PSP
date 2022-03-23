@@ -1,13 +1,17 @@
 import { GeoJsonProperties } from 'geojson';
 import { Api_Property } from 'models/api/Property';
 
-export interface IPropertyDetailsForm extends Api_Property {
-  motiRegion?: GeoJsonProperties;
-  highwaysDistrict?: GeoJsonProperties;
-  electoralDistrict?: GeoJsonProperties;
-  isALR?: boolean;
-  firstNations?: IFirstNationsInfo;
-}
+export interface IPropertyDetailsForm
+  extends ExtendOverride<
+    Api_Property,
+    {
+      motiRegion?: GeoJsonProperties;
+      highwaysDistrict?: GeoJsonProperties;
+      electoralDistrict?: GeoJsonProperties;
+      isALR?: boolean;
+      firstNations?: IFirstNationsInfo;
+    }
+  > {}
 
 export interface IFirstNationsInfo {
   bandName?: string;
@@ -28,6 +32,24 @@ export function toFormValues(apiData: Api_Property): IPropertyDetailsForm {
   };
 }
 
+export const readOnlyMultiSelectStyle = {
+  multiselectContainer: {
+    opacity: 1,
+  },
+  searchBox: {
+    border: 'none',
+    padding: 0,
+  },
+  chips: {
+    opacity: 1,
+    background: '#F2F2F2',
+    borderRadius: '4px',
+    color: 'black',
+    fontSize: '16px',
+    marginRight: '1em',
+  },
+};
+
 export const defaultPropertyInfo: Api_Property = {
   id: 1,
   propertyType: {
@@ -35,26 +57,34 @@ export const defaultPropertyInfo: Api_Property = {
     description: 'Titled',
     isDisabled: false,
   },
-  anomalies: {
-    id: 'ACCESS',
-    description: 'Access',
-    isDisabled: false,
-  },
-  tenure: {
-    id: 'ADJLAND',
-    description: 'Adjacent Land',
-    isDisabled: false,
-  },
-  roadType: {
-    id: 'GAZSURVD',
-    description: 'Gazetted (Surveyed)',
-    isDisabled: false,
-  },
-  adjacentLand: {
-    id: 'PRIVATE',
-    description: 'Private (Fee Simple)',
-    isDisabled: false,
-  },
+  anomalies: [
+    {
+      id: 'ACCESS',
+      description: 'Access',
+      isDisabled: false,
+    },
+  ],
+  tenure: [
+    {
+      id: 'ADJLAND',
+      description: 'Adjacent Land',
+      isDisabled: false,
+    },
+  ],
+  roadType: [
+    {
+      id: 'GAZSURVD',
+      description: 'Gazetted (Surveyed)',
+      isDisabled: false,
+    },
+  ],
+  adjacentLand: [
+    {
+      id: 'PRIVATE',
+      description: 'Private (Fee Simple)',
+      isDisabled: false,
+    },
+  ],
   status: {
     id: 'MOTIADMIN',
     description: 'Under MoTI administration',

@@ -26,12 +26,14 @@ export interface Api_Property extends Api_ConcurrentVersion {
   volumetricUnit?: Api_TypeCode<string>;
   volumetricType?: Api_TypeCode<string>;
 
-  anomalies?: Api_TypeCode<string>;
   propertyType: Api_TypeCode<string>;
-  tenure: Api_TypeCode<string>;
-  roadType?: Api_TypeCode<string>;
-  adjacentLand?: Api_TypeCode<string>;
   status?: Api_TypeCode<string>;
+
+  // multi-selects
+  anomalies?: Api_TypeCode<string>[];
+  tenure: Api_TypeCode<string>[];
+  roadType?: Api_TypeCode<string>[];
+  adjacentLand?: Api_TypeCode<string>[];
 
   dataSource?: Api_TypeCode<string>;
   dataSourceEffectiveDate?: string;
