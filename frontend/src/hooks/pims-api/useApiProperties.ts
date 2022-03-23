@@ -2,6 +2,7 @@ import { IPaginateProperties } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
 import { IPagedItems, IProperty } from 'interfaces';
+import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -41,7 +42,7 @@ export const useApiProperties = () => {
         api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getPropertyWithPid: (pid: string) => api.get<IProperty>(`/properties/${pid}`),
+      getPropertyWithPid: (pid: string) => api.get<Api_Property>(`/properties/${pid}`),
       getProperty: (id: number) => api.get<IProperty>(`/properties/${id}`),
       postProperty: (property: IProperty) =>
         apiWithPropertyCreatingToasts.post<IProperty>(`/properties`, property),

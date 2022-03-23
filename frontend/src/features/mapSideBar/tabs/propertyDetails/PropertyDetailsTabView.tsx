@@ -1,38 +1,47 @@
 import { Input } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { Formik } from 'formik';
-import { IProperty } from 'interfaces';
 import noop from 'lodash/noop';
-import { Api_Property } from 'models/api/Property';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { Section } from '../Section';
 import { SectionField } from '../SectionField';
-import { StyledReadOnlyForm, StyledScrollable } from '../SectionStyles';
+import { StyledReadOnlyForm, StyledScrollable, StyledText } from '../SectionStyles';
+import {
+  defaultPropertyInfo,
+  IPropertyDetailsForm,
+  toFormValues,
+} from './PropertyDetailsTabView.helpers';
 
-interface IInventoryPropertyDetailsProps {
-  details?: IProperty;
+interface IPropertyDetailsTabView {
+  details?: IPropertyDetailsForm;
 }
 
 /**
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FC<IInventoryPropertyDetailsProps> = ({ details }) => {
+export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ details }) => {
+  const values = details ?? toFormValues(defaultPropertyInfo);
+
   return (
     <StyledScrollable>
-      <Formik
-        initialValues={details ?? defaultPropertyInfo}
-        onSubmit={noop}
-        enableReinitialize={true}
-      >
+      <Formik initialValues={values} onSubmit={noop} enableReinitialize={true}>
         <StyledReadOnlyForm>
           <Section header="Property attributes">
-            <SectionField label="MOTI region">TBD</SectionField>
-            <SectionField label="Highways district">TBD</SectionField>
-            <SectionField label="Electoral district">TBD</SectionField>
-            <SectionField label="Agricultural Land Reserve">TBD</SectionField>
+            <SectionField label="MOTI region">
+              <Input disabled field="motiRegion" />
+            </SectionField>
+            <SectionField label="Highways district">
+              <Input disabled field="highwaysDistrict" />
+            </SectionField>
+            <SectionField label="Electoral district">
+              <Input disabled field="electoralDistrict" />
+            </SectionField>
+            <SectionField label="Agricultural Land Reserve">
+              <StyledText>{values.isALR ? 'Yes' : 'No'}</StyledText>
+            </SectionField>
             <SectionField label="Land parcel type">
               <Input disabled field="propertyType.description" />
             </SectionField>
@@ -93,90 +102,4 @@ export const PropertyDetailsTabView: React.FC<IInventoryPropertyDetailsProps> = 
       </Formik>
     </StyledScrollable>
   );
-};
-
-const defaultPropertyInfo: Api_Property = {
-  id: 1,
-  propertyType: {
-    id: 'TITLED',
-    description: 'Titled',
-    isDisabled: false,
-  },
-  anomalies: {
-    id: 'ACCESS',
-    description: 'Access',
-    isDisabled: false,
-  },
-  tenure: {
-    id: 'ADJLAND',
-    description: 'Adjacent Land',
-    isDisabled: false,
-  },
-  roadType: {
-    id: 'GAZSURVD',
-    description: 'Gazetted (Surveyed)',
-    isDisabled: false,
-  },
-  adjacentLand: {
-    id: 'PRIVATE',
-    description: 'Private (Fee Simple)',
-    isDisabled: false,
-  },
-  status: {
-    id: 'MOTIADMIN',
-    description: 'Under MoTI administration',
-    isDisabled: false,
-  },
-  dataSource: {
-    id: 'PAIMS',
-    description: 'Property Acquisition and Inventory Management System (PAIMS)',
-    isDisabled: false,
-  },
-  dataSourceEffectiveDate: '2021-08-31T00:00:00',
-  isSensitive: false,
-  isProvincialPublicHwy: false,
-  address: {
-    id: 204,
-    streetAddress1: '456 Souris Street',
-    streetAddress2: 'PO Box 250',
-    streetAddress3: 'A Hoot and a holler from the A&W',
-    municipality: 'North Podunk',
-    province: {
-      id: 1,
-      code: 'BC',
-      description: 'British Columbia',
-      displayOrder: 10,
-    },
-    country: {
-      id: 1,
-      code: 'CA',
-      description: 'Canada',
-      displayOrder: 1,
-    },
-    postal: 'IH8 B0B',
-    rowVersion: 1,
-  },
-  pid: '007-723-385',
-  pin: 90069930,
-  areaUnit: {
-    id: 'HA',
-    description: 'Hectare',
-    isDisabled: false,
-  },
-  landArea: 1,
-  isVolumetricParcel: true,
-  volumetricMeasurement: 150,
-  volumetricUnit: {
-    id: 'FEET3',
-    description: 'Feet cubed',
-    isDisabled: false,
-  },
-  volumetricType: {
-    isDisabled: false,
-  },
-  municipalZoning: 'Some municipal zoning comments',
-  zoning: 'Lorem ipsum',
-  notes:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.',
-  rowVersion: 6,
 };

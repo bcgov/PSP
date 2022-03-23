@@ -5,6 +5,7 @@ import { catchAxiosError } from 'customAxios';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
 import { IProperty } from 'interfaces';
+import { Api_Property } from 'models/api/Property';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -98,7 +99,7 @@ export const useProperties = () => {
    * @param params PID of the property
    */
   const fetchPropertyWithPid = useCallback(
-    async (pid: string): Promise<IProperty> => {
+    async (pid: string): Promise<Api_Property> => {
       dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
       dispatch(showLoading());
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
@@ -110,7 +111,7 @@ export const useProperties = () => {
       ])
         .then(([apiProperty, wfsResponse]) => {
           const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: IProperty = {
+          const property: Api_Property = {
             ...apiProperty.data,
             latitude,
             longitude,
