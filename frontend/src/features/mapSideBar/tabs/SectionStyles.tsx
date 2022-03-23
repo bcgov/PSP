@@ -35,3 +35,7 @@ export const StyledReadOnlyForm = styled(Form)`
     }
   }
 `;
+
+export const StyledText = styled.span`
+  color: ${props => props.theme.css.formControlTextColor};
+`;
