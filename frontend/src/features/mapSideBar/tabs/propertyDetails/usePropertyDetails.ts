@@ -53,18 +53,20 @@ export function usePropertyDetails(pid?: string) {
         return;
       }
       // query BC Geographic Warehouse layers
-      const moti = await findByLocation(motiRegionService, location, 'GEOMETRY');
-      const highway = await findByLocation(highwaysDistrictService, location, 'GEOMETRY');
-      const electoral = await findByLocation(electoralService, location);
-      const alr = await findByLocation(alrService, location, 'GEOMETRY');
+      const motiRegion = await findByLocation(motiRegionService, location, 'GEOMETRY');
+      const highwaysDistrict = await findByLocation(highwaysDistrictService, location, 'GEOMETRY');
+      const electoralDistrict = await findByLocation(electoralService, location);
+      const alr = await alrService.findOneWhereContains(location, 'GEOMETRY');
 
       if (isMounted()) {
         setPropertyDetails(prevState => {
           if (prevState !== undefined) {
             return {
               ...prevState,
-              motiRegion: moti?.REGION_NAME,
-              highwaysDistrict: highway?.a,
+              motiRegion,
+              highwaysDistrict,
+              electoralDistrict,
+              isALR: alr?.features?.length > 0,
             };
           }
         });
@@ -72,7 +74,14 @@ export function usePropertyDetails(pid?: string) {
     }
 
     fn();
-  }, [isMounted, location, motiRegionService]);
+  }, [
+    alrService,
+    electoralService,
+    highwaysDistrictService,
+    isMounted,
+    location,
+    motiRegionService,
+  ]);
 
   return { propertyDetails };
 }

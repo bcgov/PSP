@@ -1,9 +1,10 @@
+import { GeoJsonProperties } from 'geojson';
 import { Api_Property } from 'models/api/Property';
 
 export interface IPropertyDetailsForm extends Api_Property {
-  motiRegion?: string;
-  highwaysDistrict?: string;
-  electoralDistrict?: string;
+  motiRegion?: GeoJsonProperties;
+  highwaysDistrict?: GeoJsonProperties;
+  electoralDistrict?: GeoJsonProperties;
   isALR?: boolean;
   firstNations?: IFirstNationsInfo;
 }
@@ -16,9 +17,9 @@ export interface IFirstNationsInfo {
 export function toFormValues(apiData: Api_Property): IPropertyDetailsForm {
   return {
     ...apiData,
-    motiRegion: '',
-    highwaysDistrict: '',
-    electoralDistrict: '',
+    motiRegion: {},
+    highwaysDistrict: {},
+    electoralDistrict: {},
     isALR: false,
     firstNations: {
       bandName: '',

@@ -36,6 +36,9 @@ export const StyledReadOnlyForm = styled(Form)`
   }
 `;
 
-export const StyledText = styled.span`
-  color: ${props => props.theme.css.formControlTextColor};
+export const InlineContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
 `;

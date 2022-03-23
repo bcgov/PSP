@@ -1,4 +1,4 @@
-import { Input } from 'components/common/form';
+import { Input, Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
@@ -7,7 +7,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { Section } from '../Section';
 import { SectionField } from '../SectionField';
-import { StyledReadOnlyForm, StyledScrollable, StyledText } from '../SectionStyles';
+import { InlineContainer, StyledReadOnlyForm, StyledScrollable } from '../SectionStyles';
 import {
   defaultPropertyInfo,
   IPropertyDetailsForm,
@@ -31,16 +31,22 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ deta
         <StyledReadOnlyForm>
           <Section header="Property attributes">
             <SectionField label="MOTI region">
-              <Input disabled field="motiRegion" />
+              <Text field="motiRegion.REGION_NAME" />
             </SectionField>
             <SectionField label="Highways district">
-              <Input disabled field="highwaysDistrict" />
+              <InlineContainer>
+                <Text field="highwaysDistrict.DISTRICT_NUMBER" />
+                {'-'}
+                <Text field="highwaysDistrict.DISTRICT_NAME" />
+              </InlineContainer>
             </SectionField>
             <SectionField label="Electoral district">
-              <Input disabled field="electoralDistrict" />
+              <InlineContainer>
+                <Text field="electoralDistrict.ED_NAME" />
+              </InlineContainer>
             </SectionField>
             <SectionField label="Agricultural Land Reserve">
-              <StyledText>{values.isALR ? 'Yes' : 'No'}</StyledText>
+              <Text>{values.isALR ? 'Yes' : 'No'}</Text>
             </SectionField>
             <SectionField label="Land parcel type">
               <Input disabled field="propertyType.description" />
