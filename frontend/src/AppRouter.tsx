@@ -143,6 +143,24 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           exact
+          path="/research/list"
+          component={ResearchListView}
+          layout={AuthLayout}
+          claim={Claims.RESEARCH_VIEW}
+          title={getTitle('View Research Files')}
+        />
+        <AppRoute
+          protected
+          exact
+          path="/research/new"
+          component={AddResearchView}
+          layout={AuthLayout}
+          claim={Claims.RESEARCH_ADD}
+          title={getTitle('Create Research File')}
+        />
+        <AppRoute
+          protected
+          exact
           path="/lease/list"
           component={LeaseAndLicenseListView}
           layout={AuthLayout}
@@ -212,7 +230,6 @@ const AppRouter: React.FC = () => {
           component={TestFileManagement}
           layout={AuthLayout}
         />
-
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
       </Switch>
     </Suspense>
