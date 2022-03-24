@@ -31,7 +31,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.SearchBy == "persons")
             {
-                query = query.Where(c => c.PersonId != null);
+                query = query.Where(c => c.PersonId != null && c.Id.StartsWith("P"));
                 string[] nameParts = filter.Summary.Split(' ');
                 if (!String.IsNullOrWhiteSpace(summary))
                 {
@@ -43,7 +43,7 @@ namespace Pims.Dal.Helpers.Extensions
             }
             else if (filter.SearchBy == "organizations")
             {
-                query = query.Where(c => c.OrganizationId != null);
+                query = query.Where(c => c.OrganizationId != null && c.Id.StartsWith("O"));
                 if (!String.IsNullOrWhiteSpace(summary))
                 {
                     query = query.Where(c => EF.Functions.Like(c.Summary, $"%{summary}%"));
