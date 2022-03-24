@@ -1,8 +1,8 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using System;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -22,22 +22,43 @@ namespace Pims.Dal.Helpers.Extensions
         {
             filter.ThrowIfNull(nameof(filter));
 
-            if (!String.IsNullOrWhiteSpace(filter.Summary))
-            {
-                query = query.Where(c => EF.Functions.Like(c.Summary, $"%{filter.Summary}%"));
-            }
-
             if (!String.IsNullOrWhiteSpace(filter.Municipality))
             {
                 query = query.Where(c => EF.Functions.Like(c.MunicipalityName, $"%{filter.Municipality}%"));
             }
 
+            var summary = filter.Summary.Trim();
+
             if (filter.SearchBy == "persons")
             {
                 query = query.Where(c => c.PersonId != null);
-            } else if (filter.SearchBy == "organizations")
+                string[] nameParts = filter.Summary.Split(' ');
+                if (!String.IsNullOrWhiteSpace(summary))
+                {
+                    foreach (string namePart in nameParts)
+                    {
+                        query = query.Where(c => EF.Functions.Like(c.FirstName, $"%{namePart}%") || EF.Functions.Like(c.Surname, $"%{namePart}%") || EF.Functions.Like(c.MiddleNames, $"%{namePart}%"));
+                    }
+                }
+            }
+            else if (filter.SearchBy == "organizations")
             {
                 query = query.Where(c => c.OrganizationId != null);
+                if (!String.IsNullOrWhiteSpace(summary))
+                {
+                    query = query.Where(c => EF.Functions.Like(c.Summary, $"%{summary}%"));
+                }
+            }
+            else
+            {
+                string[] nameParts = summary.Split(' ');
+                if (!String.IsNullOrWhiteSpace(summary))
+                {
+                    foreach (string namePart in nameParts)
+                    {
+                        query = query.Where(c => EF.Functions.Like(c.FirstName, $"%{namePart}%") || EF.Functions.Like(c.Surname, $"%{namePart}%") || EF.Functions.Like(c.MiddleNames, $"%{namePart}%") || EF.Functions.Like(c.OrganizationName, $"%{summary}%"));
+                    }
+                }
             }
 
             if (filter.ActiveContactsOnly)
