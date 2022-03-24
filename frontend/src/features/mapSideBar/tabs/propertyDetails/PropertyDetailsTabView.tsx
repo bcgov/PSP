@@ -1,4 +1,4 @@
-import { Input, Text } from 'components/common/form';
+import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { Formik, FormikProps, getIn } from 'formik';
 import noop from 'lodash/noop';
@@ -7,8 +7,15 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { Section } from '../Section';
-import { SectionField } from '../SectionField';
-import { InlineContainer, StyledReadOnlyForm, StyledScrollable } from '../SectionStyles';
+import { SectionField, StyledFieldLabel } from '../SectionField';
+import {
+  InlineContainer,
+  LeftBorderCol,
+  StyledReadOnlyForm,
+  StyledScrollable,
+  TableCaption,
+  TableContainer,
+} from '../SectionStyles';
 import {
   defaultPropertyInfo,
   IPropertyDetailsForm,
@@ -68,10 +75,10 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Land parcel type">
-          <Input disabled field="propertyType.description" />
+          <Text field="propertyType.description" />
         </SectionField>
         <SectionField label="Municipal zoning">
-          <Input disabled field="municipalZoning" />
+          <Text field="municipalZoning" />
         </SectionField>
         <SectionField label="Anomalies">
           <Multiselect
@@ -124,18 +131,25 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
       </Section>
 
       <Section header="First Nations Information">
-        <SectionField label="Band name">TBD</SectionField>
-        <SectionField label="Reserve name">TBD</SectionField>
+        <SectionField label="Band name">
+          <Text field="firstNations.bandName" />
+        </SectionField>
+        <SectionField label="Reserve name">
+          <Text field="firstNations.reserveName" />
+        </SectionField>
       </Section>
 
       <Section header="Area">
         <Row>
           <Col>
-            <p style={{ fontWeight: 700 }}>Land measurement</p>
+            <TableContainer>
+              <TableCaption>Land measurement</TableCaption>
+            </TableContainer>
           </Col>
-          <Col style={{ borderLeft: '1px solid #8c8c8c' }}>
-            <p style={{ fontWeight: 700 }}>Is this a volumetric parcel?</p>
+          <LeftBorderCol>
+            <StyledFieldLabel>Is this a volumetric parcel?</StyledFieldLabel>
             <RadioGroup
+              disabled
               flexDirection="row"
               field="isVolumetricParcel"
               radioGroupClassName="pb-3"
@@ -150,7 +164,14 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
                 },
               ]}
             />
-          </Col>
+            <SectionField label="Type">
+              <Text field="volumetricType.description" />
+            </SectionField>
+
+            <TableContainer>
+              <TableCaption>Volumetric measurement</TableCaption>
+            </TableContainer>
+          </LeftBorderCol>
         </Row>
       </Section>
 

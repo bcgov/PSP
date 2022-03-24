@@ -55,3 +55,10 @@ export function stringToBoolean(value: string | boolean): boolean {
   }
   return value;
 }
+
+export function booleanToString(value?: boolean): string {
+  if (typeof value === 'undefined') {
+    return 'false';
+  }
+  return value.toString();
+}

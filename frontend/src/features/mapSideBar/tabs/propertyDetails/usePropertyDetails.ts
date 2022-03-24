@@ -2,6 +2,7 @@ import {
   ALR_LAYER_URL,
   ELECTORAL_LAYER_URL,
   HWY_DISTRICT_LAYER_URL,
+  INDIAN_RESERVES_LAYER_URL,
   IUserLayerQuery,
   MOTI_REGION_LAYER_URL,
   useLayerQuery,
@@ -32,6 +33,7 @@ export function usePropertyDetails(pid?: string) {
   const highwaysDistrictService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
   const electoralService = useLayerQuery(ELECTORAL_LAYER_URL);
   const alrService = useLayerQuery(ALR_LAYER_URL);
+  const firstNationsService = useLayerQuery(INDIAN_RESERVES_LAYER_URL);
 
   useEffect(() => {
     async function fn() {
@@ -57,6 +59,7 @@ export function usePropertyDetails(pid?: string) {
       const highwaysDistrict = await findByLocation(highwaysDistrictService, location, 'GEOMETRY');
       const electoralDistrict = await findByLocation(electoralService, location);
       const alr = await alrService.findOneWhereContains(location, 'GEOMETRY');
+      const firstNations = await findByLocation(firstNationsService, location, 'GEOMETRY');
 
       if (isMounted()) {
         setPropertyDetails(prevState => {
@@ -67,6 +70,10 @@ export function usePropertyDetails(pid?: string) {
               highwaysDistrict,
               electoralDistrict,
               isALR: alr?.features?.length > 0,
+              firstNations: {
+                bandName: firstNations?.BAND_NAME,
+                reserveName: firstNations?.ENGLISH_NAME,
+              },
             };
           }
         });
@@ -77,6 +84,7 @@ export function usePropertyDetails(pid?: string) {
   }, [
     alrService,
     electoralService,
+    firstNationsService,
     highwaysDistrictService,
     isMounted,
     location,

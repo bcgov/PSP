@@ -1,5 +1,6 @@
 import { GeoJsonProperties } from 'geojson';
 import { Api_Property } from 'models/api/Property';
+import { booleanToString } from 'utils/formUtils';
 
 export interface IPropertyDetailsForm
   extends ExtendOverride<
@@ -10,6 +11,7 @@ export interface IPropertyDetailsForm
       electoralDistrict?: GeoJsonProperties;
       isALR?: boolean;
       firstNations?: IFirstNationsInfo;
+      isVolumetricParcel: string; // radio buttons only support string values, not booleans
     }
   > {}
 
@@ -29,6 +31,7 @@ export function toFormValues(apiData: Api_Property): IPropertyDetailsForm {
       bandName: '',
       reserveName: '',
     },
+    isVolumetricParcel: booleanToString(apiData?.isVolumetricParcel),
   };
 }
 

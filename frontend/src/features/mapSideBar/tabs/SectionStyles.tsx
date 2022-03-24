@@ -1,4 +1,5 @@
 import { Form } from 'formik';
+import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export const StyledScrollable = styled.div`
@@ -38,7 +39,24 @@ export const StyledReadOnlyForm = styled(Form)`
 
 export const InlineContainer = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
   gap: 0.8rem;
+`;
+
+export const LeftBorderCol = styled(Col)`
+  border-left: 1px solid #8c8c8c;
+`;
+
+export const TableCaption = styled.label`
+  width: 100%;
+  font-weight: bold;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0;
+  border-bottom: 2px solid #8c8c8c;
+`;
+
+export const TableContainer = styled.div`
+  width: 80%;
 `;
