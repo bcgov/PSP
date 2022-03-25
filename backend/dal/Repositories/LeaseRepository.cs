@@ -64,11 +64,12 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
-
         public PimsLease Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
-            PimsLease lease = this.Context.PimsLeases.Include(l => l.PimsPropertyLeases)
+
+            PimsLease lease = this.Context.PimsLeases.AsSplitQuery()
+                .Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
                     .ThenInclude(p => p.Country)
@@ -104,6 +105,7 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
                     .ThenInclude(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
 
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
@@ -116,6 +118,7 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
                     .ThenInclude(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
 
                 .Include(t => t.PimsPropertyImprovements)
 
@@ -149,10 +152,9 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.PimsLeaseTerms)
                     .ThenInclude(t => t.PimsLeasePayments)
                     .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
+                .FirstOrDefault(l=>l.LeaseId == id) ?? throw new KeyNotFoundException();
 
-                .Where(l => l.LeaseId == id)
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
-
+            lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
             lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t =>
             {

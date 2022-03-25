@@ -59,6 +59,13 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
 
                     MapLease(src.Item1, dest);
                 });
+            config.NewConfig<Entity.PimsLease, Model.LeaseModel>()
+                .AfterMapping((src, dest) =>
+                {
+                    MapLease(src, dest);
+                });
+
+
         }
     }
 }

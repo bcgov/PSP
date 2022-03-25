@@ -3,18 +3,13 @@ namespace Pims.Api.Models.Concepts
     /// <summary>
     /// Provides a contact-oriented address model.
     /// </summary>
-    public class AddressModel : BaseAppModel
+    public class AddressModel : BaseModel
     {
         #region Properties
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The address type.
-        /// </summary>
-        public TypeModel<string> AddressType { get; set; }
 
         /// <summary>
         /// get/set - The street address.
@@ -39,13 +34,22 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The address's province.
         /// </summary>
-        public ProvinceStateModel Province { get; set; }
+        public CodeTypeModel Province { get; set; }
 
         /// <summary>
         /// get/set - The address's country.
         /// </summary>
-        public CountryModel Country { get; set; }
+        public CodeTypeModel Country { get; set; }
 
+        /// <summary>
+        /// get/set - The address's district.
+        /// </summary>
+        public CodeTypeModel District { get; set; }
+
+        /// <summary>
+        /// get/set - The address's region.
+        /// </summary>
+        public CodeTypeModel Region { get; set; }
         /// <summary>
         /// get/set - The free-form value of country when country code is "Other".
         /// </summary>
@@ -55,6 +59,21 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The postal code.
         /// </summary>
         public string Postal { get; set; }
+
+        /// <summary>
+        /// get/set - Addresss latitude coordinate.
+        /// </summary>
+        public decimal? Latitude { get; set; }
+
+        /// <summary>
+        /// get/set - Addresss longitude coordinate.
+        /// </summary>
+        public decimal? Longitude { get; set; }
+
+        /// <summary>
+        /// get/set - Addresss comment.
+        /// </summary>
+        public string Comment { get; set; }
         #endregion
     }
 }

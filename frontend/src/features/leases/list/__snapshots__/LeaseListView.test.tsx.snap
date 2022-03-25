@@ -663,9 +663,12 @@ exports[`Lease and License List View matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="no-rows-message"
+          class="table-loading"
         >
-          Lease / License details do not exist in PIMS inventory
+          <div
+            class="spinner-border"
+            role="status"
+          />
         </div>
       </div>
       <div

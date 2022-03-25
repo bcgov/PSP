@@ -51,6 +51,18 @@ namespace Pims.Dal.Services
             return _leaseRepository.Get(leaseId);
         }
 
+        public PimsLease UpdateLeaseDepositNote(long leaseId, long leaseRowVersion, string note)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            ValidateServiceCall(leaseId, leaseRowVersion);
+            var lease = _leaseRepository.Get(leaseId);
+            lease.ReturnNotes = note;
+            _leaseRepository.Update(lease);
+            _leaseRepository.CommitTransaction();
+            
+            return _leaseRepository.Get(leaseId);
+        }
+
         public PimsLease DeleteLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseDelete);
