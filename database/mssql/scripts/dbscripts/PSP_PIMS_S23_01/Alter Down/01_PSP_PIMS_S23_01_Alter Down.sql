@@ -799,20 +799,20 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Drop primary key constraint dbo.PK__BCA_JURI__A318B2B5A46D67D0
-PRINT N'Drop primary key constraint dbo.PK__BCA_JURI__A318B2B5A46D67D0'
+-- Drop primary key constraint dbo.BCAJUR_PK
+PRINT N'Drop primary key constraint dbo.BCAJUR_PK'
 GO
 ALTER TABLE [dbo].[BCA_JURISDICTION]
-	DROP CONSTRAINT [PK__BCA_JURI__A318B2B5A46D67D0]
+	DROP CONSTRAINT [BCAJUR_PK]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Drop primary key constraint dbo.PK__BCA_ASSE__FC7CF8094B7DBA6B
-PRINT N'Drop primary key constraint dbo.PK__BCA_ASSE__FC7CF8094B7DBA6B'
+-- Drop primary key constraint dbo.BCASAR_PK
+PRINT N'Drop primary key constraint dbo.BCASAR_PK'
 GO
 ALTER TABLE [dbo].[BCA_ASSESSMENT_AREA]
-	DROP CONSTRAINT [PK__BCA_ASSE__FC7CF8094B7DBA6B]
+	DROP CONSTRAINT [BCASAR_PK]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
