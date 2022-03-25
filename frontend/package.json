@@ -9,6 +9,7 @@
     "axios": "0.23.0",
     "bootstrap": "4.6.0",
     "classnames": "2.3.1",
+    "convert": "4.4.2",
     "crypto-js": "4.0.0",
     "dequal": "2.0.2",
     "formik": "2.2.6",
