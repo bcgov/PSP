@@ -56,7 +56,3 @@ export const TableCaption = styled.label`
   margin-bottom: 0;
   border-bottom: 2px solid #8c8c8c;
 `;
-
-export const TableContainer = styled.div`
-  width: 80%;
-`;

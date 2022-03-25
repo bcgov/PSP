@@ -1,5 +1,6 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import { Table } from 'components/Table';
 import { Formik, FormikProps, getIn } from 'formik';
 import noop from 'lodash/noop';
 import Multiselect from 'multiselect-react-dropdown';
@@ -14,8 +15,9 @@ import {
   StyledReadOnlyForm,
   StyledScrollable,
   TableCaption,
-  TableContainer,
 } from '../SectionStyles';
+import { LandMeasurementTable } from './components/LandMeasurementTable';
+import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
 import {
   defaultPropertyInfo,
   IPropertyDetailsForm,
@@ -142,9 +144,11 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
       <Section header="Area">
         <Row>
           <Col>
-            <TableContainer>
-              <TableCaption>Land measurement</TableCaption>
-            </TableContainer>
+            <Row>
+              <Col className="col-10">
+                <LandMeasurementTable />
+              </Col>
+            </Row>
           </Col>
           <LeftBorderCol>
             <StyledFieldLabel>Is this a volumetric parcel?</StyledFieldLabel>
@@ -168,9 +172,11 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
               <Text field="volumetricType.description" />
             </SectionField>
 
-            <TableContainer>
-              <TableCaption>Volumetric measurement</TableCaption>
-            </TableContainer>
+            <Row>
+              <Col className="col-10">
+                <VolumetricMeasurementTable />
+              </Col>
+            </Row>
           </LeftBorderCol>
         </Row>
       </Section>
