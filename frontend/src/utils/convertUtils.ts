@@ -2,19 +2,19 @@ import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { VolumeUnitTypes } from 'constants/volumeUnitTypes';
 import convert, { Area, Volume } from 'convert';
 
-export function convertArea(value: number, from: AreaUnitTypes, to: AreaUnitTypes): number {
+export function convertArea(value: number, from: string, to: string): number {
   const _from = getAreaUnit(from);
   const _to = getAreaUnit(to);
   return convert(value, _from).to(_to);
 }
 
-export function convertVolume(value: number, from: VolumeUnitTypes, to: VolumeUnitTypes): number {
+export function convertVolume(value: number, from: string, to: string): number {
   const _from = getVolumeUnit(from);
   const _to = getVolumeUnit(to);
   return convert(value, _from).to(_to);
 }
 
-export function getAreaUnit(unit: AreaUnitTypes): Area {
+export function getAreaUnit(unit: string): Area {
   switch (unit) {
     case AreaUnitTypes.Acres:
       return 'ac';
@@ -28,7 +28,7 @@ export function getAreaUnit(unit: AreaUnitTypes): Area {
   }
 }
 
-export function getVolumeUnit(unit: VolumeUnitTypes): Volume {
+export function getVolumeUnit(unit: string): Volume {
   switch (unit) {
     case VolumeUnitTypes.CubicFeet:
       return 'ft3';

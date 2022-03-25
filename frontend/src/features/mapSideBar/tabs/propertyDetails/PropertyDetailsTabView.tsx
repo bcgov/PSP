@@ -54,6 +54,9 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
   const tenureStatus = getIn(values, 'tenure');
   const roadType = getIn(values, 'roadType');
   const adjacentLand = getIn(values, 'adjacentLand');
+  // measurement tables
+  const landMeasurement = getIn(values, 'landMeasurementTable');
+  const volumeMeasurement = getIn(values, 'volumetricMeasurementTable');
 
   const isProvincialHighway = getIn(values, 'isProvincialPublicHwy');
 
@@ -146,7 +149,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
           <Col>
             <Row>
               <Col className="col-10">
-                <LandMeasurementTable />
+                <LandMeasurementTable data={landMeasurement} />
               </Col>
             </Row>
           </Col>
@@ -174,7 +177,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
 
             <Row>
               <Col className="col-10">
-                <VolumetricMeasurementTable />
+                <VolumetricMeasurementTable data={volumeMeasurement} />
               </Col>
             </Row>
           </LeftBorderCol>
