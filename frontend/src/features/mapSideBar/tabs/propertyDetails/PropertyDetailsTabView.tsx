@@ -1,11 +1,12 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
-import { Table } from 'components/Table';
 import { Formik, FormikProps, getIn } from 'formik';
 import noop from 'lodash/noop';
+import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../Section';
 import { SectionField, StyledFieldLabel } from '../SectionField';
@@ -14,7 +15,6 @@ import {
   LeftBorderCol,
   StyledReadOnlyForm,
   StyledScrollable,
-  TableCaption,
 } from '../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
@@ -49,16 +49,20 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ deta
 };
 
 const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) => {
+  // yes/no/unknown (true/false/undefined)
+  const isProvincialHighway = getIn(values, 'isProvincialPublicHwy');
   // multi-selects
-  const anomalies = getIn(values, 'anomalies');
-  const tenureStatus = getIn(values, 'tenure');
-  const roadType = getIn(values, 'roadType');
-  const adjacentLand = getIn(values, 'adjacentLand');
+  const anomalies = getIn(values, 'anomalies') as Api_TypeCode<string>[];
+  const tenureStatus = getIn(values, 'tenure') as Api_TypeCode<string>[];
+  const roadType = getIn(values, 'roadType') as Api_TypeCode<string>[];
+  const adjacentLand = getIn(values, 'adjacentLand') as Api_TypeCode<string>[];
   // measurement tables
   const landMeasurement = getIn(values, 'landMeasurementTable');
   const volumeMeasurement = getIn(values, 'volumetricMeasurementTable');
-
-  const isProvincialHighway = getIn(values, 'isProvincialPublicHwy');
+  // show/hide conditionals
+  const isAdjacentLand = tenureStatus.some(obj => obj.id === 'ADJLAND');
+  const isIndianReserve = isAdjacentLand && adjacentLand.some(obj => obj.id === 'INDIANR');
+  const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
 
   return (
     <StyledReadOnlyForm>
@@ -123,26 +127,30 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Adjacent land">
-          <Multiselect
-            disable
-            disablePreSelectedValues
-            hidePlaceholder
-            selectedValues={adjacentLand}
-            displayValue="description"
-            style={readOnlyMultiSelectStyle}
-          />
-        </SectionField>
+        {isAdjacentLand && (
+          <SectionField label="Adjacent land">
+            <Multiselect
+              disable
+              disablePreSelectedValues
+              hidePlaceholder
+              selectedValues={adjacentLand}
+              displayValue="description"
+              style={readOnlyMultiSelectStyle}
+            />
+          </SectionField>
+        )}
       </Section>
 
-      <Section header="First Nations Information">
-        <SectionField label="Band name">
-          <Text field="firstNations.bandName" />
-        </SectionField>
-        <SectionField label="Reserve name">
-          <Text field="firstNations.reserveName" />
-        </SectionField>
-      </Section>
+      {isIndianReserve && (
+        <Section header="First Nations Information">
+          <SectionField label="Band name">
+            <Text field="firstNations.bandName" />
+          </SectionField>
+          <SectionField label="Reserve name">
+            <Text field="firstNations.reserveName" />
+          </SectionField>
+        </Section>
+      )}
 
       <Section header="Area">
         <Row>
@@ -171,21 +179,26 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
                 },
               ]}
             />
-            <SectionField label="Type">
-              <Text field="volumetricType.description" />
-            </SectionField>
 
-            <Row>
-              <Col className="col-10">
-                <VolumetricMeasurementTable data={volumeMeasurement} />
-              </Col>
-            </Row>
+            {isVolumetricParcel && (
+              <>
+                <SectionField label="Type">
+                  <Text field="volumetricType.description" />
+                </SectionField>
+
+                <Row>
+                  <Col className="col-10">
+                    <VolumetricMeasurementTable data={volumeMeasurement} />
+                  </Col>
+                </Row>
+              </>
+            )}
           </LeftBorderCol>
         </Row>
       </Section>
 
       <Section header="Notes">
-        Some notes go here. We can capture information about property here.
+        <p>{getIn(values, 'notes')}</p>
       </Section>
     </StyledReadOnlyForm>
   );
