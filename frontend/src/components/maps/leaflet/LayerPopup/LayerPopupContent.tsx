@@ -1,27 +1,13 @@
 import L from 'leaflet';
 import keys from 'lodash/keys';
 import queryString from 'query-string';
-import * as React from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Row from 'react-bootstrap/Row';
 import { useMap } from 'react-leaflet';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
-export const LayerPopupTitle = styled('div')`
-  padding: 1.6rem;
-  font-weight: 800;
-`;
-
-export const MenuRow = styled(Row)`
-  text-align: center;
-  padding-bottom: 1rem;
-`;
-
-export const StyledLink = styled(Link)`
-  padding: 0 0.4rem;
-`;
+import { MenuRow, StyledLink } from './styles';
 
 export type PopupContentConfig = {
   [key: string]: {
