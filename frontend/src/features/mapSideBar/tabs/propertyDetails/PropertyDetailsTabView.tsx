@@ -1,5 +1,6 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikProps, getIn } from 'formik';
 import noop from 'lodash/noop';
 import Api_TypeCode from 'models/api/TypeCode';
@@ -38,6 +39,7 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ deta
 
   return (
     <StyledScrollable>
+      <LoadingBackdrop show={details === undefined} parentScreen={true} />
       <Formik
         initialValues={values}
         onSubmit={noop}
