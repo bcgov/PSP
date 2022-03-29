@@ -115,96 +115,23 @@ export const readOnlyMultiSelectStyle = {
   },
 };
 
-export const defaultPropertyInfo: Api_Property = {
-  id: 1,
-  propertyType: {
-    id: 'TITLED',
-    description: 'Titled',
-    isDisabled: false,
-  },
-  anomalies: [
-    {
-      id: 'ACCESS',
-      description: 'Access',
-      isDisabled: false,
-    },
-  ],
-  tenure: [
-    {
-      id: 'ADJLAND',
-      description: 'Adjacent Land',
-      isDisabled: false,
-    },
-  ],
-  roadType: [
-    {
-      id: 'GAZSURVD',
-      description: 'Gazetted (Surveyed)',
-      isDisabled: false,
-    },
-  ],
-  adjacentLand: [
-    {
-      id: 'PRIVATE',
-      description: 'Private (Fee Simple)',
-      isDisabled: false,
-    },
-  ],
-  status: {
-    id: 'MOTIADMIN',
-    description: 'Under MoTI administration',
-    isDisabled: false,
-  },
-  dataSource: {
-    id: 'PAIMS',
-    description: 'Property Acquisition and Inventory Management System (PAIMS)',
-    isDisabled: false,
-  },
-  dataSourceEffectiveDate: '2021-08-31T00:00:00',
+export const defaultPropertyInfo: Partial<Api_Property> = {
+  anomalies: [],
+  tenure: [],
+  roadType: [],
+  adjacentLand: [],
+  dataSourceEffectiveDate: '',
   isSensitive: false,
   isProvincialPublicHwy: false,
-  address: {
-    id: 204,
-    streetAddress1: '456 Souris Street',
-    streetAddress2: 'PO Box 250',
-    streetAddress3: 'A Hoot and a holler from the A&W',
-    municipality: 'North Podunk',
-    province: {
-      id: 1,
-      code: 'BC',
-      description: 'British Columbia',
-      displayOrder: 10,
-    },
-    country: {
-      id: 1,
-      code: 'CA',
-      description: 'Canada',
-      displayOrder: 1,
-    },
-    postal: 'IH8 B0B',
-    rowVersion: 1,
-  },
-  pid: '007-723-385',
-  pin: 90069930,
-  areaUnit: {
-    id: 'HA',
-    description: 'Hectare',
-    isDisabled: false,
-  },
-  landArea: 1,
+  pid: '',
+  pin: undefined,
+  areaUnit: undefined,
+  landArea: undefined,
   isVolumetricParcel: true,
-  volumetricMeasurement: 150,
-  volumetricUnit: {
-    id: 'FEET3',
-    description: 'Feet cubed',
-    isDisabled: false,
-  },
-  volumetricType: {
-    isDisabled: false,
-  },
-  municipalZoning: 'Some municipal zoning comments',
-  zoning: 'Lorem ipsum',
-  notes:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.',
-  rowVersion: 6,
+  volumetricMeasurement: undefined,
+  volumetricUnit: undefined,
+  volumetricType: undefined,
+  municipalZoning: '',
+  zoning: '',
+  notes: '',
 };

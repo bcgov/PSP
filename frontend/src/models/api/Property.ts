@@ -3,7 +3,7 @@ import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Property extends Api_ConcurrentVersion {
-  id: number;
+  id?: number;
   pid?: string;
   pin?: number;
   zoning?: string;

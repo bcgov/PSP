@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         /// <summary>
-        /// get/set - Primary key to identify property tenure type.
+        /// get/set - Primary key to identify volumetric type.
         /// </summary>
         [NotMapped]
         public string Id { get => VolumetricTypeCode; set => VolumetricTypeCode = value; }

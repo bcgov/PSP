@@ -8,7 +8,7 @@ namespace Pims.Api.Areas.Property.Models.Property
     /// <summary>
     /// PropertyModel class, provides a model to represent the property whether Land or Building.
     /// </summary>
-    public class PropertyModel : BaseAppModel
+    public class PropertyModel : BaseModel
     {
         #region Properties
         #region Identification

@@ -49,6 +49,17 @@ export function usePropertyDetails(pid?: string) {
     fn();
   }, [getPropertyWithPid, isMounted, pid]);
 
+  /**
+   * This effect is intended to run AFTER the property info has been loaded from the API.
+   * This is guaranteed here because:
+   *   1. location is a memo that only gets re-calculated when the property info comes back
+   *      from the API with proper lat, long values. So until API results comes back it will be undefined.
+   *
+   *   2. The second useEffect aborts early if location is undefined so it won't call the layers until
+   *      a location is available (because that is needed to query the layers). So effectively if the API
+   *      takes longer to return then the second effect will return early and re-run whenever the API
+   *      response is set via setState on propertyDetails
+   */
   useEffect(() => {
     async function fn() {
       if (location === undefined) {
