@@ -231,7 +231,7 @@ const Map: React.FC<MapProps> = ({
     }
 
     if (parcel?.features?.length === 1) {
-      title = 'Parcel Information';
+      title = 'LTSA ParcelMap data';
       properties = parcel.features[0].properties!;
       displayConfig = parcelLayerPopupConfig;
       mapBounds = parcel.features[0]?.geometry

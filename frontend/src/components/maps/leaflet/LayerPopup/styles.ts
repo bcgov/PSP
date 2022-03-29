@@ -2,9 +2,12 @@ import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const LayerPopupTitle = styled('div')`
-  padding: 1.6rem;
-  font-weight: 800;
+export const LayerPopupTitle = styled.h5`
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: ${props => props.theme.css.headingTextColor};
+  border-bottom: 0.2rem ${props => props.theme.css.headingBorderColor} solid;
+  line-height: 2.4rem;
 `;
 
 export const MenuRow = styled(Row)`

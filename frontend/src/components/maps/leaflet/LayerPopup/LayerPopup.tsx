@@ -1,18 +1,40 @@
-import { Feature } from 'geojson';
+import { Feature, GeoJsonProperties } from 'geojson';
 import { LatLng, LatLngBounds } from 'leaflet';
 import noop from 'lodash/noop';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Popup } from 'react-leaflet';
+import styled from 'styled-components';
 
 import { LayerPopupContent, PopupContentConfig } from '.';
+import { LayerPopupFlyout } from './components/LayerPopupFlyout';
+import { LayerPopupLinks } from './components/LayerPopupLinks';
 import { LayerPopupTitle } from './styles';
 
-export type LayerPopupInformation = PopupContentConfig & {
+export type LayerPopupInformation = {
   latlng: LatLng;
   title: string;
   center?: LatLng;
   bounds?: LatLngBounds;
-  feature: Feature;
+  feature?: Feature;
+  /**
+   * Data coming from the GeoJSON feature.properties
+   * @property
+   * @example
+   * feature: {
+   *  properties: {
+   *    'ADMIN_AREA_ID': 1,
+   *    'ADMIN_AERA_NAME: 'West Saanich'
+   *  }
+   * }
+   */
+  data: GeoJsonProperties;
+  /**
+   * A configuration used to display the properties fields in the popup content
+   * @property
+   * @example
+   * {ADMIN_AREA_SQFT: (data: any) => `${data.ADMIN_AREA_SQFT} ft^2`}
+   */
+  config: PopupContentConfig;
 };
 
 export interface ILayerPopupProps {
@@ -22,22 +44,70 @@ export interface ILayerPopupProps {
 }
 
 export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, onAddToParcel }) => {
+  const [showFlyout, setShowFlyout] = useState(false);
+  const openFlyout = useCallback(() => setShowFlyout(true), []);
+  const closeFlyout = useCallback(() => setShowFlyout(false), []);
+
+  const handlePopupClose = useCallback(() => {
+    closeFlyout();
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose, closeFlyout]);
+
   return (
     <Popup
       position={layerPopup.latlng}
       offset={[0, -25]}
-      onClose={onClose ?? noop}
+      onClose={handlePopupClose}
       closeButton={true}
       autoPan={false}
     >
-      <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
-      <LayerPopupContent
-        data={layerPopup.data as any}
-        config={layerPopup.config as any}
-        center={layerPopup.center}
-        onAddToParcel={onAddToParcel ?? noop}
-        bounds={layerPopup.bounds}
-      />
+      <StyledContainer>
+        <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
+        <LayerPopupContent layerPopup={layerPopup} />
+        <LayerPopupLinks
+          layerPopup={layerPopup}
+          onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
+        />
+
+        {showFlyout && (
+          <StyledFlyoutContainer>
+            <LayerPopupFlyout onViewPropertyInfo={noop} onCreateResearchFile={noop} />
+          </StyledFlyoutContainer>
+        )}
+      </StyledContainer>
     </Popup>
   );
 };
+
+const StyledContainer = styled.div`
+  padding: 0.5rem 1.2rem;
+  .btn-link {
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+    padding: 0;
+    &:active {
+      background-color: transparent !important;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+  }
+`;
+
+const StyledFlyoutContainer = styled.div`
+  position: absolute;
+  bottom: -3.5rem;
+  left: 100%;
+  background: #fffefa;
+  border: 2px solid #bcbec5;
+  box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
+  width: 20rem;
+
+  .list-group {
+    .list-group-item {
+      padding: 0.6rem 1rem;
+    }
+  }
+`;
