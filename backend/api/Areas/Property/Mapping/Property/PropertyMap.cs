@@ -49,7 +49,7 @@ namespace Pims.Api.Areas.Property.Mapping.Property
 
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.Leases, src => src.GetLeases())
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
         }
     }
 }
