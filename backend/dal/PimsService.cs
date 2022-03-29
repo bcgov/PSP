@@ -51,6 +51,10 @@ namespace Pims.Dal
         /// get - The organization service.
         /// </summary>
         public IOrganizationService OrganizationService { get { return _serviceProvider.GetService<IOrganizationService>(); } }
+        /// <summary>
+        /// get - The research file service.
+        /// </summary>
+        public IResearchFileService ResearchFileService { get { return _serviceProvider.GetService<IResearchFileService>(); } }
         #endregion
 
         #region Constructors
