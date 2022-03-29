@@ -1,4 +1,10 @@
 import { Input, TextArea } from 'components/common/form';
+import { SectionFieldWrapper } from 'features/mapSideBar/components/SectionFieldWrapper';
+import {
+  StyledFormSection,
+  StyledScrollable,
+  StyledSectionHeader,
+} from 'features/mapSideBar/components/SectionStyles';
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
@@ -7,7 +13,6 @@ import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledFormSection, StyledScrollable, StyledSectionHeader } from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';

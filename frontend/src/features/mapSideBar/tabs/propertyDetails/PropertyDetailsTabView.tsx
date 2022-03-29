@@ -1,5 +1,12 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import { SectionField, StyledFieldLabel } from 'features/mapSideBar/components/SectionField';
+import {
+  InlineContainer,
+  LeftBorderCol,
+  StyledReadOnlyForm,
+  StyledScrollable,
+} from 'features/mapSideBar/components/SectionStyles';
 import { Formik, FormikProps, getIn } from 'formik';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import noop from 'lodash/noop';
@@ -10,13 +17,6 @@ import { Col, Row } from 'react-bootstrap';
 import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../Section';
-import { SectionField, StyledFieldLabel } from '../SectionField';
-import {
-  InlineContainer,
-  LeftBorderCol,
-  StyledReadOnlyForm,
-  StyledScrollable,
-} from '../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
 import {

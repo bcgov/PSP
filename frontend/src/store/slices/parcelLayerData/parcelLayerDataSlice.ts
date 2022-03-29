@@ -1,17 +1,14 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { GeoJsonObject } from 'geojson';
-
-export interface IParcelLayerData {
-  e: MouseEvent | null;
-  data: { [key: string]: any };
-}
+import { Feature, FeatureCollection, GeoJsonObject, GeoJsonProperties, Geometry } from 'geojson';
 
 export interface IParcelLayerDataState {
-  parcelLayerData: IParcelLayerData | null;
-  parcelLayerFeature: GeoJsonObject | null;
+  parcelLayerData: FeatureCollection<Geometry, GeoJsonProperties> | null;
+  parcelLayerFeature: Feature<Geometry, GeoJsonProperties> | null;
 }
 
-export const saveParcelLayerData = createAction<IParcelLayerData>('saveParcelLayerData');
+export const saveParcelLayerData = createAction<FeatureCollection<Geometry, GeoJsonProperties>>(
+  'saveParcelLayerData',
+);
 export const saveParcelLayerFeature = createAction<GeoJsonObject>('saveParcelLayerFeature');
 export const clearParcelLayerData = createAction('clearParcelLayerData');
 export const clearParcelLayerFeature = createAction('clearParcelLayerFeature');

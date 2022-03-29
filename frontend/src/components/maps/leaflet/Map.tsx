@@ -1,10 +1,5 @@
 import axios from 'axios';
 import classNames from 'classnames';
-import {
-  LayerPopup,
-  LayerPopupInformation,
-  useLayerQuery,
-} from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
@@ -12,8 +7,7 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
-import isEmpty from 'lodash/isEmpty';
+import { LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -24,7 +18,6 @@ import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
 import { useAppSelector } from 'store/hooks';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
-import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
@@ -33,11 +26,6 @@ import { useFilterContext } from '../providers/FIlterProvider';
 import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
 import { InventoryLayer } from './InventoryLayer';
 import {
-  MUNICIPALITY_LAYER_URL,
-  municipalityLayerPopupConfig,
-  parcelLayerPopupConfig,
-  PARCELS_LAYER_URL,
-} from './LayerPopup/constants';
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
 import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
@@ -115,8 +103,7 @@ const Map: React.FC<MapProps> = ({
   const [triggerFilterChanged, setTriggerFilterChanged] = useState(true);
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
   const smallScreen = useMediaQuery({ maxWidth: 1800 });
-  const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
-  const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
+
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
@@ -134,7 +121,7 @@ const Map: React.FC<MapProps> = ({
   }
 
   const parcelLayerFeature = useAppSelector(state => state.parcelLayerData?.parcelLayerFeature);
-  useActiveFeatureLayer({
+  const { showLocationDetails } = useActiveFeatureLayer({
     selectedProperty: propertyInfo,
     layerPopup,
     mapRef,
@@ -210,50 +197,6 @@ const Map: React.FC<MapProps> = ({
     }
   };
 
-  const showLocationDetails = async (event: LeafletMouseEvent) => {
-    !!onMapClick && onMapClick(event);
-    const municipality = await municipalitiesService.findOneWhereContains(event.latlng);
-    const parcel = await parcelsService.findOneWhereContains(event.latlng);
-
-    let properties = {};
-    let center: LatLng | undefined;
-    let mapBounds: LatLngBounds | undefined;
-    let displayConfig = {};
-    let title = 'Municipality Information';
-    let feature = {};
-    if (municipality?.features?.length === 1) {
-      properties = municipality.features[0].properties!;
-      displayConfig = municipalityLayerPopupConfig;
-      feature = municipality.features[0];
-      mapBounds = municipality.features[0]?.geometry
-        ? geoJSON(municipality.features[0].geometry).getBounds()
-        : undefined;
-    }
-
-    if (parcel?.features?.length === 1) {
-      title = 'LTSA ParcelMap data';
-      properties = parcel.features[0].properties!;
-      displayConfig = parcelLayerPopupConfig;
-      mapBounds = parcel.features[0]?.geometry
-        ? geoJSON(parcel.features[0].geometry).getBounds()
-        : undefined;
-      center = mapBounds?.getCenter();
-      feature = parcel.features[0];
-    }
-
-    if (!isEmpty(properties)) {
-      setLayerPopup({
-        title,
-        data: properties as any,
-        config: displayConfig as any,
-        latlng: event.latlng,
-        center,
-        bounds,
-        feature,
-      } as any);
-    }
-  };
-
   const handleBounds = (e: any) => {
     const boundsData: LatLngBounds = e.target.getBounds();
     if (!isEqual(boundsData.getNorthEast(), boundsData.getSouthWest())) {
@@ -291,7 +234,7 @@ const Map: React.FC<MapProps> = ({
           whenReady={handleMapReady}
         >
           <MapEvents
-            click={showLocationDetails}
+            click={e => showLocationDetails(e.latlng)}
             zoomend={e => setZoom(e.sourceTarget.getZoom())}
             moveend={handleBounds}
           />
@@ -304,17 +247,6 @@ const Map: React.FC<MapProps> = ({
               onClose={() => {
                 setLayerPopup(undefined);
                 setPropertyInfo(null);
-              }}
-              onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
-                dispatch(
-                  saveParcelLayerData({
-                    e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
-                    data: {
-                      ...data,
-                      CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
-                    },
-                  }),
-                );
               }}
             />
           )}
