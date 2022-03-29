@@ -3,6 +3,7 @@ import { RadioGroup } from 'components/common/form/RadioGroup';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikProps, getIn } from 'formik';
 import noop from 'lodash/noop';
+import { Api_Property } from 'models/api/Property';
 import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
@@ -35,7 +36,7 @@ interface IPropertyDetailsTabView {
  * @returns the rendered property details panel
  */
 export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ details }) => {
-  const values = details ?? toFormValues(defaultPropertyInfo);
+  const values = details ?? toFormValues(defaultPropertyInfo as Api_Property);
 
   return (
     <StyledScrollable>
