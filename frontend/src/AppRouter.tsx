@@ -148,7 +148,7 @@ const AppRouter: React.FC = () => {
           path="/research/list"
           component={ResearchListView}
           layout={AuthLayout}
-          claim={Claims.RESEARCH_VIEW}
+          claim={Claims.LEASE_VIEW}
           title={getTitle('View Research Files')}
         />
         <AppRoute
@@ -157,7 +157,7 @@ const AppRouter: React.FC = () => {
           path="/research/new"
           component={AddResearchView}
           layout={AuthLayout}
-          claim={Claims.RESEARCH_ADD}
+          claim={Claims.LEASE_ADD}
           title={getTitle('Create Research File')}
         />
         <AppRoute
