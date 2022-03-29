@@ -1,6 +1,4 @@
-import { InlineInput } from 'components/common/form/styles';
 import { LargeInlineInput } from 'features/leases/add/styles';
-import { remove } from 'lodash';
 import { Button, Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
@@ -61,7 +59,7 @@ const ResearchProperties: React.FunctionComponent<IResearchPropertiesProps> = pr
             </Col>
           </Row>
         ))}
-      {props.properties.length == 0 && <div>No properties added</div>}
+      {props.properties.length === 0 && <div>No properties added</div>}
     </>
   );
 };
@@ -86,12 +84,5 @@ const StyledRemoveButton = styled(Button)`
   color: ${props => props.theme.css.formBackgroundColor};
   &:hover {
     color: red;
-  }
-`;
-
-const SmallInlineInput = styled(InlineInput)`
-  input.form-control {
-    min-width: 12rem;
-    max-width: 12rem;
   }
 `;

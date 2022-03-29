@@ -3,7 +3,7 @@ import Icon from '@mdi/react';
 import { InlineInput } from 'components/common/form/styles';
 import * as Styled from 'components/common/styles';
 import { Formik } from 'formik';
-import { Api_Property, Api_ResearchFile } from 'models/api/ResearchFile';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Prompt, useHistory } from 'react-router-dom';
