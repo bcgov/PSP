@@ -7,6 +7,8 @@ import CreateContactContainer from 'features/contacts/contact/create/CreateConta
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
 import { AddLeaseContainer } from 'features/leases';
+import AddResearchView from 'features/research/add/AddResearchView';
+import ResearchListView from 'features/research/list/ResearchListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -146,7 +148,7 @@ const AppRouter: React.FC = () => {
           path="/research/list"
           component={ResearchListView}
           layout={AuthLayout}
-          claim={Claims.RESEARCH_VIEW}
+          claim={Claims.LEASE_VIEW}
           title={getTitle('View Research Files')}
         />
         <AppRoute
@@ -155,7 +157,7 @@ const AppRouter: React.FC = () => {
           path="/research/new"
           component={AddResearchView}
           layout={AuthLayout}
-          claim={Claims.RESEARCH_ADD}
+          claim={Claims.LEASE_ADD}
           title={getTitle('Create Research File')}
         />
         <AppRoute
