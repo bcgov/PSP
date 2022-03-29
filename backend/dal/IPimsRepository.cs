@@ -51,6 +51,10 @@ namespace Pims.Dal
         #region Configuration
         ITenantService Tenant { get; }
         #endregion
+
+        #region ResearchFiles
+        IResearchFileRepository ResearchFile { get; }
+        #endregion
         #endregion
     }
 }
