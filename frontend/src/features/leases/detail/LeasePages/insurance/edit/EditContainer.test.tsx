@@ -111,9 +111,10 @@ describe('Lease Insurance', () => {
     const forms = result.getAllByTestId('insurance-form');
     expect(forms.length).toBe(2);
 
-    const formLimits = result.getAllByTestId('insurance-form-limit');
-    expect(formLimits[0] as HTMLInputElement).toHaveValue(mockInsuranceHome.coverageLimit);
-    expect(formLimits[1] as HTMLInputElement).toHaveValue(testInsuranceCar.coverageLimit);
+    const homeLimit = result.container.querySelector(`input[name="insurances.0.coverageLimit"]`);
+    const carLimit = result.container.querySelector(`input[name="insurances.1.coverageLimit"]`);
+    expect(homeLimit).toHaveValue(mockInsuranceHome.coverageLimit?.toString());
+    expect(carLimit).toHaveValue(testInsuranceCar.coverageLimit?.toString());
 
     const formDescriptions = result.getAllByTestId('insurance-form-description');
     expect(formDescriptions[0] as HTMLInputElement).toHaveValue(
