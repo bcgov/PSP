@@ -19,7 +19,6 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
     formikProps.values,
     `${withNameSpace(nameSpace, 'insuranceType')}`,
   );
-  console.log(withNameSpace(nameSpace, 'coverageLimit'));
 
   return (
     <FormSection className="mb-3" data-testid="insurance-form">
