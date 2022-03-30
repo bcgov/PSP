@@ -7,7 +7,6 @@ import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import L, { LatLngLiteral } from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
