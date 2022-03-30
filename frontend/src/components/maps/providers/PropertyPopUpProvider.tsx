@@ -1,11 +1,10 @@
 import { IProperty } from 'interfaces';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { noop } from 'lodash';
 import React from 'react';
 
 export interface IPopUpContext {
-  propertyInfo: IPropertyApiModel | null;
-  setPropertyInfo: (propertyInfo: IPropertyApiModel | null) => void;
+  propertyInfo: IProperty | null;
+  setPropertyInfo: (propertyInfo: IProperty | null) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
 }
