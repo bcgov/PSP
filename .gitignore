@@ -16,3 +16,84 @@ trufflehog_report.*
 datastore.xml
 **/.vscode/
 *.bak
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._Alter Down
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._Alter Up
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._Build
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._Drop
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._PIMS PDM S23.01.png
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._PIMS S23.01 Change Log.txt
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/._Test Data
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Alter Down/._01_PSP_PIMS_S23_01_Alter Down.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Alter Down/._10_DML_PIMS_STATIC_VARIABLE_VERSION.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Alter Down/._Schema Compare.zip
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Alter Up/._01_PSP_PIMS_S23_00_Alter_Up.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Alter Up/._10_DML_PIMS_STATIC_VARIABLE_VERSION.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Alter Up/._Schema Compare.zip
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._00_PSP_PIMS_ETL_SCHEMA_Build.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._01_PSP_PIMS_PMBC_SCHEMA_Build.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._02_PSP_PIMS_S23_01_Build.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._03_PSP_PIMS_ETL_Tables_Build.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._04_PSP_PIMS_PMBC_Tables_Build.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._20_DML_PIMS_STATIC_VARIABLE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._30_DML_PIMS_ADDRESS_USAGE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._31_DML_PIMS_AREA_UNIT_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._32_DML_PIMS_PROPERTY_TENURE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._33_DML_PIMS_PROPERTY_SERVICE_FILE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._34_DML_PIMS_PROJECT_STATUS_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._35_DML_PIMS_PROJECT_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._36_DML_PIMS_PROJECT_RISK_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._37_DML_PIMS_PROJECT_TIER_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._38_DML_PIMS_WORKFLOW_MODEL_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._39_DML_PIMS_TASK_TEMPLATE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._40_DML_PIMS_CONTACT_METHOD_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._41_DML_PIMS_ORGANIZATION_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._42_DML_PIMS_ACCESS_REQUEST_STATUS_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._43_DML_PIMS_PROPERTY_CLASSIFICATION_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._44_DML_PIMS_PROPERTY_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._45_DML_PIMS_COUNTRY.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._46_DML_PIMS_PROVINCE_STATE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._47_DML_PIMS_REGION.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._48_DML_PIMS_DISTRICT.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._49_DML_PIMS_PROPERTY_DATA_SOURCE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._50_DML_PIMS_ORG_IDENTIFIER_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._51_DML_PIMS_ROLE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._52_DML_PIMS_PROPERTY_STATUS_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._53_DML_PIMS_LEASE_PAY_RVBL_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._54_DML_PIMS_LEASE_LICENSE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._55_DML_PIMS_LEASE_CATEGORY_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._56_DML_PIMS_LEASE_PURPOSE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._57_DML_PIMS_LEASE_PROGRAM_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._58_DML_PIMS_LEASE_PMT_FREQ_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._59_DML_PIMS_PROPERTY_TAX_REMIT_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._61_DML_PIMS_SURPLUS_DECLARATION_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._62_DML_PIMS_PROPERTY_IMPROVEMENT_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._64_DML_PIMS_SECURITY_DEPOSIT_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._65_DML_PIMS_LESSOR_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._66_DML_PIMS_LEASE_INITIATOR_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._67_DML_PIMS_LEASE_RESPONSIBILITY_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._68_DML_PIMS_LEASE_TERM_STATUS_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._70_DML_PIMS_LEASE_PAYMENT_STATUS_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._71_DML_PIMS_LEASE_PAYMENT_METHOD_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._72_DML_PIMS_INSURANCE_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._73_DML_PIMS_LEASE_STATUS_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._74_DML_PIMS_CLAIM.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._75_DML_PIMS_ROLE_CLAIM.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._76_DML_PIMS_ORGANIZATION.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._77_DML_PIMS_TENANT.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._78_DML_PIMS_PROPERTY_ANOMALY_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._79_DML_PIMS_PROPERTY_ROAD_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._80_DML_PIMS_PROPERTY_ADJACENT_LAND_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Build/._81_DML_PIMS_VOLUMETRIC_TYPE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Drop/._01_PSP_PIMS_S23_01_Drop.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._03_DML_LEASE_TESTING.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._04_DML_LEASE_LOAD.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._05_DML_LEASE_PROPERTY.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._06_DML_PROPERTY_LEASE.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._07_CONTACTS_ORGANIZATION_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._08_CONTACTS_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._09_INSURANCE_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._10_LEASE_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._11_SECURITY_DEPOSIT_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._12_SECURITY_DEPOSIT_RETURN_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._13_SURPLUS_DECLERATION_TEST_DATA.sql
+database/mssql/scripts/dbscripts/PSP_PIMS_S23_01/Test Data/._14_TENANT_TEST_DATA.sql
