@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { IPaginateProperties } from 'constants/API';
 import find from 'lodash/find';
 import * as MOCK from 'mocks/dataMocks';
-import { mockParcel, mockParcelDetail, mockProperties } from 'mocks/filterDataMock';
+import { mockProperties } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';

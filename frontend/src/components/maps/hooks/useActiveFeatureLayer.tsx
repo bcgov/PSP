@@ -1,7 +1,6 @@
 import { GeoJsonObject } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { GeoJSON, geoJSON, LatLng, Map as LeafletMap } from 'leaflet';
 import { useState } from 'react';
 
