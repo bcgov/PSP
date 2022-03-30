@@ -1,3 +1,4 @@
+import { IAddress, IProperty } from 'interfaces';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
