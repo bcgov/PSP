@@ -1,3 +1,4 @@
+import { IAddress, IProperty } from 'interfaces';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
@@ -34,13 +35,14 @@ describe('MapSlideBarHeader component', () => {
   });
 
   it('Diplays land parcel type', async () => {
+    const testProperty: IPropertyApiModel = {
+      propertyType: { description: 'A land type description' },
+    };
     const result = setup({
       ltsaData: undefined,
-      property: {},
+      property: testProperty,
     });
     // PID is shown
-    expect(
-      result.getByText(mockLtsaResponse.parcelInfo.orderedProduct.fieldedData.parcelIdentifier),
-    ).toBeVisible();
+    expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
   });
 });
