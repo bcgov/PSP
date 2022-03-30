@@ -36,7 +36,6 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
           isMounted() &&
           ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
         ) {
-          console.log(ltsaData);
           setLtsaData(ltsaData);
         }
       }
