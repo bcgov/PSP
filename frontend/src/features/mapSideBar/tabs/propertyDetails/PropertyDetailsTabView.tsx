@@ -1,9 +1,8 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikProps, getIn } from 'formik';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import noop from 'lodash/noop';
-import { Api_Property } from 'models/api/Property';
 import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
@@ -28,19 +27,19 @@ import {
 } from './PropertyDetailsTabView.helpers';
 
 interface IPropertyDetailsTabView {
-  details?: IPropertyDetailsForm;
+  property?: IPropertyApiModel;
 }
 
 /**
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ details }) => {
-  const values = details ?? toFormValues(defaultPropertyInfo as Api_Property);
+export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ property }) => {
+  const values =
+    property !== undefined ? toFormValues(property) : toFormValues(defaultPropertyInfo);
 
   return (
     <StyledScrollable>
-      <LoadingBackdrop show={details === undefined} parentScreen={true} />
       <Formik
         initialValues={values}
         onSubmit={noop}

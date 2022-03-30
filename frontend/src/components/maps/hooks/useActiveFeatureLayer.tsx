@@ -1,6 +1,6 @@
 import { GeoJsonObject } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { IProperty } from 'interfaces';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { GeoJSON, geoJSON, LatLng, Map as LeafletMap } from 'leaflet';
 import { useState } from 'react';
 
@@ -11,7 +11,7 @@ interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
   mapRef: React.RefObject<LeafletMap>;
   /** The currently selected property on the map */
-  selectedProperty?: IProperty | null;
+  selectedProperty?: IPropertyApiModel | null;
   /** the currently displayed layer popup information */
   layerPopup?: LayerPopupInformation;
   /** set the display of the layer popup imperatively */

@@ -7,6 +7,7 @@ import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import L, { LatLngLiteral } from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -238,7 +239,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       popUpContext.setLoading(true);
       getProperty(id)
         .then(apiProperty => {
-          const property: IProperty = {
+          const property: IPropertyApiModel = {
             ...apiProperty.data,
             latitude: latLng.lat,
             longitude: latLng.lng,

@@ -2,6 +2,7 @@ import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
 import classNames from 'classnames';
 import * as Styled from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as React from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -15,6 +16,7 @@ interface IMapSideBarLayoutProps {
   /** property name for title */
   propertyName?: string;
   header: React.ReactNode;
+  isLoading: boolean;
 }
 
 /**
@@ -27,6 +29,7 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
   hidePolicy,
   title,
   propertyName,
+  isLoading,
   ...props
 }) => {
   return (
@@ -38,14 +41,16 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
       <VisibilitySensor partialVisibility={true}>
         {({ isVisible }: any) => (
           <>
+            <LoadingBackdrop show={isLoading} parentScreen={true} />
             <TitleBar>
               <Underline>
                 <LotIcon className="mr-1" />
                 <Styled.H1 className="mr-auto">{title}</Styled.H1>
+
+                <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
+                  <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
+                </TooltipWrapper>
               </Underline>
-              <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
-                <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
-              </TooltipWrapper>
             </TitleBar>
             <Header>{props.header}</Header>
             <Content>{isVisible ? props.children : null}</Content>
@@ -60,7 +65,9 @@ const Content = styled.div`
   grid-area: content;
   width: 100%;
   height: 100%;
+  top: 2rem;
   position: absolute;
+  margin-top: 1rem;
 `;
 
 const Header = styled.div`
