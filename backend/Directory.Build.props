@@ -13,7 +13,9 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    </ItemGroup>
     <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)\..\.editorconfig" />
     </ItemGroup>
