@@ -110,12 +110,12 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - Area Unit name.
         /// </summary>
-        public TypeModel<string>  AreaUnit { get; set; }
+        public TypeModel<string> AreaUnit { get; set; }
 
         /// <summary>
         /// get/set - The land area of the parcel.
         /// </summary>
-        public Single LandArea { get; set; }
+        public float LandArea { get; set; }
 
         /// <summary>
         /// get/set - Whether the property is a volumetric parcel.
@@ -125,17 +125,17 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - The volumetric measurement of the parcel. Only applies if IsVolumetricParcel is true.
         /// </summary>
-        public Single VolumetricMeasurement { get; set; }
+        public float VolumetricMeasurement { get; set; }
 
         /// <summary>
         /// get/set - Volumetric Unit name.
         /// </summary>
-        public TypeModel<string>  VolumetricUnit { get; set; }
+        public TypeModel<string> VolumetricUnit { get; set; }
 
         /// <summary>
         /// get/set - Volumetric parcel type. e.g. airspace / sub-surface
         /// </summary>
-        public TypeModel<string>  VolumetricType { get; set; }
+        public TypeModel<string> VolumetricType { get; set; }
 
         /// <summary>
         /// get/set - The land legal description of the parcel.

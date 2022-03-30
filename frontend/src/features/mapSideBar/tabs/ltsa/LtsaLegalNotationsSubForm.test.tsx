@@ -30,7 +30,7 @@ describe('LtsaLegalNotationsSubForm component', () => {
   };
   it('renders legal notations form', () => {
     const { component } = setup({
-      ltsaData: mockLtsaResponse as any,
+      ltsaData: mockLtsaResponse,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -41,7 +41,7 @@ describe('LtsaLegalNotationsSubForm component', () => {
     const {
       component: { queryByLabelText },
     } = setup({
-      ltsaData: mockLtsaResponse as any,
+      ltsaData: mockLtsaResponse,
     });
     expect(queryByLabelText('Legal Notations:')).toBeNull();
   });

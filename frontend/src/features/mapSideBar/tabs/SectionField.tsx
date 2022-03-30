@@ -3,16 +3,15 @@ import styled from 'styled-components';
 
 interface ISectionFieldProps {
   label: string;
-  isCompact?: boolean;
 }
 
 export const SectionField: React.FunctionComponent<ISectionFieldProps> = props => {
   return (
     <Row className="pb-2">
-      <Col xs={props.isCompact ? 'auto' : '4'}>
+      <Col xs="4">
         <StyledFieldLabel>{props.label}:</StyledFieldLabel>
       </Col>
-      <Col xs={props.isCompact ? 'auto' : false}>{props.children}</Col>
+      <Col>{props.children}</Col>
     </Row>
   );
 };
