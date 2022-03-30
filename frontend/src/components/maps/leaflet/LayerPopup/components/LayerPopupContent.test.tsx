@@ -1,5 +1,4 @@
 import { cleanup, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import L from 'leaflet';
 import React from 'react';
@@ -20,10 +19,6 @@ const map: Partial<L.Map> = {
 };
 
 (useMap as jest.Mock).mockReturnValue(map);
-
-const northEast = new L.LatLng(50.5, -120.7);
-const southWest = new L.LatLng(50.3, -121.2);
-const bounds = new L.LatLngBounds(southWest, northEast);
 
 const mockLayer: IPopupContentProps = {
   layerPopup: {
