@@ -9,18 +9,15 @@ import {
 } from 'components/maps/leaflet/LayerPopup';
 import { useProperties } from 'hooks';
 import useIsMounted from 'hooks/useIsMounted';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LatLngLiteral } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
 import { pidFormatter } from 'utils';
 
-import { IPropertyDetailsForm, toFormValues } from './PropertyDetailsTabView.helpers';
-
-export function usePropertyDetails(pid?: string) {
+export function usePropertyDetails(pid?: string): IPropertyApiModel | undefined {
   const { getPropertyWithPid } = useProperties();
   const isMounted = useIsMounted();
-  const [propertyDetails, setPropertyDetails] = useState<IPropertyDetailsForm | undefined>(
-    undefined,
-  );
+  const [propertyDetails, setPropertyDetails] = useState<IPropertyApiModel | undefined>(undefined);
 
   const lat = propertyDetails?.latitude;
   const lng = propertyDetails?.longitude;
@@ -42,7 +39,7 @@ export function usePropertyDetails(pid?: string) {
       }
       const propInfo = await getPropertyWithPid(pid);
       if (isMounted() && propInfo.pid === pidFormatter(pid)) {
-        setPropertyDetails(toFormValues(propInfo));
+        setPropertyDetails(propInfo);
       }
     }
 
@@ -102,7 +99,7 @@ export function usePropertyDetails(pid?: string) {
     motiRegionService,
   ]);
 
-  return { propertyDetails };
+  return propertyDetails;
 }
 
 async function findByLocation(

@@ -4,8 +4,7 @@ import * as API from 'constants/API';
 import { catchAxiosError } from 'customAxios';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
-import { IProperty } from 'interfaces';
-import { Api_Property } from 'models/api/Property';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -17,15 +16,11 @@ export const useProperties = () => {
   const dispatch = useDispatch();
   const {
     getPropertiesPaged,
-    getProperty,
     getPropertyWithPid,
-    postProperty,
-    putProperty,
-    deleteProperty,
     exportProperties: rawApiExportProperties,
   } = useApiProperties();
 
-  const { getPropertyWfs, getPropertyWithPidWfs } = useGeoServer();
+  const { getPropertyWithPidWfs } = useGeoServer();
 
   /**
    * fetch properties, passing the current bounds of the map.
@@ -57,49 +52,10 @@ export const useProperties = () => {
 
   /**
    * Make an AJAX request to fetch the specified 'property' from inventory.
-   * @param params unique id of the property
-   * @param position optional override for the lat/lng of the returned property.
-   */
-  const fetchProperty = useCallback(
-    async (id: number, position?: [number, number]): Promise<IProperty> => {
-      dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
-      dispatch(showLoading());
-      // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
-      //   1. to the REST API to fetch property field attributes (e.g. address, etc)
-      //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
-      return Promise.all([getProperty(id), getPropertyWfs(id)])
-        .then(([apiProperty, wfsResponse]) => {
-          const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: IProperty = {
-            ...apiProperty.data,
-            latitude,
-            longitude,
-          };
-          dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
-          dispatch(hideLoading());
-          return property;
-        })
-        .catch(axiosError => {
-          dispatch(
-            logError({
-              name: actionTypes.GET_PARCEL_DETAIL,
-              status: axiosError?.response?.status,
-              error: axiosError,
-            }),
-          );
-          return Promise.reject(axiosError);
-        })
-        .finally(() => dispatch(hideLoading()));
-    },
-    [dispatch, getProperty, getPropertyWfs],
-  );
-
-  /**
-   * Make an AJAX request to fetch the specified 'property' from inventory.
    * @param params PID of the property
    */
   const fetchPropertyWithPid = useCallback(
-    async (pid: string): Promise<Api_Property> => {
+    async (pid: string): Promise<IPropertyApiModel> => {
       dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
       dispatch(showLoading());
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
@@ -109,10 +65,10 @@ export const useProperties = () => {
         getPropertyWithPid(pidFormatter(pid)),
         getPropertyWithPidWfs(pidPadded(pid)),
       ])
-        .then(([apiProperty, wfsResponse]) => {
+        .then(([propertyResponse, wfsResponse]) => {
           const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: Api_Property = {
-            ...apiProperty.data,
+          const property: IPropertyApiModel = {
+            ...propertyResponse.data,
             latitude,
             longitude,
           };
@@ -133,72 +89,6 @@ export const useProperties = () => {
         .finally(() => dispatch(hideLoading()));
     },
     [dispatch, getPropertyWithPid, getPropertyWithPidWfs],
-  );
-
-  /**
-   * Make an AJAX request to add the specified 'property' to inventory.
-   * @param property IProperty object to add to inventory.
-   */
-  const createProperty = useCallback(
-    async (property: IProperty) => {
-      dispatch(logRequest(actionTypes.ADD_PARCEL));
-      dispatch(showLoading());
-      try {
-        const { data, status } = await postProperty(property);
-        dispatch(logSuccess({ name: actionTypes.ADD_PARCEL, status }));
-        dispatch(hideLoading());
-        return data;
-      } catch (axiosError) {
-        if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.ADD_PARCEL);
-        }
-      }
-    },
-    [dispatch, postProperty],
-  );
-
-  /**
-   * Make an AJAX request to update the specified 'property' from inventory, using the id.
-   * @param property IProperty object to update from inventory.
-   */
-  const updateProperty = useCallback(
-    async (property: IProperty) => {
-      dispatch(logRequest(actionTypes.UPDATE_PARCEL));
-      dispatch(showLoading());
-      try {
-        const { data, status } = await putProperty(property);
-        dispatch(logSuccess({ name: actionTypes.UPDATE_PARCEL, status }));
-        dispatch(hideLoading());
-        return data;
-      } catch (axiosError) {
-        if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.UPDATE_PARCEL);
-        }
-      }
-    },
-    [dispatch, putProperty],
-  );
-
-  /**
-   * Make an AJAX request to delete the specified 'property' from inventory.
-   * @param property IProperty object to delete from inventory.
-   */
-  const removeProperty = useCallback(
-    async (property: IProperty) => {
-      dispatch(logRequest(actionTypes.DELETE_PARCEL));
-      dispatch(showLoading());
-      try {
-        const { data, status } = await deleteProperty(property);
-        dispatch(logSuccess({ name: actionTypes.DELETE_PARCEL, status }));
-        dispatch(hideLoading());
-        return data;
-      } catch (axiosError) {
-        if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
-        }
-      }
-    },
-    [dispatch, deleteProperty],
   );
 
   /**
@@ -235,11 +125,7 @@ export const useProperties = () => {
 
   return {
     getProperties: fetchProperties,
-    getProperty: fetchProperty,
     getPropertyWithPid: fetchPropertyWithPid,
-    createProperty,
-    updateProperty,
-    deleteProperty: removeProperty,
     exportProperties,
   };
 };

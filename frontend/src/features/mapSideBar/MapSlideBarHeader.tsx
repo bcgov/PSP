@@ -1,48 +1,65 @@
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { AssociatedPlan, LtsaOrders } from 'interfaces/ltsaModels';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
-import { SectionField } from './tabs/SectionField';
+import { HeaderField } from './tabs/HeaderField';
 
 interface IMapSlideBarHeaderProps {
   ltsaData?: LtsaOrders;
-  propertyDetails: any;
+  property?: IPropertyApiModel;
 }
 
 export const MapSlideBarHeader: React.FunctionComponent<IMapSlideBarHeaderProps> = props => {
   const pid = props.ltsaData?.parcelInfo.orderedProduct.fieldedData.parcelIdentifier;
-  const planNumbers = (props.ltsaData?.parcelInfo.orderedProduct.fieldedData
-    .associatedPlans as AssociatedPlan[]).map(x => x.planNumber);
-  console.log(props.ltsaData?.titleOrders[0].orderedProduct.fieldedData);
+  const planNumbers =
+    props.ltsaData === undefined
+      ? []
+      : (props.ltsaData?.parcelInfo.orderedProduct.fieldedData
+          .associatedPlans as AssociatedPlan[]).map(x => x.planNumber);
   return (
     <>
-      <Row>
-        <Col>
-          <SectionField label={'Civic Address'} isCompact>
-            Todo
-          </SectionField>
-        </Col>
-        <Col>
-          <SectionField label={'PID'} isCompact>
-            {pid}
-          </SectionField>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <SectionField label={'Plan(s) #'} isCompact>
-            {planNumbers.map((planNumber: string, index: number) => (
-              <span key={'plannumber-' + index} className="pr-3">
-                {planNumber}
-              </span>
-            ))}
-          </SectionField>
-        </Col>
-        <Col>
-          <SectionField label={'Land parcel type'} isCompact>
-            {props.propertyDetails.propertyType}
-          </SectionField>
-        </Col>
-      </Row>
+      <HeaderWrapper>
+        <Row>
+          <Col xs="8">
+            <HeaderField label={'Civic Address'}>-</HeaderField>
+          </Col>
+          <Col>
+            <HeaderField label={'PID:'} className="justify-content-end">
+              {pid}
+            </HeaderField>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="8">
+            <HeaderField label={'Plan(s) #'}>
+              {planNumbers.map((planNumber: string, index: number) => (
+                <span key={'plannumber-' + index} className="pr-3">
+                  {planNumber}
+                </span>
+              ))}
+            </HeaderField>
+          </Col>
+          <Col>
+            <HeaderField label={'Land parcel type:'} className="justify-content-end">
+              {props.property?.propertyType?.description}
+            </HeaderField>
+          </Col>
+        </Row>
+      </HeaderWrapper>
+      <StyledDivider />
     </>
   );
 };
+
+const HeaderWrapper = styled.div`
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+`;
+const StyledDivider = styled.div`
+  margin-top: 0.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+`;

@@ -28,7 +28,7 @@ describe('LtsaChargeSubForm component', () => {
   };
   it('renders charge sub form', () => {
     const { component } = setup({
-      ltsaData: mockLtsaResponse as any,
+      ltsaData: mockLtsaResponse,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -39,7 +39,7 @@ describe('LtsaChargeSubForm component', () => {
     const {
       component: { getByText },
     } = setup({
-      ltsaData: mockLtsaResponse as any,
+      ltsaData: mockLtsaResponse,
     });
     expect(getByText('this title has no charges')).toBeVisible();
   });
