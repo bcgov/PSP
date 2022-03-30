@@ -87,11 +87,13 @@ const StyledContainer = styled.div`
     font-size: 1.4rem;
     line-height: 2.2rem;
     padding: 0;
-    &:active {
-      background-color: transparent !important;
-    }
-    &:focus {
-      box-shadow: none;
+  }
+  .list-group {
+    .list-group-item {
+      font-size: 1.4rem;
+      border: none;
+      padding: 0;
+      padding-top: 0.8rem;
     }
   }
 `;
@@ -103,11 +105,21 @@ const StyledFlyoutContainer = styled.div`
   background: #fffefa;
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
-  width: 20rem;
+  min-width: 25rem;
 
   .list-group {
     .list-group-item {
-      padding: 0.6rem 1rem;
+      padding: 0.5rem 1rem 0 1rem !important;
+      .btn {
+        width: 100%;
+        border-bottom: 1px solid #bcbec5 !important;
+      }
+      &:last-of-type {
+        padding-bottom: 0.5rem !important;
+        .btn {
+          border-bottom: none !important;
+        }
+      }
     }
   }
 `;
