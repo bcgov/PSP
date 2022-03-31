@@ -19,16 +19,10 @@ export const INDIAN_RESERVES_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP';
 
 export const parcelLayerPopupConfig = {
-  PARCEL_NAME: { label: 'Parcel Name:', display: (data: any) => data.PARCEL_NAME },
   PIN: { label: 'Parcel PIN:', display: (data: any) => data.PIN },
   PID: { label: 'Parcel PID:', display: (data: any) => pidFormatter(data?.PID) },
   PLAN_NUMBER: { label: 'Plan Number:', display: (data: any) => data.PLAN_NUMBER },
-  PARCEL_CLASS: { label: 'Parcel Class:', display: (data: any) => data.PARCEL_CLASS },
   MUNICIPALITY: { label: 'Municipality:', display: (data: any) => data.MUNICIPALITY },
-  REGIONAL_DISTRICT: {
-    label: 'Regional District:',
-    display: (data: any) => data.REGIONAL_DISTRICT,
-  },
   FEATURE_AREA_SQM: {
     label: 'Area:',
     display: (data: any) => (

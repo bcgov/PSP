@@ -1,12 +1,15 @@
 import axios from 'axios';
 import classNames from 'classnames';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import {
+  LayerPopup,
+  LayerPopupInformation,
+  useLayerQuery,
+} from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
-import { Feature } from 'geojson';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
@@ -15,7 +18,7 @@ import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { MapContainer as ReactLeafletMap, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
@@ -35,11 +38,6 @@ import {
   parcelLayerPopupConfig,
   PARCELS_LAYER_URL,
 } from './LayerPopup/constants';
-import {
-  LayerPopupContent,
-  LayerPopupTitle,
-  PopupContentConfig,
-} from './LayerPopup/LayerPopupContent';
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
 import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
@@ -63,14 +61,6 @@ export type MapProps = {
   showParcelBoundaries?: boolean;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
-};
-
-export type LayerPopupInformation = PopupContentConfig & {
-  latlng: LatLng;
-  title: string;
-  center?: LatLng;
-  bounds?: LatLngBounds;
-  feature: Feature;
 };
 
 type BaseLayerFile = {
@@ -241,7 +231,7 @@ const Map: React.FC<MapProps> = ({
     }
 
     if (parcel?.features?.length === 1) {
-      title = 'Parcel Information';
+      title = 'LTSA ParcelMap data';
       properties = parcel.features[0].properties!;
       displayConfig = parcelLayerPopupConfig;
       mapBounds = parcel.features[0]?.geometry
@@ -309,35 +299,24 @@ const Map: React.FC<MapProps> = ({
             <TileLayer attribution={activeBasemap.attribution} url={activeBasemap.url} zIndex={0} />
           )}
           {!!layerPopup && (
-            <Popup
-              position={layerPopup.latlng}
-              offset={[0, -25]}
+            <LayerPopup
+              layerPopup={layerPopup}
               onClose={() => {
                 setLayerPopup(undefined);
                 setPropertyInfo(null);
               }}
-              closeButton={true}
-              autoPan={false}
-            >
-              <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
-              <LayerPopupContent
-                data={layerPopup.data as any}
-                config={layerPopup.config as any}
-                center={layerPopup.center}
-                onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
-                  dispatch(
-                    saveParcelLayerData({
-                      e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
-                      data: {
-                        ...data,
-                        CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
-                      },
-                    }),
-                  );
-                }}
-                bounds={layerPopup.bounds}
-              />
-            </Popup>
+              onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
+                dispatch(
+                  saveParcelLayerData({
+                    e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
+                    data: {
+                      ...data,
+                      CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
+                    },
+                  }),
+                );
+              }}
+            />
           )}
           <LegendControl />
           <ZoomOutButton bounds={defaultBounds} />
