@@ -238,8 +238,27 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       popUpContext.setLoading(true);
       getProperty(id)
         .then(apiProperty => {
+          const propertyData = apiProperty.data;
+          const propertyAddress = propertyData.address;
+          const teunure = propertyData?.tenure !== undefined ? propertyData?.tenure[0] : undefined;
           const property: IProperty = {
-            ...apiProperty.data,
+            ...propertyData,
+            pid: propertyData.pid || '',
+            status: propertyData.status?.id,
+            dataSource: propertyData.dataSource?.id,
+            tenure: teunure?.id,
+            address: {
+              addressTypeId: '',
+              provinceId: propertyAddress?.province?.id || 0,
+              streetAddress1: propertyAddress?.streetAddress1 || '',
+              streetAddress2: propertyAddress?.streetAddress2,
+              streetAddress3: propertyAddress?.streetAddress3,
+              municipality: propertyAddress?.municipality || '',
+              postal: propertyAddress?.postal || '',
+            },
+            areaUnit: propertyData.areaUnit?.id,
+            landArea: propertyData.landArea || 0,
+            landLegalDescription: propertyData.landLegalDescription || '',
             latitude: latLng.lat,
             longitude: latLng.lng,
           };

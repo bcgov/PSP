@@ -1,5 +1,4 @@
 import { Input, TextArea } from 'components/common/form';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
@@ -7,7 +6,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
+import { SectionField } from '../SectionField';
 import { StyledFormSection, StyledScrollable, StyledSectionHeader } from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
@@ -22,30 +21,29 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
   return (
     <StyledScrollable>
-      <LoadingBackdrop show={ltsaData === undefined} parentScreen={true} />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
           <StyledFormSection>
             <StyledSectionHeader>Title Details</StyledSectionHeader>
-            <SectionFieldWrapper label="Title number">
+            <SectionField label="Title number">
               <Input
                 disabled
                 field={withNameSpace(titleNameSpace, 'titleIdentifier.titleNumber')}
               />
-            </SectionFieldWrapper>
-            <SectionFieldWrapper label="Land title district">
+            </SectionField>
+            <SectionField label="Land title district">
               <Input
                 disabled
                 field={withNameSpace(titleNameSpace, 'titleIdentifier.landTitleDistrict')}
               />
-            </SectionFieldWrapper>
-            <SectionFieldWrapper label="Taxation authorities">
+            </SectionField>
+            <SectionField label="Taxation authorities">
               <TextArea
                 disabled
                 field={withNameSpace(titleNameSpace, 'taxAuthorities')}
                 mapFunction={(taxAuthority: TaxAuthority) => taxAuthority.authorityName}
               />
-            </SectionFieldWrapper>
+            </SectionField>
           </StyledFormSection>
           <StyledFormSection>
             <LtsaLandSubForm nameSpace={titleNameSpace} />
@@ -61,12 +59,12 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
           </StyledFormSection>
           <StyledFormSection>
             <StyledSectionHeader>Notes</StyledSectionHeader>
-            <SectionFieldWrapper label="Miscellaneous notes">
+            <SectionField label="Miscellaneous notes">
               <p>{getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes')}</p>
-            </SectionFieldWrapper>
-            <SectionFieldWrapper label="Parcel status">
+            </SectionField>
+            <SectionField label="Parcel status">
               <Input disabled field="parcelInfo.orderedProduct.fieldedData.status" />
-            </SectionFieldWrapper>
+            </SectionField>
           </StyledFormSection>
         </StyledForm>
       </Formik>

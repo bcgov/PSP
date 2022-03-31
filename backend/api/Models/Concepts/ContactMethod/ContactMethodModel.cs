@@ -3,9 +3,9 @@
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
-    /// Provides a contact-oriented contact method model.
+    /// Provides a Contact method model.
     /// </summary>
-    public class ContactMethodModel : BaseAppModel
+    public class ContactMethodModel : BaseModel
     {
         #region Properties
         /// <summary>

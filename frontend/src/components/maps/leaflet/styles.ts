@@ -13,12 +13,6 @@ export const MapContainer = styled.div`
     }
     .leaflet-popup-content {
       margin: 0rem;
-      .list-group {
-        .list-group-item {
-          border: none;
-          padding: 0.8rem 1.4rem;
-        }
-      }
     }
 
     .leaflet-control-container .leaflet-top {

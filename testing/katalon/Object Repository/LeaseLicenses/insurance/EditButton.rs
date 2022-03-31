@@ -7,13 +7,18 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//button[contains(text(), &quot;Edit Insurances&quot;)]</value>
+         <value>//body/div[@id='root']/div[2]/div[2]/div[1]/div[3]/div[1]/h2[1]/a[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <type>Main</type>
+      <value>/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[3]/div[1]/h2[1]/a[1]</value>
+   </webElementXpaths>
 </WebElementEntity>

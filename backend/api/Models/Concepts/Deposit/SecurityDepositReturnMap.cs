@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -8,7 +7,7 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsSecurityDepositReturn, Model.SecurityDepositReturnModel>()
+            config.NewConfig<Entity.PimsSecurityDepositReturn, SecurityDepositReturnModel>()
                 .Map(dest => dest.Id, src => src.SecurityDepositReturnId)
                 .Map(dest => dest.ParentDepositId, src => src.SecurityDepositId)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
@@ -16,9 +15,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ReturnAmount, src => src.ReturnAmount)
                 .Map(dest => dest.ReturnDate, src => src.ReturnDate)
                 .Map(dest => dest.ContactHolder, src => src.PimsSecurityDepositReturnHolder)
-                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
-            config.NewConfig<Model.SecurityDepositReturnModel, Entity.PimsSecurityDepositReturn>()
+            config.NewConfig<SecurityDepositReturnModel, Entity.PimsSecurityDepositReturn>()
                .Map(dest => dest.SecurityDepositReturnId, src => src.Id)
                 .Map(dest => dest.SecurityDepositId, src => src.ParentDepositId)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
@@ -26,7 +25,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ReturnAmount, src => src.ReturnAmount)
                 .Map(dest => dest.ReturnDate, src => src.ReturnDate)
                 .Map(dest => dest.PimsSecurityDepositReturnHolder, src => src.ContactHolder)
-                .Inherits<Api.Models.BaseModel, Entity.IBaseEntity>();
+                .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }
 }

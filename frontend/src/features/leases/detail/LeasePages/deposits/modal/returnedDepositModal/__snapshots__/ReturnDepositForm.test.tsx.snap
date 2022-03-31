@@ -238,7 +238,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             class="form-label"
             for="input-contactHolder"
           >
-            Deposit Holder:
+            Payee name:
           </label>
           <div
             class="align-items-center row"
@@ -566,7 +566,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             class="form-label"
             for="input-contactHolder"
           >
-            Deposit Holder:
+            Payee name:
           </label>
           <div
             class="align-items-center row"

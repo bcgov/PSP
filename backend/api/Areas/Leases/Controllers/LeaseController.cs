@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,6 @@ using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Lease.Controllers
 {
@@ -52,8 +52,8 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult GetLease(int id)
         {
             var lease = _pimsService.Lease.Get(id);
-
-            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+            var mapped = _mapper.Map<Models.Lease.LeaseModel>(lease);
+            return new JsonResult(mapped);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ import { FastInput } from '.';
 import { Input, InputProps } from './Input';
 
 // only "field" is required for <Input>, the rest are optional
-export type TextProps = InputProps & {
+export type TextAreaProps = InputProps & {
   /** use FastInput instead of Input */
   fast?: boolean;
   rows?: number;
@@ -18,7 +18,7 @@ export type TextProps = InputProps & {
 /**
  * Formik-connected <Input> form control
  */
-export const TextArea: React.FC<TextProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   field,
   label,
   placeholder,
