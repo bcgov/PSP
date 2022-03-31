@@ -1374,3 +1374,124 @@ DF L24824
   </div>
 </DocumentFragment>
 `;
+
+exports[`MapSlideBarHeader component Renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-8"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 col-auto"
+          >
+            <label>
+              Civic Address
+            </label>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <strong>
+              -
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="justify-content-end row"
+        >
+          <div
+            class="pr-0 col-auto"
+          >
+            <label>
+              PID:
+            </label>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <strong />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-8"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 col-auto"
+          >
+            <label>
+              Plan(s) #
+            </label>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <strong />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="justify-content-end row"
+        >
+          <div
+            class="pr-0 col-auto"
+          >
+            <label>
+              Land parcel type:
+            </label>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <strong />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c0 {
+  margin-top: 0.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+<div
+    class="c0"
+  />
+</DocumentFragment>
+`;
