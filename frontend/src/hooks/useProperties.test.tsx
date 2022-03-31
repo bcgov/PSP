@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { IPaginateProperties } from 'constants/API';
 import find from 'lodash/find';
 import * as MOCK from 'mocks/dataMocks';
-import { mockParcel, mockParcelDetail, mockProperties } from 'mocks/filterDataMock';
+import { mockProperties } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -65,110 +65,6 @@ describe('useProperties functions', () => {
 
       const { getProperties } = setup();
       await expect(getProperties(null)).rejects.toThrow();
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-    });
-  });
-
-  describe('getProperty action creator', () => {
-    const url = `/properties/${mockParcel.id}`;
-    const wfsUrl = new RegExp(`ogs-internal/*`);
-
-    it('Request successful, dispatches success with correct response', async () => {
-      const mockResponse = { data: mockParcelDetail };
-      const mockWfsResponse = { data: MOCK.mockWfsGetPropertyById };
-      // mock API calls
-      mockAxios.onGet(url).reply(200, mockResponse);
-      mockAxios.onGet(wfsUrl).reply(200, mockWfsResponse);
-
-      const { getProperty } = setup();
-      const response = await getProperty(1);
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(response).toEqual(mockResponse);
-    });
-
-    it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onGet(url).reply(400, MOCK.ERROR);
-
-      const { getProperty } = setup();
-      await expect(getProperty(1)).rejects.toThrow();
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-    });
-  });
-
-  describe('postProperty action creator', () => {
-    const url = `/properties`;
-    it('Request successful, dispatches success with correct response', async () => {
-      const mockResponse = { data: mockParcelDetail };
-      mockAxios.onPost(url).reply(200, mockResponse);
-
-      const { createProperty } = setup();
-      await createProperty(mockParcel);
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-    });
-
-    it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onPost(url).reply(400, MOCK.ERROR);
-
-      const { createProperty } = setup();
-      await expect(createProperty(mockParcel)).rejects.toThrow();
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-    });
-  });
-
-  describe('updateProperty action creator', () => {
-    const url = `/properties/${mockParcel.id}`;
-    it('Request successful, dispatches success with correct response', async () => {
-      const mockResponse = { data: mockParcel };
-      mockAxios.onPut(url).reply(200, mockResponse);
-
-      const { updateProperty } = setup();
-      const response = await updateProperty(mockParcel);
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(response).toEqual(mockResponse);
-    });
-
-    it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onPut(url).reply(400, MOCK.ERROR);
-
-      const { updateProperty } = setup();
-      await expect(updateProperty(mockParcel)).rejects.toThrow();
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-    });
-  });
-
-  describe('deleteParcel action creator', () => {
-    const url = `/properties/${mockParcel.id}`;
-    it('Request successful, dispatches success with correct response', async () => {
-      const mockResponse = { data: { success: true } };
-      mockAxios.onDelete(url).reply(200, mockResponse);
-
-      const { deleteProperty } = setup();
-      const response = await deleteProperty(mockParcel);
-
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(response).toEqual(mockResponse);
-    });
-
-    it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onDelete(url).reply(400, MOCK.ERROR);
-
-      const { deleteProperty } = setup();
-      await expect(deleteProperty(mockParcel)).rejects.toThrow();
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();

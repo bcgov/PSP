@@ -1,14 +1,14 @@
 import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { VolumeUnitTypes } from 'constants/volumeUnitTypes';
 import { GeoJsonProperties } from 'geojson';
-import { Api_Property } from 'models/api/Property';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { ReactNode } from 'react';
 import { convertArea, convertVolume } from 'utils/convertUtils';
 import { booleanToString } from 'utils/formUtils';
 
 export interface IPropertyDetailsForm
   extends ExtendOverride<
-    Api_Property,
+    IPropertyApiModel,
     {
       motiRegion?: GeoJsonProperties;
       highwaysDistrict?: GeoJsonProperties;
@@ -24,7 +24,7 @@ export interface IPropertyDetailsForm
     }
   > {}
 
-export function toFormValues(apiData: Api_Property): IPropertyDetailsForm {
+export function toFormValues(apiData: IPropertyApiModel): IPropertyDetailsForm {
   return {
     ...apiData,
     motiRegion: {},
@@ -41,7 +41,9 @@ export function toFormValues(apiData: Api_Property): IPropertyDetailsForm {
   };
 }
 
-function generateLandMeasurements(apiData?: Api_Property): Array<{ value: number; unit: string }> {
+function generateLandMeasurements(
+  apiData?: IPropertyApiModel,
+): Array<{ value: number; unit: string }> {
   const { landArea, areaUnit } = { ...apiData };
   const unitId = areaUnit?.id;
   if (typeof landArea === 'undefined' || typeof unitId === 'undefined') {
@@ -69,7 +71,7 @@ function generateLandMeasurements(apiData?: Api_Property): Array<{ value: number
 }
 
 function generateVolumeMeasurements(
-  apiData?: Api_Property,
+  apiData?: IPropertyApiModel,
 ): Array<{ value: number; unit: ReactNode }> {
   const { volumetricMeasurement, volumetricUnit } = { ...apiData };
   const unitId = volumetricUnit?.id;
@@ -115,7 +117,7 @@ export const readOnlyMultiSelectStyle = {
   },
 };
 
-export const defaultPropertyInfo: Partial<Api_Property> = {
+export const defaultPropertyInfo: Partial<IPropertyApiModel> = {
   anomalies: [],
   tenure: [],
   roadType: [],
