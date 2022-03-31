@@ -13,7 +13,6 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-  PropertyTypes,
 } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { useProperties } from 'hooks';
@@ -51,30 +50,30 @@ jest.mock('hooks/pims-api');
 }));
 
 const largeMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 3, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 4, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 5, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 6, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 7, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 8, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 9, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 10, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 11, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Land },
+  { id: 1, latitude: 53.917065, longitude: -122.749672 },
+  { id: 2, latitude: 53.917065, longitude: -122.749672 },
+  { id: 3, latitude: 53.917065, longitude: -122.749672 },
+  { id: 4, latitude: 53.917065, longitude: -122.749672 },
+  { id: 5, latitude: 53.917065, longitude: -122.749672 },
+  { id: 6, latitude: 53.917065, longitude: -122.749672 },
+  { id: 7, latitude: 53.917065, longitude: -122.749672 },
+  { id: 8, latitude: 53.917065, longitude: -122.749672 },
+  { id: 9, latitude: 53.917065, longitude: -122.749672 },
+  { id: 10, latitude: 53.917065, longitude: -122.749672 },
+  { id: 11, latitude: 53.918165, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const smallMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Land },
+  { id: 1, latitude: 53.917065, longitude: -122.749672 },
+  { id: 3, latitude: 53.918165, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 3, latitude: 53.917065, longitude: -122.749772, propertyTypeId: PropertyTypes.Land },
+  { id: 1, latitude: 53.917065, longitude: -122.749672 },
+  { id: 2, latitude: 53.917065, longitude: -122.749672 },
+  { id: 3, latitude: 53.917065, longitude: -122.749772 },
 ] as IProperty[];
 
 let findOneWhereContains = jest.fn();
@@ -85,12 +84,10 @@ let findOneWhereContains = jest.fn();
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
-  propertyTypeId: PropertyTypes.Land,
   propertyDetail: {
     id: 1,
     pid: '000-000-000',
     pin: '',
-    propertyTypeId: PropertyTypes.Land,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: new Date(),
@@ -312,9 +309,7 @@ describe('MapView', () => {
         {
           type: 'Feature',
           geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
-          properties: {
-            propertyTypeId: PropertyTypes.Land,
-          },
+          properties: {},
         },
       ],
     });
@@ -336,9 +331,7 @@ describe('MapView', () => {
         {
           type: 'Feature',
           geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
-          properties: {
-            propertyTypeId: PropertyTypes.Land,
-          },
+          properties: { pid: '123-456-789' },
         },
       ],
     });

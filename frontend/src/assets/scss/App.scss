@@ -1,0 +1,134 @@
+@import './styles.scss';
+
+.modal-dialog.modal-xl {
+  max-width: 100rem;
+}
+
+.modal-dialog.modal-l {
+  max-width: 75rem;
+}
+
+.modal-dialog.modal-m {
+  max-width: 50rem;
+}
+
+.modal-dialog.modal-s {
+  max-width: 40rem;
+}
+
+.Toastify__toast .Toastify__toast-body {
+  word-break: break-word;
+}
+
+.Toastify__toast.Toastify__toast--dark {
+  color: #fff;
+  background-color: $secondary-variant-color;
+}
+
+.Toastify__toast.Toastify__toast--warning {
+  color: $text-color;
+  background-color: $light-accent-color;
+}
+
+.Toastify__toast.Toastify__toast--error {
+  color: #fff;
+  background-color: $danger-color;
+}
+
+.tooltip {
+  pointer-events: none;
+  font-size: 1.4rem;
+}
+
+.dropdown-menu {
+  font-size: 1.6rem;
+}
+
+.h4 {
+  font-size: 2.4rem;
+}
+
+.invalid-feedback {
+  display: block !important;
+}
+
+// see https://github.com/Hacker0x01/react-datepicker/issues/624
+.react-datepicker {
+  font-size: 1em;
+}
+.react-datepicker__header {
+  padding-top: 0.8em;
+}
+.react-datepicker__month {
+  margin: 0.4em 1em;
+}
+.react-datepicker__day-name,
+.react-datepicker__day {
+  width: 1.9em;
+  line-height: 1.9em;
+  margin: 0.166em;
+}
+.react-datepicker__current-month {
+  font-size: 1em;
+}
+.react-datepicker__navigation {
+  top: 1em;
+  line-height: 1.7em;
+  border: 0.45em solid transparent;
+}
+.react-datepicker__navigation--previous {
+  border-right-color: #ccc;
+  left: 1em;
+}
+.react-datepicker__navigation--next {
+  border-left-color: #ccc;
+  right: 1em;
+}
+
+#root {
+  // React-bootstrap toast global styling
+  .toast {
+    font-size: 1.4rem;
+  }
+
+  .spinner-border {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .page-link {
+    padding: 0.8rem 1.2rem;
+  }
+
+  .error {
+    color: $danger-color;
+  }
+
+  ul.pagination li {
+    cursor: pointer;
+  }
+
+  //React table global styling
+  .table .tr .td {
+    word-break: break-word;
+  }
+
+  .table .th.reset-filter.svg-btn {
+    display: none;
+  }
+
+  select.form-control.is-invalid {
+    background-image: none;
+    padding-right: 1.2rem;
+  }
+
+  //by default, highlight dropdown options blue
+  .dropdown-item,
+  .dropdown-header {
+    color: $text-color;
+    &:hover {
+      color: #fff;
+      background-color: $active-color;
+    }
+  }
+}

@@ -13,8 +13,9 @@ namespace Pims.Dal.Entities
     {
         public PimsAreaUnitType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
+            PimsPropertyPropertyAreaUnitTypeCodeNavigations = new HashSet<PimsProperty>();
+            PimsPropertyVolumetricUnitTypeCodeNavigations = new HashSet<PimsProperty>();
         }
 
         [Key]
@@ -45,9 +46,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyAreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.AreaUnitTypeCodeNavigation))]
         public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
+        [InverseProperty(nameof(PimsProperty.PropertyAreaUnitTypeCodeNavigation))]
+        public virtual ICollection<PimsProperty> PimsPropertyPropertyAreaUnitTypeCodeNavigations { get; set; }
+        [InverseProperty(nameof(PimsProperty.VolumetricUnitTypeCodeNavigation))]
+        public virtual ICollection<PimsProperty> PimsPropertyVolumetricUnitTypeCodeNavigations { get; set; }
     }
 }

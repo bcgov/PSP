@@ -5,7 +5,6 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
-using Pims.Dal.Repositories;
 
 namespace Pims.Dal.Repositories
 {

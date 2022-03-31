@@ -1,6 +1,6 @@
 import './LegendControl.scss';
 
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as React from 'react';
 import Button from 'react-bootstrap/Button';

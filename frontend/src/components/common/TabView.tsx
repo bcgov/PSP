@@ -16,9 +16,13 @@ const StyledTabWrapper = styled.div`
     height: 2.4rem;
   }
   .tab-content {
+    .tab-pane {
+      position: relative;
+    }
     border-radius: 0 0.4rem 0.4rem 0.4rem;
     height: calc(100% - 2.4rem);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color: ${props => props.theme.css.filterBackgroundColor};
   }
   height: 100%;

@@ -1,7 +1,6 @@
 import './PointClusterer.scss';
 
 import { AddressTypes } from 'constants/index';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
@@ -48,47 +47,39 @@ export const convertToProperty = (
   latitude?: number,
   longitude?: number,
 ): IProperty | null => {
-  if ([PropertyTypes.Land, PropertyTypes.Subdivision].includes(property.propertyTypeId)) {
-    return {
-      pid: property.PID,
-      latitude: latitude,
-      longitude: longitude,
-      propertyTypeId: property.propertyTypeId,
-      address: {
-        id: property.ADDRESS_ID,
-        addressTypeId: AddressTypes.Mailing,
-        municipality: property.MUNICIPALITY_NAME,
-        provinceId: 1,
-        province: property.PROVINCE_STATE_CODE,
-        streetAddress1: property.STREET_ADDRESS_1,
-        postal: property.POSTAL_CODE,
-        country: property.COUNTRY_CODE,
-      },
-      pin: property.PIN,
-      landArea: property.LAND_AREA,
-      landLegalDescription: property.LAND_LEGAL_DESCRIPTION,
-      name: property.NAME,
-      description: property.DESCRIPTION,
-      isSensitive: property.IS_SENSITIVE,
-      isOwned: property.IS_OWNED,
-      encumbranceReason: property.ENCUMBRANCE_REASON,
-      isPropertyOfInterest: property.IS_PROPERTY_OF_INTEREST,
-      isVisibleToOtherAgencies: property.IS_VISIBLE_TO_OTHER_AGENCIES,
-      areaUnit: property.PROPERTY_AREA_UNIT_TYPE_CODE,
-      classificationId: property.PROPERTY_CLASSIFICATION_TYPE_CODE,
-      id: property.PROPERTY_ID,
-      status: property.PROPERTY_STATUS_TYPE_CODE,
-      tenure: property.PROPERTY_TENURE_TYPE_CODE,
-      regionId: property.REGION_CODE,
-      zoning: property.ZONING,
-      zoningPotential: property.ZONING_POTENTIAL,
-    };
-  } else if (
-    [PropertyTypes.DraftBuilding, PropertyTypes.DraftLand].includes(property.propertyTypeId)
-  ) {
-    return property;
-  }
-  return null;
+  return {
+    pid: property.PID,
+    latitude: latitude,
+    longitude: longitude,
+    address: {
+      id: property.ADDRESS_ID,
+      addressTypeId: AddressTypes.Mailing,
+      municipality: property.MUNICIPALITY_NAME,
+      provinceId: 1,
+      province: property.PROVINCE_STATE_CODE,
+      streetAddress1: property.STREET_ADDRESS_1,
+      postal: property.POSTAL_CODE,
+      country: property.COUNTRY_CODE,
+    },
+    pin: property.PIN,
+    landArea: property.LAND_AREA,
+    landLegalDescription: property.LAND_LEGAL_DESCRIPTION,
+    name: property.NAME,
+    description: property.DESCRIPTION,
+    isSensitive: property.IS_SENSITIVE,
+    isOwned: property.IS_OWNED,
+    encumbranceReason: property.ENCUMBRANCE_REASON,
+    isPropertyOfInterest: property.IS_PROPERTY_OF_INTEREST,
+    isVisibleToOtherAgencies: property.IS_VISIBLE_TO_OTHER_AGENCIES,
+    areaUnit: property.PROPERTY_AREA_UNIT_TYPE_CODE,
+    classificationId: property.PROPERTY_CLASSIFICATION_TYPE_CODE,
+    id: property.PROPERTY_ID,
+    status: property.PROPERTY_STATUS_TYPE_CODE,
+    tenure: property.PROPERTY_TENURE_TYPE_CODE,
+    regionId: property.REGION_CODE,
+    zoning: property.ZONING,
+    zoningPotential: property.ZONING_POTENTIAL,
+  };
 };
 
 /**
@@ -111,7 +102,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
   const location = useLocation();
-  const { parcelId, buildingId } = queryString.parse(location.search);
+  const { parcelId } = queryString.parse(location.search);
   const popUpContext = React.useContext(PropertyPopUpContext);
   const { propertyInfo: selected } = popUpContext;
 
@@ -356,7 +347,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 );
 
                 if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                  convertedProperty?.id && convertedProperty.propertyTypeId
+                  convertedProperty?.id
                     ? fetchProperty(convertedProperty.id, {
                         lat: convertedProperty.latitude ?? 0,
                         lng: convertedProperty.longitude ?? 0,
@@ -383,7 +374,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             <SelectedPropertyMarker
               {...selected}
               icon={getMarkerIcon({ properties: selected } as any, true)}
-              className={Number(parcelId ?? buildingId) === selected?.id ? 'active-selected' : ''}
+              className={Number(parcelId) === selected?.id ? 'active-selected' : ''}
               position={[selected.latitude as number, selected.longitude as number]}
               map={mapInstance}
               eventHandlers={{

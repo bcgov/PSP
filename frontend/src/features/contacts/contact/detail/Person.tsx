@@ -110,16 +110,15 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col md="auto">
             {person.organizations &&
               person.organizations.map((organization: IContactOrganization, index: number) => (
-                <>
+                <span key={'person-org-' + index}>
                   <Link
                     to={'/contact/O' + organization.id}
                     data-testid="contact-person-organization"
-                    key={'person-org-' + index}
                   >
                     {organization.name}
                   </Link>
                   <br />
-                </>
+                </span>
               ))}
           </Col>
         </Styled.RowAligned>

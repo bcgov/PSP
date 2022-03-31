@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { createMemoryHistory } from 'history';
 import queryString from 'query-string';
 import React from 'react';
@@ -30,7 +29,6 @@ const emptyFilter = {
   pid: '',
   pin: '',
   address: '',
-  propertyType: PropertyTypes.Land,
 };
 
 const defaultFilter = {
@@ -44,7 +42,6 @@ const defaultFilter = {
   minLotSize: '7',
   maxLotSize: '8',
   parcelId: '9',
-  propertyType: '10',
   rentableArea: '',
   includeAllProperties: '',
   maxAssessedValue: '',

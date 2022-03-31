@@ -4,12 +4,13 @@ import styled from 'styled-components';
 
 export interface LoadingBackdropProps {
   show?: boolean;
+  parentScreen?: boolean;
 }
 
-const Backdrop = styled.div`
+const Backdrop = styled.div<LoadingBackdropProps>`
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: ${(props: any) => (props.parentScreen ? 'absolute' : 'fixed')};
   z-index: 999;
   top: 0;
   left: 0;
@@ -21,9 +22,9 @@ const Backdrop = styled.div`
   justify-content: center;
 `;
 
-const LoadingBackdrop: React.FC<LoadingBackdropProps> = ({ show }) => {
+const LoadingBackdrop: React.FC<LoadingBackdropProps> = ({ show, parentScreen }) => {
   return show ? (
-    <Backdrop>
+    <Backdrop parentScreen={parentScreen}>
       <Spinner animation="border" variant="warning" data-testid="filter-backdrop-loading" />
     </Backdrop>
   ) : null;

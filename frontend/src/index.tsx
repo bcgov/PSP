@@ -1,18 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'leaflet/dist/leaflet.css';
-import './index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
+import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import 'react-toastify/dist/ReactToastify.css';
 
-import css from '_variables.module.scss';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
+import css from 'assets/scss/_variables.module.scss';
 import { AuthStateContextProvider } from 'contexts/authStateContext';
 import LoginLoading from 'features/account/LoginLoading';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import EmptyLayout from 'layouts/EmptyLayout';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { LatLngBounds } from 'leaflet';
 import React from 'react';

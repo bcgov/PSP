@@ -1,4 +1,4 @@
-import { ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
+import { LtsaOrders, ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import React from 'react';
 
 import { useAxiosApi } from '.';
@@ -16,6 +16,7 @@ export const useApiLtsa = () => {
         api.get<TitleSummary[]>(`/tools/ltsa/summaries?pid=${pid}`),
       getParcelInfo: (pid: string) =>
         api.post<ParcelInfoOrder>(`/tools/ltsa/order/parcelInfo?pid=${pid}`),
+      getLtsaOrders: (pid: string) => api.post<LtsaOrders>(`/tools/ltsa/all?pid=${pid}`),
     }),
     [api],
   );

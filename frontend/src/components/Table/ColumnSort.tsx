@@ -1,5 +1,4 @@
-import variables from '_variables.module.scss';
-import * as React from 'react';
+import variables from 'assets/scss/_variables.module.scss';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import styled from 'styled-components';
 
