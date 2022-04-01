@@ -1,11 +1,14 @@
+import {
+  LayerPopupInformation,
+  parcelLayerPopupConfig,
+  PARCELS_LAYER_URL,
+  useLayerQuery,
+} from 'components/maps/leaflet/LayerPopup';
 import { GeoJsonObject } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, Map as LeafletMap } from 'leaflet';
 import { useState } from 'react';
-
-import { parcelLayerPopupConfig, PARCELS_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
-import { LayerPopupInformation } from '../leaflet/Map';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */

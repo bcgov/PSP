@@ -4,7 +4,7 @@ import { DescriptionOfLand, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
+import { SectionField } from '../SectionField';
 import { StyledSectionHeader } from '../SectionStyles';
 import LtsaLegalNotationsSubForm from './LtsaLegalNotationsSubForm';
 
@@ -30,12 +30,12 @@ export const LtsaLandSubForm: React.FunctionComponent<ILtsaLandSubFormProps> = (
                   const innerNameSpace = withNameSpace(nameSpace, `descriptionsOfLand.${index}`);
                   return (
                     <React.Fragment key={`land-row-inner-${innerNameSpace}`}>
-                      <SectionFieldWrapper label="PID">
+                      <SectionField label="PID">
                         <Input field={`${withNameSpace(innerNameSpace, 'parcelIdentifier')}`} />
-                      </SectionFieldWrapper>
-                      <SectionFieldWrapper label="Legal Description">
+                      </SectionField>
+                      <SectionField label="Legal Description">
                         <p>{getIn(land, 'fullLegalDescription')}</p>
-                      </SectionFieldWrapper>
+                      </SectionField>
                       {index < lands.length - 1 && <hr></hr>}
                     </React.Fragment>
                   );

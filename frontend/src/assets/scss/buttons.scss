@@ -195,6 +195,15 @@
   background-color: $icon-light-color !important;
 }
 
+// Had to put this here to fix link buttons because the rule above was taking precedence.
+.btn.btn-link:focus,
+.btn.btn-link:active,
+.btn.btn-link.active {
+  background: none !important;
+  outline: none;
+  box-shadow: none;
+}
+
 button.close {
   font-size: 2.4rem;
 }
