@@ -2012,6 +2012,13 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Drop trigger dbo.PIMS_STAVBL_I_S_U_TR
+PRINT N'Drop trigger dbo.PIMS_STAVBL_I_S_U_TR'
+GO
+DROP TRIGGER IF EXISTS [PIMS_STAVBL_I_S_U_TR]
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Create trigger dbo.PIMS_STAVBL_I_S_U_TR
 PRINT N'Create trigger dbo.PIMS_STAVBL_I_S_U_TR'
 GO
