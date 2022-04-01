@@ -39,9 +39,8 @@ namespace Pims.Dal.Entities
         [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyClassificationTypeCode { get; set; }
-        [Required]
         [Column("PROPERTY_TENURE_TYPE_CODE")]
-        [StringLength(20)]
+        [StringLength(4000)]
         public string PropertyTenureTypeCode { get; set; }
         [Column("STREET_ADDRESS_1")]
         [StringLength(200)]
@@ -88,7 +87,6 @@ namespace Pims.Dal.Entities
         public short DistrictCode { get; set; }
         [Column("GEOMETRY", TypeName = "geometry")]
         public Geometry Geometry { get; set; }
-        [Required]
         [Column("PROPERTY_AREA_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyAreaUnitTypeCode { get; set; }

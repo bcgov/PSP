@@ -8,19 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_AREA_UNIT_TYPE")]
-    public partial class PimsAreaUnitType
+    [Table("PIMS_VOLUME_UNIT_TYPE")]
+    public partial class PimsVolumeUnitType
     {
-        public PimsAreaUnitType()
+        public PimsVolumeUnitType()
         {
             PimsProperties = new HashSet<PimsProperty>();
-            PimsPropertyLeases = new HashSet<PimsPropertyLease>();
         }
 
         [Key]
-        [Column("AREA_UNIT_TYPE_CODE")]
+        [Column("VOLUME_UNIT_TYPE_CODE")]
         [StringLength(20)]
-        public string AreaUnitTypeCode { get; set; }
+        public string VolumeUnitTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -45,9 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyAreaUnitTypeCodeNavigation))]
+        [InverseProperty(nameof(PimsProperty.VolumeUnitTypeCodeNavigation))]
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
-        [InverseProperty(nameof(PimsPropertyLease.AreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
     }
 }

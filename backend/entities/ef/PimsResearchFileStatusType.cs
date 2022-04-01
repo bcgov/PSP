@@ -8,24 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_AREA_UNIT_TYPE")]
-    public partial class PimsAreaUnitType
+    [Table("PIMS_RESEARCH_FILE_STATUS_TYPE")]
+    public partial class PimsResearchFileStatusType
     {
-        public PimsAreaUnitType()
+        public PimsResearchFileStatusType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
-            PimsPropertyLeases = new HashSet<PimsPropertyLease>();
+            PimsResearchFiles = new HashSet<PimsResearchFile>();
         }
 
         [Key]
-        [Column("AREA_UNIT_TYPE_CODE")]
+        [Column("RESEARCH_FILE_STATUS_TYPE_CODE")]
         [StringLength(20)]
-        public string AreaUnitTypeCode { get; set; }
+        public string ResearchFileStatusTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
         public string Description { get; set; }
-        [Required]
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("DISPLAY_ORDER")]
@@ -45,9 +43,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyAreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
-        [InverseProperty(nameof(PimsPropertyLease.AreaUnitTypeCodeNavigation))]
-        public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
+        [InverseProperty(nameof(PimsResearchFile.ResearchFileStatusTypeCodeNavigation))]
+        public virtual ICollection<PimsResearchFile> PimsResearchFiles { get; set; }
     }
 }
