@@ -30,7 +30,7 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
       class="col-4"
     >
       <label
-        class="c0 form-label"
+        class="c0"
       >
         To:
       </label>
@@ -62,7 +62,7 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
       class="col-4"
     >
       <label
-        class="c0 form-label"
+        class="c0"
       >
         Application #:
       </label>
@@ -94,7 +94,7 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
       class="col-4"
     >
       <label
-        class="c0 form-label"
+        class="c0"
       >
         Document district code:
       </label>
@@ -126,7 +126,7 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
       class="col-4"
     >
       <label
-        class="c0 form-label"
+        class="c0"
       >
         Certificate text:
       </label>
@@ -235,7 +235,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Title number:
             </label>
@@ -264,7 +264,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Land title district:
             </label>
@@ -292,7 +292,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Taxation authorities:
             </label>
@@ -331,7 +331,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               PID:
             </label>
@@ -359,7 +359,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Legal Description:
             </label>
@@ -636,7 +636,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Nature:
             </label>
@@ -664,7 +664,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registration #:
             </label>
@@ -692,7 +692,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -720,7 +720,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered owner:
             </label>
@@ -749,7 +749,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Nature:
             </label>
@@ -777,7 +777,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registration #:
             </label>
@@ -805,7 +805,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -833,7 +833,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered owner:
             </label>
@@ -862,7 +862,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Nature:
             </label>
@@ -890,7 +890,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registration #:
             </label>
@@ -918,7 +918,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -946,7 +946,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered owner:
             </label>
@@ -975,7 +975,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Nature:
             </label>
@@ -1003,7 +1003,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registration #:
             </label>
@@ -1031,7 +1031,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -1060,7 +1060,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Nature:
             </label>
@@ -1088,7 +1088,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registration #:
             </label>
@@ -1116,7 +1116,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -1144,7 +1144,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered owner:
             </label>
@@ -1203,7 +1203,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               To:
             </label>
@@ -1231,7 +1231,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Application #:
             </label>
@@ -1259,7 +1259,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Document district code:
             </label>
@@ -1287,7 +1287,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Certificate text:
             </label>
@@ -1324,7 +1324,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Nature:
             </label>
@@ -1352,7 +1352,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registration #:
             </label>
@@ -1379,7 +1379,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -1407,7 +1407,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Registered date:
             </label>
@@ -1435,7 +1435,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Pending applications:
             </label>
@@ -1473,7 +1473,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Miscellaneous notes:
             </label>
@@ -1497,7 +1497,7 @@ DF L24824
             class="col-4"
           >
             <label
-              class="c4 form-label"
+              class="c4"
             >
               Parcel status:
             </label>

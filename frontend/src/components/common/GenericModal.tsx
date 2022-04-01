@@ -96,7 +96,6 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
     closeButton,
   } = props;
   const [show, setShow] = useState(true);
-  console.log(display);
 
   if (
     display !== undefined &&
@@ -154,7 +153,6 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
 const ModalContainer = (props: BsModalProps & ModalProps) =>
   !props.asPopup ? (
     <Container>
-      {console.log('test', props.show, props.asPopup)}
       <Modal
         {...props}
         show={props.show}
@@ -166,7 +164,6 @@ const ModalContainer = (props: BsModalProps & ModalProps) =>
     </Container>
   ) : props.show ? (
     <PopupContainer className={classNames(props.modalSize, props.className)}>
-      {console.log(props.show, props.asPopup)}
       {props.children}
     </PopupContainer>
   ) : null;

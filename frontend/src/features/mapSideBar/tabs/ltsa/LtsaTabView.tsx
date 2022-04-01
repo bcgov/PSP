@@ -1,7 +1,5 @@
 import { Input, TextArea } from 'components/common/form';
-import MapSelectorModalContainer from 'features/properties/selector/MapSelectorModalContainer';
 import { Form, Formik, getIn } from 'formik';
-import { IProperty } from 'interfaces';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
 import * as React from 'react';
@@ -23,9 +21,6 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
   return (
     <StyledScrollable>
-      <MapSelectorModalContainer
-        setSelectedProperties={(properties: IProperty[]) => console.log('blah')}
-      />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
           <StyledFormSection>
