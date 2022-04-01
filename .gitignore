@@ -15,3 +15,6 @@ auth/keycloak/config/*.log
 trufflehog_report.*
 datastore.xml
 **/.vscode/
+*.bak
+*._*
+
