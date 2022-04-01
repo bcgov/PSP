@@ -34,7 +34,6 @@ export const MapSelectorModalContainer: React.FunctionComponent<IMapSelectorModa
     FormikProps<IPropertySelectorModel>
   >;
   const dispatch = useDispatch();
-  console.log(display);
   return (
     <>
       <Button onClick={() => setDisplay(true)}>{modalButtonText ?? 'Select Properties'}</Button>
