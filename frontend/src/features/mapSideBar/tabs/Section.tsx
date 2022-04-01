@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyledFormSection, StyledSectionHeader } from '../components/SectionStyles';
+import { StyledFormSection, StyledSectionHeader } from './SectionStyles';
 
 export const Section: React.FC<{ header: string }> = ({ header, children }) => {
   return (

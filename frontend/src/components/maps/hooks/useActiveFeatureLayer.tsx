@@ -1,4 +1,3 @@
-import {
 import { Feature, GeoJsonObject, GeoJsonProperties } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
@@ -7,7 +6,9 @@ import { isEmpty } from 'lodash';
 import { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveParcelLayerFeature } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
+
 import {
+  LayerPopupInformation,
   MUNICIPALITY_LAYER_URL,
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
@@ -79,7 +80,7 @@ const useActiveFeatureLayer = ({
       displayConfig = parcelLayerPopupConfig;
       properties = parcel.features[0].properties!;
       feature = parcel.features[0];
-      title = 'Property Information';
+      title = 'LTSA ParcelMap data';
       mapBounds = parcel.features[0]?.geometry
         ? geoJSON(parcel.features[0].geometry).getBounds()
         : undefined;

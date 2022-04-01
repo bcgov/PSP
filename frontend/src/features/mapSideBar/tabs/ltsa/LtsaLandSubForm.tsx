@@ -1,12 +1,11 @@
 import { Input } from 'components/common/form';
-import { SectionFieldWrapper } from 'features/mapSideBar/components/SectionFieldWrapper';
-import { StyledSectionHeader } from 'features/mapSideBar/components/SectionStyles';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { DescriptionOfLand, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
+import { StyledSectionHeader } from '../SectionStyles';
 import LtsaLegalNotationsSubForm from './LtsaLegalNotationsSubForm';
 
 export interface ILtsaLandSubFormProps {

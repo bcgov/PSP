@@ -1,5 +1,5 @@
 import { SelectProperty } from 'components/common/mapping/SelectProperty';
-import { SectionFieldWrapper } from 'features/mapSideBar/components/SectionFieldWrapper';
+import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
@@ -33,9 +33,9 @@ export const PropertySelectorSubForm: React.FunctionComponent<IPropertySelectorS
         <Row>
           <GroupHeader>Selected property attributes</GroupHeader>
         </Row>
-        <SectionFieldWrapper label="PID">{pid}</SectionFieldWrapper>
-        <SectionFieldWrapper label="Plan #">{planNumber}</SectionFieldWrapper>
-        <SectionFieldWrapper label="Address">{address}</SectionFieldWrapper>
+        <SectionField label="PID">{pid}</SectionField>
+        <SectionField label="Plan #">{planNumber}</SectionField>
+        <SectionField label="Address">{address}</SectionField>
         <Row>
           <Col md={12}>
             <BsForm.Label>Legal Description:</BsForm.Label>

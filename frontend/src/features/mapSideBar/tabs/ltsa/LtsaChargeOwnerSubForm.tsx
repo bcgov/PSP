@@ -1,5 +1,4 @@
 import { Input } from 'components/common/form';
-import { SectionFieldWrapper } from 'features/mapSideBar/components/SectionFieldWrapper';
 import { getIn, useFormikContext } from 'formik';
 import {
   ChargeOwnershipGroup,

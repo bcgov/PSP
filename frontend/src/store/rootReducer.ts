@@ -9,7 +9,7 @@ import { networkSlice } from 'store/slices/network/networkSlice';
 import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import { lookupCodesSlice } from './slices/lookupCodes/lookupCodesSlice';
-import { propertiesSlice } from './slices/properties';
+import { propertiesSlice } from './slices/properties/propertiesSlice';
 import { systemConstantsSlice } from './slices/systemConstants/systemConstantsSlice';
 import { tenantsSlice } from './slices/tenants';
 import { usersSlice } from './slices/users/usersSlice';

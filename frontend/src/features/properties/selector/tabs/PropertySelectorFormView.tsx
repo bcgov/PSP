@@ -1,5 +1,5 @@
 import * as Styled from 'components/common/styles';
-import { StyledFormSection } from 'features/mapSideBar/components/SectionStyles';
+import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { IProperty } from 'interfaces';
 import { noop } from 'lodash';

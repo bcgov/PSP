@@ -7,7 +7,7 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
+import { LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -25,7 +25,7 @@ import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
 import { InventoryLayer } from './InventoryLayer';
-import {
+import { LayerPopup, LayerPopupInformation } from './LayerPopup';
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
 import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';

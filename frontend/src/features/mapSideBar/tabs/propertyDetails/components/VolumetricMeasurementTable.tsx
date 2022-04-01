@@ -1,8 +1,9 @@
 import { ColumnWithProps, Table } from 'components/Table';
-import { TableCaption } from 'features/mapSideBar/components/SectionStyles';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 import { formatNumber } from 'utils';
+
+import { TableCaption } from '../../SectionStyles';
 
 export const VolumetricMeasurementTable: React.FC<{ data?: any[] }> = ({ data = [] }) => {
   return (
