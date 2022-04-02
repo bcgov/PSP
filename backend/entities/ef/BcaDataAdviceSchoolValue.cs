@@ -19,13 +19,13 @@ namespace Pims.Dal.Entities
         [StringLength(16)]
         public string PropertyClassCode { get; set; }
         [Column("PROPERTY_CLASS_DESCRIPTION")]
-        [StringLength(16)]
+        [StringLength(255)]
         public string PropertyClassDescription { get; set; }
         [Column("PROPERTY_SUBCLASS_CODE")]
         [StringLength(16)]
         public string PropertySubclassCode { get; set; }
         [Column("PROPERTY_SUBCLASS_DESCRIPTION")]
-        [StringLength(16)]
+        [StringLength(255)]
         public string PropertySubclassDescription { get; set; }
         [Column("GROSS_LAND_VALUE", TypeName = "money")]
         public decimal? GrossLandValue { get; set; }
