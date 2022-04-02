@@ -42,25 +42,9 @@ describe('useActiveFeatureLayer hook tests', () => {
     findOneWhereContains.mockClear();
   });
   afterEach(() => {});
-  it('sets the active feature when layerPopup information is set', () => {
-    renderHook(
-      () =>
-        useActiveFeatureLayer({
-          mapRef: mapRef as any,
-          selectedProperty: undefined,
-          layerPopup: { feature: {} } as any,
-          setLayerPopup: noop,
-        }),
-      {
-        wrapper: getWrapper(getStore()),
-      },
-    );
-    expect(clearLayers).toHaveBeenCalled();
-    expect(addData).toHaveBeenCalledTimes(1);
-  });
 
-  it('sets the active feature when there is a selected property', async () => {
-    findOneWhereContains.mockResolvedValue({ features: [{}] });
+  it('sets the active feature only when there is a selected property', async () => {
+    findOneWhereContains.mockResolvedValue({ features: [{ properties: [{}] }] });
     renderHook(
       () =>
         useActiveFeatureLayer({
