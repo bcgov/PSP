@@ -1,6 +1,7 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Property.Models.Property;
+using System.Linq;
 
 namespace Pims.Api.Areas.Property.Mapping.Property
 {
@@ -16,10 +17,10 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.PropertyType, src => src.PropertyTypeCodeNavigation)
 
                 // TODO: These navigation properties will be changed to many to many in next DB schema change
-                .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes)
-                .Map(dest => dest.Tenure, src => src.PimsPropPropTenureTypes)
-                .Map(dest => dest.RoadType, src => src.PimsPropPropRoadTypes)
-                .Map(dest => dest.AdjacentLand, src => src.PimsPropPropAdjacentLandTypes)
+                .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes.Select(a => a.PropertyAnomalyTypeCodeNavigation))
+                .Map(dest => dest.Tenure, src => src.PimsPropPropTenureTypes.Select(t => t.PropertyTenureTypeCodeNavigation))
+                .Map(dest => dest.RoadType, src => src.PimsPropPropRoadTypes.Select(r => r.PropertyRoadTypeCodeNavigation))
+                .Map(dest => dest.AdjacentLand, src => src.PimsPropPropAdjacentLandTypes.Select(l => l.PropertyAdjacentLandTypeCodeNavigation))
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
                 .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
