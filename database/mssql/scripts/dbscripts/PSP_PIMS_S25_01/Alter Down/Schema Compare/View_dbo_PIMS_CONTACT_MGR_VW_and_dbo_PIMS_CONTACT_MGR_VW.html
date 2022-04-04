@@ -1,0 +1,335 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Schema Compare</title>
+<style type="text/css">
+body { font-family:"Verdana", monospace; font-size:11px; }
+.diff { border-width:1px; border-style:solid; border-color:gray; width:100%; padding: 0 0 0 0; font-family:"Verdana", monospace; font-size:11px; }td { padding: 0 3 0 3; }
+tr { padding: 0 0 0 0; }
+.L { width:4%; background:#e8e8e8; vertical-align:top; }
+.B { width:46%; background:#e8e8e8; }
+.U { width:46%; color:#808080; }
+.A { width:46%; background:#c8f2c8; font-weight: bold; }
+.D { width:46%; background:#ffded8; font-weight: bold; }
+.C {  width:46%; background:#cad9fa; }
+.SA {  background:#c8f2c8; }
+.SD {  background:#ffded8; }
+.SC {  background:#cad9fa; }
+.HI { font-weight: bold; background:#ffff00; }
+.Hr { font-weight: bold; font-size:125%; border-width:1px; border-style:solid; border-color:gray; padding: 2 2 2 2; }
+</style>
+</head>
+<body>
+<table class="diff" style="border-width:0px;"><tr><td style="padding-right:80px">0 Difference(s)</td><td style="background:#ffded8; padding-left:20px;">Only in source</td><td style="background:#cad9fa; padding-left:20px;">Both different</td><td style="background:#c8f2c8; padding-left:20px;">Only in target</td></tr></table>
+<br>
+<table class="diff">
+<tr><td colspan=2 class="Hr">PIMS_CONTACT_MGR_VW</td><td colspan=2 class="Hr">PIMS_CONTACT_MGR_VW</td></tr>
+<tr>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;V&#x200B;IEW&nbsp;PIMS&#x200B;_CONTACT&#x200B;_MGR_VW&nbsp;&#x200B;AS</td>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;V&#x200B;IEW&nbsp;PIMS&#x200B;_CONTACT&#x200B;_MGR_VW&nbsp;&#x200B;AS</td>
+</tr>
+<tr>
+<td class="L">2</td>
+<td class="U">&#x200B;&nbsp;&nbsp;SELECT&#x200B;&nbsp;CONCAT(&#x200B;'P',&nbsp;PER&#x200B;.PERSON_&#x200B;ID)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;ID</td>
+<td class="L">2</td>
+<td class="U">&#x200B;&nbsp;&nbsp;SELECT&#x200B;&nbsp;CONCAT(&#x200B;'P',&nbsp;PER&#x200B;.PERSON_&#x200B;ID)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;ID</td>
+</tr>
+<tr>
+<td class="L">3</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.PER&#x200B;SON_ID</td>
+<td class="L">3</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.PER&#x200B;SON_ID</td>
+</tr>
+<tr>
+<td class="L">4</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;ORGA&#x200B;NIZATION&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">4</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;ORGA&#x200B;NIZATION&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">5</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.IS_&#x200B;DISABLED</td>
+<td class="L">5</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.IS_&#x200B;DISABLED</td>
+</tr>
+<tr>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;TRIM(CO&#x200B;NCAT_WS(&#x200B;'&nbsp;',&nbsp;NUL&#x200B;LIF(PER.&#x200B;FIRST_NA&#x200B;ME,&nbsp;''),&#x200B;&nbsp;NULLIF(&#x200B;PER.MIDD&#x200B;LE_NAMES&#x200B;,&nbsp;''),&nbsp;N&#x200B;ULLIF(PE&#x200B;R.SURNAM&#x200B;E,&nbsp;'')))&#x200B;&nbsp;AS&nbsp;SUMM&#x200B;ARY</td>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;TRIM(CO&#x200B;NCAT_WS(&#x200B;'&nbsp;',&nbsp;NUL&#x200B;LIF(PER.&#x200B;FIRST_NA&#x200B;ME,&nbsp;''),&#x200B;&nbsp;NULLIF(&#x200B;PER.MIDD&#x200B;LE_NAMES&#x200B;,&nbsp;''),&nbsp;N&#x200B;ULLIF(PE&#x200B;R.SURNAM&#x200B;E,&nbsp;'')))&#x200B;&nbsp;AS&nbsp;SUMM&#x200B;ARY</td>
+</tr>
+<tr>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.SUR&#x200B;NAME</td>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.SUR&#x200B;NAME</td>
+</tr>
+<tr>
+<td class="L">8</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.FIR&#x200B;ST_NAME</td>
+<td class="L">8</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.FIR&#x200B;ST_NAME</td>
+</tr>
+<tr>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.MID&#x200B;DLE_NAME&#x200B;S</td>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PER.MID&#x200B;DLE_NAME&#x200B;S</td>
+</tr>
+<tr>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_NAME&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;ORGA&#x200B;NIZATION&#x200B;_NAME</td>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_NAME&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;ORGA&#x200B;NIZATION&#x200B;_NAME</td>
+</tr>
+<tr>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PAD.ADD&#x200B;RESS_ID</td>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PAD.ADD&#x200B;RESS_ID</td>
+</tr>
+<tr>
+<td class="L">12</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.STR&#x200B;EET_ADDR&#x200B;ESS_1&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;MAIL&#x200B;ING_ADDR&#x200B;ESS</td>
+<td class="L">12</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.STR&#x200B;EET_ADDR&#x200B;ESS_1&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;MAIL&#x200B;ING_ADDR&#x200B;ESS</td>
+</tr>
+<tr>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.MUN&#x200B;ICIPALIT&#x200B;Y_NAME</td>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.MUN&#x200B;ICIPALIT&#x200B;Y_NAME</td>
+</tr>
+<tr>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PRV.PRO&#x200B;VINCE_ST&#x200B;ATE_CODE&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;PROV&#x200B;INCE_STA&#x200B;TE</td>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PRV.PRO&#x200B;VINCE_ST&#x200B;ATE_CODE&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;PROV&#x200B;INCE_STA&#x200B;TE</td>
+</tr>
+<tr>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;COALESC&#x200B;E(PVW.WO&#x200B;RK_EMAIL&#x200B;,&nbsp;PVW.PE&#x200B;RSONAL_E&#x200B;MAIL)&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;EMAI&#x200B;L_ADDRES&#x200B;S</td>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;COALESC&#x200B;E(PVW.WO&#x200B;RK_EMAIL&#x200B;,&nbsp;PVW.PE&#x200B;RSONAL_E&#x200B;MAIL)&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AS&nbsp;EMAI&#x200B;L_ADDRES&#x200B;S</td>
+</tr>
+<tr>
+<td class="L">16</td>
+<td class="U">&#x200B;&nbsp;&nbsp;FROM&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PE&#x200B;RSON&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PER&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+<td class="L">16</td>
+<td class="U">&#x200B;&nbsp;&nbsp;FROM&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PE&#x200B;RSON&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PER&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">17</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PE&#x200B;RSON_ADD&#x200B;RESS&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PAD&nbsp;ON&#x200B;&nbsp;PAD.PER&#x200B;SON_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PER.PERS&#x200B;ON_ID&nbsp;&nbsp;&nbsp;</td>
+<td class="L">17</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PE&#x200B;RSON_ADD&#x200B;RESS&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PAD&nbsp;ON&#x200B;&nbsp;PAD.PER&#x200B;SON_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PER.PERS&#x200B;ON_ID&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">18</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&#x200B;&nbsp;PAD.ADD&#x200B;RESS_USA&#x200B;GE_TYPE_&#x200B;CODE&nbsp;&nbsp;=&nbsp;&#x200B;'MAILING&#x200B;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+<td class="L">18</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND&#x200B;&nbsp;PAD.ADD&#x200B;RESS_USA&#x200B;GE_TYPE_&#x200B;CODE&nbsp;&nbsp;=&nbsp;&#x200B;'MAILING&#x200B;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_AD&#x200B;DRESS&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;ADR&nbsp;ON&#x200B;&nbsp;ADR.ADD&#x200B;RESS_ID&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PAD.ADDR&#x200B;ESS_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN&nbsp;</td>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_AD&#x200B;DRESS&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;ADR&nbsp;ON&#x200B;&nbsp;ADR.ADD&#x200B;RESS_ID&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PAD.ADDR&#x200B;ESS_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN&nbsp;</td>
+</tr>
+<tr>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PR&#x200B;OVINCE_S&#x200B;TATE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PRV&nbsp;ON&#x200B;&nbsp;PRV.PRO&#x200B;VINCE_ST&#x200B;ATE_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;ADR.PROV&#x200B;INCE_STA&#x200B;TE_ID&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PR&#x200B;OVINCE_S&#x200B;TATE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PRV&nbsp;ON&#x200B;&nbsp;PRV.PRO&#x200B;VINCE_ST&#x200B;ATE_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;ADR.PROV&#x200B;INCE_STA&#x200B;TE_ID&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">21</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PE&#x200B;RSON_CON&#x200B;TACT_VW&nbsp;&#x200B;&nbsp;&nbsp;PVW&nbsp;ON&#x200B;&nbsp;PVW.PER&#x200B;SON_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PER.PERS&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+<td class="L">21</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PE&#x200B;RSON_CON&#x200B;TACT_VW&nbsp;&#x200B;&nbsp;&nbsp;PVW&nbsp;ON&#x200B;&nbsp;PVW.PER&#x200B;SON_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PER.PERS&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">22</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;(SELECT&#x200B;&nbsp;&nbsp;&nbsp;PERSO&#x200B;N_ID</td>
+<td class="L">22</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;(SELECT&#x200B;&nbsp;&nbsp;&nbsp;PERSO&#x200B;N_ID</td>
+</tr>
+<tr>
+<td class="L">23</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;,&nbsp;MAX(O&#x200B;RGANIZAT&#x200B;ION_ID)&nbsp;&#x200B;AS&nbsp;ORGAN&#x200B;IZATION_&#x200B;ID&nbsp;</td>
+<td class="L">23</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;,&nbsp;MAX(O&#x200B;RGANIZAT&#x200B;ION_ID)&nbsp;&#x200B;AS&nbsp;ORGAN&#x200B;IZATION_&#x200B;ID&nbsp;</td>
+</tr>
+<tr>
+<td class="L">24</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;FROM&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;PIMS_&#x200B;PERSON_O&#x200B;RGANIZAT&#x200B;ION</td>
+<td class="L">24</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;FROM&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;PIMS_&#x200B;PERSON_O&#x200B;RGANIZAT&#x200B;ION</td>
+</tr>
+<tr>
+<td class="L">25</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;GROUP&nbsp;&#x200B;BY&nbsp;PERSO&#x200B;N_ID)&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;POR&nbsp;ON&#x200B;&nbsp;POR.PER&#x200B;SON_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PER.PERS&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+<td class="L">25</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;GROUP&nbsp;&#x200B;BY&nbsp;PERSO&#x200B;N_ID)&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;POR&nbsp;ON&#x200B;&nbsp;POR.PER&#x200B;SON_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PER.PERS&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LE&#x200B;FT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">26</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_OR&#x200B;GANIZATI&#x200B;ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;ORG&nbsp;ON&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;POR.ORGA&#x200B;NIZATION&#x200B;_ID&nbsp;</td>
+<td class="L">26</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_OR&#x200B;GANIZATI&#x200B;ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;ORG&nbsp;ON&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;POR.ORGA&#x200B;NIZATION&#x200B;_ID&nbsp;</td>
+</tr>
+<tr>
+<td class="L">27</td>
+<td class="U">&#x200B;&nbsp;&nbsp;UNION</td>
+<td class="L">27</td>
+<td class="U">&#x200B;&nbsp;&nbsp;UNION</td>
+</tr>
+<tr>
+<td class="L">28</td>
+<td class="U">&#x200B;&nbsp;&nbsp;SELECT&#x200B;&nbsp;CONCAT(&#x200B;'O',&nbsp;ORG&#x200B;.ORGANIZ&#x200B;ATION_ID&#x200B;)</td>
+<td class="L">28</td>
+<td class="U">&#x200B;&nbsp;&nbsp;SELECT&#x200B;&nbsp;CONCAT(&#x200B;'O',&nbsp;ORG&#x200B;.ORGANIZ&#x200B;ATION_ID&#x200B;)</td>
+</tr>
+<tr>
+<td class="L">29</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL</td>
+<td class="L">29</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL</td>
+</tr>
+<tr>
+<td class="L">30</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID</td>
+<td class="L">30</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID</td>
+</tr>
+<tr>
+<td class="L">31</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.IS_&#x200B;DISABLED</td>
+<td class="L">31</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.IS_&#x200B;DISABLED</td>
+</tr>
+<tr>
+<td class="L">32</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_NAME</td>
+<td class="L">32</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_NAME</td>
+</tr>
+<tr>
+<td class="L">33</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL</td>
+<td class="L">33</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL</td>
+</tr>
+<tr>
+<td class="L">34</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;</td>
+<td class="L">34</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">35</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">35</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;NULL&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">36</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_NAME</td>
+<td class="L">36</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_NAME</td>
+</tr>
+<tr>
+<td class="L">37</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;OAD.ADD&#x200B;RESS_ID</td>
+<td class="L">37</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;OAD.ADD&#x200B;RESS_ID</td>
+</tr>
+<tr>
+<td class="L">38</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.STR&#x200B;EET_ADDR&#x200B;ESS_1</td>
+<td class="L">38</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.STR&#x200B;EET_ADDR&#x200B;ESS_1</td>
+</tr>
+<tr>
+<td class="L">39</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.MUN&#x200B;ICIPALIT&#x200B;Y_NAME&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">39</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;ADR.MUN&#x200B;ICIPALIT&#x200B;Y_NAME&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">40</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PRV.PRO&#x200B;VINCE_ST&#x200B;ATE_CODE</td>
+<td class="L">40</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;PRV.PRO&#x200B;VINCE_ST&#x200B;ATE_CODE</td>
+</tr>
+<tr>
+<td class="L">41</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;CON.CON&#x200B;TACT_MET&#x200B;HOD_VALU&#x200B;E&nbsp;</td>
+<td class="L">41</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&#x200B;&nbsp;CON.CON&#x200B;TACT_MET&#x200B;HOD_VALU&#x200B;E&nbsp;</td>
+</tr>
+<tr>
+<td class="L">42</td>
+<td class="U">&#x200B;&nbsp;&nbsp;FROM&nbsp;&nbsp;&#x200B;&nbsp;PIMS_OR&#x200B;GANIZATI&#x200B;ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;ORG&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L&#x200B;EFT&nbsp;JOIN&#x200B;&nbsp;</td>
+<td class="L">42</td>
+<td class="U">&#x200B;&nbsp;&nbsp;FROM&nbsp;&nbsp;&#x200B;&nbsp;PIMS_OR&#x200B;GANIZATI&#x200B;ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;ORG&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L&#x200B;EFT&nbsp;JOIN&#x200B;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">43</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_OR&#x200B;GANIZATI&#x200B;ON_ADDRE&#x200B;SS&nbsp;OAD&nbsp;O&#x200B;N&nbsp;OAD.OR&#x200B;GANIZATI&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID</td>
+<td class="L">43</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_OR&#x200B;GANIZATI&#x200B;ON_ADDRE&#x200B;SS&nbsp;OAD&nbsp;O&#x200B;N&nbsp;OAD.OR&#x200B;GANIZATI&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID</td>
+</tr>
+<tr>
+<td class="L">44</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AN&#x200B;D&nbsp;OAD.AD&#x200B;DRESS_US&#x200B;AGE_TYPE&#x200B;_CODE&nbsp;&nbsp;=&#x200B;&nbsp;'MAILIN&#x200B;G'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L&#x200B;EFT&nbsp;JOIN</td>
+<td class="L">44</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AN&#x200B;D&nbsp;OAD.AD&#x200B;DRESS_US&#x200B;AGE_TYPE&#x200B;_CODE&nbsp;&nbsp;=&#x200B;&nbsp;'MAILIN&#x200B;G'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L&#x200B;EFT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">45</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_AD&#x200B;DRESS&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;ADR&nbsp;O&#x200B;N&nbsp;ADR.AD&#x200B;DRESS_ID&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;OAD.ADD&#x200B;RESS_ID&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L&#x200B;EFT&nbsp;JOIN&#x200B;&nbsp;</td>
+<td class="L">45</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_AD&#x200B;DRESS&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;ADR&nbsp;O&#x200B;N&nbsp;ADR.AD&#x200B;DRESS_ID&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;OAD.ADD&#x200B;RESS_ID&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L&#x200B;EFT&nbsp;JOIN&#x200B;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">46</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PR&#x200B;OVINCE_S&#x200B;TATE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;PRV&nbsp;O&#x200B;N&nbsp;PRV.PR&#x200B;OVINCE_S&#x200B;TATE_ID&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;ADR.PRO&#x200B;VINCE_ST&#x200B;ATE_ID&nbsp;L&#x200B;EFT&nbsp;JOIN</td>
+<td class="L">46</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_PR&#x200B;OVINCE_S&#x200B;TATE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;PRV&nbsp;O&#x200B;N&nbsp;PRV.PR&#x200B;OVINCE_S&#x200B;TATE_ID&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;ADR.PRO&#x200B;VINCE_ST&#x200B;ATE_ID&nbsp;L&#x200B;EFT&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">47</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_CO&#x200B;NTACT_ME&#x200B;THOD&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;CON&nbsp;O&#x200B;N&nbsp;CON.OR&#x200B;GANIZATI&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID</td>
+<td class="L">47</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;PIMS_CO&#x200B;NTACT_ME&#x200B;THOD&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;CON&nbsp;O&#x200B;N&nbsp;CON.OR&#x200B;GANIZATI&#x200B;ON_ID&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&#x200B;&nbsp;ORG.ORG&#x200B;ANIZATIO&#x200B;N_ID</td>
+</tr>
+<tr>
+<td class="L">48</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AN&#x200B;D&nbsp;CON.CO&#x200B;NTACT_ME&#x200B;THOD_TYP&#x200B;E_CODE&nbsp;=&#x200B;&nbsp;'WORKEM&#x200B;AIL'</td>
+<td class="L">48</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AN&#x200B;D&nbsp;CON.CO&#x200B;NTACT_ME&#x200B;THOD_TYP&#x200B;E_CODE&nbsp;=&#x200B;&nbsp;'WORKEM&#x200B;AIL'</td>
+</tr>
+<tr>
+<td class="L">49</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">49</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">50</td>
+<td class="U">&#x200B;ALTER&nbsp;AU&#x200B;THORIZAT&#x200B;ION&nbsp;ON&nbsp;O&#x200B;BJECT::P&#x200B;IMS_CONT&#x200B;ACT_MGR_&#x200B;VW&nbsp;TO&nbsp;db&#x200B;o</td>
+<td class="L">50</td>
+<td class="U">&#x200B;ALTER&nbsp;AU&#x200B;THORIZAT&#x200B;ION&nbsp;ON&nbsp;O&#x200B;BJECT::P&#x200B;IMS_CONT&#x200B;ACT_MGR_&#x200B;VW&nbsp;TO&nbsp;db&#x200B;o</td>
+</tr>
+<tr>
+<td class="L">51</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">51</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+</table>
+</body>
+</html>
