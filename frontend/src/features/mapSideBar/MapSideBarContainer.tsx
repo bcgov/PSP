@@ -4,9 +4,7 @@ import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
-import * as React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { pidFormatter } from 'utils';
 
 import useMapSideBarQueryParams from './hooks/useMapSideBarQueryParams';
@@ -70,7 +68,6 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       setShowSideBar={setShowSideBar}
       hidePolicy={true}
       header={<MapSlideBarHeader ltsaData={ltsaData} property={apiProperty} />}
-      isLoading={ltsaData === undefined || apiProperty === undefined}
     >
       <InventoryTabs
         PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
