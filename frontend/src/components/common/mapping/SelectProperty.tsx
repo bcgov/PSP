@@ -15,7 +15,12 @@ export const SelectProperty: React.FunctionComponent<ISelectPropertyProps> = ({
   return (
     <div className="d-flex flex-column align-items-center">
       <ClickAwayListener onClickAway={onClickAway}>
-        <StyledDraftSvg width={97} height={97} onClick={onClick} />
+        <StyledDraftSvg
+          width={97}
+          height={97}
+          onClick={onClick}
+          title="select properties on the map"
+        />
       </ClickAwayListener>
       <ol>
         <li>Click pin above</li>

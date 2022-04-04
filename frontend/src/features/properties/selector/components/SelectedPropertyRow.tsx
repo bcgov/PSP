@@ -8,10 +8,10 @@ import { Col } from 'react-bootstrap';
 import { pidFormatter } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
-import { IPropertySelectorModel } from '../tabs/PropertySelectorFormView';
+import { IPropertySelectorModel } from '../PropertySelectorFormView';
 import DraftCircleNumber from './DraftCircleNumber';
 
-interface ISelectedPropertyRowProps {
+export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
@@ -36,7 +36,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
     text = `Plan #: ${planNumber}`;
   }
   return (
-    <NoPaddingRow key={nameSpace} className="align-items-center mb-3">
+    <NoPaddingRow className="align-items-center mb-3">
       <Col md={3}>
         <p className="mb-0">
           <DraftCircleNumber text={(index + 1).toString()} />

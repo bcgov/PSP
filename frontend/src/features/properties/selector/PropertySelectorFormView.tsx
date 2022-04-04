@@ -5,16 +5,16 @@ import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import * as React from 'react';
 
-import MapClickMonitor from '../components/MapClickMonitor';
-import SelectedPropertyHeaderRow from '../components/SelectedPropertyHeaderRow';
-import SelectedPropertyRow from '../components/SelectedPropertyRow';
+import MapClickMonitor from './components/MapClickMonitor';
+import SelectedPropertyHeaderRow from './components/SelectedPropertyHeaderRow';
+import SelectedPropertyRow from './components/SelectedPropertyRow';
 import SelectedPropertyForm from './PropertySelectorSubForm';
 
 export interface IPropertySelectorModel {
   properties: IProperty[];
 }
 
-interface IPropertySelectorFormViewProps {
+export interface IPropertySelectorFormViewProps {
   onClickDraftMarker: () => void;
   onClickAway: () => void;
   selecting?: boolean;
@@ -54,6 +54,7 @@ const PropertySelectorFormView: React.FunctionComponent<IPropertySelectorFormVie
                     <MapClickMonitor addProperty={push} />
                     {values.properties.map((property, index, properties) => (
                       <SelectedPropertyRow
+                        key={`property.${property.latitude}-${property.longitude}-${property.pid}`}
                         onRemove={() => remove(index)}
                         nameSpace={`properties.${index}`}
                         index={index}

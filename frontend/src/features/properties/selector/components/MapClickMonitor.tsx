@@ -13,7 +13,7 @@ interface IMapClickMonitorProps {
 export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = ({
   addProperty,
 }) => {
-  const feature = useAppSelector(store => store.parcelLayerData.parcelLayerFeature);
+  const feature = useAppSelector(store => store.parcelLayerData?.parcelLayerFeature);
   const previous = usePrevious(feature);
   useDraftMarkerSynchronizer('properties');
 

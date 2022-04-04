@@ -25,7 +25,7 @@ export const DraftCircleNumber: React.FunctionComponent<IDraftCircleNumberProps>
             // eslint-disable-next-line no-octal-escape
             id="path-16484842245735\77"
             d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
           />
         </defs>
         <g transform="translate(0, 0)">
@@ -38,7 +38,7 @@ export const DraftCircleNumber: React.FunctionComponent<IDraftCircleNumberProps>
               fill: 'rgb(252, 186, 25)',
             }}
             d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
           />
         </g>
       </g>

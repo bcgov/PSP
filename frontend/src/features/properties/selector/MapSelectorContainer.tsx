@@ -4,14 +4,14 @@ import { IProperty } from 'interfaces';
 import * as React from 'react';
 
 import { PropertySelectorTabsView } from '../../mapSideBar/tabs/PropertySelectorTabsView';
-import PropertySelectorFormView, { IPropertySelectorModel } from './tabs/PropertySelectorFormView';
+import PropertySelectorFormView, { IPropertySelectorModel } from './PropertySelectorFormView';
 
-interface IMapSelectorSideBarContainerProps {
+export interface IMapSelectorContainerProps {
   formikRef: React.MutableRefObject<FormikProps<IPropertySelectorModel>>;
   properties?: IProperty[];
 }
 
-export const MapSelectorSideBarContainer: React.FunctionComponent<IMapSelectorSideBarContainerProps> = ({
+export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
   formikRef,
   properties,
 }) => {
@@ -36,4 +36,4 @@ export const MapSelectorSideBarContainer: React.FunctionComponent<IMapSelectorSi
   );
 };
 
-export default MapSelectorSideBarContainer;
+export default MapSelectorContainer;
