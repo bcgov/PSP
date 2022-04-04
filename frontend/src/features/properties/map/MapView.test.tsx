@@ -94,7 +94,7 @@ const mockDetails = {
     dataSourceEffectiveDate: new Date(),
     classificationId: PropertyClassificationTypes.CoreStrategic,
     classification: 'Core Operational',
-    tenureId: PropertyTenureTypes.TitledLandMOTI,
+    tenureId: PropertyTenureTypes.HighwayRoad,
     name: 'test name',
     description: 'test',
     encumbranceReason: '',
