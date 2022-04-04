@@ -228,13 +228,20 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   display: none;
 }
 
-.c14.c14:hover {
+.c14.c14 > div:hover {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
-.c14.c14:hover .text {
+.c14.c14 > div:hover .text {
   display: inline;
 }
 
@@ -787,6 +794,9 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                         width="2rem"
                         xmlns="http://www.w3.org/2000/svg"
                       >
+                        <title>
+                          remove
+                        </title>
                         <path
                           d="M0 0h24v24H0z"
                           fill="none"

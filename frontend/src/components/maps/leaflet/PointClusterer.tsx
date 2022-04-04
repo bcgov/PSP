@@ -7,7 +7,8 @@ import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import L, { LatLngLiteral } from 'leaflet';
+import L, { LatLng, LatLngLiteral } from 'leaflet';
+import { find } from 'lodash';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
@@ -19,12 +20,13 @@ import useSupercluster from '../hooks/useSupercluster';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
 import { ICluster, PointFeature } from '../types';
-import { getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
+import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
 import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
 import { Spiderfier } from './Spiderfier';
 
 export type PointClustererProps = {
   points: Array<PointFeature>;
+  draftPoints: Array<PointFeature>;
   bounds?: BBox;
   zoom: number;
   minZoom?: number;
@@ -88,6 +90,7 @@ export const convertToProperty = (
  */
 export const PointClusterer: React.FC<PointClustererProps> = ({
   points,
+  draftPoints,
   bounds,
   zoom,
   onMarkerClick,
@@ -100,6 +103,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   // state and refs
   const spiderfierRef = useRef<Spiderfier>();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
+  const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
   const location = useLocation();
   const { parcelId } = queryString.parse(location.search);
@@ -212,6 +216,37 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
     },
     [spiderfierRef, mapInstance, maxZoom, spiderfyOnMaxZoom, supercluster, zoomToBoundsOnClick],
   );
+
+  /**
+   * Update the map bounds and zoom to make all draft properties visible.
+   */
+  useDeepCompareEffect(() => {
+    const isDraft = draftPoints.length > 0;
+    if (draftFeatureGroupRef.current && isDraft) {
+      const group: L.FeatureGroup = draftFeatureGroupRef.current;
+      const groupBounds = group.getBounds();
+      const validLatLngs = draftPoints.map(p => {
+        const latLng: LatLng = {
+          lat: p.geometry?.coordinates[1],
+          lng: p.geometry?.coordinates[0],
+        } as LatLng;
+        return latLng;
+      });
+
+      //react-leaflet is not displaying removed drafts but the layer is still present, this
+      //causes the fitbounds calculation to be off. Fixed by manually cleaning up layers referencing removed drafts.
+      group.getLayers().forEach((l: any) => {
+        if (!find(validLatLngs, vl => (l._latlng as LatLng).equals(vl))) {
+          group.removeLayer(l);
+        }
+      });
+
+      if (groupBounds.isValid()) {
+        filterState.setChanged(false);
+        mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
+      }
+    }
+  }, [draftFeatureGroupRef, mapInstance, draftPoints]);
 
   /**
    * Update the map bounds and zoom to make all property clusters visible.
@@ -404,6 +439,24 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               }}
             />
           )}
+      </FeatureGroup>
+      <FeatureGroup ref={draftFeatureGroupRef}>
+        {draftPoints.map((draftPoint, index) => {
+          //render all of the unclustered draft markers.
+          if (draftPoint?.geometry?.coordinates) {
+            const [longitude, latitude] = draftPoint.geometry.coordinates;
+            return (
+              <Marker
+                {...(draftPoint.properties as any)}
+                key={index}
+                position={[latitude, longitude]}
+                icon={getDraftIcon((index + 1).toString())}
+                zIndexOffset={500}
+              ></Marker>
+            );
+          }
+          return <></>;
+        })}
       </FeatureGroup>
     </>
   );

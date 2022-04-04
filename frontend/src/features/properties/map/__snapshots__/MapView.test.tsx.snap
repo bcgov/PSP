@@ -11,6 +11,7 @@ exports[`MapView Renders the map 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
+  margin-bottom: 2rem;
 }
 
 .c2 {
@@ -219,6 +220,18 @@ exports[`MapView Renders the map 1`] = `
   grid-area: map;
 }
 
+.c19 .leaflet-div-icon {
+  background: none;
+  border: none;
+}
+
+.c19 .leaflet-div-icon img {
+  width: inherit;
+  height: inherit;
+  -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+  filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+}
+
 .c19 .leaflet-container {
   height: 100%;
   margin: auto;
@@ -282,7 +295,7 @@ exports[`MapView Renders the map 1`] = `
 }
 
 <div
-    class="c0"
+    class="c0 mapview"
   >
     <div
       class="c1 map-side-drawer"

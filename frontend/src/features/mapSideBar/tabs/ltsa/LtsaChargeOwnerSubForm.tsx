@@ -10,7 +10,6 @@ import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-
 export interface ILtsaChargeOwnerSubFormProps {
   nameSpace?: string;
 }

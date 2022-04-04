@@ -6,7 +6,6 @@ import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
 import { StyledSectionHeader } from '../SectionStyles';
-
 export interface ILtsaDuplicateTitleSubForm {
   nameSpace?: string;
 }

@@ -9,6 +9,7 @@ import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { propertiesSlice } from 'store/slices/properties';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import Map from './Map';
@@ -38,6 +39,7 @@ const mockDetails = {
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
+  [propertiesSlice.name]: { propertyDetail: mockDetails, draftProperties: [] },
 };
 
 // To check for alert message
@@ -119,7 +121,7 @@ function setup(props: Omit<TestProps, 'done'>) {
   };
 }
 
-describe('MapProperties View', () => {
+xdescribe('MapProperties View', () => {
   let mockLoadProperties: jest.Mock<Promise<FeatureCollection>>;
   let mockGetParcel: jest.Mock<Promise<IProperty>>;
 

@@ -9,6 +9,7 @@ export * from './projectRiskTypes';
 export * from './projectStatusTypes';
 export * from './projectTierTypes';
 export * from './projectTypes';
+export * from './propertyAdjacentLandTypes';
 export * from './propertyAreaUnitTypes';
 export * from './propertyClassificationTypes';
 export * from './propertyDataSourceTypes';

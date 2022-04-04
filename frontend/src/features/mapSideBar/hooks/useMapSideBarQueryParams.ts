@@ -14,6 +14,11 @@ interface IMapSideBar {
   pid?: string;
 }
 
+export enum MapSidebarContextType {
+  INFO = 'info',
+  SELECTOR = 'selector',
+}
+
 /** control the state of the side bar via query params. */
 export const useMapSideBarQueryParams = (formikRef?: any): IMapSideBar => {
   const [showSideBar, setShowSideBar] = useState(false);
