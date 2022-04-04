@@ -10,10 +10,10 @@ import { useAppSelector } from 'store/store';
 import styled from 'styled-components';
 
 import PropertySelectorLayout from './layout/PropertySelectorLayout';
-import MapSelectorSideBarContainer from './MapSelectorContainer';
-import { IPropertySelectorModel } from './tabs/PropertySelectorFormView';
+import MapSelectorContainer from './MapSelectorContainer';
+import { IPropertySelectorModel } from './PropertySelectorFormView';
 
-interface IMapSelectorModalContainerProps {
+export interface IMapSelectorModalContainerProps {
   modalButtonText?: string;
   selectButtonText?: string;
   cancelButtonText?: string;
@@ -44,7 +44,7 @@ export const MapSelectorModalContainer: React.FunctionComponent<IMapSelectorModa
         title="Property Selection"
         message={
           <PropertySelectorLayout>
-            <MapSelectorSideBarContainer formikRef={formikRef} properties={selectedProperties} />
+            <MapSelectorContainer formikRef={formikRef} properties={selectedProperties} />
           </PropertySelectorLayout>
         }
         handleCancel={() => {
