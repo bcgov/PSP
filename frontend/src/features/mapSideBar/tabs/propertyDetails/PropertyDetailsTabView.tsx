@@ -1,7 +1,6 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { Formik, FormikProps, getIn } from 'formik';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import noop from 'lodash/noop';
 import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
@@ -27,7 +26,7 @@ import {
 } from './PropertyDetailsTabView.helpers';
 
 interface IPropertyDetailsTabView {
-  property?: IPropertyApiModel;
+  property?: IPropertyDetailsForm;
 }
 
 /**
@@ -35,8 +34,7 @@ interface IPropertyDetailsTabView {
  * @returns the rendered property details panel
  */
 export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ property }) => {
-  const values =
-    property !== undefined ? toFormValues(property) : toFormValues(defaultPropertyInfo);
+  const values = property !== undefined ? property : toFormValues(defaultPropertyInfo);
 
   return (
     <StyledScrollable>
