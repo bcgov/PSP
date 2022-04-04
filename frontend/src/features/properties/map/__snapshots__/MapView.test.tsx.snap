@@ -5,7 +5,7 @@ exports[`MapView Renders the map 1`] = `
   <div
     class="Toastify"
   />
-  .c6 {
+  .c5 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
   border-bottom: solid 0.5rem;
@@ -13,59 +13,7 @@ exports[`MapView Renders the map 1`] = `
   text-align: left;
 }
 
-.c2 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c13 {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c11 {
+.c10 {
   grid-area: content;
   width: 100%;
   height: 100%;
@@ -74,11 +22,11 @@ exports[`MapView Renders the map 1`] = `
   margin-top: 1rem;
 }
 
-.c8 {
+.c7 {
   grid-area: header;
 }
 
-.c5 {
+.c4 {
   width: 3rem;
   height: 3rem;
   -webkit-align-self: flex-end;
@@ -86,7 +34,7 @@ exports[`MapView Renders the map 1`] = `
   align-self: flex-end;
 }
 
-.c3 {
+.c2 {
   grid-area: title;
   display: -webkit-box;
   display: -webkit-flex;
@@ -94,7 +42,7 @@ exports[`MapView Renders the map 1`] = `
   display: flex;
 }
 
-.c4 {
+.c3 {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -126,73 +74,73 @@ exports[`MapView Renders the map 1`] = `
   margin-left: 0;
 }
 
-.c7 {
+.c6 {
   font-size: 30px;
   cursor: pointer;
 }
 
-.c9 {
+.c8 {
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 1rem;
 }
 
-.c10 {
+.c9 {
   margin-top: 0.5rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
 }
 
-.c14 {
+.c13 {
   padding-right: 0;
 }
 
-.c14 .form-control {
+.c13 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c15:not(:first-child) {
+.c14:not(:first-child) {
   padding-left: 0;
 }
 
-.c15:not(:first-child) .form-control {
+.c14:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c16 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c16 div:nth-child(1) div:nth-child(1) {
+.c15 div:nth-child(1) div:nth-child(1) {
   cursor: auto;
 }
 
-.c16 div:nth-child(1) div:nth-child(1) svg {
+.c15 div:nth-child(1) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c16 div:nth-child(2) div:nth-child(1) {
+.c15 div:nth-child(2) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c16 div:nth-child(2) div:nth-child(1) svg {
+.c15 div:nth-child(2) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c17 {
+.c16 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c18 {
+.c17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -209,38 +157,64 @@ exports[`MapView Renders the map 1`] = `
   align-items: center;
 }
 
-.c18 svg {
+.c17 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
 }
 
-.c19 {
+.c12 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c18 {
   grid-area: map;
 }
 
-.c19 .leaflet-container {
+.c18 .leaflet-container {
   height: 100%;
   margin: auto;
 }
 
-.c19 .leaflet-container .leaflet-popup-content-wrapper {
+.c18 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
 
-.c19 .leaflet-container .leaflet-popup-content {
+.c18 .leaflet-container .leaflet-popup-content {
   margin: 0rem;
 }
 
-.c19 .leaflet-container .leaflet-control-container .leaflet-top {
+.c18 .leaflet-container .leaflet-control-container .leaflet-top {
   z-index: 500;
 }
 
-.c19 .leaflet-control-layers.leaflet-control-layers-expanded {
+.c18 .leaflet-control-layers.leaflet-control-layers-expanded {
   border-radius: 0rem;
 }
 
-.c19 .leaflet-control-layers .leaflet-control-layers-overlays {
+.c18 .leaflet-control-layers .leaflet-control-layers-overlays {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -252,14 +226,14 @@ exports[`MapView Renders the map 1`] = `
   width: 15rem;
 }
 
-.c19 .leaflet-control-layers .leaflet-control-layers-overlays label {
+.c18 .leaflet-control-layers .leaflet-control-layers-overlays label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c12 {
+.c11 {
   width: 100%;
   display: grid;
   grid-template-rows: 1fr;
@@ -267,7 +241,7 @@ exports[`MapView Renders the map 1`] = `
   grid-template-areas: 'filter filter' 'map map';
 }
 
-.c12.sidebar {
+.c11.sidebar {
   grid-template-rows: 0 1fr;
   -webkit-transition: 1s;
   transition: 1s;
@@ -291,28 +265,20 @@ exports[`MapView Renders the map 1`] = `
         class="c2"
       >
         <div
-          class="spinner-border text-warning"
-          data-testid="filter-backdrop-loading"
-        />
-      </div>
-      <div
-        class="c3"
-      >
-        <div
-          class="c4"
+          class="c3"
         >
           <svg
-            class="c5 mr-1"
+            class="c4 mr-1"
           >
             icon-lot.svg
           </svg>
           <h1
-            class="c6 mr-auto"
+            class="c5 mr-auto"
           >
             Property Information
           </h1>
           <svg
-            class="c7"
+            class="c6"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -331,10 +297,10 @@ exports[`MapView Renders the map 1`] = `
         </div>
       </div>
       <div
-        class="c8"
+        class="c7"
       >
         <div
-          class="c9"
+          class="c8"
         >
           <div
             class="row"
@@ -428,18 +394,18 @@ exports[`MapView Renders the map 1`] = `
           </div>
         </div>
         <div
-          class="c10"
+          class="c9"
         />
       </div>
       <div
-        class="c11"
+        class="c10"
       />
     </div>
     <div
-      class="c12 px-0 map"
+      class="c11 px-0 map"
     >
       <div
-        class="c13"
+        class="c12"
       >
         <div
           class="spinner-border text-warning"
@@ -470,7 +436,7 @@ exports[`MapView Renders the map 1`] = `
                 class="row"
               >
                 <div
-                  class="c14 col-auto"
+                  class="c13 col-auto"
                 >
                   <div
                     class="input-group-prepend"
@@ -500,7 +466,7 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c15 col"
+                  class="c14 col"
                 >
                   <div
                     class="input form-group"
@@ -577,13 +543,13 @@ exports[`MapView Renders the map 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c16"
+                class="c15"
               >
                 <div
-                  class="c17"
+                  class="c16"
                 >
                   <div
-                    class="c18"
+                    class="c17"
                   >
                     <svg>
                       icon-map.svg
@@ -591,10 +557,10 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c17"
+                  class="c16"
                 >
                   <div
-                    class="c18"
+                    class="c17"
                   >
                     <svg>
                       icon-table.svg
@@ -607,7 +573,7 @@ exports[`MapView Renders the map 1`] = `
         </form>
       </div>
       <div
-        class="c19"
+        class="c18"
       >
         <div />
       </div>
