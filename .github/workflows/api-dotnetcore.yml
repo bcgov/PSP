@@ -1,4 +1,4 @@
-name: API (.NET 5)
+name: API (.NET 6)
 
 on:
   push:
@@ -21,10 +21,10 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
-      - name: Setup .NET 5
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.300
+          dotnet-version: '6.0.x'
 
       - name: Install dependencies
         run: dotnet restore
@@ -97,9 +97,9 @@ jobs:
           # Specify whether or not CI build should fail if Codecov runs into an error during upload
           fail_ci_if_error: true
 
-      - name: SonarScanner for .NET 5 with pull request decoration support
+      - name: SonarScanner for .NET 6 with pull request decoration support
         id: scan
-        uses: highbyte/sonarscan-dotnet@2.0
+        uses: highbyte/sonarscan-dotnet@v2.1.2
         if: github.event_name == 'push'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

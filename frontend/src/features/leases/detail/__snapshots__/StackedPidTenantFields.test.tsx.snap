@@ -81,7 +81,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
     <div
       class="c2"
     >
-      first last
+      First Last
     </div>
   </div>
 </DocumentFragment>

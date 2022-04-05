@@ -2,14 +2,15 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { FormLeaseDepositReturn, ILeaseSecurityDeposit } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
+import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import ReturnedDepositModal, { IReturnedDepositModalProps } from './ReturnedDepositModal';
 
-const mockDeposit: ILeaseSecurityDeposit = {
+const mockDeposit: Api_SecurityDeposit = {
   id: 7,
   description: 'Test deposit 1',
   amountPaid: 1234.0,
@@ -21,6 +22,25 @@ const mockDeposit: ILeaseSecurityDeposit = {
   },
   depositReturns: [],
   rowVersion: 1,
+};
+const mockReturnedDeposit: Api_SecurityDepositReturn = {
+  parentDepositId: 7,
+  returnAmount: 123,
+  contactHolder: {
+    id: 'P6',
+    person: {
+      id: 6,
+      isDisabled: false,
+      surname: 'User',
+      firstName: 'Admin',
+      middleNames: '',
+      personOrganizations: [],
+      personAddresses: [],
+      contactMethods: [],
+      rowVersion: 1,
+    },
+  },
+  rowVersion: 0,
 };
 
 const history = createMemoryHistory();
@@ -79,12 +99,16 @@ describe('ReturnedDepositModal component', () => {
   it('submits all filled out fields as expected', async () => {
     const {
       component: { getByText },
-    } = await setup({});
+    } = await setup({
+      initialValues: FormLeaseDepositReturn.createFromModel(mockReturnedDeposit, mockDeposit),
+    });
 
     await fillInput(document.body, 'terminationDate', '2020-01-01', 'datepicker');
     await fillInput(document.body, 'returnDate', '2020-01-02', 'datepicker');
     await fillInput(document.body, 'claimsAgainst', '1,000.00');
     await fillInput(document.body, 'returnAmount', '2,000.00');
+    await fillInput(document.body, 'contactHolder.id', 'p1');
+
     const saveButton = getByText('Save');
     userEvent.click(saveButton);
     await waitFor(() => expect(onSave).toHaveBeenCalled());
@@ -93,15 +117,14 @@ describe('ReturnedDepositModal component', () => {
       depositTypeCode: 'PET',
       depositTypeDescription: 'Pet deposit',
       id: undefined,
-      organizationDepositReturnHolderId: '',
       parentDepositAmount: 1234,
       parentDepositId: 7,
       parentDepositOtherDescription: '',
-      personDepositReturnHolderId: '',
       returnAmount: 2000,
       returnDate: '2020-01-02',
       rowVersion: 0,
       terminationDate: '2020-01-01',
+      contactHolder: { id: 'p1' },
     });
   });
 

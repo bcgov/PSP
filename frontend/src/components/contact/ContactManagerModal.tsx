@@ -3,18 +3,23 @@ import { IContactSearchResult } from 'interfaces';
 
 import ContactManagerView from './ContactManagerView/ContactManagerView';
 
-export interface ILeasePropertiesProps {
+export interface IContactManagerModalProps {
+  display?: boolean;
+  setDisplay?: (display: boolean) => void;
   setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
   selectedRows: IContactSearchResult[];
   showAddButton?: boolean;
   showActiveSelector?: boolean;
   handleModalOk?: Function;
   handleModalCancel?: Function;
+  isSingleSelect?: boolean;
 }
 
-export const ContactManagerModal: React.FunctionComponent<ILeasePropertiesProps> = props => {
+export const ContactManagerModal: React.FunctionComponent<IContactManagerModalProps> = props => {
   return (
     <GenericModal
+      display={props.display}
+      setDisplay={props.setDisplay}
       title="Select a contact"
       message={
         <>
@@ -27,7 +32,8 @@ export const ContactManagerModal: React.FunctionComponent<ILeasePropertiesProps>
             selectedRows={props.selectedRows}
             showAddButton={props.showAddButton}
             showActiveSelector={props.showActiveSelector}
-            noInitialSearch
+            noInitialSearch={props.selectedRows.length === 0}
+            isSingleSelect={props.isSingleSelect}
             isSummary
             showSelectedRowCount
           />

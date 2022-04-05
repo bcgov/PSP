@@ -112,6 +112,32 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
+        public void AddTerm_OverlappingDates_SameStartDateAsEndDate()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
+
+            var lease = EntityHelper.CreateLease(1);
+            var date = DateTime.Now;
+            var originalTerm = new PimsLeaseTerm() { TermStartDate = date, TermExpiryDate = date.AddDays(1), LeaseId = lease.Id, Lease = lease };
+            lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { originalTerm };
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+
+            var service = helper.Create<LeaseTermService>();
+            var leaseService = helper.GetService<Mock<ILeaseService>>();
+            var leaseTermRepository = helper.GetService<Mock<Repositories.ILeaseTermRepository>>();
+            leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
+            leaseTermRepository.Setup(x => x.GetByLeaseId(It.IsAny<long>())).Returns(lease.PimsLeaseTerms);
+
+            // Act
+            var term = new PimsLeaseTerm() { TermStartDate = date.AddDays(1), LeaseId = lease.Id, Lease = lease };
+
+            var ex = Assert.Throws<InvalidOperationException>(() => service.AddTerm(lease.Id, 1, term));
+            ex.Message.Should().Be("A new term start and end date must not conflict with any existing terms.");
+        }
+
+        [Fact]
         public void AddTerm_OverlappingDates_SameStartDate()
         {
             // Arrange

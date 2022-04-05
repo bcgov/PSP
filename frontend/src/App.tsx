@@ -1,5 +1,5 @@
-import './App.scss';
-import './Stepper.scss';
+import 'assets/scss/App.scss';
+import 'assets/scss/Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import AppRouter from 'AppRouter';

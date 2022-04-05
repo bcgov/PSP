@@ -1,3 +1,4 @@
+import { ContactMethodTypes } from 'constants/contactMethodType';
 import {
   AccessRequestStatus,
   AddressTypes,
@@ -7,9 +8,9 @@ import {
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
-  PropertyTypes,
 } from 'constants/index';
 import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
+import { Api_Person } from 'models/api/Person';
 import { ILookupCode } from 'store/slices/lookupCodes';
 
 // TODO: This needs to be removed as Administrative Areas no longer exist.
@@ -113,12 +114,19 @@ export const mockPerson: IPerson = {
   mobile: '555-666-7777',
 };
 
+export const mockApiPerson: Api_Person = {
+  id: 2,
+  contactMethods: [
+    { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: '222-333-4444' },
+    { contactMethodType: { id: ContactMethodTypes.WorkMobile }, value: '555-666-7777' },
+  ],
+};
+
 export const mockProperties = [
   {
     id: 1,
     pid: '000-000-000',
     pin: '',
-    propertyTypeId: PropertyTypes.Land,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
@@ -148,7 +156,6 @@ export const mockProperties = [
     id: 2,
     pid: '000-000-001',
     pin: '',
-    propertyTypeId: PropertyTypes.Land,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
@@ -178,7 +185,6 @@ export const mockProperties = [
     id: 100,
     pid: '000-000-000',
     pin: '',
-    propertyTypeId: PropertyTypes.Building,
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
@@ -208,15 +214,7 @@ export const mockProperties = [
 
 export const mockParcel = mockProperties[0];
 
-export const mockBuilding = mockProperties[2];
-
-export const mockBuildingDetail = {
-  propertyTypeId: PropertyTypes.Building,
-  propertyDetail: mockBuilding,
-};
-
 export const mockParcelDetail = {
-  propertyTypeId: PropertyTypes.Land,
   propertyDetail: mockParcel,
 };
 

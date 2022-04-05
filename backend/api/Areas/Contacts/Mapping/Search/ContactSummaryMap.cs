@@ -15,6 +15,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Search
                 .Map(dest => dest.Summary, src => src.Summary)
                 .Map(dest => dest.Surname, src => src.Surname)
                 .Map(dest => dest.FirstName, src => src.FirstName)
+                .Map(dest => dest.MiddleNames, src => src.MiddleNames)
                 .Map(dest => dest.OrganizationName, src => src.OrganizationName)
                 .Map(dest => dest.Email, src => src.EmailAddress)
                 .Map(dest => dest.MailingAddress, src => src.MailingAddress)

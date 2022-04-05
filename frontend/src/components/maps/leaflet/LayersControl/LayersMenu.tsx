@@ -1,6 +1,6 @@
 import 'react-simple-tree-menu/dist/main.css';
 
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
 import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
 import L from 'leaflet';
 import flatten from 'lodash/flatten';

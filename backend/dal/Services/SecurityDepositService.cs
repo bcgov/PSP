@@ -40,8 +40,26 @@ namespace Pims.Dal.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateServiceCall(leaseId, leaseRowVersion);
+            var currentHolder = _securityDepositRepository.GetById(deposit.SecurityDepositId).PimsSecurityDepositHolder;
+            if (currentHolder != null)
+            {
+                deposit.PimsSecurityDepositHolder.SecurityDepositHolderId = currentHolder.SecurityDepositHolderId;
+                deposit.PimsSecurityDepositHolder.ConcurrencyControlNumber = currentHolder.ConcurrencyControlNumber;
+            }
             _securityDepositRepository.Update(deposit);
             _securityDepositRepository.CommitTransaction();
+            return _leaseRepository.Get(leaseId);
+        }
+
+        public PimsLease UpdateLeaseDepositNote(long leaseId, long leaseRowVersion, string note)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            ValidateServiceCall(leaseId, leaseRowVersion);
+            var lease = _leaseRepository.Get(leaseId);
+            lease.ReturnNotes = note;
+            _leaseRepository.Update(lease);
+            _leaseRepository.CommitTransaction();
+            
             return _leaseRepository.Get(leaseId);
         }
 

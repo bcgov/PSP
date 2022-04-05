@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 using CommandLine.Text;
 using Microsoft.AspNetCore;
@@ -6,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Pims.Api.Configuration;
 using Serilog;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Api
 {

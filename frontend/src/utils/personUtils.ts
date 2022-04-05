@@ -1,10 +1,17 @@
 import { IEditablePerson } from 'interfaces/editable-contact';
+import { Api_Person } from 'models/api/Person';
 
 export function formatFullName(person?: Partial<IEditablePerson>): string {
   if (!person) {
     return '';
   }
-  const nameParts = [person.firstName, person.middleNames, person.surname];
-  const fullName = nameParts.filter(n => n != null && n.trim() !== '').join(' ');
-  return fullName;
+  return formatNames([person.firstName, person.middleNames, person.surname]);
+}
+
+export function formatApiPersonNames(person?: Api_Person): string {
+  return formatNames([person?.firstName, person?.middleNames, person?.surname]);
+}
+
+export function formatNames(nameParts: Array<string | undefined | null>): string {
+  return nameParts.filter(n => n !== null && n !== undefined && n.trim() !== '').join(' ');
 }

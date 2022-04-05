@@ -32,16 +32,20 @@ const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props =>
           <strong className="pr-2">Address:</strong>
           {property.address}
         </Col>
-        <Col md="auto">
-          <div>
-            <strong className="pr-2">PID:</strong> {property.pid || 'N.A'}
-          </div>
-        </Col>
-        <Col md="auto">
-          <div>
-            <strong className="pr-2">PIN:</strong> {property.pin || 'N.A'}
-          </div>
-        </Col>
+        {property.pid && (
+          <Col md="auto">
+            <div>
+              <strong className="pr-2">PID:</strong> {property.pid}
+            </div>
+          </Col>
+        )}
+        {property.pin && (
+          <Col md="auto">
+            <div>
+              <strong className="pr-2">PIN:</strong> {property.pin}
+            </div>
+          </Col>
+        )}
       </PropertyRow>
     );
   });

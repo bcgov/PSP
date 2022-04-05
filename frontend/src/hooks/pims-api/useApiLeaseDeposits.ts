@@ -1,5 +1,6 @@
-import { ILease, ILeaseSecurityDeposit } from 'interfaces';
+import { ILease } from 'interfaces';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
+import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import React from 'react';
 
 import { useAxiosApi } from '.';
@@ -13,11 +14,13 @@ export const useApiLeaseDeposits = () => {
 
   return React.useMemo(
     () => ({
-      deleteLeaseDeposit: (request: IParentConcurrencyGuard<ILeaseSecurityDeposit>) =>
+      deleteLeaseDeposit: (request: IParentConcurrencyGuard<Api_SecurityDeposit>) =>
         api.delete<ILease>(`/leases/${request.parentId}/deposits`, { data: request }),
-      putLeaseDeposit: (request: IParentConcurrencyGuard<ILeaseSecurityDeposit>) =>
+      putLeaseDeposit: (request: IParentConcurrencyGuard<Api_SecurityDeposit>) =>
         api.put<ILease>(`/leases/${request.parentId}/deposits/${request.payload.id}`, request),
-      postLeaseDeposit: (request: IParentConcurrencyGuard<ILeaseSecurityDeposit>) =>
+      putLeaseDepositNote: (request: IParentConcurrencyGuard<{ note: string }>) =>
+        api.put<ILease>(`/leases/${request.parentId}/deposits/note`, request),
+      postLeaseDeposit: (request: IParentConcurrencyGuard<Api_SecurityDeposit>) =>
         api.post<ILease>(`/leases/${request.parentId}/deposits`, request),
     }),
     [api],

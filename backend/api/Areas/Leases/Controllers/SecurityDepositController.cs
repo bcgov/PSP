@@ -3,8 +3,10 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Lease.Models.Lease;
+using Pims.Api.Areas.Leases.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -113,6 +115,22 @@ namespace Pims.Api.Areas.Lease.Controllers
             }
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(deleteRequest.Payload);
             var updatedLease = _pimsService.SecurityDepositService.DeleteLeaseDeposit(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
+
+            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+        }
+
+        /// <summary>
+        /// update the deposit note on the given lease
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{leaseId:long}/deposits/note")]
+        [HasPermission(Permissions.LeaseEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<DepositNoteModel> depositNoteModel)
+        {
+            var updatedLease = _pimsService.SecurityDepositService.UpdateLeaseDepositNote(depositNoteModel.ParentId, depositNoteModel.ParentRowVersion, depositNoteModel.Payload.Note);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }

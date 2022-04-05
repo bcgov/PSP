@@ -29,6 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Pims.Api.Handlers;
 using Pims.Api.Helpers;
 using Pims.Api.Helpers.Authorization;
 using Pims.Api.Helpers.Exceptions;
@@ -36,6 +37,8 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
+using Pims.Api.Repositories.EDMS;
+using Pims.Api.Services;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Dal;
@@ -103,6 +106,7 @@ namespace Pims.Api
             });
             services.Configure<JsonSerializerOptions>(options =>
             {
+                options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                 options.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                 options.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
@@ -119,6 +123,7 @@ namespace Pims.Api
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                     options.JsonSerializerOptions.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                     options.JsonSerializerOptions.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
@@ -161,7 +166,8 @@ namespace Pims.Api
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ValidAlgorithms = new List<string>() { "RS256" }
                     };
                     if (key.Length > 0) options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(key);
                     options.Events = new JwtBearerEvents()
@@ -196,10 +202,15 @@ namespace Pims.Api
                 csBuilder.Password = pwd;
             }
 
+
             services.AddHttpClient();
+            services.AddTransient<LoggingHandler>();
+            services.AddHttpClient("Pims.Api.Logging").AddHttpMessageHandler<LoggingHandler>();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
-            services.AddPimsRepositories();
-            services.AddPimsServices();
+            services.AddPimsDalRepositories();
+            services.AddPimsDalServices();
+            AddPimsApiRepositories(services);
+            AddPimsApiServices(services);
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
@@ -276,6 +287,21 @@ namespace Pims.Api
                 options.AllowedHosts = this.Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
+        }
+
+        private static void AddPimsApiRepositories(IServiceCollection services)
+        {
+            services.AddSingleton<IDocumentRepository, MayanDocumentRepository>();
+        }
+
+        /// <summary>
+        /// Add PimsService objects to the dependency injection service collection.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        private static void AddPimsApiServices(IServiceCollection services)
+        {
+            services.AddScoped<IDocumentService, DocumentService>();
         }
 
         /// <summary>

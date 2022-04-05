@@ -36,7 +36,7 @@ $fc-invalid-bg: #f2f2f2;
   text-align: right;
 }
 
-#root .form-control-sm {
+.form-control-sm {
   height: calc(1.5em + 0.8rem + 2px);
   padding: 0.4rem 0.58rem;
   font-size: 1.4rem;
@@ -50,4 +50,9 @@ $fc-invalid-bg: #f2f2f2;
   height: calc(1.5em + 1.2rem + 2px);
   border-radius: 0.4rem;
   text-overflow: ellipsis;
+}
+
+.form-select:not(.is-invalid),
+.form-control:not(.is-invalid) {
+  border: 0.1rem solid #606060;
 }
