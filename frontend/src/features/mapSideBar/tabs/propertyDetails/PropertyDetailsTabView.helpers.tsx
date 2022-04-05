@@ -24,7 +24,7 @@ export interface IPropertyDetailsForm
     }
   > {}
 
-export function toFormValues(apiData: IPropertyApiModel): IPropertyDetailsForm {
+export function toFormValues(apiData?: IPropertyApiModel): IPropertyDetailsForm {
   return {
     ...apiData,
     motiRegion: {},

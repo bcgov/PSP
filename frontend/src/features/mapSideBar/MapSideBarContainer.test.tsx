@@ -19,14 +19,6 @@ describe('MapSideBarContainer component', () => {
     };
   };
 
-  it('renders a spinner when the ltsa data is loading', () => {
-    const {
-      component: { getByTestId },
-    } = setup();
-
-    const spinner = getByTestId('filter-backdrop-loading');
-    expect(spinner).toBeVisible();
-  });
   it('requests ltsa data by pid', async () => {
     history.push('mapview?pid=9212434&searchBy=pinOrPid&sidebar=true');
     mockAxios.onPost().reply(200, {});
