@@ -25,6 +25,13 @@ namespace Pims.Dal.Entities
         [Column("RESEARCH_FILE_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string ResearchFileStatusTypeCode { get; set; }
+        [Column("REQUEST_SOURCE_TYPE_CODE")]
+        [StringLength(20)]
+        public string RequestSourceTypeCode { get; set; }
+        [Column("REQUESTOR_NAME")]
+        public long? RequestorName { get; set; }
+        [Column("REQUESTOR_ORGANIZATION")]
+        public long? RequestorOrganization { get; set; }
         [Required]
         [Column("NAME")]
         [StringLength(250)]
@@ -33,6 +40,15 @@ namespace Pims.Dal.Entities
         [Column("RFILE_NUMBER")]
         [StringLength(25)]
         public string RfileNumber { get; set; }
+        [Column("REQUEST_DATE", TypeName = "date")]
+        public DateTime? RequestDate { get; set; }
+        [Column("REQUEST_SOURCE_DESCRIPTION")]
+        [StringLength(2000)]
+        public string RequestSourceDescription { get; set; }
+        [Column("IS_EXPROPRIATION")]
+        public bool? IsExpropriation { get; set; }
+        [Column("RESEARCH_COMPLETION_DATE", TypeName = "date")]
+        public DateTime? ResearchCompletionDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
