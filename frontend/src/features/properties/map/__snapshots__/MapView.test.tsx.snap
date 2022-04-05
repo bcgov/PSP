@@ -132,6 +132,7 @@ exports[`MapView Renders the map 1`] = `
 }
 
 .c8 {
+  position: relative;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 1rem;

@@ -1410,6 +1410,7 @@ exports[`MapSlideBarHeader component renders as expected 1`] = `
 }
 
 .c0 {
+  position: relative;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 1rem;
