@@ -1,3 +1,4 @@
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { AssociatedPlan, LtsaOrders } from 'interfaces/ltsaModels';
 import { Col, Row } from 'react-bootstrap';
@@ -17,9 +18,12 @@ export const MapSlideBarHeader: React.FunctionComponent<IMapSlideBarHeaderProps>
       ? []
       : (props.ltsaData?.parcelInfo.orderedProduct.fieldedData
           .associatedPlans as AssociatedPlan[]).map(x => x.planNumber);
+
+  const isLoading = props.ltsaData === undefined || props.property === undefined;
   return (
     <>
       <HeaderWrapper>
+        <LoadingBackdrop show={isLoading} parentScreen={true} />
         <Row>
           <Col xs="8">
             <HeaderField label={'Civic Address'}>-</HeaderField>
@@ -53,6 +57,7 @@ export const MapSlideBarHeader: React.FunctionComponent<IMapSlideBarHeaderProps>
 };
 
 const HeaderWrapper = styled.div`
+  position: relative;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 1rem;
