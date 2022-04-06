@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
-    public class ResearchFileModel : BaseModel
+    public class ResearchFileModel : BaseAppModel
     {
         #region Properties
         /// <summary>
@@ -11,19 +11,24 @@ namespace Pims.Api.Models.Concepts
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - True if the model is disabled.
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the research file.
+        /// get/set - The research file name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// get/set - The research file properties.
+        /// get/set - The R-File number for this research file.
         /// </summary>
-        public IList<PropertyModel> Properties { get; set; }
+        public string RfileNumber { get; set; }
+
+        /// <summary>
+        /// get/set - The research file status type.
+        /// </summary>
+        public TypeModel<string> StatusType { get; set; }
+
+        /// <summary>
+        /// get/set - A list of research property relationships.
+        /// </summary>
+        public IList<ResearchFilePropertyModel> ResearchProperties { get; set; }
         #endregion
     }
 }

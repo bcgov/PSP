@@ -13,7 +13,7 @@ export const useApiResearchFile = () => {
   return React.useMemo(
     () => ({
       postResearchFile: (researchFile: Api_ResearchFile) =>
-        api.post<Api_ResearchFile>(`/researchFile`, researchFile),
+        api.post<Api_ResearchFile>(`/researchFiles`, researchFile),
     }),
     [api],
   );
