@@ -1,7 +1,7 @@
+using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Property.Models.Property;
-using System.Linq;
 
 namespace Pims.Api.Areas.Property.Mapping.Property
 {

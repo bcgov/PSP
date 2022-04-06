@@ -84,6 +84,30 @@ dotnet_diagnostic.S4136.severity = none
 # S1128 Remove this unnecessary 'using'
 dotnet_diagnostic.S1128.severity = warning
 
+# StyleCop
+# SA1600 Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+# SA1516 Elements should be separated by blank line 
+dotnet_diagnostic.SA1516.severity = none
+# SA1200 Using directive should appear within a namespace declaration
+dotnet_diagnostic.SA1200.severity = none
+# SA1633 The file header is missing or not located at the top of the file. 
+dotnet_diagnostic.SA1633.severity = none
+# SA1642 Constructor summary documentation should begin with standard text
+dotnet_diagnostic.SA1642.severity = none
+# SA1614 Element parameter documentation should have text 
+dotnet_diagnostic.SA1614.severity = none
+# SA1101 Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+# SA1616 Element return value documentation should have text
+dotnet_diagnostic.SA1616.severity = none
+# SA1208 Using directive for 'X' should appear before directive 'Y'
+dotnet_diagnostic.SA1208.severity = warning
+# SA1623 The property's documentation summary text should begin with: 'Gets or sets'
+dotnet_diagnostic.SA1623.severity = none
+# SA1309 Field should not begin with an underscore
+dotnet_diagnostic.SA1309.severity = none
+
 # Entity Framework files
 [**{entities/ef/*,PIMSContext}.cs]
 # CS8019: Using directive is unnecessary.
@@ -94,3 +118,5 @@ dotnet_diagnostic.CS8019.severity = none
 dotnet_diagnostic.S1128.severity = none
 # S3251 Supply an implementation for this partial method.
 dotnet_diagnostic.S3251.severity = none
+
+
