@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -6,10 +10,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Repositories
 {
@@ -100,26 +100,27 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
                 .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
+                    .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.RegionCodeNavigation)
+                    .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.DistrictCodeNavigation)
+                    .ThenInclude(a => a.DistrictCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.ProvinceState)
+                    .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.Country)
+                    .ThenInclude(a => a.Country)
                 .Include(p => p.PimsPropertyLeases)
-                .ThenInclude(l => l.Lease)
-                .ThenInclude(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.Lease)
+                    .ThenInclude(l => l.PimsLeaseTenants)
                 .Include(p => p.PimsPropertyLeases)
-                .ThenInclude(l => l.Lease)
-                .ThenInclude(l => l.PimsLeaseTenants)
-                .ThenInclude(l => l.Person)
+                    .ThenInclude(l => l.Lease)
+                    .ThenInclude(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.Person)
                 .Include(p => p.PimsPropertyLeases)
-                .ThenInclude(l => l.Lease)
-                .ThenInclude(l => l.PimsLeaseTenants)
-                .ThenInclude(l => l.Organization)
+                    .ThenInclude(l => l.Lease)
+                    .ThenInclude(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.Organization)
                 .Where(p => p.PropertyId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return property;
@@ -145,17 +146,18 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropPropRoadTypes)
                 .Include(p => p.PimsPropPropAdjacentLandTypes)
                 .Include(p => p.PimsPropPropTenureTypes)
+                    .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.RegionCodeNavigation)
+                    .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.DistrictCodeNavigation)
+                    .ThenInclude(a => a.DistrictCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.ProvinceState)
+                    .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.Country)
+                    .ThenInclude(a => a.Country)
                 .FirstOrDefault(p => p.Pid == search) ?? throw new KeyNotFoundException();
             return property;
         }
