@@ -18,11 +18,20 @@ describe('MapSlideBarHeader component', () => {
     );
     return result;
   };
-  it('Renders as expected', () => {
+
+  it('renders as expected', () => {
     const result = setup();
     expect(result.asFragment()).toMatchSnapshot();
   });
-  it('Displays PID', async () => {
+
+  it('renders a spinner when the data is loading', () => {
+    const { getByTestId } = setup();
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
+  });
+
+  it('displays PID', async () => {
     const result = setup({
       ltsaData: mockLtsaResponse,
       property: undefined,
@@ -33,7 +42,7 @@ describe('MapSlideBarHeader component', () => {
     ).toBeVisible();
   });
 
-  it('Diplays land parcel type', async () => {
+  it('displays land parcel type', async () => {
     const testProperty: IPropertyApiModel = {
       propertyType: { description: 'A land type description' },
     };

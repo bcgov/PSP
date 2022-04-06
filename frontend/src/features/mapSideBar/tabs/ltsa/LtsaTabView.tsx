@@ -1,4 +1,5 @@
 import { Input, TextArea } from 'components/common/form';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
@@ -19,8 +20,11 @@ export interface ILtsaTabViewProps {
 
 export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaData }) => {
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
+  const isLoading = ltsaData === undefined;
+
   return (
     <StyledScrollable>
+      <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
           <StyledFormSection>

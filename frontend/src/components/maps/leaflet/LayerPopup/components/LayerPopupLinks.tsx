@@ -1,6 +1,6 @@
+import { Button } from 'components/common/form';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
-import { Button } from 'react-bootstrap';
 import { FaEllipsisH } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
