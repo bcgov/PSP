@@ -1,4 +1,5 @@
 import { Form, ResetButton, SearchButton } from 'components/common/form';
+import { SelectInput } from 'components/common/List/SelectInput';
 import { TableSort } from 'components/Table/TableSort';
 import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
@@ -7,7 +8,6 @@ import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
 import { FilterBarSchema } from 'utils/YupSchema';
 
-import { PropertyFilterOptions } from './';
 import { IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 
@@ -95,7 +95,21 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
               <span>Search:</span>
             </Col>
             <Col xs="6" md="5" lg="4" xl="3">
-              <PropertyFilterOptions />
+              <SelectInput<
+                {
+                  pinOrPid: string;
+                  address: string;
+                },
+                IPropertyFilter
+              >
+                field="searchBy"
+                defaultKey="pinOrPid"
+                selectOptions={[
+                  { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+                  { label: 'Address', key: 'address', placeholder: 'Enter an address' },
+                ]}
+                className="idir-input-group"
+              />
             </Col>
             <Col xs="auto">
               <SearchButton

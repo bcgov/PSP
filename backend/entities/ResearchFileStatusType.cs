@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         /// <summary>
-        /// get/set - Primary key to identify property tenure type.
+        /// get/set - Primary key to identify research file status type.
         /// </summary>
         [NotMapped]
         public string Id { get => ResearchFileStatusTypeCode; set => ResearchFileStatusTypeCode = value; }
@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
 
         #region Constructors
         /// <summary>
-        /// Create a new instance of a PropertyTenureType class.
+        /// Create a new instance of a PimsResearchFileStatusType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsResearchFileStatusType(string id) : this()

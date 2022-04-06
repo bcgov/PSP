@@ -210,6 +210,15 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
+          exact
+          path="/research/list"
+          component={ResearchListView}
+          layout={AuthLayout}
+          claim={Claims.PROPERTY_VIEW}
+          title={getTitle('View Research Files')}
+        />
+        <AppRoute
+          protected
           path="/admin/user/:key?"
           component={EditUserPage}
           layout={AuthLayout}

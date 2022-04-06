@@ -72,7 +72,7 @@ exports[`Lease Filter matches snapshot 1`] = `
                 class="col-xl-7"
               >
                 <div
-                  class="row"
+                  class="idir-input-group flex-nowrap row"
                 >
                   <div
                     class="c1 col-auto"
@@ -96,15 +96,15 @@ exports[`Lease Filter matches snapshot 1`] = `
                           </option>
                           <option
                             class="option"
-                            value="lFileNo"
-                          >
-                            L-File #
-                          </option>
-                          <option
-                            class="option"
                             value="address"
                           >
                             Address
+                          </option>
+                          <option
+                            class="option"
+                            value="lFileNo"
+                          >
+                            L-File #
                           </option>
                         </select>
                       </div>
