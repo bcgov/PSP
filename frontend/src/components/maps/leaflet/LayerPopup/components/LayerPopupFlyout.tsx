@@ -1,6 +1,7 @@
+import { Button } from 'components/common/form';
 import noop from 'lodash/noop';
 import React from 'react';
-import { Button, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 export interface ILayerPopupFlyoutProps {
   onViewPropertyInfo?: () => void;
