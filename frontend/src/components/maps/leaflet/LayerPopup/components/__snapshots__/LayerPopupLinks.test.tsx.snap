@@ -23,28 +23,36 @@ exports[`Layer Popup links Renders correctly 1`] = `
     class="c0"
   >
     <button
-      class="btn btn-link"
+      class="Button btn btn-link"
       type="button"
     >
-      Zoom map
+      <div
+        class="Button__value"
+      >
+        Zoom map
+      </div>
     </button>
     <button
-      class="btn btn-link"
+      class="Button btn btn-link"
       type="button"
     >
-      <svg
-        fill="currentColor"
-        height="1em"
-        stroke="currentColor"
-        stroke-width="0"
-        viewBox="0 0 512 512"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="Button__value"
       >
-        <path
-          d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
-        />
-      </svg>
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+          />
+        </svg>
+      </div>
     </button>
   </div>
 </DocumentFragment>
