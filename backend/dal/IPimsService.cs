@@ -12,6 +12,7 @@ namespace Pims.Dal.Services
         IPersonService PersonService { get; }
         IOrganizationService OrganizationService { get; }
         ILeaseReportsService LeaseReportsService { get; }
+        IResearchService ResearchService { get; }
         #endregion
     }
 }

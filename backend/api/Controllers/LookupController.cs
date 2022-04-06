@@ -103,6 +103,7 @@ namespace Pims.Api.Controllers
             var roleCodes = _mapper.Map<Model.RoleModel[]>(_pimsService.Lookup.GetRoles());
             var securtyDepositTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetSecurityDepositTypes());
             var tenureTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTenureTypes());
+            var researchStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchFileStatusTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -131,6 +132,7 @@ namespace Pims.Api.Controllers
             codes.AddRange(roleCodes);
             codes.AddRange(securtyDepositTypes);
             codes.AddRange(tenureTypes);
+            codes.AddRange(researchStatusTypes);
 
             return new JsonResult(codes);
         }

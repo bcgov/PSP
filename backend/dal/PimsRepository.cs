@@ -74,7 +74,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The tenant repository.
         /// </summary>
-        public ITenantService Tenant { get { return _serviceProvider.GetService<ITenantService>(); } }
+        public ITenantRepository Tenant { get { return _serviceProvider.GetService<ITenantRepository>(); } }
 
         /// <summary>
         /// get - The lease repository.
@@ -94,17 +94,22 @@ namespace Pims.Dal
         /// <summary>
         /// get - The contact repository.
         /// </summary>
-        public IContactService Contact { get { return _serviceProvider.GetService<IContactService>(); } }
+        public IContactRepository Contact { get { return _serviceProvider.GetService<IContactRepository>(); } }
 
         /// <summary>
         /// get - The insurance repository.
         /// </summary>
-        public IInsuranceService Insurance { get { return _serviceProvider.GetService<IInsuranceService>(); } }
+        public IInsuranceRepository Insurance { get { return _serviceProvider.GetService<IInsuranceRepository>(); } }
 
         /// <summary>
         /// get - The autocomplete repository.
         /// </summary>
         public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
+
+        /// <summary>
+        /// get - The research repository.
+        /// </summary>
+        public IResearchRepository Research { get { return _serviceProvider.GetService<IResearchRepository>(); } }
         #endregion
 
         #region Constructors

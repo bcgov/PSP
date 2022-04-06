@@ -42,7 +42,6 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions &
 
   return (
     <InputGroup
-      fast={false}
       formikProps={null as any}
       prepend={
         <Select field="searchBy" options={state.options} onChange={reset} disabled={disabled} />

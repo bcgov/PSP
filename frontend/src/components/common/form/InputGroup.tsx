@@ -7,7 +7,6 @@ import BootstrapInputGroup from 'react-bootstrap/InputGroup';
 import styled from 'styled-components';
 
 import { Label } from '../Label';
-import { FastInput } from './FastInput';
 import { Input } from './Input';
 
 type RequiredAttributes = {
@@ -35,8 +34,8 @@ type OptionalAttributes = {
   preText?: string;
   prepend?: React.ReactNode;
   postText?: string;
-  fast?: boolean;
-  outerClassName?: string;
+  content?: React.ReactNode;
+  innerClassName?: string;
   displayErrorTooltips?: boolean;
   /** style to pass down to the FastInput or Input */
   style?: CSSProperties;
@@ -64,9 +63,9 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   preText,
   prepend: PrependComponent,
   postText,
-  outerClassName,
+  innerClassName,
   className,
-  fast,
+  content,
   formikProps,
   options,
   autoComplete,
@@ -75,11 +74,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
 }) => {
   return (
     <Row
-      className={classNames(
-        !!required ? 'required' : '',
-        outerClassName,
-        disabled ? 'disabled' : '',
-      )}
+      className={classNames(!!required ? 'required' : '', className, disabled ? 'disabled' : '')}
     >
       {!!label && required && <Label required={required}>{label}</Label>}
 
@@ -94,22 +89,13 @@ export const InputGroup: React.FC<InputGroupProps> = ({
         </ColPrepend>
       )}
       <ColContent>
-        {fast ? (
-          <FastInput
-            formikProps={formikProps}
-            disabled={disabled}
-            style={style}
-            field={field}
-            className={className}
-            placeholder={placeholder}
-            displayErrorTooltips={displayErrorTooltips}
-            {...rest}
-          />
+        {content ? (
+          content
         ) : (
           <Input
             disabled={disabled}
             field={field}
-            className={className}
+            className={innerClassName}
             style={style}
             placeholder={placeholder}
             displayErrorTooltips={displayErrorTooltips}

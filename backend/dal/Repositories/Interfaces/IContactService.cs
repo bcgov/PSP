@@ -5,9 +5,9 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// IContactService interface, provides functions to interact with contacts within the datasource.
+    /// IContactRepository interface, provides functions to interact with contacts within the datasource.
     /// </summary>
-    public interface IContactService : IRepository<PimsContactMgrVw>
+    public interface IContactRepository : IRepository<PimsContactMgrVw>
     {
         int Count();
         IEnumerable<PimsContactMgrVw> Get(ContactFilter filter);

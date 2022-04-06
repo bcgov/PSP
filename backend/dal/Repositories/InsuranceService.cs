@@ -13,7 +13,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// InsuranceService class, provides a service layer to interact with insurances within the datasource.
     /// </summary>
-    public class InsuranceService : BaseRepository<PimsInsurance>, IInsuranceService
+    public class InsuranceRepository : BaseRepository<PimsInsurance>, IInsuranceRepository
     {
         #region Constructors
         /// <summary>
@@ -23,7 +23,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public InsuranceService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<InsuranceService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public InsuranceRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<InsuranceRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods

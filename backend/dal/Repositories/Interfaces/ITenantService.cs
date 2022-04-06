@@ -5,7 +5,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// ITenantService interface, provides functions to interact with tenants within the datasource.
     /// </summary>
-    public interface ITenantService : IRepository<PimsTenant>
+    public interface ITenantRepository : IRepository<PimsTenant>
     {
         PimsTenant GetTenant(string code);
 

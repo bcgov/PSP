@@ -36,6 +36,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsSecurityDepositType> GetSecurityDepositTypes();
         IEnumerable<PimsLeasePaymentStatusType> GetLeasePaymentStatusTypes();
         IEnumerable<PimsLeasePaymentMethodType> GetLeasePaymentMethodTypes();
+        IEnumerable<PimsResearchFileStatusType> GetResearchFileStatusTypes();
     }
 }
 

@@ -10,6 +10,30 @@ namespace Pims.Core.Extensions
     public static class DictionaryExtensions
     {
         /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as a short.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static short GetShortValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, short defaultValue = 0)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && short.TryParse(dValue, out short value) ? value : defaultValue;
+        }
+
+        /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as a short.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static short? GetShortNullValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, short? defaultValue = null)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && short.TryParse(dValue, out short value) ? value : defaultValue;
+        }
+
+        /// <summary>
         /// Get the value from the dictionary for the specified 'key' and return it as an int.
         /// </summary>
         /// <param name="dict"></param>

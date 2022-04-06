@@ -32,10 +32,10 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
             repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();
             repositories.AddScoped<Repositories.IAccessRequestService, Repositories.AccessRequestService>();
-            repositories.AddScoped<Repositories.ITenantService, Repositories.TenantService>();
+            repositories.AddScoped<Repositories.ITenantRepository, Repositories.TenantRepository>();
             repositories.AddScoped<Repositories.ILeaseRepository, Repositories.LeaseRepository>();
-            repositories.AddScoped<Repositories.IContactService, Repositories.ContactService>();
-            repositories.AddScoped<Repositories.IInsuranceService, Repositories.InsuranceService>();
+            repositories.AddScoped<Repositories.IContactRepository, Repositories.ContactRepository>();
+            repositories.AddScoped<Repositories.IInsuranceRepository, Repositories.InsuranceRepository>();
             repositories.AddScoped<Repositories.IAutocompleteService, Repositories.AutocompleteService>();
             repositories.AddScoped<Repositories.IUserOrganizationService, Repositories.UserOrganizationService>();
             repositories.AddScoped<Repositories.IOrganizationRepository, Repositories.OrganizationRepository>();
@@ -43,6 +43,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.ISecurityDepositRepository, Repositories.SecurityDepositRepository>();
             repositories.AddScoped<Repositories.ILeasePaymentRepository, Repositories.LeasePaymentRepository>();
             repositories.AddScoped<Repositories.ISecurityDepositReturnRepository, Repositories.SecurityDepositReturnRepository>();
+            repositories.AddScoped<Repositories.IResearchRepository, Repositories.ResearchRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 
@@ -57,11 +58,12 @@ namespace Pims.Dal
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseReportsService, LeaseReportsService>();
             services.AddScoped<ILeaseTermService, LeaseTermService>();
-            services.AddScoped<Services.ILeasePaymentService, Services.LeasePaymentService>();
+            services.AddScoped<ILeasePaymentService, LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();
             services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
-            services.AddScoped<Services.IPersonService, Services.PersonService>();
-            services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IResearchService, ResearchService>();
             return services; // TODO: Use reflection to find all Repositories.
         }
 

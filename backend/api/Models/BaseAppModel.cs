@@ -7,9 +7,11 @@ namespace Pims.Api.Models
         #region Properties
         public DateTime AppCreateTimestamp { get; set; }
 
-        public DateTime UpdatedOn { get; set; }
+        public DateTime AppUpdateTimestamp { get; set; }
 
         public string UpdatedByName { get; set; }
+
+        public string CreatedByName { get; set; }
         #endregion
     }
 }
