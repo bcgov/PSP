@@ -6,6 +6,7 @@ import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from 'constants/API';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
+import { useEffect } from 'react';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
@@ -62,6 +63,13 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
     .getByType(RESEARCH_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
+  useEffect(() => {
+    if (researchStatusOptions.length > 0) {
+      defaultFilter.researchFileStatusCode =
+        researchStatusOptions.find(s => s.code === 'ACTIVE')?.value.toString() ?? '';
+    }
+  }, [researchStatusOptions]);
+
   return (
     <Formik enableReinitialize initialValues={filter ?? defaultFilter} onSubmit={onSearchSubmit}>
       {formikProps => (
@@ -88,11 +96,7 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
                 <Col>
                   <Row>
                     <Col xl="4">
-                      <Select
-                        options={researchStatusOptions}
-                        field="researchFileStatusTypeCode"
-                        placeholder="Active"
-                      />
+                      <Select options={researchStatusOptions} field="researchFileStatusTypeCode" />
                     </Col>
                     <Col xl="1"></Col>
                     <Col xl="7">

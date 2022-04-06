@@ -79,6 +79,7 @@ const SmallInputGroup = styled(InputGroup)`
   }
   input {
     width: 18rem;
+    max-width: 100%;
   }
 `;
 export default AppCreateUpdateBySelect;

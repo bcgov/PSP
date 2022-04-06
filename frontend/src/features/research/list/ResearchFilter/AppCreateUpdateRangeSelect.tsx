@@ -53,7 +53,7 @@ export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectPro
 
   return (
     <Row>
-      <Col md={8}>
+      <Col lg={12} xl={8}>
         <SmallInputGroup
           formikProps={formikProps}
           prepend={
@@ -71,7 +71,7 @@ export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectPro
           {...rest}
         ></SmallInputGroup>
       </Col>
-      <Col md={4}>
+      <Col lg={12} xl={4}>
         <SmallDatePicker
           formikProps={formikProps}
           field={
@@ -92,4 +92,5 @@ const SmallInputGroup = styled(InputGroup)`
 
 const SmallDatePicker = styled(FastDatePicker)`
   width: 18rem;
+  max-width: 100%;
 `;
