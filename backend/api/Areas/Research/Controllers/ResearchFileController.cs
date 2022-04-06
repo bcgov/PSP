@@ -46,7 +46,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// Add the specified research file.
         /// </summary>
         /// <returns></returns>
-        [HttpPost()]
+        [HttpPost]
         [HasPermission(Permissions.ResearchFileAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
@@ -54,9 +54,9 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         public IActionResult AddResearchFile(ResearchFileModel researchFileModel)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
-            var lease = _pimsService.ResearchFileService.Add(researchFileEntity);
+            var researchFile = _pimsService.ResearchFileService.Add(researchFileEntity);
 
-            return new JsonResult(_mapper.Map<ResearchFileModel>(lease));
+            return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
 
 
