@@ -3,15 +3,20 @@ import { createMemoryHistory } from 'history';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { IPropertyDetailsTabView, PropertyDetailsTabView } from './PropertyDetailsTabView';
+import { PropertyDetailsTabView } from './PropertyDetailsTabView';
+import { toFormValues } from './PropertyDetailsTabView.helpers';
 
 const history = createMemoryHistory();
 
 describe('PropertyDetailsTabView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & IPropertyDetailsTabView = {}) => {
+  const setup = (renderOptions: RenderOptions & { property?: IPropertyApiModel } = {}) => {
     const { property, ...rest } = renderOptions;
-    const component = render(<PropertyDetailsTabView property={property} />, { ...rest, history });
+    const formValues = toFormValues(property);
+    const component = render(<PropertyDetailsTabView property={formValues} />, {
+      ...rest,
+      history,
+    });
 
     return {
       ...component,
