@@ -24,6 +24,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams(formikRef);
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
+  const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
 
   // First, fetch property information from PSP API
   const { getPropertyWithPid } = useProperties();
@@ -47,6 +48,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   const { getLtsaData } = useLtsa();
   useEffect(() => {
     const func = async () => {
+      setLtsaDataRequestedOn(new Date());
       setLtsaData(undefined);
       if (!!pid) {
         const ltsaData = await getLtsaData(pidFormatter(pid));
@@ -71,7 +73,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
     >
       <InventoryTabs
         PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
-        LtsaView={<LtsaTabView ltsaData={ltsaData} />}
+        LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
       />
     </MapSideBarLayout>
   );
