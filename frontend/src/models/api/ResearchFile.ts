@@ -1,5 +1,6 @@
-import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from 'models/api/TypeCode';
+
+import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Property } from './Property';
 
 export interface Api_ResearchFile extends Api_ConcurrentVersion {
