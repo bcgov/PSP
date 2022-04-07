@@ -6,7 +6,7 @@ namespace Pims.Api.Models.Concepts
     {
         public long Id { get; set; }
 
-        public TypeCode ResearchFileStatusTypeCode { get; set; }
+        public TypeModel<string> ResearchFileStatusTypeCode { get; set; }
 
         public string Name { get; set; }
 

@@ -3,7 +3,7 @@ export interface IResearchFilter {
   researchFileStatusCode: string;
   name: string;
   roadOrAlias: string;
-  rFileNumber: string;
+  rfileNumber: string;
   createOrUpdateRange: string;
   createOrUpdateBy: string;
   researchSearchBy: string;

@@ -21,7 +21,7 @@ const primaryResearchFilterOptions = [
   },
   {
     label: 'Research file #',
-    value: 'rFileNumber',
+    value: 'rfileNumber',
   },
 ];
 
@@ -36,7 +36,7 @@ export const ResearchFileSelect: React.FC<IResearchFileSelectProps &
   } = {
     options: options ?? primaryResearchFilterOptions,
     placeholders: placeholders ?? {
-      rFileNumber: '',
+      rfileNumber: '',
       name: '',
     },
   };

@@ -9,7 +9,7 @@ namespace Pims.Api.Areas.Research.Controllers
     using Pims.Api.Areas.Research.Models.Search;
     using Pims.Api.Helpers.Exceptions;
     using Pims.Api.Helpers.Extensions;
-    using Pims.Api.Models.Concepts.Research;
+    using Pims.Api.Models.Concepts;
     using Pims.Api.Policies;
     using Pims.Dal.Entities.Models;
     using Pims.Dal.Security;

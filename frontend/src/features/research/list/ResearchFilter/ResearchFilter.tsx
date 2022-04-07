@@ -32,7 +32,7 @@ export const defaultFilter: IResearchFilter = {
   createdOnStartDate: '',
   updatedOnEndDate: '',
   updatedOnStartDate: '',
-  rFileNumber: '',
+  rfileNumber: '',
   researchSearchBy: 'name',
   createOrUpdateRange: 'updatedOnStartDate',
   createOrUpdateBy: 'updatedByIdir',

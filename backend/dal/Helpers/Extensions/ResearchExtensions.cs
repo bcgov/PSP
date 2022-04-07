@@ -50,22 +50,22 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.CreatedOnStartDate.HasValue)
             {
-                query = query.Where(l => (l.AppCreateTimestamp >= filter.CreatedOnStartDate.Value));
-            }
-
-            if (filter.UpdatedOnStartDate.HasValue)
-            {
-                query = query.Where(l => (l.AppLastUpdateTimestamp >= filter.UpdatedOnStartDate.Value));
+                query = query.Where(l => (l.AppCreateTimestamp.Date >= filter.CreatedOnStartDate.Value.Date));
             }
 
             if (filter.CreatedOnEndDate.HasValue)
             {
-                query = query.Where(l => (l.AppCreateTimestamp <= filter.CreatedOnEndDate.Value));
+                query = query.Where(l => (l.AppCreateTimestamp.Date <= filter.CreatedOnEndDate.Value.Date));
+            }
+
+            if (filter.UpdatedOnStartDate.HasValue)
+            {
+                query = query.Where(l => (l.AppLastUpdateTimestamp.Date >= filter.UpdatedOnStartDate.Value.Date));
             }
 
             if (filter.UpdatedOnEndDate.HasValue)
             {
-                query = query.Where(l => (l.AppLastUpdateTimestamp <= filter.UpdatedOnEndDate.Value));
+                query = query.Where(l => (l.AppLastUpdateTimestamp.Date <= filter.UpdatedOnEndDate.Value.Date));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.CreatedByIdir))
@@ -77,7 +77,7 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 query = query.Where(r => EF.Functions.Like(r.AppLastUpdateUserid, $"%{filter.UpdatedByIdir}%"));
             }
-            return query;
+            return query.Include(r => r.ResearchFileStatusTypeCodeNavigation);
         }
 
         /// <summary>

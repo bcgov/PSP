@@ -1,7 +1,7 @@
 import Api_TypeCode from 'interfaces/ITypeCode';
 export interface IResearchSearchResult {
   id: number;
-  rFileNumber: string;
+  rfileNumber: string;
   name?: string;
   region?: string;
   createdByIdir: string;

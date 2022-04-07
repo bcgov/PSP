@@ -9,19 +9,20 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsResearchFile, Model.ResearchModel>()
-                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ResearchFileId)
                 .Map(dest => dest.ResearchFileStatusTypeCode, src => src.ResearchFileStatusTypeCodeNavigation)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.RfileNumber, src => src.RfileNumber)
-                .Inherits<Entity.IBaseEntity, BaseModel>();
+                .Map(dest => dest.CreatedByIdir, src => src.AppCreateUserid)
+                .Map(dest => dest.UpdatedByIdir, src => src.AppLastUpdateUserid)
+                .Inherits<Entity.IBaseEntity, BaseAppModel>();
 
             config.NewConfig<Model.ResearchModel, Entity.PimsResearchFile>()
                 .Map(dest => dest.ResearchFileId, src => src.Id)
                 .Map(dest => dest.ResearchFileStatusTypeCodeNavigation, src => src.ResearchFileStatusTypeCode)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.RfileNumber, src => src.RfileNumber)
-                .Inherits<BaseModel, Entity.IBaseEntity>();
+                .Inherits<BaseAppModel, Entity.IBaseEntity>();
         }
     }
 }

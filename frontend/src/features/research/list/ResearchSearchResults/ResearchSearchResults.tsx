@@ -1,4 +1,4 @@
-import { ColumnWithProps, DateCell, Table } from 'components/Table';
+import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { useCallback } from 'react';
@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const columns: ColumnWithProps<IResearchSearchResult>[] = [
   {
     Header: 'R-File Number',
-    accessor: 'rFileNumber',
+    accessor: 'rfileNumber',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -78,6 +78,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
+    Cell: renderTypeCode,
   },
 ];
 
