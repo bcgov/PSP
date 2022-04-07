@@ -2,7 +2,6 @@ import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
 import classNames from 'classnames';
 import * as Styled from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as React from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -16,7 +15,6 @@ interface IMapSideBarLayoutProps {
   /** property name for title */
   propertyName?: string;
   header: React.ReactNode;
-  isLoading: boolean;
 }
 
 /**
@@ -29,7 +27,6 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
   hidePolicy,
   title,
   propertyName,
-  isLoading,
   ...props
 }) => {
   return (
@@ -41,7 +38,6 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
       <VisibilitySensor partialVisibility={true}>
         {({ isVisible }: any) => (
           <>
-            <LoadingBackdrop show={isLoading} parentScreen={true} />
             <TitleBar>
               <Underline>
                 <LotIcon className="mr-1" />

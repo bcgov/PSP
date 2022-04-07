@@ -83,6 +83,8 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, on
 
 const StyledContainer = styled.div`
   padding: 0.5rem 1.2rem;
+  background-color: ${props => props.theme.css.mapPopupBackgroundColor};
+
   .btn-link {
     font-size: 1.4rem;
     line-height: 2.2rem;
@@ -90,6 +92,7 @@ const StyledContainer = styled.div`
   }
   .list-group {
     .list-group-item {
+      background-color: ${props => props.theme.css.mapPopupBackgroundColor};
       font-size: 1.4rem;
       border: none;
       padding: 0;

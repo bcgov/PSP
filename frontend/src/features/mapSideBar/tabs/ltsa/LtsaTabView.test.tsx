@@ -22,6 +22,15 @@ describe('LtsaTabView component', () => {
     };
   };
 
+  it('renders a spinner when the ltsa data is loading', () => {
+    const {
+      component: { getByTestId },
+    } = setup();
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
+  });
+
   it('renders as expected when provided valid ltsa data object', () => {
     const { component } = setup({ ltsaData: mockLtsaResponse });
     expect(component.asFragment()).toMatchSnapshot();
