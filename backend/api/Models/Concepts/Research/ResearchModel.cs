@@ -1,14 +1,18 @@
-namespace Pims.Api.Models.Concepts.Research
+namespace Pims.Api.Models.Concepts
 {
     using System;
 
     public class ResearchModel : BaseAppModel
     {
-        public long ResearchFileId { get; set; }
+        public long Id { get; set; }
 
         public TypeCode ResearchFileStatusTypeCode { get; set; }
 
         public string Name { get; set; }
+
+        public string RoadName { get; set; }
+
+        public string RoadAlias { get; set; }
 
         public string RfileNumber { get; set; }
 

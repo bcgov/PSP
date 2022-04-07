@@ -1,4 +1,4 @@
-import { ColumnWithProps, Table } from 'components/Table';
+import { ColumnWithProps, DateCell, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { useCallback } from 'react';
@@ -49,6 +49,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
+    Cell: DateCell,
   },
   {
     Header: 'Last updated by',
@@ -67,6 +68,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
+    Cell: DateCell,
   },
   {
     Header: 'Status',
