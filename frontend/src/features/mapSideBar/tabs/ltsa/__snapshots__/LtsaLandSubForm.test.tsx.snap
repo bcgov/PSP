@@ -380,7 +380,7 @@ D.F. D21890
 </DocumentFragment>
 `;
 
-exports[`LtsaTabView component renders as expected when provided valid ltsa data object 1`] = `
+exports[`LtsaTabView component renders as expected when provided valid ltsa data object and requested on datetime 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -388,7 +388,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   <div
     class="Toastify"
   />
-  .c5 {
+  .c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -400,13 +400,13 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   gap: 0.8rem;
 }
 
-.c5 .form-label {
+.c7 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c4 {
+.c6 {
   font-weight: bold;
 }
 
@@ -414,17 +414,43 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   overflow-y: auto;
 }
 
-.c2 {
+.c4 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
 }
 
-.c3 {
+.c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.8rem;
+  font-style: italic;
 }
 
 .c1.c1.c1 input,
@@ -453,8 +479,17 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
       <div
         class="c2"
       >
-        <h2
+        <div
           class="c3"
+        >
+          This data was retrived from LTSA on 06-Apr-2022 11:32 AM
+        </div>
+      </div>
+      <div
+        class="c4"
+      >
+        <h2
+          class="c5"
         >
           Title Details
         </h2>
@@ -465,7 +500,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Title number:
             </label>
@@ -494,7 +529,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Land title district:
             </label>
@@ -522,7 +557,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Taxation authorities:
             </label>
@@ -547,10 +582,10 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <h2
-          class="c3"
+          class="c5"
         >
           Land
         </h2>
@@ -561,7 +596,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               PID:
             </label>
@@ -589,7 +624,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Legal Description:
             </label>
@@ -612,7 +647,7 @@ PLAN 24843
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -633,7 +668,7 @@ PLAN 24843
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -654,7 +689,7 @@ PLAN 24843
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -694,7 +729,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -715,7 +750,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -736,7 +771,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -775,7 +810,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -796,7 +831,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -817,7 +852,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c5 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -852,10 +887,10 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <h2
-          class="c3"
+          class="c5"
         >
           Charges, Liens and Interests
         </h2>
@@ -866,7 +901,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Nature:
             </label>
@@ -894,7 +929,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registration #:
             </label>
@@ -922,7 +957,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -950,7 +985,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered owner:
             </label>
@@ -979,7 +1014,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Nature:
             </label>
@@ -1007,7 +1042,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registration #:
             </label>
@@ -1035,7 +1070,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -1063,7 +1098,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered owner:
             </label>
@@ -1092,7 +1127,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Nature:
             </label>
@@ -1120,7 +1155,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registration #:
             </label>
@@ -1148,7 +1183,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -1176,7 +1211,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered owner:
             </label>
@@ -1205,7 +1240,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Nature:
             </label>
@@ -1233,7 +1268,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registration #:
             </label>
@@ -1261,7 +1296,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -1290,7 +1325,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Nature:
             </label>
@@ -1318,7 +1353,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registration #:
             </label>
@@ -1346,7 +1381,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -1374,7 +1409,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered owner:
             </label>
@@ -1419,10 +1454,10 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <h2
-          class="c3"
+          class="c5"
         >
           Duplicate Indefeasible Title
         </h2>
@@ -1433,7 +1468,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               To:
             </label>
@@ -1461,7 +1496,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Application #:
             </label>
@@ -1489,7 +1524,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Document district code:
             </label>
@@ -1517,7 +1552,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Certificate text:
             </label>
@@ -1540,10 +1575,10 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <h2
-          class="c3"
+          class="c5"
         >
           Transfers
         </h2>
@@ -1554,7 +1589,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Nature:
             </label>
@@ -1582,7 +1617,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registration #:
             </label>
@@ -1609,7 +1644,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -1637,7 +1672,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered date:
             </label>
@@ -1665,7 +1700,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Pending applications:
             </label>
@@ -1689,10 +1724,10 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <h2
-          class="c3"
+          class="c5"
         >
           Notes
         </h2>
@@ -1703,7 +1738,7 @@ D.F. D21890
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Miscellaneous notes:
             </label>
@@ -1727,7 +1762,7 @@ DF L24824
             class="col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Parcel status:
             </label>

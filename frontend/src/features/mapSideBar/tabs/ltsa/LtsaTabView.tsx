@@ -3,12 +3,19 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
+import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledFormSection, StyledScrollable, StyledSectionHeader } from '../SectionStyles';
+import {
+  InlineMessage,
+  StyledFormSection,
+  StyledInlineMessageSection,
+  StyledScrollable,
+  StyledSectionHeader,
+} from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';
@@ -16,9 +23,13 @@ import LtsaTransferSubForm from './LtsaTransferSubForm';
 
 export interface ILtsaTabViewProps {
   ltsaData?: LtsaOrders;
+  ltsaRequestedOn?: Date;
 }
 
-export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaData }) => {
+export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
+  ltsaData,
+  ltsaRequestedOn,
+}) => {
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
   const isLoading = ltsaData === undefined;
 
@@ -27,6 +38,14 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
+          {ltsaRequestedOn && (
+            <StyledInlineMessageSection>
+              <InlineMessage>
+                This data was retrived from LTSA on{' '}
+                {moment(ltsaRequestedOn).format('DD-MMM-YYYY h:mm A')}
+              </InlineMessage>
+            </StyledInlineMessageSection>
+          )}
           <StyledFormSection>
             <StyledSectionHeader>Title Details</StyledSectionHeader>
             <SectionField label="Title number">
