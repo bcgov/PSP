@@ -112,7 +112,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-xl-3 col-lg-4 col-md-5 col-6"
             >
               <div
-                class="row"
+                class="flex-nowrap row"
               >
                 <div
                   class="c0 col-auto"

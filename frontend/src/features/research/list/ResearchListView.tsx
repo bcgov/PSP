@@ -38,7 +38,11 @@ export const ResearchListView: React.FunctionComponent = () => {
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<IResearchSearchResult, IResearchFilter>(defaultFilter, getResearchFiles);
+  } = useSearch<IResearchSearchResult, IResearchFilter>(
+    defaultFilter,
+    getResearchFiles,
+    'No matching results can be found. Try widening your search criteria.',
+  );
 
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(

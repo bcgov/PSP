@@ -699,9 +699,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               </option>
               <option
                 class="option"
-                value="EXPIRED"
+                value="INACTIVE"
               >
-                Expired
+                Inactive
               </option>
               <option
                 class="option"
@@ -1678,9 +1678,21 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  value="ACRE"
+                >
+                  Acres
+                </option>
+                <option
+                  class="option"
+                  value="FEET2"
+                >
+                  Feet sq
+                </option>
+                <option
+                  class="option"
                   value="HA"
                 >
-                  Hectare
+                  Hectares
                 </option>
                 <option
                   class="option"

@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Research.Controllers
     [Area("research")]
     [Route("v{version:apiVersion}/[area]/search")]
     [Route("[area]/search")]
-    public class ResearchController : ControllerBase
+    public class SearchController : ControllerBase
     {
         #region Variables
         private readonly IPimsService pimsService;
@@ -39,7 +39,7 @@ namespace Pims.Api.Areas.Research.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public ResearchController(IPimsService pimsService, IMapper mapper)
+        public SearchController(IPimsService pimsService, IMapper mapper)
         {
             this.pimsService = pimsService;
             this.mapper = mapper;

@@ -5,7 +5,7 @@ import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { mockLookups } from 'mocks/mockLookups';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, prettyDOM, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { ResearchListView } from './ResearchListView';
 

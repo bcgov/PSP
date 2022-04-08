@@ -21,7 +21,7 @@ exports[`renders correctly... 1`] = `
 }
 
 <div
-    class="row"
+    class="flex-nowrap row"
   >
     <div
       class="c0 col-auto"

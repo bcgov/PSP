@@ -27,7 +27,6 @@ namespace Pims.Ltsa
         private TokenModel _token = null;
         private readonly JsonSerializerOptions _jsonSerializerOptions = null;
         private readonly ILogger<ILtsaService> _logger;
-        private readonly int MAX_RETRIES = 5;
         private readonly AsyncRetryPolicy _authPolicy;
         #endregion
         #region Properties
@@ -101,7 +100,7 @@ namespace Pims.Ltsa
         {
             var orderProcessingPolicy = Policy
                 .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
-                 .WaitAndRetryAsync(MAX_RETRIES, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                 .WaitAndRetryAsync(Options.MaxRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             try
             {

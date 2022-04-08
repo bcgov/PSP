@@ -103,7 +103,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
         Area
       </label>
       <div
-        class="row"
+        class="flex-nowrap row"
       >
         <div
           class="c2 col"
@@ -228,7 +228,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
         Area
       </label>
       <div
-        class="row"
+        class="flex-nowrap row"
       >
         <div
           class="c2 col"

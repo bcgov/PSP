@@ -408,7 +408,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var options = Options.Create(new LtsaOptions());
+            var options = Options.Create(new LtsaOptions() { MaxRetries = 0 });
             var service = helper.Create<LtsaService>(options, user);
 
             var token = new TokenModel()
