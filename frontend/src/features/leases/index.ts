@@ -2,7 +2,6 @@ export * from './add/AddLeaseContainer';
 export * from './add/AddLeaseContainer';
 export * from './add/AddLeaseLayout';
 export * from './add/PropertyRow';
-export * from './detail/BackToSearchButton';
 export * from './detail/LeaseBreadCrumb';
 export * from './detail/LeaseContainer';
 export * from './detail/LeaseHeader';
