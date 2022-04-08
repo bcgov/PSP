@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Research.Controllers
         [HttpGet]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<ResearchModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ResearchFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "research", "file" })]
         public IActionResult GetResearchFiles()
@@ -73,7 +73,7 @@ namespace Pims.Api.Areas.Research.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<ResearchModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ResearchFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "research", "file" })]
         public IActionResult GetResearchFiles([FromBody] ResearchFilterModel filter)
@@ -82,7 +82,7 @@ namespace Pims.Api.Areas.Research.Controllers
             if (!filter.IsValid()) throw new BadRequestException("Research filter must contain valid values.");
 
             var researchFiles = pimsService.ResearchService.GetPage((ResearchFilter)filter);
-            return new JsonResult(mapper.Map<Api.Models.PageModel<ResearchModel>>(researchFiles));
+            return new JsonResult(mapper.Map<Api.Models.PageModel<ResearchFileModel>>(researchFiles));
         }
         #endregion
         #endregion

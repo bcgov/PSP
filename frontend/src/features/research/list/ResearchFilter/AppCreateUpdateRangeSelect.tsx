@@ -35,7 +35,7 @@ export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectPro
     options: options ?? createUpdateTimestampOptions,
     placeholders: placeholders ?? {
       appCreateTimestamp: 'from date',
-      appUpdateTimestamp: 'from date',
+      appLastUpdateTimestamp: 'from date',
     },
   };
 
@@ -48,7 +48,7 @@ export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectPro
   const desc = state.placeholders[createOrUpdateRange] || '';
 
   const reset = () => {
-    setFieldValue(createOrUpdateRange ? createOrUpdateRange : 'appUpdateTimestamp', '');
+    setFieldValue(createOrUpdateRange ? createOrUpdateRange : 'appLastUpdateTimestamp', '');
   };
 
   return (
@@ -86,7 +86,7 @@ export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectPro
 
 const SmallInputGroup = styled(InputGroup)`
   .input-group-prepend select {
-    width: 15rem;
+    width: 16rem;
   }
 `;
 

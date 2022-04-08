@@ -1,9 +1,9 @@
 import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
+import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
 import { useCallback } from 'react';
-import { Tooltip } from 'react-bootstrap';
-import styled from 'styled-components';
+import { CellProps } from 'react-table';
 
 const columns: ColumnWithProps<IResearchSearchResult>[] = [
   {
@@ -26,15 +26,19 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'MOTI Region',
-    accessor: 'region',
+    accessor: 'researchProperties',
     align: 'right',
     clickable: true,
     width: 10,
     maxWidth: 20,
+    Cell: ({ value }: CellProps<any, Api_PropertyResearchFile[]>) => {
+      const regions = [...new Set(value.map(pr => pr?.property?.region?.description))];
+      return regions.join(', ');
+    },
   },
   {
     Header: 'Created by',
-    accessor: 'createdByIdir',
+    accessor: 'appCreateUserid',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -53,7 +57,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'Last updated by',
-    accessor: 'updatedByIdir',
+    accessor: 'appLastUpdateUserid',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -62,7 +66,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'Last updated date',
-    accessor: 'appUpdateTimestamp',
+    accessor: 'appLastUpdateTimestamp',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -126,6 +130,7 @@ export function ResearchSearchResults(props: IResearchSearchResultsProps) {
 
   return (
     <Table<IResearchSearchResult>
+      manualSortBy={true}
       name="researchFilesTable"
       columns={columns}
       data={results ?? []}
@@ -133,7 +138,7 @@ export function ResearchSearchResults(props: IResearchSearchResultsProps) {
       onSortChange={handleSortChange}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
-      noRowsMessage="No Research Files exist in PIMS"
+      noRowsMessage="No matching Research Files found"
       totalItems={props.totalItems}
       {...rest}
     ></Table>

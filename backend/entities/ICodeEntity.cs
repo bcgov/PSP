@@ -8,6 +8,8 @@ namespace Pims.Dal.Entities
         /// </summary>
         CodeType Code { get; set; }
 
+        string Description { get; set; }
+
         public bool? IsDisabled { get; set; }
 
         public int? DisplayOrder { get; set; }

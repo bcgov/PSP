@@ -28,9 +28,9 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(r => r.PimsPropertyResearchFiles.Any(pr => pr.Property != null && pr.Property.RegionCode == filter.RegionCode));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.ResearchFileStatusCode))
+            if (!string.IsNullOrWhiteSpace(filter.ResearchFileStatusTypeCode))
             {
-                query = query.Where(r => r.ResearchFileStatusTypeCode == filter.ResearchFileStatusCode);
+                query = query.Where(r => r.ResearchFileStatusTypeCode == filter.ResearchFileStatusTypeCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.RFileNumber))
@@ -45,7 +45,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.RoadOrAlias))
             {
-                //query = query.Where(r => EF.Functions.Like(r.RoadOrAlias, $"%{filter.RoadOrAlias}%"));
+                query = query.Where(r => EF.Functions.Like(r.RoadAlias, $"%{filter.RoadOrAlias}%") || EF.Functions.Like(r.RoadName, $"%{filter.RoadOrAlias}%"));
             }
 
             if (filter.CreatedOnStartDate.HasValue)
@@ -77,7 +77,20 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 query = query.Where(r => EF.Functions.Like(r.AppLastUpdateUserid, $"%{filter.UpdatedByIdir}%"));
             }
-            return query.Include(r => r.ResearchFileStatusTypeCodeNavigation);
+
+            if (filter.Sort?.Any() == true)
+            {
+                query = query.OrderByProperty(filter.Sort);
+            }
+            else
+            {
+                query = query.OrderBy(l => l.RfileNumber);
+            }
+
+            return query.Include(r => r.ResearchFileStatusTypeCodeNavigation)
+                .Include(r => r.PimsPropertyResearchFiles)
+                .ThenInclude(p => p.Property)
+                .ThenInclude(p => p.RegionCodeNavigation);
         }
 
         /// <summary>

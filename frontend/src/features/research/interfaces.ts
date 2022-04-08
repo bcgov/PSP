@@ -1,16 +1,16 @@
 export interface IResearchFilter {
-  region: string;
-  researchFileStatusCode: string;
+  regionCode: string;
+  researchFileStatusTypeCode: string;
   name: string;
   roadOrAlias: string;
   rfileNumber: string;
   createOrUpdateRange: string;
   createOrUpdateBy: string;
   researchSearchBy: string;
-  createdByIdir: string;
+  appCreateUserid: string;
   createdOnStartDate: string;
   createdOnEndDate: string;
-  updatedByIdir: string;
+  appLastUpdateUserid: string;
   updatedOnStartDate: string;
   updatedOnEndDate: string;
 }

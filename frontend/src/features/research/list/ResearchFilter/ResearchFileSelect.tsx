@@ -10,8 +10,8 @@ interface IResearchFileSelectProps {
 
 interface IResearchFileSelect {
   researchSearchBy: string;
-  createdByIdir: string;
-  updatedByIdir: string;
+  appCreateUserid: string;
+  appLastUpdateUserid: string;
 }
 
 const primaryResearchFilterOptions = [

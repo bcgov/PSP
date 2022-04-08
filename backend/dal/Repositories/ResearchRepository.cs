@@ -52,7 +52,6 @@ namespace Pims.Dal.Repositories
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateResearchQuery(filter);
             var items = query
-                .OrderBy(r => r.ResearchFileId)
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();

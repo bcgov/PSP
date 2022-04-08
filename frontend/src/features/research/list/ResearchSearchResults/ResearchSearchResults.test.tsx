@@ -10,20 +10,15 @@ const setup = (renderOptions: RenderOptions & IResearchSearchResultsProps = { re
   const { results, ...rest } = renderOptions;
   const utils = render(<ResearchSearchResults results={results} setSort={setSort} />, { ...rest });
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');
-  // long css selector to: get the FIRST header or table, then get the SVG up/down sort buttons
-  const sortButtons = utils.container.querySelector(
-    '.table .thead .tr .th:nth-of-type(1) .sortable-column div',
-  ) as HTMLElement;
   return {
     ...utils,
     tableRows,
-    sortButtons,
   };
 };
 
 const mockResults: IResearchSearchResult[] = [];
 
-describe('Lease Search Results Table', () => {
+describe('Research Search Results Table', () => {
   beforeEach(() => {
     setSort.mockClear();
   });
@@ -37,7 +32,7 @@ describe('Lease Search Results Table', () => {
     const { tableRows, findAllByText } = setup({ results: [] });
 
     expect(tableRows.length).toBe(0);
-    const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
+    const toasts = await findAllByText('No matching Research Files found');
     expect(toasts[0]).toBeVisible();
   });
 });

@@ -17,7 +17,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The status of the research file.
         /// </summary>
         /// <value></value>
-        public string ResearchFileStatusCode { get; set; }
+        public string ResearchFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Descriptive name given to this research file.

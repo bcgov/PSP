@@ -74,7 +74,12 @@ export const InputGroup: React.FC<InputGroupProps> = ({
 }) => {
   return (
     <Row
-      className={classNames(!!required ? 'required' : '', className, disabled ? 'disabled' : '')}
+      className={classNames(
+        !!required ? 'required' : '',
+        className,
+        disabled ? 'disabled' : '',
+        'flex-nowrap',
+      )}
     >
       {!!label && required && <Label required={required}>{label}</Label>}
 

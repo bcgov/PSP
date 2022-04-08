@@ -1,13 +1,12 @@
 import { Form, Input, Select } from 'components/common/form';
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
-import { NoPaddingRow as Row } from 'components/common/styles';
 import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from 'constants/API';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
 import { useEffect } from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
@@ -22,12 +21,12 @@ export interface IResearchFilterProps {
 }
 
 export const defaultFilter: IResearchFilter = {
-  region: '',
-  researchFileStatusCode: '',
+  regionCode: '',
+  researchFileStatusTypeCode: '',
   name: '',
   roadOrAlias: '',
-  createdByIdir: '',
-  updatedByIdir: '',
+  appCreateUserid: '',
+  appLastUpdateUserid: '',
   createdOnEndDate: '',
   createdOnStartDate: '',
   updatedOnEndDate: '',
@@ -35,7 +34,7 @@ export const defaultFilter: IResearchFilter = {
   rfileNumber: '',
   researchSearchBy: 'name',
   createOrUpdateRange: 'updatedOnStartDate',
-  createOrUpdateBy: 'updatedByIdir',
+  createOrUpdateBy: 'appLastUpdateUserid',
 };
 
 /**
@@ -65,7 +64,7 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
 
   useEffect(() => {
     if (researchStatusOptions.length > 0) {
-      defaultFilter.researchFileStatusCode =
+      defaultFilter.researchFileStatusTypeCode =
         researchStatusOptions.find(s => s.code === 'ACTIVE')?.value.toString() ?? '';
     }
   }, [researchStatusOptions]);
@@ -80,26 +79,28 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
             </Col>
             <Col xl="5">
               <Row>
-                <Col>
+                <Col xl="12">
                   <Row>
                     <Col xl="4">
-                      <Select options={regionOptions} field="region" placeholder="All Regions" />
+                      <Select
+                        options={regionOptions}
+                        field="regionCode"
+                        placeholder="All Regions"
+                      />
                     </Col>
-                    <Col xl="1"></Col>
-                    <Col xl="7">
+                    <Col xl="8">
                       <ResearchFileSelect />
                     </Col>
                   </Row>
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col xl="12">
                   <Row>
                     <Col xl="4">
                       <Select options={researchStatusOptions} field="researchFileStatusTypeCode" />
                     </Col>
-                    <Col xl="1"></Col>
-                    <Col xl="7">
+                    <Col xl="8">
                       <Input field="roadOrAlias" placeholder="Road name or alias" />
                     </Col>
                   </Row>
@@ -108,22 +109,22 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
             </Col>
             <Col xl="5">
               <Row>
-                <Col>
+                <Col xl="12">
                   <AppCreateUpdateRangeSelect />
                 </Col>
               </Row>
               <Row>
-                <Col md={12}>
+                <Col xl="12">
                   <AppCreateUpdateBySelect />
                 </Col>
               </Row>
             </Col>
             <ColButtons xl="1">
               <Row>
-                <Col xs="auto" className="pr-0">
+                <Col xl="auto" className="pr-0">
                   <SearchButton disabled={formikProps.isSubmitting} />
                 </Col>
-                <Col xs="auto">
+                <Col xl="auto">
                   <ResetButton
                     disabled={formikProps.isSubmitting}
                     onClick={() => {

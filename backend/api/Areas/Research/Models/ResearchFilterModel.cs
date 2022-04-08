@@ -17,7 +17,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// get/set - The status of the research file, 
         /// </summary>
         /// <value></value>
-        public string ResearchFileStatusCode { get; set; }
+        public string ResearchFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The descriptive name of the address
@@ -91,8 +91,9 @@ namespace Pims.Api.Areas.Research.Models.Search
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
             this.RegionCode = filter.GetShortNullValue(nameof(this.RegionCode));
-            this.ResearchFileStatusCode = filter.GetStringValue(nameof(this.ResearchFileStatusCode));
+            this.ResearchFileStatusTypeCode = filter.GetStringValue(nameof(this.ResearchFileStatusTypeCode));
             this.Name = filter.GetStringValue(nameof(this.Name));
+            this.RoadOrAlias = filter.GetStringValue(nameof(this.RoadOrAlias));
             this.RFileNumber = filter.GetStringValue(nameof(this.RFileNumber));
             this.CreatedByIdir = filter.GetStringValue(nameof(this.CreatedByIdir));
             this.CreatedOnStartDate = filter.GetDateTimeNullValue(nameof(this.CreatedOnStartDate));
@@ -117,7 +118,7 @@ namespace Pims.Api.Areas.Research.Models.Search
                 Quantity = model.Quantity,
 
                 RegionCode = model.RegionCode,
-                ResearchFileStatusCode = model.ResearchFileStatusCode,
+                ResearchFileStatusTypeCode = model.ResearchFileStatusTypeCode,
                 Name = model.Name,
                 RoadOrAlias = model.RoadOrAlias,
                 CreatedByIdir = model.CreatedByIdir,

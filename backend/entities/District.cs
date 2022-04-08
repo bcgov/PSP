@@ -10,6 +10,8 @@ namespace Pims.Dal.Entities
         #region Properties
         [NotMapped]
         public short Code { get => DistrictCode; set => DistrictCode = value; }
+        [NotMapped]
+        public string Description { get => DistrictName; set => DistrictName = value; }
         #endregion
 
         #region Constructors

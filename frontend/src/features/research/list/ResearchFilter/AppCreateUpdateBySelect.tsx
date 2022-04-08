@@ -1,6 +1,7 @@
 import { InputGroup, Select } from 'components/common/form';
 import { useFormikContext } from 'formik';
 import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 interface IAppCreateUpdateBySelectProps {
@@ -11,18 +12,18 @@ interface IAppCreateUpdateBySelectProps {
 
 interface IAppCreatedUpdatedBy {
   createOrUpdateBy: string;
-  createdByIdir: string;
-  updatedByIdir: string;
+  appCreateUserid: string;
+  appLastUpdateUserid: string;
 }
 
 const createUpdateUserOptions = [
   {
     label: 'Created by',
-    value: 'createdByIdir',
+    value: 'appCreateUserid',
   },
   {
     label: 'Updated by',
-    value: 'updatedByIdir',
+    value: 'appLastUpdateUserid',
   },
 ];
 
@@ -37,8 +38,8 @@ export const AppCreateUpdateBySelect: React.FC<IAppCreateUpdateBySelectProps &
   } = {
     options: options ?? createUpdateUserOptions,
     placeholders: placeholders ?? {
-      updatedByIdir: `User's IDIR`,
-      createdByIdir: `User's IDIR`,
+      appLastUpdateUserid: `User's IDIR`,
+      appCreateUserid: `User's IDIR`,
     },
   };
 
@@ -51,31 +52,35 @@ export const AppCreateUpdateBySelect: React.FC<IAppCreateUpdateBySelectProps &
   const desc = state.placeholders[createOrUpdateBy] || '';
 
   const reset = () => {
-    setFieldValue(createOrUpdateBy ? createOrUpdateBy : 'updatedByIdir', '');
+    setFieldValue(createOrUpdateBy ? createOrUpdateBy : 'appLastUpdateUserid', '');
   };
 
   return (
-    <SmallInputGroup
-      formikProps={formikProps}
-      prepend={
-        <Select
-          field="createOrUpdateBy"
-          options={state.options}
-          onChange={reset}
+    <Row>
+      <Col xl="12">
+        <SmallInputGroup
+          formikProps={formikProps}
+          prepend={
+            <Select
+              field="createOrUpdateBy"
+              options={state.options}
+              onChange={reset}
+              disabled={disabled}
+            />
+          }
+          field={createOrUpdateBy}
+          placeholder={desc}
           disabled={disabled}
+          {...rest}
         />
-      }
-      field={createOrUpdateBy}
-      placeholder={desc}
-      disabled={disabled}
-      {...rest}
-    />
+      </Col>
+    </Row>
   );
 };
 
 const SmallInputGroup = styled(InputGroup)`
   .input-group-prepend select {
-    width: 15rem;
+    width: 16rem;
   }
   input {
     width: 18rem;
