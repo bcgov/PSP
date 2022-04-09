@@ -1,27 +1,32 @@
-import { FormikProps, FormikValues } from 'formik';
+import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
-import useMapSideBarQueryParams from './hooks/useMapSideBarQueryParams';
 import { usePropertyDetails } from './hooks/usePropertyDetails';
 import MapSideBarLayout from './layout/MapSideBarLayout';
-import { MapSlideBarHeader } from './MapSlideBarHeader';
+import { MotiInventoryHeader } from './MotiInventoryHeader';
 import { InventoryTabs } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
+interface IMotiInventoryContainerProps {
+  showSideBar: boolean;
+  setShowSideBar: (show: boolean) => void;
+  pid?: string;
+}
+
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
-export const MotiInventoryContainer: React.FunctionComponent = () => {
+export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryContainerProps> = props => {
   const isMounted = useIsMounted();
-  const formikRef = React.useRef<FormikProps<FormikValues>>();
-  const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams(formikRef);
+  //const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
 
@@ -29,16 +34,16 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   const { getPropertyWithPid } = useProperties();
   useEffect(() => {
     const func = async () => {
-      if (!!pid) {
-        const propInfo = await getPropertyWithPid(pid);
-        if (isMounted() && propInfo.pid === pidFormatter(pid)) {
+      if (!!props.pid) {
+        const propInfo = await getPropertyWithPid(props.pid);
+        if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
           setApiProperty(propInfo);
         }
       }
     };
 
     func();
-  }, [getPropertyWithPid, isMounted, pid]);
+  }, [getPropertyWithPid, isMounted, props.pid]);
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
@@ -48,26 +53,28 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   useEffect(() => {
     const func = async () => {
       setLtsaData(undefined);
-      if (!!pid) {
-        const ltsaData = await getLtsaData(pidFormatter(pid));
+      if (!!props.pid) {
+        const ltsaData = await getLtsaData(pidFormatter(props.pid));
         if (
           isMounted() &&
-          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
+          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier ===
+            pidFormatter(props.pid)
         ) {
           setLtsaData(ltsaData);
         }
       }
     };
     func();
-  }, [getLtsaData, pid, isMounted]);
+  }, [getLtsaData, props.pid, isMounted]);
 
   return (
     <MapSideBarLayout
       title="Property Information"
-      show={showSideBar}
-      setShowSideBar={setShowSideBar}
-      hidePolicy={true}
-      header={<MapSlideBarHeader ltsaData={ltsaData} property={apiProperty} />}
+      showSideBar={props.showSideBar}
+      setShowSideBar={props.setShowSideBar}
+      header={<MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} />}
+      icon={<LotIcon className="mr-1" />}
+      showCloseButton
     >
       <InventoryTabs
         PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
@@ -78,3 +85,9 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
 };
 
 export default MotiInventoryContainer;
+
+const LotIcon = styled(LotSvg)`
+  width: 3rem;
+  height: 3rem;
+  align-self: flex-end;
+`;

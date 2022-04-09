@@ -2,10 +2,10 @@ import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
-import { MapSlideBarHeader } from './MapSlideBarHeader';
+import { MotiInventoryHeader } from './MotiInventoryHeader';
 import { mockLtsaResponse } from './tabs/ltsa/LtsaTabView.test';
 
-describe('MapSlideBarHeader component', () => {
+describe('MotiInventoryHeader component', () => {
   const setup = (
     renderOptions: RenderOptions & {
       ltsaData?: LtsaOrders;
@@ -14,7 +14,7 @@ describe('MapSlideBarHeader component', () => {
   ): RenderResult => {
     // render component under test
     const result = render(
-      <MapSlideBarHeader ltsaData={renderOptions.ltsaData} property={renderOptions.property} />,
+      <MotiInventoryHeader ltsaData={renderOptions.ltsaData} property={renderOptions.property} />,
     );
     return result;
   };

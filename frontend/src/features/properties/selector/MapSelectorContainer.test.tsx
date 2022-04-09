@@ -1,4 +1,4 @@
-import { PropertyPopUpContext } from 'components/maps/providers/PropertyPopUpProvider';
+import { PropertyPopUpContext } from 'components/maps/providers/SelectedPropertyContext';
 import { IProperty } from 'interfaces';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

@@ -1,7 +1,4 @@
-import { mdiFolderText } from '@mdi/js';
-import Icon from '@mdi/react';
 import { InlineInput } from 'components/common/form/styles';
-import * as Styled from 'components/common/styles';
 import { Formik } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -42,11 +39,8 @@ const AddResearchForm: React.FunctionComponent = () => {
     >
       {formikProps => (
         <StyledFormWrapper>
-          <Styled.H1 className="mr-auto">
-            <Icon path={mdiFolderText} title="User Profile" size={2} /> Create Research File
-          </Styled.H1>
-          <Row className="py-5">
-            <Col xs="auto">
+          <Row className="py-4 no-gutters">
+            <Col xs="auto" className="pr-5">
               <strong>Name this research file:</strong>
             </Col>
             <Col xs="auto">
@@ -61,8 +55,8 @@ const AddResearchForm: React.FunctionComponent = () => {
               throw new Error('Function not implemented.');
             }}
           />
-          <Row className="justify-content-end mt-auto">
-            <Col xs="auto">
+          <Row className="justify-content-end mt-auto no-gutters pt-3">
+            <Col xs="auto" className="pr-4">
               <Button variant="secondary" onClick={onCancel}>
                 Cancel
               </Button>
@@ -97,6 +91,9 @@ const StyledFormWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 `;
 
 const LargeInlineInput = styled(InlineInput)`

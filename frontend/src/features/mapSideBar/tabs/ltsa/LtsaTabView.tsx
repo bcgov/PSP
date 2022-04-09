@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledFormSection, StyledScrollable, StyledSectionHeader } from '../SectionStyles';
+import { StyledFormSection, StyledSectionHeader } from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';
@@ -23,7 +23,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
   const isLoading = ltsaData === undefined;
 
   return (
-    <StyledScrollable>
+    <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
@@ -72,7 +72,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
           </StyledFormSection>
         </StyledForm>
       </Formik>
-    </StyledScrollable>
+    </>
   );
 };
 

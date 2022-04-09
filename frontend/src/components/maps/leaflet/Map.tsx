@@ -2,12 +2,11 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
-import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
+import { LatLngBounds, Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -23,7 +22,7 @@ import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
-import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { InventoryLayer } from './InventoryLayer';
 import { LayerPopup, LayerPopupInformation } from './LayerPopup';
 import LayersControl from './LayersControl';
@@ -43,12 +42,12 @@ export type MapProps = {
   lng: number;
   zoom?: number;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
-  onMapClick?: (e: LeafletMouseEvent) => void;
   disableMapFilterBar?: boolean;
-  showSideBar?: boolean;
+  showSideBar: boolean;
   showParcelBoundaries?: boolean;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
+  onPropertyMarkerClick: (property: IProperty) => void;
 };
 
 type BaseLayerFile = {
@@ -87,11 +86,11 @@ const Map: React.FC<MapProps> = ({
   lat,
   lng,
   zoom: zoomProp,
-  onMapClick,
   showSideBar,
   whenReady,
   whenCreated,
   disableMapFilterBar,
+  onPropertyMarkerClick,
 }) => {
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
@@ -107,12 +106,11 @@ const Map: React.FC<MapProps> = ({
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
-  const { setShowSideBar } = useMapSideBarQueryParams();
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
 
-  const { setPropertyInfo, propertyInfo } = useContext(PropertyPopUpContext);
+  const { setPropertyInfo, propertyInfo } = useContext(SelectedPropertyContext);
 
   if (mapRef.current && !propertyInfo) {
     const center = mapRef.current.getCenter();
@@ -263,7 +261,7 @@ const Map: React.FC<MapProps> = ({
             bounds={bounds}
             onMarkerClick={(property: IProperty) => {
               setLayersOpen(false);
-              setShowSideBar(true, property);
+              onPropertyMarkerClick(property);
             }}
             filter={geoFilter}
             onRequestData={setShowLoadingBackdrop}

@@ -44,7 +44,7 @@ export const MapSelectorModalContainer: React.FunctionComponent<IMapSelectorModa
         title="Property Selection"
         message={
           <PropertySelectorLayout>
-            <MapSelectorContainer formikRef={formikRef} properties={selectedProperties} />
+            <MapSelectorContainer properties={selectedProperties} />
           </PropertySelectorLayout>
         }
         handleCancel={() => {
