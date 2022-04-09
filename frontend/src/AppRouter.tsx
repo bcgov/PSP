@@ -159,7 +159,7 @@ const AppRouter: React.FC = () => {
           path="/research/new"
           component={ResearchMapView}
           layout={AuthLayout}
-          claim={Claims.LEASE_ADD}
+          claim={Claims.RESEARCH_ADD}
           title={getTitle('Create Research File')}
         />
         <AppRoute
