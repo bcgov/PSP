@@ -1,32 +1,34 @@
-import { MapCursors, PropertyPopUpContext } from 'components/maps/providers/PropertyPopUpProvider';
-import { FormikProps } from 'formik';
+import {
+  MapCursors,
+  SelectedPropertyContext,
+} from 'components/maps/providers/SelectedPropertyContext';
 import { IProperty } from 'interfaces';
 import * as React from 'react';
 
 import { PropertySelectorTabsView } from '../../mapSideBar/tabs/PropertySelectorTabsView';
-import PropertySelectorFormView, { IPropertySelectorModel } from './PropertySelectorFormView';
+import PropertySelectorFormView from './PropertySelectorFormView';
 
 export interface IMapSelectorContainerProps {
-  formikRef: React.MutableRefObject<FormikProps<IPropertySelectorModel>>;
   properties?: IProperty[];
 }
 
 export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
-  formikRef,
   properties,
 }) => {
-  const { setCursor, cursor } = React.useContext(PropertyPopUpContext);
+  const { setCursor, cursor } = React.useContext(SelectedPropertyContext);
   return (
     <>
       <PropertySelectorTabsView
         MapSelectorView={
           <PropertySelectorFormView
-            onClickDraftMarker={() => setCursor(MapCursors.DRAFT)}
+            onClickDraftMarker={() => {
+              console.log('Cursor set!');
+              setCursor(MapCursors.DRAFT);
+            }}
             onClickAway={() => {
               setCursor(undefined);
             }}
             selecting={cursor === MapCursors.DRAFT}
-            formikRef={formikRef}
             properties={properties}
           />
         }

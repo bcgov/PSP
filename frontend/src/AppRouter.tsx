@@ -7,7 +7,6 @@ import CreateContactContainer from 'features/contacts/contact/create/CreateConta
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
 import { AddLeaseContainer } from 'features/leases';
-import AddResearchView from 'features/research/add/AddResearchView';
 import ResearchListView from 'features/research/list/ResearchListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
@@ -43,6 +42,9 @@ const LeaseAndLicenseListView = lazy(() =>
 );
 const LeaseContainerWrapper = lazy(() =>
   componentLoader(import('features/leases/detail/LeaseContainerWrapper'), 2),
+);
+const ResearchMapView = lazy(() =>
+  componentLoader(import('features/research/add/AddResearchView'), 2),
 );
 
 const AppRouter: React.FC = () => {
@@ -155,9 +157,9 @@ const AppRouter: React.FC = () => {
           protected
           exact
           path="/research/new"
-          component={AddResearchView}
+          component={ResearchMapView}
           layout={AuthLayout}
-          claim={Claims.LEASE_ADD}
+          claim={Claims.RESEARCH_ADD}
           title={getTitle('Create Research File')}
         />
         <AppRoute

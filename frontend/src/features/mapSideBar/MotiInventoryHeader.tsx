@@ -6,12 +6,12 @@ import styled from 'styled-components';
 
 import { HeaderField } from './tabs/HeaderField';
 
-interface IMapSlideBarHeaderProps {
+interface IMotiInventoryHeaderProps {
   ltsaData?: LtsaOrders;
   property?: IPropertyApiModel;
 }
 
-export const MapSlideBarHeader: React.FunctionComponent<IMapSlideBarHeaderProps> = props => {
+export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = props.ltsaData?.parcelInfo.orderedProduct.fieldedData.parcelIdentifier;
   const planNumbers =
     props.ltsaData === undefined
@@ -57,7 +57,6 @@ export const MapSlideBarHeader: React.FunctionComponent<IMapSlideBarHeaderProps>
 };
 
 const HeaderWrapper = styled.div`
-  position: relative;
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 1rem;

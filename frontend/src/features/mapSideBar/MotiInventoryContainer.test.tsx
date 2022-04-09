@@ -3,16 +3,24 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import MapSideBarContainer from './MapSideBarContainer';
-describe('MapSideBarContainer component', () => {
+import MotiInventoryContainer from './MotiInventoryContainer';
+describe('MotiInventoryContainer component', () => {
   const mockAxios = new MockAdapter(axios);
   const history = createMemoryHistory();
   const setup = (renderOptions: RenderOptions = {}) => {
     // render component under test
-    const component = render(<MapSideBarContainer />, {
-      ...renderOptions,
-      history,
-    });
+    const component = render(
+      <MotiInventoryContainer
+        showSideBar={false}
+        setShowSideBar={function(show: boolean): void {
+          throw new Error('Function not implemented.');
+        }}
+      />,
+      {
+        ...renderOptions,
+        history,
+      },
+    );
 
     return {
       component,

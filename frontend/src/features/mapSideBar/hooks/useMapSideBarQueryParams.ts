@@ -20,7 +20,7 @@ export enum MapSidebarContextType {
 }
 
 /** control the state of the side bar via query params. */
-export const useMapSideBarQueryParams = (formikRef?: any): IMapSideBar => {
+export const useMapSideBarQueryParams = (): IMapSideBar => {
   const [showSideBar, setShowSideBar] = useState(false);
   const location = useLocation();
   const history = useHistory();
@@ -38,7 +38,7 @@ export const useMapSideBarQueryParams = (formikRef?: any): IMapSideBar => {
   const setShow = useCallback(
     (show: boolean, propertyInfo?: IProperty) => {
       const search = {
-        ...(searchParams as any),
+        ...searchParams,
         sidebar: show,
         pid: pidParser(propertyInfo?.pid),
       };
