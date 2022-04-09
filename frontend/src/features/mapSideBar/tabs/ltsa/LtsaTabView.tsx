@@ -34,7 +34,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
   const isLoading = ltsaData === undefined;
 
   return (
-    <StyledScrollable>
+    <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
@@ -91,7 +91,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
           </StyledFormSection>
         </StyledForm>
       </Formik>
-    </StyledScrollable>
+    </>
   );
 };
 

@@ -15,7 +15,7 @@ import {
   PARCELS_LAYER_URL,
   useLayerQuery,
 } from '../leaflet/LayerPopup';
-import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
@@ -44,7 +44,7 @@ const useActiveFeatureLayer = ({
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
-  const { isSelecting } = useContext(PropertyPopUpContext);
+  const { isSelecting } = useContext(SelectedPropertyContext);
   const dispatch = useDispatch();
 
   // add geojson layer to the map

@@ -1,18 +1,10 @@
 import './MapView.scss';
 
-import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import {
-  PropertyPopUpContext,
-  PropertyPopUpContextProvider,
-} from 'components/maps/providers/PropertyPopUpProvider';
 import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
-import MapSideBarContainer from 'features/mapSideBar/MapSideBarContainer';
+import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
 import { IProperty } from 'interfaces';
-import { LeafletMouseEvent } from 'leaflet';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { saveClickLatLng as saveLeafletMouseEvent } from 'store/slices/leafletMouse/LeafletMouseSlice';
 import styled from 'styled-components';
 
 import Map from '../../../components/maps/leaflet/Map';
@@ -30,50 +22,30 @@ interface MapViewProps {
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const [loadedProperties, setLoadedProperties] = useState(false);
-  const dispatch = useDispatch();
-  const { showSideBar } = useMapSideBarQueryParams();
+  const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams();
 
-  const saveLatLng = (e: LeafletMouseEvent) => {
-    dispatch(
-      saveLeafletMouseEvent({
-        latlng: { lat: e.latlng.lat, lng: e.latlng.lng },
-        originalEvent: { timeStamp: e.originalEvent.timeStamp },
-      }),
-    );
+  const onMarkerClicked = (property: IProperty) => {
+    setShowSideBar(true, property);
   };
   return (
-    <PropertyPopUpContextProvider>
-      <PropertyPopUpContext.Consumer>
-        {({ cursor }) => (
-          <StyleMapView
-            className={clsx(
-              {
-                sidebar: showSideBar,
-                mapview: true,
-              },
-              cursor,
-            )}
-          >
-            <MapSideBarContainer />
-            <FilterProvider>
-              <Map
-                lat={defaultLatLng.lat}
-                lng={defaultLatLng.lng}
-                onViewportChanged={() => {
-                  if (!loadedProperties) {
-                    setLoadedProperties(true);
-                  }
-                }}
-                onMapClick={saveLatLng}
-                showSideBar={showSideBar}
-                showParcelBoundaries={props.showParcelBoundaries ?? true}
-                zoom={6}
-              />
-            </FilterProvider>
-          </StyleMapView>
-        )}
-      </PropertyPopUpContext.Consumer>
-    </PropertyPopUpContextProvider>
+    <StyleMapView>
+      <MotiInventoryContainer showSideBar={showSideBar} setShowSideBar={setShowSideBar} pid={pid} />
+      <FilterProvider>
+        <Map
+          lat={defaultLatLng.lat}
+          lng={defaultLatLng.lng}
+          onViewportChanged={() => {
+            if (!loadedProperties) {
+              setLoadedProperties(true);
+            }
+          }}
+          showParcelBoundaries={props.showParcelBoundaries ?? true}
+          zoom={6}
+          onPropertyMarkerClick={onMarkerClicked}
+          showSideBar={showSideBar}
+        />
+      </FilterProvider>
+    </StyleMapView>
   );
 };
 

@@ -5,7 +5,7 @@ import React from 'react';
 export enum MapCursors {
   DRAFT = 'draft-cursor',
 }
-export interface IPopUpContext {
+export interface ISelectedPropertyContext {
   propertyInfo: IProperty | null;
   setPropertyInfo: (propertyInfo: IProperty | null) => void;
   loading: boolean;
@@ -15,7 +15,7 @@ export interface IPopUpContext {
   isSelecting: boolean;
 }
 
-export const PropertyPopUpContext = React.createContext<IPopUpContext>({
+export const SelectedPropertyContext = React.createContext<ISelectedPropertyContext>({
   propertyInfo: null,
   setPropertyInfo: noop,
   loading: false,
@@ -24,15 +24,15 @@ export const PropertyPopUpContext = React.createContext<IPopUpContext>({
   isSelecting: false,
 });
 
-interface IPopUpContextComponent {
-  values?: Partial<IPopUpContext>;
+interface ISelectedPropertyContextComponent {
+  values?: Partial<ISelectedPropertyContext>;
 }
 
 /**
  * Allows for the property information to be sent to the map
  * when the user clicks on a marker
  */
-export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
+export const SelectedPropertyContextProvider: React.FC<ISelectedPropertyContextComponent> = ({
   children,
   values,
 }) => {
@@ -41,8 +41,10 @@ export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
   );
   const [loading, setLoading] = React.useState<boolean>(values?.loading ?? false);
   const [cursor, setCursor] = React.useState<MapCursors | undefined>(undefined);
+  console.log(cursor);
+
   return (
-    <PropertyPopUpContext.Provider
+    <SelectedPropertyContext.Provider
       value={{
         propertyInfo,
         setPropertyInfo,
@@ -54,6 +56,6 @@ export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
       }}
     >
       {children}
-    </PropertyPopUpContext.Provider>
+    </SelectedPropertyContext.Provider>
   );
 };
