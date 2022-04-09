@@ -1,4 +1,6 @@
+import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { Feature, GeoJsonProperties } from 'geojson';
+import { IProperty } from 'interfaces';
 import { LatLng, LatLngBounds } from 'leaflet';
 import noop from 'lodash/noop';
 import React, { useCallback, useState } from 'react';
@@ -47,6 +49,7 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, on
   const [showFlyout, setShowFlyout] = useState(false);
   const openFlyout = useCallback(() => setShowFlyout(true), []);
   const closeFlyout = useCallback(() => setShowFlyout(false), []);
+  const { setShowSideBar } = useMapSideBarQueryParams();
 
   const handlePopupClose = useCallback(() => {
     closeFlyout();
@@ -54,6 +57,11 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, on
       onClose();
     }
   }, [onClose, closeFlyout]);
+
+  const onViewPropertyInfo = useCallback(() => {
+    const property = { pid: layerPopup?.data?.PID } as IProperty;
+    setShowSideBar(true, property);
+  }, [layerPopup, setShowSideBar]);
 
   return (
     <Popup
@@ -73,7 +81,7 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, on
 
         {showFlyout && (
           <StyledFlyoutContainer>
-            <LayerPopupFlyout onViewPropertyInfo={noop} onCreateResearchFile={noop} />
+            <LayerPopupFlyout onViewPropertyInfo={onViewPropertyInfo} onCreateResearchFile={noop} />
           </StyledFlyoutContainer>
         )}
       </StyledContainer>
