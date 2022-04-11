@@ -14,19 +14,20 @@ using Pims.Dal.Security;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// PropertyService class, provides a service layer to interact with properties within the datasource.
+    /// PropertyRepository class, provides a service layer to interact with properties within the datasource.
     /// </summary>
-    public class PropertyService : BaseRepository<PimsProperty>, IPropertyService
+    public class PropertyRepository : BaseRepository<PimsProperty>, IPropertyRepository
     {
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a PropertyService, and initializes it with the specified arguments.
+        /// Creates a new instance of a PropertyRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public PropertyService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PropertyService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public PropertyRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PropertyRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -127,14 +128,26 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get the property for the specified PID string value.
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public PimsProperty GetByPid(string pid)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+            var parsedPid = pid.ConvertPID();
+
+            return GetByPid(parsedPid);
+        }
+
+        /// <summary>
         /// Get the property for the specified PID value.
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public PimsProperty GetForPID(string pid)
+        public PimsProperty GetByPid(int pid)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
-            var search = pid.ConvertPID();
 
             var property = this.Context.PimsProperties
                 .Include(p => p.DistrictCodeNavigation)
@@ -158,7 +171,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
-                .FirstOrDefault(p => p.Pid == search) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
             return property;
         }
         #endregion

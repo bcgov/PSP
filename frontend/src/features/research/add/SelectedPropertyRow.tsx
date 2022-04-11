@@ -8,8 +8,8 @@ import { Col } from 'react-bootstrap';
 import { pidFormatter } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
-import { IPropertySelectorModel } from '../PropertySelectorFormView';
-import DraftCircleNumber from './DraftCircleNumber';
+import DraftCircleNumber from '../../properties/selector/components/DraftCircleNumber';
+import { ResearchForm } from './models';
 
 export interface ISelectedPropertyRowProps {
   index: number;
@@ -22,25 +22,25 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   onRemove,
   index,
 }) => {
-  const { values } = useFormikContext<IPropertySelectorModel>();
+  const { values } = useFormikContext<ResearchForm>();
   const pid = getIn(values, `${withNameSpace(nameSpace, 'pid')}`);
   const pin = getIn(values, `${withNameSpace(nameSpace, 'pin')}`);
   const planNumber = getIn(values, `${withNameSpace(nameSpace, 'planNumber')}`);
-  let text = getLatLngText(values, nameSpace);
+  let propertyIdentifier = getLatLngText(values, nameSpace);
 
   if (!!pid) {
-    text = `PID: ${pidFormatter(pid)}`;
+    propertyIdentifier = `PID: ${pidFormatter(pid)}`;
   } else if (!!pin) {
-    text = `PIN: ${pin}`;
+    propertyIdentifier = `PIN: ${pin}`;
   } else if (!!planNumber) {
-    text = `Plan #: ${planNumber}`;
+    propertyIdentifier = `Plan #: ${planNumber}`;
   }
   return (
     <NoPaddingRow className="align-items-center mb-3">
       <Col md={3}>
         <p className="mb-0">
           <DraftCircleNumber text={(index + 1).toString()} />
-          {text}
+          <span className="pl-3">{propertyIdentifier}</span>
         </p>
       </Col>
       <Col md={7}>
@@ -58,7 +58,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   );
 };
 
-const getLatLngText = (values: IPropertySelectorModel, nameSpace?: string) => {
+const getLatLngText = (values: ResearchForm, nameSpace?: string) => {
   const latitude = getIn(values, `${withNameSpace(nameSpace, 'latitude')}`)?.toFixed(5);
   const longitude = getIn(values, `${withNameSpace(nameSpace, 'longitude')}`)?.toFixed(5);
   return compact([latitude, longitude]).join(', ');

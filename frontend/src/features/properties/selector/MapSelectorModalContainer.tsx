@@ -11,7 +11,6 @@ import styled from 'styled-components';
 
 import PropertySelectorLayout from './layout/PropertySelectorLayout';
 import MapSelectorContainer from './MapSelectorContainer';
-import { IPropertySelectorModel } from './PropertySelectorFormView';
 
 export interface IMapSelectorModalContainerProps {
   modalButtonText?: string;
@@ -30,9 +29,9 @@ export const MapSelectorModalContainer: React.FunctionComponent<IMapSelectorModa
 }) => {
   const [display, setDisplay] = React.useState(false);
   const draftProperties = useAppSelector(state => state?.properties?.draftProperties ?? []);
-  const formikRef = useRef<FormikProps<IPropertySelectorModel>>() as React.MutableRefObject<
+  /*const formikRef = useRef<FormikProps<IPropertySelectorModel>>() as React.MutableRefObject<
     FormikProps<IPropertySelectorModel>
-  >;
+  >;*/
   const dispatch = useDispatch();
   return (
     <>
@@ -43,9 +42,10 @@ export const MapSelectorModalContainer: React.FunctionComponent<IMapSelectorModa
         setDisplay={setDisplay}
         title="Property Selection"
         message={
+          'asdas' /*
           <PropertySelectorLayout>
             <MapSelectorContainer properties={selectedProperties} />
-          </PropertySelectorLayout>
+          </PropertySelectorLayout>*/
         }
         handleCancel={() => {
           setDisplay(false);
@@ -54,7 +54,7 @@ export const MapSelectorModalContainer: React.FunctionComponent<IMapSelectorModa
         }}
         handleOk={() => {
           setDisplay(false);
-          setSelectedProperties(formikRef?.current?.values?.properties ?? []);
+          //setSelectedProperties(formikRef?.current?.values?.properties ?? []);
           dispatch(storeDraftProperties(draftProperties));
         }}
         okButtonText={selectButtonText ?? 'Add to File'}
