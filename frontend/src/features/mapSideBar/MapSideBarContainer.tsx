@@ -1,10 +1,11 @@
+import { MAP_MAX_ZOOM } from 'constants/strings';
 import { FormikProps, FormikValues } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { pidFormatter } from 'utils';
 
 import useMapSideBarQueryParams from './hooks/useMapSideBarQueryParams';
@@ -15,15 +16,29 @@ import { InventoryTabs } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
+interface IMapSideBarContainer {
+  map?: L.Map;
+}
+
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
-export const MotiInventoryContainer: React.FunctionComponent = () => {
+export const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainer> = ({ map }) => {
   const isMounted = useIsMounted();
   const formikRef = React.useRef<FormikProps<FormikValues>>();
   const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams(formikRef);
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
+
+  const onZoom = useCallback(
+    () =>
+      apiProperty?.longitude &&
+      apiProperty?.latitude &&
+      map?.flyTo({ lat: apiProperty?.latitude, lng: apiProperty?.longitude }, MAP_MAX_ZOOM, {
+        animate: false,
+      }),
+    [apiProperty?.latitude, apiProperty?.longitude, map],
+  );
 
   // First, fetch property information from PSP API
   const { getPropertyWithPid } = useProperties();
@@ -67,7 +82,13 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       show={showSideBar}
       setShowSideBar={setShowSideBar}
       hidePolicy={true}
-      header={<MapSlideBarHeader ltsaData={ltsaData} property={apiProperty} />}
+      header={
+        <MapSlideBarHeader
+          ltsaData={ltsaData}
+          property={apiProperty}
+          onZoom={apiProperty && map ? onZoom : undefined}
+        />
+      }
     >
       <InventoryTabs
         PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
@@ -77,4 +98,4 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   );
 };
 
-export default MotiInventoryContainer;
+export default MapSideBarContainer;

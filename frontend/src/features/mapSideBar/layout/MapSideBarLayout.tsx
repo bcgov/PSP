@@ -68,6 +68,7 @@ const Content = styled.div`
 
 const Header = styled.div`
   grid-area: header;
+  position: relative;
 `;
 
 const LotIcon = styled(LotSvg)`
@@ -99,7 +100,7 @@ const StyledMapSideBarLayout = styled.div`
   max-width: 93rem;
   padding: 2.4rem 3.6rem;
   display: grid;
-  grid: 4.2rem 5.8rem 1fr / 1fr;
+  grid: 4.2rem 7rem 1fr / 1fr;
   grid-template-areas:
     'title'
     'header'
