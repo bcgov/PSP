@@ -15,7 +15,7 @@ import { InventoryTabs } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
-interface IMotiInventoryContainerProps {
+export interface IMotiInventoryContainerProps {
   showSideBar: boolean;
   setShowSideBar: (show: boolean) => void;
   pid?: string;

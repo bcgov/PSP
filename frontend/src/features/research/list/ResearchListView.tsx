@@ -1,10 +1,8 @@
-import * as Styled from './styles';
-
 /**
- * Page that displays leases information.
+ * Page that displays research lists.
  */
 export const ResearchListView: React.FunctionComponent = () => {
-  return <Styled.ListPage>Research List</Styled.ListPage>;
+  return <div>Research List</div>;
 };
 
 export default ResearchListView;
