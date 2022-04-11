@@ -857,6 +857,12 @@ D.F. D21890
             >
               Nature:
             </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              value=""
+            />
           </div>
         </div>
       </div>

@@ -1425,8 +1425,14 @@ D.F. D21890
             <label
               class="c6"
             >
-              Registration #:
+              Cancellation date: 
             </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+              value=""
+            />
           </div>
         </div>
       </div>
@@ -1442,6 +1448,25 @@ D.F. D21890
             Registration #:
           </label>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        />
+        <div
+          class="col"
+        >
+          <p>
+            ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
+10.2.1981 UNDER NO. T17084 PLAN NO. 61216
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
           class="col"
         >
@@ -1451,7 +1476,7 @@ D.F. D21890
             <label
               class="c6"
             >
-              Registered date:
+              Legal Notations: 
             </label>
           </div>
         </div>
@@ -1477,7 +1502,7 @@ D.F. D21890
             <label
               class="c6"
             >
-              Registered owner:
+              Status: 
             </label>
           </div>
         </div>
@@ -1503,8 +1528,14 @@ D.F. D21890
             <label
               class="c6"
             >
-              Nature:
+              Cancellation date: 
             </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              value=""
+            />
           </div>
         </div>
       </div>
@@ -1814,6 +1845,19 @@ D.F. D21890
             Nature:
           </label>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registered date:
+          </label>
+        </div>
         <div
           class="col"
         >
@@ -1842,6 +1886,10 @@ D.F. D21890
             Registration #:
           </label>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
           class="col"
         >
