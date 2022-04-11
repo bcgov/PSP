@@ -8,7 +8,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   <div
     class="Toastify"
   />
-  .c7 {
+  .c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -20,41 +20,37 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   gap: 0.8rem;
 }
 
-.c7 .form-label {
+.c6 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c6 {
+.c5 {
   font-weight: bold;
 }
 
-.c0 {
-  overflow-y: auto;
-}
-
-.c4 {
+.c3 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
 }
 
-.c5 {
+.c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c2 {
+.c1 {
   margin: 1.5rem;
   padding: 0.5rem 1.5rem;
   background-color: white;
   text-align: left;
 }
 
-.c3 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -73,9 +69,9 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   font-style: italic;
 }
 
-.c1.c1.c1 input,
-.c1.c1.c1 select,
-.c1.c1.c1 textarea {
+.c0.c0.c0 input,
+.c0.c0.c0 select,
+.c0.c0.c0 textarea {
   background: none;
   border: none;
   resize: none;
@@ -96,66 +92,28 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
     <div
       class="c1"
     >
-      <h2
+      <div
         class="c2"
       >
-        <div
-          class="c3"
-        >
-          This data was retrived from LTSA on 06-Apr-2022 11:32 AM
-        </div>
+        This data was retrived from LTSA on 06-Apr-2022 11:32 AM
       </div>
-      <div
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
         class="c4"
       >
-        <h2
-          class="c5"
-        >
-          Title Details
-        </h2>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Title number:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                disabled=""
-                id="input-titleOrders.0.orderedProduct.fieldedData.titleIdentifier.titleNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.titleIdentifier.titleNumber"
-                title="BL264819"
-                value="BL264819"
-              />
-            </div>
-          </div>
-        </div>
+        Title Details
+      </h2>
+      <div
+        class="pb-2 row"
+      >
         <div
           class="col-4"
         >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Land title district:
-            </label>
-          </div>
-          <div
-            class="col"
+          <label
+            class="c5"
           >
             Title number:
           </label>
@@ -164,16 +122,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           class="col"
         >
           <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Taxation authorities:
-            </label>
-          </div>
-          <div
-            class="col"
+            class="input form-group"
           >
             <input
               class="form-control"
@@ -187,27 +136,13 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
         </div>
       </div>
       <div
-        class="c4"
+        class="pb-2 row"
       >
-        <h2
-          class="c5"
-        >
-          Land
-        </h2>
         <div
           class="col-4"
         >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              PID:
-            </label>
-          </div>
-          <div
-            class="col"
+          <label
+            class="c5"
           >
             Land title district:
           </label>
@@ -216,16 +151,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           class="col"
         >
           <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Legal Description:
-            </label>
-          </div>
-          <div
-            class="col"
+            class="input form-group"
           >
             <input
               class="form-control"
@@ -243,68 +169,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
         <div
           class="col-4"
         >
-          <div
-            class="col"
+          <label
+            class="c5"
           >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
-              >
-                Legal Notations: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
-                title="CV1442411"
-                value="CV1442411"
-              />
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
-              >
-                Status: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
-                title="ACTIVE"
-                value="ACTIVE"
-              />
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
-              >
-                Cancellation date: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
-                value=""
-              />
-            </div>
-          </div>
+            Taxation authorities:
+          </label>
         </div>
         <div
           class="col"
@@ -326,10 +195,10 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
       </div>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         Land
       </h2>
@@ -339,68 +208,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
         <div
           class="col-4"
         >
-          <div
-            class="col"
+          <label
+            class="c5"
           >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
-              >
-                Legal Notations: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
-                title="CV1442412"
-                value="CV1442412"
-              />
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
-              >
-                Status: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
-                title="ACTIVE"
-                value="ACTIVE"
-              />
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-              >
-                Cancellation date: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-                value=""
-              />
-            </div>
-          </div>
+            PID:
+          </label>
         </div>
         <div
           class="col"
@@ -424,68 +236,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
         <div
           class="col-4"
         >
-          <div
-            class="col"
+          <label
+            class="c5"
           >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
-              >
-                Legal Notations: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
-                title="CV1442414"
-                value="CV1442414"
-              />
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
-              >
-                Status: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
-                title="ACTIVE"
-                value="ACTIVE"
-              />
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c7 input form-group"
-            >
-              <label
-                class="form-label"
-                for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-              >
-                Cancellation date: 
-              </label>
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-                name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-                value=""
-              />
-            </div>
-          </div>
+            Legal Description:
+          </label>
         </div>
         <div
           class="col"
@@ -499,21 +254,17 @@ PLAN 24843
         </div>
       </div>
       <div
-        class="c4"
+        class="pb-2 row"
       >
-        <h2
-          class="c5"
-        >
-          Charges, Liens and Interests
-        </h2>
         <div
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
             >
               Legal Notations: 
             </label>
@@ -530,10 +281,11 @@ PLAN 24843
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
             >
               Status: 
             </label>
@@ -550,10 +302,11 @@ PLAN 24843
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
             >
               Cancellation date: 
             </label>
@@ -589,10 +342,11 @@ DEPOSITED JULY 30TH, 1974.
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
             >
               Legal Notations: 
             </label>
@@ -609,10 +363,11 @@ DEPOSITED JULY 30TH, 1974.
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
             >
               Status: 
             </label>
@@ -629,10 +384,11 @@ DEPOSITED JULY 30TH, 1974.
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
             >
               Cancellation date: 
             </label>
@@ -667,10 +423,11 @@ DEPOSITED JULY 30TH, 1974.
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
             >
               Legal Notations: 
             </label>
@@ -687,10 +444,11 @@ DEPOSITED JULY 30TH, 1974.
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
             >
               Status: 
             </label>
@@ -707,10 +465,11 @@ DEPOSITED JULY 30TH, 1974.
           class="col"
         >
           <div
-            class="c4 input form-group"
+            class="c6 input form-group"
           >
             <label
-              class="c6"
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
             >
               Cancellation date: 
             </label>
@@ -741,10 +500,10 @@ D.F. D21890
       </div>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         Charges, Liens and Interests
       </h2>
@@ -755,7 +514,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Nature:
           </label>
@@ -766,16 +525,12 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Cancellation date: 
-            </label>
             <input
               class="form-control"
-              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
-              value=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
+              title="STATUTORY RIGHT-OF-WAY"
+              value="STATUTORY RIGHT-OF-WAY"
             />
           </div>
         </div>
@@ -787,41 +542,24 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registration #:
           </label>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        />
-        <div
-          class="col"
-        >
-          <p>
-            ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
-10.2.1981 UNDER NO. T17084 PLAN NO. 61216
-          </p>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
         <div
           class="col"
         >
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Legal Notations: 
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
+              title="H107642"
+              value="H107642"
+            />
           </div>
         </div>
       </div>
@@ -832,7 +570,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -843,11 +581,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Status: 
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
+              title="1972-10-23T21:38:00Z"
+              value="1972-10-23T21:38:00Z"
+            />
           </div>
         </div>
       </div>
@@ -858,7 +598,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered owner:
           </label>
@@ -869,16 +609,12 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Cancellation date: 
-            </label>
             <input
               class="form-control"
-              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
-              value=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              title="BRITISH COLUMBIA HYDRO AND POWER AUTHORITY"
+              value="BRITISH COLUMBIA HYDRO AND POWER AUTHORITY"
             />
           </div>
         </div>
@@ -891,7 +627,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Nature:
           </label>
@@ -902,11 +638,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registration #:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
+              title="STATUTORY RIGHT-OF-WAY"
+              value="STATUTORY RIGHT-OF-WAY"
+            />
           </div>
         </div>
       </div>
@@ -917,7 +655,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registration #:
           </label>
@@ -928,11 +666,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registered date:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
+              title="N35326"
+              value="N35326"
+            />
           </div>
         </div>
       </div>
@@ -943,7 +683,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -954,11 +694,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Nature:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
+              title="1977-04-14T22:32:00Z"
+              value="1977-04-14T22:32:00Z"
+            />
           </div>
         </div>
       </div>
@@ -969,7 +711,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered owner:
           </label>
@@ -980,11 +722,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registration #:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              title="THE CORPORATION OF DELTA"
+              value="THE CORPORATION OF DELTA"
+            />
           </div>
         </div>
       </div>
@@ -996,7 +740,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Nature:
           </label>
@@ -1007,11 +751,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registered date:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
+              title="MORTGAGE"
+              value="MORTGAGE"
+            />
           </div>
         </div>
       </div>
@@ -1022,7 +768,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registration #:
           </label>
@@ -1033,11 +779,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registered owner:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+              title="BL158885"
+              value="BL158885"
+            />
           </div>
         </div>
       </div>
@@ -1048,7 +796,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -1070,13 +818,13 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c4"
+        class="pb-2 row"
       >
-        <h2
-          class="c5"
+        <div
+          class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered owner:
           </label>
@@ -1087,11 +835,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              To:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              title="RICHMOND SAVINGS CREDIT UNION"
+              value="RICHMOND SAVINGS CREDIT UNION"
+            />
           </div>
         </div>
       </div>
@@ -1103,7 +853,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Nature:
           </label>
@@ -1114,11 +864,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Application #:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
+              title="MORTGAGE"
+              value="MORTGAGE"
+            />
           </div>
         </div>
       </div>
@@ -1129,7 +881,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registration #:
           </label>
@@ -1157,7 +909,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -1168,11 +920,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Document district code:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
+              title="2001-09-25T18:11:00Z"
+              value="2001-09-25T18:11:00Z"
+            />
           </div>
         </div>
       </div>
@@ -1184,22 +938,9 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Nature:
-          </label>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Registered date:
           </label>
         </div>
         <div
@@ -1225,26 +966,24 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registration #:
           </label>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
         <div
           class="col"
         >
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Certificate text:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
+              title="CA5338545"
+              value="CA5338545"
+            />
           </div>
         </div>
       </div>
@@ -1255,7 +994,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -1277,13 +1016,13 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c4"
+        class="pb-2 row"
       >
-        <h2
-          class="c5"
+        <div
+          class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered owner:
           </label>
@@ -1294,11 +1033,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Nature:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              title="ROGERS COMMUNICATIONS INC."
+              value="ROGERS COMMUNICATIONS INC."
+            />
           </div>
         </div>
       </div>
@@ -1326,10 +1067,10 @@ D.F. D21890
       </div>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         Duplicate Indefeasible Title
       </h2>
@@ -1340,7 +1081,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             To:
           </label>
@@ -1351,11 +1092,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registration #:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+              title="last"
+              value="last"
+            />
           </div>
         </div>
       </div>
@@ -1366,7 +1109,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Application #:
           </label>
@@ -1394,7 +1137,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Document district code:
           </label>
@@ -1405,11 +1148,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registered date:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+              title="test district code"
+              value="test district code"
+            />
           </div>
         </div>
       </div>
@@ -1420,7 +1165,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Certificate text:
           </label>
@@ -1443,10 +1188,10 @@ D.F. D21890
       </div>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         Transfers
       </h2>
@@ -1457,7 +1202,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Nature:
           </label>
@@ -1468,11 +1213,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registered date:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+              title="disposition text"
+              value="disposition text"
+            />
           </div>
         </div>
       </div>
@@ -1483,7 +1230,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registration #:
           </label>
@@ -1510,7 +1257,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -1521,11 +1268,13 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Pending applications:
-            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+              title="54321"
+              value="54321"
+            />
           </div>
         </div>
       </div>
@@ -1536,7 +1285,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Registered date:
           </label>
@@ -1558,13 +1307,13 @@ D.F. D21890
         </div>
       </div>
       <div
-        class="c4"
+        class="pb-2 row"
       >
-        <h2
-          class="c5"
+        <div
+          class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Pending applications:
           </label>
@@ -1575,20 +1324,23 @@ D.F. D21890
           <div
             class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Miscellaneous notes:
-            </label>
+            <input
+              class="form-control"
+              disabled=""
+              id="input-parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+              name="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+              title="0"
+              value="0"
+            />
           </div>
         </div>
       </div>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         Notes
       </h2>
@@ -1599,7 +1351,7 @@ D.F. D21890
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
             Miscellaneous notes:
           </label>
@@ -1623,14 +1375,14 @@ DF L24824
           class="col-4"
         >
           <label
-            class="c3"
+            class="c5"
           >
-            <label
-              class="c6"
-            >
-              Parcel status:
-            </label>
-          </div>
+            Parcel status:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
           <div
             class="input form-group"
           >

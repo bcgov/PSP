@@ -22,7 +22,7 @@ const store = mockStore({
   [propertiesSlice.name]: {},
 });
 
-describe('PropertySelectorFormView component', () => {
+describe('PropertySelectorSubForm component', () => {
   const setup = (renderOptions: RenderOptions & IPropertySelectorSubFormProps) => {
     // render component under test
     const component = render(
