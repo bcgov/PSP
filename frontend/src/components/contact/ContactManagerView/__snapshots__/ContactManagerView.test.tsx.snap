@@ -518,7 +518,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Last Name
+                First Name
                 <div
                   class="c7"
                 >
@@ -563,7 +563,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                First Name
+                Last Name
                 <div
                   class="c7"
                 >
