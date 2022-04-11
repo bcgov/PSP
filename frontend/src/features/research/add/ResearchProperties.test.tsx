@@ -1,17 +1,13 @@
-import {
-  SelectedPropertyContextProvider,
-  SelectedPropertyContext,
-} from 'components/maps/providers/SelectedPropertyContext';
+import { SelectedPropertyContextProvider } from 'components/maps/providers/SelectedPropertyContext';
 import { Formik } from 'formik';
-import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { propertiesSlice } from 'store/slices/properties';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
-import { PropertyForm, ResearchForm } from './models';
 
+import { PropertyForm, ResearchForm } from './models';
 import ResearchProperties from './ResearchProperties';
 
 const mockStore = configureMockStore([thunk]);
