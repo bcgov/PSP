@@ -31,7 +31,6 @@ namespace Pims.Dal.Services
 
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
-                //var currentProperty = researchProperty.Property;
                 var pid = researchProperty.Property.Pid.Value;
                 try
                 {
@@ -51,11 +50,10 @@ namespace Pims.Dal.Services
                     researchProperty.Property.AddressId = 1; // TODO: this would be nullable
                 }
             }
-            //_propertyRepository.GetForPID()
+
             var newResearchFile = _researchFileRepository.Add(researchFile);
             _researchFileRepository.CommitTransaction();
             return newResearchFile;
-            //return researchFile;
         }
     }
 }
