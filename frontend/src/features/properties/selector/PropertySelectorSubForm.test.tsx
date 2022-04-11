@@ -2,8 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { propertiesSlice } from 'store/slices/properties';
 import { render, RenderOptions } from 'utils/test-utils';
-import { IMapProperty } from './models';
 
+import { IMapProperty } from './models';
 import PropertySelectorSubForm, { IPropertySelectorSubFormProps } from './PropertySelectorSubForm';
 
 const onClickAway = jest.fn();
