@@ -13,7 +13,6 @@ import {
   InlineMessage,
   StyledFormSection,
   StyledInlineMessageSection,
-  StyledScrollable,
   StyledSectionHeader,
 } from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
