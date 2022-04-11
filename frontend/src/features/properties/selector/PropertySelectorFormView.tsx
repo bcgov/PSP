@@ -4,7 +4,6 @@ import {
   SelectedPropertyContext,
 } from 'components/maps/providers/SelectedPropertyContext';
 import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
-import { IProperty } from 'interfaces';
 import * as React from 'react';
 
 import MapClickMonitor from './components/MapClickMonitor';
@@ -18,7 +17,7 @@ export interface IPropertySelectorFormViewProps {
 const PropertySelectorFormView: React.FunctionComponent<IPropertySelectorFormViewProps> = ({
   onSelectedProperty,
 }) => {
-  const { setCursor, cursor } = React.useContext(SelectedPropertyContext);
+  const { setCursor } = React.useContext(SelectedPropertyContext);
 
   const [selectedProperty, setSelectedProperty] = React.useState<IMapProperty | undefined>(
     undefined,

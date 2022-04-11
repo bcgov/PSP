@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { IMapProperty } from './models';
 
-interface IPropertySelectorSubFormProps {
+export interface IPropertySelectorSubFormProps {
   onClickDraftMarker: () => void;
   onClickAway: () => void;
   selectedProperty?: IMapProperty;

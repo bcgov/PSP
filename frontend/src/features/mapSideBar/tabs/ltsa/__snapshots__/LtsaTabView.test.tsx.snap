@@ -85,18 +85,18 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   padding: 0;
 }
 
-.c1.c1.c1 .form-label {
+.c0.c0.c0 .form-label {
   font-weight: bold;
 }
 
-<div
+<form
+    action="#"
     class="c0"
   >
-    <form
-      action="#"
+    <div
       class="c1"
     >
-      <div
+      <h2
         class="c2"
       >
         <div
@@ -143,10 +143,10 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col-4"
         >
-          <div
-            class="col-4"
+          <label
+            class="c3"
           >
             <label
               class="c6"
@@ -171,10 +171,10 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -210,7 +210,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           Land
         </h2>
         <div
-          class="pb-2 row"
+          class="col-4"
         >
           <div
             class="col-4"
@@ -224,21 +224,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
-                name="titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
-                title="009-212-434"
-                value="009-212-434"
-              />
-            </div>
-          </div>
+            Land title district:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
             class="col-4"
@@ -252,16 +242,21 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col"
           >
-            <p>
-              LOT 4 EXCEPT: FIRSTLY: PART ON STATUTORY RIGHT OF WAY PLAN 30557;
-SECONDLY: PART ON STATUTORY RIGHT OF WAY PLAN 45999A;
-DISTRICT LOT 26 GROUP 2 AND SECTION 11 TOWNSHIP 6 NEW WESTMINSTER DISTRICT
-PLAN 24843
-            </p>
+            <input
+              class="form-control"
+              disabled=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleIdentifier.landTitleDistrict"
+              name="titleOrders.0.orderedProduct.fieldedData.titleIdentifier.landTitleDistrict"
+              value=""
+            />
           </div>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
         >
           <div
             class="col"
@@ -327,23 +322,37 @@ PLAN 24843
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
-          />
-          <div
-            class="col"
+            class="textarea input form-group"
           >
-            <p>
-              THIS CERTIFICATE OF TITLE MAY BE AFFECTED BY THE AGRICULTURAL LAND
-COMMISSION ACT, SEE AGRICULTURAL LAND RESERVE PLAN NO. 2
-DEPOSITED JULY 30TH, 1974.
-            </p>
+            <textarea
+              class="form-control"
+              disabled=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.taxAuthorities"
+              name="titleOrders.0.orderedProduct.fieldedData.taxAuthorities"
+              title="Delta, City of"
+            >
+              Delta, City of
+            </textarea>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        Land
+      </h2>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
         >
           <div
             class="col"
@@ -409,22 +418,26 @@ DEPOSITED JULY 30TH, 1974.
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
-          />
-          <div
-            class="col"
+            class="input form-group"
           >
-            <p>
-              ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
-10.2.1981 UNDER NO. T17084 PLAN NO. 61216
-            </p>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
+              name="titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
+              title="009-212-434"
+              value="009-212-434"
+            />
           </div>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
         >
           <div
             class="col"
@@ -490,20 +503,14 @@ DEPOSITED JULY 30TH, 1974.
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
-          <div
-            class="col-4"
-          />
-          <div
-            class="col"
-          >
-            <p>
-              LAND HEREIN CHARGED UNDER THE
-MUNICIPAL ACT, PART 25
-D.F. D21890
-            </p>
-          </div>
+          <p>
+            LOT 4 EXCEPT: FIRSTLY: PART ON STATUTORY RIGHT OF WAY PLAN 30557;
+SECONDLY: PART ON STATUTORY RIGHT OF WAY PLAN 45999A;
+DISTRICT LOT 26 GROUP 2 AND SECTION 11 TOWNSHIP 6 NEW WESTMINSTER DISTRICT
+PLAN 24843
+          </p>
         </div>
       </div>
       <div
@@ -515,91 +522,73 @@ D.F. D21890
           Charges, Liens and Interests
         </h2>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="c4 input form-group"
           >
             <label
               class="c6"
             >
-              Nature:
+              Legal Notations: 
             </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
-                title="STATUTORY RIGHT-OF-WAY"
-                value="STATUTORY RIGHT-OF-WAY"
-              />
-            </div>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+              title="CV1442411"
+              value="CV1442411"
+            />
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="c4 input form-group"
           >
             <label
               class="c6"
             >
-              Registration #:
+              Status: 
             </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
-                title="H107642"
-                value="H107642"
-              />
-            </div>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="c4 input form-group"
           >
             <label
               class="c6"
             >
-              Registered date:
+              Cancellation date: 
             </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
-                title="1972-10-23T21:38:00Z"
-                value="1972-10-23T21:38:00Z"
-              />
-            </div>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+              value=""
+            />
           </div>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
+        />
+        <div
+          class="col"
         >
           <div
             class="col-4"
@@ -626,68 +615,190 @@ D.F. D21890
             </div>
           </div>
         </div>
-        <hr />
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="c4 input form-group"
           >
             <label
               class="c6"
             >
-              Nature:
+              Legal Notations: 
             </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
-                title="STATUTORY RIGHT-OF-WAY"
-                value="STATUTORY RIGHT-OF-WAY"
-              />
-            </div>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+              title="CV1442412"
+              value="CV1442412"
+            />
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="c4 input form-group"
           >
             <label
               class="c6"
             >
-              Registration #:
+              Status: 
             </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
-                title="N35326"
-                value="N35326"
-              />
-            </div>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="c4 input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Cancellation date: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        />
+        <div
+          class="col"
+        >
+          <p>
+            ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
+10.2.1981 UNDER NO. T17084 PLAN NO. 61216
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c4 input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Legal Notations: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+              title="CV1442414"
+              value="CV1442414"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c4 input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Status: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c4 input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Cancellation date: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        />
+        <div
+          class="col"
+        >
+          <p>
+            LAND HEREIN CHARGED UNDER THE
+MUNICIPAL ACT, PART 25
+D.F. D21890
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        Charges, Liens and Interests
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Nature:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -695,27 +806,25 @@ D.F. D21890
               Registered date:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
-                title="1977-04-14T22:32:00Z"
-                value="1977-04-14T22:32:00Z"
-              />
-            </div>
-          </div>
+            Registration #:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -723,28 +832,25 @@ D.F. D21890
               Registered owner:
             </label>
           </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
-                title="THE CORPORATION OF DELTA"
-                value="THE CORPORATION OF DELTA"
-              />
-            </div>
-          </div>
         </div>
-        <hr />
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -752,27 +858,25 @@ D.F. D21890
               Nature:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
-                title="MORTGAGE"
-                value="MORTGAGE"
-              />
-            </div>
-          </div>
+            Registered owner:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -780,27 +884,26 @@ D.F. D21890
               Registration #:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <hr />
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
-                title="BL158885"
-                value="BL158885"
-              />
-            </div>
-          </div>
+            Nature:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -808,27 +911,104 @@ D.F. D21890
               Registered date:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.applicationReceivedDate"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.applicationReceivedDate"
-                title="1997-05-07T16:51:00Z"
-                value="1997-05-07T16:51:00Z"
-              />
-            </div>
-          </div>
+            Registration #:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Nature:
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Registration #:
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registered owner:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <label
+              class="c6"
+            >
+              Registered date:
+            </label>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Nature:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -836,240 +1016,33 @@ D.F. D21890
               Registered owner:
             </label>
           </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
-                title="RICHMOND SAVINGS CREDIT UNION"
-                value="RICHMOND SAVINGS CREDIT UNION"
-              />
-            </div>
-          </div>
         </div>
-        <hr />
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
         >
-          <div
-            class="col-4"
+          <label
+            class="c3"
           >
-            <label
-              class="c6"
-            >
-              Nature:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
-                title="MORTGAGE"
-                value="MORTGAGE"
-              />
-            </div>
-          </div>
+            Registration #:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
-            <label
-              class="c6"
-            >
-              Registration #:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
-                title="BR248606"
-                value="BR248606"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Registered date:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
-                title="2001-09-25T18:11:00Z"
-                value="2001-09-25T18:11:00Z"
-              />
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Nature:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
-                title="STATUTORY RIGHT OF WAY"
-                value="STATUTORY RIGHT OF WAY"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Registration #:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
-                title="CA5338545"
-                value="CA5338545"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Registered date:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
-                title="2016-07-13T21:01:28Z"
-                value="2016-07-13T21:01:28Z"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c6"
-            >
-              Registered owner:
-            </label>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
-                title="ROGERS COMMUNICATIONS INC."
-                value="ROGERS COMMUNICATIONS INC."
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="col-4"
-          />
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
-                title="BC0921753"
-                value="BC0921753"
-              />
-            </div>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+              title="BL158885"
+              value="BL158885"
+            />
           </div>
         </div>
       </div>
@@ -1079,13 +1052,17 @@ D.F. D21890
         <h2
           class="c5"
         >
-          Duplicate Indefeasible Title
-        </h2>
+          <label
+            class="c3"
+          >
+            Registered date:
+          </label>
+        </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1093,27 +1070,54 @@ D.F. D21890
               To:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
-                name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
-                title="last"
-                value="last"
-              />
-            </div>
-          </div>
+            Registered owner:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+              title="RICHMOND SAVINGS CREDIT UNION"
+              value="RICHMOND SAVINGS CREDIT UNION"
+            />
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Nature:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1121,27 +1125,53 @@ D.F. D21890
               Application #:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
-                title="12345"
-                value="12345"
-              />
-            </div>
-          </div>
+            Registration #:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
+              title="BR248606"
+              value="BR248606"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1149,27 +1179,54 @@ D.F. D21890
               Document district code:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <hr />
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
-                name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
-                title="test district code"
-                value="test district code"
-              />
-            </div>
-          </div>
+            Nature:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
+              title="STATUTORY RIGHT OF WAY"
+              value="STATUTORY RIGHT OF WAY"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registration #:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1177,20 +1234,33 @@ D.F. D21890
               Certificate text:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
-                name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
-                title="certificate text"
-                value="certificate text"
-              />
-            </div>
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
+              title="2016-07-13T21:01:28Z"
+              value="2016-07-13T21:01:28Z"
+            />
           </div>
         </div>
       </div>
@@ -1200,13 +1270,17 @@ D.F. D21890
         <h2
           class="c5"
         >
-          Transfers
-        </h2>
+          <label
+            class="c3"
+          >
+            Registered owner:
+          </label>
+        </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1214,27 +1288,56 @@ D.F. D21890
               Nature:
             </label>
           </div>
-          <div
-            class="col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
-                name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
-                title="disposition text"
-                value="disposition text"
-              />
-            </div>
-          </div>
         </div>
+      </div>
+      <div
+        class="row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
+        />
+        <div
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
+              title="BC0921753"
+              value="BC0921753"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        Duplicate Indefeasible Title
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            To:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1242,26 +1345,53 @@ D.F. D21890
               Registration #:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
-                name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
-                value=""
-              />
-            </div>
-          </div>
+            Application #:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+              title="12345"
+              value="12345"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Document district code:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1269,27 +1399,62 @@ D.F. D21890
               Registered date:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
-                name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
-                title="54321"
-                value="54321"
-              />
-            </div>
-          </div>
+            Certificate text:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+              title="certificate text"
+              value="certificate text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        Transfers
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Nature:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1297,27 +1462,52 @@ D.F. D21890
               Registered date:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
-                name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
-                title="district"
-                value="district"
-              />
-            </div>
-          </div>
+            Registration #:
+          </label>
         </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1325,21 +1515,33 @@ D.F. D21890
               Pending applications:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                disabled=""
-                id="input-parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
-                name="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
-                title="0"
-                value="0"
-              />
-            </div>
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+              title="district"
+              value="district"
+            />
           </div>
         </div>
       </div>
@@ -1349,13 +1551,17 @@ D.F. D21890
         <h2
           class="c5"
         >
-          Notes
-        </h2>
+          <label
+            class="c3"
+          >
+            Pending applications:
+          </label>
+        </div>
         <div
-          class="pb-2 row"
+          class="col"
         >
           <div
-            class="col-4"
+            class="input form-group"
           >
             <label
               class="c6"
@@ -1363,23 +1569,49 @@ D.F. D21890
               Miscellaneous notes:
             </label>
           </div>
-          <div
-            class="col"
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        Notes
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
           >
-            <p>
-              SRW PLAN 33784
+            Miscellaneous notes:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            SRW PLAN 33784
 SRW PLAN 41816
 SRW PLAN 50351
 DF L24824
 
-            </p>
-          </div>
+          </p>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
         <div
-          class="pb-2 row"
+          class="col-4"
         >
-          <div
-            class="col-4"
+          <label
+            class="c3"
           >
             <label
               class="c6"
@@ -1388,24 +1620,20 @@ DF L24824
             </label>
           </div>
           <div
-            class="col"
+            class="input form-group"
           >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                disabled=""
-                id="input-parcelInfo.orderedProduct.fieldedData.status"
-                name="parcelInfo.orderedProduct.fieldedData.status"
-                title="ACTIVE"
-                value="ACTIVE"
-              />
-            </div>
+            <input
+              class="form-control"
+              disabled=""
+              id="input-parcelInfo.orderedProduct.fieldedData.status"
+              name="parcelInfo.orderedProduct.fieldedData.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
           </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </DocumentFragment>
 `;

@@ -1,32 +1,41 @@
+import {
+  SelectedPropertyContextProvider,
+  SelectedPropertyContext,
+} from 'components/maps/providers/SelectedPropertyContext';
+import { Formik } from 'formik';
 import { IProperty } from 'interfaces';
+import { noop } from 'lodash';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { propertiesSlice } from 'store/slices/properties';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { PropertyForm, ResearchForm } from './models';
 
-import PropertySelectorFormView, {
-  IPropertySelectorFormViewProps,
-} from './PropertySelectorFormView';
-
-const onClickAway = jest.fn();
-const onClickDraftMarker = jest.fn();
+import ResearchProperties from './ResearchProperties';
 
 const mockStore = configureMockStore([thunk]);
+
+const testForm = new ResearchForm();
+testForm.name = 'Test name';
+testForm.properties = [
+  new PropertyForm({ pid: '123-456-789' }),
+  new PropertyForm({ pin: '1111222' }),
+];
 
 const store = mockStore({
   [propertiesSlice.name]: {},
 });
 
-describe('PropertySelectorFormView component', () => {
-  const setup = (renderOptions: RenderOptions & IPropertySelectorFormViewProps) => {
+describe('ResearchProperties component', () => {
+  const setup = (renderOptions: RenderOptions & { initialForm: ResearchForm }) => {
     // render component under test
     const component = render(
-      <PropertySelectorFormView
-        properties={renderOptions.properties}
-        onClickAway={renderOptions.onClickAway}
-        onClickDraftMarker={renderOptions.onClickDraftMarker}
-      />,
+      <SelectedPropertyContextProvider>
+        <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
+          <ResearchProperties />
+        </Formik>
+      </SelectedPropertyContextProvider>,
       {
         ...renderOptions,
         store: store,
@@ -44,7 +53,7 @@ describe('PropertySelectorFormView component', () => {
   });
 
   it('renders as expected when provided no properties', () => {
-    const { component } = setup({ properties: [], onClickAway, onClickDraftMarker });
+    const { component } = setup({ initialForm: testForm });
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -52,11 +61,7 @@ describe('PropertySelectorFormView component', () => {
     const {
       component: { getByText },
       store,
-    } = await setup({
-      properties: [{ pid: '123-456-789' } as IProperty, { pin: '1111222' } as any],
-      onClickAway,
-      onClickDraftMarker,
-    });
+    } = await setup({ initialForm: testForm });
 
     await waitFor(async () => {
       expect(store.getActions()).toContainEqual({
@@ -71,11 +76,7 @@ describe('PropertySelectorFormView component', () => {
   it('properties can be removed', async () => {
     const {
       component: { getAllByTitle, queryByText },
-    } = await setup({
-      properties: [{ pid: '123-456-789' } as IProperty, { pin: '1111222' } as any],
-      onClickAway,
-      onClickDraftMarker,
-    });
+    } = await setup({ initialForm: testForm });
     const pidRow = getAllByTitle('remove')[0];
 
     await act(async () => {
@@ -92,14 +93,10 @@ describe('PropertySelectorFormView component', () => {
   });
 
   it('properties with lat/lng are synchronized', async () => {
-    await setup({
-      properties: [
-        { pid: '123-456-789', latitude: 1, longitude: 2 } as IProperty,
-        { pin: '1111222' } as any,
-      ],
-      onClickAway,
-      onClickDraftMarker,
-    });
+    const formWithProperties = testForm;
+    formWithProperties.properties[0].latitude = 1;
+    formWithProperties.properties[0].longitude = 2;
+    await setup({ initialForm: formWithProperties });
 
     await act(async () => {
       await waitFor(async () => {
@@ -118,14 +115,13 @@ describe('PropertySelectorFormView component', () => {
   });
 
   it('multiple properties with lat/lng are synchronized', async () => {
-    await setup({
-      properties: [
-        { pid: '123-456-789', latitude: 1, longitude: 2 } as IProperty,
-        { pin: '1111222', latitude: 3, longitude: 4 } as any,
-      ],
-      onClickAway,
-      onClickDraftMarker,
-    });
+    const formWithProperties = testForm;
+    formWithProperties.properties[0].latitude = 1;
+    formWithProperties.properties[0].longitude = 2;
+    formWithProperties.properties[1].latitude = 3;
+    formWithProperties.properties[1].longitude = 4;
+
+    await setup({ initialForm: formWithProperties });
 
     await act(async () => {
       await waitFor(async () => {
@@ -151,11 +147,7 @@ describe('PropertySelectorFormView component', () => {
   it('properties are prefixed by svg with incrementing id', async () => {
     const {
       component: { getByTitle },
-    } = await setup({
-      properties: [{ pid: '123-456-789' } as IProperty, { pin: '1111222' } as any],
-      onClickAway,
-      onClickDraftMarker,
-    });
+    } = await setup({ initialForm: testForm });
 
     await waitFor(async () => {
       expect(store.getActions()).toContainEqual({
@@ -165,48 +157,5 @@ describe('PropertySelectorFormView component', () => {
     });
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
-  });
-
-  it('clicking the draft marker fires the expected event', async () => {
-    const {
-      component: { getByTitle },
-    } = await setup({
-      properties: [{ pid: '123-456-789' } as IProperty, { pin: '1111222' } as any],
-      onClickAway,
-      onClickDraftMarker,
-    });
-
-    await waitFor(async () => {
-      expect(store.getActions()).toContainEqual({
-        payload: [],
-        type: 'properties/storeDraftProperties',
-      });
-    });
-    const draftMarker = getByTitle('select properties on the map');
-    userEvent.click(draftMarker);
-    expect(onClickDraftMarker).toHaveBeenCalled();
-  });
-
-  it('clicking off the draft marker fires the expected event', async () => {
-    const {
-      component: { getByTitle },
-    } = await setup({
-      properties: [{ pid: '123-456-789' } as IProperty, { pin: '1111222' } as any],
-      onClickAway,
-      onClickDraftMarker,
-    });
-
-    await waitFor(async () => {
-      expect(store.getActions()).toContainEqual({
-        payload: [],
-        type: 'properties/storeDraftProperties',
-      });
-    });
-    const draftMarker = getByTitle('select properties on the map');
-    userEvent.click(draftMarker);
-    expect(onClickDraftMarker).toHaveBeenCalled();
-    const draftIcon = getByTitle('1');
-    userEvent.click(draftIcon);
-    expect(onClickAway).toHaveBeenCalled();
   });
 });
