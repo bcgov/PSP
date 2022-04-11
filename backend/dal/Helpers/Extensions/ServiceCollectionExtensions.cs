@@ -23,7 +23,7 @@ namespace Pims.Dal
         public static IServiceCollection AddPimsDalRepositories(this IServiceCollection repositories)
         {
             repositories.AddScoped<IPimsRepository, PimsRepository>();
-            repositories.AddScoped<Repositories.IPropertyService, Repositories.PropertyService>();
+            repositories.AddScoped<Repositories.IPropertyRepository, Repositories.PropertyRepository>();
             repositories.AddScoped<Repositories.IProvinceService, Repositories.ProvinceService>();
             repositories.AddScoped<Repositories.ILookupService, Repositories.LookupService>();
             repositories.AddScoped<Repositories.ISystemConstantService, Repositories.SystemConstantService>();

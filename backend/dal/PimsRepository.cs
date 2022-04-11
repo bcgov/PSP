@@ -39,7 +39,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The property repository.
         /// </summary>
-        public IPropertyService Property { get { return _serviceProvider.GetService<IPropertyService>(); } }
+        public IPropertyRepository Property { get { return _serviceProvider.GetService<IPropertyRepository>(); } }
 
         /// <summary>
         /// get - The lookup repository.

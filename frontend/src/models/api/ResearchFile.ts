@@ -17,6 +17,7 @@ export interface Api_ResearchFile extends Api_ConcurrentVersion {
 export interface Api_ResearchProperty extends Api_ConcurrentVersion {
   researchFile?: Api_ResearchFile;
   property?: Api_Property;
+  description?: string;
   displayOrder?: number;
   isDisabled?: boolean;
 }

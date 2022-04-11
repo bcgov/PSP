@@ -48,13 +48,7 @@ const AddResearchForm: React.FunctionComponent = () => {
               research file on save.
             </Col>
           </Row>
-          <ResearchProperties
-            properties={[]}
-            namespace={''}
-            onRemove={function(id: string): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <ResearchProperties />
           <Row className="justify-content-end mt-auto no-gutters pt-3">
             <Col xs="auto" className="pr-4">
               <Button variant="secondary" onClick={onCancel}>

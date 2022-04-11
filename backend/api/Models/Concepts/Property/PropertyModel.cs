@@ -1,6 +1,5 @@
 namespace Pims.Api.Models.Concepts
 {
-    // TODO: should this be refactored?
     public class PropertyModel : BaseModel
     {
         #region Properties
@@ -8,6 +7,16 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The model id.
         /// </summary>
         public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - The model id.
+        /// </summary>
+        public int? Pin { get; set; }
+
+        /// <summary>
+        /// get/set - The model id.
+        /// </summary>
+        public int? Pid { get; set; }
         #endregion
     }
 }

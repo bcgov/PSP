@@ -52,7 +52,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the next available id from the PIMS_LEASE_ID_SEQ
+        /// Get the next available id from the PIMS_RESEARCH_FILE_ID_SEQ
         /// </summary>
         /// <param name="context"></param>
         private long GetNextLeaseSequenceValue()
