@@ -1,13 +1,14 @@
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDraftMarkerSynchronizer from 'hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from 'hooks/usePrevious';
-import { IProperty } from 'interfaces';
 import { geoJSON } from 'leaflet';
 import * as React from 'react';
 import { useAppSelector } from 'store/hooks';
 
+import { IMapProperty } from '../models';
+
 interface IMapClickMonitorProps {
-  addProperty: (property: IProperty) => void;
+  addProperty: (property: IMapProperty) => void;
 }
 
 export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = ({
@@ -36,7 +37,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         address: 'placeholder', //todo: need alternate source for this
         legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer
         name: '',
-      } as any);
+      });
     }
   }, [addProperty, feature, previous]);
   return <></>;

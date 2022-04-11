@@ -1,37 +1,20 @@
-import {
-  MapCursors,
-  SelectedPropertyContext,
-} from 'components/maps/providers/SelectedPropertyContext';
-import { IProperty } from 'interfaces';
 import * as React from 'react';
 
 import { PropertySelectorTabsView } from '../../mapSideBar/tabs/PropertySelectorTabsView';
+import { IMapProperty } from './models';
 import PropertySelectorFormView from './PropertySelectorFormView';
 
 export interface IMapSelectorContainerProps {
-  properties?: IProperty[];
+  onSelectedProperty: (property: IMapProperty) => void;
 }
 
 export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
-  properties,
+  onSelectedProperty,
 }) => {
-  const { setCursor, cursor } = React.useContext(SelectedPropertyContext);
   return (
     <>
       <PropertySelectorTabsView
-        MapSelectorView={
-          <PropertySelectorFormView
-            onClickDraftMarker={() => {
-              console.log('Cursor set!');
-              setCursor(MapCursors.DRAFT);
-            }}
-            onClickAway={() => {
-              setCursor(undefined);
-            }}
-            selecting={cursor === MapCursors.DRAFT}
-            properties={properties}
-          />
-        }
+        MapSelectorView={<PropertySelectorFormView onSelectedProperty={onSelectedProperty} />}
         ListSelectorView={<></>}
       ></PropertySelectorTabsView>
     </>

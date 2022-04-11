@@ -1,13 +1,12 @@
-using Pims.Core.Extensions;
-using Pims.Core.Test;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
-using Pims.Dal.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Pims.Core.Test;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
+using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -46,7 +45,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-            var service = helper.CreateRepository<PropertyService>(user);
+            var service = helper.CreateRepository<PropertyRepository>(user);
 
             // Act
             // Assert
@@ -65,7 +64,7 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission();
             var filter = new PropertyFilter();
 
-            var service = helper.CreateRepository<PropertyService>(user);
+            var service = helper.CreateRepository<PropertyRepository>(user);
 
             // Act
             // Assert
@@ -92,7 +91,7 @@ namespace Pims.Dal.Test.Services
 
             init.SaveChanges();
 
-            var service = helper.CreateRepository<PropertyService>(user);
+            var service = helper.CreateRepository<PropertyRepository>(user);
 
             // Act
             var result = service.GetPage(filter);

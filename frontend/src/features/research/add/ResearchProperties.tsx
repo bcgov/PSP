@@ -1,16 +1,18 @@
+import * as Styled from 'components/common/styles';
+import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
+import { IMapProperty } from 'features/properties/selector/models';
+import SelectedPropertyHeaderRow from 'features/research/add/SelectedPropertyHeaderRow';
+import SelectedPropertyRow from 'features/research/add/SelectedPropertyRow';
+import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { PropertyForm } from './models';
+import { PropertyForm, ResearchForm } from './models';
 
-export interface IResearchPropertiesProps {
-  properties: PropertyForm[];
-  namespace: string;
-  onRemove: (id: string) => void;
-}
+const ResearchProperties: React.FunctionComponent = () => {
+  const { values } = useFormikContext<ResearchForm>();
 
-const ResearchProperties: React.FunctionComponent<IResearchPropertiesProps> = props => {
   return (
     <>
       <StyledSectionHeader>Properties to include in this file:</StyledSectionHeader>
@@ -18,11 +20,37 @@ const ResearchProperties: React.FunctionComponent<IResearchPropertiesProps> = pr
         Select one or more properties that you want to include in this research file. You can choose
         a location from the map, or search by other criteria
       </div>
-      <Row className="py-3 no-gutters">
-        <Col>
-          <MapSelectorContainer properties={[]} />
-        </Col>
-      </Row>
+
+      <FieldArray name="properties">
+        {({ push, remove }) => (
+          <>
+            <Row className="py-3 no-gutters">
+              <Col>
+                <MapSelectorContainer
+                  onSelectedProperty={(property: IMapProperty) => {
+                    const formProperty = new PropertyForm(property);
+                    push(formProperty);
+                  }}
+                />
+              </Col>
+            </Row>
+            <StyledFormSection>
+              <Styled.H3>Selected properties</Styled.H3>
+              <SelectedPropertyHeaderRow />
+              {values.properties.map((property, index, properties) => (
+                <SelectedPropertyRow
+                  key={`property.${property.latitude}-${property.longitude}-${property.pid}`}
+                  onRemove={() => remove(index)}
+                  nameSpace={`properties.${index}`}
+                  index={index}
+                />
+              ))}
+
+              {values.properties.length === 0 && <span>No Properties selected</span>}
+            </StyledFormSection>
+          </>
+        )}
+      </FieldArray>
     </>
   );
 };

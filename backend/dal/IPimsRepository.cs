@@ -24,7 +24,7 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
-        IPropertyService Property { get; }
+        IPropertyRepository Property { get; }
         #endregion
 
         #region Leases

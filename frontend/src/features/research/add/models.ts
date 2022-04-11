@@ -1,3 +1,4 @@
+import { IMapProperty } from 'features/properties/selector/models';
 import { Api_Property } from 'models/api/Property';
 import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
 
@@ -17,6 +18,7 @@ export class ResearchForm {
         return {
           property: x.toApi(),
           researchFile: { id: this.id },
+          propertyName: x.name,
         };
       }),
     };
@@ -24,17 +26,23 @@ export class ResearchForm {
 }
 
 export class PropertyForm {
-  public id: string;
-  public pid: string;
-  public description?: string;
+  public pid?: string;
+  public pin?: string;
+  public latitude?: number;
+  public longitude?: number;
+  public planNumber?: string;
+  public name?: string;
 
-  constructor(id: string, pid: string) {
-    this.id = id;
-    this.pid = pid;
+  constructor(property: IMapProperty) {
+    this.pid = property.pid;
+    this.pin = property.pin;
+    this.latitude = property.latitude;
+    this.longitude = property.longitude;
+    this.planNumber = property.planNumber;
   }
 
   public toApi(): Api_Property {
     // TODO: description
-    return { pid: this.pid };
+    return { pid: Number(this.pid), pin: Number(this.pin) };
   }
 }
