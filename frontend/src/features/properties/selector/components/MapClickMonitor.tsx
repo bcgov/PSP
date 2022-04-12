@@ -25,6 +25,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
       previous !== undefined &&
       feature?.properties?.IS_SELECTED
     ) {
+      console.log(feature);
       const latLng = geoJSON(feature.geometry)
         .getBounds()
         .getCenter();
@@ -35,8 +36,8 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         longitude: latLng.lng ?? '',
         planNumber: feature?.properties?.PLAN_NUMBER ?? '',
         address: 'placeholder', //todo: need alternate source for this
-        legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer
-        name: '',
+        legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer,
+        district: feature?.properties?.REGIONAL_DISTRICT ?? '', // todo: this returns a named district,
       });
     }
   }, [addProperty, feature, previous]);

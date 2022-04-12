@@ -30,7 +30,6 @@ describe('MotiInventoryContainer component', () => {
   };
 
   it('requests ltsa data by pid', async () => {
-    //history.push('mapview?pid=9212434&searchBy=pinOrPid&sidebar=true');
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet().reply(200, {});
     setup({

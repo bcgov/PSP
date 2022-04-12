@@ -32,6 +32,8 @@ export class PropertyForm {
   public longitude?: number;
   public planNumber?: string;
   public name?: string;
+  //public regionId?: number;
+  //public districtId?: number;
 
   constructor(property: IMapProperty) {
     this.pid = property.pid;
@@ -39,10 +41,17 @@ export class PropertyForm {
     this.latitude = property.latitude;
     this.longitude = property.longitude;
     this.planNumber = property.planNumber;
+    //this.regionId = property.dis;
+    //this.districtId = 0; //property.district;
   }
 
   public toApi(): Api_Property {
-    // TODO: description
-    return { pid: Number(this.pid), pin: Number(this.pin) };
+    return {
+      pid: Number(this.pid),
+      pin: Number(this.pin),
+      location: { coordinate: { x: this.longitude, y: this.latitude } },
+      /*region: { id: this.regionId },
+      district: { id: this.districtId },*/
+    };
   }
 }

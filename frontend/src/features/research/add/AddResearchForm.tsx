@@ -81,10 +81,11 @@ const AddResearchForm: React.FunctionComponent = () => {
 export default AddResearchForm;
 
 const StyledFormWrapper = styled.div`
-  text-align: left;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
   overflow-y: auto;
   padding-right: 1rem;
   padding-bottom: 1rem;

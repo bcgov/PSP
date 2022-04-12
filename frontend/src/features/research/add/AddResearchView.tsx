@@ -1,4 +1,5 @@
 import clsx from 'classnames';
+import { FilterProvider } from 'components/maps/providers/FIlterProvider';
 import {
   SelectedPropertyContext,
   SelectedPropertyContextProvider,
@@ -24,25 +25,28 @@ interface ResearchMapViewProps {
 
 const ResearchMapView: React.FC<ResearchMapViewProps> = props => {
   const [loadedProperties, setLoadedProperties] = useState(false);
+
   return (
     <SelectedPropertyContextProvider>
       <SelectedPropertyContext.Consumer>
         {({ cursor }) => (
           <StyleMapView className={clsx(cursor)}>
             <AddResearchSideBar />
-            <Map
-              lat={defaultLatLng.lat}
-              lng={defaultLatLng.lng}
-              onViewportChanged={() => {
-                if (!loadedProperties) {
-                  setLoadedProperties(true);
-                }
-              }}
-              showSideBar={true}
-              showParcelBoundaries={props.showParcelBoundaries ?? true}
-              zoom={6}
-              onPropertyMarkerClick={noop}
-            />
+            <FilterProvider>
+              <Map
+                lat={defaultLatLng.lat}
+                lng={defaultLatLng.lng}
+                onViewportChanged={() => {
+                  if (!loadedProperties) {
+                    setLoadedProperties(true);
+                  }
+                }}
+                showParcelBoundaries={props.showParcelBoundaries ?? true}
+                zoom={10}
+                onPropertyMarkerClick={noop}
+                showSideBar={true}
+              />
+            </FilterProvider>
           </StyleMapView>
         )}
       </SelectedPropertyContext.Consumer>

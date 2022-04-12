@@ -26,7 +26,6 @@ export interface IMotiInventoryContainerProps {
  */
 export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryContainerProps> = props => {
   const isMounted = useIsMounted();
-  //const { showSideBar, setShowSideBar, pid } = useMapSideBarQueryParams();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
@@ -79,8 +78,8 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
       showCloseButton
     >
       <InventoryTabs
-        PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
         LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
+        PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
       />
     </MapSideBarLayout>
   );
@@ -91,5 +90,4 @@ export default MotiInventoryContainer;
 const LotIcon = styled(LotSvg)`
   width: 3rem;
   height: 3rem;
-  align-self: flex-end;
 `;
