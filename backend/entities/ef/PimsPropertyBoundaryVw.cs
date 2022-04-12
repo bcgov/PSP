@@ -80,7 +80,7 @@ namespace Pims.Dal.Entities
         [StringLength(2000)]
         public string Description { get; set; }
         [Column("ADDRESS_ID")]
-        public long AddressId { get; set; }
+        public long? AddressId { get; set; }
         [Column("REGION_CODE")]
         public short RegionCode { get; set; }
         [Column("DISTRICT_CODE")]
