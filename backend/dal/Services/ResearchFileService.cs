@@ -40,13 +40,13 @@ namespace Pims.Dal.Services
                 catch (KeyNotFoundException e)
                 {
                     _logger.LogDebug("Adding new property with pid:{prop}", pid);
-                    researchProperty.Property.PropertyClassificationTypeCode = "UNKNOWN";
+                    researchProperty.Property.PropertyClassificationTypeCode = "CORESTRAT"; // Todo: should be "UNKNOWN"
                     researchProperty.Property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
-                    researchProperty.Property.PropertyDataSourceTypeCode = "PMBC";
+                    researchProperty.Property.PropertyDataSourceTypeCode = "PAIMS"; // Todo: should be "PMBC"
 
                     researchProperty.Property.PropertyTypeCode = "UNKNOWN";
 
-                    researchProperty.Property.PropertyStatusTypeCode = "UNKNOWN";
+                    researchProperty.Property.PropertyStatusTypeCode = "UNSURVYED"; // Todo: should be 'UNKNOWN';
                     researchProperty.Property.SurplusDeclarationTypeCode = "UNKNOWN";
 
                     researchProperty.Property.RegionCode = 1; // TODO: this reallly needs to come from the app
