@@ -51,7 +51,6 @@ namespace Pims.Dal.Services
 
                     researchProperty.Property.RegionCode = 1; // TODO: this reallly needs to come from the app
                     researchProperty.Property.DistrictCode = 1; // TODO: this reallly needs to come from the app
-                    researchProperty.Property.AddressId = 1; // TODO: this would be nullable
                 }
             }
 

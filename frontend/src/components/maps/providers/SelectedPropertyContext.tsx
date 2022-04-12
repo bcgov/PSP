@@ -41,7 +41,6 @@ export const SelectedPropertyContextProvider: React.FC<ISelectedPropertyContextC
   );
   const [loading, setLoading] = React.useState<boolean>(values?.loading ?? false);
   const [cursor, setCursor] = React.useState<MapCursors | undefined>(undefined);
-  console.log(cursor);
 
   return (
     <SelectedPropertyContext.Provider

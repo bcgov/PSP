@@ -25,7 +25,6 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
       previous !== undefined &&
       feature?.properties?.IS_SELECTED
     ) {
-      console.log(feature);
       const latLng = geoJSON(feature.geometry)
         .getBounds()
         .getCenter();

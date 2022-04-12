@@ -11,7 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Areas.ResearchFile.Controllers
 {
     /// <summary>
-    /// ResearchFileController class, provides endpoints for interacting with leases.
+    /// ResearchFileController class, provides endpoints for interacting with research files.
     /// </summary>
     [Authorize]
     [ApiController]
