@@ -1,6 +1,5 @@
 import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { Feature, GeoJsonProperties } from 'geojson';
-import { IProperty } from 'interfaces';
 import { LatLng, LatLngBounds } from 'leaflet';
 import noop from 'lodash/noop';
 import React, { useCallback, useState } from 'react';
@@ -46,10 +45,15 @@ export interface ILayerPopupProps {
 }
 
 export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, onAddToParcel }) => {
+  // We are interested in the PID field that comes back from parcel map layer attributes
+  const pid = layerPopup?.data?.PID;
+  // open/close map popup fly-out menu
   const [showFlyout, setShowFlyout] = useState(false);
   const openFlyout = useCallback(() => setShowFlyout(true), []);
   const closeFlyout = useCallback(() => setShowFlyout(false), []);
+  // open map side-bar for non-inventory properties - based on their PID
   const { setShowSideBar } = useMapSideBarQueryParams();
+  const onViewPropertyInfo = useCallback(() => setShowSideBar(true, pid), [pid, setShowSideBar]);
 
   const handlePopupClose = useCallback(() => {
     closeFlyout();
@@ -57,11 +61,6 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, on
       onClose();
     }
   }, [onClose, closeFlyout]);
-
-  const onViewPropertyInfo = useCallback(() => {
-    const property = { pid: layerPopup?.data?.PID } as IProperty;
-    setShowSideBar(true, property);
-  }, [layerPopup, setShowSideBar]);
 
   return (
     <Popup
