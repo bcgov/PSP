@@ -32,8 +32,8 @@ const AddResearchForm: React.FunctionComponent = () => {
       initialValues={initialForm}
       onSubmit={async (values: ResearchForm, formikHelpers) => {
         const researchFile: Api_ResearchFile = values.toApi();
-        formikHelpers.setSubmitting(false);
         submitForm(researchFile);
+        formikHelpers.setSubmitting(false);
       }}
       validationSchema={AddResearchFileYupSchema}
     >
