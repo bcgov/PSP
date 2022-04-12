@@ -69,6 +69,9 @@ const ContactManagerView = ({
     initialFilter,
     getContacts,
     'Search returned no results',
+    {},
+    0,
+    5,
   );
 
   // update internal state whenever the filter bar changes
