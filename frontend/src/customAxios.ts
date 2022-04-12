@@ -36,6 +36,7 @@ export const CustomAxios = ({
   envelope?: typeof defaultEnvelope;
   baseURL?: string;
 } = {}) => {
+  baseURL = baseURL ?? '/';
   let loadingToastId: React.ReactText | undefined = undefined;
   const instance = axios.create({
     baseURL,

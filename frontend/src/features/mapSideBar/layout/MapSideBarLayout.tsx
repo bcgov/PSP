@@ -53,8 +53,9 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
               <Underline />
             </TitleBar>
 
+            {header && isVisible && <Header>{header}</Header>}
+
             <StyledBody>
-              {header && isVisible && <Header>{header}</Header>}
               <Content>{isVisible ? props.children : null}</Content>
             </StyledBody>
           </>
@@ -65,12 +66,10 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
 };
 
 const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
   width: 100%;
-  height: 100%;
   position: relative;
+  overflow: auto;
+  flex: 1;
 `;
 
 const Content = styled.div`
@@ -88,18 +87,19 @@ const Underline = styled.div`
 `;
 
 const StyledMapSideBarLayout = styled.div<{ show: boolean }>`
+  display: flex;
+  flex-flow: column;
   h1 {
     border-bottom: none;
     margin-bottom: 0.2rem;
   }
 
-  min-width: ${props => (props.show ? `93rem` : `0px`)};
-  width: ${props => (props.show ? `93rem` : `0px`)};
-  max-width: ${props => (props.show ? `93rem` : `0px`)};
+  min-width: ${props => (props.show ? `93rem` : `0rem`)};
+  width: ${props => (props.show ? `93rem` : `0rem`)};
+  max-width: ${props => (props.show ? `93rem` : `0rem`)};
 
   padding: ${props => (props.show ? `1.4rem 3.6rem` : `0rem`)};
-  padding-bottom: ${props =>
-    props.show ? `calc(${props.theme.css.footerHeight} + 2rem);` : `0rem`};
+  padding-bottom: ${props => (props.show ? `2rem` : `0rem`)};
 
   overflow: hidden;
   transition: 1s;
