@@ -3731,7 +3731,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsProperties)
                     .HasForeignKey(d => d.AddressId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ADDRSS_PIM_PRPRTY_FK");
 
                 entity.HasOne(d => d.DistrictCodeNavigation)
