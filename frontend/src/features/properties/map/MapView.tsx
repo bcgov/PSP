@@ -5,7 +5,7 @@ import { PropertyPopUpContextProvider } from 'components/maps/providers/Property
 import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import MapSideBarContainer from 'features/mapSideBar/MapSideBarContainer';
 import { IProperty } from 'interfaces';
-import { LeafletMouseEvent } from 'leaflet';
+import L, { LeafletMouseEvent } from 'leaflet';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveClickLatLng as saveLeafletMouseEvent } from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -26,6 +26,7 @@ interface MapViewProps {
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const [loadedProperties, setLoadedProperties] = useState(false);
+  const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
   const dispatch = useDispatch();
   const { showSideBar } = useMapSideBarQueryParams();
 
@@ -40,7 +41,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   return (
     <PropertyPopUpContextProvider>
       <StyleMapView className={showSideBar ? 'side-bar' : ''}>
-        <MapSideBarContainer />
+        <MapSideBarContainer map={mapInstance} />
         <FilterProvider>
           <Map
             lat={defaultLatLng.lat}
@@ -54,6 +55,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
             showSideBar={showSideBar}
             showParcelBoundaries={props.showParcelBoundaries ?? true}
             zoom={6}
+            whenCreated={setMapInstance}
           />
         </FilterProvider>
       </StyleMapView>

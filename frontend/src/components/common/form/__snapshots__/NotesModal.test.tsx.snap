@@ -8,21 +8,22 @@ exports[`NotesModal component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c0.btn.btn-light {
+  .c0.c0.btn {
   background-color: unset;
   border: 0;
 }
 
-.c0.btn.btn-light:hover {
+.c0.c0.btn:hover,
+.c0.c0.btn:active {
   background-color: unset;
 }
 
-.c0.btn.btn-light svg {
+.c0.c0.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c0.btn.btn-light svg:hover {
+.c0.c0.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }

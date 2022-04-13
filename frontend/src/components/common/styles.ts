@@ -37,19 +37,34 @@ export const SelectedText = styled.p`
 `;
 
 export const IconButton = styled(Button)`
-  &.btn.btn-light {
+  &&.btn {
     background-color: unset;
     border: 0;
-    :hover {
+    :hover,
+    :active {
       background-color: unset;
     }
     svg {
-      color: ${({ theme }) => theme.css.slideOutBlue};
       transition: all 0.3s ease-out;
     }
     svg:hover {
       transition: all 0.3s ease-in;
+    }
+  }
+  &.btn.btn-light {
+    svg {
+      color: ${({ theme }) => theme.css.slideOutBlue};
+    }
+    svg:hover {
       color: ${({ theme }) => theme.css.dangerColor};
+    }
+  }
+  &.btn.btn-info {
+    svg {
+      color: ${({ theme }) => theme.css.slideOutBlue};
+    }
+    svg:hover {
+      color: ${({ theme }) => theme.css.activeColor};
     }
   }
 `;
