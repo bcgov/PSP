@@ -17,7 +17,7 @@ export const parcelIcon = L.icon({
 });
 
 // parcel icon (green) highlighted
-export const parcelIconSelect = L.divIcon({
+export const parcelIconSelect = L.icon({
   iconUrl:
     require('assets/images/pins/land-reg-highlight.png').default ??
     'assets/images/pins/land-reg-highlight.png',
