@@ -263,7 +263,7 @@ const Map: React.FC<MapProps> = ({
             bounds={bounds}
             onMarkerClick={(property: IProperty) => {
               setLayersOpen(false);
-              setShowSideBar(true, property);
+              setShowSideBar(true, property?.pid);
             }}
             filter={geoFilter}
             onRequestData={setShowLoadingBackdrop}

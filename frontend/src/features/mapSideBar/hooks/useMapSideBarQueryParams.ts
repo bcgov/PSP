@@ -1,5 +1,4 @@
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { IProperty } from 'interfaces';
 import queryString from 'query-string';
 import { useCallback, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { pidParser } from './../../../utils/propertyUtils';
 
 interface IMapSideBar {
   showSideBar: boolean;
-  setShowSideBar: (show: boolean, property?: IProperty) => void;
+  setShowSideBar: (show: boolean, pid?: string) => void;
   setDisabled: (disabled: boolean) => void;
   disabled?: boolean;
   pid?: string;
@@ -36,11 +35,11 @@ export const useMapSideBarQueryParams = (formikRef?: any): IMapSideBar => {
   }, [searchParams]);
 
   const setShow = useCallback(
-    (show: boolean, propertyInfo?: IProperty) => {
+    (show: boolean, pid?: string) => {
       const search = {
         ...(searchParams as any),
         sidebar: show,
-        pid: pidParser(propertyInfo?.pid),
+        pid: pidParser(pid),
       };
       history.push({ search: queryString.stringify(search) });
     },

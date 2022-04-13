@@ -1,3 +1,4 @@
+import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { Feature, GeoJsonProperties } from 'geojson';
 import { LatLng, LatLngBounds } from 'leaflet';
 import noop from 'lodash/noop';
@@ -44,9 +45,15 @@ export interface ILayerPopupProps {
 }
 
 export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, onAddToParcel }) => {
+  // We are interested in the PID field that comes back from parcel map layer attributes
+  const pid = layerPopup?.data?.PID;
+  // open/close map popup fly-out menu
   const [showFlyout, setShowFlyout] = useState(false);
   const openFlyout = useCallback(() => setShowFlyout(true), []);
   const closeFlyout = useCallback(() => setShowFlyout(false), []);
+  // open map side-bar for non-inventory properties - based on their PID
+  const { setShowSideBar } = useMapSideBarQueryParams();
+  const onViewPropertyInfo = useCallback(() => setShowSideBar(true, pid), [pid, setShowSideBar]);
 
   const handlePopupClose = useCallback(() => {
     closeFlyout();
@@ -73,7 +80,7 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({ layerPopup, onClose, on
 
         {showFlyout && (
           <StyledFlyoutContainer>
-            <LayerPopupFlyout onViewPropertyInfo={noop} onCreateResearchFile={noop} />
+            <LayerPopupFlyout onViewPropertyInfo={onViewPropertyInfo} onCreateResearchFile={noop} />
           </StyledFlyoutContainer>
         )}
       </StyledContainer>

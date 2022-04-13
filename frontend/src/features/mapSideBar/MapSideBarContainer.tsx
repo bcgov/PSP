@@ -1,7 +1,9 @@
+import axios, { AxiosError } from 'axios';
 import { FormikProps, FormikValues } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
+import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import React, { useEffect, useState } from 'react';
@@ -25,15 +27,28 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
+  const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
 
   // First, fetch property information from PSP API
   const { getPropertyWithPid } = useProperties();
   useEffect(() => {
     const func = async () => {
-      if (!!pid) {
-        const propInfo = await getPropertyWithPid(pid);
-        if (isMounted() && propInfo.pid === pidFormatter(pid)) {
-          setApiProperty(propInfo);
+      try {
+        if (!!pid) {
+          const propInfo = await getPropertyWithPid(pid);
+          if (isMounted() && propInfo.pid === pidFormatter(pid)) {
+            setApiProperty(propInfo);
+            setShowPropertyInfoTab(true);
+          }
+        }
+      } catch (e) {
+        // PSP-2919 Hide the property info tab for non-inventory properties
+        // We get an error because PID is not on our database
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 404) {
+            setShowPropertyInfoTab(false);
+          }
         }
       }
     };
@@ -72,7 +87,9 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       header={<MapSlideBarHeader ltsaData={ltsaData} property={apiProperty} />}
     >
       <InventoryTabs
-        PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
+        PropertyView={
+          showPropertyInfoTab ? <PropertyDetailsTabView property={propertyViewForm} /> : null
+        }
         LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
       />
     </MapSideBarLayout>
