@@ -9,10 +9,8 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import L, { LatLng, LatLngLiteral } from 'leaflet';
 import { find } from 'lodash';
-import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
-import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Supercluster from 'supercluster';
 
@@ -105,7 +103,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
-  const location = useLocation();
   const popUpContext = React.useContext(PropertyPopUpContext);
   const { propertyInfo: selected } = popUpContext;
 
