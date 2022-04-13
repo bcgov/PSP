@@ -46,7 +46,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         // We get an error because PID is not on our database
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
-          if (axiosError?.response?.status === 400) {
+          if (axiosError?.response?.status === 404) {
             setShowPropertyInfoTab(false);
           }
         }
