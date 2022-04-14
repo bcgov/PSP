@@ -14,6 +14,7 @@ interface IMapSideBarLayoutProps {
   hidePolicy?: boolean;
   /** property name for title */
   propertyName?: string;
+  header: React.ReactNode;
 }
 
 /**
@@ -41,12 +42,13 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
               <Underline>
                 <LotIcon className="mr-1" />
                 <Styled.H1 className="mr-auto">{title}</Styled.H1>
+
+                <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
+                  <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
+                </TooltipWrapper>
               </Underline>
-              <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
-                <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
-              </TooltipWrapper>
             </TitleBar>
-            <Header>Placeholder</Header>
+            <Header>{props.header}</Header>
             <Content>{isVisible ? props.children : null}</Content>
           </>
         )}
@@ -59,11 +61,14 @@ const Content = styled.div`
   grid-area: content;
   width: 100%;
   height: 100%;
+  top: 2rem;
   position: absolute;
+  margin-top: 1rem;
 `;
 
 const Header = styled.div`
   grid-area: header;
+  position: relative;
 `;
 
 const LotIcon = styled(LotSvg)`
@@ -95,7 +100,7 @@ const StyledMapSideBarLayout = styled.div`
   max-width: 93rem;
   padding: 2.4rem 3.6rem;
   display: grid;
-  grid: 4.2rem 5.8rem 1fr / 1fr;
+  grid: 4.2rem 7rem 1fr / 1fr;
   grid-template-areas:
     'title'
     'header'

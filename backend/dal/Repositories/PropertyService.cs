@@ -139,11 +139,15 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
+                .Include(p => p.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PropertyRoadTypeCodeNavigation)
+                .Include(p => p.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(p => p.VolumetricTypeCodeNavigation)
+                .Include(p => p.VolumetricUnitTypeCodeNavigation)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
@@ -152,8 +156,7 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.Country)
-                .Where(p => p.Pid == search)
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
+                .FirstOrDefault(p => p.Pid == search) ?? throw new KeyNotFoundException();
             return property;
         }
         #endregion

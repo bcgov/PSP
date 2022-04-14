@@ -106,7 +106,7 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
             <Row>
               <Col>
                 <ContactInput
-                  label="Deposit Holder:"
+                  label="Payee name:"
                   field="contactHolder"
                   setShowContactManager={setShowContactManager}
                   onClear={() => {

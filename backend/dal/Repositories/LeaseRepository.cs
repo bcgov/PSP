@@ -105,6 +105,7 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
                     .ThenInclude(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
 
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
@@ -117,6 +118,7 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
                     .ThenInclude(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
 
                 .Include(t => t.PimsPropertyImprovements)
 

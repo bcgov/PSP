@@ -15,4 +15,5 @@ export * from './SearchButton';
 export * from './SearchToggle';
 export * from './Select';
 export * from './TableSelect';
+export * from './Text';
 export * from './TextArea';

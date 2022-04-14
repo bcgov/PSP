@@ -1,5 +1,8 @@
 namespace Pims.Api.Models.Concepts
 {
+    /// <summary>
+    /// The contact model. Note, given the source is a view, it does not have a version.
+    /// </summary>
     public class ContactModel
     {
         #region Properties

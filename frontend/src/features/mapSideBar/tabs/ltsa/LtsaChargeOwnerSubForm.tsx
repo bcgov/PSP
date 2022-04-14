@@ -9,7 +9,7 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
+import { SectionField } from '../SectionField';
 
 export interface ILtsaChargeOwnerSubFormProps {
   nameSpace?: string;
@@ -34,9 +34,9 @@ export const LtsaChargeOwnerSubForm: React.FunctionComponent<ILtsaChargeOwnerSub
           return (
             <React.Fragment key={`charge-owner-sub-row-${innerNameSpace}`}>
               {getIn(values, withNameSpace(innerNameSpace, 'lastNameOrCorpName1')) && (
-                <SectionFieldWrapper label="Registered owner">
+                <SectionField label="Registered owner">
                   <Input field={`${withNameSpace(innerNameSpace, 'lastNameOrCorpName1')}`} />
-                </SectionFieldWrapper>
+                </SectionField>
               )}
               {getIn(values, withNameSpace(innerNameSpace, 'lastNameOrCorpName2')) && (
                 <Row>

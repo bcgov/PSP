@@ -9,6 +9,7 @@ namespace Pims.Api.Models.Concepts
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPerson, Model.PersonModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PersonId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Surname, src => src.Surname)
@@ -16,10 +17,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.MiddleNames, src => src.MiddleNames)
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Comment, src => src.Comment)
-                .Map(dest => dest.Addresses, src => src.PimsPersonAddresses)
+                .Map(dest => dest.PersonAddresses, src => src.PimsPersonAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
-                .Map(dest => dest.Organizations, src => src.PimsPersonOrganizations)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Map(dest => dest.PersonOrganizations, src => src.PimsPersonOrganizations)
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<Model.PersonModel, Entity.PimsPerson>()
                 .Map(dest => dest.PersonId, src => src.Id)
@@ -29,10 +30,10 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.MiddleNames, src => src.MiddleNames)
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Comment, src => src.Comment)
-                .Map(dest => dest.PimsPersonAddresses, src => src.Addresses)
+                .Map(dest => dest.PimsPersonAddresses, src => src.PersonAddresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
-                .Map(dest => dest.PimsPersonOrganizations, src => src.Organizations)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
+                .Map(dest => dest.PimsPersonOrganizations, src => src.PersonOrganizations)
+                .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }
 }

@@ -12,7 +12,10 @@ export interface IUserLayerQuery {
    * function to find GeoJSON shape containing a point (x, y)
    * @param latlng = {lat, lng}
    */
-  findOneWhereContains: (latlng: LatLngLiteral) => Promise<FeatureCollection>;
+  findOneWhereContains: (
+    latlng: LatLngLiteral,
+    geometryName?: string,
+  ) => Promise<FeatureCollection>;
   /**
    * function to find GeoJSON shape matching the passed non-zero padded pid.
    * @param pid
@@ -59,11 +62,11 @@ const wfsAxios = () => {
  * @param url wfs request url
  * @param geometry the name of the geometry in the feature collection
  */
-export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUserLayerQuery => {
+export const useLayerQuery = (url: string): IUserLayerQuery => {
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
-    async (latlng: LatLngLiteral): Promise<FeatureCollection> => {
+    async (latlng: LatLngLiteral, geometryName: string = 'SHAPE'): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios().get<FeatureCollection>(
           `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=4326;POINT ( ${latlng.lng} ${latlng.lat}))`,
@@ -71,7 +74,7 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
       )?.data;
       return data;
     },
-    [baseUrl, geometryName],
+    [baseUrl],
   );
 
   const findByAdministrative = useCallback(

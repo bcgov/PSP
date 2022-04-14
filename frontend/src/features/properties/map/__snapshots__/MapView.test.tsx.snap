@@ -5,7 +5,27 @@ exports[`MapView Renders the map 1`] = `
   <div
     class="Toastify"
   />
-  .c5 {
+  .c10.c10.btn {
+  background-color: unset;
+  border: 0;
+}
+
+.c10.c10.btn:hover,
+.c10.c10.btn:active {
+  background-color: unset;
+}
+
+.c10.c10.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c10.c10.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c5 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
   border-bottom: solid 0.5rem;
@@ -13,15 +33,18 @@ exports[`MapView Renders the map 1`] = `
   text-align: left;
 }
 
-.c8 {
+.c12 {
   grid-area: content;
   width: 100%;
   height: 100%;
+  top: 2rem;
   position: absolute;
+  margin-top: 1rem;
 }
 
 .c7 {
   grid-area: header;
+  position: relative;
 }
 
 .c4 {
@@ -56,7 +79,7 @@ exports[`MapView Renders the map 1`] = `
   max-width: 93rem;
   padding: 2.4rem 3.6rem;
   display: grid;
-  grid: 4.2rem 5.8rem 1fr / 1fr;
+  grid: 4.2rem 7rem 1fr / 1fr;
   grid-template-areas: 'title' 'header' 'content';
   -webkit-transition: 1s;
   transition: 1s;
@@ -77,78 +100,33 @@ exports[`MapView Renders the map 1`] = `
   cursor: pointer;
 }
 
-.c11 {
-  padding-right: 0;
-}
-
-.c11 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c12:not(:first-child) {
-  padding-left: 0;
-}
-
-.c12:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c13 div:nth-child(1) div:nth-child(1) {
-  cursor: auto;
-}
-
-.c13 div:nth-child(1) div:nth-child(1) svg {
-  fill: #909090;
-}
-
-.c13 div:nth-child(2) div:nth-child(1) {
-  cursor: pointer;
-}
-
-.c13 div:nth-child(2) div:nth-child(1) svg {
-  fill: #003366;
-}
-
-.c14 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+.c8 {
   width: 100%;
-}
-
-.c15 {
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
-.c15 svg {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-}
-
-.c10 {
+.c14 {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -174,37 +152,117 @@ exports[`MapView Renders the map 1`] = `
   justify-content: center;
 }
 
-.c16 {
+.c9 {
+  position: relative;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+}
+
+.c11 {
+  margin-top: 0.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c15 {
+  padding-right: 0;
+}
+
+.c15 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c16:not(:first-child) {
+  padding-left: 0;
+}
+
+.c16:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c17 div:nth-child(1) div:nth-child(1) {
+  cursor: auto;
+}
+
+.c17 div:nth-child(1) div:nth-child(1) svg {
+  fill: #909090;
+}
+
+.c17 div:nth-child(2) div:nth-child(1) {
+  cursor: pointer;
+}
+
+.c17 div:nth-child(2) div:nth-child(1) svg {
+  fill: #003366;
+}
+
+.c18 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c19 svg {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.c20 {
   grid-area: map;
 }
 
-.c16 .leaflet-container {
+.c20 .leaflet-container {
   height: 100%;
   margin: auto;
 }
 
-.c16 .leaflet-container .leaflet-popup-content-wrapper {
+.c20 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
 
-.c16 .leaflet-container .leaflet-popup-content {
+.c20 .leaflet-container .leaflet-popup-content {
   margin: 0rem;
 }
 
-.c16 .leaflet-container .leaflet-popup-content .list-group .list-group-item {
-  border: none;
-  padding: 0.8rem 1.4rem;
-}
-
-.c16 .leaflet-container .leaflet-control-container .leaflet-top {
+.c20 .leaflet-container .leaflet-control-container .leaflet-top {
   z-index: 500;
 }
 
-.c16 .leaflet-control-layers.leaflet-control-layers-expanded {
+.c20 .leaflet-control-layers.leaflet-control-layers-expanded {
   border-radius: 0rem;
 }
 
-.c16 .leaflet-control-layers .leaflet-control-layers-overlays {
+.c20 .leaflet-control-layers .leaflet-control-layers-overlays {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -216,14 +274,14 @@ exports[`MapView Renders the map 1`] = `
   width: 15rem;
 }
 
-.c16 .leaflet-control-layers .leaflet-control-layers-overlays label {
+.c20 .leaflet-control-layers .leaflet-control-layers-overlays label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c9 {
+.c13 {
   width: 100%;
   display: grid;
   grid-template-rows: 1fr;
@@ -231,7 +289,7 @@ exports[`MapView Renders the map 1`] = `
   grid-template-areas: 'filter filter' 'map map';
 }
 
-.c9.sidebar {
+.c13.sidebar {
   grid-template-rows: 0 1fr;
   -webkit-transition: 1s;
   transition: 1s;
@@ -267,39 +325,182 @@ exports[`MapView Renders the map 1`] = `
           >
             Property Information
           </h1>
+          <svg
+            class="c6"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              close
+            </title>
+            <path
+              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+            />
+          </svg>
         </div>
-        <svg
-          class="c6"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
       </div>
       <div
         class="c7"
       >
-        Placeholder
+        <div
+          class="c8"
+        >
+          <div
+            class="spinner-border text-warning"
+            data-testid="filter-backdrop-loading"
+          />
+        </div>
+        <div
+          class="c9"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-11"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col-8"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="pr-0 col-auto"
+                    >
+                      <label>
+                        Civic Address
+                      </label>
+                    </div>
+                    <div
+                      class="col-auto"
+                    >
+                      <strong>
+                        -
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <div
+                    class="justify-content-end row"
+                  >
+                    <div
+                      class="pr-0 col-auto"
+                    >
+                      <label>
+                        PID:
+                      </label>
+                    </div>
+                    <div
+                      class="col-auto"
+                    >
+                      <strong />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-8"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="pr-0 col-auto"
+                    >
+                      <label>
+                        Plan #
+                      </label>
+                    </div>
+                    <div
+                      class="col-auto"
+                    >
+                      <strong />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <div
+                    class="justify-content-end row"
+                  >
+                    <div
+                      class="pr-0 col-auto"
+                    >
+                      <label>
+                        Land parcel type:
+                      </label>
+                    </div>
+                    <div
+                      class="col-auto"
+                    >
+                      <strong />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex p-0 align-items-center justify-content-end col-1"
+            >
+              <button
+                class="c10 float-right btn btn-info"
+                disabled=""
+                title="Zoom Map"
+                type="button"
+              >
+                <svg
+                  fill="currentColor"
+                  height="22"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0V0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                  />
+                  <path
+                    d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c11"
+        />
       </div>
       <div
-        class="c8"
+        class="c12"
       />
     </div>
     <div
-      class="c9 px-0 map"
+      class="c13 px-0 map"
     >
       <div
-        class="c10"
+        class="c14"
       >
         <div
           class="spinner-border text-warning"
@@ -330,7 +531,7 @@ exports[`MapView Renders the map 1`] = `
                 class="row"
               >
                 <div
-                  class="c11 col-auto"
+                  class="c15 col-auto"
                 >
                   <div
                     class="input-group-prepend"
@@ -360,7 +561,7 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c12 col"
+                  class="c16 col"
                 >
                   <div
                     class="input form-group"
@@ -437,13 +638,13 @@ exports[`MapView Renders the map 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c13"
+                class="c17"
               >
                 <div
-                  class="c14"
+                  class="c18"
                 >
                   <div
-                    class="c15"
+                    class="c19"
                   >
                     <svg>
                       icon-map.svg
@@ -451,10 +652,10 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c14"
+                  class="c18"
                 >
                   <div
-                    class="c15"
+                    class="c19"
                   >
                     <svg>
                       icon-table.svg
@@ -467,7 +668,7 @@ exports[`MapView Renders the map 1`] = `
         </form>
       </div>
       <div
-        class="c16"
+        class="c20"
       >
         <div />
       </div>

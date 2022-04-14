@@ -5,6 +5,7 @@ $light-variant-color: #606060;
 $dark-variant-color: #121212;
 $text-color: #494949;
 $form-text-color: #212529;
+$form-control-text-color: #495057;
 $form-background-color: #d9d9d9;
 $dropdown-background-color: #32507c;
 $accent-color: #fcba19;
@@ -26,7 +27,7 @@ $disabled-field-background-color: #e9ecef;
 $discarded-color: #bcbec5;
 $filter-box-color: #d9eaf7;
 $draft-color: #1976d2;
-$link-color: #007bff;
+$link-color: #1a5a96;
 $link-hover-color: #0056b3;
 $subtle-color: #aaaaaa;
 $summary-color: #f9f1c6;
@@ -39,3 +40,8 @@ $table-header-border-color: #8c8c8c;
 $table-column-border-color: #f2f2f2;
 $table-even-row-bg-color: #f2f2f2;
 $table-odd-row-bg-color: #ffffff;
+// text headings - H1, H2 etc
+$heading-text-color: #494949;
+$heading-border-color: #666666;
+// map popup
+$map-popup-background-color: #fffefa;
