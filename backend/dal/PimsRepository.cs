@@ -39,7 +39,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The property repository.
         /// </summary>
-        public IPropertyService Property { get { return _serviceProvider.GetService<IPropertyService>(); } }
+        public IPropertyRepository Property { get { return _serviceProvider.GetService<IPropertyRepository>(); } }
 
         /// <summary>
         /// get - The lookup repository.
@@ -105,6 +105,10 @@ namespace Pims.Dal
         /// get - The autocomplete repository.
         /// </summary>
         public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
+        /// <summary>
+        /// get - The research file repository.
+        /// </summary>
+        public IResearchFileRepository ResearchFile { get { return _serviceProvider.GetService<IResearchFileRepository>(); } }
         #endregion
 
         #region Constructors

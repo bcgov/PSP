@@ -12,12 +12,7 @@ import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../Section';
 import { SectionField, StyledFieldLabel } from '../SectionField';
-import {
-  InlineContainer,
-  LeftBorderCol,
-  StyledReadOnlyForm,
-  StyledScrollable,
-} from '../SectionStyles';
+import { InlineContainer, LeftBorderCol, StyledReadOnlyForm } from '../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
 import {
@@ -40,7 +35,7 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ prop
   const isLoading = property === undefined;
 
   return (
-    <StyledScrollable>
+    <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik
         initialValues={values}
@@ -48,7 +43,7 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ prop
         enableReinitialize={true}
         component={FormComponent}
       />
-    </StyledScrollable>
+    </>
   );
 };
 

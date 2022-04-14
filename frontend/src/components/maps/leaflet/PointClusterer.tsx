@@ -18,7 +18,7 @@ import Supercluster from 'supercluster';
 
 import useSupercluster from '../hooks/useSupercluster';
 import { useFilterContext } from '../providers/FIlterProvider';
-import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { ICluster, PointFeature } from '../types';
 import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
 import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
@@ -107,8 +107,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const filterState = useFilterContext();
   const location = useLocation();
   const { parcelId } = queryString.parse(location.search);
-  const popUpContext = React.useContext(PropertyPopUpContext);
-  const { propertyInfo: selected } = popUpContext;
+  const selectedPropertyContext = React.useContext(SelectedPropertyContext);
+  const { propertyInfo: selected } = selectedPropertyContext;
 
   const [currentSelected, setCurrentSelected] = useState(selected);
   const [currentCluster, setCurrentCluster] = useState<
@@ -270,7 +270,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const { getProperty } = useApiProperties();
   const fetchProperty = React.useCallback(
     (id: number, latLng: LatLngLiteral) => {
-      popUpContext.setLoading(true);
+      selectedPropertyContext.setLoading(true);
       getProperty(id)
         .then(apiProperty => {
           const propertyData = apiProperty.data;
@@ -297,16 +297,16 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             latitude: latLng.lat,
             longitude: latLng.lng,
           };
-          popUpContext.setPropertyInfo(property);
+          selectedPropertyContext.setPropertyInfo(property);
         })
         .catch(() => {
           toast.error('Unable to load property details, refresh the page and try again.');
         })
         .finally(() => {
-          popUpContext.setLoading(false);
+          selectedPropertyContext.setLoading(false);
         });
     },
-    [getProperty, popUpContext],
+    [getProperty, selectedPropertyContext],
   );
 
   const keycloak = useKeycloakWrapper();
@@ -374,7 +374,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                         })
                       : toast.dark('This property is invalid, unable to view details');
                   } else {
-                    popUpContext.setPropertyInfo(convertedProperty);
+                    selectedPropertyContext.setPropertyInfo(convertedProperty);
                   }
                 },
               }}
@@ -433,7 +433,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               map={mapInstance}
               eventHandlers={{
                 click: () => {
-                  popUpContext.setPropertyInfo(selected);
+                  selectedPropertyContext.setPropertyInfo(selected);
                   selected && onMarkerClick(selected);
                 },
               }}

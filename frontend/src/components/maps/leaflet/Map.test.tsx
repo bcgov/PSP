@@ -28,6 +28,9 @@ const mockParcels = [
 jest.mock('hooks/useApi');
 jest.mock('hooks/pims-api');
 
+const onPropertyMarkerClick = jest.fn();
+const onViewPropertyClick = jest.fn();
+
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
   propertyDetail: {
@@ -92,7 +95,17 @@ function createProps(): TestProps {
 function Template(props: Omit<TestProps, 'renderOptions'>) {
   const { done, setMap, zoom = 6, ...rest } = props;
   return (
-    <Map lat={48.43} lng={-123.37} zoom={zoom} whenReady={done} whenCreated={setMap} {...rest} />
+    <Map
+      onViewPropertyClick={onViewPropertyClick}
+      showSideBar={false}
+      onPropertyMarkerClick={onPropertyMarkerClick}
+      lat={48.43}
+      lng={-123.37}
+      zoom={zoom}
+      whenReady={done}
+      whenCreated={setMap}
+      {...rest}
+    />
   );
 }
 

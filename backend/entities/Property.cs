@@ -53,7 +53,10 @@ namespace Pims.Dal.Entities
             this.PropertyAreaUnitTypeCodeNavigation = areaUnit ?? throw new ArgumentNullException(nameof(areaUnit));
             this.PropertyAreaUnitTypeCode = areaUnit.Id;
             if (address.Longitude.HasValue && address.Latitude.HasValue)
+            {
                 this.Location = new Point((double)address.Longitude.Value, (double)address.Latitude.Value) { SRID = 4326 };
+            }
+
             this.PropertyDataSourceTypeCodeNavigation = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
             this.PropertyDataSourceTypeCode = dataSource.Id;
             this.PropertyDataSourceEffectiveDate = dataSourceEffectiveDate;
