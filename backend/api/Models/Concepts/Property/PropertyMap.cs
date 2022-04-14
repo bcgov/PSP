@@ -46,7 +46,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.District, src => src.DistrictCodeNavigation)
                 .Map(dest => dest.Location, src => src.Location)
                 .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
-                
+
             config.NewConfig<PropertyModel, Entity.PimsProperty>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Pid, src => src.Pid)

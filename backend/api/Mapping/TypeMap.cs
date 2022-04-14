@@ -14,11 +14,11 @@ namespace Pims.Api.Mapping
                 .Map("IsDisabled", "IsDisabled")
                 .Map("DisplayOrder", "DisplayOrder");
 
-            config.ForType(typeof(Entity.ICodeEntity<short>), typeof(Model.TypeModel<short>))
-                .Map("Id", "Id")
-                .Map("Description", "Description")
-                .Map("IsDisabled", "IsDisabled")
-                .Map("DisplayOrder", "DisplayOrder");
+            config.NewConfig<Entity.ICodeEntity<short>, Model.TypeModel<short>>()
+                .Map(dest => dest.Id, src => src.Code)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
 
             config.ForType(typeof(Model.TypeModel<string>), typeof(Entity.ITypeEntity<string>))
                 .Map("Id", "Id")
