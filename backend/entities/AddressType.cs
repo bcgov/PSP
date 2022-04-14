@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
@@ -27,7 +27,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a AddressType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsAddressUsageType(string id):this()
+        public PimsAddressUsageType(string id) : this()
         {
             Id = id;
         }

@@ -106,6 +106,7 @@ namespace Pims.Api
             });
             services.Configure<JsonSerializerOptions>(options =>
             {
+                options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                 options.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                 options.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
@@ -122,6 +123,7 @@ namespace Pims.Api
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                     options.JsonSerializerOptions.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                     options.JsonSerializerOptions.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;

@@ -48,10 +48,11 @@ WebUI.click(findTestObject('Navigation/ManagementExpandedButton'))
 WebUI.click(findTestObject('LeaseLicenses/searchLease/LeaseLicenseHyperlink'))
 
 // Filter for lease with file number "111-111-111"
-WebUI.setText(findTestObject('LeaseLicenses/searchLease/LLumberFilter'), "L-000-362")
+WebUI.setText(findTestObject('LeaseLicenses/searchLease/LLumberFilter'), "L-000-043")
 
 // Search
 WebUI.click(findTestObject('LeaseLicenses/searchLease/FilterSearchButton'))
+
 
 // Click the filtered result
 WebUI.click(findTestObject('LeaseLicenses/searchLease/FilteredLease'))
@@ -105,5 +106,57 @@ WebUI.setText(findTestObject('Object Repository/LeaseLicenses/insurance/VehicleF
 
 WebUI.click(findTestObject('Object Repository/LeaseLicenses/insurance/SaveButton'))
 
-WebUI.closeBrowser()
+// verify insurance view
+// verify aircraft liability coverage view
+WebUI.verifyTextPresent('Aircraft Liability Coverage', true)
+WebUI.verifyTextPresent('Insurance in place:', true)
+WebUI.verifyTextPresent('No', true)
+WebUI.verifyTextPresent('Limit:', true)
+WebUI.verifyTextPresent('1,234', true)
+WebUI.verifyTextPresent('Sep 20, 2025', true)
+WebUI.verifyTextPresent('Description of Coverage', true)
+WebUI.verifyTextPresent('Generated description by automation test', true)
+
+// verify commercial general liability coverage view
+WebUI.verifyTextPresent('Commercial General Liability', true)
+WebUI.verifyTextPresent('Insurance in place:', true)
+WebUI.verifyTextPresent('No', true)
+WebUI.verifyTextPresent('Limit:', true)
+WebUI.verifyTextPresent('1,234', true)
+WebUI.verifyTextPresent('Sep 20, 2025', true)
+WebUI.verifyTextPresent('Description of Coverage', true)
+WebUI.verifyTextPresent('Generated description by automation test', true)
+
+// verify marine liability coverage view
+WebUI.verifyTextPresent('Marine Liability Coverage', true)
+WebUI.verifyTextPresent('Insurance in place:', true)
+WebUI.verifyTextPresent('No', true)
+WebUI.verifyTextPresent('Limit:', true)
+WebUI.verifyTextPresent('1,234', true)
+WebUI.verifyTextPresent('Sep 20, 2025', true)
+WebUI.verifyTextPresent('Description of Coverage', true)
+WebUI.verifyTextPresent('Generated description by automation test', true)
+
+// verify vehicle liability coverage view
+WebUI.verifyTextPresent('Vehicle Liability Coverage', true)
+WebUI.verifyTextPresent('Insurance in place:', true)
+WebUI.verifyTextPresent('No', true)
+WebUI.verifyTextPresent('Limit:', true)
+WebUI.verifyTextPresent('1,234', true)
+WebUI.verifyTextPresent('Sep 20, 2025', true)
+WebUI.verifyTextPresent('Description of Coverage', true)
+WebUI.verifyTextPresent('Generated description by automation test', true)
+
+// verify other liability coverage view
+WebUI.verifyTextPresent('Other Insurance Coverage', true)
+WebUI.verifyTextPresent('Insurance in place:', true)
+WebUI.verifyTextPresent('No', true)
+WebUI.verifyTextPresent('Limit:', true)
+WebUI.verifyTextPresent('1,234', true)
+WebUI.verifyTextPresent('Sep 20, 2025', true)
+WebUI.verifyTextPresent('Description of Coverage', true)
+WebUI.verifyTextPresent('Generated description by automation test', true)
+
+
+//WebUI.closeBrowser()
 

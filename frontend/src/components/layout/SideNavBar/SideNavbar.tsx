@@ -36,7 +36,12 @@ export const SideNavBar = () => {
           text="Home"
           showText={expanded}
         />
-        <NavIcon onClick={noop} icon={<Source />} text="Research" showText={expanded} />
+        <NavIcon
+          onClick={() => setTrayPage(SidebarContextType.RESEARCH)}
+          icon={<Source />}
+          text="Research"
+          showText={expanded}
+        />
         <NavIcon onClick={noop} icon={<RealEstateAgent />} text="Acquisition" showText={expanded} />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.LEASE)}

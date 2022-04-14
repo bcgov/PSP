@@ -292,8 +292,8 @@ backend-coverage: ## Generate coverage report for backend
 	@echo "$(P) Generate coverage report for backend"
 	@cd backend/tests/unit/api; dotnet build;
 	@cd backend/tests/unit/dal; dotnet build;
-	@cd backend; coverlet ./tests/unit/api/bin/Debug/net5.0/Pims.Api.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.json" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" -f json
-	@cd backend; coverlet ./tests/unit/dal/bin/Debug/net5.0/Pims.Dal.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
+	@cd backend; coverlet ./tests/unit/api/bin/Debug/net6.0/Pims.Api.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.json" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" -f json
+	@cd backend; coverlet ./tests/unit/dal/bin/Debug/net6.0/Pims.Dal.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
 	@cd backend; reportgenerator "-reports:./tests/TestResults/coverage.xml" "-targetdir:./tests/TestResults/Coverage" -reporttypes:Html
 	@cd backend; start ./tests/TestResults/Coverage/index.htm
 

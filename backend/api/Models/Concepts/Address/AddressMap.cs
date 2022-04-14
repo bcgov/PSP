@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -8,29 +7,44 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPersonAddress, Model.AddressModel>()
+            config.NewConfig<Entity.PimsAddress, AddressModel>()
                 .Map(dest => dest.Id, src => src.AddressId)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
-                .Map(dest => dest.StreetAddress1, src => src.Address.StreetAddress1)
-                .Map(dest => dest.StreetAddress2, src => src.Address.StreetAddress2)
-                .Map(dest => dest.StreetAddress3, src => src.Address.StreetAddress3)
-                .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
-                .Map(dest => dest.Province, src => src.Address.ProvinceState)
-                .Map(dest => dest.Country, src => src.Address.Country)
-                .Map(dest => dest.Postal, src => src.Address.PostalCode)
-                .Map(dest => dest.AddressType, src => src.AddressUsageTypeCodeNavigation);
+                .Map(dest => dest.StreetAddress1, src => src.StreetAddress1)
+                .Map(dest => dest.StreetAddress2, src => src.StreetAddress2)
+                .Map(dest => dest.StreetAddress3, src => src.StreetAddress3)
+                .Map(dest => dest.Municipality, src => src.MunicipalityName)
+                .Map(dest => dest.Province, src => src.ProvinceState)
+                .Map(dest => dest.Country, src => src.Country)
+                .Map(dest => dest.Region, src => src.RegionCodeNavigation)
+                .Map(dest => dest.District, src => src.DistrictCodeNavigation)
+                .Map(dest => dest.CountryOther, src => src.OtherCountry)
+                .Map(dest => dest.Postal, src => src.PostalCode)
+                .Map(dest => dest.Latitude, src => src.Latitude)
+                .Map(dest => dest.Longitude, src => src.Longitude)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
-            config.NewConfig<Entity.PimsOrganizationAddress, Model.AddressModel>()
-                .Map(dest => dest.Id, src => src.AddressId)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
-                .Map(dest => dest.StreetAddress1, src => src.Address.StreetAddress1)
-                .Map(dest => dest.StreetAddress2, src => src.Address.StreetAddress2)
-                .Map(dest => dest.StreetAddress3, src => src.Address.StreetAddress3)
-                .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
-                .Map(dest => dest.Province, src => src.Address.ProvinceState)
-                .Map(dest => dest.Country, src => src.Address.Country)
-                .Map(dest => dest.Postal, src => src.Address.PostalCode)
-                .Map(dest => dest.AddressType, src => src.AddressUsageTypeCodeNavigation);
+            config.NewConfig<Entity.PimsCountry, CodeTypeModel>()
+                .Map(dest => dest.Id, src => src.CountryId)
+                .Map(dest => dest.Code, src => src.CountryCode)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
+
+            config.NewConfig<Entity.PimsProvinceState, CodeTypeModel>()
+                .Map(dest => dest.Id, src => src.ProvinceStateId)
+                .Map(dest => dest.Code, src => src.ProvinceStateCode)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
+
+            config.NewConfig<Entity.PimsRegion, CodeTypeModel>()
+                .Map(dest => dest.Code, src => src.RegionCode)
+                .Map(dest => dest.Description, src => src.RegionName)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
+
+            config.NewConfig<Entity.PimsDistrict, CodeTypeModel>()
+                .Map(dest => dest.Code, src => src.DistrictCode)
+                .Map(dest => dest.Description, src => src.DistrictName)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
         }
     }
 }

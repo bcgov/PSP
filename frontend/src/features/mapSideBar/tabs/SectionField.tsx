@@ -16,6 +16,6 @@ export const SectionField: React.FunctionComponent<ISectionFieldProps> = props =
   );
 };
 
-const StyledFieldLabel = styled.label`
+export const StyledFieldLabel = styled.label`
   font-weight: bold;
 `;

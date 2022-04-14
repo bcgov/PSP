@@ -29,11 +29,11 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
     <div
       class="col-4"
     >
-      <div
+      <label
         class="c0"
       >
         To:
-      </div>
+      </label>
     </div>
     <div
       class="col"
@@ -61,11 +61,11 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
     <div
       class="col-4"
     >
-      <div
+      <label
         class="c0"
       >
         Application #:
-      </div>
+      </label>
     </div>
     <div
       class="col"
@@ -93,11 +93,11 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
     <div
       class="col-4"
     >
-      <div
+      <label
         class="c0"
       >
         Document district code:
-      </div>
+      </label>
     </div>
     <div
       class="col"
@@ -125,11 +125,11 @@ exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
     <div
       class="col-4"
     >
-      <div
+      <label
         class="c0"
       >
         Certificate text:
-      </div>
+      </label>
     </div>
     <div
       class="col"
@@ -234,11 +234,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Title number:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -263,11 +263,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Land title district:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -291,11 +291,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Taxation authorities:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -330,11 +330,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               PID:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -358,11 +358,11 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Legal Description:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -635,11 +635,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Nature:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -663,11 +663,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registration #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -691,11 +691,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -719,11 +719,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered owner:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -748,11 +748,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Nature:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -776,11 +776,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registration #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -804,11 +804,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -832,11 +832,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered owner:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -861,11 +861,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Nature:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -889,11 +889,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registration #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -917,11 +917,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -945,11 +945,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered owner:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -974,11 +974,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Nature:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1002,11 +1002,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registration #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1030,11 +1030,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1059,11 +1059,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Nature:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1087,11 +1087,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registration #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1115,11 +1115,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1143,11 +1143,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered owner:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1202,11 +1202,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               To:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1230,11 +1230,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Application #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1258,11 +1258,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Document district code:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1286,11 +1286,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Certificate text:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1323,11 +1323,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Nature:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1351,11 +1351,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registration #:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1378,11 +1378,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1406,11 +1406,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Registered date:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1434,11 +1434,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Pending applications:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1472,11 +1472,11 @@ D.F. D21890
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Miscellaneous notes:
-            </div>
+            </label>
           </div>
           <div
             class="col"
@@ -1496,11 +1496,11 @@ DF L24824
           <div
             class="col-4"
           >
-            <div
+            <label
               class="c4"
             >
               Parcel status:
-            </div>
+            </label>
           </div>
           <div
             class="col"

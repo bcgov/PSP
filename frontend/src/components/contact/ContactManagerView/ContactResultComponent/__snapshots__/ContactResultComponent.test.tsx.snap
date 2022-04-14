@@ -18,21 +18,22 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c5.btn.btn-light {
+.c5.c5.btn {
   background-color: unset;
   border: 0;
 }
 
-.c5.btn.btn-light:hover {
+.c5.c5.btn:hover,
+.c5.c5.btn:active {
   background-color: unset;
 }
 
-.c5.btn.btn-light svg {
+.c5.c5.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c5.btn.btn-light svg:hover {
+.c5.c5.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }

@@ -325,7 +325,7 @@ describe('MapView', () => {
     });
   });
 
-  it('When the map is clicked, the resulting popup can be closed', async () => {
+  xit('When the map is clicked, the resulting popup can be closed', async () => {
     findOneWhereContains.mockResolvedValue({
       features: [
         {

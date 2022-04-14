@@ -1,4 +1,4 @@
-import { FastDatePicker, TextArea } from 'components/common/form';
+import { FastCurrencyInput, FastDatePicker, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { FormSection, InlineInput } from 'components/common/form/styles';
 import { getIn, useFormikContext } from 'formik';
@@ -59,10 +59,9 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
           <div>
             <strong>Limit ($)</strong>
           </div>
-          <InlineInput
-            type="number"
+          <FastCurrencyInput
+            formikProps={formikProps}
             field={withNameSpace(nameSpace, 'coverageLimit')}
-            data-testid="insurance-form-limit"
           />
           <div>
             <strong>Policy Expiry date:</strong>

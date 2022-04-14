@@ -4,6 +4,8 @@
         <LangVersion>9.0</LangVersion>
         <AnalysisMode>Minimum</AnalysisMode>
         <WarningLevel>4</WarningLevel>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="SonarAnalyzer.CSharp" Version="8.27.0.35380">
@@ -11,7 +13,9 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    </ItemGroup>
     <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)\..\.editorconfig" />
     </ItemGroup>

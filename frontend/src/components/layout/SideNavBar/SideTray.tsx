@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import { AdminTools, LeaseAndLicenses } from 'components/layout';
+import { AdminTools, LeaseAndLicenses, ResearchTray } from 'components/layout';
 import { useEffect, useState } from 'react';
 import { ReactElement } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
@@ -9,6 +9,7 @@ import * as Styled from './styles';
 export enum SidebarContextType {
   ADMIN = 'admin',
   LEASE = 'lease',
+  RESEARCH = 'research',
 }
 
 interface ISideTrayProps {
@@ -29,6 +30,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   >([
     [SidebarContextType.ADMIN, <AdminTools onLinkClick={() => setShow(false)} />],
     [SidebarContextType.LEASE, <LeaseAndLicenses onLinkClick={() => setShow(false)} />],
+    [SidebarContextType.RESEARCH, <ResearchTray onLinkClick={() => setShow(false)} />],
   ]);
 
   useEffect(() => {

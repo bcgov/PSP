@@ -4,7 +4,7 @@ import { DuplicateCertificate, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
+import { SectionField } from '../SectionField';
 import { StyledSectionHeader } from '../SectionStyles';
 
 export interface ILtsaDuplicateTitleSubForm {
@@ -32,38 +32,38 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<ILtsaDuplicateTi
               );
               return (
                 <>
-                  <SectionFieldWrapper label="To">
+                  <SectionField label="To">
                     <Input
                       field={`${withNameSpace(
                         innerNameSpace,
                         'certificateDelivery.intendedRecipientLastName',
                       )}`}
                     />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Application #">
+                  </SectionField>
+                  <SectionField label="Application #">
                     <Input
                       field={`${withNameSpace(
                         innerNameSpace,
                         'certificateIdentifier.documentNumber',
                       )}`}
                     />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Document district code">
+                  </SectionField>
+                  <SectionField label="Document district code">
                     <Input
                       field={`${withNameSpace(
                         innerNameSpace,
                         'certificateIdentifier.documentDistrictCode',
                       )}`}
                     />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Certificate text">
+                  </SectionField>
+                  <SectionField label="Certificate text">
                     <Input
                       field={`${withNameSpace(
                         innerNameSpace,
                         'certificateDelivery.certificateText',
                       )}`}
                     />
-                  </SectionFieldWrapper>
+                  </SectionField>
                   {index < certificates.length - 1 && <hr></hr>}
                 </>
               );

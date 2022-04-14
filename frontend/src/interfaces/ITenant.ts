@@ -1,7 +1,9 @@
-import { IOrganization, IPerson } from '.';
+import { Api_Person } from 'models/api/Person';
+
+import { IOrganization } from '.';
 export interface ITenant {
   leaseId?: number;
-  person?: IPerson;
+  person?: Api_Person;
   personId?: number;
   organization?: IOrganization;
   organizationId?: number;

@@ -70,11 +70,11 @@ exports[`Lease Insurance renders as expected 1`] = `
   <h2>
     Coverage details
   </h2>
-  .c4.c4.form-control.is-valid {
+  .c3.c3.form-control.is-valid {
   background-image: none;
 }
 
-.c4.c4.form-control.is-invalid {
+.c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -86,24 +86,6 @@ exports[`Lease Insurance renders as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c3 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c0 {
@@ -249,17 +231,19 @@ exports[`Lease Insurance renders as expected 1`] = `
             </strong>
           </div>
           <div
-            class="c3 input form-group"
+            class="form-group"
           >
-            <input
-              class="form-control"
-              data-testid="insurance-form-limit"
-              id="input-insurances.0.coverageLimit"
-              name="insurances.0.coverageLimit"
-              title="777"
-              type="number"
-              value="777"
-            />
+            <div
+              class="input-tooltip-wrapper"
+            >
+              <input
+                class="form-control input-number"
+                id="input-insurances.0.coverageLimit"
+                name="insurances.0.coverageLimit"
+                placeholder=""
+                value="777"
+              />
+            </div>
           </div>
           <div>
             <strong>
@@ -277,7 +261,7 @@ exports[`Lease Insurance renders as expected 1`] = `
               >
                 <input
                   autocomplete="off"
-                  class="c4 form-control date-picker"
+                  class="c3 form-control date-picker"
                   id="datepicker-insurances.0.expiryDate"
                   name="insurances.0.expiryDate"
                   placeholder="--/--/----"

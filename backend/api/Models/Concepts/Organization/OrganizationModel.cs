@@ -5,7 +5,7 @@ namespace Pims.Api.Models.Concepts
     /// <summary>
     /// Provides a contact-oriented organization model.
     /// </summary>
-    public class OrganizationModel : BaseAppModel
+    public class OrganizationModel : BaseModel
     {
         #region Properties
         /// <summary>
@@ -34,14 +34,14 @@ namespace Pims.Api.Models.Concepts
         public string IncorporationNumber { get; set; }
 
         /// <summary>
-        /// get/set - The organization's persons.
+        /// get/set - The organization and person relationships.
         /// </summary>
-        public IList<PersonModel> Persons { get; set; }
+        public IList<OrganizationPersonModel> OrganizationPersons { get; set; }
 
         /// <summary>
         /// get/set - The organization's addresses.
         /// </summary>
-        public IList<AddressModel> Addresses { get; set; }
+        public IList<OrganizationAddressModel> OrganizationAddresses { get; set; }
 
         /// <summary>
         /// get/set - The organization's contact methods.

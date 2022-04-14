@@ -171,5 +171,22 @@ describe('SideNavbar display and logic', () => {
         expect(history.location.pathname).toBe('/admin/users');
       });
     });
+
+    it('Opens research side tray when an icon is clicked.', async () => {
+      const { getByText, getByTestId } = renderComponent({
+        roles: [Roles.SYSTEM_ADMINISTRATOR],
+      });
+      const researchButton = getByTestId('nav-tooltip-research');
+      await act(async () => {
+        userEvent.click(researchButton);
+      });
+      const searchReseachFileLink = getByText('Search for a Research File');
+      await act(async () => {
+        userEvent.click(searchReseachFileLink);
+      });
+      await waitFor(async () => {
+        expect(history.location.pathname).toBe('/research/list');
+      });
+    });
   });
 });

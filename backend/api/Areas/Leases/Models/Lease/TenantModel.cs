@@ -1,3 +1,5 @@
+using Pims.Api.Models.Concepts;
+
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
     public class TenantModel : Api.Models.BaseAppModel
