@@ -1,11 +1,8 @@
 namespace Pims.Dal.Helpers.Extensions
 {
-    using System;
     using System.Linq;
-    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
     using Pims.Core.Extensions;
-    using Pims.Dal.Entities;
     using Entity = Pims.Dal.Entities;
 
     /// <summary>
@@ -108,33 +105,6 @@ namespace Pims.Dal.Helpers.Extensions
             query = query.GenerateCommonResearchQuery(filter);
 
             return query;
-        }
-
-        /// <summary>
-        /// Get the next available id from the PIMS_RESEARCH_FILE_ID_SEQ
-        /// </summary>
-        /// <param name="context"></param>
-        public static Int64 GetNextResearchFileSequenceValue(this PimsContext context)
-        {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
-            context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_RESEARCH_FILE_ID_SEQ;", result);
-
-            return (Int64)result.Value;
-        }
-
-        /// <summary>
-        /// Generate a new R File in format R-XXX-YYY using the research file id. Add the research file id and rfileNo to the passed research file.
-        /// </summary>
-        /// <param name="context"></param>
-        public static PimsResearchFile GenerateRFileNo(this PimsContext context, PimsResearchFile researchFile)
-        {
-            Int64 researchFileId = GetNextResearchFileSequenceValue(context);
-            researchFile.ResearchFileId = researchFileId;
-            researchFile.RfileNumber = $"L-{researchFile.ResearchFileId.ToString().PadLeft(6, '0').Insert(3, "-")}";
-            return researchFile;
         }
     }
 }

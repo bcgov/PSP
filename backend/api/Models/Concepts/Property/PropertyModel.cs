@@ -161,10 +161,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The property zoning potential.
         /// </summary>
         public string ZoningPotential { get; set; }
-
-        /// <summary>
-        /// get/set - The property notes.
-        /// </summary>
         
         /// <summary>
         /// get/set - The location of the property.
@@ -175,7 +171,10 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The property's district.
         /// </summary>
         public CodeTypeModel District { get; set; }
-        
+
+        /// <summary>
+        /// get/set - The property notes.
+        /// </summary>
         public string Notes { get; set; }
         #endregion
         #endregion
