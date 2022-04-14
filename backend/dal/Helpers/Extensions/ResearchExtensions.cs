@@ -65,14 +65,14 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(l => (l.AppLastUpdateTimestamp.Date <= filter.UpdatedOnEndDate.Value.Date));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.CreatedByIdir))
+            if (!string.IsNullOrWhiteSpace(filter.AppCreateUserid))
             {
-                query = query.Where(r => EF.Functions.Like(r.AppCreateUserid, $"%{filter.CreatedByIdir}%"));
+                query = query.Where(r => EF.Functions.Like(r.AppCreateUserid, $"%{filter.AppCreateUserid}%"));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.UpdatedByIdir))
+            if (!string.IsNullOrWhiteSpace(filter.AppLastUpdateUserid))
             {
-                query = query.Where(r => EF.Functions.Like(r.AppLastUpdateUserid, $"%{filter.UpdatedByIdir}%"));
+                query = query.Where(r => EF.Functions.Like(r.AppLastUpdateUserid, $"%{filter.AppLastUpdateUserid}%"));
             }
 
             if (filter.Sort?.Any() == true)

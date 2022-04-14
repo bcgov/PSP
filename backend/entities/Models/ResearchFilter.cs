@@ -41,7 +41,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The idir or username of the user that created this research file row.
         /// </summary>
         /// <value></value>
-        public string CreatedByIdir { get; set; }
+        public string AppCreateUserid { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row creation date after this date.
@@ -59,7 +59,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The idir or username of the user that updated this research file row.
         /// </summary>
         /// <value></value>
-        public string UpdatedByIdir { get; set; }
+        public string AppLastUpdateUserid { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row update date after this date.

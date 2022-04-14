@@ -10,6 +10,7 @@ using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using System;
@@ -54,7 +55,7 @@ namespace Pims.Api.Test.Controllers.Research
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
+            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
@@ -83,7 +84,7 @@ namespace Pims.Api.Test.Controllers.Research
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView, uri);
+            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView, uri);
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
@@ -111,7 +112,7 @@ namespace Pims.Api.Test.Controllers.Research
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
@@ -131,7 +132,7 @@ namespace Pims.Api.Test.Controllers.Research
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
             var service = helper.GetService<Mock<IPimsService>>();
 
@@ -149,7 +150,7 @@ namespace Pims.Api.Test.Controllers.Research
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
             var service = helper.GetService<Mock<IPimsService>>();
             var filter = new ResearchFilterModel() { CreatedOnStartDate = DateTime.Now, CreatedOnEndDate = DateTime.Now.AddDays(-1) };

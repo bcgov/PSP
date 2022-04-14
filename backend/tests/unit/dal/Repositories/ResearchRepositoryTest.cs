@@ -41,10 +41,10 @@ namespace Pims.Dal.Test.Services
                 new object[] { new ResearchFilter() { CreatedOnEndDate = DateTime.Now.Date.AddDays(-1) }, 0 },
                 new object[] { new ResearchFilter() { UpdatedOnEndDate = DateTime.Now.Date }, 1 },
                 new object[] { new ResearchFilter() { UpdatedOnEndDate = DateTime.Now.Date.AddDays(-1) }, 0 },
-                new object[] { new ResearchFilter() { CreatedByIdir = "service" }, 1 },
-                new object[] { new ResearchFilter() { CreatedByIdir = "invalid" }, 0 },
-                new object[] { new ResearchFilter() { UpdatedByIdir = "service" }, 1 },
-                new object[] { new ResearchFilter() { UpdatedByIdir = "invalid" }, 0 },
+                new object[] { new ResearchFilter() { AppCreateUserid = "service" }, 1 },
+                new object[] { new ResearchFilter() { AppCreateUserid = "invalid" }, 0 },
+                new object[] { new ResearchFilter() { AppLastUpdateUserid = "service" }, 1 },
+                new object[] { new ResearchFilter() { AppLastUpdateUserid = "invalid" }, 0 },
 
             };
         #endregion
@@ -57,7 +57,7 @@ namespace Pims.Dal.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileView);
             var eResearch = EntityHelper.CreateResearchFile(rfileNumber: "100-000-000");
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
@@ -84,7 +84,7 @@ namespace Pims.Dal.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileView);
 
             var service = helper.CreateRepository<ResearchFileRepository>(user);
 
@@ -99,7 +99,7 @@ namespace Pims.Dal.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileView);
 
             var service = helper.CreateRepository<ResearchFileRepository>(user);
 

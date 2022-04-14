@@ -55,7 +55,6 @@ export const ResearchFileSelect: React.FC<IResearchFileSelectProps &
 
   return (
     <InputGroup
-      formikProps={formikProps}
       prepend={
         <Select
           field="researchSearchBy"

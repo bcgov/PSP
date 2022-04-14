@@ -144,15 +144,6 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           exact
-          path="/research/list"
-          component={ResearchListView}
-          layout={AuthLayout}
-          claim={Claims.LEASE_VIEW}
-          title={getTitle('View Research Files')}
-        />
-        <AppRoute
-          protected
-          exact
           path="/lease/list"
           component={LeaseAndLicenseListView}
           layout={AuthLayout}
@@ -214,7 +205,7 @@ const AppRouter: React.FC = () => {
           path="/research/list"
           component={ResearchListView}
           layout={AuthLayout}
-          claim={Claims.PROPERTY_VIEW}
+          claim={Claims.RESEARCH_VIEW}
           title={getTitle('View Research Files')}
         />
         <AppRoute

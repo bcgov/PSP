@@ -62,6 +62,10 @@ namespace Pims.Dal.Services
 
         public Paged<PimsResearchFile> GetPage(ResearchFilter filter)
         {
+            _logger.LogInformation("Searching for research files...");
+
+            _logger.LogDebug("Research file search with filter", filter);
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
             return _researchFileRepository.GetPage(filter);
         }
     }

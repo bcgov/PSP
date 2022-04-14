@@ -34,7 +34,6 @@ export function SelectInput<SelectTypes, FormikType>({
 
   return (
     <InputGroup
-      formikProps={null as any}
       prepend={
         <Select field={field} options={options ?? []} onChange={reset} disabled={disabled} />
       }

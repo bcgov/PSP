@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { FormikProps } from 'formik';
 import React, { CSSProperties } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FormControlProps } from 'react-bootstrap/FormControl';
@@ -12,8 +11,6 @@ import { Input } from './Input';
 type RequiredAttributes = {
   /** The field name */
   field: string;
-  /** formik state used for context and memo calculations */
-  formikProps: FormikProps<any>;
 };
 
 type OptionalAttributes = {
@@ -66,7 +63,6 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   innerClassName,
   className,
   content,
-  formikProps,
   options,
   autoComplete,
   displayErrorTooltips,

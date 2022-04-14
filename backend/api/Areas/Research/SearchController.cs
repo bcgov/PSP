@@ -53,7 +53,7 @@ namespace Pims.Api.Areas.Research.Controllers
         /// </summary>
         /// <returns>An array of Research Files matching the filter</returns>
         [HttpGet]
-        [HasPermission(Permissions.LeaseView)]
+        [HasPermission(Permissions.ResearchFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<ResearchFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
@@ -71,7 +71,7 @@ namespace Pims.Api.Areas.Research.Controllers
         /// <param name="filter"></param>
         /// <returns>An array of research files matching the filter</returns>
         [HttpPost("filter")]
-        [HasPermission(Permissions.LeaseView)]
+        [HasPermission(Permissions.ResearchFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<ResearchFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]

@@ -55,7 +55,6 @@ export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectPro
     <Row>
       <Col lg={12} xl={8}>
         <SmallInputGroup
-          formikProps={formikProps}
           prepend={
             <Select
               field="createOrUpdateRange"

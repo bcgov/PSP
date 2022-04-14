@@ -41,7 +41,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// get/set - The username/idir of the user that created this row
         /// </summary>
         /// <value></value>
-        public string CreatedByIdir { get; set; }
+        public string AppCreateUserid { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row creation date after this date.
@@ -59,7 +59,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// get/set - The idir or username of the user that updated this research file row.
         /// </summary>
         /// <value></value>
-        public string UpdatedByIdir { get; set; }
+        public string AppLastUpdateUserid { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row update date after this date.
@@ -95,10 +95,10 @@ namespace Pims.Api.Areas.Research.Models.Search
             this.Name = filter.GetStringValue(nameof(this.Name));
             this.RoadOrAlias = filter.GetStringValue(nameof(this.RoadOrAlias));
             this.RFileNumber = filter.GetStringValue(nameof(this.RFileNumber));
-            this.CreatedByIdir = filter.GetStringValue(nameof(this.CreatedByIdir));
+            this.AppCreateUserid = filter.GetStringValue(nameof(this.AppCreateUserid));
             this.CreatedOnStartDate = filter.GetDateTimeNullValue(nameof(this.CreatedOnStartDate));
             this.CreatedOnEndDate = filter.GetDateTimeNullValue(nameof(this.CreatedOnEndDate));
-            this.UpdatedByIdir = filter.GetStringValue(nameof(this.UpdatedByIdir));
+            this.AppLastUpdateUserid = filter.GetStringValue(nameof(this.AppLastUpdateUserid));
             this.UpdatedOnStartDate = filter.GetDateTimeNullValue(nameof(this.UpdatedOnStartDate));
             this.UpdatedOnEndDate = filter.GetDateTimeNullValue(nameof(this.UpdatedOnEndDate));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
@@ -121,10 +121,10 @@ namespace Pims.Api.Areas.Research.Models.Search
                 ResearchFileStatusTypeCode = model.ResearchFileStatusTypeCode,
                 Name = model.Name,
                 RoadOrAlias = model.RoadOrAlias,
-                CreatedByIdir = model.CreatedByIdir,
+                AppCreateUserid = model.AppCreateUserid,
                 CreatedOnStartDate = model.CreatedOnStartDate,
                 CreatedOnEndDate = model.CreatedOnEndDate,
-                UpdatedByIdir = model.UpdatedByIdir,
+                AppLastUpdateUserid = model.AppLastUpdateUserid,
                 UpdatedOnStartDate = model.UpdatedOnStartDate,
                 UpdatedOnEndDate = model.UpdatedOnEndDate,
                 Sort = model.Sort,
