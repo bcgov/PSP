@@ -6,6 +6,7 @@ import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
 
 const onClose = jest.fn();
+const onZoom = jest.fn();
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -23,7 +24,11 @@ describe('MotiInventoryContainer component', () => {
   const setup = (renderOptions: RenderOptions & IMotiInventoryContainerProps) => {
     // render component under test
     const renderResult = render(
-      <MotiInventoryContainer onClose={renderOptions.onClose} pid={renderOptions.pid} />,
+      <MotiInventoryContainer
+        onClose={renderOptions.onClose}
+        pid={renderOptions.pid}
+        onZoom={renderOptions.onZoom}
+      />,
       {
         ...renderOptions,
         history,
@@ -46,6 +51,7 @@ describe('MotiInventoryContainer component', () => {
     setup({
       pid: '9212434',
       onClose,
+      onZoom,
     });
     await waitFor(() => {
       expect(mockAxios.history.post).toHaveLength(1);
@@ -57,7 +63,7 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { findByText } = setup({ onClose, pid: '9212434' });
+    const { findByText } = setup({ onClose, pid: '9212434', onZoom });
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
@@ -74,7 +80,7 @@ describe('MotiInventoryContainer component', () => {
     };
     mockAxios.onGet(new RegExp('/properties/*')).reply(404, error);
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { queryByText } = setup({ onClose, pid: '9212434' });
+    const { queryByText } = setup({ onClose, pid: '9212434', onZoom });
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);

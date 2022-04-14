@@ -28,8 +28,8 @@ interface MapViewProps {
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const history = useHistory();
   const [loadedProperties, setLoadedProperties] = useState(false);
-
-  const { sidebarComponent, showSideBar } = useMapSideBarQueryParams();
+  const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
+  const { sidebarComponent, showSideBar } = useMapSideBarQueryParams(mapInstance);
 
   const onMarkerClicked = (property: IProperty) => {
     const parsedPid = pidParser(property.pid);
@@ -65,6 +65,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
                 onPropertyMarkerClick={onMarkerClicked}
                 onViewPropertyClick={onPropertyViewClicked}
                 showSideBar={showSideBar}
+                whenCreated={setMapInstance}
               />
             </FilterProvider>
           </StyleMapView>

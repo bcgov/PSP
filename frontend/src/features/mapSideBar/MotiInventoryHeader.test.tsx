@@ -15,7 +15,7 @@ describe('MotiInventoryHeader component', () => {
   ): RenderResult => {
     // render component under test
     const result = render(
-      <MotiInventoryHeader ltsaData={renderOptions.ltsaData} property={renderOptions.property} />,
+      <MotiInventoryHeader
         ltsaData={renderOptions.ltsaData}
         property={renderOptions.property}
         onZoom={onZoom}

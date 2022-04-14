@@ -3,7 +3,6 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { AssociatedPlan, LtsaOrders } from 'interfaces/ltsaModels';
-import { noop } from 'lodash';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdZoomIn } from 'react-icons/md';
@@ -14,7 +13,7 @@ import { HeaderField } from './tabs/HeaderField';
 interface IMotiInventoryHeaderProps {
   ltsaData?: LtsaOrders;
   property?: IPropertyApiModel;
-  onZoom?: () => void;
+  onZoom?: (apiProperty?: IPropertyApiModel | undefined) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
@@ -65,7 +64,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
               className="float-right"
               disabled={!props.onZoom}
               title="Zoom Map"
-              onClick={props?.onZoom ? props.onZoom : noop}
+              onClick={() => props?.onZoom && props?.onZoom(props.property)}
             >
               <TooltipWrapper toolTipId="property-zoom-map" toolTip="Zoom Map">
                 <MdZoomIn size={22} />
