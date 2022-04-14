@@ -32,10 +32,6 @@ namespace Pims.Dal
         ILeaseTermRepository LeaseTerm { get; }
         #endregion
 
-        #region Research
-        IResearchRepository Research { get; }
-        #endregion
-
         #region Deposits
         ISecurityDepositRepository SecurityDeposit { get; }
         #endregion

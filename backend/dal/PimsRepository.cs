@@ -109,7 +109,6 @@ namespace Pims.Dal
         /// get - The research file repository.
         /// </summary>
         public IResearchFileRepository ResearchFile { get { return _serviceProvider.GetService<IResearchFileRepository>(); } }
-        public IResearchRepository Research { get { return _serviceProvider.GetService<IResearchRepository>(); } }
         #endregion
 
         #region Constructors

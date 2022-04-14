@@ -1,10 +1,8 @@
-import { Api_Address, Api_CodeType } from './Address';
 import Api_TypeCode from 'interfaces/ITypeCode';
 import { Moment } from 'moment';
 
-import { Api_Address } from './Address';
+import { Api_Address, Api_CodeType } from './Address';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
-
 
 export interface Api_Coordinate {
   /**
@@ -33,7 +31,7 @@ export interface Api_Property extends Api_ConcurrentVersion {
   tenure?: Api_TypeCode<string>;
   name?: string;
   description?: string;
-  address: Api_Address;
+  address?: Api_Address;
   region?: Api_TypeCode<number>;
   district?: Api_TypeCode<string>;
   location?: Api_Geometry;
@@ -43,7 +41,7 @@ export interface Api_Property extends Api_ConcurrentVersion {
   longitude?: number;
 
   landArea: number;
-  landLegalDescription: string;
+  landLegalDescription?: string;
   encumbranceReason?: string;
   isSensitive?: boolean;
   isOwned?: boolean;

@@ -10,8 +10,8 @@ namespace Pims.Api.Models.Concepts
         {
             config.NewConfig<Entity.PimsProperty, PropertyModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.PID, src => src.Pid)
-                .Map(dest => dest.PIN, src => src.Pin)
+                .Map(dest => dest.Pid, src => src.Pid)
+                .Map(dest => dest.Pin, src => src.Pin)
                 .Map(dest => dest.Status, src => src.PropertyStatusTypeCodeNavigation)
                 .Map(dest => dest.PropertyType, src => src.PropertyTypeCodeNavigation)
                 .Map(dest => dest.Region, src => src.RegionCodeNavigation)
@@ -53,7 +53,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Pin, src => src.Pin)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.DistrictCode, src => src.District.Code)
-                .Map(dest => dest.RegionCode, src => src.Region.Code)
+                .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Map(dest => dest.Location, src => src.Location)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }

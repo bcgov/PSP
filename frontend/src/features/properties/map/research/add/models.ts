@@ -49,6 +49,7 @@ export class PropertyForm {
     return {
       pid: Number(this.pid),
       pin: Number(this.pin),
+      landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
       /*region: { id: this.regionId },
       district: { id: this.districtId },*/

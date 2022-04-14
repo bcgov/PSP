@@ -50,24 +50,6 @@ namespace Pims.Dal.Test.Services
         #endregion
 
         #region Tests
-        [Fact]
-        public void ResearchFile_Count()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var eResearch = EntityHelper.CreateResearchFile(rfileNumber: "100-000-000");
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(eResearch);
-
-            var service = helper.CreateRepository<ResearchRepository>(user);
-
-            // Act
-            var result = service.Count();
-
-            // Assert
-            Assert.Equal(1, result);
-        }
-
         #region GetPage
         [Theory]
         [MemberData(nameof(ResearchFilterData))]
@@ -86,7 +68,7 @@ namespace Pims.Dal.Test.Services
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(eResearch);
 
-            var repository = helper.CreateRepository<ResearchRepository>(user);
+            var repository = helper.CreateRepository<ResearchFileRepository>(user);
 
             // Act
             var result = repository.GetPage(filter);
@@ -98,28 +80,13 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
-        public void Get_ResearchFiles_NotAuthorized()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-
-            var service = helper.CreateRepository<ResearchRepository>(user);
-
-            // Act
-            // Assert
-            Assert.Throws<NotAuthorizedException>(() =>
-                service.GetPage(null));
-        }
-
-        [Fact]
         public void Get_ResearchFiles_NullFilter()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
 
-            var service = helper.CreateRepository<ResearchRepository>(user);
+            var service = helper.CreateRepository<ResearchFileRepository>(user);
 
             // Act
             // Assert
@@ -134,7 +101,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
 
-            var service = helper.CreateRepository<ResearchRepository>(user);
+            var service = helper.CreateRepository<ResearchFileRepository>(user);
 
             // Act
             // Assert

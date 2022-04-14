@@ -105,12 +105,12 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - A unique identifier for the titled parcel.
         /// </summary>
-        public int? Pid PID { get; set; }
+        public int? Pid { get; set; }
 
         /// <summary>
         /// get/set - A unique identifier for an untitled parcel.
         /// </summary>
-        public int? PIN { get; set; }
+        public int? Pin { get; set; }
 
         /// <summary>
         /// get/set - Area Unit name.

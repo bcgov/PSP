@@ -61,7 +61,7 @@ namespace Pims.Api.Test.Controllers.Research
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.ResearchService.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
+            service.Setup(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
             // Act
             var result = controller.GetResearchFiles(filter);
@@ -71,7 +71,7 @@ namespace Pims.Api.Test.Controllers.Research
             var actualResult = Assert.IsType<Models.PageModel<ResearchFileModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.ResearchService.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
+            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Pims.Api.Test.Controllers.Research
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.ResearchService.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
+            service.Setup(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
             // Act
             var result = controller.GetResearchFiles();
@@ -100,7 +100,7 @@ namespace Pims.Api.Test.Controllers.Research
             var actualResult = Assert.IsType<Models.PageModel<ResearchFileModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.ResearchService.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
+            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Pims.Api.Test.Controllers.Research
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetResearchFiles());
-            service.Verify(m => m.ResearchService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
+            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Pims.Api.Test.Controllers.Research
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetResearchFiles(null));
-            service.Verify(m => m.ResearchService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
+            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Pims.Api.Test.Controllers.Research
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetResearchFiles(filter));
-            service.Verify(m => m.ResearchService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
+            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
         }
         #endregion
         #endregion

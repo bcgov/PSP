@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -57,6 +58,11 @@ namespace Pims.Dal.Services
             var newResearchFile = _researchFileRepository.Add(researchFile);
             _researchFileRepository.CommitTransaction();
             return newResearchFile;
+        }
+
+        public Paged<PimsResearchFile> GetPage(ResearchFilter filter)
+        {
+            return _researchFileRepository.GetPage(filter);
         }
     }
 }

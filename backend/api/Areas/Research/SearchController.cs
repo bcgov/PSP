@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Research.Controllers
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid()) throw new BadRequestException("Research filter must contain valid values.");
 
-            var researchFiles = pimsService.ResearchService.GetPage((ResearchFilter)filter);
+            var researchFiles = pimsService.ResearchFileService.GetPage((ResearchFilter)filter);
             return new JsonResult(mapper.Map<Api.Models.PageModel<ResearchFileModel>>(researchFiles));
         }
         #endregion

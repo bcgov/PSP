@@ -15,6 +15,10 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public string Name { get; set; }
 
+        public string RoadName { get; set; }
+
+        public string RoadAlias { get; set; }
+
         /// <summary>
         /// get/set - The R-File number for this research file.
         /// </summary>
@@ -23,7 +27,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The research file status type.
         /// </summary>
-        public TypeModel<string> StatusType { get; set; }
+        public TypeModel<string> ResearchFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - A list of research property relationships.

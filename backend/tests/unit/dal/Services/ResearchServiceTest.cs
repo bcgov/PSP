@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
@@ -27,8 +28,8 @@ namespace Pims.Dal.Test.Services
             var researchFile = EntityHelper.CreateResearchFile(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(researchFile);
 
-            var service = helper.Create<ResearchService>();
-            var researchRepository = helper.GetService<Mock<Repositories.IResearchRepository>>();
+            var service = helper.Create<ResearchFileService>();
+            var researchRepository = helper.GetService<Mock<Repositories.IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
 
             // Act
