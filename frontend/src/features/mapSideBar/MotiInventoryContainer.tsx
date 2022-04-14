@@ -20,6 +20,7 @@ import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTa
 export interface IMotiInventoryContainerProps {
   onClose: () => void;
   pid?: string;
+  onZoom: (apiProperty?: IPropertyApiModel | undefined) => void;
 }
 
 /**
@@ -85,7 +86,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   return (
     <MapSideBarLayout
       title="Property Information"
-      header={<MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} />}
+      header={
+        <MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} onZoom={props.onZoom} />
+      }
       icon={<LotIcon className="mr-1" />}
       showCloseButton
       onClose={props.onClose}

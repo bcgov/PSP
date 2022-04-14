@@ -1,10 +1,11 @@
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
-import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+import { render, RenderOptions, RenderResult, userEvent } from 'utils/test-utils';
 
 import { MotiInventoryHeader } from './MotiInventoryHeader';
 import { mockLtsaResponse } from './tabs/ltsa/LtsaTabView.test';
 
+const onZoom = jest.fn();
 describe('MotiInventoryHeader component', () => {
   const setup = (
     renderOptions: RenderOptions & {
@@ -14,10 +15,18 @@ describe('MotiInventoryHeader component', () => {
   ): RenderResult => {
     // render component under test
     const result = render(
-      <MotiInventoryHeader ltsaData={renderOptions.ltsaData} property={renderOptions.property} />,
+      <MotiInventoryHeader
+        ltsaData={renderOptions.ltsaData}
+        property={renderOptions.property}
+        onZoom={onZoom}
+      />,
     );
     return result;
   };
+
+  afterEach(() => {
+    onZoom.mockClear();
+  });
 
   it('renders as expected', () => {
     const result = setup();
@@ -52,5 +61,27 @@ describe('MotiInventoryHeader component', () => {
     });
     // PID is shown
     expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
+  });
+
+  it('allows the active property to be zoomed in', async () => {
+    const testProperty: IPropertyApiModel = {} as any;
+    const { getByTitle } = setup({
+      ltsaData: undefined,
+      property: testProperty,
+    });
+    const zoomButton = getByTitle('Zoom Map');
+    userEvent.click(zoomButton);
+    expect(onZoom).toHaveBeenCalled();
+  });
+
+  it('does not allow property zooming if no property is visible', async () => {
+    const { getByTitle } = setup({
+      ltsaData: undefined,
+      property: undefined,
+    });
+
+    const zoomButton = getByTitle('Zoom Map');
+    userEvent.click(zoomButton);
+    expect(onZoom).toHaveBeenCalled();
   });
 });
