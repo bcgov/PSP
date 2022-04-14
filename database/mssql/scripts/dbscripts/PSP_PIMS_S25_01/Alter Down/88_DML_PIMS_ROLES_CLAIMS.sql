@@ -6,9 +6,6 @@ Author        Date         Comment
 Devin Smith  2021-Nov-18  Initial version
 ----------------------------------------------------------------------------- */
 
-DELETE FROM PIMS_ROLE_CLAIM
-
-
 DECLARE @admin BIGINT;
 DECLARE @rem BIGINT;
 DECLARE @rea BIGINT;
@@ -58,15 +55,6 @@ VALUES(@admin, 1, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migratio
 
 (@admin, 21, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
 
-(@admin, 22, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
-
-(@admin, 23, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
-
-(@admin, 24, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
-
-(@admin, 25, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
-
-
 /** Real Estate Manager - read only access **/
 (@rem, 8, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED'),
 
@@ -75,9 +63,6 @@ VALUES(@admin, 1, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migratio
 (@rem, 17, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
 
 (@rem, 21, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
-
-(@rem, 22, 0, 1, CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', NULL, N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED', CAST(N'2021-11-10T02:17:49.920' AS DateTime), N'SEED'),
-
 
 /** Real Estate Analyst - limited read/write access **/
 (@rea, 8, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED'),
@@ -98,11 +83,5 @@ VALUES(@admin, 1, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migratio
 
 (@rea, 19, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED'),
 
-(@rea, 21, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED'),
-
-(@rea, 22, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED'),
-
-(@rea, 23, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED'),
-
-(@rea, 24, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED')
+(@rea, 21, 0, 1, CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'migration', NULL, N'', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED', CAST(N'2021-10-13T04:10:54.770' AS DateTime), N'SEED')
 GO
