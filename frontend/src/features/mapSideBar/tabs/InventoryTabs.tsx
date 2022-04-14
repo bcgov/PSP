@@ -21,9 +21,7 @@ export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
   PropertyView,
   LtsaView,
 }) => {
-  console.log(PropertyView);
   const showPropertyInfo = PropertyView !== null;
-  console.log(PropertyView);
 
   return (
     <TabView

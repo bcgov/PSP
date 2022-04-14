@@ -79,6 +79,10 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   margin-bottom: 2rem;
 }
 
+.c0 {
+  position: relative;
+}
+
 .c0.c0.c0 input,
 .c0.c0.c0 select,
 .c0.c0.c0 textarea {

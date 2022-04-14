@@ -41,7 +41,6 @@ describe('MotiInventoryContainer component', () => {
   });
 
   it('requests ltsa data by pid', async () => {
-    history.replace('mapview?pid=9212434&searchBy=pinOrPid&sidebar=true');
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet().reply(200, {});
     setup({
@@ -55,11 +54,10 @@ describe('MotiInventoryContainer component', () => {
   });
 
   it('shows the property information tab for inventory properties', async () => {
-    history.replace('mapview?pid=9212434&searchBy=pinOrPid&sidebar=true');
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { findByText } = setup({});
+    const { findByText } = setup({ onClose, pid: '9212434' });
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
@@ -68,7 +66,6 @@ describe('MotiInventoryContainer component', () => {
   });
 
   it('hides the property information tab for non-inventory properties', async () => {
-    history.replace('mapview?pid=9212434&searchBy=pinOrPid&sidebar=true');
     mockAxios.onPost().reply(200, {});
     // non-inventory properties return a "not-found" error from API
     const error = {
@@ -77,7 +74,7 @@ describe('MotiInventoryContainer component', () => {
     };
     mockAxios.onGet(new RegExp('/properties/*')).reply(404, error);
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { queryByText } = setup({});
+    const { queryByText } = setup({ onClose, pid: '9212434' });
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);

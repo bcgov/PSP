@@ -70,7 +70,6 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   };
 
   const handlePageToggle = (option: SearchToggleOption) => {
-    console.log(option);
     if (option === SearchToggleOption.Map) {
       history.push('/mapview');
     } else if (option === SearchToggleOption.List) {

@@ -80,6 +80,10 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   font-style: italic;
 }
 
+.c0 {
+  position: relative;
+}
+
 .c0.c0.c0 input,
 .c0.c0.c0 select,
 .c0.c0.c0 textarea {

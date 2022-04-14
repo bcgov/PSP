@@ -32,8 +32,6 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
 
-  console.log(props.pid);
-
   // First, fetch property information from PSP API
   const { getPropertyWithPid } = useProperties();
   useEffect(() => {
@@ -41,14 +39,12 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
       try {
         if (!!props.pid) {
           const propInfo = await getPropertyWithPid(props.pid);
-          console.log(propInfo);
           if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
             setApiProperty(propInfo);
             setShowPropertyInfoTab(true);
           }
         }
       } catch (e) {
-        console.log('error');
         // PSP-2919 Hide the property info tab for non-inventory properties
         // We get an error because PID is not on our database
         if (axios.isAxiosError(e)) {

@@ -1,6 +1,4 @@
-import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { Feature, GeoJsonProperties } from 'geojson';
-import { IProperty } from 'interfaces';
 import { LatLng, LatLngBounds } from 'leaflet';
 import noop from 'lodash/noop';
 import React, { useCallback, useState } from 'react';
