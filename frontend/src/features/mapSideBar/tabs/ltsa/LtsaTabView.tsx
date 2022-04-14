@@ -95,6 +95,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
 };
 
 export const StyledForm = styled(Form)`
+  position: relative;
   &&& {
     input,
     select,

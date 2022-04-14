@@ -60,6 +60,7 @@ const HeaderWrapper = styled.div`
   margin-left: 3rem;
   margin-right: 3rem;
   margin-top: 1rem;
+  position: relative;
 `;
 const StyledDivider = styled.div`
   margin-top: 0.5rem;

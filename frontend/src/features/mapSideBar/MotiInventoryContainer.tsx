@@ -1,7 +1,9 @@
 import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
+import axios, { AxiosError } from 'axios';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
+import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import React, { useEffect, useState } from 'react';
@@ -17,7 +19,7 @@ import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTa
 
 export interface IMotiInventoryContainerProps {
   onClose: () => void;
-  pid: string;
+  pid?: string;
 }
 
 /**
@@ -28,14 +30,33 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
+  const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
+
+  console.log(props.pid);
 
   // First, fetch property information from PSP API
   const { getPropertyWithPid } = useProperties();
   useEffect(() => {
     const func = async () => {
-      const propInfo = await getPropertyWithPid(props.pid);
-      if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
-        setApiProperty(propInfo);
+      try {
+        if (!!props.pid) {
+          const propInfo = await getPropertyWithPid(props.pid);
+          console.log(propInfo);
+          if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
+            setApiProperty(propInfo);
+            setShowPropertyInfoTab(true);
+          }
+        }
+      } catch (e) {
+        console.log('error');
+        // PSP-2919 Hide the property info tab for non-inventory properties
+        // We get an error because PID is not on our database
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 404) {
+            setShowPropertyInfoTab(false);
+          }
+        }
       }
     };
 
@@ -75,7 +96,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     >
       <InventoryTabs
         LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
-        PropertyView={<PropertyDetailsTabView property={propertyViewForm} />}
+        PropertyView={
+          showPropertyInfoTab ? <PropertyDetailsTabView property={propertyViewForm} /> : null
+        }
       />
     </MapSideBarLayout>
   );

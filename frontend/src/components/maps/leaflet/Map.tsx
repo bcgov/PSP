@@ -49,6 +49,7 @@ export type MapProps = {
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
   onPropertyMarkerClick: (property: IProperty) => void;
+  onViewPropertyClick: (pid?: string | null) => void;
 };
 
 type BaseLayerFile = {
@@ -92,6 +93,7 @@ const Map: React.FC<MapProps> = ({
   whenCreated,
   disableMapFilterBar,
   onPropertyMarkerClick,
+  onViewPropertyClick,
 }) => {
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
@@ -243,6 +245,7 @@ const Map: React.FC<MapProps> = ({
           {!!layerPopup && (
             <LayerPopup
               layerPopup={layerPopup}
+              onViewPropertyInfo={onViewPropertyClick}
               onClose={() => {
                 setLayerPopup(undefined);
                 setPropertyInfo(null);

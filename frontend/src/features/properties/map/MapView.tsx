@@ -32,8 +32,17 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const { sidebarComponent, showSideBar } = useMapSideBarQueryParams();
 
   const onMarkerClicked = (property: IProperty) => {
-    const pid = pidParser(property.pid);
-    history.push(`/mapview/property/${pid}`);
+    const parsedPid = pidParser(property.pid);
+    history.push(`/mapview/property/${parsedPid}`);
+  };
+
+  const onPropertyViewClicked = (pid?: string | null) => {
+    if (pid !== undefined && pid !== null) {
+      const parsedPid = pidParser(pid);
+      history.push(`/mapview/property/${parsedPid}`);
+    } else {
+      console.warn('Invalid pin when trying to see property information');
+    }
   };
 
   return (
@@ -54,6 +63,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
                 showParcelBoundaries={props.showParcelBoundaries ?? true}
                 zoom={6}
                 onPropertyMarkerClick={onMarkerClicked}
+                onViewPropertyClick={onPropertyViewClicked}
                 showSideBar={showSideBar}
               />
             </FilterProvider>

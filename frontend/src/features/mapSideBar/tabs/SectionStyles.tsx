@@ -17,6 +17,7 @@ export const StyledSectionHeader = styled.h2`
 `;
 
 export const StyledReadOnlyForm = styled(Form)`
+  position: relative;
   &&& {
     input,
     select,
