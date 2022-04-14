@@ -38,7 +38,7 @@ export const defaultResearchFilter: IResearchFilter = {
 };
 
 /**
- * Filter bar for leases and license.
+ * Filter bar for research files.
  * @param {IResearchFilterProps} props
  */
 export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
