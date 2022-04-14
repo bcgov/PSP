@@ -43,7 +43,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var service = helper.CreateRepository<ContactService>(user);
+            var service = helper.CreateRepository<ContactRepository>(user);
 
             // Act
             // Assert

@@ -274,9 +274,9 @@ exports[`Update lease container component renders as expected 1`] = `
             </option>
             <option
               class="option"
-              value="EXPIRED"
+              value="INACTIVE"
             >
-              Expired
+              Inactive
             </option>
             <option
               class="option"

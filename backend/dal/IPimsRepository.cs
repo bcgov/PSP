@@ -37,11 +37,11 @@ namespace Pims.Dal
         #endregion
 
         #region Contacts
-        IContactService Contact { get; }
+        IContactRepository Contact { get; }
         #endregion
 
         #region Insurance
-        IInsuranceService Insurance { get; }
+        IInsuranceRepository Insurance { get; }
         #endregion
 
         #region Autocomplete
@@ -49,7 +49,7 @@ namespace Pims.Dal
         #endregion
 
         #region Configuration
-        ITenantService Tenant { get; }
+        ITenantRepository Tenant { get; }
         #endregion
 
         #region ResearchFiles
