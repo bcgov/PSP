@@ -5,7 +5,7 @@ import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
 
-const setShowSideBar = jest.fn();
+const onClose = jest.fn();
 
 describe('MotiInventoryContainer component', () => {
   const mockAxios = new MockAdapter(axios);
@@ -13,11 +13,7 @@ describe('MotiInventoryContainer component', () => {
   const setup = (renderOptions: RenderOptions & IMotiInventoryContainerProps) => {
     // render component under test
     const component = render(
-      <MotiInventoryContainer
-        showSideBar={renderOptions.showSideBar}
-        setShowSideBar={renderOptions.setShowSideBar}
-        pid={renderOptions.pid}
-      />,
+      <MotiInventoryContainer onClose={renderOptions.onClose} pid={renderOptions.pid} />,
       {
         ...renderOptions,
         history,
@@ -34,8 +30,7 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onGet().reply(200, {});
     setup({
       pid: '9212434',
-      showSideBar: false,
-      setShowSideBar,
+      onClose,
     });
     await waitFor(() => {
       expect(mockAxios.history.post).toHaveLength(1);

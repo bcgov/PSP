@@ -1,0 +1,660 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResearchProperties component renders as expected when provided no properties 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+}
+
+<h2
+    class="c0"
+  >
+    Properties to include in this file:
+  </h2>
+  <div
+    class="py-2"
+  >
+    Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria
+  </div>
+  .c1 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c1 .nav-tabs {
+  height: 2.4rem;
+}
+
+.c1 .nav-item {
+  min-width: 7rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.c1 .nav-item:hover {
+  border-color: transparent;
+}
+
+.c1 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c3 {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c0 {
+  height: 100%;
+}
+
+.c0 .nav-tabs {
+  height: 2.4rem;
+}
+
+.c0 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
+}
+
+.c0 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c5:hover {
+  cursor: pointer;
+}
+
+.c7 {
+  font-weight: bold;
+}
+
+.c4.c4.c4 input,
+.c4.c4.c4 select,
+.c4.c4.c4 textarea {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.c4.c4.c4 .form-label {
+  font-weight: bold;
+}
+
+.c6 {
+  font-family: 'BcSans-Bold';
+  margin-bottom: 1rem;
+}
+
+<div
+    class="py-3 no-gutters row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0"
+      >
+        <nav
+          class="c1 nav nav-tabs"
+          role="tablist"
+        >
+          <a
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="map"
+            href="#"
+            role="tab"
+          >
+            Locate on Map
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="list"
+            href="#"
+            role="tab"
+          >
+            Search
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
+          <div
+            aria-hidden="false"
+            class="fade tab-pane active show"
+            role="tabpanel"
+          >
+            <div
+              class="c2"
+            >
+              <h3
+                class="c3"
+              >
+                Select a property
+              </h3>
+              <div
+                class="c4 row"
+              >
+                <div
+                  class="col-md-4"
+                >
+                  <div
+                    class="d-flex flex-column align-items-center"
+                  >
+                    <div>
+                      <svg
+                        class="c5"
+                        height="97"
+                        title="select properties on the map"
+                        width="97"
+                      >
+                        icon-draft.svg
+                      </svg>
+                    </div>
+                    <ol>
+                      <li>
+                        Click pin above
+                      </li>
+                      <li>
+                        Position it on the map
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div
+                  class="col-md-8"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c6 col"
+                    >
+                      Selected property attributes
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="col-4"
+                    >
+                      <label
+                        class="c7"
+                      >
+                        PID:
+                      </label>
+                    </div>
+                    <div
+                      class="col"
+                    />
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="col-4"
+                    >
+                      <label
+                        class="c7"
+                      >
+                        Plan #:
+                      </label>
+                    </div>
+                    <div
+                      class="col"
+                    />
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="col-4"
+                    >
+                      <label
+                        class="c7"
+                      >
+                        Address:
+                      </label>
+                    </div>
+                    <div
+                      class="col"
+                    />
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-12"
+                    >
+                      <label
+                        class="form-label"
+                      >
+                        Legal Description:
+                      </label>
+                    </div>
+                    <div
+                      class="col-md-12"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="fade tab-pane"
+            role="tabpanel"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  .c2 {
+  margin: 0;
+}
+
+.c2 [class^='col-'] {
+  padding: 0;
+}
+
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c3 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c5 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c7.c7 {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c7.c7 .text {
+  display: none;
+}
+
+.c7.c7 > div:hover {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c7.c7 > div:hover .text {
+  display: inline;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c4 {
+  font-size: 1.2rem;
+}
+
+<div
+    class="c0"
+  >
+    <h3
+      class="c1"
+    >
+      Selected properties
+    </h3>
+    <div
+      class="c2 c3 row"
+    >
+      <div
+        class="col-md-3"
+      >
+        Identifier
+      </div>
+      <div
+        class="col-md-9"
+      >
+        Provide a descriptive name for this land
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </div>
+    </div>
+    <div
+      class="c2 align-items-center mb-3 row"
+    >
+      <div
+        class="col-md-3"
+      >
+        <p
+          class="mb-0"
+        >
+          <svg
+            height="21"
+            overflow="visible"
+            preserveAspectRatio="none"
+            version="1.2"
+            viewBox="0 0 22 21"
+            width="21"
+            x="5"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            y="5"
+          >
+            <g
+              transform="translate(1, 1)"
+            >
+              <defs>
+                <path
+                  d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                  id="path-16484842245735\\\\77"
+                  vector-effect="non-scaling-stroke"
+                />
+              </defs>
+              <g
+                transform="translate(0, 0)"
+              >
+                <path
+                  d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                  style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(252, 186, 25);"
+                  vector-effect="non-scaling-stroke"
+                />
+              </g>
+            </g>
+            <text
+              class="c4"
+              textLength="1.25rem"
+              x="7"
+              y="15"
+            >
+              1
+            </text>
+            <title>
+              1
+            </title>
+          </svg>
+          <span
+            class="pl-3"
+          >
+            PID: 123-456-789
+          </span>
+        </p>
+      </div>
+      <div
+        class="col-md-7"
+      >
+        <div
+          class="c5 mb-0 w-100 input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-properties.0.name"
+            name="properties.0.name"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="col-md-2"
+      >
+        <div
+          class="c6 h-100"
+        >
+          <button
+            class="Button c7 btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                fill="currentColor"
+                height="2rem"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="2rem"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  remove
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+               
+              <span
+                class="text"
+              >
+                Remove
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 align-items-center mb-3 row"
+    >
+      <div
+        class="col-md-3"
+      >
+        <p
+          class="mb-0"
+        >
+          <svg
+            height="21"
+            overflow="visible"
+            preserveAspectRatio="none"
+            version="1.2"
+            viewBox="0 0 22 21"
+            width="21"
+            x="5"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            y="5"
+          >
+            <g
+              transform="translate(1, 1)"
+            >
+              <defs>
+                <path
+                  d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                  id="path-16484842245735\\\\77"
+                  vector-effect="non-scaling-stroke"
+                />
+              </defs>
+              <g
+                transform="translate(0, 0)"
+              >
+                <path
+                  d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                  style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(252, 186, 25);"
+                  vector-effect="non-scaling-stroke"
+                />
+              </g>
+            </g>
+            <text
+              class="c4"
+              textLength="1.25rem"
+              x="7"
+              y="15"
+            >
+              2
+            </text>
+            <title>
+              2
+            </title>
+          </svg>
+          <span
+            class="pl-3"
+          >
+            PIN: 1111222
+          </span>
+        </p>
+      </div>
+      <div
+        class="col-md-7"
+      >
+        <div
+          class="c5 mb-0 w-100 input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-properties.1.name"
+            name="properties.1.name"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="col-md-2"
+      >
+        <div
+          class="c6 h-100"
+        >
+          <button
+            class="Button c7 btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                fill="currentColor"
+                height="2rem"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="2rem"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  remove
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+               
+              <span
+                class="text"
+              >
+                Remove
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
