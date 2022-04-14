@@ -221,7 +221,25 @@ describe('Research List View', () => {
     fillInput(container, 'rFileNumber', '101');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getResearchFiles).toHaveBeenCalledWith(expect.objectContaining({}));
+    expect(getResearchFiles).toHaveBeenCalledWith({
+      appCreateUserid: '',
+      appLastUpdateUserid: '',
+      createOrUpdateBy: 'appLastUpdateUserid',
+      createOrUpdateRange: 'updatedOnStartDate',
+      createdOnEndDate: '',
+      createdOnStartDate: '',
+      name: '',
+      page: 1,
+      quantity: 10,
+      regionCode: '',
+      researchFileStatusTypeCode: '',
+      researchSearchBy: '',
+      rfileNumber: '',
+      roadOrAlias: '',
+      sort: undefined,
+      updatedOnEndDate: '',
+      updatedOnStartDate: '',
+    });
   });
 
   it('searches by file name', async () => {
@@ -231,7 +249,25 @@ describe('Research List View', () => {
     fillInput(container, 'name', 'test file name 1');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getResearchFiles).toHaveBeenCalledWith(expect.objectContaining({}));
+    expect(getResearchFiles).toHaveBeenCalledWith({
+      appCreateUserid: '',
+      appLastUpdateUserid: '',
+      createOrUpdateBy: 'appLastUpdateUserid',
+      createOrUpdateRange: 'updatedOnStartDate',
+      createdOnEndDate: '',
+      createdOnStartDate: '',
+      name: 'test file name 1',
+      page: 1,
+      quantity: 10,
+      regionCode: '',
+      researchFileStatusTypeCode: '',
+      researchSearchBy: 'name',
+      rfileNumber: '',
+      roadOrAlias: '',
+      sort: undefined,
+      updatedOnEndDate: '',
+      updatedOnStartDate: '',
+    });
   });
 
   it('searches by research file status', async () => {
@@ -241,7 +277,25 @@ describe('Research List View', () => {
     fillInput(container, 'researchFileStatusTypeCode', 'INACTIVE', 'select');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getResearchFiles).toHaveBeenCalledWith(expect.objectContaining({}));
+    expect(getResearchFiles).toHaveBeenCalledWith({
+      appCreateUserid: '',
+      appLastUpdateUserid: '',
+      createOrUpdateBy: 'appLastUpdateUserid',
+      createOrUpdateRange: 'updatedOnStartDate',
+      createdOnEndDate: '',
+      createdOnStartDate: '',
+      name: '',
+      page: 1,
+      quantity: 10,
+      regionCode: '',
+      researchFileStatusTypeCode: 'INACTIVE',
+      researchSearchBy: 'name',
+      rfileNumber: '',
+      roadOrAlias: '',
+      sort: undefined,
+      updatedOnEndDate: '',
+      updatedOnStartDate: '',
+    });
   });
 
   it('searches by road name', async () => {
@@ -251,7 +305,25 @@ describe('Research List View', () => {
     fillInput(container, 'roadOrAlias', 'a road name');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getResearchFiles).toHaveBeenCalledWith(expect.objectContaining({}));
+    expect(getResearchFiles).toHaveBeenCalledWith({
+      appCreateUserid: '',
+      appLastUpdateUserid: '',
+      createOrUpdateBy: 'appLastUpdateUserid',
+      createOrUpdateRange: 'updatedOnStartDate',
+      createdOnEndDate: '',
+      createdOnStartDate: '',
+      name: '',
+      page: 1,
+      quantity: 10,
+      regionCode: '',
+      researchFileStatusTypeCode: '',
+      researchSearchBy: 'name',
+      rfileNumber: '',
+      roadOrAlias: 'a road name',
+      sort: undefined,
+      updatedOnEndDate: '',
+      updatedOnStartDate: '',
+    });
   });
 
   it('searches by create date range', async () => {
