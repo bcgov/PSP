@@ -39,7 +39,7 @@ namespace Pims.Dal.Test.Services
             var tenant = EntityHelper.CreateTenant(1, "TEST", "Test Tenant");
             init.AddAndSaveChanges(tenant);
 
-            var service = helper.CreateRepository<TenantService>(user);
+            var service = helper.CreateRepository<TenantRepository>(user);
 
             // Act
             var result = service.GetTenant(tenant.Code);
@@ -61,7 +61,7 @@ namespace Pims.Dal.Test.Services
             var tenant = EntityHelper.CreateTenant(1, "TEST", "Test Tenant");
             init.AddAndSaveChanges(tenant);
 
-            var service = helper.CreateRepository<TenantService>(user);
+            var service = helper.CreateRepository<TenantRepository>(user);
 
             // Act
             var result = service.GetTenant("FAKE");
@@ -83,7 +83,7 @@ namespace Pims.Dal.Test.Services
             var tenant = EntityHelper.CreateTenant(1, "TEST", "Test Tenant");
             init.AddAndSaveChanges(tenant);
 
-            var service = helper.CreateRepository<TenantService>(user);
+            var service = helper.CreateRepository<TenantRepository>(user);
 
             var updateTenant = EntityHelper.CreateTenant(1, "TEST", "New Name");
             updateTenant.Description = "New Description";
@@ -107,7 +107,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var service = helper.CreateRepository<TenantService>(user);
+            var service = helper.CreateRepository<TenantRepository>(user);
 
             // Act
             // Assert
@@ -121,7 +121,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var service = helper.CreateRepository<TenantService>(user);
+            var service = helper.CreateRepository<TenantRepository>(user);
             var tenant = EntityHelper.CreateTenant();
 
             // Act
@@ -136,7 +136,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
-            var service = helper.CreateRepository<TenantService>(user);
+            var service = helper.CreateRepository<TenantRepository>(user);
             var tenant = EntityHelper.CreateTenant();
 
             // Act

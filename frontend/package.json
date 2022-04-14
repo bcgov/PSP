@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.1.0-25.22",
+  "version": "1.1.0-25.23",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -139,10 +139,10 @@
     "preinstall": "npx npm-force-resolutions",
     "start": "react-app-rewired start",
     "build": "cross-env CI=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",
-    "test": "tsc && react-app-rewired test --ci --watchAll=false --runInBand",
+    "test": "tsc && react-app-rewired test --ci --watchAll=false",
     "test:watch": "react-app-rewired test",
     "test:clear-cache": "jest --clearCache",
-    "coverage": "react-app-rewired test --ci --coverage --testResultsProcessor jest-sonar-reporter --watchAll=false --runInBand",
+    "coverage": "react-app-rewired test --ci --coverage --testResultsProcessor jest-sonar-reporter --watchAll=false",
     "update-snapshots": "react-app-rewired test --updateSnapshot",
     "eject": "react-scripts eject",
     "lint": "eslint src/ --ext .jsx,.js,.ts,.tsx --max-warnings 0",

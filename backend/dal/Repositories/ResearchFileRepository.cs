@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Data.SqlClient;
@@ -7,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -43,6 +46,27 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get a page with an array of leases within the specified filters.
+        /// Note that the 'researchFilter' will control the 'page' and 'quantity'.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public Paged<PimsResearchFile> GetPage(ResearchFilter filter)
+        {
+            filter.ThrowIfNull(nameof(filter));
+            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+
+            var skip = (filter.Page - 1) * filter.Quantity;
+            var query = this.Context.GenerateResearchQuery(filter);
+            var items = query
+                .Skip(skip)
+                .Take(filter.Quantity)
+                .ToArray();
+
+            return new Paged<PimsResearchFile>(items, filter.Page, filter.Quantity, query.Count());
+        }
+
+        /// <summary>
         /// Generate a new L File in format RFile-XXXXXXXXXX using the lease id. Add the lease id and lfileno to the passed lease.
         /// </summary>
         private string GenerateRFileNumber()
@@ -65,7 +89,6 @@ namespace Pims.Dal.Repositories
 
             return (long)result.Value;
         }
-
         #endregion
     }
 }

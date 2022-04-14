@@ -32,10 +32,10 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
             repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();
             repositories.AddScoped<Repositories.IAccessRequestService, Repositories.AccessRequestService>();
-            repositories.AddScoped<Repositories.ITenantService, Repositories.TenantService>();
+            repositories.AddScoped<Repositories.ITenantRepository, Repositories.TenantRepository>();
             repositories.AddScoped<Repositories.ILeaseRepository, Repositories.LeaseRepository>();
-            repositories.AddScoped<Repositories.IContactService, Repositories.ContactService>();
-            repositories.AddScoped<Repositories.IInsuranceService, Repositories.InsuranceService>();
+            repositories.AddScoped<Repositories.IContactRepository, Repositories.ContactRepository>();
+            repositories.AddScoped<Repositories.IInsuranceRepository, Repositories.InsuranceRepository>();
             repositories.AddScoped<Repositories.IAutocompleteService, Repositories.AutocompleteService>();
             repositories.AddScoped<Repositories.IUserOrganizationService, Repositories.UserOrganizationService>();
             repositories.AddScoped<Repositories.IOrganizationRepository, Repositories.OrganizationRepository>();

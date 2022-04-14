@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly... 1`] = `
+exports[`SelectInput tests renders correctly... 1`] = `
 <DocumentFragment>
   .c0 {
   padding-right: 0;
@@ -21,7 +21,7 @@ exports[`renders correctly... 1`] = `
 }
 
 <div
-    class="row"
+    class="idir-input-group flex-nowrap row"
   >
     <div
       class="c0 col-auto"
@@ -62,7 +62,6 @@ exports[`renders correctly... 1`] = `
         <input
           class="form-control"
           id="input-undefined"
-          placeholder=""
           value=""
         />
       </div>

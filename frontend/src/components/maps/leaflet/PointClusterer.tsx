@@ -9,10 +9,8 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import L, { LatLng, LatLngLiteral } from 'leaflet';
 import { find } from 'lodash';
-import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
-import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Supercluster from 'supercluster';
 
@@ -105,8 +103,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
-  const location = useLocation();
-  const { parcelId } = queryString.parse(location.search);
   const selectedPropertyContext = React.useContext(SelectedPropertyContext);
   const { propertyInfo: selected } = selectedPropertyContext;
 
@@ -146,21 +142,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       return [];
     }
   }, [currentCluster, supercluster]);
-
-  //Optionally create a new pin to represent the active property if not already displayed in a spiderfied cluster.
-  useDeepCompareEffect(() => {
-    if (!currentClusterIds.includes(+(selected?.id ?? 0))) {
-      setCurrentSelected(selected);
-      if (!!parcelId && !!selected) {
-        mapInstance.setView(
-          [selected?.latitude as number, selected?.longitude as number],
-          Math.max(MAX_ZOOM, mapInstance.getZoom()),
-        );
-      }
-    } else {
-      setCurrentSelected(null);
-    }
-  }, [selected, setCurrentSelected]);
 
   // Register event handlers to shrink and expand clusters when map is interacted with
   const componentDidMount = useCallback(() => {
@@ -310,7 +291,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   );
 
   const keycloak = useKeycloakWrapper();
-
   return (
     <>
       <FeatureGroup ref={featureGroupRef}>
@@ -366,6 +346,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                     longitude,
                   );
                   convertedProperty && onMarkerClick(convertedProperty); //open information slideout
+                  setCurrentSelected(convertedProperty);
                   if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
                     convertedProperty?.id
                       ? fetchProperty(convertedProperty.id, {
@@ -428,7 +409,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             <SelectedPropertyMarker
               {...selected}
               icon={getMarkerIcon({ properties: selected } as any, true)}
-              className={Number(parcelId) === selected?.id ? 'active-selected' : ''}
+              className={'active-selected'}
               position={[selected.latitude as number, selected.longitude as number]}
               map={mapInstance}
               eventHandlers={{

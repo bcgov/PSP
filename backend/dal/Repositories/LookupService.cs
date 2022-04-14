@@ -192,6 +192,11 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsLeasePaymentMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
+
+        public IEnumerable<PimsResearchFileStatusType> GetResearchFileStatusTypes()
+        {
+            return this.Context.PimsResearchFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }
