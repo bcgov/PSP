@@ -16,9 +16,8 @@ import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
 export interface IMotiInventoryContainerProps {
-  showSideBar: boolean;
-  setShowSideBar: (show: boolean) => void;
-  pid?: string;
+  onClose: () => void;
+  pid: string;
 }
 
 /**
@@ -34,11 +33,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const { getPropertyWithPid } = useProperties();
   useEffect(() => {
     const func = async () => {
-      if (!!props.pid) {
-        const propInfo = await getPropertyWithPid(props.pid);
-        if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
-          setApiProperty(propInfo);
-        }
+      const propInfo = await getPropertyWithPid(props.pid);
+      if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
+        setApiProperty(propInfo);
       }
     };
 
@@ -71,11 +68,10 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   return (
     <MapSideBarLayout
       title="Property Information"
-      showSideBar={props.showSideBar}
-      setShowSideBar={props.setShowSideBar}
       header={<MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} />}
       icon={<LotIcon className="mr-1" />}
       showCloseButton
+      onClose={props.onClose}
     >
       <InventoryTabs
         LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}

@@ -2,13 +2,13 @@ import * as Styled from 'components/common/styles';
 import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
-import SelectedPropertyHeaderRow from 'features/research/add/SelectedPropertyHeaderRow';
-import SelectedPropertyRow from 'features/research/add/SelectedPropertyRow';
 import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { PropertyForm, ResearchForm } from './models';
+import SelectedPropertyHeaderRow from './SelectedPropertyHeaderRow';
+import SelectedPropertyRow from './SelectedPropertyRow';
 
 const ResearchProperties: React.FunctionComponent = () => {
   const { values } = useFormikContext<ResearchForm>();

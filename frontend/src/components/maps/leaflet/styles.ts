@@ -58,4 +58,7 @@ export const MapGrid = styled.div`
     grid-template-rows: 0 1fr;
     transition: 1s;
   }
+
+  transition: margin 1s, width 1s;
+  position: relative;
 `;

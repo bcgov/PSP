@@ -7,12 +7,12 @@ import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
 interface IMapSideBarLayoutProps {
-  showSideBar: boolean;
-  setShowSideBar: (show: boolean) => void;
   title: React.ReactNode;
   header?: React.ReactNode;
   icon: React.ReactNode | React.FunctionComponent;
+  footer?: React.ReactNode | React.FunctionComponent;
   showCloseButton?: boolean;
+  onClose?: () => void;
 }
 
 /**
@@ -20,8 +20,6 @@ interface IMapSideBarLayoutProps {
  * @param param0
  */
 const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
-  showSideBar,
-  setShowSideBar,
   title,
   header,
   icon,
@@ -29,39 +27,39 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
   ...props
 }) => {
   return (
-    <StyledMapSideBarLayout show={showSideBar}>
-      <VisibilitySensor partialVisibility={true}>
-        {({ isVisible }: any) => (
-          <>
-            <TitleBar>
-              <Row>
-                <Col>
-                  <Styled.H1 className="mr-auto">
-                    {icon}
-                    {title}
-                  </Styled.H1>
+    <VisibilitySensor partialVisibility={true}>
+      {({ isVisible }: any) => (
+        <>
+          <TitleBar>
+            <Row>
+              <Col>
+                <Styled.H1 className="mr-auto">
+                  {icon}
+                  {title}
+                </Styled.H1>
+              </Col>
+
+              {showCloseButton && (
+                <Col xs="auto">
+                  <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
+                    <CloseIcon title="close" onClick={props.onClose} />
+                  </TooltipWrapper>
                 </Col>
+              )}
+            </Row>
+            <Underline />
+          </TitleBar>
 
-                {showCloseButton && (
-                  <Col xs="auto">
-                    <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
-                      <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
-                    </TooltipWrapper>
-                  </Col>
-                )}
-              </Row>
-              <Underline />
-            </TitleBar>
+          {header && isVisible && <Header>{header}</Header>}
 
-            {header && isVisible && <Header>{header}</Header>}
+          <StyledBody>
+            <Content>{isVisible ? props.children : null}</Content>
+          </StyledBody>
 
-            <StyledBody>
-              <Content>{isVisible ? props.children : null}</Content>
-            </StyledBody>
-          </>
-        )}
-      </VisibilitySensor>
-    </StyledMapSideBarLayout>
+          {props.footer && isVisible && <Footer>{props.footer}</Footer>}
+        </>
+      )}
+    </VisibilitySensor>
   );
 };
 
@@ -77,32 +75,15 @@ const Content = styled.div`
   width: 100%;
 `;
 
+const TitleBar = styled.div``;
+
 const Header = styled.div``;
 
-const TitleBar = styled.div``;
+const Footer = styled.div``;
 
 const Underline = styled.div`
   width: 100%;
   border-bottom: solid 0.5rem ${props => props.theme.css.primaryLightColor};
-`;
-
-const StyledMapSideBarLayout = styled.div<{ show: boolean }>`
-  display: flex;
-  flex-flow: column;
-  h1 {
-    border-bottom: none;
-    margin-bottom: 0.2rem;
-  }
-
-  min-width: ${props => (props.show ? `93rem` : `0rem`)};
-  width: ${props => (props.show ? `93rem` : `0rem`)};
-  max-width: ${props => (props.show ? `93rem` : `0rem`)};
-
-  padding: ${props => (props.show ? `1.4rem 3.6rem` : `0rem`)};
-  padding-bottom: ${props => (props.show ? `2rem` : `0rem`)};
-
-  overflow: hidden;
-  transition: 1s;
 `;
 
 const CloseIcon = styled(FaWindowClose)`

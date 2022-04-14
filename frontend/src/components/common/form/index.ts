@@ -12,7 +12,6 @@ export * from './InputGroup';
 export * from './PlusButton';
 export * from './ResetButton';
 export * from './SearchButton';
-export * from './SearchToggle';
 export * from './Select';
 export * from './TableSelect';
 export * from './Text';

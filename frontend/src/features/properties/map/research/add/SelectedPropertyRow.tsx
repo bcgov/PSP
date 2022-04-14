@@ -1,6 +1,7 @@
 import { InlineInput } from 'components/common/form/styles';
 import RemoveButton from 'components/common/RemoveButton';
 import { NoPaddingRow } from 'components/common/styles';
+import DraftCircleNumber from 'features/properties/selector/components/DraftCircleNumber';
 import { getIn, useFormikContext } from 'formik';
 import { compact } from 'lodash';
 import * as React from 'react';
@@ -8,7 +9,6 @@ import { Col } from 'react-bootstrap';
 import { pidFormatter } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
-import DraftCircleNumber from '../../properties/selector/components/DraftCircleNumber';
 import { ResearchForm } from './models';
 
 export interface ISelectedPropertyRowProps {

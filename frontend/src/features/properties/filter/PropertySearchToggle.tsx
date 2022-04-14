@@ -1,11 +1,9 @@
 import { ReactComponent as MapSvg } from 'assets/images/icon-map.svg';
 import { ReactComponent as TableSvg } from 'assets/images/icon-table.svg';
 import React from 'react';
-import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import TooltipWrapper from '../TooltipWrapper';
-import { ButtonProps } from '.';
+import TooltipWrapper from '../../../components/common/TooltipWrapper';
 
 export enum SearchToggleOption {
   /** The map is the active page */
@@ -14,37 +12,48 @@ export enum SearchToggleOption {
   List = 'list',
 }
 
-interface ISearchToggleProps extends ButtonProps {
+interface IPropertySearchToggleProps {
   /** set the id of the tool tip use for on hover of the plus buttons */
   toolId: string;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
+  onPageToggle: (option: SearchToggleOption) => void;
 }
 
 /**
  * SearchToggle displaying two buttons which act like a toggle to navigate from the map to the property list view (and vise-versa).
  * @param param0
  */
-export const SearchToggle: React.FC<ISearchToggleProps> = ({
+export const PropertySearchToggle: React.FunctionComponent<IPropertySearchToggleProps> = ({
   toggle = SearchToggleOption.Map,
   toolId,
-  ...props
+  onPageToggle,
 }) => {
-  const history = useHistory();
-
   return (
     <StyledToggle toggle={toggle}>
       <StyledNav>
         <StyledLink>
           <TooltipWrapper toolTipId={`${toolId}-map`} toolTip="Map View">
-            <MapSvg onClick={() => history.push('/mapview')} />
+            <MapSvg
+              onClick={() => {
+                if (toggle !== SearchToggleOption.Map) {
+                  onPageToggle(SearchToggleOption.Map);
+                }
+              }}
+            />
           </TooltipWrapper>
         </StyledLink>
       </StyledNav>
       <StyledNav>
         <StyledLink>
           <TooltipWrapper toolTipId={`${toolId}-list`} toolTip="List View">
-            <TableSvg onClick={() => history.push('/properties/list')} />
+            <TableSvg
+              onClick={() => {
+                if (toggle !== SearchToggleOption.List) {
+                  onPageToggle(SearchToggleOption.List);
+                }
+              }}
+            />
           </TooltipWrapper>
         </StyledLink>
       </StyledNav>
@@ -93,4 +102,4 @@ const StyledLink = styled('div')`
   }
 `;
 
-export default SearchToggle;
+export default PropertySearchToggle;

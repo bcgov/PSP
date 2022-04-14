@@ -1,6 +1,5 @@
 import './PropertyListView.scss';
 
-import { SearchToggleOption } from 'components/common/form';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
@@ -17,11 +16,13 @@ import noop from 'lodash/noop';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import styled from 'styled-components';
 import { generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
+import { SearchToggleOption } from '../filter/PropertySearchToggle';
 import { columns as columnDefinitions } from './columns';
 import * as Styled from './PropertyListView.styled';
 
@@ -147,7 +148,7 @@ const PropertyListView: React.FC = () => {
   return (
     <Container fluid className="PropertyListView">
       <Container fluid className="filter-container border-bottom">
-        <Container fluid className="px-0 map-filter-container">
+        <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             defaultFilter={defaultFilterValues}
             onChange={handleFilterChange}
@@ -155,7 +156,7 @@ const PropertyListView: React.FC = () => {
             onSorting={setSort}
             toggle={SearchToggleOption.List}
           />
-        </Container>
+        </StyledFilterContainer>
       </Container>
       <div className="ScrollContainer">
         <Container fluid className="TableToolbar px-0">
@@ -214,3 +215,38 @@ const PropertyListView: React.FC = () => {
 };
 
 export default PropertyListView;
+
+const StyledFilterContainer = styled(Container)`
+  transition: margin 1s;
+
+  grid-area: filter;
+  background-color: $filter-background-color;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+  z-index: 500;
+  .map-filter-bar {
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+    .vl {
+      border-left: 6px solid rgba(96, 96, 96, 0.2);
+      height: 4rem;
+      margin-left: 1%;
+      margin-right: 1%;
+      border-width: 0.2rem;
+    }
+    .btn-primary {
+      color: white;
+      font-weight: bold;
+      height: 3.5rem;
+      width: 3.5rem;
+      min-height: unset;
+      padding: 0;
+    }
+    .form-control {
+      font-size: 1.4rem;
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+`;

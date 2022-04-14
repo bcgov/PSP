@@ -17,6 +17,7 @@ import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
 import { useAppSelector } from 'store/hooks';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
+import styled from 'styled-components';
 
 import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
@@ -97,7 +98,7 @@ const Map: React.FC<MapProps> = ({
   const [geoFilter, setGeoFilter] = useState<IGeoSearchParams>({
     ...defaultFilterValues,
     includeAllProperties: keycloak.hasClaim(Claims.ADMIN_PROPERTIES),
-  } as any);
+  } as any); // Todo: remove type coercion
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
   const [triggerFilterChanged, setTriggerFilterChanged] = useState(true);
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
@@ -208,7 +209,7 @@ const Map: React.FC<MapProps> = ({
     <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map', { sidebar: showSideBar })}>
       <LoadingBackdrop show={showLoadingBackdrop} />
       {!showSideBar && !disableMapFilterBar ? (
-        <Container fluid className="px-0 map-filter-container">
+        <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             defaultFilter={{
               ...defaultFilterValues,
@@ -216,7 +217,7 @@ const Map: React.FC<MapProps> = ({
             onChange={handleMapFilterChange}
             setTriggerFilterChanged={setTriggerFilterChanged}
           />
-        </Container>
+        </StyledFilterContainer>
       ) : null}
       <Styled.MapContainer>
         {baseLayers?.length > 0 && (
@@ -273,3 +274,38 @@ const Map: React.FC<MapProps> = ({
 };
 
 export default Map;
+
+const StyledFilterContainer = styled(Container)`
+  transition: margin 1s;
+
+  grid-area: filter;
+  background-color: #f2f2f2;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+  z-index: 500;
+  .map-filter-bar {
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+    .vl {
+      border-left: 6px solid rgba(96, 96, 96, 0.2);
+      height: 4rem;
+      margin-left: 1%;
+      margin-right: 1%;
+      border-width: 0.2rem;
+    }
+    .btn-primary {
+      color: white;
+      font-weight: bold;
+      height: 3.5rem;
+      width: 3.5rem;
+      min-height: unset;
+      padding: 0;
+    }
+    .form-control {
+      font-size: 1.4rem;
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+`;

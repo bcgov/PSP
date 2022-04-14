@@ -11,7 +11,7 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<ISelectedPropert
     <HeaderRow>
       <Col md={3}>Identifier</Col>
       <Col md={9}>
-        Provide a descriptive name for this land{' '}
+        Provide a descriptive name for this land
         <TooltipIcon
           toolTipId="property-selector-tooltip"
           toolTip="Optionally - provide a user friendly description to identify the property, such as Highway 1"
