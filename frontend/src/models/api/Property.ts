@@ -1,7 +1,7 @@
 import Api_TypeCode from 'interfaces/ITypeCode';
 import { Moment } from 'moment';
 
-import { Api_Address, Api_CodeType } from './Address';
+import { Api_Address } from './Address';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_Coordinate {
