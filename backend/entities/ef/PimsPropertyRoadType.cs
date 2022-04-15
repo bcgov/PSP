@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsPropertyRoadType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
+            PimsPropPropRoadTypes = new HashSet<PimsPropPropRoadType>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyRoadTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropPropRoadType.PropertyRoadTypeCodeNavigation))]
+        public virtual ICollection<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
     }
 }

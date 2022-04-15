@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <param name="status"></param>
-        public PimsAccessRequest(PimsUser user, PimsRole role, PimsAccessRequestStatusType status):this()
+        public PimsAccessRequest(PimsUser user, PimsRole role, PimsAccessRequestStatusType status) : this()
         {
             this.User = user ?? throw new ArgumentNullException(nameof(user));
             this.UserId = user.Id;

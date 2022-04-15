@@ -15,6 +15,8 @@ namespace Pims.Dal.Entities
         public short Id { get => RegionCode; set => RegionCode = value; }
         [NotMapped]
         public short Code { get => RegionCode; set => RegionCode = value; }
+        [NotMapped]
+        public string Description { get => RegionName; set => RegionName = value; }
         #endregion
 
         #region Constructors

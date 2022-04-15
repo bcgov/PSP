@@ -65,9 +65,11 @@ export const RemoveButton = styled(Button).attrs({ variant: 'link' })`
     .text {
       display: none;
     }
-    &:hover {
+    > div:hover {
       color: #d8292f;
       text-decoration: none;
+      display: flex;
+      flex-direction: row;
       .text {
         display: inline;
       }

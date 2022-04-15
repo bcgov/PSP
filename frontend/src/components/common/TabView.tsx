@@ -20,9 +20,8 @@ const StyledTabWrapper = styled.div`
       position: relative;
     }
     border-radius: 0 0.4rem 0.4rem 0.4rem;
-    height: calc(100% - 2.4rem);
+    height: calc(100% - 2.4rem); // substract nav height
     overflow-y: auto;
-    overflow-x: hidden;
     background-color: ${props => props.theme.css.filterBackgroundColor};
   }
   height: 100%;

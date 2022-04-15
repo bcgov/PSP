@@ -32,7 +32,6 @@ export const PropertyInformation: React.FunctionComponent<IPropertyInformationPr
         {!disabled ? (
           <InputGroup
             disabled={disabled}
-            formikProps={formikProps}
             field={withNameSpace(nameSpace, 'landArea')}
             postText={areaUnit}
           />

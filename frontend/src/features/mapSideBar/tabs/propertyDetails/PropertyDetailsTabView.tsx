@@ -1,6 +1,7 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Formik, FormikProps, getIn } from 'formik';
 import noop from 'lodash/noop';
 import Api_TypeCode from 'models/api/TypeCode';
@@ -11,12 +12,7 @@ import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../Section';
 import { SectionField, StyledFieldLabel } from '../SectionField';
-import {
-  InlineContainer,
-  LeftBorderCol,
-  StyledReadOnlyForm,
-  StyledScrollable,
-} from '../SectionStyles';
+import { InlineContainer, LeftBorderCol, StyledReadOnlyForm } from '../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
 import {
@@ -26,7 +22,7 @@ import {
   toFormValues,
 } from './PropertyDetailsTabView.helpers';
 
-interface IPropertyDetailsTabView {
+export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
 }
 
@@ -39,7 +35,7 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ prop
   const isLoading = property === undefined;
 
   return (
-    <StyledScrollable>
+    <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik
         initialValues={values}
@@ -47,7 +43,7 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ prop
         enableReinitialize={true}
         component={FormComponent}
       />
-    </StyledScrollable>
+    </>
   );
 };
 
@@ -63,8 +59,10 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
   const landMeasurement = getIn(values, 'landMeasurementTable');
   const volumeMeasurement = getIn(values, 'volumetricMeasurementTable');
   // show/hide conditionals
-  const isAdjacentLand = tenureStatus.some(obj => obj.id === 'ADJLAND');
-  const isIndianReserve = isAdjacentLand && adjacentLand.some(obj => obj.id === 'INDIANR');
+  const isHighwayRoad = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.HighwayRoad);
+  const isAdjacentLand = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.AdjacentLand);
+  const isIndianReserve =
+    isAdjacentLand && adjacentLand?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
 
   return (
@@ -97,6 +95,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
             disable
             disablePreSelectedValues
             hidePlaceholder
+            placeholder=""
             selectedValues={anomalies}
             displayValue="description"
             style={readOnlyMultiSelectStyle}
@@ -110,6 +109,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
             disable
             disablePreSelectedValues
             hidePlaceholder
+            placeholder=""
             selectedValues={tenureStatus}
             displayValue="description"
             style={readOnlyMultiSelectStyle}
@@ -120,22 +120,26 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
           {isProvincialHighway === false && <Text>No</Text>}
           {isProvincialHighway === undefined && <Text>Unknown</Text>}
         </SectionField>
-        <SectionField label="Highway / Road">
-          <Multiselect
-            disable
-            disablePreSelectedValues
-            hidePlaceholder
-            selectedValues={roadType}
-            displayValue="description"
-            style={readOnlyMultiSelectStyle}
-          />
-        </SectionField>
+        {isHighwayRoad && (
+          <SectionField label="Highway / Road">
+            <Multiselect
+              disable
+              disablePreSelectedValues
+              hidePlaceholder
+              placeholder=""
+              selectedValues={roadType}
+              displayValue="description"
+              style={readOnlyMultiSelectStyle}
+            />
+          </SectionField>
+        )}
         {isAdjacentLand && (
           <SectionField label="Adjacent land">
             <Multiselect
               disable
               disablePreSelectedValues
               hidePlaceholder
+              placeholder=""
               selectedValues={adjacentLand}
               displayValue="description"
               style={readOnlyMultiSelectStyle}

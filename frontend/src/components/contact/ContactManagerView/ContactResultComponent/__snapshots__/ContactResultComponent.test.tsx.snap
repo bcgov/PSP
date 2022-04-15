@@ -162,7 +162,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Last Name
+            First Name
             <div
               class="c0"
             >
@@ -207,7 +207,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            First Name
+            Last Name
             <div
               class="c0"
             >
@@ -443,7 +443,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            last
+            first
           </div>
           <div
             class="td"
@@ -451,7 +451,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            first
+            last
           </div>
           <div
             class="td"
@@ -589,7 +589,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            last
+            first
           </div>
           <div
             class="td"
@@ -597,7 +597,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            first
+            last
           </div>
           <div
             class="td"
@@ -735,7 +735,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            last
+            first
           </div>
           <div
             class="td"
@@ -743,7 +743,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            first
+            last
           </div>
           <div
             class="td"
