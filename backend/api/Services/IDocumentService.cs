@@ -10,6 +10,8 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentService
     {
+        ExternalResult<QueryResult<DocumentType>> GetDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
+
         ExternalResult<QueryResult<DocumentDetail>> GetDocumentList(string ordering = "", int? page = null, int? pageSize = null);
 
         ExternalResult<FileDownload> DownloadFile(int documentId, int fileId);
