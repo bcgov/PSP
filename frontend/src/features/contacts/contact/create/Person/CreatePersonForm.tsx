@@ -94,7 +94,7 @@ export const CreatePersonForm: React.FunctionComponent = () => {
       const personResponse = await addPerson(newPerson, setShowDuplicateModal, allowDuplicate);
 
       if (!!personResponse?.id) {
-        history.push('/contact/list');
+        history.push(`/contact/P${personResponse?.id}`);
       }
     } finally {
       setSubmitting(false);
