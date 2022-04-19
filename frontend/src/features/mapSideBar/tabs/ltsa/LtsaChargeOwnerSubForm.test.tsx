@@ -28,7 +28,7 @@ describe('LtsaChargeOwnerSubForm component', () => {
   };
   it('renders charge owner sub form', () => {
     const { component } = setup({
-      ltsaData: mockLtsaResponse as any,
+      ltsaData: mockLtsaResponse,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -41,7 +41,7 @@ describe('LtsaChargeOwnerSubForm component', () => {
     const {
       component: { queryByLabelText },
     } = setup({
-      ltsaData: mockLtsaResponse as any,
+      ltsaData: mockLtsaResponse,
     });
     expect(queryByLabelText('Registered owner:')).toBeNull();
   });

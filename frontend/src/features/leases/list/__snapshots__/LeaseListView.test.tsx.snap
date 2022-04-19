@@ -141,7 +141,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                           class="col-xl-7"
                         >
                           <div
-                            class="row"
+                            class="idir-input-group flex-nowrap row"
                           >
                             <div
                               class="c6 col-auto"
@@ -165,15 +165,15 @@ exports[`Lease and License List View matches snapshot 1`] = `
                                     </option>
                                     <option
                                       class="option"
-                                      value="lFileNo"
-                                    >
-                                      L-File #
-                                    </option>
-                                    <option
-                                      class="option"
                                       value="address"
                                     >
                                       Address
+                                    </option>
+                                    <option
+                                      class="option"
+                                      value="lFileNo"
+                                    >
+                                      L-File #
                                     </option>
                                   </select>
                                 </div>
@@ -200,60 +200,63 @@ exports[`Lease and License List View matches snapshot 1`] = `
                         <div
                           class="col-xl-5"
                         >
-                          <div
-                            class="multiselect-container multiSelectContainer "
-                            id="status-selector"
-                            style="width: auto; color: black; padding-bottom: 12px;"
-                          >
+                          <div>
                             <div
-                              class="search-wrapper searchWrapper "
-                              style="background: white; border: 1px solid #606060;"
+                              class="multiselect-container multiSelectContainer  "
+                              id="status-selector"
+                              style="width: auto; color: black; padding-bottom: 12px;"
                             >
-                              <span
-                                class="chip  false false"
-                                style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                              >
-                                Active
-                                <i
-                                  class="custom-close"
-                                >
-                                  <svg
-                                    class="ml-3"
-                                    fill="currentColor"
-                                    height="18px"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 352 512"
-                                    width="18px"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                    />
-                                  </svg>
-                                </i>
-                              </span>
-                              <input
-                                autocomplete="off"
-                                class="searchBox"
-                                id="status-selector_input"
-                                placeholder=""
-                                type="text"
-                                value=""
-                              />
-                            </div>
-                            <div
-                              class="optionListContainer displayNone"
-                            >
-                              <ul
-                                class="optionContainer"
+                              <div
+                                class="search-wrapper searchWrapper "
+                                style="background: white; border: 1px solid #606060;"
                               >
                                 <span
-                                  class="notFound"
+                                  class="chip  false false"
+                                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
                                 >
-                                  No Options Available
+                                  Active
+                                  <i
+                                    class="custom-close"
+                                  >
+                                    <svg
+                                      class="ml-3"
+                                      fill="currentColor"
+                                      height="18px"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 352 512"
+                                      width="18px"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                      />
+                                    </svg>
+                                  </i>
                                 </span>
-                              </ul>
+                                <input
+                                  autocomplete="off"
+                                  class="searchBox "
+                                  id="status-selector_input"
+                                  name="search_name_input"
+                                  placeholder=""
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                              <div
+                                class="optionListContainer displayNone"
+                              >
+                                <ul
+                                  class="optionContainer"
+                                >
+                                  <span
+                                    class="notFound"
+                                  >
+                                    No Options Available
+                                  </span>
+                                </ul>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -264,36 +267,39 @@ exports[`Lease and License List View matches snapshot 1`] = `
                         <div
                           class="col-xl-7"
                         >
-                          <div
-                            class="multiselect-container multiSelectContainer "
-                            id="properties-selector"
-                            style="width: auto; color: black; padding-bottom: 12px;"
-                          >
+                          <div>
                             <div
-                              class="search-wrapper searchWrapper "
-                              style="background: white; border: 1px solid #606060;"
+                              class="multiselect-container multiSelectContainer  "
+                              id="properties-selector"
+                              style="width: auto; color: black; padding-bottom: 12px;"
                             >
-                              <input
-                                autocomplete="off"
-                                class="searchBox"
-                                id="properties-selector_input"
-                                placeholder="Select Program(s)"
-                                type="text"
-                                value=""
-                              />
-                            </div>
-                            <div
-                              class="optionListContainer displayNone"
-                            >
-                              <ul
-                                class="optionContainer"
+                              <div
+                                class="search-wrapper searchWrapper "
+                                style="background: white; border: 1px solid #606060;"
                               >
-                                <span
-                                  class="notFound"
+                                <input
+                                  autocomplete="off"
+                                  class="searchBox "
+                                  id="properties-selector_input"
+                                  name="search_name_input"
+                                  placeholder="Select Program(s)"
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                              <div
+                                class="optionListContainer displayNone"
+                              >
+                                <ul
+                                  class="optionContainer"
                                 >
-                                  No Options Available
-                                </span>
-                              </ul>
+                                  <span
+                                    class="notFound"
+                                  >
+                                    No Options Available
+                                  </span>
+                                </ul>
+                              </div>
                             </div>
                           </div>
                         </div>

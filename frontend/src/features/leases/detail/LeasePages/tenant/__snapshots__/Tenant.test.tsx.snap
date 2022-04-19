@@ -185,6 +185,7 @@ exports[`Tenant component renders as expected 1`] = `
                   disabled=""
                   id="input-persons.0.fullName"
                   name="persons.0.fullName"
+                  title=""
                   value=""
                 />
               </div>

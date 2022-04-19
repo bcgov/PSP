@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pims.Dal;
 using Entity = Pims.Dal.Entities;
@@ -27,9 +28,10 @@ namespace Pims.Core.Test
             classification ??= EntityHelper.CreatePropertyClassificationType("Class");
             address ??= EntityHelper.CreateAddress(pid);
             tenure ??= EntityHelper.CreatePropertyTenureType("Tenure");
+
             areaUnit ??= EntityHelper.CreatePropertyAreaUnitType("Sqft");
             dataSource ??= EntityHelper.CreateDataSourceType("LIS");
-            var property = new Entity.PimsProperty(pid, type, classification, address, tenure, areaUnit, dataSource, DateTime.UtcNow)
+            var property = new Entity.PimsProperty(pid, type, classification, address, new Entity.PimsPropPropTenureType {PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow)
             {
                 PropertyId = pid,
                 Pin = pin,

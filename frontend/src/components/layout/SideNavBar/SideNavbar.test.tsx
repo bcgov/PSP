@@ -2,7 +2,6 @@ import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Claims, Roles } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import React from 'react';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import { SideNavBar } from './SideNavbar';
@@ -17,7 +16,7 @@ const renderComponent = (props?: IRenderProps) =>
     <TestCommonWrapper
       history={history}
       roles={props?.roles ?? [Roles.REAL_ESTATE_MANAGER]}
-      claims={[Claims.LEASE_VIEW]}
+      claims={[Claims.LEASE_VIEW, Claims.RESEARCH_VIEW]}
     >
       <SidebarStateContextProvider>
         <SideNavBar />
@@ -169,6 +168,23 @@ describe('SideNavbar display and logic', () => {
       });
       await waitFor(async () => {
         expect(history.location.pathname).toBe('/admin/users');
+      });
+    });
+
+    it('Opens research side tray when an icon is clicked.', async () => {
+      const { getByText, getByTestId } = renderComponent({
+        roles: [Roles.SYSTEM_ADMINISTRATOR],
+      });
+      const researchButton = getByTestId('nav-tooltip-research');
+      await act(async () => {
+        userEvent.click(researchButton);
+      });
+      const searchReseachFileLink = getByText('Search for a Research File');
+      await act(async () => {
+        userEvent.click(searchReseachFileLink);
+      });
+      await waitFor(async () => {
+        expect(history.location.pathname).toBe('/research/list');
       });
     });
   });

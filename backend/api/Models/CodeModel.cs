@@ -1,7 +1,7 @@
 namespace Pims.Api.Models
 {
     /// <summary>
-    /// CodeModel class, provides a model that represents a code code item.
+    /// CodeModel class, provides a model that represents a code item.
     /// </summary>
     public class CodeModel : BaseAppModel
     {

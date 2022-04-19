@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsPropertyAdjacentLandType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
+            PimsPropPropAdjacentLandTypes = new HashSet<PimsPropPropAdjacentLandType>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyAdjacentLandTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropPropAdjacentLandType.PropertyAdjacentLandTypeCodeNavigation))]
+        public virtual ICollection<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
     }
 }

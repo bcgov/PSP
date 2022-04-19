@@ -1,15 +1,8 @@
+import { Api_Person } from 'models/api/Person';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
-import {
-  IFormProperty,
-  IInsurance,
-  ILeaseImprovement,
-  IOrganization,
-  IPerson,
-  IProperty,
-  ITenant,
-} from '.';
+import { IFormProperty, IInsurance, ILeaseImprovement, IOrganization, IProperty, ITenant } from '.';
 import { IFormLeaseTerm, ILeaseTerm } from './ILeaseTerm';
 import { IRegion } from './IRegion';
 import ITypeCode from './ITypeCode';
@@ -54,7 +47,7 @@ export interface ILease {
   tenants: ITenant[];
   terms: ILeaseTerm[];
   properties: IProperty[];
-  persons: IPerson[];
+  persons: Api_Person[];
   organizations: IOrganization[];
   improvements: ILeaseImprovement[];
   securityDeposits: Api_SecurityDeposit[];

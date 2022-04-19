@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { Breadcrumb as BsBreadcrumb, Button } from 'react-bootstrap';
+import { Breadcrumb as BsBreadcrumb, Button, Row } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
@@ -37,19 +37,34 @@ export const SelectedText = styled.p`
 `;
 
 export const IconButton = styled(Button)`
-  &.btn.btn-light {
+  &&.btn {
     background-color: unset;
     border: 0;
-    :hover {
+    :hover,
+    :active {
       background-color: unset;
     }
     svg {
-      color: ${({ theme }) => theme.css.slideOutBlue};
       transition: all 0.3s ease-out;
     }
     svg:hover {
       transition: all 0.3s ease-in;
+    }
+  }
+  &.btn.btn-light {
+    svg {
+      color: ${({ theme }) => theme.css.slideOutBlue};
+    }
+    svg:hover {
       color: ${({ theme }) => theme.css.dangerColor};
+    }
+  }
+  &.btn.btn-info {
+    svg {
+      color: ${({ theme }) => theme.css.slideOutBlue};
+    }
+    svg:hover {
+      color: ${({ theme }) => theme.css.activeColor};
     }
   }
 `;
@@ -118,6 +133,13 @@ export const Tabs = styled(BsTabs)`
   }
 `;
 
+export const NoPaddingRow = styled(Row)`
+  [class^='col-'] {
+    padding: 0;
+  }
+  margin: 0;
+`;
+
 export const H1 = styled.h1`
   color: ${props => props.theme.css.textColor};
   font-family: 'BCSans-Bold';
@@ -125,4 +147,25 @@ export const H1 = styled.h1`
   border-bottom: solid 0.5rem ${props => props.theme.css.primaryLightColor};
   width: 100%;
   text-align: left;
+  margin-bottom: 2rem;
+`;
+
+export const H2 = styled.h2`
+  color: ${props => props.theme.css.primaryColor};
+  font-family: 'BCSans-Bold';
+  font-size: 2.6rem;
+  border-bottom: solid 0.2rem ${props => props.theme.css.primaryLightColor};
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+`;
+
+export const H3 = styled.h3`
+  color: ${props => props.theme.css.primaryColor};
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  border-bottom: solid 0.2rem ${props => props.theme.css.discardedColor};
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
 `;

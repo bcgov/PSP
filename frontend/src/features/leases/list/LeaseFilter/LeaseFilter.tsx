@@ -1,9 +1,9 @@
 import { FastDatePicker, Form, Input, Select } from 'components/common/form';
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
+import { SelectInput } from 'components/common/List/SelectInput';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES, REGION_TYPES } from 'constants/API';
-import { PropertyFilterOptions } from 'features/properties/filter';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
@@ -37,27 +37,6 @@ export const defaultFilter: ILeaseFilter = {
   expiryEndDate: '',
   regionType: '',
   details: '',
-};
-
-const idFilterOptions = [
-  {
-    label: 'PID/PIN',
-    value: 'pinOrPid',
-  },
-  {
-    label: 'L-File #',
-    value: 'lFileNo',
-  },
-  {
-    label: 'Address',
-    value: 'address',
-  },
-];
-
-const idFilterPlaceholders = {
-  pinOrPid: 'Enter a PID or PIN',
-  lFileNo: 'Enter an L-File number',
-  address: 'Enter an address',
 };
 
 /**
@@ -135,9 +114,26 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                 <Col>
                   <Row>
                     <Col xl="7">
-                      <PropertyFilterOptions
-                        options={idFilterOptions}
-                        placeholders={idFilterPlaceholders}
+                      <SelectInput<
+                        {
+                          pinOrPid: string;
+                          address: string;
+                          lFileNo: string;
+                        },
+                        ILeaseFilter
+                      >
+                        field="searchBy"
+                        defaultKey="pinOrPid"
+                        selectOptions={[
+                          { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+                          { label: 'Address', key: 'address', placeholder: 'Enter an address' },
+                          {
+                            label: 'L-File #',
+                            key: 'lFileNo',
+                            placeholder: 'Enter an L-File number',
+                          },
+                        ]}
+                        className="idir-input-group"
                       />
                     </Col>
                     <Col xl="5">

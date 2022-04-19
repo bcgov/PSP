@@ -1,3 +1,4 @@
+import { ContactMethodTypes } from 'constants/contactMethodType';
 import {
   AccessRequestStatus,
   AddressTypes,
@@ -9,6 +10,7 @@ import {
   PropertyTenureTypes,
 } from 'constants/index';
 import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
+import { Api_Person } from 'models/api/Person';
 import { ILookupCode } from 'store/slices/lookupCodes';
 
 // TODO: This needs to be removed as Administrative Areas no longer exist.
@@ -112,6 +114,14 @@ export const mockPerson: IPerson = {
   mobile: '555-666-7777',
 };
 
+export const mockApiPerson: Api_Person = {
+  id: 2,
+  contactMethods: [
+    { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: '222-333-4444' },
+    { contactMethodType: { id: ContactMethodTypes.WorkMobile }, value: '555-666-7777' },
+  ],
+};
+
 export const mockProperties = [
   {
     id: 1,
@@ -121,7 +131,7 @@ export const mockProperties = [
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.TitledLandMOTI,
+    tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
     zoningPotential: '',
     encumbranceReason: '',
@@ -150,7 +160,7 @@ export const mockProperties = [
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.TitledLandMOTI,
+    tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
     zoningPotential: '',
     encumbranceReason: '',
@@ -179,7 +189,7 @@ export const mockProperties = [
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.TitledLandMOTI,
+    tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
     zoningPotential: '',
     encumbranceReason: '',

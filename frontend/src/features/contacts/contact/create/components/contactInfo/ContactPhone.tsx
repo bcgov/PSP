@@ -1,9 +1,7 @@
 import { Input, Select } from 'components/common/form';
-import { Stack } from 'components/common/Stack/Stack';
-import * as Styled from 'features/contacts/contact/create/styles';
+import RemoveButton from 'components/common/RemoveButton';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { MdClose } from 'react-icons/md';
 import { withNameSpace } from 'utils/formUtils';
 
 import useContactInfoHelpers from './useContactInfoHelpers';
@@ -38,13 +36,7 @@ export const ContactPhone: React.FunctionComponent<IContactPhone> = ({ namespace
           />
         </Col>
         <Col md={2} style={{ paddingLeft: 0, paddingTop: '3rem' }}>
-          {onRemove && (
-            <Stack justifyContent="flex-start" className="h-100">
-              <Styled.RemoveButton onClick={onRemove}>
-                <MdClose size="2rem" /> <span className="text">Remove</span>
-              </Styled.RemoveButton>
-            </Stack>
-          )}
+          {onRemove && <RemoveButton onRemove={onRemove} />}
         </Col>
       </Row>
     </>

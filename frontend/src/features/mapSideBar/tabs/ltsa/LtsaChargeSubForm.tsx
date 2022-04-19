@@ -4,7 +4,7 @@ import { ChargeOnTitle, LtsaOrders } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
+import { SectionField } from '../SectionField';
 import { StyledSectionHeader } from '../SectionStyles';
 import LtsaChargeOwnerSubForm from './LtsaChargeOwnerSubForm';
 
@@ -29,15 +29,15 @@ export const LtsaChargeSubForm: React.FunctionComponent<ILtsaChargeSubFormProps>
               const innerNameSpace = withNameSpace(nameSpace, `chargesOnTitle.${index}.charge`);
               return (
                 <React.Fragment key={`charge-sub-row-${innerNameSpace}`}>
-                  <SectionFieldWrapper label="Nature">
+                  <SectionField label="Nature">
                     <Input field={`${withNameSpace(innerNameSpace, 'transactionType')}`} />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Registration #">
+                  </SectionField>
+                  <SectionField label="Registration #">
                     <Input field={`${withNameSpace(innerNameSpace, 'chargeNumber')}`} />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Registered date">
+                  </SectionField>
+                  <SectionField label="Registered date">
                     <Input field={`${withNameSpace(innerNameSpace, 'applicationReceivedDate')}`} />
-                  </SectionFieldWrapper>
+                  </SectionField>
                   <LtsaChargeOwnerSubForm nameSpace={innerNameSpace} />
                   {index < charges.length - 1 && <hr></hr>}
                 </React.Fragment>

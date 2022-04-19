@@ -3,12 +3,18 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
+import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
-import { StyledFormSection, StyledScrollable, StyledSectionHeader } from '../SectionStyles';
+import { SectionField } from '../SectionField';
+import {
+  InlineMessage,
+  StyledFormSection,
+  StyledInlineMessageSection,
+  StyledSectionHeader,
+} from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';
@@ -16,36 +22,50 @@ import LtsaTransferSubForm from './LtsaTransferSubForm';
 
 export interface ILtsaTabViewProps {
   ltsaData?: LtsaOrders;
+  ltsaRequestedOn?: Date;
 }
 
-export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaData }) => {
+export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
+  ltsaData,
+  ltsaRequestedOn,
+}) => {
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
+  const isLoading = ltsaData === undefined;
+
   return (
-    <StyledScrollable>
-      <LoadingBackdrop show={ltsaData === undefined} parentScreen={true} />
+    <>
+      <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
         <StyledForm>
+          {ltsaRequestedOn && (
+            <StyledInlineMessageSection>
+              <InlineMessage>
+                This data was retrived from LTSA on{' '}
+                {moment(ltsaRequestedOn).format('DD-MMM-YYYY h:mm A')}
+              </InlineMessage>
+            </StyledInlineMessageSection>
+          )}
           <StyledFormSection>
             <StyledSectionHeader>Title Details</StyledSectionHeader>
-            <SectionFieldWrapper label="Title number">
+            <SectionField label="Title number">
               <Input
                 disabled
                 field={withNameSpace(titleNameSpace, 'titleIdentifier.titleNumber')}
               />
-            </SectionFieldWrapper>
-            <SectionFieldWrapper label="Land title district">
+            </SectionField>
+            <SectionField label="Land title district">
               <Input
                 disabled
                 field={withNameSpace(titleNameSpace, 'titleIdentifier.landTitleDistrict')}
               />
-            </SectionFieldWrapper>
-            <SectionFieldWrapper label="Taxation authorities">
+            </SectionField>
+            <SectionField label="Taxation authorities">
               <TextArea
                 disabled
                 field={withNameSpace(titleNameSpace, 'taxAuthorities')}
                 mapFunction={(taxAuthority: TaxAuthority) => taxAuthority.authorityName}
               />
-            </SectionFieldWrapper>
+            </SectionField>
           </StyledFormSection>
           <StyledFormSection>
             <LtsaLandSubForm nameSpace={titleNameSpace} />
@@ -61,20 +81,21 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({ ltsaDa
           </StyledFormSection>
           <StyledFormSection>
             <StyledSectionHeader>Notes</StyledSectionHeader>
-            <SectionFieldWrapper label="Miscellaneous notes">
+            <SectionField label="Miscellaneous notes">
               <p>{getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes')}</p>
-            </SectionFieldWrapper>
-            <SectionFieldWrapper label="Parcel status">
+            </SectionField>
+            <SectionField label="Parcel status">
               <Input disabled field="parcelInfo.orderedProduct.fieldedData.status" />
-            </SectionFieldWrapper>
+            </SectionField>
           </StyledFormSection>
         </StyledForm>
       </Formik>
-    </StyledScrollable>
+    </>
   );
 };
 
 export const StyledForm = styled(Form)`
+  position: relative;
   &&& {
     input,
     select,

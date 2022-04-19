@@ -1,4 +1,5 @@
 export * from './constants';
+export { DateCell } from './DateCell';
 export * from './helpers';
 export { MoneyCell } from './MoneyCell';
 export { default as Table } from './Table';

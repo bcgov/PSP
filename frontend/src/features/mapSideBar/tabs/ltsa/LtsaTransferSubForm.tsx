@@ -4,9 +4,8 @@ import { LtsaOrders, TitleTransferDisposition } from 'interfaces/ltsaModels';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import { SectionFieldWrapper } from '../SectionFieldWrapper';
+import { SectionField } from '../SectionField';
 import { StyledSectionHeader } from '../SectionStyles';
-
 export interface ILtsaTransferSubFormProps {
   nameSpace?: string;
 }
@@ -31,29 +30,29 @@ export const LtsaTransferSubForm: React.FunctionComponent<ILtsaTransferSubFormPr
               );
               return (
                 <>
-                  <SectionFieldWrapper label="Nature">
+                  <SectionField label="Nature">
                     <Input field={`${withNameSpace(innerNameSpace, 'disposition')}`} />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Registration #">
+                  </SectionField>
+                  <SectionField label="Registration #">
                     <Input field={`${withNameSpace(innerNameSpace, 'dispositionDate')}`} />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Registered date">
+                  </SectionField>
+                  <SectionField label="Registered date">
                     <Input field={`${withNameSpace(innerNameSpace, 'titleNumber')}`} />
-                  </SectionFieldWrapper>
-                  <SectionFieldWrapper label="Registered date">
+                  </SectionField>
+                  <SectionField label="Registered date">
                     <Input field={`${withNameSpace(innerNameSpace, 'landLandDistrict')}`} />
-                  </SectionFieldWrapper>
+                  </SectionField>
                   {index < transfers.length - 1 && <hr></hr>}
                 </>
               );
             })}
             {transfers.length !== 0 && (
-              <SectionFieldWrapper label="Pending applications">
+              <SectionField label="Pending applications">
                 <Input
                   disabled
                   field="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
                 />
-              </SectionFieldWrapper>
+              </SectionField>
             )}
           </React.Fragment>
         )}

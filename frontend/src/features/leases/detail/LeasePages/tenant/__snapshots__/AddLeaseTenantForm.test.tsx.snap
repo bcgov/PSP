@@ -650,7 +650,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      Last Name
+                      First Name
                       <div
                         class="c10"
                       >
@@ -695,7 +695,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      First Name
+                      Last Name
                       <div
                         class="c10"
                       >

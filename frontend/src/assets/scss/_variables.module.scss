@@ -14,6 +14,7 @@
   darkVariantColor: $dark-variant-color;
   textColor: $text-color;
   formTextColor: $form-text-color;
+  formControlTextColor: $form-control-text-color;
   formBackgroundColor: $form-background-color;
   primaryBackgroundColor: $primary-background-color;
   dropdownBackgroundColor: $dropdown-background-color;
@@ -37,7 +38,6 @@
   dangerBackgroundColor: $danger-background-color;
   summaryColor: $summary-color;
   summaryBorderColor: $summary-border-color;
-
   // table ui
   tableHoverColor: $table-hover-color;
   tableHeaderBgColor: $table-header-bg-color;
@@ -45,4 +45,9 @@
   tableColumnBorderColor: $table-column-border-color;
   tableEvenRowBgColor: $table-even-row-bg-color;
   tableOddRowBgColor: $table-odd-row-bg-color;
+  // text headings - H1, H2 etc
+  headingTextColor: $heading-text-color;
+  headingBorderColor: $heading-border-color;
+  // map popup
+  mapPopupBackgroundColor: $map-popup-background-color;
 }

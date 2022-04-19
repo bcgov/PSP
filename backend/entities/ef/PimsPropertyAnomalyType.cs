@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsPropertyAnomalyType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
+            PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyAnomalyTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropPropAnomalyType.PropertyAnomalyTypeCodeNavigation))]
+        public virtual ICollection<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
     }
 }

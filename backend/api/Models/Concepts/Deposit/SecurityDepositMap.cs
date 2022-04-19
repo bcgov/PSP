@@ -1,6 +1,5 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -8,7 +7,7 @@ namespace Pims.Api.Models.Concepts
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsSecurityDeposit, Model.SecurityDepositModel>()
+            config.NewConfig<Entity.PimsSecurityDeposit, SecurityDepositModel>()
                 .Map(dest => dest.Id, src => src.SecurityDepositId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.AmountPaid, src => src.AmountPaid)
@@ -17,9 +16,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OtherTypeDescription, src => src.OtherDepositTypeDesc)
                 .Map(dest => dest.DepositReturns, src => src.PimsSecurityDepositReturns)
                 .Map(dest => dest.ContactHolder, src => src.PimsSecurityDepositHolder)
-                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
-            config.NewConfig<Model.SecurityDepositModel, Entity.PimsSecurityDeposit>()
+            config.NewConfig<SecurityDepositModel, Entity.PimsSecurityDeposit>()
                 .Map(dest => dest.SecurityDepositId, src => src.Id)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.AmountPaid, src => src.AmountPaid)
@@ -27,7 +26,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.SecurityDepositTypeCode, src => src.DepositType.Id)
                 .Map(dest => dest.OtherDepositTypeDesc, src => src.OtherTypeDescription)
                 .Map(dest => dest.PimsSecurityDepositHolder, src => src.ContactHolder)
-                .Inherits<Api.Models.BaseModel, Entity.IBaseEntity>();
+                .Inherits<BaseModel, Entity.IBaseEntity>();
 
 
         }
