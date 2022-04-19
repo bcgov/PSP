@@ -4,7 +4,7 @@ import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 
 export interface ILayerPopupFlyoutProps {
-  onViewPropertyInfo?: () => void;
+  onViewPropertyInfo: () => void;
   onCreateResearchFile?: () => void;
 }
 
@@ -15,7 +15,7 @@ export const LayerPopupFlyout: React.FC<ILayerPopupFlyoutProps> = ({
   return (
     <ListGroup variant="flush">
       <ListGroup.Item>
-        <Button variant="link" onClick={onViewPropertyInfo ?? noop}>
+        <Button variant="link" onClick={onViewPropertyInfo}>
           View more property info
         </Button>
       </ListGroup.Item>

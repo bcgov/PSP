@@ -2,10 +2,6 @@ import { Form } from 'formik';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
-export const StyledScrollable = styled.div`
-  overflow-y: auto;
-`;
-
 export const StyledFormSection = styled.div`
   margin: 1.5rem;
   padding: 1.5rem;
@@ -21,6 +17,7 @@ export const StyledSectionHeader = styled.h2`
 `;
 
 export const StyledReadOnlyForm = styled(Form)`
+  position: relative;
   &&& {
     input,
     select,
