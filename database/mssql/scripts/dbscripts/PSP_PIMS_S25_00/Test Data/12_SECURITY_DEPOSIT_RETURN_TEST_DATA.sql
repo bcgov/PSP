@@ -1,0 +1,38 @@
+INSERT INTO [dbo].[PIMS_SECURITY_DEPOSIT_RETURN]
+	(
+	[LEASE_ID]
+	,[SECURITY_DEPOSIT_ID]
+	,[SECURITY_DEPOSIT_TYPE_CODE]
+	,[TERMINATION_DATE]
+	,[CLAIMS_AGAINST]
+	,[RETURN_AMOUNT]
+	,[RETURN_DATE]
+	,[PAYEE_NAME]
+	,[PAYEE_ADDRESS]
+	,[CONCURRENCY_CONTROL_NUMBER]
+	)
+VALUES
+	(
+		2
+	,	1
+	, 'PET'
+	, GETDATE()
+	, 500
+	, 250
+	, GETDATE()
+	, 'Chester Tester'
+	, '1234 Fake St.'
+	, 1
+  ),
+	(
+		2
+	,	2
+	, 'SECURITY'
+	, GETDATE()
+	, 500
+	, 270
+	, GETDATE()
+	, 'Les McTester'
+	, '1234 Faker St.'
+	, 1
+  )
