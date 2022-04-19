@@ -17,6 +17,10 @@ export enum Claims {
   ADMIN_ROLES = 'admin-roles',
   ADMIN_PROPERTIES = 'admin-properties',
   ADMIN_PROJECTS = 'admin-projects',
+  RESEARCH_VIEW = 'researchfile-view',
+  RESEARCH_ADD = 'researchfile-add',
+  RESEARCH_EDIT = 'researchfile-edit',
+  RESEARCH_DELETE = 'researchfile-delete',
 }
 
 export default Claims;

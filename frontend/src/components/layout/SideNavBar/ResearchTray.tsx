@@ -16,13 +16,13 @@ export const ResearchTray = ({ onLinkClick }: ISideTrayPageProps) => {
     <>
       <HalfHeightDiv>
         <Styled.TrayHeader>Research Files</Styled.TrayHeader>
-        {hasClaim(Claims.LEASE_VIEW) && (
+        {hasClaim(Claims.RESEARCH_VIEW) && (
           <Link onClick={onLinkClick} to="/research/list">
             Search for a Research File
           </Link>
         )}
-        {hasClaim(Claims.LEASE_ADD) && (
-          <Link onClick={onLinkClick} to="/research/new">
+        {hasClaim(Claims.RESEARCH_ADD) && (
+          <Link onClick={onLinkClick} to="/mapview/research/new">
             Create a Research File
           </Link>
         )}

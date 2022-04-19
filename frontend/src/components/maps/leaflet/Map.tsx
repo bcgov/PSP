@@ -2,12 +2,11 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
-import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
+import { LatLngBounds, Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -18,12 +17,13 @@ import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
 import { useAppSelector } from 'store/hooks';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
+import styled from 'styled-components';
 
 import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
-import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { InventoryLayer } from './InventoryLayer';
 import { LayerPopup, LayerPopupInformation } from './LayerPopup';
 import LayersControl from './LayersControl';
@@ -43,12 +43,13 @@ export type MapProps = {
   lng: number;
   zoom?: number;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
-  onMapClick?: (e: LeafletMouseEvent) => void;
   disableMapFilterBar?: boolean;
-  showSideBar?: boolean;
+  showSideBar: boolean;
   showParcelBoundaries?: boolean;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
+  onPropertyMarkerClick: (property: IProperty) => void;
+  onViewPropertyClick: (pid?: string | null) => void;
 };
 
 type BaseLayerFile = {
@@ -87,18 +88,19 @@ const Map: React.FC<MapProps> = ({
   lat,
   lng,
   zoom: zoomProp,
-  onMapClick,
   showSideBar,
   whenReady,
   whenCreated,
   disableMapFilterBar,
+  onPropertyMarkerClick,
+  onViewPropertyClick,
 }) => {
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
   const [geoFilter, setGeoFilter] = useState<IGeoSearchParams>({
     ...defaultFilterValues,
     includeAllProperties: keycloak.hasClaim(Claims.ADMIN_PROPERTIES),
-  } as any);
+  } as any); // Todo: remove type coercion
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
   const [triggerFilterChanged, setTriggerFilterChanged] = useState(true);
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
@@ -107,12 +109,11 @@ const Map: React.FC<MapProps> = ({
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
-  const { setShowSideBar } = useMapSideBarQueryParams();
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
 
-  const { setPropertyInfo, propertyInfo } = useContext(PropertyPopUpContext);
+  const { setPropertyInfo, propertyInfo } = useContext(SelectedPropertyContext);
 
   if (mapRef.current && !propertyInfo) {
     const center = mapRef.current.getCenter();
@@ -210,7 +211,7 @@ const Map: React.FC<MapProps> = ({
     <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map', { sidebar: showSideBar })}>
       <LoadingBackdrop show={showLoadingBackdrop} />
       {!showSideBar && !disableMapFilterBar ? (
-        <Container fluid className="px-0 map-filter-container">
+        <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             defaultFilter={{
               ...defaultFilterValues,
@@ -218,7 +219,7 @@ const Map: React.FC<MapProps> = ({
             onChange={handleMapFilterChange}
             setTriggerFilterChanged={setTriggerFilterChanged}
           />
-        </Container>
+        </StyledFilterContainer>
       ) : null}
       <Styled.MapContainer>
         {baseLayers?.length > 0 && (
@@ -244,6 +245,7 @@ const Map: React.FC<MapProps> = ({
           {!!layerPopup && (
             <LayerPopup
               layerPopup={layerPopup}
+              onViewPropertyInfo={onViewPropertyClick}
               onClose={() => {
                 setLayerPopup(undefined);
                 setPropertyInfo(null);
@@ -263,7 +265,7 @@ const Map: React.FC<MapProps> = ({
             bounds={bounds}
             onMarkerClick={(property: IProperty) => {
               setLayersOpen(false);
-              setShowSideBar(true, property);
+              onPropertyMarkerClick(property);
             }}
             filter={geoFilter}
             onRequestData={setShowLoadingBackdrop}
@@ -275,3 +277,38 @@ const Map: React.FC<MapProps> = ({
 };
 
 export default Map;
+
+const StyledFilterContainer = styled(Container)`
+  transition: margin 1s;
+
+  grid-area: filter;
+  background-color: #f2f2f2;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+  z-index: 500;
+  .map-filter-bar {
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+    .vl {
+      border-left: 6px solid rgba(96, 96, 96, 0.2);
+      height: 4rem;
+      margin-left: 1%;
+      margin-right: 1%;
+      border-width: 0.2rem;
+    }
+    .btn-primary {
+      color: white;
+      font-weight: bold;
+      height: 3.5rem;
+      width: 3.5rem;
+      min-height: unset;
+      padding: 0;
+    }
+    .form-control {
+      font-size: 1.4rem;
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+`;

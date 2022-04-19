@@ -59,7 +59,7 @@ export interface IFlatProperty {
   evaluations?: IPropertyEvaluation[];
 
   appCreateTimestamp?: Date | string | Moment;
-  updatedOn?: Date | string | Moment;
+  appUpdateTimestamp?: Date | string | Moment;
   updatedByEmail?: string;
   updatedByName?: string;
   rowVersion?: number;

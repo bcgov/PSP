@@ -15,7 +15,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// ContactService class, provides a service layer to interact with contacts within the datasource.
     /// </summary>
-    public class ContactService : BaseRepository, IContactService
+    public class ContactRepository : BaseRepository, IContactRepository
     {
         #region Constructors
         /// <summary>
@@ -25,7 +25,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ContactService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ContactService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public ContactRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ContactRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods

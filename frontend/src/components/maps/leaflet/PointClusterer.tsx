@@ -9,16 +9,14 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import L, { LatLng, LatLngLiteral } from 'leaflet';
 import { find } from 'lodash';
-import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
-import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Supercluster from 'supercluster';
 
 import useSupercluster from '../hooks/useSupercluster';
 import { useFilterContext } from '../providers/FIlterProvider';
-import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { ICluster, PointFeature } from '../types';
 import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
 import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
@@ -105,10 +103,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
-  const location = useLocation();
-  const { parcelId } = queryString.parse(location.search);
-  const popUpContext = React.useContext(PropertyPopUpContext);
-  const { propertyInfo: selected } = popUpContext;
+  const selectedPropertyContext = React.useContext(SelectedPropertyContext);
+  const { propertyInfo: selected } = selectedPropertyContext;
 
   const [currentSelected, setCurrentSelected] = useState(selected);
   const [currentCluster, setCurrentCluster] = useState<
@@ -146,21 +142,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       return [];
     }
   }, [currentCluster, supercluster]);
-
-  //Optionally create a new pin to represent the active property if not already displayed in a spiderfied cluster.
-  useDeepCompareEffect(() => {
-    if (!currentClusterIds.includes(+(selected?.id ?? 0))) {
-      setCurrentSelected(selected);
-      if (!!parcelId && !!selected) {
-        mapInstance.setView(
-          [selected?.latitude as number, selected?.longitude as number],
-          Math.max(MAX_ZOOM, mapInstance.getZoom()),
-        );
-      }
-    } else {
-      setCurrentSelected(null);
-    }
-  }, [selected, setCurrentSelected]);
 
   // Register event handlers to shrink and expand clusters when map is interacted with
   const componentDidMount = useCallback(() => {
@@ -270,7 +251,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const { getProperty } = useApiProperties();
   const fetchProperty = React.useCallback(
     (id: number, latLng: LatLngLiteral) => {
-      popUpContext.setLoading(true);
+      selectedPropertyContext.setLoading(true);
       getProperty(id)
         .then(apiProperty => {
           const propertyData = apiProperty.data;
@@ -297,20 +278,19 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             latitude: latLng.lat,
             longitude: latLng.lng,
           };
-          popUpContext.setPropertyInfo(property);
+          selectedPropertyContext.setPropertyInfo(property);
         })
         .catch(() => {
           toast.error('Unable to load property details, refresh the page and try again.');
         })
         .finally(() => {
-          popUpContext.setLoading(false);
+          selectedPropertyContext.setLoading(false);
         });
     },
-    [getProperty, popUpContext],
+    [getProperty, selectedPropertyContext],
   );
 
   const keycloak = useKeycloakWrapper();
-
   return (
     <>
       <FeatureGroup ref={featureGroupRef}>
@@ -366,6 +346,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                     longitude,
                   );
                   convertedProperty && onMarkerClick(convertedProperty); //open information slideout
+                  setCurrentSelected(convertedProperty);
                   if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
                     convertedProperty?.id
                       ? fetchProperty(convertedProperty.id, {
@@ -374,7 +355,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                         })
                       : toast.dark('This property is invalid, unable to view details');
                   } else {
-                    popUpContext.setPropertyInfo(convertedProperty);
+                    selectedPropertyContext.setPropertyInfo(convertedProperty);
                   }
                 },
               }}
@@ -428,12 +409,12 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             <SelectedPropertyMarker
               {...selected}
               icon={getMarkerIcon({ properties: selected } as any, true)}
-              className={Number(parcelId) === selected?.id ? 'active-selected' : ''}
+              className={'active-selected'}
               position={[selected.latitude as number, selected.longitude as number]}
               map={mapInstance}
               eventHandlers={{
                 click: () => {
-                  popUpContext.setPropertyInfo(selected);
+                  selectedPropertyContext.setPropertyInfo(selected);
                   selected && onMarkerClick(selected);
                 },
               }}

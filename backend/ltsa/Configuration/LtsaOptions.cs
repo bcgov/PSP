@@ -54,6 +54,11 @@ namespace Pims.Ltsa.Configuration
         /// get/set - My LTSA Password.
         /// </summary>
         public string MyLtsaUserPassword { get; set; }
+
+        /// <summary>
+        /// get/set - Max retries when contacting ltsa service.
+        /// </summary>
+        public int MaxRetries { get; set; }
         #endregion
     }
 }

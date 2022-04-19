@@ -1,20 +1,18 @@
-import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
-import classNames from 'classnames';
 import * as Styled from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
 interface IMapSideBarLayoutProps {
-  show: boolean;
-  setShowSideBar: (show: boolean) => void;
   title: React.ReactNode;
-  hidePolicy?: boolean;
-  /** property name for title */
-  propertyName?: string;
-  header: React.ReactNode;
+  header?: React.ReactNode;
+  icon: React.ReactNode | React.FunctionComponent;
+  footer?: React.ReactNode | React.FunctionComponent;
+  showCloseButton?: boolean;
+  onClose?: () => void;
 }
 
 /**
@@ -22,94 +20,70 @@ interface IMapSideBarLayoutProps {
  * @param param0
  */
 const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
-  show,
-  setShowSideBar,
-  hidePolicy,
   title,
-  propertyName,
+  header,
+  icon,
+  showCloseButton,
   ...props
 }) => {
   return (
-    <StyledMapSideBarLayout
-      className={classNames('map-side-drawer', {
-        show: show,
-      })}
-    >
-      <VisibilitySensor partialVisibility={true}>
-        {({ isVisible }: any) => (
-          <>
-            <TitleBar>
-              <Underline>
-                <LotIcon className="mr-1" />
-                <Styled.H1 className="mr-auto">{title}</Styled.H1>
+    <VisibilitySensor partialVisibility={true}>
+      {({ isVisible }: any) => (
+        <>
+          <TitleBar>
+            <Row>
+              <Col>
+                <Styled.H1 className="mr-auto">
+                  {icon}
+                  {title}
+                </Styled.H1>
+              </Col>
 
-                <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
-                  <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
-                </TooltipWrapper>
-              </Underline>
-            </TitleBar>
-            <Header>{props.header}</Header>
+              {showCloseButton && (
+                <Col xs="auto">
+                  <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
+                    <CloseIcon title="close" onClick={props.onClose} />
+                  </TooltipWrapper>
+                </Col>
+              )}
+            </Row>
+            <Underline />
+          </TitleBar>
+
+          {header && isVisible && <Header>{header}</Header>}
+
+          <StyledBody>
             <Content>{isVisible ? props.children : null}</Content>
-          </>
-        )}
-      </VisibilitySensor>
-    </StyledMapSideBarLayout>
+          </StyledBody>
+
+          {props.footer && isVisible && <Footer>{props.footer}</Footer>}
+        </>
+      )}
+    </VisibilitySensor>
   );
 };
 
-const Content = styled.div`
-  grid-area: content;
+const StyledBody = styled.div`
   width: 100%;
+  position: relative;
+  overflow: auto;
+  flex: 1;
+`;
+
+const Content = styled.div`
   height: 100%;
-  top: 2rem;
-  position: absolute;
-  margin-top: 1rem;
+  width: 100%;
 `;
 
-const Header = styled.div`
-  grid-area: header;
-`;
+const TitleBar = styled.div``;
 
-const LotIcon = styled(LotSvg)`
-  width: 3rem;
-  height: 3rem;
-  align-self: flex-end;
-`;
+const Header = styled.div``;
 
-const TitleBar = styled.div`
-  grid-area: title;
-  display: flex;
-`;
+const Footer = styled.div``;
 
 const Underline = styled.div`
   width: 100%;
-  display: flex;
   border-bottom: solid 0.5rem ${props => props.theme.css.primaryLightColor};
-`;
-
-const StyledMapSideBarLayout = styled.div`
-  h1 {
-    border-bottom: none;
-  }
-  height: calc(
-    100vh - ${props => props.theme.css.headerHeight} - ${props => props.theme.css.footerHeight}
-  );
-  min-width: 93rem;
-  margin-left: -93rem;
-  max-width: 93rem;
-  padding: 2.4rem 3.6rem;
-  display: grid;
-  grid: 4.2rem 5.8rem 1fr / 1fr;
-  grid-template-areas:
-    'title'
-    'header'
-    'content';
-  transition: 1s;
-  overflow: hidden;
-  position: absolute;
-  &.show {
-    margin-left: 0;
-  }
 `;
 
 const CloseIcon = styled(FaWindowClose)`

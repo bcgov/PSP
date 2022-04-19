@@ -1,11 +1,7 @@
-import { ColumnWithProps } from 'components/Table';
+import { ColumnWithProps, DateCell } from 'components/Table';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import ITypeCode from 'interfaces/ITypeCode';
 import { CellProps } from 'react-table';
-import { prettyFormatDate } from 'utils';
-
-export const DateCell = ({ cell: { value } }: CellProps<ILeaseTerm, string>) =>
-  prettyFormatDate(value);
 
 export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
   {

@@ -1,29 +1,26 @@
 import { SelectProperty } from 'components/common/mapping/SelectProperty';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { withNameSpace } from 'utils/formUtils';
 
-import { IPropertySelectorModel } from './PropertySelectorFormView';
+import { IMapProperty } from './models';
 
-interface IPropertySelectorSubFormProps {
-  nameSpace?: string;
+export interface IPropertySelectorSubFormProps {
   onClickDraftMarker: () => void;
   onClickAway: () => void;
+  selectedProperty?: IMapProperty;
 }
 
 export const PropertySelectorSubForm: React.FunctionComponent<IPropertySelectorSubFormProps> = ({
-  nameSpace,
   onClickDraftMarker,
   onClickAway,
+  selectedProperty,
 }) => {
-  const { values } = useFormikContext<IPropertySelectorModel>();
-  const pid = getIn(values, withNameSpace(nameSpace, 'pid'));
-  const planNumber = getIn(values, withNameSpace(nameSpace, 'planNumber'));
-  const address = getIn(values, withNameSpace(nameSpace, 'address'));
-  const legalDescription = getIn(values, withNameSpace(nameSpace, 'legalDescription'));
+  const pid = selectedProperty?.pid;
+  const planNumber = selectedProperty?.planNumber;
+  const address = selectedProperty?.address;
+  const legalDescription = selectedProperty?.legalDescription;
   return (
     <StyledFormRow>
       <Col md={4}>

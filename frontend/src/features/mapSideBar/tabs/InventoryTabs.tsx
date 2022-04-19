@@ -21,15 +21,21 @@ export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
   PropertyView,
   LtsaView,
 }) => {
+  const showPropertyInfo = PropertyView !== null;
+
   return (
-    <TabView defaultActiveKey={InventoryTabNames.property}>
+    <TabView
+      defaultActiveKey={showPropertyInfo ? InventoryTabNames.property : InventoryTabNames.title}
+    >
       <Tab eventKey={InventoryTabNames.title} title="Title">
         {LtsaView}
       </Tab>
       <Tab eventKey={InventoryTabNames.value} title="Value"></Tab>
-      <Tab eventKey={InventoryTabNames.property} title="Property Details">
-        {PropertyView}
-      </Tab>
+      {showPropertyInfo && (
+        <Tab eventKey={InventoryTabNames.property} title="Property Details">
+          {PropertyView}
+        </Tab>
+      )}
     </TabView>
   );
 };

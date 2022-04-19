@@ -51,7 +51,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetPropertyWithPid(string pid)
         {
-            var property = _pimsService.Property.GetForPID(pid);
+            var property = _pimsService.Property.GetByPid(pid);
 
             return new JsonResult(_mapper.Map<Models.Property.PropertyModel>(property));
         }
