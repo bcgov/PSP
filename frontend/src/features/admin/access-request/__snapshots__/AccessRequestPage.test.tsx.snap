@@ -196,6 +196,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
            
           <a
             href="https://www2.gov.bc.ca//gov/content/home/disclaimer"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Terms and Conditions
@@ -205,6 +206,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
            
           <a
             href="http://www.gov.bc.ca/gov/content/home/privacy"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Privacy Policy
