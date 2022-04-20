@@ -1,8 +1,11 @@
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
+import UpdateResearchContainer from 'features/properties/map/research/update/UpdateResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { isNumber } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { isNum } from 'react-toastify/dist/utils';
 
 import MotiInventoryContainer from '../MotiInventoryContainer';
 
@@ -20,6 +23,8 @@ export enum MapSidebarContextType {
 export enum MapViewState {
   MAP_ONLY = 'map_only',
   RESEARCH_ADD = 'research_add',
+  RESEARCH_EDIT = 'research_edit',
+  RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
   PROPERTY_SEARCH = 'property_search',
 }
@@ -49,11 +54,18 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
 
     var parts = location.pathname.split('/');
     var currentState: MapViewState = MapViewState.MAP_ONLY;
+    debugger;
     if (parts.length === 2) {
       currentState = MapViewState.MAP_ONLY;
     } else if (parts[2] === 'research') {
       if (parts[3] === 'new') {
         currentState = MapViewState.RESEARCH_ADD;
+      } else if (isNumber(Number(parts[3]))) {
+        if (parts[4] === 'edit') {
+          currentState = MapViewState.RESEARCH_EDIT;
+        } else {
+          currentState = MapViewState.RESEARCH_VIEW;
+        }
       } else {
         currentState = MapViewState.MAP_ONLY;
       }
@@ -72,6 +84,14 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         break;
       case MapViewState.RESEARCH_ADD:
         setSidebarComponent(<AddResearchContainer onClose={handleClose} />);
+        setShowSideBar(true);
+        break;
+      case MapViewState.RESEARCH_EDIT:
+        setSidebarComponent(<UpdateResearchContainer onClose={handleClose} />);
+        setShowSideBar(true);
+        break;
+      case MapViewState.RESEARCH_VIEW:
+        setSidebarComponent(<UpdateResearchContainer onClose={handleClose} />);
         setShowSideBar(true);
         break;
       case MapViewState.PROPERTY_SEARCH:

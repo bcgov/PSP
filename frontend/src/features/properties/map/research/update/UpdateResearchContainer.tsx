@@ -9,15 +9,15 @@ import styled from 'styled-components';
 
 import ResearchFooter from '../common/ResearchFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
-import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
-import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
+import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
+import UpdateResearchForm from './UpdateResearchForm';
 
-export interface IAddResearchContainerProps {
+export interface IUpdateResearchContainerProps {
   onClose: () => void;
 }
 
-export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
+export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchContainerProps> = props => {
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const initialForm = new ResearchForm();
   const { addResearchFile } = useAddResearch();
@@ -41,7 +41,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
 
   return (
     <MapSideBarLayout
-      title="Create Research File"
+      title="Update Research File"
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
         <ResearchFooter
@@ -62,11 +62,11 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           formikHelpers.setSubmitting(false);
           formikHelpers.resetForm();
         }}
-        validationSchema={AddResearchFileYupSchema}
+        validationSchema={UpdateResearchFileYupSchema}
       >
         {formikProps => (
           <StyledFormWrapper>
-            <AddResearchForm />
+            <UpdateResearchForm />
 
             <Prompt
               when={formikProps.dirty && formikProps.submitCount === 0}
@@ -79,7 +79,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   );
 };
 
-export default AddResearchContainer;
+export default UpdateResearchContainer;
 
 const StyledFormWrapper = styled.div`
   display: flex;
