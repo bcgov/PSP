@@ -9,9 +9,13 @@ namespace Pims.Api.Areas.Reports.Models.Lease
     public class LeaseModel
     {
         #region Properties
-        [DisplayName("L-File Number")]
-        [CsvHelper.Configuration.Attributes.Name("L-File Number")]
+        [DisplayName("L_FILE_NO")]
+        [CsvHelper.Configuration.Attributes.Name("L_FILE_NO")]
         public string LFileNo { get; set; }
+
+        [DisplayName("MoTI Region")]
+        [CsvHelper.Configuration.Attributes.Name("MoTI Region")]
+        public string MotiRegion { get; set; }
 
         [DisplayName("Start Date")]
         [CsvHelper.Configuration.Attributes.Name("Start Date")]
@@ -29,44 +33,48 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         [CsvHelper.Configuration.Attributes.Name("Current Term End Date")]
         public DateTime? CurrentTermEndDate { get; set; }
 
-        [DisplayName("Tenant Name")]
-        [CsvHelper.Configuration.Attributes.Name("Tenant Name")]
+        [DisplayName("Tenant")]
+        [CsvHelper.Configuration.Attributes.Name("Tenant")]
         public string TenantName { get; set; }
 
         [DisplayName("PID")]
         [CsvHelper.Configuration.Attributes.Name("PID")]
-        public string Pid { get; set; }
+        public int? Pid { get; set; }
 
         [DisplayName("PIN")]
         [CsvHelper.Configuration.Attributes.Name("PIN")]
-        public string Pin { get; set; }
+        public int? Pin { get; set; }
 
-        [DisplayName("Civic Address")]
-        [CsvHelper.Configuration.Attributes.Name("Civic Address")]
+        [DisplayName("Address")]
+        [CsvHelper.Configuration.Attributes.Name("Address")]
         public string CivicAddress { get; set; }
 
-        [DisplayName("Program Name")]
-        [CsvHelper.Configuration.Attributes.Name("Program Name")]
+        [DisplayName("Program Type")]
+        [CsvHelper.Configuration.Attributes.Name("Program Type")]
         public string ProgramName { get; set; }
 
-        [DisplayName("Lease Purpose Type")]
-        [CsvHelper.Configuration.Attributes.Name("Lease Purpose Type")]
+        [DisplayName("Lease Type")]
+        [CsvHelper.Configuration.Attributes.Name("Lease Type")]
+        public string LeaseTypeName { get; set; }
+
+        [DisplayName("Purpose Type")]
+        [CsvHelper.Configuration.Attributes.Name("Purpose Type")]
         public string PurposeType { get; set; }
 
-        [DisplayName("Lease Status Type")]
-        [CsvHelper.Configuration.Attributes.Name("Lease Status Type")]
+        [DisplayName("Status")]
+        [CsvHelper.Configuration.Attributes.Name("Status")]
         public string StatusType { get; set; }
 
-        [DisplayName("PS File Number")]
-        [CsvHelper.Configuration.Attributes.Name("PS File Number")]
+        [DisplayName("PS File#")]
+        [CsvHelper.Configuration.Attributes.Name("PS File#")]
         public string PsFileNo { get; set; }
 
-        [DisplayName("Term Start Date")]
-        [CsvHelper.Configuration.Attributes.Name("Term Start Date")]
+        [DisplayName("Term Start")]
+        [CsvHelper.Configuration.Attributes.Name("Term Start")]
         public DateTime? TermStartDate { get; set; }
 
-        [DisplayName("Term Expiry Date")]
-        [CsvHelper.Configuration.Attributes.Name("Term Expiry Date")]
+        [DisplayName("Term End")]
+        [CsvHelper.Configuration.Attributes.Name("Term End")]
         public DateTime? TermExpiryDate { get; set; }
 
         [DisplayName("Term Renewal Date")]
@@ -75,10 +83,14 @@ namespace Pims.Api.Areas.Reports.Models.Lease
 
         [DisplayName("Lease Amount")]
         [CsvHelper.Configuration.Attributes.Name("Lease Amount")]
-        public decimal LeaseAmount { get; set; }
+        public decimal? LeaseAmount { get; set; }
 
-        [DisplayName("Inspection Dates")]
-        [CsvHelper.Configuration.Attributes.Name("Inspection Dates")]
+        [DisplayName("Lease Payment Frequency")]
+        [CsvHelper.Configuration.Attributes.Name("Lease Payment Frequency")]
+        public string LeasePaymentFrequencyType { get; set; }
+
+        [DisplayName("Inspection Date")]
+        [CsvHelper.Configuration.Attributes.Name("Inspection Date")]
         public DateTime? InspectionDate { get; set; }
 
         [DisplayName("Inspection Notes")]
@@ -89,10 +101,16 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         [CsvHelper.Configuration.Attributes.Name("Lease Notes")]
         public string LeaseNotes { get; set; }
 
+        [DisplayName("Land Area")]
+        [CsvHelper.Configuration.Attributes.Name("Land Area")]
+        public string LandArea { get; set; }
+
+        [DisplayName("Unit")]
+        [CsvHelper.Configuration.Attributes.Name("Unit")]
         public string Unit { get; set; }
 
-        [DisplayName("Is Expired?")]
-        [CsvHelper.Configuration.Attributes.Name("Is Expired?")]
+        [DisplayName("IS_EXPIRED")]
+        [CsvHelper.Configuration.Attributes.Name("IS_EXPIRED")]
         public bool IsExpired { get; set; }
         #endregion
     }

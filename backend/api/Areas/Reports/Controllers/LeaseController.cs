@@ -68,7 +68,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="all"></param>
         /// <returns></returns>
         [HttpGet]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.LeaseView)]
         [Produces(ContentTypes.CONTENT_TYPE_CSV, ContentTypes.CONTENT_TYPE_EXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "lease", "report" })]
@@ -88,7 +88,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="all"></param>
         /// <returns></returns>
         [HttpPost("filter")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.LeaseView)]
         [Produces(ContentTypes.CONTENT_TYPE_CSV, ContentTypes.CONTENT_TYPE_EXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "lease", "report" })]
@@ -104,16 +104,15 @@ namespace Pims.Api.Areas.Reports.Controllers
             //Create duplicate lease rows for every unique property lease, tenant, and term.
             filter.Quantity = all ? _pimsRepository.Lease.Count() : filter.Quantity;
             var page = _pimsRepository.Lease.GetPage((LeaseFilter)filter);
-            var leaseTerms = _mapper.Map<IEnumerable<Models.Lease.LeaseModel>>(page.Items.SelectMany(l => l.PimsLeaseTerms, (lease, term) => (lease, term)));
-            var leaseProperties = _mapper.Map<IEnumerable<Models.Lease.LeaseModel>>(page.Items.SelectMany(l => l.PimsPropertyLeases, (lease, property) => (lease, property)));
-            var leaseTenants = _mapper.Map<IEnumerable<Models.Lease.LeaseModel>>(page.Items.SelectMany(l => l.PimsLeaseTenants, (lease, tenant) => (lease, tenant)));
-            var leases = _mapper.Map<IEnumerable<Models.Lease.LeaseModel>>(page.Items.Where(l => !l.PimsLeaseTenants.Any() && !l.PimsLeaseTerms.Any() && !l.PimsPropertyLeases.Any()));
-            var allLeases = leaseTerms.Concat(leaseProperties).Concat(leaseTenants).Concat(leases);
+            var allLeases = page.Items.SelectMany(l => l.PimsLeaseTerms.DefaultIfEmpty(), (lease, term) => (lease, term))
+                .SelectMany(lt => lt.lease.PimsPropertyLeases.DefaultIfEmpty(), (leaseTerm, property) => (leaseTerm.term, leaseTerm.lease, property))
+                .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leaseTermProperty, tenant) => (leaseTermProperty.term, leaseTermProperty.lease, leaseTermProperty.property, tenant));
+            var flatLeases = _mapper.Map<IEnumerable<LeaseModel>>(allLeases);
 
             return accept.ToString() switch
             {
-                ContentTypes.CONTENT_TYPE_CSV => ReportHelper.GenerateCsv(allLeases),
-                _ => ReportHelper.GenerateExcel(allLeases, "PIMS")
+                ContentTypes.CONTENT_TYPE_CSV => ReportHelper.GenerateCsv(flatLeases),
+                _ => ReportHelper.GenerateExcel(flatLeases, "PIMS")
             };
 
         }
