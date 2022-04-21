@@ -46,7 +46,9 @@ namespace Pims.Dal.Repositories
             var query = this.Context.PimsClaims.AsNoTracking();
 
             if (!String.IsNullOrWhiteSpace(name))
+            {
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
+            }
 
             var claims = query.Skip((page - 1) * quantity).Take(quantity);
             return new Paged<PimsClaim>(claims.ToArray(), page, quantity, query.Count());

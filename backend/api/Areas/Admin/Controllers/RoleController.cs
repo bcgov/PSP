@@ -55,9 +55,20 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRoles(int page = 1, int quantity = 10, string name = null)
         {
-            if (page < 1) page = 1;
-            if (quantity < 1) quantity = 1;
-            if (quantity > 50) quantity = 50;
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            if (quantity < 1)
+            {
+                quantity = 1;
+            }
+
+            if (quantity > 50)
+            {
+                quantity = 50;
+            }
 
             var paged = _pimsService.Role.Get(page, quantity, name);
             var result = _mapper.Map<Api.Models.PageModel<Model.RoleModel>>(paged);

@@ -32,10 +32,14 @@ namespace Pims.Keycloak.Configuration
         public void Validate()
         {
             if (String.IsNullOrWhiteSpace(this.Authority))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:Admin:Authority is invalid or missing.");
+            }
 
             if (String.IsNullOrWhiteSpace(this.Users))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:Admin:Users is invalid or missing.");
+            }
         }
         #endregion
     }

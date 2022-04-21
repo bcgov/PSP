@@ -81,11 +81,17 @@ namespace Pims.Api.Areas.Reports.Controllers
         public IActionResult ExportProperties([FromBody] Property.Models.Search.PropertyFilterModel filter, bool all = false)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            if (!filter.IsValid()) throw new BadRequestException("Property filter must contain valid values.");
+            if (!filter.IsValid())
+            {
+                throw new BadRequestException("Property filter must contain valid values.");
+            }
+
             var accept = (string)this.Request.Headers["Accept"] ?? throw new BadRequestException($"HTTP request header 'Accept' is required.");
 
             if (accept != ContentTypes.CONTENT_TYPE_CSV && accept != ContentTypes.CONTENT_TYPE_EXCEL && accept != ContentTypes.CONTENT_TYPE_EXCELX)
+            {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
+            }
 
             filter.Quantity = all ? _pimsService.Property.Count() : filter.Quantity;
             var page = _pimsService.Property.GetPage((PropertyFilter)filter);

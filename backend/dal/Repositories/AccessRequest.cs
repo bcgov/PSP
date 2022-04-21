@@ -71,7 +71,11 @@ namespace Pims.Dal.Repositories
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
-            if (!isAdmin && accessRequest.User.GuidIdentifierValue != key) throw new NotAuthorizedException();
+            if (!isAdmin && accessRequest.User.GuidIdentifierValue != key)
+            {
+                throw new NotAuthorizedException();
+            }
+
             return accessRequest;
         }
 
@@ -95,19 +99,29 @@ namespace Pims.Dal.Repositories
 
             var userOrganizations = this.User.GetOrganizations();
             if (userOrganizations != null && User.HasPermission(Permissions.OrganizationAdmin) && !User.HasPermission(Permissions.SystemAdmin))
+            {
                 query = query.Where(accessRequest => accessRequest.PimsAccessRequestOrganizations.Any(a => a.OrganizationId.HasValue && userOrganizations.Contains(a.OrganizationId.Value)));
+            }
 
             if (!String.IsNullOrWhiteSpace(filter.Status))
+            {
                 query = query.Where(request => request.AccessRequestStatusTypeCode == filter.Status);
+            }
 
             if (!string.IsNullOrWhiteSpace(filter.Role))
+            {
                 query = query.Where(ar => EF.Functions.Like(ar.Role.Name, $"%{filter.Role}%"));
+            }
 
             if (!string.IsNullOrWhiteSpace(filter.Organization))
+            {
                 query = query.Where(ar => ar.PimsAccessRequestOrganizations.Any(a => EF.Functions.Like(a.Organization.OrganizationName, $"%{filter.Organization}%")));
+            }
 
             if (!string.IsNullOrWhiteSpace(filter.Username))
+            {
                 query = query.Where(ar => EF.Functions.Like(ar.User.BusinessIdentifierValue, $"%{filter.Username}%"));
+            }
 
             var accessRequests = query
                 .Skip((filter.Page - 1) * filter.Quantity)
@@ -126,7 +140,10 @@ namespace Pims.Dal.Repositories
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
-            if (!isAdmin && accessRequest.User.GuidIdentifierValue != key) throw new NotAuthorizedException();
+            if (!isAdmin && accessRequest.User.GuidIdentifierValue != key)
+            {
+                throw new NotAuthorizedException();
+            }
 
             accessRequest.ConcurrencyControlNumber = deleteRequest.ConcurrencyControlNumber;
             Context.PimsAccessRequests.Remove(accessRequest);
@@ -142,7 +159,10 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsAccessRequest Add(PimsAccessRequest addRequest)
         {
-            if (addRequest == null) throw new ArgumentNullException(nameof(addRequest));
+            if (addRequest == null)
+            {
+                throw new ArgumentNullException(nameof(addRequest));
+            }
 
             var key = this.User.GetUserKey();
             var position = addRequest.User.Position;
@@ -163,14 +183,20 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsAccessRequest Update(PimsAccessRequest updateRequest)
         {
-            if (updateRequest == null) throw new ArgumentNullException(nameof(updateRequest));
+            if (updateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateRequest));
+            }
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
             var position = updateRequest.User.Position;
             updateRequest.User = this.Context.PimsUsers.FirstOrDefault(u => u.GuidIdentifierValue == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
             updateRequest.User.Position = position;
-            if (!isAdmin && updateRequest.User.GuidIdentifierValue != key) throw new NotAuthorizedException(); // Not allowed to update someone elses request.
+            if (!isAdmin && updateRequest.User.GuidIdentifierValue != key)
+            {
+                throw new NotAuthorizedException(); // Not allowed to update someone elses request.
+            }
 
             // fetch the existing request from the datasource.
             var accessRequest = this.Context.PimsAccessRequests

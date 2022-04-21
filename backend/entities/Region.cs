@@ -24,9 +24,12 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a Region class.
         /// </summary>
         /// <param name="name"></param>
-        public PimsRegion(string name):this()
+        public PimsRegion(string name) : this()
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
+            }
 
             this.RegionName = name;
         }

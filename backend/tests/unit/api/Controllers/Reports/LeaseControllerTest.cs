@@ -18,6 +18,8 @@ using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using FluentAssertions;
+using System.Linq;
 
 namespace Pims.Api.Test.Controllers.Reports
 {
@@ -105,6 +107,199 @@ namespace Pims.Api.Test.Controllers.Reports
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
             service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+        }
+
+        [Fact]
+        public void ExportLeases_Lease_Mapping()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
+            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCodeNavigation = new PimsRegion() { RegionCode = 1, Description = "region" };
+            lease.LFileNo = "L-010-070";
+            lease.OrigStartDate = new DateTime(2000, 1, 1);
+            lease.LeaseProgramTypeCodeNavigation = new PimsLeaseProgramType() { LeaseProgramTypeCode = "OTHER", Description = "otherprogramdesc" };
+            lease.OtherLeaseProgramType = "program";
+            lease.LeaseLicenseTypeCodeNavigation = new PimsLeaseLicenseType() { LeaseLicenseTypeCode = "OTHER", Description = "othertypedesc" };
+            lease.OtherLeaseLicenseType = "type";
+            lease.LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType() { LeasePurposeTypeCode = "OTHER", Description = "otherpurposedesc" };
+            lease.OtherLeasePurposeType = "purpose";
+            lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType() { LeaseStatusTypeCode = "STATUS", Description = "status" };
+            lease.PsFileNo = "123";
+            lease.LeaseNotes = "note";
+            lease.InspectionDate = new DateTime(2000, 2, 2);
+            lease.InspectionNotes = "inspection note";
+            var leases = new[] { lease };
+
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.PimsLease>(leases);
+            service.Setup(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+
+            // Act
+            var result = controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+
+            // Assert
+            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            result.MotiRegion.Should().Be("region");
+            result.LFileNo.Should().Be("L-010-070");
+            result.StartDate.Should().Be(new DateTime(2000, 1, 1));
+            result.ProgramName.Should().Be("otherprogramdesc - program");
+            result.StatusType.Should().Be("status");
+            result.PurposeType.Should().Be("otherpurposedesc - purpose");
+            result.LeaseTypeName.Should().Be("othertypedesc - type");
+            result.PsFileNo.Should().Be("123");
+            result.LeaseNotes.Should().Be("note");
+            result.InspectionDate.Should().Be(new DateTime(2000, 2, 2));
+            result.InspectionNotes.Should().Be("inspection note");
+        }
+
+        [Fact]
+        public void ExportLeases_LeaseTerm_Mapping()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
+            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+
+            var lease = EntityHelper.CreateLease(1);
+            var leaseTerm = new PimsLeaseTerm();
+            leaseTerm.TermStartDate = DateTime.Now;
+            leaseTerm.TermRenewalDate = DateTime.Now.AddDays(1);
+            leaseTerm.TermExpiryDate = DateTime.Now.AddDays(2);
+            leaseTerm.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() {LeasePmtFreqTypeCode = "PMT", Description="pmt" };
+            leaseTerm.PaymentAmount = 1000;
+            lease.PimsLeaseTerms.Add(leaseTerm);
+
+            var leases = new[] { lease };
+
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.PimsLease>(leases);
+            service.Setup(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+
+            // Act
+            var result = controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+
+            // Assert
+            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            result.CurrentTermStartDate.Should().Be(leaseTerm.TermStartDate);
+            result.CurrentTermEndDate.Should().Be(leaseTerm.TermExpiryDate);
+            result.TermStartDate.Should().Be(leaseTerm.TermStartDate);
+            result.TermRenewalDate.Should().Be(leaseTerm.TermRenewalDate);
+            result.TermExpiryDate.Should().Be(leaseTerm.TermExpiryDate);
+            result.IsExpired.Should().Be("No");
+            result.LeasePaymentFrequencyType.Should().Be("pmt");
+            result.LeaseAmount.Should().Be(1000);
+        }
+
+        [Fact]
+        public void ExportLeases_LeaseTenant_Mapping()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
+            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+
+            var lease = EntityHelper.CreateLease(1);
+            var leaseOrgTenant = new PimsLeaseTenant();
+            leaseOrgTenant.Organization = new PimsOrganization() { Name = "org" };
+            lease.PimsLeaseTenants.Add(leaseOrgTenant);
+
+            var leasePersonTenant = new PimsLeaseTenant();
+            leasePersonTenant.Person = new PimsPerson() { FirstName = "first", MiddleNames = "middle", Surname = "last" };
+            lease.PimsLeaseTenants.Add(leasePersonTenant);
+
+
+            var leases = new[] { lease };
+
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.PimsLease>(leases);
+            service.Setup(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+
+            // Act
+            var result = controller.GetCrossJoinLeases(new LeaseFilterModel());
+
+            // Assert
+            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            result.ToArray()[0].TenantName.Should().Be("org");
+            result.ToArray()[1].TenantName.Should().Be("first middle last");
+        }
+
+        [Fact]
+        public void ExportLeases_LeaseProperty_Mapping()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
+            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+
+            var lease = new PimsLease();
+            var property = new PimsProperty();
+            property.Pid = 1;
+            property.Pin = 2;
+            property.Address = new PimsAddress() { StreetAddress1 = "1", StreetAddress2 = "2", StreetAddress3 = "3", MunicipalityName = "m" };
+            var leaseProperty = new PimsPropertyLease() { Property = property, Lease = lease, LeaseArea = 3, AreaUnitTypeCodeNavigation = new PimsAreaUnitType() { AreaUnitTypeCode = "HA", Description = "hectares" } };
+            lease.PimsPropertyLeases.Add(leaseProperty);
+
+            var leases = new[] { lease };
+
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.PimsLease>(leases);
+            service.Setup(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+
+            // Act
+            var result = controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+
+            // Assert
+            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            result.Pid.Should().Be(1);
+            result.Pin.Should().Be(2);
+            result.CivicAddress.Should().Be("1 2 3 m");
+            result.LeaseArea.Should().Be(3);
+            result.AreaUnit.Should().Be("hectares");
+        }
+
+        [Fact]
+        public void ExportLeases_Cartesion()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LeaseController>(Permissions.LeaseView);
+            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
+            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
+
+            var lease = new PimsLease();
+            lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
+            lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
+            lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
+
+            lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
+            lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
+            lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
+
+            var leases = new[] { lease };
+
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.PimsLease>(leases);
+            service.Setup(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>())).Returns(page);
+
+            // Act
+            var result = controller.GetCrossJoinLeases(new LeaseFilterModel());
+
+            // Assert
+            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Once());
+            result.Count().Should().Be(9);
         }
 
         /// <summary>

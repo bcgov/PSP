@@ -67,9 +67,13 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             if (filter.Sort?.Any() == true)
+            {
                 query = query.OrderByProperty(filter.Sort);
+            }
             else
+            {
                 query = query.OrderBy(c => c.Summary);
+            }
 
             return query;
         }

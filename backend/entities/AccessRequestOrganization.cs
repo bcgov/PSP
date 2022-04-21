@@ -29,7 +29,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="accessRequest"></param>
         /// <param name="organization"></param>
-        public PimsAccessRequestOrganization(PimsAccessRequest accessRequest, PimsOrganization organization):this()
+        public PimsAccessRequestOrganization(PimsAccessRequest accessRequest, PimsOrganization organization) : this()
         {
             this.AccessRequest = accessRequest;
             this.AccessRequestId = accessRequest?.AccessRequestId ??

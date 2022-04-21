@@ -17,10 +17,14 @@ namespace Pims.Keycloak.Configuration
         public override void Validate()
         {
             if (String.IsNullOrWhiteSpace(this.Client))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:ServiceAccount:Client is invalid or missing.");
+            }
 
             if (String.IsNullOrWhiteSpace(this.Secret))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:ServiceAccount:Secret is invalid or missing.");
+            }
         }
         #endregion
     }

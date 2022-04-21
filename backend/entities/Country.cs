@@ -23,7 +23,10 @@ namespace Pims.Dal.Entities
         /// <param name="code"></param>
         public PimsCountry(string code) : this()
         {
-            if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
+            if (String.IsNullOrWhiteSpace(code))
+            {
+                throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
+            }
 
             this.CountryCode = code;
         }

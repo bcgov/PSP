@@ -20,9 +20,12 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="name"></param>
         /// <param name="region"></param>
-        public PimsDistrict(string name, PimsRegion region):this()
+        public PimsDistrict(string name, PimsRegion region) : this()
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
+            }
 
             this.DistrictName = name;
             this.RegionCodeNavigation = region ?? throw new ArgumentNullException(nameof(region));

@@ -47,7 +47,9 @@ namespace Pims.Dal.Repositories
             var query = this.Context.PimsRoles.AsNoTracking();
 
             if (!String.IsNullOrWhiteSpace(name))
+            {
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
+            }
 
             var roles = query.Skip((page - 1) * quantity).Take(quantity);
             return new Paged<PimsRole>(roles.ToArray(), page, quantity, query.Count());
