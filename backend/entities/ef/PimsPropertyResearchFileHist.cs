@@ -32,32 +32,39 @@ namespace Pims.Dal.Entities
         public int? DisplayOrder { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
+        [Column("IS_LEGAL_OPINION_REQUIRED")]
+        public bool? IsLegalOpinionRequired { get; set; }
+        [Column("IS_LEGAL_OPINION_OBTAINED")]
+        public bool? IsLegalOpinionObtained { get; set; }
+        [Column("DOCUMENT_REFERENCE")]
+        [StringLength(2000)]
+        public string DocumentReference { get; set; }
+        [Column("CONCURRENCY_CONTROL_NUMBER")]
+        public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
-        [Required]
-        [Column("APP_CREATE_USER_DIRECTORY")]
-        [StringLength(30)]
-        public string AppCreateUserDirectory { get; set; }
-        [Column("APP_CREATE_USER_GUID")]
-        public Guid? AppCreateUserGuid { get; set; }
         [Required]
         [Column("APP_CREATE_USERID")]
         [StringLength(30)]
         public string AppCreateUserid { get; set; }
+        [Column("APP_CREATE_USER_GUID")]
+        public Guid? AppCreateUserGuid { get; set; }
+        [Required]
+        [Column("APP_CREATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppCreateUserDirectory { get; set; }
         [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppLastUpdateTimestamp { get; set; }
-        [Required]
-        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
-        [StringLength(30)]
-        public string AppLastUpdateUserDirectory { get; set; }
-        [Column("APP_LAST_UPDATE_USER_GUID")]
-        public Guid? AppLastUpdateUserGuid { get; set; }
         [Required]
         [Column("APP_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string AppLastUpdateUserid { get; set; }
-        [Column("CONCURRENCY_CONTROL_NUMBER")]
-        public long ConcurrencyControlNumber { get; set; }
+        [Column("APP_LAST_UPDATE_USER_GUID")]
+        public Guid? AppLastUpdateUserGuid { get; set; }
+        [Required]
+        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppLastUpdateUserDirectory { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime DbCreateTimestamp { get; set; }
         [Required]
