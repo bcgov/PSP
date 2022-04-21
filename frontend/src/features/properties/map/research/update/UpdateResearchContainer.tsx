@@ -12,6 +12,7 @@ import { useAddResearch } from '../hooks/useAddResearch';
 import { ResearchForm } from './models';
 import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
 import UpdateResearchForm from './UpdateResearchForm';
+import UpdateResearchHeader from './UpdateResearchHeader';
 
 export interface IUpdateResearchContainerProps {
   onClose: () => void;
@@ -50,6 +51,7 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
           onCancel={handleCancel}
         />
       }
+      header={<UpdateResearchHeader />}
       showCloseButton
       onClose={handleCancel}
     >
