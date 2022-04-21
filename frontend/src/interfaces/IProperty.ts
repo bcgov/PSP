@@ -5,14 +5,7 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from 'constants/index';
-import {
-  IAddress,
-  IOrganization,
-  IProject,
-  IProjectActivity,
-  IPropertyEvaluation,
-  IPropertyServiceFile,
-} from 'interfaces';
+import { IAddress, IOrganization } from 'interfaces';
 import { Moment } from 'moment';
 
 import { ILease } from './ILease';
@@ -62,10 +55,6 @@ export interface IProperty {
   zoningPotential?: string;
 
   organizations?: IOrganization[];
-  serviceFiles?: IPropertyServiceFile[];
-  projects?: IProject[];
-  projectActivities?: IProjectActivity[];
-  evaluations?: IPropertyEvaluation[];
   surplusDeclaration?: IPropertySurplus;
 
   appCreateTimestamp?: Date | string | Moment;

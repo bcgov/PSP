@@ -1,11 +1,12 @@
+import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import { PointFeature } from 'components/maps/types';
 import { getIn, useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useIsMounted from 'hooks/useIsMounted';
 import { IProperty } from 'interfaces';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
-import { useAppDispatch } from 'store/hooks';
-import { storeDraftProperties } from 'store/slices/properties/propertiesSlice';
+import { useContext, useEffect } from 'react';
 /**
  * Get a list of draft markers from the current form values.
  * As long as a parcel/building has both a lat and a lng it will be returned by this method.
@@ -49,13 +50,11 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
  */
 const useDraftMarkerSynchronizer = (nameSpace: string) => {
   const { values, initialValues } = useFormikContext();
-  const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    return () => {
-      dispatch(storeDraftProperties([]));
-    };
-  }, [dispatch]);
+  const { setDraftProperties } = useContext(SelectedPropertyContext);
+  const isMounted = useIsMounted();
+  useEffect(() => {
+    return () => setDraftProperties([]);
+  }, [setDraftProperties]);
 
   /**
    * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers as drafts.
@@ -66,14 +65,16 @@ const useDraftMarkerSynchronizer = (nameSpace: string) => {
    */
   const synchronizeMarkers = React.useCallback(
     (values: any, initialValues: any, nameSpace: string) => {
-      const draftMarkers = getDraftMarkers(values, initialValues, nameSpace);
-      if (draftMarkers.length) {
-        dispatch(storeDraftProperties(draftMarkers as PointFeature[]));
-      } else {
-        dispatch(storeDraftProperties([]));
+      if (isMounted()) {
+        const draftMarkers = getDraftMarkers(values, initialValues, nameSpace);
+        if (draftMarkers.length) {
+          setDraftProperties(draftMarkers as PointFeature[]);
+        } else {
+          setDraftProperties([]);
+        }
       }
     },
-    [dispatch],
+    [setDraftProperties, isMounted],
   );
 
   const synchronize = React.useRef(

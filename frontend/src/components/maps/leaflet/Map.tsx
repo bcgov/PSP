@@ -115,7 +115,7 @@ const Map: React.FC<MapProps> = ({
   // a reference to the basemap tile layer since the layer url is immutable
   const tileRef = useRef<LeafletTileLayer>(null);
 
-  const { setPropertyInfo, propertyInfo } = useContext(SelectedPropertyContext);
+  const { setPropertyInfo, propertyInfo, selectedFeature } = useContext(SelectedPropertyContext);
 
   if (mapRef.current && !propertyInfo) {
     const center = mapRef.current.getCenter();
@@ -123,7 +123,7 @@ const Map: React.FC<MapProps> = ({
     lng = center.lng;
   }
 
-  const parcelLayerFeature = useAppSelector(state => state.parcelLayerData?.parcelLayerFeature);
+  const parcelLayerFeature = selectedFeature;
   const { showLocationDetails } = useActiveFeatureLayer({
     selectedProperty: propertyInfo,
     layerPopup,
