@@ -85,7 +85,7 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
       );
 
       if (!!organizationResponse?.id) {
-        history.push('/contact/list');
+        history.push(`/contact/O${organizationResponse?.id}`);
       }
     } finally {
       setSubmitting(false);

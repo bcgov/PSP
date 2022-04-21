@@ -60,6 +60,9 @@ namespace Pims.Dal.Entities
         [Column("VOLUME_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string VolumeUnitTypeCode { get; set; }
+        [Column("PPH_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string PphStatusTypeCode { get; set; }
         [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE", TypeName = "date")]
         public DateTime PropertyDataSourceEffectiveDate { get; set; }
         [Column("NAME")]
@@ -99,6 +102,13 @@ namespace Pims.Dal.Entities
         public bool IsSensitive { get; set; }
         [Column("IS_PROVINCIAL_PUBLIC_HWY")]
         public bool? IsProvincialPublicHwy { get; set; }
+        [Column("PPH_STATUS_UPDATE_USERID")]
+        [StringLength(30)]
+        public string PphStatusUpdateUserid { get; set; }
+        [Column("PPH_STATUS_UPDATE_TIMESTAMP", TypeName = "datetime")]
+        public DateTime? PphStatusUpdateTimestamp { get; set; }
+        [Column("IS_RWY_BELT_DOM_PATENT")]
+        public bool? IsRwyBeltDomPatent { get; set; }
         [Column("ZONING")]
         [StringLength(50)]
         public string Zoning { get; set; }
