@@ -2102,6 +2102,14 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Added conditional drop trigger statement for PIMS_STAVBL_I_S_I_TR on 2022-Apr-18
+PRINT N'Drop trigger if exists dbo.PIMS_STAVBL_I_S_I_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_STAVBL_I_S_I_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Create trigger dbo.PIMS_STAVBL_I_S_I_TR
 PRINT N'Create trigger dbo.PIMS_STAVBL_I_S_I_TR'
 GO
