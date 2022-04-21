@@ -57,19 +57,15 @@ namespace Pims.Dal.Entities
         [Column("POSTAL_CODE")]
         [StringLength(20)]
         public string PostalCode { get; set; }
-        [Required]
         [Column("PROVINCE_STATE_CODE")]
         [StringLength(20)]
         public string ProvinceStateCode { get; set; }
-        [Required]
         [Column("PROVINCE_NAME")]
         [StringLength(200)]
         public string ProvinceName { get; set; }
-        [Required]
         [Column("COUNTRY_CODE")]
         [StringLength(20)]
         public string CountryCode { get; set; }
-        [Required]
         [Column("COUNTRY_NAME")]
         [StringLength(200)]
         public string CountryName { get; set; }
