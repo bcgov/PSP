@@ -180,8 +180,14 @@ const AccessRequestPage = () => {
 
                 <p>
                   By clicking request, you agree to our{' '}
-                  <a href={DISCLAIMER_URL}>Terms and Conditions</a> and that you have read our{' '}
-                  <a href={PRIVACY_POLICY_URL}>Privacy Policy</a>.
+                  <a target="_blank" rel="noopener noreferrer" href={DISCLAIMER_URL}>
+                    Terms and Conditions
+                  </a>{' '}
+                  and that you have read our{' '}
+                  <a target="_blank" rel="noopener noreferrer" href={PRIVACY_POLICY_URL}>
+                    Privacy Policy
+                  </a>
+                  .
                 </p>
                 {alert.show && (
                   <Snackbar
