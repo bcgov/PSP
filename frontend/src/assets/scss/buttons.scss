@@ -9,34 +9,6 @@
   stroke: $text-color;
 }
 
-.svg-btn {
-  color: $text-color;
-}
-
-.svg-btn:hover {
-  color: $icon-light-color;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.svg-btn:hover svg {
-  fill: $icon-light-color;
-  stroke: #fff;
-}
-
-.svg-btn.active {
-  color: $icon-light-color;
-  border-bottom-style: solid;
-  border-bottom-color: $accent-color;
-  border-bottom-width: 0.1rem;
-  background-color: transparent !important;
-}
-
-.svg-btn.active svg {
-  fill: $icon-light-color;
-  stroke: #fff;
-}
-
 .btn {
   min-height: 3rem;
   display: flex;
