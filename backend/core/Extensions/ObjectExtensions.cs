@@ -23,7 +23,10 @@ namespace Pims.Core.Extensions
             where ST : class
             where DT : class
         {
-            if (destination == null) throw new ArgumentNullException(nameof(destination));
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
 
             var type = typeof(DT);
             var sProps = typeof(ST)
@@ -42,7 +45,11 @@ namespace Pims.Core.Extensions
 
             foreach (var dProp in dProps)
             {
-                if (!sProps.ContainsKey(dProp.Name)) continue;
+                if (!sProps.ContainsKey(dProp.Name))
+                {
+                    continue;
+                }
+
                 var sProp = sProps[dProp.Name];
 
                 if (sProp.PropertyType == dProp.PropertyType && dProp.GetSetMethod() != null)

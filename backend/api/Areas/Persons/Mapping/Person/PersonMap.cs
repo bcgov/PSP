@@ -28,7 +28,9 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                     // The database supports many organizations for a person but the app currently supports only one linked organization per person.
                     var linkedOrganization = src.PimsPersonOrganizations?.FirstOrDefault(p => p != null && p.Organization != null)?.Organization;
                     if (linkedOrganization != null)
+                    {
                         dest.Organization = new Model.OrganizationLinkModel { Id = linkedOrganization.Id, Text = linkedOrganization.Name };
+                    }
                 });
 
             config.NewConfig<Model.PersonModel, Entity.PimsPerson>()

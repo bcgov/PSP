@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a ProjectRiskType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsProjectRiskType(string id):this()
+        public PimsProjectRiskType(string id) : this()
         {
             Id = id;
         }

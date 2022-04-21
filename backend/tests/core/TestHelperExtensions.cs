@@ -47,7 +47,11 @@ namespace Pims.Core.Test
 
                 // If an 'args' type matches, use it for the mock.
                 var arg = args.FirstOrDefault(a => a.GetType() == carg.ParameterType);
-                if (arg == null) arg = args.FirstOrDefault(a => carg.ParameterType.IsAssignableFrom(a.GetType()));
+                if (arg == null)
+                {
+                    arg = args.FirstOrDefault(a => carg.ParameterType.IsAssignableFrom(a.GetType()));
+                }
+
                 if (arg != null)
                 {
                     // Add the supplied argument to services.

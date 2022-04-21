@@ -135,7 +135,7 @@ namespace Pims.Api.Repositories.EDMS
         {
             string authenticationToken = await GetToken();
 
-            ExternalResult<QueryResult<DocumentDetail>> retVal = new()
+            ExternalResult<QueryResult<DocumentDetail>> retVal = new ()
             {
                 Status = ExternalResultStatus.Error,
             };
@@ -146,7 +146,7 @@ namespace Pims.Api.Repositories.EDMS
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
-            Dictionary<string, string> queryParams = new();
+            Dictionary<string, string> queryParams = new ();
 
             if (!string.IsNullOrEmpty(ordering))
             {
@@ -166,7 +166,7 @@ namespace Pims.Api.Repositories.EDMS
             try
             {
                 string endpointString = $"{this._config.BaseUri}/documents/";
-                Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+                Uri endpoint = new (QueryHelpers.AddQueryString(endpointString, queryParams));
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
                 string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                 this._logger.LogTrace("Response: {response}", response);
@@ -217,7 +217,7 @@ namespace Pims.Api.Repositories.EDMS
         {
             string authenticationToken = await GetToken();
 
-            ExternalResult<FileDownload> retVal = new()
+            ExternalResult<FileDownload> retVal = new ()
             {
                 Status = ExternalResultStatus.Error,
             };
@@ -230,7 +230,7 @@ namespace Pims.Api.Repositories.EDMS
             try
             {
 
-                Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
+                Uri endpoint = new ($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
                 byte[] payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
                 this._logger.LogTrace("Response: {response}", response);
@@ -279,7 +279,7 @@ namespace Pims.Api.Repositories.EDMS
         {
             string authenticationToken = await GetToken();
 
-            ExternalResult<DocumentDetail> uploadDocumentResult = new()
+            ExternalResult<DocumentDetail> uploadDocumentResult = new ()
             {
                 Status = ExternalResultStatus.Error,
             };
@@ -302,7 +302,7 @@ namespace Pims.Api.Repositories.EDMS
                 using HttpContent content = new StringContent(documentType.ToString());
                 multiContent.Add(content, "document_type_id");
 
-                Uri endpoint = new($"{this._config.BaseUri}/documents/upload/");
+                Uri endpoint = new ($"{this._config.BaseUri}/documents/upload/");
                 using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpoint);
                 request.Content = multiContent;
 
@@ -374,7 +374,7 @@ namespace Pims.Api.Repositories.EDMS
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
             try
             {
-                using StringContent credentials = new(JsonSerializer.Serialize(new TokenRequest
+                using StringContent credentials = new (JsonSerializer.Serialize(new TokenRequest
                 {
                     Username = _config.ConnectionUser,
                     Password = _config.ConnectionPassword

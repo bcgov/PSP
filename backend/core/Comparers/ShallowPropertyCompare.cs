@@ -22,7 +22,11 @@ namespace Pims.Core.Comparers
         /// <returns></returns>
         public new bool Equals([AllowNull] object x, [AllowNull] object y)
         {
-            if (x == null || y == null || GetHashCode(x) != GetHashCode(y)) return false;
+            if (x == null || y == null || GetHashCode(x) != GetHashCode(y))
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -42,7 +46,11 @@ namespace Pims.Core.Comparers
             {
                 var value = p.GetValue(obj);
 
-                if (value == null) continue;
+                if (value == null)
+                {
+                    continue;
+                }
+
                 if (p.PropertyType.IsValueType || p.PropertyType == typeof(string) || p.PropertyType.IsNullableType())
                     hash.Add(value);
                 else if (p.PropertyType == typeof(byte[]))

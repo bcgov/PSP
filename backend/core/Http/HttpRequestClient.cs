@@ -82,7 +82,9 @@ namespace Pims.Core.Http
             try
             {
                 if (contentType.MediaType.Contains("json", StringComparison.InvariantCultureIgnoreCase))
+                {
                     return JsonSerializer.Deserialize<TModel>(data, _serializeOptions);
+                }
             }
             catch (Exception ex)
             {

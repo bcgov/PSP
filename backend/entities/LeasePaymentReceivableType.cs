@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a LeasePaymentRvblType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLeasePayRvblType(string id):this()
+        public PimsLeasePayRvblType(string id) : this()
         {
             Id = id;
         }

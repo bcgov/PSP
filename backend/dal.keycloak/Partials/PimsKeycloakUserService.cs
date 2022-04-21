@@ -128,13 +128,21 @@ namespace Pims.Dal.Keycloak
             removeRoleIds.ForEach(r =>
             {
                 var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot remove a role from a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                if (role.KeycloakGroupId == null)
+                {
+                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                }
+
                 euser = _pimsRepository.User.RemoveRole(euser, role.RoleId);
             });
             addRoleIds.ForEach(r =>
             {
                 var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                if (role.KeycloakGroupId == null)
+                {
+                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                }
+
                 euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
             });
 
@@ -158,7 +166,11 @@ namespace Pims.Dal.Keycloak
             foreach (var roleId in roleIds)
             {
                 var role = _pimsRepository.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                if (role.KeycloakGroupId == null)
+                {
+                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                }
+
                 _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifierValue}'.");
                 await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
             }
@@ -166,7 +178,11 @@ namespace Pims.Dal.Keycloak
             addRoleIds.ForEach(r =>
             {
                 var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                if (role.KeycloakGroupId == null)
+                {
+                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                }
+
                 euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
             });
 
@@ -219,7 +235,11 @@ namespace Pims.Dal.Keycloak
             foreach (var roleId in roleIds)
             {
                 var role = _pimsRepository.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                if (role.KeycloakGroupId == null)
+                {
+                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                }
+
                 _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifierValue}'.");
                 await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
             }
