@@ -53,7 +53,7 @@ describe('CreateOrganizationForm', () => {
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
-      mockAxios.onPost().reply(200, {});
+      mockAxios.onPost().reply(200, { id: 1 });
       const { getSaveButton, container } = setup();
       // provide required fields
       await fillInput(container, 'name', 'FooBarBaz Property Management');
@@ -70,6 +70,9 @@ describe('CreateOrganizationForm', () => {
 
       await waitFor(() => {
         expect(mockAxios.history.post[0].data).toEqual(JSON.stringify(expectedFormData));
+      });
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/contact/O1');
       });
     });
   });
