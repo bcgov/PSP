@@ -1,4 +1,5 @@
-import { Button, Input, Select, SelectOption } from 'components/common/form';
+import { Button } from 'components/common/buttons';
+import { Input, Select, SelectOption } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
 import * as Styled from 'features/contacts/contact/create/styles';

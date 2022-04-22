@@ -1,6 +1,6 @@
 import './Filter.scss';
 
-import { Button } from 'components/common/form/Button';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { IMenuItemProps, Menu } from 'components/menu/Menu';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';

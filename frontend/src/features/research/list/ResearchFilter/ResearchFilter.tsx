@@ -1,6 +1,5 @@
+import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Form, Input, Select } from 'components/common/form';
-import ResetButton from 'components/common/form/ResetButton';
-import SearchButton from 'components/common/form/SearchButton';
 import { SelectInput } from 'components/common/List/SelectInput';
 import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from 'constants/API';
 import { Formik } from 'formik';

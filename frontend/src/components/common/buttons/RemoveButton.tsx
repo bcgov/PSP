@@ -2,7 +2,7 @@ import * as Styled from 'features/contacts/contact/create/styles';
 import * as React from 'react';
 import { MdClose } from 'react-icons/md';
 
-import { Stack } from './Stack/Stack';
+import { Stack } from '../Stack/Stack';
 
 interface IRemoveButtonProps {
   onRemove: () => void;

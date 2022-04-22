@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { Button } from 'components/common/buttons';
 import { FormikProps } from 'formik';
 import { ILease } from 'interfaces';
 import { isEqual } from 'lodash';

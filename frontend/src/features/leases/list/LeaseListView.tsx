@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { Button } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';

@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { Button } from 'components/common/buttons';
 import { ArrayHelpers, FieldArray } from 'formik';
 import { IEditableContactMethodForm } from 'interfaces/editable-contact';
 import React from 'react';

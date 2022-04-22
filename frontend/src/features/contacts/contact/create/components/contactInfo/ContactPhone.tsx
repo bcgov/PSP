@@ -1,5 +1,5 @@
+import { RemoveButton } from 'components/common/buttons';
 import { Input, Select } from 'components/common/form';
-import RemoveButton from 'components/common/RemoveButton';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
