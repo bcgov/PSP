@@ -15,12 +15,6 @@ namespace Pims.Api.Models.Mayan.Document
         public int Id { get; set; }
 
         /// <summary>
-        /// get/set - The related document id.
-        /// </summary>
-        [JsonPropertyName("document_id")]
-        public int DocumentId { get; set; }
-
-        /// <summary>
         /// get/set - File comment.
         /// </summary>
         [JsonPropertyName("comment")]

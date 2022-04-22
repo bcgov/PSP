@@ -38,6 +38,10 @@ namespace Pims.Api.Models.Mayan.Document
         [JsonPropertyName("file_latest")]
         public FileLatest FileLatest { get; set; }
 
-
+        /// <summary>
+        /// get/set - The document type information.
+        /// </summary>
+        [JsonPropertyName("document_type")]
+        public DocumentType DocumentType { get; set; }
     }
 }
