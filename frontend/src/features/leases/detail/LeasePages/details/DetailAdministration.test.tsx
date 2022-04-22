@@ -45,8 +45,6 @@ describe('DetailAdministration component', () => {
         properties: [mockParcel],
         amount: 1,
         description: 'a test description',
-        landArea: 111,
-        areaUnit: 'Hectares',
         programName: 'A program',
         lFileNo: '222',
         tfaFileNo: 333,

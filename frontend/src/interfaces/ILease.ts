@@ -35,8 +35,6 @@ export interface ILease {
   amount?: number;
   renewalCount: number;
   description?: string;
-  landArea?: number;
-  areaUnit?: string;
   isResidential: boolean;
   isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
@@ -62,7 +60,6 @@ export interface IFormLease
       tfaFileNo: NumberFieldValue;
       amount: NumberFieldValue;
       renewalCount: NumberFieldValue;
-      landArea: NumberFieldValue;
       paymentReceivableType?: ITypeCode<string>;
       categoryType?: ITypeCode<string>;
       purposeType?: ITypeCode<string>;
@@ -81,7 +78,6 @@ export interface IAddFormLease
     {
       amount: NumberFieldValue;
       renewalCount: NumberFieldValue;
-      landArea: NumberFieldValue;
       tfaFileNo: NumberFieldValue;
       securityDeposits?: Api_SecurityDeposit[];
       securityDepositReturn?: Api_SecurityDepositReturn[];
@@ -144,8 +140,6 @@ export const defaultFormLease: IFormLease = {
   motiName: '',
   amount: '',
   renewalCount: '',
-  landArea: '',
-  areaUnit: '',
   tenantNotes: [],
   insurances: [],
   isResidential: false,
@@ -182,8 +176,6 @@ export const defaultAddFormLease: IAddFormLease = {
   amount: '',
   renewalCount: '',
   description: '',
-  landArea: '',
-  areaUnit: '',
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -193,7 +185,7 @@ export const defaultAddFormLease: IAddFormLease = {
   insurances: [],
   terms: [],
   tenants: [],
-  properties: [{ pid: '', pin: '', areaUnitType: '' }],
+  properties: [{ pid: '', pin: '', areaUnitType: { id: '' } }],
   persons: [],
   organizations: [],
   improvements: [],
