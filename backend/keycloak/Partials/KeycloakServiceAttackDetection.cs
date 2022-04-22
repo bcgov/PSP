@@ -19,7 +19,9 @@ namespace Pims.Keycloak
             var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/attack-detection/brute-force/users");
 
             if (!response.IsSuccessStatusCode)
+            {
                 throw new HttpClientRequestException(response);
+            }
         }
         #endregion
     }

@@ -62,7 +62,7 @@ namespace Pims.Dal.Services
         private void ValidatePaymentServiceCall(long leaseId, long leaseRowVersion)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            if(!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
+            if (!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this lease, please refresh the application and retry.");
             }

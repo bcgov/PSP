@@ -232,7 +232,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<OrderWrapper<OrderParent<Title>>> PostTitleOrder(string titleNumber, string landTitleDistrictCode)
         {
-            TitleOrder order = new(new TitleOrderParameters(titleNumber, Enum.Parse<LandTitleDistrictCode>(landTitleDistrictCode)));
+            TitleOrder order = new (new TitleOrderParameters(titleNumber, Enum.Parse<LandTitleDistrictCode>(landTitleDistrictCode)));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
             return await SendOrderAsync<Title, OrderWrapper<TitleOrder>>(url, HttpMethod.Post, new OrderWrapper<TitleOrder>(order));
         }
@@ -244,7 +244,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<OrderWrapper<OrderParent<ParcelInfo>>> PostParcelInfoOrder(string pid)
         {
-            ParcelInfoOrder order = new(new ParcelInfoOrderParameters(pid));
+            ParcelInfoOrder order = new (new ParcelInfoOrderParameters(pid));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
             return await SendOrderAsync<ParcelInfo, OrderWrapper<ParcelInfoOrder>>(url, HttpMethod.Post, new OrderWrapper<ParcelInfoOrder>(order));
         }
@@ -256,7 +256,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<OrderWrapper<OrderParent<StrataPlanCommonProperty>>> PostSpcpOrder(string strataPlanNumber)
         {
-            SpcpOrder order = new(new StrataPlanCommonPropertyOrderParameters(strataPlanNumber));
+            SpcpOrder order = new (new StrataPlanCommonPropertyOrderParameters(strataPlanNumber));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
             return await SendOrderAsync<StrataPlanCommonProperty, OrderWrapper<SpcpOrder>>(url, HttpMethod.Post, new OrderWrapper<SpcpOrder>(order));
         }
@@ -266,7 +266,7 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T: IFieldedData
+        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
             return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);

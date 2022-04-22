@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a WorkflowType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsWorkflowModelType(string id):this()
+        public PimsWorkflowModelType(string id) : this()
         {
             Id = id;
         }

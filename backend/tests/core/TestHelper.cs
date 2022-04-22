@@ -52,9 +52,16 @@ namespace Pims.Core.Test
                     registerTypes.Select(registerType =>
                     {
                         var constructor = registerType.GetConstructor(Type.EmptyTypes);
-                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType);
+                        if (constructor != null)
+                        {
+                            return (IRegister)Activator.CreateInstance(registerType);
+                        }
+
                         constructor = registerType.GetConstructor(new[] { typeof(IOptions<JsonSerializerOptions>), typeof(IOptions<PimsOptions>) });
-                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType, new object[] { serializerOptions, pimsOptions });
+                        if (constructor != null)
+                        {
+                            return (IRegister)Activator.CreateInstance(registerType, new object[] { serializerOptions, pimsOptions });
+                        }
                         // Default to providing serializer options.
                         return (IRegister)Activator.CreateInstance(registerType, new[] { serializerOptions });
                     }
@@ -98,7 +105,11 @@ namespace Pims.Core.Test
         /// <typeparam name="T"></typeparam>
         public Mock<T> AddSingletonWithMock<T>() where T : class
         {
-            if (Provider != null) throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            if (Provider != null)
+            {
+                throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            }
+
             var mock = new Mock<T>();
             Services.AddSingleton(mock.Object).AddSingleton(mock);
             return mock;
@@ -110,7 +121,11 @@ namespace Pims.Core.Test
         /// <typeparam name="T"></typeparam>
         public IServiceCollection AddSingleton<T>() where T : class
         {
-            if (Provider != null) throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            if (Provider != null)
+            {
+                throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            }
+
             return Services.AddSingleton<T>();
         }
 
@@ -121,7 +136,11 @@ namespace Pims.Core.Test
         /// <typeparam name="T"></typeparam>
         public IServiceCollection AddSingleton<T>(T item) where T : class
         {
-            if (Provider != null) throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            if (Provider != null)
+            {
+                throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            }
+
             return Services.AddSingleton<T>(item);
         }
 
@@ -135,7 +154,11 @@ namespace Pims.Core.Test
             where TService : class
             where TImplementation : class, TService
         {
-            if (Provider != null) throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            if (Provider != null)
+            {
+                throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            }
+
             return Services.AddSingleton<TService, TImplementation>((p) => item);
         }
 
@@ -147,7 +170,11 @@ namespace Pims.Core.Test
         /// <typeparam name="T"></typeparam>
         public IServiceCollection AddSingleton(Type type, object item)
         {
-            if (Provider != null) throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            if (Provider != null)
+            {
+                throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
+            }
+
             return Services.AddSingleton(type, item);
         }
 

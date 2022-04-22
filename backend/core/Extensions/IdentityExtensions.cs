@@ -140,8 +140,15 @@ namespace Pims.Core.Extensions
         /// <returns>True if the user has any of the roles.</returns>
         public static bool HasRole(this ClaimsPrincipal user, params string[] role)
         {
-            if (role == null) throw new ArgumentNullException(nameof(role));
-            if (role.Length == 0) throw new ArgumentOutOfRangeException(nameof(role));
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+
+            if (role.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(role));
+            }
 
             return user.Claims.Any(c => c.Type == ClaimTypes.Role && role.Contains(c.Value));
         }
@@ -154,8 +161,15 @@ namespace Pims.Core.Extensions
         /// <returns>True if the user has all of the roles.</returns>
         public static bool HasRoles(this ClaimsPrincipal user, params string[] role)
         {
-            if (role == null) throw new ArgumentNullException(nameof(role));
-            if (role.Length == 0) throw new ArgumentOutOfRangeException(nameof(role));
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+
+            if (role.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(role));
+            }
 
             var count = user.Claims.Count(c => c.Type == ClaimTypes.Role && role.Contains(c.Value));
 

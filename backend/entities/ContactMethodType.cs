@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a ContactMethodType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsContactMethodType(string id):this()
+        public PimsContactMethodType(string id) : this()
         {
             Id = id;
         }

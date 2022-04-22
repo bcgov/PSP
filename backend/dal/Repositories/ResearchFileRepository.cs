@@ -54,7 +54,10 @@ namespace Pims.Dal.Repositories
         public Paged<PimsResearchFile> GetPage(ResearchFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateResearchQuery(filter);

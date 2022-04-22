@@ -73,7 +73,11 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static T Next<T>(this IEnumerable<T> items, int skip)
         {
-            if (skip < 0) throw new ArgumentException("Argument must be greater than or equal to zero.", nameof(skip));
+            if (skip < 0)
+            {
+                throw new ArgumentException("Argument must be greater than or equal to zero.", nameof(skip));
+            }
+
             return items.Skip(skip).First();
         }
 
@@ -87,8 +91,16 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static IEnumerable<T> Next<T>(this IEnumerable<T> items, int skip, int take)
         {
-            if (skip < 0) throw new ArgumentException("Argument must be greater than or equal to zero.", nameof(skip));
-            if (take < 1) throw new ArgumentException("Argument must be greater than or equal to 1.", nameof(take));
+            if (skip < 0)
+            {
+                throw new ArgumentException("Argument must be greater than or equal to zero.", nameof(skip));
+            }
+
+            if (take < 1)
+            {
+                throw new ArgumentException("Argument must be greater than or equal to 1.", nameof(take));
+            }
+
             return items.Skip(skip).Take(take);
         }
 

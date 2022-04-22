@@ -36,7 +36,10 @@ namespace Pims.Dal.Entities
         /// <param name="address"></param>
         public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address) : this()
         {
-            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
+            }
 
             this.OrganizationName = name;
             this.OrganizationTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));

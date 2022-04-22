@@ -45,7 +45,10 @@ namespace Pims.Core.Extensions
         public static string FormatAsPostal(this string postal)
         {
             if (postal?.Length == 6 && (!postal?.Contains(" ") ?? false))
+            {
                 return postal?.ToUpper().Insert(3, " ");
+            }
+
             return postal?.ToUpper();
         }
 
@@ -88,7 +91,11 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string ConvertToUTF8(this string value, bool replaceLineBreaks = true)
         {
-            if (value == null) return value;
+            if (value == null)
+            {
+                return value;
+            }
+
             var bytes = Encoding.Default.GetBytes(replaceLineBreaks ? value.Replace("\r\n", " ") : value);
             return Encoding.UTF8.GetString(bytes);
         }
@@ -101,7 +108,11 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string Truncate(this string value, int maxLength)
         {
-            if (string.IsNullOrEmpty(value)) return value;
+            if (string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+
             return value.Length <= maxLength ? value : value.Substring(0, maxLength);
         }
     }

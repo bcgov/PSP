@@ -77,7 +77,10 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
         public IActionResult GetOrganizationPredictions([FromBody] AutocompletionRequestModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include an autocomplete request.");
-            if (!filter.IsValid()) throw new BadRequestException("Autocomplete request must contain valid values.");
+            if (!filter.IsValid())
+            {
+                throw new BadRequestException("Autocomplete request must contain valid values.");
+            }
 
             var predictions = _pimsService.Autocomplete.GetOrganizationPredictions(filter);
 

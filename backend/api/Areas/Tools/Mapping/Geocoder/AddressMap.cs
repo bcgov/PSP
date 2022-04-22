@@ -33,25 +33,40 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         {
             var address = new StringBuilder();
             if (!String.IsNullOrWhiteSpace($"{ properties.CivicNumber}"))
+            {
                 address.Append($"{properties.CivicNumber} ");
+            }
 
             if (properties.IsStreetTypePrefix && !String.IsNullOrWhiteSpace(properties.StreetType))
+            {
                 address.Append($"{properties.StreetType} ");
+            }
 
             if (properties.IsStreetDirectionPrefix && !String.IsNullOrWhiteSpace(properties.StreetDirection))
+            {
                 address.Append($"{properties.StreetDirection} ");
+            }
 
             if (!String.IsNullOrWhiteSpace(properties.StreetName))
+            {
                 address.Append(properties.StreetName);
+            }
 
             if (!String.IsNullOrWhiteSpace(properties.StreetQualifier))
+            {
                 address.Append($" {properties.StreetQualifier}");
+            }
 
             if (!properties.IsStreetDirectionPrefix && !String.IsNullOrWhiteSpace(properties.StreetDirection))
+            {
                 address.Append($" {properties.StreetDirection}");
+            }
 
             if (!properties.IsStreetTypePrefix && !String.IsNullOrWhiteSpace(properties.StreetType))
+            {
                 address.Append($" {properties.StreetType}");
+            }
+
             return address.ToString();
         }
 
@@ -72,7 +87,11 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// <returns></returns>
         private static double GetLatitude(GModel.GeometryModel geometry)
         {
-            if (geometry.Coordinates?.Length == 2) return geometry.Coordinates[1];
+            if (geometry.Coordinates?.Length == 2)
+            {
+                return geometry.Coordinates[1];
+            }
+
             return 0;
         }
 
@@ -83,7 +102,11 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// <returns></returns>
         private static double GetLongtitude(GModel.GeometryModel geometry)
         {
-            if (geometry.Coordinates?.Length >= 1) return geometry.Coordinates[0];
+            if (geometry.Coordinates?.Length >= 1)
+            {
+                return geometry.Coordinates[0];
+            }
+
             return 0;
         }
     }
