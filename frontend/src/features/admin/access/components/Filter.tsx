@@ -86,7 +86,7 @@ export const AccessRequestFilter = (props: IProps) => {
             />
           </TooltipWrapper>
           <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
-            <Button variant="secondary" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
+            <Button variant="info" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
           </TooltipWrapper>
         </Col>
       </Row>
