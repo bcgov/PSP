@@ -25,23 +25,24 @@ export type ButtonProps = ButtonPropsBase & {
   'aria-relevant'?: 'text' | 'all' | 'additions' | 'additions text' | 'removals';
 };
 
-export const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> = ({
-  showSubmitting,
-  isSubmitting,
-  disabled,
-  icon,
-  children,
-  className,
-  ...rest
-}) => {
-  const classes = classnames({
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ * Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”.
+ * Plain buttons, which look similar to links, are used for less important or
+ * less commonly used actions, such as "View more details".
+ */
+export const Button = React.forwardRef<typeof StyledButton, ButtonProps>((props, ref) => {
+  const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
+
+  const css = classnames({
     Button: true,
     'Button--disabled': disabled,
     'Button--icon-only': (children === null || children === undefined) && icon,
     [className!]: className,
   });
+
   return (
-    <StyledButton className={classes} disabled={disabled} {...rest}>
+    <StyledButton ref={ref} className={css} disabled={disabled} {...rest}>
       {icon && <div className="Button__icon">{icon}</div>}
       {children && <div className="Button__value">{children}</div>}
       {showSubmitting && isSubmitting && (
@@ -55,7 +56,7 @@ export const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> =
       )}
     </StyledButton>
   );
-};
+});
 
 const StyledButton = styled(BootstrapButton)`
   &.btn {
