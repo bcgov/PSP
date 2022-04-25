@@ -2,31 +2,47 @@ import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ResearchFooter from '../common/ResearchFooter';
-import { useAddResearch } from '../hooks/useAddResearch';
-import { ResearchForm } from './models';
-import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
+import { useGetResearch } from '../hooks/useGetResearch';
+import { useUpdateResearch } from '../hooks/useUpdateResearch';
+import { UpdateResearchFormModel } from './models';
 import UpdateResearchForm from './UpdateResearchForm';
 import UpdateResearchHeader from './UpdateResearchHeader';
 
 export interface IUpdateResearchContainerProps {
+  researchFileId: number;
   onClose: () => void;
 }
 
 export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchContainerProps> = props => {
-  const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const initialForm = new ResearchForm();
-  const { addResearchFile } = useAddResearch();
+  const formikRef = useRef<FormikProps<UpdateResearchFormModel>>(null);
+  const { retrieveResearchFile } = useGetResearch();
+  const { updateResearchFile } = useUpdateResearch();
+
+  const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
+  const [initialForm, setForm] = useState<UpdateResearchFormModel | undefined>(undefined);
+
+  useEffect(() => {
+    async function fetchResearchFile() {
+      var retrieved = await retrieveResearchFile(props.researchFileId);
+      setResearchFile(retrieved);
+      if (retrieved !== undefined) {
+        setForm(UpdateResearchFormModel.fromApi(retrieved));
+      }
+    }
+    fetchResearchFile();
+  }, [props.researchFileId, retrieveResearchFile]);
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
-    const response = await addResearchFile(researchFile);
+    const response = await updateResearchFile(researchFile);
     if (!!response?.name) {
       props.onClose();
+      formikRef.current?.resetForm();
     }
   };
 
@@ -40,6 +56,10 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
     props.onClose();
   };
 
+  if (initialForm === undefined) {
+    return <></>;
+  }
+
   return (
     <MapSideBarLayout
       title="Update Research File"
@@ -51,24 +71,24 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
           onCancel={handleCancel}
         />
       }
-      header={<UpdateResearchHeader />}
+      header={<UpdateResearchHeader researchFile={researchFile} />}
       showCloseButton
       onClose={handleCancel}
     >
-      <Formik<ResearchForm>
+      <Formik<UpdateResearchFormModel>
+        enableReinitialize
         innerRef={formikRef}
         initialValues={initialForm}
-        onSubmit={async (values: ResearchForm, formikHelpers) => {
+        onSubmit={async (values: UpdateResearchFormModel, formikHelpers) => {
           const researchFile: Api_ResearchFile = values.toApi();
+          console.log(researchFile);
           saveResearchFile(researchFile);
           formikHelpers.setSubmitting(false);
-          formikHelpers.resetForm();
         }}
-        validationSchema={UpdateResearchFileYupSchema}
       >
         {formikProps => (
           <StyledFormWrapper>
-            <UpdateResearchForm />
+            <UpdateResearchForm formikProps={formikProps} />
 
             <Prompt
               when={formikProps.dirty && formikProps.submitCount === 0}

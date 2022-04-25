@@ -25,6 +25,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
     if (!!response?.name) {
+      formikRef.current?.resetForm();
       props.onClose();
     }
   };
@@ -60,7 +61,6 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           const researchFile: Api_ResearchFile = values.toApi();
           saveResearchFile(researchFile);
           formikHelpers.setSubmitting(false);
-          formikHelpers.resetForm();
         }}
         validationSchema={AddResearchFileYupSchema}
       >

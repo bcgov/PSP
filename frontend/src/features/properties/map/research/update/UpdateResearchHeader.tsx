@@ -1,51 +1,61 @@
-import { InlineInput } from 'components/common/form/styles';
 import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 
-const UpdateResearchHeader: React.FunctionComponent = () => {
+interface IUpdateResearchHeaderProps {
+  researchFile?: Api_ResearchFile;
+}
+
+const UpdateResearchHeader: React.FunctionComponent<IUpdateResearchHeaderProps> = props => {
   const lefttColumnWidth = '6';
   const leftColumnLabel = '4';
+  const researchFile = props.researchFile;
+
+  const region = researchFile?.researchProperties?.map(x => x.property?.region).join(', ');
+  const district = researchFile?.researchProperties?.map(x => x.property?.district).join(', ');
   return (
     <Row>
       <Col>
         <Row>
           <Col xs={lefttColumnWidth}>
             <HeaderField label="Research file #:" labelWidth={leftColumnLabel}>
-              R-12345
+              {researchFile?.rfileNumber}
             </HeaderField>
           </Col>
           <Col className="text-right">
-            Created: <strong>Mar 16, 2022</strong> by USERID
+            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
+            {researchFile?.appCreateUserid}
           </Col>
         </Row>
         <Row>
           <Col xs={lefttColumnWidth}>
             <HeaderField label="R-file name:" labelWidth={leftColumnLabel}>
-              Some file name here
+              {researchFile?.name}
             </HeaderField>
           </Col>
           <Col className="text-right">
-            Created: <strong>Mar 16, 2022</strong> by USERID
+            Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
+            by {researchFile?.appLastUpdateUserid}
           </Col>
         </Row>
         <Row>
           <Col xs={lefttColumnWidth}>
             <HeaderField label="MoTI region:" labelWidth={leftColumnLabel}>
-              South Coast
+              {region}
             </HeaderField>
           </Col>
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
-              Active
+              {researchFile?.statusTypeCode?.description}
             </HeaderField>
           </Col>
         </Row>
         <Row>
           <Col xs={lefttColumnWidth}>
             <HeaderField label="Ministry district:" labelWidth={leftColumnLabel}>
-              Vancouver Island
+              {district}
             </HeaderField>
           </Col>
         </Row>
@@ -55,14 +65,3 @@ const UpdateResearchHeader: React.FunctionComponent = () => {
 };
 
 export default UpdateResearchHeader;
-
-const StyledSummarySection = styled.div`
-  background-color: red;
-`;
-
-const LargeInlineInput = styled(InlineInput)`
-  input.form-control {
-    min-width: 50rem;
-    max-width: 50rem;
-  }
-`;

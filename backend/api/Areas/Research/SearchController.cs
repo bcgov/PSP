@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Research.Controllers
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Area("research")]
+    [Area("researchfiles")]
     [Route("v{version:apiVersion}/[area]/search")]
     [Route("[area]/search")]
     public class SearchController : ControllerBase

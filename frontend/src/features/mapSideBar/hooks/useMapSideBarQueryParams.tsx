@@ -5,7 +5,6 @@ import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { isNum } from 'react-toastify/dist/utils';
 
 import MotiInventoryContainer from '../MotiInventoryContainer';
 
@@ -54,7 +53,6 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
 
     var parts = location.pathname.split('/');
     var currentState: MapViewState = MapViewState.MAP_ONLY;
-    debugger;
     if (parts.length === 2) {
       currentState = MapViewState.MAP_ONLY;
     } else if (parts[2] === 'research') {
@@ -87,11 +85,15 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         setShowSideBar(true);
         break;
       case MapViewState.RESEARCH_EDIT:
-        setSidebarComponent(<UpdateResearchContainer onClose={handleClose} />);
+        setSidebarComponent(
+          <UpdateResearchContainer researchFileId={Number(parts[3])} onClose={handleClose} />,
+        );
         setShowSideBar(true);
         break;
       case MapViewState.RESEARCH_VIEW:
-        setSidebarComponent(<UpdateResearchContainer onClose={handleClose} />);
+        setSidebarComponent(
+          <UpdateResearchContainer researchFileId={Number(parts[3])} onClose={handleClose} />,
+        );
         setShowSideBar(true);
         break;
       case MapViewState.PROPERTY_SEARCH:

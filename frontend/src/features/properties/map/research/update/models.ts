@@ -1,58 +1,120 @@
-import { IMapProperty } from 'features/properties/selector/models';
-import { Api_Property } from 'models/api/Property';
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import {
+  fromApiOrganization,
+  fromApiPerson,
+  IContactSearchResult,
+  toOrganization,
+  toPerson,
+} from 'interfaces';
+import { Api_ResearchFile, Api_ResearchFilePurpose } from 'models/api/ResearchFile';
 
-export class ResearchForm {
-  public id?: number;
-  public name: string;
-  public properties: PropertyForm[];
-  constructor() {
-    this.name = '';
-    this.properties = [];
+export class ResearchFilePurposeFormModel {
+  public id?: string;
+  public researchPurposeTypeCode?: string;
+  public researchPurposeTypeDescription?: string;
+
+  public static fromApi(base: Api_ResearchFilePurpose): ResearchFilePurposeFormModel {
+    var newModel = new ResearchFilePurposeFormModel();
+    newModel.id = base.id;
+    newModel.researchPurposeTypeCode = base.researchPurposeTypeCode?.id;
+    newModel.researchPurposeTypeDescription = base.researchPurposeTypeCode?.description;
+    return newModel;
   }
 
-  public toApi(): Api_ResearchFile {
+  public toApi(): Api_ResearchFilePurpose {
     return {
-      name: this.name,
-      researchProperties: this.properties.map<Api_ResearchFileProperty>(x => {
-        return {
-          property: x.toApi(),
-          researchFile: { id: this.id },
-          propertyName: x.name,
-        };
-      }),
+      id: this.id,
+      researchPurposeTypeCode: {
+        id: this.researchPurposeTypeCode,
+        description: this.researchPurposeTypeDescription,
+      },
     };
   }
 }
 
-export class PropertyForm {
-  public pid?: string;
-  public pin?: string;
-  public latitude?: number;
-  public longitude?: number;
-  public planNumber?: string;
+export class UpdateResearchFormModel {
+  public id?: number;
   public name?: string;
-  //public regionId?: number;
-  //public districtId?: number;
+  public roadName?: string;
+  public roadAlias?: string;
+  public rfileNumber?: string;
+  public statusTypeCode?: string;
+  public statusTypeDescription?: string;
+  //public researchProperties?: Api_ResearchFileProperty[];
+  public requestDate?: string;
+  public requestDescription?: string;
+  public requestSourceDescription?: string;
+  public researchResult?: string;
+  public researchCompletionDate?: string;
+  public isExpropriation?: string;
+  public expropriationNotes?: string;
+  public requestSourceTypeCode?: string;
+  public requestSourceTypeDescription?: string;
+  public requestor?: IContactSearchResult;
+  public researchFilePurposes?: ResearchFilePurposeFormModel[];
+  public rowVersion?: number;
 
-  constructor(property: IMapProperty) {
-    this.pid = property.pid;
-    this.pin = property.pin;
-    this.latitude = property.latitude;
-    this.longitude = property.longitude;
-    this.planNumber = property.planNumber;
-    //this.regionId = property.dis;
-    //this.districtId = 0; //property.district;
+  public static fromApi(base: Api_ResearchFile): UpdateResearchFormModel {
+    var model = new UpdateResearchFormModel();
+    model.id = base.id;
+    model.name = base.name;
+    model.roadName = base.roadName;
+    model.roadAlias = base.roadAlias;
+    model.rfileNumber = base.rfileNumber;
+    model.statusTypeCode = base.statusTypeCode?.id;
+    model.statusTypeDescription = base.statusTypeCode?.description;
+    //model.researchProperties = base.researchProperties;
+    model.requestDate = base.requestDate;
+    model.requestDescription = base.requestDescription;
+    model.requestSourceDescription = base.requestSourceDescription;
+    model.researchResult = base.researchResult;
+    model.researchCompletionDate = base.researchCompletionDate;
+    model.isExpropriation = base.isExpropriation ? 'true' : 'false';
+    model.expropriationNotes = base.expropriationNotes;
+    model.requestSourceTypeCode = base.requestSourceType?.id;
+    model.requestSourceTypeDescription = base.requestSourceType?.description;
+
+    console.log(base.requestorPerson);
+    console.log(base.requestorOrganization);
+
+    if (base.requestorPerson !== undefined) {
+      model.requestor = fromApiPerson(base.requestorPerson);
+    } else if (base.requestorOrganization !== undefined) {
+      model.requestor = fromApiOrganization(base.requestorOrganization);
+    }
+    model.researchFilePurposes = base.researchFilePurposes?.map(x =>
+      ResearchFilePurposeFormModel.fromApi(x),
+    );
+    model.rowVersion = base.rowVersion;
+    return model;
   }
 
-  public toApi(): Api_Property {
+  public toApi(): Api_ResearchFile {
+    console.log(this.id);
     return {
-      pid: Number(this.pid),
-      pin: Number(this.pin),
-      landArea: 0,
-      location: { coordinate: { x: this.longitude, y: this.latitude } },
-      /*region: { id: this.regionId },
-      district: { id: this.districtId },*/
+      id: this.id,
+      name: this.name,
+      roadName: this.roadName,
+      roadAlias: this.roadAlias,
+      rfileNumber: this.rfileNumber,
+      statusTypeCode: { id: this.statusTypeCode },
+      //researchProperties: this.researchProperties,
+      requestDate: this.requestDate,
+      requestDescription: this.requestDescription,
+      requestSourceDescription: this.requestSourceDescription,
+      researchResult: this.researchResult,
+      researchCompletionDate: this.researchCompletionDate,
+      isExpropriation:
+        this.isExpropriation === undefined
+          ? undefined
+          : this.isExpropriation === 'true'
+          ? true
+          : false,
+      expropriationNotes: this.expropriationNotes,
+      requestSourceType: { id: this.requestSourceTypeCode },
+      rowVersion: this.rowVersion,
+      requestorPerson: toPerson(this.requestor),
+      requestorOrganization: toOrganization(this.requestor),
+      //researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()),
     };
   }
 }

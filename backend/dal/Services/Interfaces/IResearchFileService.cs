@@ -5,7 +5,9 @@ namespace Pims.Dal.Services
 {
     public interface IResearchFileService
     {
+        PimsResearchFile GetById(long id);
         PimsResearchFile Add(PimsResearchFile researchFile);
+        PimsResearchFile Update(PimsResearchFile researchFile);
         Paged<PimsResearchFile> GetPage(ResearchFilter filter);
     }
 }
