@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a DataSourceType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsDataSourceType(string id):this()
+        public PimsDataSourceType(string id) : this()
         {
             Id = id;
         }

@@ -21,8 +21,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns>True if the user has any of the permission.</returns>
         public static bool HasPermission(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (permission == null) throw new ArgumentNullException(nameof(permission));
-            if (permission.Length == 0) throw new ArgumentOutOfRangeException(nameof(permission));
+            if (permission == null)
+            {
+                throw new ArgumentNullException(nameof(permission));
+            }
+
+            if (permission.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(permission));
+            }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
             return user.Claims.Any(c => c.Type == ClaimTypes.Role && roles.Contains(c.Value));
@@ -36,8 +43,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns>True if the user has all of the permissions.</returns>
         public static bool HasPermissions(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (permission == null) throw new ArgumentNullException(nameof(permission));
-            if (permission.Length == 0) throw new ArgumentOutOfRangeException(nameof(permission));
+            if (permission == null)
+            {
+                throw new ArgumentNullException(nameof(permission));
+            }
+
+            if (permission.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(permission));
+            }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
             var claims = user.Claims.Where(c => c.Type == ClaimTypes.Role);
@@ -53,7 +67,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, string message = null)
         {
-            if (user == null || !user.Identity.IsAuthenticated) throw new NotAuthorizedException(message);
+            if (user == null || !user.Identity.IsAuthenticated)
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -67,7 +85,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, string role, string message)
         {
-            if (user == null || !user.HasRole(role)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasRole(role))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -81,7 +103,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, Permissions permission, string message = null)
         {
-            if (user == null || !user.HasPermission(permission)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasPermission(permission))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -94,7 +120,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (user == null || !user.HasPermission(permission)) throw new NotAuthorizedException();
+            if (user == null || !user.HasPermission(permission))
+            {
+                throw new NotAuthorizedException();
+            }
+
             return user;
         }
 
@@ -108,7 +138,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAllAuthorized(this ClaimsPrincipal user, Permissions permission, string message = null)
         {
-            if (user == null || !user.HasPermissions(permission)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasPermissions(permission))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -121,7 +155,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAllAuthorized(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (user == null || !user.HasPermissions(permission)) throw new NotAuthorizedException();
+            if (user == null || !user.HasPermissions(permission))
+            {
+                throw new NotAuthorizedException();
+            }
+
             return user;
         }
 
@@ -135,7 +173,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, Permissions[] permission, string message = null)
         {
-            if (user == null || !user.HasPermission(permission)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasPermission(permission))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -192,14 +234,19 @@ namespace Pims.Dal.Helpers.Extensions
         {
             var organizationIds = user.GetOrganizations();
 
-            if (organizationIds == null || !organizationIds.Any()) return null;
+            if (organizationIds == null || !organizationIds.Any())
+            {
+                return null;
+            }
 
             var organizations = context.PimsOrganizations.Where(a => organizationIds.Contains(a.OrganizationId)).OrderBy(a => a.PrntOrganizationId);
 
             // If one of the organizations is a parent, return it.
             var parentOrganization = organizations.FirstOrDefault(a => a.PrntOrganizationId == null);
             if (parentOrganization != null)
+            {
                 return parentOrganization;
+            }
 
             // Assume the first organization is their primary
             return organizations.FirstOrDefault();

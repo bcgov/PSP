@@ -21,7 +21,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="organization"></param>
         /// <param name="address"></param>
-        public PimsOrganizationAddress(PimsOrganization organization, PimsAddress address):this()
+        public PimsOrganizationAddress(PimsOrganization organization, PimsAddress address) : this()
         {
             this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
             this.OrganizationId = organization.OrganizationId;

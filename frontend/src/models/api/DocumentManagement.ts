@@ -9,6 +9,7 @@ export interface DocumentDetail {
   datetime_created: string;
   description: string;
   file_latest: FileLatest;
+  document_type: Mayan_DocumentType;
 }
 
 export interface FileLatest {
@@ -20,6 +21,15 @@ export interface FileLatest {
   mimetype: string;
   size: number;
   timeStamp: string;
+}
+
+export interface Mayan_DocumentType {
+  id: number;
+  label: string;
+  delete_time_period?: number;
+  delete_time_unit?: string;
+  trash_time_period?: number;
+  trash_time_unit?: string;
 }
 
 export interface FileDownload {

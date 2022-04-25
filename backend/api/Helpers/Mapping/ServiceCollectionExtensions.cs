@@ -63,9 +63,16 @@ namespace Pims.Api.Helpers.Mapping
                     registerTypes.Select(registerType =>
                     {
                         var constructor = registerType.GetConstructor(Type.EmptyTypes);
-                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType);
+                        if (constructor != null)
+                        {
+                            return (IRegister)Activator.CreateInstance(registerType);
+                        }
+
                         constructor = registerType.GetConstructor(new[] { typeof(IOptions<JsonSerializerOptions>), typeof(IOptions<PimsOptions>) });
-                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType, new object[] { optionsSerializer, optionsPims });
+                        if (constructor != null)
+                        {
+                            return (IRegister)Activator.CreateInstance(registerType, new object[] { optionsSerializer, optionsPims });
+                        }
                         // Default to providing serializer options.
                         return (IRegister)Activator.CreateInstance(registerType, new[] { optionsSerializer });
                     }

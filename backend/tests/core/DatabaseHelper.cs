@@ -76,7 +76,10 @@ namespace Pims.Core.Test
         public static PimsContext CreatePimsContext(this TestHelper helper, string dbName, ClaimsPrincipal user, bool ensureDeleted = false)
         {
             // Generate a randome database name.
-            if (String.IsNullOrWhiteSpace(dbName)) dbName = StringHelper.Generate(10);
+            if (String.IsNullOrWhiteSpace(dbName))
+            {
+                dbName = StringHelper.Generate(10);
+            }
 
             helper.AddSingleton(user);
             var options = new DbContextOptionsBuilder<PimsContext>()
@@ -94,7 +97,11 @@ namespace Pims.Core.Test
 
             var context = new PimsContext(options, contextAccessor.Object, serializerOptions.Object);
 
-            if (ensureDeleted) context.Database.EnsureDeleted();
+            if (ensureDeleted)
+            {
+                context.Database.EnsureDeleted();
+            }
+
             helper.AddSingleton(context);
 
             return context;

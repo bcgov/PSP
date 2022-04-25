@@ -30,11 +30,17 @@ namespace Pims.Core.Test
         {
             var attr = attribute.Arguments.First();
             if (attr is Permissions[] aperms)
+            {
                 Assert.Equal(permissions.Select(p => p).ToArray(), aperms);
+            }
             else if (attr is Permissions aperm)
+            {
                 Assert.Equal(permissions.Select(p => p).ToArray(), new Permissions[] { aperm });
+            }
             else
+            {
                 Assert.True(false, "Invalid filter argument type");
+            }
         }
 
         /// <summary>
@@ -55,9 +61,13 @@ namespace Pims.Core.Test
         public static void HasTemplate(this HttpMethodAttribute attribute, string template = null)
         {
             if (template == null)
+            {
                 Assert.Null(attribute.Template);
+            }
             else
+            {
                 Assert.Equal(template, attribute.Template);
+            }
         }
 
         /// <summary>
@@ -223,10 +233,16 @@ namespace Pims.Core.Test
         {
             var type = obj.GetType();
             var itemsProp = type.GetProperty("Items");
-            if (itemsProp == null) Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            if (itemsProp == null)
+            {
+                Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            }
 
             var items = itemsProp.GetValue(obj) as IEnumerable<T>;
-            if (items == null) Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            if (items == null)
+            {
+                Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            }
 
             var pageProp = type.GetProperty("Page");
             var page = (int)pageProp.GetValue(obj);

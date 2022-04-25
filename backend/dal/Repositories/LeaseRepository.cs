@@ -50,7 +50,10 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var query = this.Context.GenerateLeaseQuery(filter, loadPayments);
 
@@ -152,7 +155,7 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.PimsLeaseTerms)
                     .ThenInclude(t => t.PimsLeasePayments)
                     .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
-                .FirstOrDefault(l=>l.LeaseId == id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
@@ -174,7 +177,10 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateLeaseQuery(filter);
@@ -239,7 +245,11 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsLease Add(PimsLease lease, bool userOverride = false)
         {
-            if (lease == null) throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            if (lease == null)
+            {
+                throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            }
+
             this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
             lease = AssociatePropertyLeases(lease, userOverride);
@@ -256,7 +266,11 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsLease Update(PimsLease lease, bool commitTransaction = true)
         {
-            if (lease == null) throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            if (lease == null)
+            {
+                throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            }
+
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Where(l => l.LeaseId == lease.LeaseId).FirstOrDefault()
                  ?? throw new KeyNotFoundException();
@@ -279,7 +293,10 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseTenants).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
                  ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
 
             this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
             this.Context.CommitTransaction();
@@ -298,7 +315,10 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyImprovements).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
                  ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
 
             this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
             this.Context.CommitTransaction();
@@ -317,7 +337,11 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyLeases).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
                  ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
+
             bool newLeaseProperties = pimsPropertyLeases.Any(p => !existingLease.PimsPropertyLeases.Any(xp => xp.PropertyId == p.PropertyId));
             existingLease.PimsPropertyLeases = pimsPropertyLeases;
             var leaseWithAssociatedProperties = AssociatePropertyLeases(existingLease, userOverride, newLeaseProperties);

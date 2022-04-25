@@ -60,9 +60,20 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-access-requests" })]
         public IActionResult GetPage(int page = 1, int quantity = 10, string searchText = null, string role = null, string organization = null, string status = null, string sort = null)
         {
-            if (page < 1) page = 1;
-            if (quantity < 1) quantity = 1;
-            if (quantity > 20) quantity = 20;
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            if (quantity < 1)
+            {
+                quantity = 1;
+            }
+
+            if (quantity > 20)
+            {
+                quantity = 20;
+            }
 
             var filter = new EModel.AccessRequestFilter(page, quantity, searchText, role, organization, status, new[] { sort });
 

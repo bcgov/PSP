@@ -59,9 +59,20 @@ namespace Pims.Api.Models
         /// <param name="total"></param>
         public PageModel(IEnumerable<T> items, int page, int quantity, int total)
         {
-            if (page < 1) throw new ArgumentException("Must be greater than or equal to 1.", nameof(page));
-            if (quantity < 1) throw new ArgumentException("Must be greater than or equal to 1.", nameof(quantity));
-            if (total < 0) throw new ArgumentException("Must be greater than or equal to 0.", nameof(total));
+            if (page < 1)
+            {
+                throw new ArgumentException("Must be greater than or equal to 1.", nameof(page));
+            }
+
+            if (quantity < 1)
+            {
+                throw new ArgumentException("Must be greater than or equal to 1.", nameof(quantity));
+            }
+
+            if (total < 0)
+            {
+                throw new ArgumentException("Must be greater than or equal to 0.", nameof(total));
+            }
 
             this.Items = items ?? throw new ArgumentNullException(nameof(items));
             this.Page = page;

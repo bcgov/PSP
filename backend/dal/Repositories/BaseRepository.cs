@@ -87,8 +87,15 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public T OriginalValue<T>(object entity, string propertyName)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-            if (String.IsNullOrWhiteSpace(propertyName)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.");
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if (String.IsNullOrWhiteSpace(propertyName))
+            {
+                throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.");
+            }
 
             return (T)this.Context.Entry(entity).OriginalValues[propertyName];
         }

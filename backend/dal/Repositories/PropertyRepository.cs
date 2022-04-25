@@ -51,7 +51,10 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var query = this.Context.GeneratePropertyQuery(this.User, filter);
             var properties = query.ToArray();
@@ -72,7 +75,10 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GeneratePropertyQuery(this.User, filter);

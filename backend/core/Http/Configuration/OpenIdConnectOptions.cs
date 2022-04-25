@@ -54,10 +54,14 @@ namespace Pims.Core.Http.Configuration
         public virtual void Validate()
         {
             if (String.IsNullOrWhiteSpace(this.Token))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:OpenIdConnect:Token is invalid or missing.");
+            }
 
             if (String.IsNullOrWhiteSpace(this.UserInfo))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:OpenIdConnect:UserInfo is invalid or missing.");
+            }
         }
         #endregion
     }

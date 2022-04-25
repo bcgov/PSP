@@ -54,7 +54,11 @@ namespace Pims.Api.Controllers
         {
             var tenant = _pimsService.Tenant.GetTenant(_pimsOptions.Tenant);
 
-            if (tenant == null) return new NoContentResult();
+            if (tenant == null)
+            {
+                return new NoContentResult();
+            }
+
             return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
         }
 

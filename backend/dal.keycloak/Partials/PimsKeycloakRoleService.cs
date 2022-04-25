@@ -98,7 +98,10 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         public async Task<Entity.PimsRole> UpdateRoleAsync(Entity.PimsRole role)
         {
-            if (await _keycloakService.GetGroupAsync(role.RoleUid) == null) throw new KeyNotFoundException();
+            if (await _keycloakService.GetGroupAsync(role.RoleUid) == null)
+            {
+                throw new KeyNotFoundException();
+            }
 
             // Role does not exist in PIMS, it needs to be added.
             if (_pimsRepository.Role.Find(role.RoleId) == null)

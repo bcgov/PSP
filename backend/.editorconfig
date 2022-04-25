@@ -107,6 +107,15 @@ dotnet_diagnostic.SA1208.severity = warning
 dotnet_diagnostic.SA1623.severity = none
 # SA1309 Field should not begin with an underscore
 dotnet_diagnostic.SA1309.severity = none
+# SA1513 Closing brace should be followed by an empty line
+dotnet_diagnostic.SA1505.severity = none
+# SA1505 Opening brace should be followed by an empty line
+dotnet_diagnostic.SA1513.severity = none
+# SA1124 Do not use regions
+dotnet_diagnostic.SA1124.severity = none
+# SA1507 Code should not contain multiple blank lines in a row
+dotnet_diagnostic.SA1507.severity = none
+
 
 # Entity Framework files
 [**{entities/ef/*,PIMSContext}.cs]

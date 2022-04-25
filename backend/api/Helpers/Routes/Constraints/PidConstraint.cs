@@ -40,7 +40,11 @@ namespace Pims.Api.Helpers.Routes.Constraints
             if (values.TryGetValue(routeKey, out object value))
             {
                 var parameterValueString = Convert.ToString(value, CultureInfo.InvariantCulture);
-                if (parameterValueString == null) return false;
+                if (parameterValueString == null)
+                {
+                    return false;
+                }
+
                 return _regex.IsMatch(parameterValueString);
             }
 
