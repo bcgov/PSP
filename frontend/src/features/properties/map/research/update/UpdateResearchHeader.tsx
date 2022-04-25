@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { prettyFormatDate } from 'utils';
 
-interface IUpdateResearchHeaderProps {
+export interface IUpdateResearchHeaderProps {
   researchFile?: Api_ResearchFile;
 }
 
@@ -25,8 +25,8 @@ const UpdateResearchHeader: React.FunctionComponent<IUpdateResearchHeaderProps> 
             </HeaderField>
           </Col>
           <Col className="text-right">
-            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
-            {researchFile?.appCreateUserid}
+            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by
+            <span> {researchFile?.appCreateUserid} </span>
           </Col>
         </Row>
         <Row>
@@ -37,7 +37,7 @@ const UpdateResearchHeader: React.FunctionComponent<IUpdateResearchHeaderProps> 
           </Col>
           <Col className="text-right">
             Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
-            by {researchFile?.appLastUpdateUserid}
+            by <span>{researchFile?.appLastUpdateUserid}</span>
           </Col>
         </Row>
         <Row>

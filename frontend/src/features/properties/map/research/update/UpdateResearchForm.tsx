@@ -22,7 +22,7 @@ interface MultiSelectOption {
   text: string;
 }
 
-interface IUpdateResearchFormProps {
+export interface IUpdateResearchFormProps {
   formikProps: FormikProps<UpdateResearchFormModel>;
 }
 
