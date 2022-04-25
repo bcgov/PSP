@@ -1,8 +1,8 @@
+import { Button } from 'components/common/buttons';
 import * as actionTypes from 'constants/actionTypes';
 import { useQuery } from 'hooks/use-query';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';

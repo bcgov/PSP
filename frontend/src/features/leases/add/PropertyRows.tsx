@@ -1,7 +1,7 @@
+import { Button } from 'components/common/buttons';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { IFormLease, IProperty } from 'interfaces';
-import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
 import PropertyRow from './PropertyRow';

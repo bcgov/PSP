@@ -1,4 +1,5 @@
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button } from 'components/common/buttons';
+import { Col, Row } from 'react-bootstrap';
 
 interface IAddResearchFooterProps {
   isSubmitting?: boolean;

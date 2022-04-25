@@ -1,6 +1,7 @@
+import { Button } from 'components/common/buttons';
 import { ILeaseProperty } from 'interfaces';
 import { useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 const PropertyRow = styled(Row)`

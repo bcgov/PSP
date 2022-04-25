@@ -1,5 +1,6 @@
 import './AccessRequestPage.scss';
 
+import { Button } from 'components/common/buttons';
 import { ISnackbarState, Snackbar } from 'components/common/Snackbar';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as API from 'constants/API';
@@ -11,7 +12,6 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IAccessRequest, IAccessRequestUserInfo } from 'interfaces';
 import React, { useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';

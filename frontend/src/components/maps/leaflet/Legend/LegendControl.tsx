@@ -1,9 +1,8 @@
 import './LegendControl.scss';
 
-import variables from 'assets/scss/_variables.module.scss';
+import { Button } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as React from 'react';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
 import ClickAwayListener from 'react-click-away-listener';
@@ -14,13 +13,14 @@ import Control from '../Control/Control';
 import { Legend } from './Legend';
 
 const LegendButton = styled(Button)`
-  background-color: #ffffff !important;
-  color: ${variables.darkVariantColor} !important;
-  width: 4rem;
-  height: 4rem;
-  font-size: 2.5rem;
-  display: flex;
-  align-items: center;
+  &&.btn {
+    background-color: #ffffff;
+    color: ${({ theme }) => theme.css.darkVariantColor};
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const LegendControl: React.FC = () => {
