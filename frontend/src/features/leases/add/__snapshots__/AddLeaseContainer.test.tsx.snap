@@ -1668,8 +1668,8 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               <select
                 class="form-select form-control"
                 disabled=""
-                id="input-properties.0.areaUnitId"
-                name="properties.0.areaUnitId"
+                id="input-properties.0.areaUnitType.id"
+                name="properties.0.areaUnitType.id"
               >
                 <option
                   value=""

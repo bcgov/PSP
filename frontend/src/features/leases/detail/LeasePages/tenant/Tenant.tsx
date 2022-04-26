@@ -68,8 +68,6 @@ class FormTenant {
   public readonly amount?: number;
   public readonly renewalCount: number;
   public readonly description?: string;
-  public readonly landArea?: number;
-  public readonly areaUnit?: string;
   public readonly isResidential: boolean;
   public readonly isCommercialBuilding: boolean;
   public readonly note?: string;
@@ -85,8 +83,6 @@ class FormTenant {
     this.amount = baseModel.amount;
     this.renewalCount = baseModel.renewalCount;
     this.description = baseModel.description;
-    this.landArea = baseModel.landArea;
-    this.areaUnit = baseModel.areaUnit;
     this.isResidential = baseModel.isResidential;
     this.isCommercialBuilding = baseModel.isCommercialBuilding;
     this.note = baseModel.note;
