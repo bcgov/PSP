@@ -118,6 +118,7 @@ namespace Pims.Api.Areas.Research.Models.Search
                 Quantity = model.Quantity,
 
                 RegionCode = model.RegionCode,
+                RFileNumber = model.RFileNumber,
                 ResearchFileStatusTypeCode = model.ResearchFileStatusTypeCode,
                 Name = model.Name,
                 RoadOrAlias = model.RoadOrAlias,
