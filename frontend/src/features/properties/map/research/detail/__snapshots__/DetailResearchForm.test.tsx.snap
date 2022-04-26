@@ -95,9 +95,7 @@ exports[`DetailResearchForm component renders as expected when provided no resea
         </div>
         <div
           class="col"
-        >
-          A, B, C
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
