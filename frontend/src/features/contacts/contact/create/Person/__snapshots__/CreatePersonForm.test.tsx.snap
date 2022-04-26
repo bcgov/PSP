@@ -11,7 +11,139 @@ exports[`CreatePersonForm renders as expected 1`] = `
   <div
     class="container"
   />
-  .c4 {
+  .c10.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c10.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c10.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c10.btn.btn-primary {
+  border: none;
+}
+
+.c10.btn.btn-secondary {
+  background: none;
+}
+
+.c10.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
+  background: none;
+}
+
+.c10.btn.btn-light {
+  border: none;
+}
+
+.c10.btn.btn-dark {
+  border: none;
+}
+
+.c10.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c10.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c10.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c6 button.close {
+  font-size: 2.4rem;
+}
+
+.c4 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
@@ -38,7 +170,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   gap: 1.6rem;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -49,7 +181,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   gap: 0.5rem;
 }
 
-.c11 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -60,26 +192,6 @@ exports[`CreatePersonForm renders as expected 1`] = `
   gap: 1.6rem;
 }
 
-.c8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
 .c5 {
   font-size: 2rem;
   font-weight: 700;
@@ -88,7 +200,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   line-height: 2.9rem;
 }
 
-.c10 {
+.c12 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -144,7 +256,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   color: red;
 }
 
-.c12 {
+.c14 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -152,25 +264,25 @@ exports[`CreatePersonForm renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c7 {
+.c8 {
   color: #494949;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c9.c9 {
+.c11.c11 {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c9.c9 .text {
+.c11.c11 .text {
   display: none;
 }
 
-.c9.c9 > div:hover {
+.c11.c11 > div:hover {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -183,16 +295,36 @@ exports[`CreatePersonForm renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c9.c9 > div:hover .text {
+.c11.c11 > div:hover .text {
   display: inline;
 }
 
-.c13 {
+.c15 {
   font-size: 1.6rem;
   font-weight: 400;
   -webkit-text-decoration: none solid rgb(170,170,170);
   text-decoration: none solid rgb(170,170,170);
   line-height: 2rem;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 <div
@@ -320,7 +452,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col-md-7"
             >
               <div
-                class="form-group"
+                class="c6 form-group"
               >
                 <label
                   class="form-label"
@@ -390,7 +522,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             Contact info
           </h2>
           <div
-            class="c6 c7"
+            class="c7 c8"
           >
             <svg
               class="mt-2"
@@ -483,10 +615,10 @@ exports[`CreatePersonForm renders as expected 1`] = `
               style="padding-left: 0px; padding-top: 3rem;"
             >
               <div
-                class="c8 h-100"
+                class="c9 h-100"
               >
                 <button
-                  class="Button c9 btn btn-link"
+                  class="c10 Button c11 btn btn-link"
                   type="button"
                 >
                   <div
@@ -521,7 +653,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             </div>
           </div>
           <button
-            class="Button btn btn-link"
+            class="c10 Button btn btn-link"
             type="button"
           >
             <div
@@ -615,10 +747,10 @@ exports[`CreatePersonForm renders as expected 1`] = `
               style="padding-left: 0px; padding-top: 3rem;"
             >
               <div
-                class="c8 h-100"
+                class="c9 h-100"
               >
                 <button
-                  class="Button c9 btn btn-link"
+                  class="c10 Button c11 btn btn-link"
                   type="button"
                 >
                   <div
@@ -656,7 +788,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             </div>
           </div>
           <button
-            class="Button btn btn-link"
+            class="c10 Button btn btn-link"
             type="button"
           >
             <div
@@ -675,7 +807,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             Address
           </h2>
           <h3
-            class="c10"
+            class="c12"
           >
             Mailing Address
           </h3>
@@ -742,7 +874,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col"
             >
               <button
-                class="Button btn btn-link"
+                class="c10 Button btn btn-link"
                 type="button"
               >
                 <div
@@ -872,7 +1004,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
           class="c4"
         >
           <h3
-            class="c10"
+            class="c12"
           >
             Property Address
           </h3>
@@ -913,7 +1045,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col"
             >
               <button
-                class="Button btn btn-link"
+                class="c10 Button btn btn-link"
                 type="button"
               >
                 <div
@@ -1043,7 +1175,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
           class="c4"
         >
           <h3
-            class="c10"
+            class="c12"
           >
             Billing Address
           </h3>
@@ -1084,7 +1216,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col"
             >
               <button
-                class="Button btn btn-link"
+                class="c10 Button btn btn-link"
                 type="button"
               >
                 <div
@@ -1214,15 +1346,15 @@ exports[`CreatePersonForm renders as expected 1`] = `
           class="c4"
         >
           <div
-            class="c11"
+            class="c13"
           >
             <label
-              class="c12 form-label"
+              class="c14 form-label"
             >
               Comments
             </label>
             <span
-              class="c13"
+              class="c15"
             >
               (Optional)
             </span>
@@ -1242,7 +1374,135 @@ exports[`CreatePersonForm renders as expected 1`] = `
       </div>
     </form>
   </div>
-  .c0 {
+  .c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  border: none;
+}
+
+.c2.btn.btn-secondary {
+  background: none;
+}
+
+.c2.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  background: none;
+}
+
+.c2.btn.btn-light {
+  border: none;
+}
+
+.c2.btn.btn-dark {
+  border: none;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1270,7 +1530,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
     class="c0 c1"
   >
     <button
-      class="Button btn btn-secondary"
+      class="c2 Button btn btn-secondary"
       type="button"
     >
       <div
@@ -1280,7 +1540,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
       </div>
     </button>
     <button
-      class="Button btn btn-primary"
+      class="c2 Button btn btn-primary"
       type="button"
     >
       <div
