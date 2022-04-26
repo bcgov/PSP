@@ -1,5 +1,6 @@
+import { Button } from 'components/common/buttons';
 import { CSSProperties } from 'react';
-import { Breadcrumb as BsBreadcrumb, Button, Row } from 'react-bootstrap';
+import { Breadcrumb as BsBreadcrumb, Row } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
@@ -50,21 +51,22 @@ export const IconButton = styled(Button)`
     svg:hover {
       transition: all 0.3s ease-in;
     }
-  }
-  &.btn.btn-light {
-    svg {
-      color: ${({ theme }) => theme.css.slideOutBlue};
+
+    &.btn-light {
+      svg {
+        color: ${({ theme }) => theme.css.slideOutBlue};
+      }
+      svg:hover {
+        color: ${({ theme }) => theme.css.dangerColor};
+      }
     }
-    svg:hover {
-      color: ${({ theme }) => theme.css.dangerColor};
-    }
-  }
-  &.btn.btn-info {
-    svg {
-      color: ${({ theme }) => theme.css.slideOutBlue};
-    }
-    svg:hover {
-      color: ${({ theme }) => theme.css.activeColor};
+    &.btn-info {
+      svg {
+        color: ${({ theme }) => theme.css.slideOutBlue};
+      }
+      svg:hover {
+        color: ${({ theme }) => theme.css.activeColor};
+      }
     }
   }
 `;
