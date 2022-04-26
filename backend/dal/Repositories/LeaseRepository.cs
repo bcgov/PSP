@@ -81,6 +81,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.Address)
                     .ThenInclude(p => p.ProvinceState)
                 .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
+                .Include(l => l.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
                     .ThenInclude(s => s.SurplusDeclarationTypeCodeNavigation)
                 .Include(l => l.PimsPropertyLeases)
