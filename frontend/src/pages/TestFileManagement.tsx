@@ -68,7 +68,6 @@ export const TestFileManagement: React.FunctionComponent = () => {
       var target = e.target as HTMLSelectElement;
       if (target.selectedOptions !== null) {
         setSelectedType(Number(target.selectedOptions[0].value));
-        console.log(selectedType);
       }
     }
   };
