@@ -3,6 +3,7 @@ import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, useFormikContext } from 'formik';
+import { isEqual } from 'lodash';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -27,9 +28,11 @@ const ResearchProperties: React.FunctionComponent = () => {
             <Row className="py-3 no-gutters">
               <Col>
                 <MapSelectorContainer
-                  onSelectedProperty={(property: IMapProperty) => {
-                    const formProperty = new PropertyForm(property);
-                    push(formProperty);
+                  onSelectedProperty={(newProperty: IMapProperty) => {
+                    const formProperty = new PropertyForm(newProperty);
+                    if (!values.properties.some(property => isEqual(formProperty, property))) {
+                      push(formProperty);
+                    }
                   }}
                 />
               </Col>
