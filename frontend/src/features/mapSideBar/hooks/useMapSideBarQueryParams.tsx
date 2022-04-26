@@ -1,5 +1,6 @@
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
+import { DetailResearchContainer } from 'features/properties/map/research/detail/DetailResearchContainer';
 import UpdateResearchContainer from 'features/properties/map/research/update/UpdateResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
@@ -92,7 +93,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         break;
       case MapViewState.RESEARCH_VIEW:
         setSidebarComponent(
-          <UpdateResearchContainer researchFileId={Number(parts[3])} onClose={handleClose} />,
+          <DetailResearchContainer researchFileId={Number(parts[3])} onClose={handleClose} />,
         );
         setShowSideBar(true);
         break;

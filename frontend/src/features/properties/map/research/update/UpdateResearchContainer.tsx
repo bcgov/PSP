@@ -8,11 +8,11 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ResearchFooter from '../common/ResearchFooter';
+import ResearchHeader from '../common/ResearchHeader';
 import { useGetResearch } from '../hooks/useGetResearch';
 import { useUpdateResearch } from '../hooks/useUpdateResearch';
 import { UpdateResearchFormModel } from './models';
 import UpdateResearchForm from './UpdateResearchForm';
-import UpdateResearchHeader from './UpdateResearchHeader';
 
 export interface IUpdateResearchContainerProps {
   researchFileId: number;
@@ -71,7 +71,7 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
           onCancel={handleCancel}
         />
       }
-      header={<UpdateResearchHeader researchFile={researchFile} />}
+      header={<ResearchHeader researchFile={researchFile} />}
       showCloseButton
       onClose={handleCancel}
     >
