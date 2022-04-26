@@ -22,9 +22,11 @@ namespace Pims.Ltsa.Models
         /// Indicate the type of the search product requested for an order
         /// </summary>
         /// <value>Indicate the type of the search product requested for an order</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum ProductTypeEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum Title for value: title
             /// </summary>
@@ -61,9 +63,11 @@ namespace Pims.Ltsa.Models
         /// Indicate the status for the order # One of:  1. Processing - Order has been created and is being processed.  Both the fielded data (JSON) and the PDF are not yet available. 1. Fulfilled - Order has been partially fulfilled.  Fielded data (JSON) is available, but PDF is not yet available. 1. Completed - Order has been fully completed.  PDF is available.  Fielded data (JSON) is available (as applicable for the product type). 1. Cancelled - Order has been cancelled. The ordered product is not available for a cancelled order.  Third party software may cancel an outstanding order by changing this status to “Cancelled” via the Put Order service. 
         /// </summary>
         /// <value>Indicate the status for the order # One of:  1. Processing - Order has been created and is being processed.  Both the fielded data (JSON) and the PDF are not yet available. 1. Fulfilled - Order has been partially fulfilled.  Fielded data (JSON) is available, but PDF is not yet available. 1. Completed - Order has been fully completed.  PDF is available.  Fielded data (JSON) is available (as applicable for the product type). 1. Cancelled - Order has been cancelled. The ordered product is not available for a cancelled order.  Third party software may cancel an outstanding order by changing this status to “Cancelled” via the Put Order service. </value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum Processing for value: Processing
             /// </summary>
