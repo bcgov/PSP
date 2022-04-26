@@ -11,6 +11,7 @@ import { phoneFormatter } from 'utils/formUtils';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import OrganizationView, { OrganizationViewProps } from './Organization';
+import { fakeAddresses } from './utils';
 
 const fakeOrganization: IContactOrganization = {
   id: '123',
@@ -292,6 +293,22 @@ describe('Contact OrganizationView component', () => {
     expect(personElements[0].textContent).toBe(person1.fullName);
     expect(personElements[1].textContent).toBe(person2.fullName);
     expect(personElements[2].textContent).toBe(person3.fullName);
+  });
+
+  it('Orders address information correctly', () => {
+    const { component } = setup({
+      organization: {
+        ...fakeOrganization,
+        addresses: fakeAddresses,
+      },
+    });
+
+    var addressElements = component.getAllByTestId('contact-organization-address');
+    expect(addressElements.length).toBe(3);
+
+    expect(addressElements[0].children[0]).toHaveTextContent('Mailing address');
+    expect(addressElements[1].children[0]).toHaveTextContent('Property address');
+    expect(addressElements[2].children[0]).toHaveTextContent('Billing address');
   });
 
   it('Shows comment information', () => {
