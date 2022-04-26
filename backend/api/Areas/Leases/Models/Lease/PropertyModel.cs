@@ -32,16 +32,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string Description { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the property area unit type.
-        /// </summary>
-        public string AreaUnitId { get; set; }
-
-        /// <summary>
-        /// get/set - Area unit description.
-        /// </summary>
-        public string AreaUnit { get; set; }
-
-        /// <summary>
         /// get/set - Area unit type.
         /// </summary>
         public TypeModel<string> AreaUnitType { get; set; }
@@ -49,7 +39,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The land area of the property.
         /// </summary>
-        public Single LandArea { get; set; }
+        public float? LandArea { get; set; }
 
         /// <summary>
         /// get/set - The property address.

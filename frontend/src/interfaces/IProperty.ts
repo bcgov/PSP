@@ -17,6 +17,7 @@ import { Moment } from 'moment';
 
 import { ILease } from './ILease';
 import IPropertySurplus from './IPropertySurplus';
+import ITypeCode from './ITypeCode';
 
 /**
  * A property entity represents a land, or other type of property.
@@ -49,7 +50,8 @@ export interface IProperty {
 
   areaUnitId?: PropertyAreaUnitTypes;
   areaUnit?: string;
-  landArea: number;
+  areaUnitType?: ITypeCode<string>;
+  landArea?: number;
   landLegalDescription: string;
   encumbranceReason?: string;
   isSensitive?: boolean;
@@ -78,7 +80,7 @@ export interface IFormProperty
   extends ExtendOverride<
     IProperty,
     {
-      areaUnitType?: string;
+      areaUnitType?: ITypeCode<string>;
       address?: IAddress;
       landArea?: number;
       landLegalDescription?: string;
