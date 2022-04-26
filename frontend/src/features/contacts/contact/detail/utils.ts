@@ -1,17 +1,19 @@
 import { IContactAddress } from 'interfaces/IContact';
 
+import { AddressTypes } from './../../../../constants/addressTypes';
+
+// the order of this array corresponds to the expected display order
+const addressSortOrder = [AddressTypes.Mailing, AddressTypes.Residential, AddressTypes.Billing];
+
 export const sortAddresses = (a1: IContactAddress, a2: IContactAddress) => {
   if (a2.addressType.id === a1.addressType.id) {
     return 0;
   }
-
-  if (a2.addressType.id === 'MAILING') {
+  const a2Index = addressSortOrder.indexOf(a2.addressType.id as AddressTypes);
+  if (a2Index !== -1 && a2Index < addressSortOrder.indexOf(a1.addressType.id as AddressTypes)) {
     return 1;
   }
 
-  if (a2.addressType.id === 'RESIDNT' && a1.addressType.id !== 'MAILING') {
-    return 1;
-  }
   return -1;
 };
 
