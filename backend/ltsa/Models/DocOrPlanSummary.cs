@@ -22,9 +22,11 @@ namespace Pims.Ltsa.Models
         /// Status of the document or plan. Note: Only document or plan with the status “Found” can be ordered via this interface.
         /// </summary>
         /// <value>Status of the document or plan. Note: Only document or plan with the status “Found” can be ordered via this interface.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum Found for value: Found.
             /// </summary>

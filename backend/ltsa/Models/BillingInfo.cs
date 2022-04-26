@@ -22,9 +22,11 @@ namespace Pims.Ltsa.Models
         /// Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account 
         /// </summary>
         /// <value>Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account </value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum BillingModelEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum REG for value: REG
             /// </summary>

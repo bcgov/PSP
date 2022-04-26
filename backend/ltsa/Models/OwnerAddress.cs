@@ -28,7 +28,7 @@ namespace Pims.Ltsa.Models
         /// <param name="provinceName">Non-Canadian Province / geographic division.</param>
         /// <param name="country">Country.</param>
         /// <param name="postalCode">Postal Code.</param>
-        public OwnerAddress(string addressLine1 = default, string addressLine2 = default, string city = default, CanadianProvince province = default, string provinceName = default, string country = default, string postalCode = default)
+        public OwnerAddress(string addressLine1 = default, string addressLine2 = default, string city = default, CanadianProvince? province = default, string provinceName = default, string country = default, string postalCode = default)
         {
             this.AddressLine1 = addressLine1;
             this.AddressLine2 = addressLine2;
@@ -64,7 +64,7 @@ namespace Pims.Ltsa.Models
         /// Gets or Sets Province
         /// </summary>
         [DataMember(Name = "province", EmitDefaultValue = false)]
-        public CanadianProvince Province { get; set; }
+        public CanadianProvince? Province { get; set; }
 
         /// <summary>
         /// Non-Canadian Province / geographic division

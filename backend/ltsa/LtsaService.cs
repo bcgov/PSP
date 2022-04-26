@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Pims.Ltsa
@@ -136,7 +137,8 @@ namespace Pims.Ltsa
                 try
                 {
                     error = JsonSerializer.Deserialize<Error>(errorContent, _jsonSerializerOptions);
-                } catch (JsonException)
+                }
+                catch (JsonException)
                 {
                     error = new Error(new List<String>() { ex.Message });
                 }
@@ -266,7 +268,7 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T: IFieldedData
+        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
             return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);
