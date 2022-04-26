@@ -197,6 +197,17 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsResearchFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+
+        public IEnumerable<PimsRequestSourceType> GeRequestSourceTypes()
+        {
+            return this.Context.PimsRequestSourceTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsResearchPurposeType> GetResearchPurposeTypes()
+        {
+            return this.Context.PimsResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
         #endregion
     }
 }

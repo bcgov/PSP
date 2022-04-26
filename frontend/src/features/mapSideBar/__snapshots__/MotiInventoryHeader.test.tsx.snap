@@ -1521,7 +1521,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
               class="row"
             >
               <div
-                class="pr-0 col-auto"
+                class="pr-0 text-left col-auto"
               >
                 <label>
                   Civic Address
@@ -1543,7 +1543,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
               class="justify-content-end row"
             >
               <div
-                class="pr-0 col-auto"
+                class="pr-0 text-left col-auto"
               >
                 <label>
                   PID:
@@ -1567,7 +1567,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
               class="row"
             >
               <div
-                class="pr-0 col-auto"
+                class="pr-0 text-left col-auto"
               >
                 <label>
                   Plan #
@@ -1587,7 +1587,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
               class="justify-content-end row"
             >
               <div
-                class="pr-0 col-auto"
+                class="pr-0 text-left col-auto"
               >
                 <label>
                   Land parcel type:

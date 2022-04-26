@@ -43,6 +43,21 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         #region Endpoints
 
         /// <summary>
+        /// Gets the specified research file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResearchFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetResearchFile(long id)
+        {
+            var researchFile = _pimsService.ResearchFileService.GetById(id);
+            return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
+        /// <summary>
         /// Add the specified research file.
         /// </summary>
         /// <returns></returns>
@@ -55,6 +70,23 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
             var researchFile = _pimsService.ResearchFileService.Add(researchFileEntity);
+
+            return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
+        /// <summary>
+        /// Update the research file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.ResearchFileEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResearchFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult UpdateResearchFile([FromBody] ResearchFileModel researchFileModel)
+        {
+            var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
+            var researchFile = _pimsService.ResearchFileService.Update(researchFileEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
