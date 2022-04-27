@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>PID</name>
+   <name>researchFileTable</name>
    <tag></tag>
-   <elementGuidId>7cff0483-81d9-4268-8250-6401c11af2e3</elementGuidId>
+   <elementGuidId>93f70df3-f651-4020-a02c-0f2141ee0938</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//input[@name='pinOrPid']</value>
+         <value>//div[@data-testid='researchFilesTable']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
