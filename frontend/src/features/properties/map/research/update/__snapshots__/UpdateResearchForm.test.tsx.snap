@@ -16,6 +16,134 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border-color: #d8292f !important;
 }
 
+.c6.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c6.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c6.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c6.btn.btn-primary {
+  border: none;
+}
+
+.c6.btn.btn-secondary {
+  background: none;
+}
+
+.c6.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  background: none;
+}
+
+.c6.btn.btn-light {
+  border: none;
+}
+
+.c6.btn.btn-dark {
+  border: none;
+}
+
+.c6.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c6.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c6.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
 .c3 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -33,7 +161,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   flex-shrink: 0;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -55,7 +183,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border: solid 0.1rem;
 }
 
-.c6.form-group {
+.c7.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -63,7 +191,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   margin-bottom: 0;
 }
 
-.c6.form-group .radio-group {
+.c7.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -76,7 +204,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   column-gap: unset;
 }
 
-.c6.form-group .radio-group .form-check {
+.c7.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -91,15 +219,15 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   justify-content: center;
 }
 
-.c6.form-group .radio-group .form-check .form-check-input {
+.c7.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c6.form-group .radio-group .form-check-label {
+.c7.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c6 .form-label {
+.c7 .form-label {
   margin-bottom: unset;
 }
 
@@ -440,7 +568,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 class="pl-0 align-self-center col-auto"
               >
                 <button
-                  class="Button Button--icon-only px-2 btn btn-secondary"
+                  class="c6 Button Button--icon-only px-2 btn btn-secondary"
                   type="button"
                 >
                   <div
@@ -470,7 +598,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 class="pl-0 col-auto"
               >
                 <button
-                  class="Button Button--icon-only px-2 btn btn-primary"
+                  class="c6 Button Button--icon-only px-2 btn btn-primary"
                   type="button"
                 >
                   <div
@@ -624,13 +752,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           class="col"
         >
           <div
-            class="c6 form-group"
+            class="c7 form-group"
           >
             <div
               class="radio-group"
             >
               <div
-                class="c7"
+                class="c8"
               >
                 <div
                   class="form-check"
@@ -652,7 +780,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 </label>
               </div>
               <div
-                class="c7"
+                class="c8"
               >
                 <div
                   class="form-check"
