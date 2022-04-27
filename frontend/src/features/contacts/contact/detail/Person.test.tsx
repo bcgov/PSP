@@ -11,6 +11,7 @@ import { phoneFormatter } from 'utils/formUtils';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import PersonView, { PersonViewProps } from './Person';
+import { fakeAddresses } from './utils';
 
 const fakePerson: IContactPerson = {
   id: 1,
@@ -284,5 +285,21 @@ describe('Contact PersonView component', () => {
 
     var commentElement = component.getByTestId('contact-person-comment');
     expect(commentElement.textContent).toBe(testComment);
+  });
+
+  it('Orders address information correctly', () => {
+    const { component } = setup({
+      person: {
+        ...fakePerson,
+        addresses: fakeAddresses,
+      },
+    });
+
+    var addressElements = component.getAllByTestId('contact-person-address');
+    expect(addressElements.length).toBe(3);
+
+    expect(addressElements[0].children[0]).toHaveTextContent('Mailing address');
+    expect(addressElements[1].children[0]).toHaveTextContent('Property address');
+    expect(addressElements[2].children[0]).toHaveTextContent('Billing address');
   });
 });

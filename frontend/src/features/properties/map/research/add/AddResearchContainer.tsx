@@ -7,9 +7,9 @@ import { MdTopic } from 'react-icons/md';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ResearchFooter from '../common/ResearchFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
-import AddResearchFooter from './AddResearchFooter';
 import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
 
@@ -25,6 +25,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
     if (!!response?.name) {
+      formikRef.current?.resetForm();
       props.onClose();
     }
   };
@@ -44,7 +45,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       title="Create Research File"
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
-        <AddResearchFooter
+        <ResearchFooter
           isSubmitting={formikRef.current?.isSubmitting}
           onSave={handleSave}
           onCancel={handleCancel}
@@ -60,7 +61,6 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           const researchFile: Api_ResearchFile = values.toApi();
           saveResearchFile(researchFile);
           formikHelpers.setSubmitting(false);
-          formikHelpers.resetForm();
         }}
         validationSchema={AddResearchFileYupSchema}
       >
