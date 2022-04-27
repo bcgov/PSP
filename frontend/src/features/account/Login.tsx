@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons/Button';
+import { Button, LinkButton } from 'components/common/buttons';
 import * as actionTypes from 'constants/actionTypes';
 import { useQuery } from 'hooks/use-query';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -57,9 +57,9 @@ const Login = () => {
             </Button>
             <p>Sign into PIMS with your government issued IDIR or with your Business BCeID.</p>
             <Row className="bceid">
-              <Button variant="link" onClick={() => setShowInstruction(!showInstruction)}>
+              <LinkButton onClick={() => setShowInstruction(!showInstruction)}>
                 Don't have a Business BCeID?
-              </Button>
+              </LinkButton>
             </Row>
             <Row>
               {showInstruction && (

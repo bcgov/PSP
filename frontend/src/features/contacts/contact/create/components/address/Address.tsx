@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons/Button';
+import { LinkButton } from 'components/common/buttons';
 import { Input, Select, SelectOption } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
@@ -103,9 +103,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
       {count < 3 && !disabled && (
         <Row style={{ marginTop: '-1rem', marginBottom: '1rem' }}>
           <Col>
-            <Button variant="link" onClick={increment}>
-              + Add an address line
-            </Button>
+            <LinkButton onClick={increment}>+ Add an address line</LinkButton>
           </Col>
         </Row>
       )}

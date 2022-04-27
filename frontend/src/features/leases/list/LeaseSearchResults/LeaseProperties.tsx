@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons/Button';
+import { LinkButton } from 'components/common/buttons';
 import { ILeaseProperty } from 'interfaces';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -56,9 +56,9 @@ const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props =>
       <Row key="showMoreKey">
         <Col />
         <Col md="auto">
-          <Button variant="link" onClick={() => setExpanded(!isExpanded)}>
+          <LinkButton onClick={() => setExpanded(!isExpanded)}>
             {isExpanded ? 'hide' : `[+${properties.length - rowItems.length} more...]`}
-          </Button>
+          </LinkButton>
         </Col>
       </Row>,
     );

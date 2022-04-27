@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons/Button';
+import { LinkButton } from 'components/common/buttons';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { IFormLease, IProperty } from 'interfaces';
 import React from 'react';
@@ -29,14 +29,13 @@ export const PropertyRows: React.FunctionComponent<IPropertyRowsProps> = ({ name
               key={`property-row-${index}`}
             />
           ))}
-          <Button
-            variant="link"
+          <LinkButton
             onClick={() => {
               push({ pid: '', pin: '', areaUnitId: '' });
             }}
           >
             + Add another property
-          </Button>
+          </LinkButton>
         </React.Fragment>
       )}
     />
