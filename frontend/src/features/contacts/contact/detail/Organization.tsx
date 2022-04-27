@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { phoneFormatter } from 'utils/formUtils';
 
 import * as Styled from '../../styles';
+import { sortAddresses } from './utils';
 
 export interface OrganizationViewProps {
   organization: IContactOrganization;
@@ -52,8 +53,9 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
   if (organization.addresses === undefined) {
     personAddresses = [];
   } else {
-    personAddresses = organization.addresses.reduce(
-      (accumulator: AddressField[], value: IContactAddress) => {
+    personAddresses = organization.addresses
+      .sort(sortAddresses)
+      .reduce((accumulator: AddressField[], value: IContactAddress) => {
         accumulator.push({
           label: value.addressType.description || '',
           streetAddress1: value.streetAddress1,
@@ -67,9 +69,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
         });
 
         return accumulator;
-      },
-      [],
-    );
+      }, []);
   }
 
   return (
