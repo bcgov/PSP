@@ -1,4 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb, Row } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
@@ -35,40 +34,6 @@ export const Breadcrumb = styled(BsBreadcrumb)`
 export const SelectedText = styled.p`
   font-size: 1.4rem;
   color: ${props => props.theme.css.completedColor};
-`;
-
-export const IconButton = styled(Button)`
-  &&.btn {
-    background-color: unset;
-    border: 0;
-    :hover,
-    :active {
-      background-color: unset;
-    }
-    svg {
-      transition: all 0.3s ease-out;
-    }
-    svg:hover {
-      transition: all 0.3s ease-in;
-    }
-
-    &.btn-light {
-      svg {
-        color: ${({ theme }) => theme.css.slideOutBlue};
-      }
-      svg:hover {
-        color: ${({ theme }) => theme.css.dangerColor};
-      }
-    }
-    &.btn-info {
-      svg {
-        color: ${({ theme }) => theme.css.slideOutBlue};
-      }
-      svg:hover {
-        color: ${({ theme }) => theme.css.activeColor};
-      }
-    }
-  }
 `;
 
 export const PrimaryGenericModal = styled(GenericModal)`
