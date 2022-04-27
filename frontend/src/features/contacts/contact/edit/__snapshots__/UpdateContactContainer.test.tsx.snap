@@ -197,6 +197,16 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   flex-direction: row;
 }
 
+.c9 button.close {
+  font-size: 2.4rem;
+}
+
+.c6 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
 .c2 {
   text-align: left;
 }
@@ -233,16 +243,6 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   width: 100%;
   overflow: auto;
   padding-right: 1rem;
-}
-
-.c9 button.close {
-  font-size: 2.4rem;
-}
-
-.c6 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
 }
 
 .c17 {

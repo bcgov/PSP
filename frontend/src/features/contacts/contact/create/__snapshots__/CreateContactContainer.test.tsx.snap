@@ -217,10 +217,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   flex-direction: row;
 }
 
-.c2 {
-  text-align: left;
-}
-
 .c11 button.close {
   font-size: 2.4rem;
 }
@@ -231,23 +227,8 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   padding: 2.5rem;
 }
 
-.c4 {
-  gap: 5rem;
-  padding: 0.5rem 3rem;
-  border-radius: 0.5rem;
-  margin-right: 2.5rem;
-}
-
-.c4 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 2rem;
+.c2 {
+  text-align: left;
 }
 
 .c10 {
@@ -397,6 +378,25 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+}
+
+.c4 {
+  gap: 5rem;
+  padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+  margin-right: 2.5rem;
+}
+
+.c4 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
 }
 
 .c0 {
