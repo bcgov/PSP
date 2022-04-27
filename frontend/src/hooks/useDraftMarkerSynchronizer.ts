@@ -3,10 +3,16 @@ import { PointFeature } from 'components/maps/types';
 import { getIn, useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
-import { IProperty } from 'interfaces';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
+
+interface IDraftMapProperty {
+  latitude: number;
+  longitude: number;
+  name: string;
+}
+
 /**
  * Get a list of draft markers from the current form values.
  * As long as a parcel/building has both a lat and a lng it will be returned by this method.
@@ -18,7 +24,7 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
   const properties = getIn(values, nameSpace);
   const initialProperties = getIn(initialValues, nameSpace);
   return properties
-    .filter((property: IProperty) => {
+    .filter((property: IDraftMapProperty) => {
       if (
         !property?.latitude ||
         !property?.longitude ||
@@ -29,7 +35,7 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
       }
       return true;
     })
-    .map((property: IProperty) => {
+    .map((property: IDraftMapProperty) => {
       return {
         type: 'Feature',
         geometry: {
