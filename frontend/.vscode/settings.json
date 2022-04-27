@@ -12,8 +12,7 @@
     "editor.formatOnSave": true
   },
   "eslint.alwaysShowStatus": true,
-  "jest.pathToJest": "npm run test:watch --",
-  "jestrunner.jestCommand": "npm run test --",
+  "jest.jestCommandLine": "npm run test --",
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
