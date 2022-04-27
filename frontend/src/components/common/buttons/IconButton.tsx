@@ -5,10 +5,13 @@ import { Button } from './Button';
 export const IconButton = styled(Button)`
   &&.btn {
     background-color: unset;
-    border: 0;
+    border: none;
     :hover,
+    :focus,
     :active {
       background-color: unset;
+      outline: none;
+      box-shadow: none;
     }
     svg {
       transition: all 0.3s ease-out;
@@ -17,6 +20,16 @@ export const IconButton = styled(Button)`
       transition: all 0.3s ease-in;
     }
 
+    &.btn-primary {
+      svg {
+        color: ${({ theme, disabled }) =>
+          disabled ? theme.css.disabledColor : theme.css.primaryColor};
+      }
+      svg:hover {
+        color: ${({ theme, disabled }) =>
+          disabled ? theme.css.disabledColor : theme.css.primaryColor};
+      }
+    }
     &.btn-light {
       svg {
         color: ${({ theme }) => theme.css.slideOutBlue};
