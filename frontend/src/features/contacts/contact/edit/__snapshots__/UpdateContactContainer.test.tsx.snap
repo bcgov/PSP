@@ -786,7 +786,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
               </div>
             </div>
             <button
-              class="Button c14 btn btn-link"
+              class="c14 Button btn btn-link"
               type="button"
             >
               <div
@@ -917,7 +917,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
               </div>
             </div>
             <button
-              class="Button c14 btn btn-link"
+              class="c14 Button btn btn-link"
               type="button"
             >
               <div
@@ -1003,7 +1003,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button c14 btn btn-link"
+                  class="c14 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1174,7 +1174,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button c14 btn btn-link"
+                  class="c14 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1345,7 +1345,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button c14 btn btn-link"
+                  class="c14 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1509,7 +1509,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
       class="c19 c20"
     >
       <button
-        class="Button c14 btn btn-secondary"
+        class="c14 Button btn btn-secondary"
         type="button"
       >
         <div
@@ -1519,7 +1519,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
         </div>
       </button>
       <button
-        class="Button c14 btn btn-primary"
+        class="c14 Button btn btn-primary"
         type="button"
       >
         <div

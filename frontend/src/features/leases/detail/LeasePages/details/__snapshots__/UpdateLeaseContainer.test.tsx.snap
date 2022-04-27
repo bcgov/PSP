@@ -1387,7 +1387,7 @@ exports[`Update lease container component renders as expected 1`] = `
       </div>
     </div>
     <button
-      class="Button c11 btn btn-link"
+      class="c11 Button btn btn-link"
       type="button"
     >
       <div
@@ -1600,7 +1600,7 @@ exports[`Update lease container component renders as expected 1`] = `
     class="c0"
   >
     <button
-      class="Button c1 btn btn-secondary"
+      class="c1 Button btn btn-secondary"
       type="button"
     >
       <div
@@ -1610,7 +1610,7 @@ exports[`Update lease container component renders as expected 1`] = `
       </div>
     </button>
     <button
-      class="Button Button--disabled c1 btn btn-primary"
+      class="c1 Button Button--disabled btn btn-primary"
       disabled=""
       type="button"
     >

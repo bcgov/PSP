@@ -435,7 +435,7 @@ exports[`Lease Insurance renders as expected 1`] = `
         class="col"
       >
         <button
-          class="Button c0 mr-5 btn btn-secondary"
+          class="c0 Button mr-5 btn btn-secondary"
           type="button"
         >
           <div
@@ -449,7 +449,7 @@ exports[`Lease Insurance renders as expected 1`] = `
         class="col"
       >
         <button
-          class="Button Button--disabled c0 mr-5 btn btn-primary"
+          class="c0 Button Button--disabled mr-5 btn btn-primary"
           disabled=""
           type="button"
         >

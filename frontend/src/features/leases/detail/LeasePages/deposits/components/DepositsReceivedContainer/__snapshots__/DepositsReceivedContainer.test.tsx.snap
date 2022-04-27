@@ -176,7 +176,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
       Deposits Received
     </label>
     <button
-      class="Button Button--disabled c3 mb-4 px-5 btn btn-secondary"
+      class="c3 Button Button--disabled mb-4 px-5 btn btn-secondary"
       disabled=""
       type="button"
     >

@@ -631,7 +631,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="Button c5 c6 btn btn-light"
+                class="c5 Button c6 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -781,7 +781,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="Button c5 c6 btn btn-light"
+                class="c5 Button c6 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -931,7 +931,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="Button c5 c6 btn btn-light"
+                class="c5 Button c6 btn btn-light"
                 title="View Contact"
                 type="button"
               >

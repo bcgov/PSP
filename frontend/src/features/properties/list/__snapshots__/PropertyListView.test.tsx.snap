@@ -339,7 +339,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-auto"
             >
               <button
-                class="Button Button--icon-only c3 primary btn btn-primary"
+                class="c3 Button Button--icon-only primary btn btn-primary"
                 data-testid="search"
                 id="search-button"
                 type="submit"
@@ -367,7 +367,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-auto"
             >
               <button
-                class="Button Button--icon-only c3 btn btn-info"
+                class="c3 Button Button--icon-only btn btn-info"
                 data-testid="reset-button"
                 id="reset-button"
                 type="reset"
@@ -438,7 +438,7 @@ exports[`Property list view matches snapshot 1`] = `
           class="menu"
         />
         <button
-          class="Button c3 c7 btn btn-primary"
+          class="c3 Button c7 btn btn-primary"
           type="button"
         >
           <div
@@ -461,7 +461,7 @@ exports[`Property list view matches snapshot 1`] = `
           </div>
         </button>
         <button
-          class="Button c3 c7 btn btn-primary"
+          class="c3 Button c7 btn btn-primary"
           type="button"
         >
           <div

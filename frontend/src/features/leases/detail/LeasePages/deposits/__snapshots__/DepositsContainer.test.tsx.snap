@@ -191,7 +191,7 @@ exports[`DepositsContainer renders as expected 1`] = `
         Deposits Received
       </label>
       <button
-        class="Button Button--disabled c4 mb-4 px-5 btn btn-secondary"
+        class="c4 Button Button--disabled mb-4 px-5 btn btn-secondary"
         disabled=""
         type="button"
       >

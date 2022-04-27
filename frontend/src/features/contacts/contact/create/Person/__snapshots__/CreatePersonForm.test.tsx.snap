@@ -649,7 +649,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             </div>
           </div>
           <button
-            class="Button c11 btn btn-link"
+            class="c11 Button btn btn-link"
             type="button"
           >
             <div
@@ -780,7 +780,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             </div>
           </div>
           <button
-            class="Button c11 btn btn-link"
+            class="c11 Button btn btn-link"
             type="button"
           >
             <div
@@ -866,7 +866,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col"
             >
               <button
-                class="Button c11 btn btn-link"
+                class="c11 Button btn btn-link"
                 type="button"
               >
                 <div
@@ -1037,7 +1037,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col"
             >
               <button
-                class="Button c11 btn btn-link"
+                class="c11 Button btn btn-link"
                 type="button"
               >
                 <div
@@ -1208,7 +1208,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               class="col"
             >
               <button
-                class="Button c11 btn btn-link"
+                class="c11 Button btn btn-link"
                 type="button"
               >
                 <div
@@ -1522,7 +1522,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
     class="c0 c1"
   >
     <button
-      class="Button c2 btn btn-secondary"
+      class="c2 Button btn btn-secondary"
       type="button"
     >
       <div
@@ -1532,7 +1532,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
       </div>
     </button>
     <button
-      class="Button c2 btn btn-primary"
+      class="c2 Button btn btn-primary"
       type="button"
     >
       <div

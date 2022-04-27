@@ -1734,7 +1734,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
         class="d-flex p-0 align-items-center justify-content-end col-1"
       >
         <button
-          class="Button c1 c2 float-right btn btn-info"
+          class="c1 Button c2 float-right btn btn-info"
           title="Zoom Map"
           type="button"
         >

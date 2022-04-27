@@ -284,7 +284,7 @@ exports[`login login renders correctly 1`] = `
           WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.
         </p>
         <button
-          className="Button c1 btn btn-primary"
+          className="c1 Button btn btn-primary"
           disabled={false}
           onClick={[Function]}
           type="button"
@@ -302,7 +302,7 @@ exports[`login login renders correctly 1`] = `
           className="bceid row"
         >
           <button
-            className="Button c1 btn btn-link"
+            className="c1 Button btn btn-link"
             disabled={false}
             onClick={[Function]}
             type="button"

@@ -1831,7 +1831,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               </select>
             </div>
             <button
-              class="Button c27 c28 btn btn-link"
+              class="c27 Button c28 btn btn-link"
               type="button"
             >
               <div
@@ -1861,7 +1861,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         </div>
       </div>
       <button
-        class="Button c27 btn btn-link"
+        class="c27 Button btn btn-link"
         type="button"
       >
         <div
@@ -1922,7 +1922,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         class="c30"
       >
         <button
-          class="Button c27 btn btn-secondary"
+          class="c27 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -1932,7 +1932,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="Button Button--disabled c27 btn btn-primary"
+          class="c27 Button Button--disabled btn btn-primary"
           disabled=""
           type="button"
         >

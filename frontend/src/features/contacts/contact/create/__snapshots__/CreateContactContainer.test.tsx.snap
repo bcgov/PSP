@@ -810,7 +810,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
               </div>
             </div>
             <button
-              class="Button c16 btn btn-link"
+              class="c16 Button btn btn-link"
               type="button"
             >
               <div
@@ -941,7 +941,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
               </div>
             </div>
             <button
-              class="Button c16 btn btn-link"
+              class="c16 Button btn btn-link"
               type="button"
             >
               <div
@@ -1027,7 +1027,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button c16 btn btn-link"
+                  class="c16 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1198,7 +1198,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button c16 btn btn-link"
+                  class="c16 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1369,7 +1369,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button c16 btn btn-link"
+                  class="c16 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1531,7 +1531,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
       class="c21 c22"
     >
       <button
-        class="Button c16 btn btn-secondary"
+        class="c16 Button btn btn-secondary"
         type="button"
       >
         <div
@@ -1541,7 +1541,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
         </div>
       </button>
       <button
-        class="Button c16 btn btn-primary"
+        class="c16 Button btn btn-primary"
         type="button"
       >
         <div

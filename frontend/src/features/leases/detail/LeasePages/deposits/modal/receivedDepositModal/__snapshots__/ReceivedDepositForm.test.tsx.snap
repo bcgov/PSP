@@ -382,7 +382,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
               class="pl-0 align-self-center col-auto"
             >
               <button
-                class="Button Button--disabled Button--icon-only c5 px-2 btn btn-secondary"
+                class="c5 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
                 disabled=""
                 type="button"
               >
@@ -413,7 +413,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="Button Button--icon-only c5 px-2 btn btn-primary"
+                class="c5 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
@@ -828,7 +828,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
               class="pl-0 align-self-center col-auto"
             >
               <button
-                class="Button Button--disabled Button--icon-only c5 px-2 btn btn-secondary"
+                class="c5 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
                 disabled=""
                 type="button"
               >
@@ -859,7 +859,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="Button Button--icon-only c5 px-2 btn btn-primary"
+                class="c5 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
