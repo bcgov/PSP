@@ -86,7 +86,6 @@ export class UpdateResearchFormModel {
   }
 
   public toApi(): Api_ResearchFile {
-    console.log(this.id);
     return {
       id: this.id,
       name: this.name,
