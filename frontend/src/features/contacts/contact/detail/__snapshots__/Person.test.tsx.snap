@@ -8,7 +8,13 @@ exports[`Contact PersonView component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c2 {
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c2 {
   text-align: left;
 }
 
@@ -25,12 +31,6 @@ exports[`Contact PersonView component renders as expected 1`] = `
 
 .c3.active {
   border: 1px solid;
-}
-
-.c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
 }
 
 <div
@@ -112,14 +112,14 @@ exports[`Contact PersonView component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c1 {
-  text-align: left;
-}
-
-.c0 {
+  .c0 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+}
+
+.c1 {
+  text-align: left;
 }
 
 <div
@@ -154,18 +154,18 @@ exports[`Contact PersonView component renders as expected 1`] = `
       />
     </div>
   </div>
-  .c1 {
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1 {
   text-align: left;
 }
 
 .c2 {
   text-align: left;
-}
-
-.c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
 }
 
 <div
@@ -213,14 +213,14 @@ exports[`Contact PersonView component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c1 {
-  text-align: left;
-}
-
-.c0 {
+  .c0 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+}
+
+.c1 {
+  text-align: left;
 }
 
 <div
@@ -232,14 +232,14 @@ exports[`Contact PersonView component renders as expected 1`] = `
       Address
     </h2>
   </div>
-  .c1 {
-  text-align: left;
-}
-
-.c0 {
+  .c0 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+}
+
+.c1 {
+  text-align: left;
 }
 
 <div

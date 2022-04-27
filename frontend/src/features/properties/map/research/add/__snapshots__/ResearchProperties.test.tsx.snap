@@ -326,18 +326,18 @@ exports[`ResearchProperties component renders as expected when provided no prope
   flex-shrink: 0;
 }
 
-.c7.c7 {
+.c7.c7.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c7.c7 .text {
+.c7.c7.btn .text {
   display: none;
 }
 
-.c7.c7 > div:hover {
+.c7.c7.btn > div:hover {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -350,7 +350,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   flex-direction: row;
 }
 
-.c7.c7 > div:hover .text {
+.c7.c7.btn > div:hover .text {
   display: inline;
 }
 
@@ -500,39 +500,35 @@ exports[`ResearchProperties component renders as expected when provided no prope
           class="c6 h-100"
         >
           <button
-            class="Button c7 btn btn-link"
+            class="c7 btn btn-link"
             type="button"
           >
-            <div
-              class="Button__value"
+            <svg
+              fill="currentColor"
+              height="2rem"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2rem"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                fill="currentColor"
-                height="2rem"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="2rem"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>
-                  remove
-                </title>
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-               
-              <span
-                class="text"
-              >
-                Remove
-              </span>
-            </div>
+              <title>
+                remove
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+             
+            <span
+              class="text"
+            >
+              Remove
+            </span>
           </button>
         </div>
       </div>
@@ -618,39 +614,35 @@ exports[`ResearchProperties component renders as expected when provided no prope
           class="c6 h-100"
         >
           <button
-            class="Button c7 btn btn-link"
+            class="c7 btn btn-link"
             type="button"
           >
-            <div
-              class="Button__value"
+            <svg
+              fill="currentColor"
+              height="2rem"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2rem"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                fill="currentColor"
-                height="2rem"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="2rem"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>
-                  remove
-                </title>
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-               
-              <span
-                class="text"
-              >
-                Remove
-              </span>
-            </div>
+              <title>
+                remove
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+             
+            <span
+              class="text"
+            >
+              Remove
+            </span>
           </button>
         </div>
       </div>

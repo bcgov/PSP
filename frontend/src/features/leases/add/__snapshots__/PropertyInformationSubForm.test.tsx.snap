@@ -348,7 +348,7 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
           </select>
         </div>
         <button
-          class="c7 Button c8 btn btn-link"
+          class="Button c7 c8 btn btn-link"
           type="button"
         >
           <div
@@ -506,7 +506,7 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
 }
 
 <button
-    class="c0 Button btn btn-link"
+    class="Button c0 btn btn-link"
     type="button"
   >
     <div

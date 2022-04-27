@@ -1088,7 +1088,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
                 class="c2 c5"
               >
                 <button
-                  class="c6 Button Button--icon-only btn btn-primary"
+                  class="Button Button--icon-only c6 btn btn-primary"
                   title="edit term"
                   type="button"
                 >

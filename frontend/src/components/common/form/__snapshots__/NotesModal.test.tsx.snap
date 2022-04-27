@@ -157,7 +157,7 @@ exports[`NotesModal component renders as expected 1`] = `
 }
 
 <button
-    class="c0 Button c1 btn btn-light"
+    class="Button c0 c1 btn btn-light"
     title="notes"
     type="button"
   >

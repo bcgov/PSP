@@ -516,7 +516,7 @@ exports[`Contact List View matches snapshot 1`] = `
                       class="c10 col-auto"
                     >
                       <button
-                        class="c11 Button Button--icon-only primary btn btn-primary"
+                        class="Button Button--icon-only c11 primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         type="button"
@@ -544,7 +544,7 @@ exports[`Contact List View matches snapshot 1`] = `
                       class="c10 col-auto"
                     >
                       <button
-                        class="c11 Button Button--icon-only btn btn-info"
+                        class="Button Button--icon-only c11 btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         type="button"

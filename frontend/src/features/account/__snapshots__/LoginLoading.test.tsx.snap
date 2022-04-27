@@ -318,7 +318,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
           The data provided can assist your organization in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.
         </p>
         <button
-          class="c2 Button Button--disabled btn btn-primary"
+          class="Button Button--disabled c2 btn btn-primary"
           disabled=""
           type="button"
         >
@@ -661,7 +661,7 @@ exports[`Empty Header MOTI Login Loading 1`] = `
           WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.
         </p>
         <button
-          class="c2 Button Button--disabled btn btn-primary"
+          class="Button Button--disabled c2 btn btn-primary"
           disabled=""
           type="button"
         >

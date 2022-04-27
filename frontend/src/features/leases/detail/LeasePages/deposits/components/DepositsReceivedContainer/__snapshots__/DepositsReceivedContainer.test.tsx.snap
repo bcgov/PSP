@@ -136,12 +136,6 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -150,6 +144,12 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
 }
 
 .c1 {
@@ -176,7 +176,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
       Deposits Received
     </label>
     <button
-      class="c3 Button Button--disabled mb-4 px-5 btn btn-secondary"
+      class="Button Button--disabled c3 mb-4 px-5 btn btn-secondary"
       disabled=""
       type="button"
     >
