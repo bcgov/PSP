@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import React, { CSSProperties, MouseEventHandler } from 'react';
-import BootstrapButton, { ButtonProps as ButtonPropsBase } from 'react-bootstrap/Button';
+import React, { CSSProperties, forwardRef, MouseEventHandler } from 'react';
+import BootstrapButton, { ButtonProps as BootstrapButtonProps } from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
 
-export type ButtonProps = ButtonPropsBase & {
+export interface ButtonProps extends BootstrapButtonProps {
   /** Adds a custom class to the button element of the <Button> component */
   className?: string;
   /** Allow for direct style overrides */
@@ -23,40 +23,18 @@ export type ButtonProps = ButtonPropsBase & {
   defaultValue?: string | number | string[];
   /** overwrite type from React.HTMLAttributes */
   'aria-relevant'?: 'text' | 'all' | 'additions' | 'additions text' | 'removals';
-};
+}
 
-// const Button2 = React.forwardRef<typeof UnstyledButton, ButtonProps>((props, ref) => {
-//   const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
-
-//   const css = classnames({
-//     Button: true,
-//     'Button--disabled': disabled,
-//     'Button--icon-only': (children === null || children === undefined) && icon,
-//     [className!]: className,
-//   });
-
-//   return (
-//     <UnstyledButton ref={ref} className={css} disabled={disabled} {...rest}>
-//       {icon && <div className="Button__icon">{icon}</div>}
-//       {children && <div className="Button__value">{children}</div>}
-//       {showSubmitting && isSubmitting && (
-//         <Spinner
-//           animation="border"
-//           size="sm"
-//           role="status"
-//           as="span"
-//           style={{ marginLeft: '.8rem', padding: '.8rem' }}
-//         />
-//       )}
-//     </UnstyledButton>
-//   );
-// });
-
-// internal un-styled button - not meant to be shared
-const UnstyledButton: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> = props => {
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ * Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”.
+ * Plain buttons, which look similar to links, are used for less important or
+ * less commonly used actions, such as "View more details".
+ */
+export const Button = forwardRef<typeof StyledButton, ButtonProps>((props, ref) => {
   const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
 
-  const css = classnames({
+  const classes = classnames({
     Button: true,
     'Button--disabled': disabled,
     'Button--icon-only': (children === null || children === undefined) && icon,
@@ -64,7 +42,7 @@ const UnstyledButton: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> 
   });
 
   return (
-    <BootstrapButton className={css} disabled={disabled} {...rest}>
+    <StyledButton ref={ref} className={classes} disabled={disabled} {...rest}>
       {icon && <div className="Button__icon">{icon}</div>}
       {children && <div className="Button__value">{children}</div>}
       {showSubmitting && isSubmitting && (
@@ -76,17 +54,11 @@ const UnstyledButton: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> 
           style={{ marginLeft: '.8rem', padding: '.8rem' }}
         />
       )}
-    </BootstrapButton>
+    </StyledButton>
   );
-};
+});
 
-/**
- * Buttons allow users to take actions, and make choices, with a single tap.
- * Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”.
- * Plain buttons, which look similar to links, are used for less important or
- * less commonly used actions, such as "View more details".
- */
-export const Button = styled(UnstyledButton)`
+const StyledButton = styled(BootstrapButton)`
   &.btn {
     // common styling for all buttons
     display: flex;
