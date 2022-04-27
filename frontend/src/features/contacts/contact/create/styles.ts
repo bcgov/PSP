@@ -1,4 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
 import { Form as FormBase } from 'components/common/form';
 import { sharedFormStyles } from 'components/common/form/styles';
 import { FlexBox } from 'components/common/styles';
@@ -56,26 +55,6 @@ export const SectionMessage = styled(FlexBox)<{ appearance: 'information' | 'err
   color: ${({ appearance = 'information' }) => (appearance === 'error' ? '#d8292f' : '#494949')};
   font-size: 1.6rem;
   text-decoration: none;
-`;
-
-export const RemoveButton = styled(Button).attrs({ variant: 'link' })`
-  &&.btn {
-    color: #aaaaaa;
-    text-decoration: none;
-    line-height: unset;
-    .text {
-      display: none;
-    }
-    > div:hover {
-      color: #d8292f;
-      text-decoration: none;
-      display: flex;
-      flex-direction: row;
-      .text {
-        display: inline;
-      }
-    }
-  }
 `;
 
 export const SubtleText = styled.span`

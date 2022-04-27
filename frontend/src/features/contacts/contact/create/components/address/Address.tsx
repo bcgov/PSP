@@ -1,8 +1,7 @@
-import { LinkButton } from 'components/common/buttons';
+import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Input, Select, SelectOption } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
-import * as Styled from 'features/contacts/contact/create/styles';
 import { getIn, useFormikContext } from 'formik';
 import useCounter from 'hooks/useCounter';
 import { Dictionary } from 'interfaces/Dictionary';
@@ -93,9 +92,9 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
         <Col style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
           {count > 1 && !disabled && (
             <Stack justifyContent="flex-end" className="h-100">
-              <Styled.RemoveButton onClick={decrement}>
+              <RemoveButton onRemove={decrement}>
                 <MdClose size="2rem" /> <span className="text">Remove</span>
-              </Styled.RemoveButton>
+              </RemoveButton>
             </Stack>
           )}
         </Col>

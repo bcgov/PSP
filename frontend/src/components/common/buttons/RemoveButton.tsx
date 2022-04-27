@@ -1,8 +1,8 @@
-import * as Styled from 'features/contacts/contact/create/styles';
-import * as React from 'react';
+import React from 'react';
 import { MdClose } from 'react-icons/md';
+import styled from 'styled-components';
 
-import { Stack } from '../Stack/Stack';
+import { LinkButton } from './LinkButton';
 
 interface IRemoveButtonProps {
   onRemove: () => void;
@@ -10,10 +10,32 @@ interface IRemoveButtonProps {
 
 export const RemoveButton: React.FunctionComponent<IRemoveButtonProps> = ({ onRemove }) => {
   return (
-    <Stack justifyContent="flex-start" className="h-100">
-      <Styled.RemoveButton onClick={onRemove}>
-        <MdClose size="2rem" title="remove" /> <span className="text">Remove</span>
-      </Styled.RemoveButton>
-    </Stack>
+    <StyledLinkButton onClick={onRemove}>
+      <MdClose size="2rem" title="remove" /> <span className="text">Remove</span>
+    </StyledLinkButton>
   );
 };
+
+const StyledLinkButton = styled(LinkButton)`
+  &&.btn {
+    color: #aaaaaa;
+    text-decoration: none;
+    line-height: unset;
+    .text {
+      display: none;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+      color: #d8292f;
+      text-decoration: none;
+      opacity: unset;
+      display: flex;
+      flex-direction: row;
+      .text {
+        display: inline;
+        line-height: 2rem;
+      }
+    }
+  }
+`;

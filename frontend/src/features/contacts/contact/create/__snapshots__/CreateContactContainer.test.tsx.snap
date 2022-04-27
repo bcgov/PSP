@@ -222,6 +222,44 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   flex-direction: row;
 }
 
+.c16.c16.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c16.c16.btn .text {
+  display: none;
+}
+
+.c16.c16.btn:hover,
+.c16.c16.btn:active,
+.c16.c16.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c16.c16.btn:hover .text,
+.c16.c16.btn:active .text,
+.c16.c16.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c2 {
+  text-align: left;
+}
+
 .c11 button.close {
   font-size: 2.4rem;
 }
@@ -232,8 +270,43 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   padding: 2.5rem;
 }
 
-.c2 {
-  text-align: left;
+.c4 {
+  gap: 5rem;
+  padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+  margin-right: 2.5rem;
+}
+
+.c4 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
+}
+
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 
 .c10 {
@@ -315,34 +388,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   text-decoration: none;
 }
 
-.c16.c16.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c16.c16.btn .text {
-  display: none;
-}
-
-.c16.c16.btn > div:hover {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c16.c16.btn > div:hover .text {
-  display: inline;
-}
-
 .c20 {
   font-size: 1.6rem;
   font-weight: 400;
@@ -363,45 +408,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
-.c4 {
-  gap: 5rem;
-  padding: 0.5rem 3rem;
-  border-radius: 0.5rem;
-  margin-right: 2.5rem;
-}
-
-.c4 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 2rem;
 }
 
 .c0 {
@@ -799,6 +805,9 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                         width="2rem"
                         xmlns="http://www.w3.org/2000/svg"
                       >
+                        <title>
+                          remove
+                        </title>
                         <path
                           d="M0 0h24v24H0z"
                           fill="none"
@@ -912,45 +921,41 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 class="col-md-2"
                 style="padding-left: 0px; padding-top: 3rem;"
               >
-                <div
-                  class="c14 h-100"
+                <button
+                  class="c15 Button c16 btn btn-link"
+                  type="button"
                 >
-                  <button
-                    class="c15 Button c16 btn btn-link"
-                    type="button"
+                  <div
+                    class="Button__value"
                   >
-                    <div
-                      class="Button__value"
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        fill="currentColor"
-                        height="2rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="2rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <title>
-                          remove
-                        </title>
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                       
-                      <span
-                        class="text"
-                      >
-                        Remove
-                      </span>
-                    </div>
-                  </button>
-                </div>
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
               </div>
             </div>
             <button
