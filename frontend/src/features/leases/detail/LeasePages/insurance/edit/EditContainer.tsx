@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { Form } from 'components/common/form/Form';
 import { FormSectionClear } from 'components/common/form/styles';
 import { FieldArray, Formik, FormikProps } from 'formik';

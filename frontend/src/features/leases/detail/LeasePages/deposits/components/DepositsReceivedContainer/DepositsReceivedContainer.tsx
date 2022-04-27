@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { FormSection } from 'components/common/form/styles';
 import { Table } from 'components/Table';
 import Claims from 'constants/claims';

@@ -1,8 +1,8 @@
-import { Button } from 'components/common/buttons';
 import { Form as FormBase } from 'components/common/form';
 import { sharedFormStyles } from 'components/common/form/styles';
 import { FlexBox } from 'components/common/styles';
 import { Form as FormikForm } from 'formik';
+import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 
 // common ui styling
@@ -59,7 +59,7 @@ export const SectionMessage = styled(FlexBox)<{ appearance: 'information' | 'err
 `;
 
 export const RemoveButton = styled(Button).attrs({ variant: 'link' })`
-  && {
+  &&.btn {
     color: #aaaaaa;
     text-decoration: none;
     line-height: unset;

@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';

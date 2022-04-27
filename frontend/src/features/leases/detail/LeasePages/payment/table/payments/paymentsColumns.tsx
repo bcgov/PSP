@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { NotesModal } from 'components/common/form/NotesModal';
 import { InlineFlexDiv } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';

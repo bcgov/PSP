@@ -1,6 +1,6 @@
 import './LegendControl.scss';
 
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import React from 'react';
 import Overlay from 'react-bootstrap/Overlay';
@@ -31,7 +31,7 @@ export const LegendControl: React.FC = () => {
     <Control position="topleft">
       <ClickAwayListener onClickAway={() => setVisible(false)}>
         <TooltipWrapper toolTipId="marker-legendId" toolTip={visible ? undefined : 'Marker legend'}>
-          <LegendButton ref={target} onClick={() => setVisible(!visible)}>
+          <LegendButton onClick={() => setVisible(!visible)}>
             <FiMapPin />
           </LegendButton>
         </TooltipWrapper>

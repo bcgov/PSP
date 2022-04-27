@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { Claims } from 'constants/claims';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';

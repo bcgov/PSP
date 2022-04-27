@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import React, { useState } from 'react';
 import { ModalProps as BsModalProps } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';

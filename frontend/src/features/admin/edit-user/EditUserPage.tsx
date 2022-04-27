@@ -1,6 +1,6 @@
 import './EditUserPage.scss';
 
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { Label } from 'components/common/Label';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';

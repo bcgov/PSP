@@ -1,6 +1,6 @@
 import './HelpBox.scss';
 
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import styled from 'styled-components';

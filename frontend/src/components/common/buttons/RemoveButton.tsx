@@ -17,5 +17,3 @@ export const RemoveButton: React.FunctionComponent<IRemoveButtonProps> = ({ onRe
     </Stack>
   );
 };
-
-export default RemoveButton;

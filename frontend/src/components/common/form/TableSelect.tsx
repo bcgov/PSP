@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { DisplayError } from 'components/common/form';
 import * as Styled from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';

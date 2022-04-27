@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb, Row } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';

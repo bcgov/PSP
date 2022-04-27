@@ -31,7 +31,7 @@ export type ButtonProps = ButtonPropsBase & {
  * Plain buttons, which look similar to links, are used for less important or
  * less commonly used actions, such as "View more details".
  */
-export const Button = React.forwardRef<typeof StyledButton, ButtonProps>((props, ref) => {
+const Button2 = React.forwardRef<typeof UnstyledButton, ButtonProps>((props, ref) => {
   const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
 
   const css = classnames({
@@ -42,7 +42,7 @@ export const Button = React.forwardRef<typeof StyledButton, ButtonProps>((props,
   });
 
   return (
-    <StyledButton ref={ref} className={css} disabled={disabled} {...rest}>
+    <UnstyledButton ref={ref} className={css} disabled={disabled} {...rest}>
       {icon && <div className="Button__icon">{icon}</div>}
       {children && <div className="Button__value">{children}</div>}
       {showSubmitting && isSubmitting && (
@@ -54,11 +54,39 @@ export const Button = React.forwardRef<typeof StyledButton, ButtonProps>((props,
           style={{ marginLeft: '.8rem', padding: '.8rem' }}
         />
       )}
-    </StyledButton>
+    </UnstyledButton>
   );
 });
 
-const StyledButton = styled(BootstrapButton)`
+export const UnstyledButton: React.FC<ButtonProps &
+  React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<any> }> = props => {
+  const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
+
+  const css = classnames({
+    Button: true,
+    'Button--disabled': disabled,
+    'Button--icon-only': (children === null || children === undefined) && icon,
+    [className!]: className,
+  });
+
+  return (
+    <BootstrapButton className={css} disabled={disabled} {...rest}>
+      {icon && <div className="Button__icon">{icon}</div>}
+      {children && <div className="Button__value">{children}</div>}
+      {showSubmitting && isSubmitting && (
+        <Spinner
+          animation="border"
+          size="sm"
+          role="status"
+          as="span"
+          style={{ marginLeft: '.8rem', padding: '.8rem' }}
+        />
+      )}
+    </BootstrapButton>
+  );
+};
+
+export const Button = styled(UnstyledButton)`
   &.btn {
     // common styling for all buttons
     display: flex;

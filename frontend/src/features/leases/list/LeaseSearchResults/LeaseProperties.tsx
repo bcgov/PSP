@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { ILeaseProperty } from 'interfaces';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';

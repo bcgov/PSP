@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import L from 'leaflet';
 import React, { useEffect } from 'react';

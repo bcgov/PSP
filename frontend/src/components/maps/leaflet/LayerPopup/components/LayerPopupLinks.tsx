@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';

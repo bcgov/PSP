@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { IFormLease, IProperty } from 'interfaces';
 import React from 'react';

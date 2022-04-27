@@ -1,5 +1,5 @@
 import variables from 'assets/scss/_variables.module.scss';
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import TooltipIcon from 'components/common/TooltipIcon';
 import React, { FunctionComponent } from 'react';
 import Container from 'react-bootstrap/Container';

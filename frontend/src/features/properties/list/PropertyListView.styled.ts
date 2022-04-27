@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import styled from 'styled-components';
 
 export const FileIcon = styled(Button)`

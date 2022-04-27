@@ -1,4 +1,4 @@
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { Col, Row } from 'react-bootstrap';
 
 interface IAddResearchFooterProps {

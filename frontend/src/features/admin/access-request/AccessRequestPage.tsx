@@ -1,6 +1,6 @@
 import './AccessRequestPage.scss';
 
-import { Button } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import { ISnackbarState, Snackbar } from 'components/common/Snackbar';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as API from 'constants/API';
