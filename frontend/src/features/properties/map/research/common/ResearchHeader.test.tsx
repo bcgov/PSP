@@ -2,7 +2,7 @@ import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import UpdateResearchHeader, { IUpdateResearchHeaderProps } from './UpdateResearchHeader';
+import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
 
 const testResearchFile: Api_ResearchFile = {
   id: 5,
@@ -44,10 +44,10 @@ const testResearchFile: Api_ResearchFile = {
   rowVersion: 9,
 };
 
-describe('UpdateResearchHeader component', () => {
-  const setup = (renderOptions: RenderOptions & IUpdateResearchHeaderProps) => {
+describe('ResearchHeader component', () => {
+  const setup = (renderOptions: RenderOptions & IResearchHeaderProps) => {
     // render component under test
-    const component = render(<UpdateResearchHeader researchFile={renderOptions.researchFile} />, {
+    const component = render(<ResearchHeader researchFile={renderOptions.researchFile} />, {
       ...renderOptions,
     });
 

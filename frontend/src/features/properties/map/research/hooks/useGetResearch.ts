@@ -28,7 +28,7 @@ export const useGetResearch = () => {
           if (axiosError?.response?.status === 400) {
             toast.error(axiosError?.response.data.error);
           } else {
-            toast.error('Save error. Check responses and try again.');
+            toast.error('Retrieve research file error. Check responses and try again.');
           }
           dispatch(
             logError({
