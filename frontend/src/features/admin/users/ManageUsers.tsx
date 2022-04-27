@@ -1,3 +1,4 @@
+import { IconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import * as actionTypes from 'constants/actionTypes';
@@ -139,9 +140,9 @@ export const ManageUsers = () => {
       <Styled.ScrollContainer>
         <Styled.Ribbon>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-            <Styled.FileIcon>
-              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
-            </Styled.FileIcon>
+            <IconButton onClick={() => fetch('excel')}>
+              <FaFileExcel data-testid="excel-icon" size={36} />
+            </IconButton>
           </TooltipWrapper>
         </Styled.Ribbon>
         <Styled.TableContainer fluid>

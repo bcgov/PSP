@@ -1,7 +1,7 @@
 import { Input, Select, SelectOption } from 'components/common/form';
 import FilterBar from 'components/SearchBar/FilterBar';
 import { IUsersFilter } from 'interfaces';
-import * as React from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import { ILookupCode } from 'store/slices/lookupCodes';
 

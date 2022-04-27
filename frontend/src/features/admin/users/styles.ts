@@ -27,14 +27,6 @@ export const TableContainer = styled(Container)`
   margin-bottom: 4rem;
 `;
 
-export const FileIcon = styled(Button)`
-  &&.btn {
-    background-color: #fff;
-    color: ${({ theme }) => theme.css.primaryColor};
-    padding: 0.6rem 0.5rem;
-  }
-`;
-
 export const Ribbon = styled.div`
   text-align: right;
   margin-right: 5rem;
