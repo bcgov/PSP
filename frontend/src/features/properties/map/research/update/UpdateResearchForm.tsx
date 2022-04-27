@@ -27,7 +27,6 @@ export interface IUpdateResearchFormProps {
 }
 
 const UpdateResearchForm: React.FunctionComponent<IUpdateResearchFormProps> = props => {
-  //const { values, setFieldValue } = props.formikProps;
   const { values } = useFormikContext<UpdateResearchFormModel>();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);
@@ -70,10 +69,7 @@ const UpdateResearchForm: React.FunctionComponent<IUpdateResearchFormProps> = pr
 
   function handleRequesterSelected() {
     var selectedContact = selectedContacts[0];
-    console.log(selectedContact);
-
     props.formikProps.setFieldValue('requestor', selectedContact);
-
     setShowContactManager(false);
   }
 

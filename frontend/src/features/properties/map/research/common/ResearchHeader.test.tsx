@@ -10,18 +10,18 @@ const testResearchFile: Api_ResearchFile = {
   roadName: 'Test road name',
   roadAlias: 'Test road alias',
   rfileNumber: 'RFile-0000000018',
-  statusTypeCode: {
+  researchFileStatusTypeCode: {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,
   },
   researchProperties: [],
   requestDate: '2022-04-14T00:00:00',
-  requestDescription: 'werwerwerwer',
-  researchResult: 'werwerwer',
+  requestDescription: 'a request description',
+  researchResult: 'A research result',
   researchCompletionDate: '2022-03-30T00:00:00',
   isExpropriation: false,
-  expropriationNotes: 'werwerwerwer',
+  expropriationNotes: 'An expropriation note',
   requestSourceType: {
     id: 'HQ',
     description: 'Headquarters (HQ)',

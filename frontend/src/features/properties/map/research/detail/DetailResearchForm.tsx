@@ -37,7 +37,7 @@ const DetailResearchForm: React.FunctionComponent<IDetailResearchFormProps> = pr
     roadName: props.researchFile.roadName,
     roadAlias: props.researchFile.roadAlias,
     rfileNumber: props.researchFile.rfileNumber,
-    statusTypeCodeDescription: props.researchFile.statusTypeCode?.description,
+    statusTypeCodeDescription: props.researchFile.researchFileStatusTypeCode?.description,
     requestDate: props.researchFile.requestDate,
     requestDescription: props.researchFile.requestDescription,
     requestSourceDescription: props.researchFile.requestSourceDescription,

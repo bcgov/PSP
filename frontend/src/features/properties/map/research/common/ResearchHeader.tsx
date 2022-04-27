@@ -9,7 +9,7 @@ export interface IResearchHeaderProps {
 }
 
 const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
-  const lefttColumnWidth = '6';
+  const leftColumnWidth = '6';
   const leftColumnLabel = '4';
   const researchFile = props.researchFile;
 
@@ -19,7 +19,7 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
     <Row>
       <Col>
         <Row>
-          <Col xs={lefttColumnWidth}>
+          <Col xs={leftColumnWidth}>
             <HeaderField label="Research file #:" labelWidth={leftColumnLabel}>
               {researchFile?.rfileNumber}
             </HeaderField>
@@ -30,7 +30,7 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           </Col>
         </Row>
         <Row>
-          <Col xs={lefttColumnWidth}>
+          <Col xs={leftColumnWidth}>
             <HeaderField label="R-file name:" labelWidth={leftColumnLabel}>
               {researchFile?.name}
             </HeaderField>
@@ -41,19 +41,19 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           </Col>
         </Row>
         <Row>
-          <Col xs={lefttColumnWidth}>
+          <Col xs={leftColumnWidth}>
             <HeaderField label="MoTI region:" labelWidth={leftColumnLabel}>
               {region}
             </HeaderField>
           </Col>
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
-              {researchFile?.statusTypeCode?.description}
+              {researchFile?.researchFileStatusTypeCode?.description}
             </HeaderField>
           </Col>
         </Row>
         <Row>
-          <Col xs={lefttColumnWidth}>
+          <Col xs={leftColumnWidth}>
             <HeaderField label="Ministry district:" labelWidth={leftColumnLabel}>
               {district}
             </HeaderField>

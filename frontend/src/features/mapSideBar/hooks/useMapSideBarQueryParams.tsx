@@ -26,7 +26,6 @@ export enum MapViewState {
   RESEARCH_EDIT = 'research_edit',
   RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
-  PROPERTY_SEARCH = 'property_search',
 }
 
 /** control the state of the side bar via the route. */
@@ -54,26 +53,32 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
 
     var parts = location.pathname.split('/');
     var currentState: MapViewState = MapViewState.MAP_ONLY;
+    var researchId = 0;
+    var propertyId = '';
     if (parts.length === 2) {
       currentState = MapViewState.MAP_ONLY;
-    } else if (parts[2] === 'research') {
-      if (parts[3] === 'new') {
-        currentState = MapViewState.RESEARCH_ADD;
-      } else if (isNumber(Number(parts[3]))) {
-        if (parts[4] === 'edit') {
-          currentState = MapViewState.RESEARCH_EDIT;
+    } else if (parts.length > 2) {
+      if (parts[2] === 'research') {
+        if (parts.length === 4 && parts[3] === 'new') {
+          currentState = MapViewState.RESEARCH_ADD;
+        } else if (parts.length >= 4 && isNumber(Number(parts[3]))) {
+          researchId = Number(parts[3]);
+          if (parts.length === 5 && parts[4] === 'edit') {
+            currentState = MapViewState.RESEARCH_EDIT;
+          } else {
+            currentState = MapViewState.RESEARCH_VIEW;
+          }
         } else {
-          currentState = MapViewState.RESEARCH_VIEW;
+          currentState = MapViewState.MAP_ONLY;
         }
+      } else if (parts.length > 3 && parts[2] === 'property') {
+        propertyId = parts[3];
+        currentState = MapViewState.PROPERTY_INFORMATION;
       } else {
         currentState = MapViewState.MAP_ONLY;
       }
-    } else if (parts[2] === 'property') {
-      if (parts[3] === 'search') {
-        currentState = MapViewState.PROPERTY_SEARCH;
-      } else {
-        currentState = MapViewState.PROPERTY_INFORMATION;
-      }
+    } else {
+      currentState = MapViewState.MAP_ONLY;
     }
 
     switch (currentState as MapViewState) {
@@ -87,25 +92,19 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         break;
       case MapViewState.RESEARCH_EDIT:
         setSidebarComponent(
-          <UpdateResearchContainer researchFileId={Number(parts[3])} onClose={handleClose} />,
+          <UpdateResearchContainer researchFileId={researchId} onClose={handleClose} />,
         );
         setShowSideBar(true);
         break;
       case MapViewState.RESEARCH_VIEW:
         setSidebarComponent(
-          <DetailResearchContainer researchFileId={Number(parts[3])} onClose={handleClose} />,
+          <DetailResearchContainer researchFileId={researchId} onClose={handleClose} />,
         );
         setShowSideBar(true);
         break;
-      case MapViewState.PROPERTY_SEARCH:
-        setSidebarComponent(
-          <MotiInventoryContainer onClose={handleClose} pid={parts[3]} onZoom={onZoom} />,
-        );
-        setShowSideBar(false);
-        break;
       case MapViewState.PROPERTY_INFORMATION:
         setSidebarComponent(
-          <MotiInventoryContainer onClose={handleClose} pid={parts[3]} onZoom={onZoom} />,
+          <MotiInventoryContainer onClose={handleClose} pid={propertyId} onZoom={onZoom} />,
         );
         setShowSideBar(true);
         break;

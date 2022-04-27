@@ -60,8 +60,8 @@ export class UpdateResearchFormModel {
     model.roadName = base.roadName;
     model.roadAlias = base.roadAlias;
     model.rfileNumber = base.rfileNumber;
-    model.statusTypeCode = base.statusTypeCode?.id;
-    model.statusTypeDescription = base.statusTypeCode?.description;
+    model.statusTypeCode = base.researchFileStatusTypeCode?.id;
+    model.statusTypeDescription = base.researchFileStatusTypeCode?.description;
     //model.researchProperties = base.researchProperties;
     model.requestDate = base.requestDate;
     model.requestDescription = base.requestDescription;
@@ -72,9 +72,6 @@ export class UpdateResearchFormModel {
     model.expropriationNotes = base.expropriationNotes;
     model.requestSourceTypeCode = base.requestSourceType?.id;
     model.requestSourceTypeDescription = base.requestSourceType?.description;
-
-    console.log(base.requestorPerson);
-    console.log(base.requestorOrganization);
 
     if (base.requestorPerson !== undefined) {
       model.requestor = fromApiPerson(base.requestorPerson);
@@ -96,7 +93,7 @@ export class UpdateResearchFormModel {
       roadName: this.roadName,
       roadAlias: this.roadAlias,
       rfileNumber: this.rfileNumber,
-      statusTypeCode: { id: this.statusTypeCode },
+      researchFileStatusTypeCode: { id: this.statusTypeCode },
       //researchProperties: this.researchProperties,
       requestDate: this.requestDate,
       requestDescription: this.requestDescription,

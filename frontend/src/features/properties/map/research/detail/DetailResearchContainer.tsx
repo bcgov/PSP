@@ -1,3 +1,4 @@
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -28,14 +29,19 @@ export const DetailResearchContainer: React.FunctionComponent<IDetailResearchCon
   }, [props.researchFileId, retrieveResearchFile]);
 
   if (researchFile === undefined) {
-    return <></>;
+    return (
+      <>
+        <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
+      </>
+    );
   }
 
   return (
     <MapSideBarLayout
-      title="Update Research File"
+      title="Research File"
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       header={<ResearchHeader researchFile={researchFile} />}
+      onClose={props.onClose}
       showCloseButton
     >
       <StyledFormWrapper>
