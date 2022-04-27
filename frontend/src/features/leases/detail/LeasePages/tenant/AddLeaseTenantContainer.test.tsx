@@ -3,14 +3,10 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
-import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultLease, IContactSearchResult, ILease } from 'interfaces';
-import { noop } from 'lodash';
-import React from 'react';
+import { defaultLease, ILease } from 'interfaces';
 import {
   getAllByRole as getAllByRoleBase,
-  getByTestId,
   mockKeycloak,
   renderAsync,
   RenderOptions,
