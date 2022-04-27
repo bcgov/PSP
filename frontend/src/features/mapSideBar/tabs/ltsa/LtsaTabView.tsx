@@ -18,6 +18,7 @@ import {
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';
+import LtsaOwnershipInformationForm from './LtsaOwnershipInformationForm';
 import LtsaTransferSubForm from './LtsaTransferSubForm';
 
 export interface ILtsaTabViewProps {
@@ -69,6 +70,9 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
           </StyledFormSection>
           <StyledFormSection>
             <LtsaLandSubForm nameSpace={titleNameSpace} />
+          </StyledFormSection>
+          <StyledFormSection>
+            <LtsaOwnershipInformationForm nameSpace={titleNameSpace} />
           </StyledFormSection>
           <StyledFormSection>
             <LtsaChargeSubForm nameSpace={titleNameSpace} />
