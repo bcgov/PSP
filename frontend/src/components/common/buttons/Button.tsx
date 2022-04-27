@@ -197,6 +197,7 @@ const StyledButton = styled(BootstrapButton)`
         border: none;
         background: none;
         box-shadow: none;
+        outline: none;
       }
 
       &:disabled,
@@ -223,6 +224,9 @@ const StyledButton = styled(BootstrapButton)`
       margin-right: 1.6rem;
     }
     &--icon-only {
+      &:focus {
+        outline: none;
+      }
       .Button__icon {
         margin-right: 0;
       }
