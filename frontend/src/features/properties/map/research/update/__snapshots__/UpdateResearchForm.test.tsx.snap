@@ -519,9 +519,9 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           class="form-control"
           id="input-requestDescription"
           name="requestDescription"
-          title="werwerwerwer"
+          title="a request description"
         >
-          werwerwerwer
+          a request description
         </textarea>
       </div>
     </div>
@@ -594,9 +594,9 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           class="form-control"
           id="input-researchResult"
           name="researchResult"
-          title="werwerwer"
+          title="A research result"
         >
-          werwerwer
+          A research result
         </textarea>
       </div>
     </div>
@@ -699,9 +699,9 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           class="form-control"
           id="input-expropriationNotes"
           name="expropriationNotes"
-          title="werwerwerwer"
+          title="An expropriation note"
         >
-          werwerwerwer
+          An expropriation note
         </textarea>
       </div>
     </div>

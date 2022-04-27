@@ -28,7 +28,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The research file status type.
         /// </summary>
-        public TypeModel<string> StatusTypeCode { get; set; }
+        public TypeModel<string> ResearchFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - A list of research property relationships.

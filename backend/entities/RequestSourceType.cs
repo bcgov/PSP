@@ -2,13 +2,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// ResearchFileStatusType class, provides an entity for the datamodel to manage research status types.
+    /// PimsRequestSourceType class, provides an entity for the datamodel to manage request sorce types.
     /// </summary>
     public partial class PimsRequestSourceType : ITypeEntity<string>
     {
         #region Properties
         /// <summary>
-        /// get/set - Primary key to identify research file status type.
+        /// get/set - Primary key to identify the request source type.
         /// </summary>
         [NotMapped]
         public string Id { get => RequestSourceTypeCode; set => RequestSourceTypeCode = value; }

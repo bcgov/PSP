@@ -4,11 +4,11 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { prettyFormatDate } from 'utils';
 
-export interface IUpdateResearchHeaderProps {
+export interface IResearchHeaderProps {
   researchFile?: Api_ResearchFile;
 }
 
-const UpdateResearchHeader: React.FunctionComponent<IUpdateResearchHeaderProps> = props => {
+const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
   const leftColumnWidth = '6';
   const leftColumnLabel = '4';
   const researchFile = props.researchFile;
@@ -64,4 +64,4 @@ const UpdateResearchHeader: React.FunctionComponent<IUpdateResearchHeaderProps> 
   );
 };
 
-export default UpdateResearchHeader;
+export default ResearchHeader;

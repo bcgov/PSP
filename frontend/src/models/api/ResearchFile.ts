@@ -19,7 +19,7 @@ export interface Api_ResearchFile extends Api_ConcurrentVersion {
   roadName?: string;
   roadAlias?: string;
   rfileNumber?: string;
-  statusTypeCode?: Api_TypeCode<string>;
+  researchFileStatusTypeCode?: Api_TypeCode<string>;
   researchProperties?: Api_ResearchFileProperty[];
   requestDate?: string;
   requestDescription?: string;

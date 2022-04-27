@@ -1,18 +1,19 @@
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ResearchFooter from '../common/ResearchFooter';
+import ResearchHeader from '../common/ResearchHeader';
 import { useGetResearch } from '../hooks/useGetResearch';
 import { useUpdateResearch } from '../hooks/useUpdateResearch';
 import { UpdateResearchFormModel } from './models';
 import UpdateResearchForm from './UpdateResearchForm';
-import UpdateResearchHeader from './UpdateResearchHeader';
 
 export interface IUpdateResearchContainerProps {
   researchFileId: number;
@@ -23,6 +24,7 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
   const formikRef = useRef<FormikProps<UpdateResearchFormModel>>(null);
   const { retrieveResearchFile } = useGetResearch();
   const { updateResearchFile } = useUpdateResearch();
+  const history = useHistory();
 
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
   const [initialForm, setForm] = useState<UpdateResearchFormModel | undefined>(undefined);
@@ -41,8 +43,9 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await updateResearchFile(researchFile);
     if (!!response?.name) {
-      props.onClose();
+      //props.onClose();
       formikRef.current?.resetForm();
+      history.replace(`/mapview/research/${researchFile.id}`);
     }
   };
 
@@ -57,7 +60,11 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
   };
 
   if (initialForm === undefined) {
-    return <></>;
+    return (
+      <>
+        <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
+      </>
+    );
   }
 
   return (
@@ -71,17 +78,16 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
           onCancel={handleCancel}
         />
       }
-      header={<UpdateResearchHeader researchFile={researchFile} />}
+      header={<ResearchHeader researchFile={researchFile} />}
       showCloseButton
       onClose={handleCancel}
     >
       <Formik<UpdateResearchFormModel>
         enableReinitialize
         innerRef={formikRef}
-        initialValues={initialForm}
+        initialValues={initialForm || new UpdateResearchFormModel()}
         onSubmit={async (values: UpdateResearchFormModel, formikHelpers) => {
           const researchFile: Api_ResearchFile = values.toApi();
-          console.log(researchFile);
           saveResearchFile(researchFile);
           formikHelpers.setSubmitting(false);
         }}
