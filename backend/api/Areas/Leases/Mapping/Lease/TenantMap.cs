@@ -22,8 +22,8 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
             config.NewConfig<Model.TenantModel, Entity.PimsLeaseTenant>()
                 .Map(dest => dest.LeaseTenantId, src => src.LeaseTenantId)
                 .Map(dest => dest.LeaseId, src => src.LeaseId)
-                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
-                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.Id != null && src.Id.StartsWith('O') ? src.OrganizationId : null)
+                .Map(dest => dest.PersonId, src => src.Id != null && src.Id.StartsWith('P') ? src.PersonId : null)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.LessorTypeCode, src => src.PersonId != null ? LessorTypes.PERSON : LessorTypes.ORGANIZATION)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
