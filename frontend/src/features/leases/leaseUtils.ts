@@ -31,6 +31,8 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
     tenants: formLease.tenants.map(tenant => ({
       ...tenant,
       leaseId: formLease.id,
+      personId: tenant.id?.startsWith('P') ? tenant.personId : undefined,
+      organizationId: tenant.id?.startsWith('O') ? tenant.organizationId : undefined,
     })),
   } as ILease;
 };

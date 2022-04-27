@@ -13,8 +13,8 @@ export const LeaseStateContext = React.createContext<ILeaseState>({
   setLease: noop,
 });
 
-export const LeaseContextProvider = (props: { children?: any }) => {
-  const [lease, setLease] = useState<ILease>();
+export const LeaseContextProvider = (props: { children?: any; initialLease?: ILease }) => {
+  const [lease, setLease] = useState<ILease | undefined>(props.initialLease);
 
   return (
     <LeaseStateContext.Provider value={{ lease, setLease }}>
