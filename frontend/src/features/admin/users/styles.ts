@@ -1,4 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
 

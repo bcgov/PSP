@@ -124,6 +124,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c27.btn.btn-link:disabled,
@@ -146,6 +147,10 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 
 .c27.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c27.Button--icon-only:focus {
+  outline: none;
 }
 
 .c27.Button--icon-only .Button__icon {

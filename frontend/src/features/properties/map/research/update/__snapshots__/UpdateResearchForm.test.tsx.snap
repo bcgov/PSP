@@ -116,6 +116,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c6.btn.btn-link:disabled,
@@ -138,6 +139,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
 
 .c6.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c6.Button--icon-only:focus {
+  outline: none;
 }
 
 .c6.Button--icon-only .Button__icon {

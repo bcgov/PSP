@@ -128,6 +128,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c10.btn.btn-link:disabled,
@@ -150,6 +151,10 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
 
 .c10.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c10.Button--icon-only:focus {
+  outline: none;
 }
 
 .c10.Button--icon-only .Button__icon {

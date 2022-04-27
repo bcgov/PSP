@@ -108,6 +108,7 @@ exports[`DepositsContainer renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c4.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`DepositsContainer renders as expected 1`] = `
 
 .c4.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
 }
 
 .c4.Button--icon-only .Button__icon {

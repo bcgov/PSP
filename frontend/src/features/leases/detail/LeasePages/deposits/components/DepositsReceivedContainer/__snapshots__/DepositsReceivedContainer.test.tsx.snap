@@ -108,6 +108,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c3.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
 
 .c3.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
 }
 
 .c3.Button--icon-only .Button__icon {

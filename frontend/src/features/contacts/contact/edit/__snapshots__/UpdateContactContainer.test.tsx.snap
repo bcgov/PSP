@@ -108,6 +108,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c13.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`UpdateContactContainer renders as expected 1`] = `
 
 .c13.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c13.Button--icon-only:focus {
+  outline: none;
 }
 
 .c13.Button--icon-only .Button__icon {

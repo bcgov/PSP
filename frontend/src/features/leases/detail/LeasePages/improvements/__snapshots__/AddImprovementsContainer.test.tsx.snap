@@ -108,6 +108,7 @@ exports[`Add lease container component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c8.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`Add lease container component renders as expected 1`] = `
 
 .c8.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c8.Button--icon-only:focus {
+  outline: none;
 }
 
 .c8.Button--icon-only .Button__icon {

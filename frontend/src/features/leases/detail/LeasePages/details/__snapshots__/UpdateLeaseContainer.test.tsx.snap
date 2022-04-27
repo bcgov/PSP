@@ -108,6 +108,7 @@ exports[`Update lease container component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c11.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`Update lease container component renders as expected 1`] = `
 
 .c11.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c11.Button--icon-only:focus {
+  outline: none;
 }
 
 .c11.Button--icon-only .Button__icon {
@@ -1545,6 +1550,7 @@ exports[`Update lease container component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c1.btn.btn-link:disabled,
@@ -1567,6 +1573,10 @@ exports[`Update lease container component renders as expected 1`] = `
 
 .c1.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c1.Button--icon-only:focus {
+  outline: none;
 }
 
 .c1.Button--icon-only .Button__icon {

@@ -101,6 +101,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c0.btn.btn-link:disabled,
@@ -123,6 +124,10 @@ exports[`Manage access requests Snapshot matches 1`] = `
 
 .c0.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
 }
 
 .c0.Button--icon-only .Button__icon {

@@ -101,6 +101,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c2.btn.btn-link:disabled,
@@ -123,6 +124,10 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 
 .c2.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
 }
 
 .c2.Button--icon-only .Button__icon {
@@ -444,6 +449,7 @@ exports[`Empty Header MOTI Login Loading 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c2.btn.btn-link:disabled,
@@ -466,6 +472,10 @@ exports[`Empty Header MOTI Login Loading 1`] = `
 
 .c2.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
 }
 
 .c2.Button--icon-only .Button__icon {

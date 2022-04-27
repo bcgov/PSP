@@ -108,6 +108,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c15.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`CreateContactContainer component should render as expected 1`] = `
 
 .c15.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c15.Button--icon-only:focus {
+  outline: none;
 }
 
 .c15.Button--icon-only .Button__icon {

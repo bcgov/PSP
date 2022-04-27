@@ -108,6 +108,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c10.btn.btn-link:disabled,
@@ -132,8 +133,35 @@ exports[`Lease and License List View matches snapshot 1`] = `
   margin-right: 1.6rem;
 }
 
+.c10.Button--icon-only:focus {
+  outline: none;
+}
+
 .c10.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c11.c11.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c11.c11.btn:hover,
+.c11.c11.btn:focus,
+.c11.c11.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c11.c11.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c11.c11.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
 
 .c8.c8.form-control.is-valid {
@@ -211,11 +239,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
   align-items: center;
   padding: 0;
   padding-bottom: 2rem;
-}
-
-.c11.c11.btn {
-  background-color: #fff;
-  padding: 6px 0.5rem;
 }
 
 <div

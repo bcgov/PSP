@@ -108,6 +108,7 @@ exports[`Property list view matches snapshot 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c3.btn.btn-link:disabled,
@@ -132,8 +133,35 @@ exports[`Property list view matches snapshot 1`] = `
   margin-right: 1.6rem;
 }
 
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
 .c3.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c7.c7.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c7.c7.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c7.c7.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
 
 .c1 {
@@ -205,11 +233,6 @@ exports[`Property list view matches snapshot 1`] = `
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
-}
-
-.c7.c7.btn {
-  background-color: #fff;
-  padding: 6px 0.5rem;
 }
 
 .c0 {

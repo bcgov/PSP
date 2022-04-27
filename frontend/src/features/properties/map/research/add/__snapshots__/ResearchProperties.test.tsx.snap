@@ -376,6 +376,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c7.btn.btn-link:disabled,
@@ -398,6 +399,10 @@ exports[`ResearchProperties component renders as expected when provided no prope
 
 .c7.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
 }
 
 .c7.Button--icon-only .Button__icon {

@@ -108,6 +108,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c7.btn.btn-link:disabled,
@@ -130,6 +131,10 @@ exports[`ContactManagerView matches snapshot 1`] = `
 
 .c7.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
 }
 
 .c7.Button--icon-only .Button__icon {

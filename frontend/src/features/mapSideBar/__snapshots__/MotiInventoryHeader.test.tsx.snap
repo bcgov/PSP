@@ -1575,6 +1575,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c1.btn.btn-link:disabled,
@@ -1599,18 +1600,25 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   margin-right: 1.6rem;
 }
 
+.c1.Button--icon-only:focus {
+  outline: none;
+}
+
 .c1.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
 .c2.c2.btn {
   background-color: unset;
-  border: 0;
+  border: none;
 }
 
 .c2.c2.btn:hover,
+.c2.c2.btn:focus,
 .c2.c2.btn:active {
   background-color: unset;
+  outline: none;
+  box-shadow: none;
 }
 
 .c2.c2.btn svg {

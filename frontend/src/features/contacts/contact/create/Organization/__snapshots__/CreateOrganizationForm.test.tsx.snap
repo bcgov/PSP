@@ -111,6 +111,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c9.btn.btn-link:disabled,
@@ -133,6 +134,10 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
 
 .c9.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c9.Button--icon-only:focus {
+  outline: none;
 }
 
 .c9.Button--icon-only .Button__icon {
@@ -1351,6 +1356,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c2.btn.btn-link:disabled,
@@ -1373,6 +1379,10 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
 
 .c2.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
 }
 
 .c2.Button--icon-only .Button__icon {

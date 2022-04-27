@@ -111,6 +111,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c10.btn.btn-link:disabled,
@@ -133,6 +134,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
 
 .c10.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c10.Button--icon-only:focus {
+  outline: none;
 }
 
 .c10.Button--icon-only .Button__icon {
@@ -1518,6 +1523,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   border: none;
   background: none;
   box-shadow: none;
+  outline: none;
 }
 
 .c2.btn.btn-link:disabled,
@@ -1540,6 +1546,10 @@ exports[`UpdatePersonForm renders as expected 1`] = `
 
 .c2.Button .Button__icon {
   margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
 }
 
 .c2.Button--icon-only .Button__icon {
