@@ -25,41 +25,35 @@ export type ButtonProps = ButtonPropsBase & {
   'aria-relevant'?: 'text' | 'all' | 'additions' | 'additions text' | 'removals';
 };
 
-/**
- * Buttons allow users to take actions, and make choices, with a single tap.
- * Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”.
- * Plain buttons, which look similar to links, are used for less important or
- * less commonly used actions, such as "View more details".
- */
-const Button2 = React.forwardRef<typeof UnstyledButton, ButtonProps>((props, ref) => {
-  const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
+// const Button2 = React.forwardRef<typeof UnstyledButton, ButtonProps>((props, ref) => {
+//   const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
 
-  const css = classnames({
-    Button: true,
-    'Button--disabled': disabled,
-    'Button--icon-only': (children === null || children === undefined) && icon,
-    [className!]: className,
-  });
+//   const css = classnames({
+//     Button: true,
+//     'Button--disabled': disabled,
+//     'Button--icon-only': (children === null || children === undefined) && icon,
+//     [className!]: className,
+//   });
 
-  return (
-    <UnstyledButton ref={ref} className={css} disabled={disabled} {...rest}>
-      {icon && <div className="Button__icon">{icon}</div>}
-      {children && <div className="Button__value">{children}</div>}
-      {showSubmitting && isSubmitting && (
-        <Spinner
-          animation="border"
-          size="sm"
-          role="status"
-          as="span"
-          style={{ marginLeft: '.8rem', padding: '.8rem' }}
-        />
-      )}
-    </UnstyledButton>
-  );
-});
+//   return (
+//     <UnstyledButton ref={ref} className={css} disabled={disabled} {...rest}>
+//       {icon && <div className="Button__icon">{icon}</div>}
+//       {children && <div className="Button__value">{children}</div>}
+//       {showSubmitting && isSubmitting && (
+//         <Spinner
+//           animation="border"
+//           size="sm"
+//           role="status"
+//           as="span"
+//           style={{ marginLeft: '.8rem', padding: '.8rem' }}
+//         />
+//       )}
+//     </UnstyledButton>
+//   );
+// });
 
-export const UnstyledButton: React.FC<ButtonProps &
-  React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<any> }> = props => {
+// internal un-styled button - not meant to be shared
+const UnstyledButton: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> = props => {
   const { showSubmitting, isSubmitting, disabled, icon, children, className, ...rest } = props;
 
   const css = classnames({
@@ -86,6 +80,12 @@ export const UnstyledButton: React.FC<ButtonProps &
   );
 };
 
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ * Buttons are used primarily for actions, such as “Add”, “Close”, “Cancel”, or “Save”.
+ * Plain buttons, which look similar to links, are used for less important or
+ * less commonly used actions, such as "View more details".
+ */
 export const Button = styled(UnstyledButton)`
   &.btn {
     // common styling for all buttons

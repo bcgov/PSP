@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import Control from '../Control/Control';
 import { Legend } from './Legend';
 
-const LegendButton = styled(Button)`
+const LegendButton = styled(Button as any)`
   &&.btn {
     background-color: #ffffff;
     color: ${({ theme }) => theme.css.darkVariantColor};
@@ -31,7 +31,7 @@ export const LegendControl: React.FC = () => {
     <Control position="topleft">
       <ClickAwayListener onClickAway={() => setVisible(false)}>
         <TooltipWrapper toolTipId="marker-legendId" toolTip={visible ? undefined : 'Marker legend'}>
-          <LegendButton onClick={() => setVisible(!visible)}>
+          <LegendButton ref={target} onClick={() => setVisible(!visible)}>
             <FiMapPin />
           </LegendButton>
         </TooltipWrapper>
