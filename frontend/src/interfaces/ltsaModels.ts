@@ -2041,13 +2041,13 @@ export interface TitleOwner {
    * @type {string}
    * @memberof TitleOwner
    */
-  surnameOrCorpName1: string;
+  lastNameOrCorpName1: string;
   /**
    * Provides additional space for storing the Owner Last Name or the Corporate Name.
    * @type {string}
    * @memberof TitleOwner
    */
-  surnameOrCorpName2?: string;
+  lastNameOrCorpName2?: string;
   /**
    * Owner Given Name; this attribute is empty if the Owner is a corporation.
    * @type {string}
