@@ -17,9 +17,11 @@ namespace Pims.Ltsa.Models
     /// Geographical district determined by location of associated Parcel(s). Needed to identify Titles issued prior introduction of province-wide unique Title Number in 1990s. (e.g. Victoria)
     /// </summary>
     /// <value>Geographical district determined by location of associated Parcel(s). Needed to identify Titles issued prior introduction of province-wide unique Title Number in 1990s. (e.g. Victoria)</value>
+    [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LandTitleDistrict
     {
+        Unknown = 0,
         /// <summary>
         /// Enum KAMLOOPS for value: KAMLOOPS
         /// </summary>
