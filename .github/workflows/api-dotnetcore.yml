@@ -24,7 +24,7 @@ jobs:
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
 
       - name: Install dependencies
         run: dotnet restore
@@ -100,7 +100,6 @@ jobs:
       - name: SonarScanner for .NET 6 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@v2.1.2
-        if: github.event_name == 'push'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
