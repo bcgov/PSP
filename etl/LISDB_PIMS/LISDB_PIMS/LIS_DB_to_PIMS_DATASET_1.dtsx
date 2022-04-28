@@ -7,7 +7,7 @@
   DTS:CreatorName="MSI\fiera"
   DTS:DTSID="{4B2E793E-3853-46F6-8F50-5A21D250C1A9}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
   DTS:LocaleID="4105"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
@@ -38,11 +38,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -97,7 +93,7 @@
               <DTS:ObjectData>
                 <SQLTask:SqlTaskData
                   SQLTask:Connection="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}"
-                  SQLTask:SqlStatementSource="DELETE &#xA;FROM PIMS_LEASE&#xA;WHERE  APP_LAST_UPDATE_USERID='APP_PIMS_PROXY_ETL_EDIT'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+                  SQLTask:SqlStatementSource="&#xA;BEGIN TRANSACTION;&#xA;delete from PIMS_PROPERTY_LEASE where LEASE_ID IN (SELECT LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_LEASE_PAYMENT where LEASE_TERM_ID in (select LEASE_TERM_ID from PIMS_LEASE_TERM where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT'));&#xA;delete from PIMS_LEASE_TERM where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_LEASE_TENANT where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_SECURITY_DEPOSIT_HOLDER where SECURITY_DEPOSIT_ID in (select SECURITY_DEPOSIT_ID FROM PIMS_SECURITY_DEPOSIT where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT'));&#xA;delete from PIMS_SECURITY_DEPOSIT_HOLDER where PERSON_ID in (select PERSON_ID from PIMS_PERSON where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_SECURITY_DEPOSIT_RETURN_HOLDER where SECURITY_DEPOSIT_RETURN_ID in (select security_deposit_return_id from PIMS_SECURITY_DEPOSIT_RETURN where SECURITY_DEPOSIT_ID in (select SECURITY_DEPOSIT_ID FROM PIMS_SECURITY_DEPOSIT where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT')));&#xA;delete from PIMS_SECURITY_DEPOSIT_RETURN where SECURITY_DEPOSIT_ID in (select SECURITY_DEPOSIT_ID FROM PIMS_SECURITY_DEPOSIT where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT'));&#xA;delete from PIMS_SECURITY_DEPOSIT where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_PROPERTY_IMPROVEMENT where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_INSURANCE where LEASE_ID in (select LEASE_ID from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT');&#xA;delete from PIMS_LEASE where APP_CREATE_USERID = 'APP_PIMS_PROXY_ETL_EDIT';&#xA;ROLLBACK;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
               </DTS:ObjectData>
             </DTS:Executable>
           </DTS:Executables>
@@ -2042,6 +2038,7 @@ where [refTable].[FIRST_NAME] = ?</property>
                   description="OLE DB Destination"
                   name="OLE DB Destination"
                   usesDispositions="true"
+                  validateExternalMetadata="False"
                   version="4">
                   <properties>
                     <property
@@ -10277,40 +10274,40 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   name="Derived Column Output"
                   startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null.Outputs[Derived Column Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
-                <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup No Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Inputs[Derived Column Input]"
@@ -10352,22 +10349,22 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   name="OLE DB Source Output"
                   startId="Package\Main Flow 1\LOAD LEASES\t_leasing + PID.Outputs[OLE DB Source Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
-                  name="Union All Output 1"
-                  startId="Package\Main Flow 1\LOAD LEASES\Union All 1.Outputs[Union All Output 1]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
                   endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Union All Output 1"
+                  startId="Package\Main Flow 1\LOAD LEASES\Union All 1.Outputs[Union All Output 1]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
                   endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 2.Outputs[Union All Output 1]" />
@@ -13296,40 +13293,6 @@ where [refTable].[PID] = ?</property>
           TopLeft="647.428571428571,1791.57142857143" />
         <EdgeLayout
           Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
-          TopLeft="695,748">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-198.5,57"
-              Start="0,0"
-              End="-198.5,49.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,24.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,24.5"
-                    Point2="0,28.5"
-                    Point3="-4,28.5" />
-                  <mssgle:LineSegment
-                    End="-194.5,28.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-194.5,28.5"
-                    Point2="-198.5,28.5"
-                    Point3="-198.5,32.5" />
-                  <mssgle:LineSegment
-                    End="-198.5,49.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
           TopLeft="1531,1149">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13363,29 +13326,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
-          TopLeft="482.25,523">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,89"
-              Start="0,0"
-              End="0,81.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,81.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
           TopLeft="1356.25,1554">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13398,6 +13339,62 @@ where [refTable].[PID] = ?</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+          TopLeft="695,748">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-198.5,57"
+              Start="0,0"
+              End="-198.5,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5"
+                    Point2="0,28.5"
+                    Point3="-4,28.5" />
+                  <mssgle:LineSegment
+                    End="-194.5,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-194.5,28.5"
+                    Point2="-198.5,28.5"
+                    Point3="-198.5,32.5" />
+                  <mssgle:LineSegment
+                    End="-198.5,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+          TopLeft="482.25,523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,89"
+              Start="0,0"
+              End="0,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,81.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -13810,6 +13807,28 @@ where [refTable].[PID] = ?</property>
             <mssgm:EdgeLabel
               BoundingBox="46.4752799479165,35.8263473053892,96.3827734375,11.609375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
+          TopLeft="732.714285714286,1694">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,97.57142857143"
+              Start="0,0"
+              End="0,90.07142857143">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,90.07142857143" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14290,28 +14309,6 @@ where [refTable].[PID] = ?</property>
             <mssgm:EdgeLabel
               BoundingBox="-70.61390625,20.9208984375,141.2278125,11.658203125"
               RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
-          TopLeft="732.714285714286,1694">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,97.57142857143"
-              Start="0,0"
-              End="0,90.07142857143">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,90.07142857143" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
