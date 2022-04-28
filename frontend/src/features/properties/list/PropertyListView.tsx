@@ -1,5 +1,6 @@
 import './PropertyListView.scss';
 
+import { IconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
@@ -24,7 +25,6 @@ import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import { SearchToggleOption } from '../filter/PropertySearchToggle';
 import { columns as columnDefinitions } from './columns';
-import * as Styled from './PropertyListView.styled';
 
 const defaultFilterValues: IPropertyFilter = {
   searchBy: 'pinOrPid',
@@ -163,14 +163,14 @@ const PropertyListView: React.FC = () => {
           <h3>Property Information</h3>
           <div className="menu"></div>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-            <Styled.FileIcon>
-              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
-            </Styled.FileIcon>
+            <IconButton onClick={() => fetch('excel')}>
+              <FaFileExcel data-testid="excel-icon" size={36} />
+            </IconButton>
           </TooltipWrapper>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
-            <Styled.FileIcon>
-              <FaFileAlt data-testid="csv-icon" size={36} onClick={() => fetch('csv')} />
-            </Styled.FileIcon>
+            <IconButton onClick={() => fetch('csv')}>
+              <FaFileAlt data-testid="csv-icon" size={36} />
+            </IconButton>
           </TooltipWrapper>
         </Container>
 

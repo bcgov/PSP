@@ -1,6 +1,5 @@
+import { ResetButton, SearchButton } from 'components/common/buttons';
 import { FastDatePicker, Form, Input, Select } from 'components/common/form';
-import ResetButton from 'components/common/form/ResetButton';
-import SearchButton from 'components/common/form/SearchButton';
 import { SelectInput } from 'components/common/List/SelectInput';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES, REGION_TYPES } from 'constants/API';

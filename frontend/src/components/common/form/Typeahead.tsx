@@ -113,7 +113,7 @@ export function TypeaheadField<T extends TypeaheadModel>({
     }
   }, [clearMenu, clearSelected, setClear, name, setFieldValue]);
   return (
-    <Form.Group className={classNames(!!required ? 'required' : '', outerClassName)}>
+    <StyledFormGroup className={classNames(!!required ? 'required' : '', outerClassName)}>
       {!!label && <Form.Label>{label}</Form.Label>}
       {!!tooltip && <TooltipIcon toolTipId="typeAhead-tip" toolTip={tooltip} />}
       <TooltipWrapper toolTipId={`${name}-error-tooltip}`} toolTip={errorTooltip}>
@@ -145,6 +145,13 @@ export function TypeaheadField<T extends TypeaheadModel>({
       {hasError && !displayErrorTooltips && (
         <Feedback type="invalid">{getIn(errors, name)}</Feedback>
       )}
-    </Form.Group>
+    </StyledFormGroup>
   );
 }
+
+const StyledFormGroup = styled(Form.Group)`
+  // This is the close button of the type-ahead
+  button.close {
+    font-size: 2.4rem;
+  }
+`;

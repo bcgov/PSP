@@ -17,6 +17,7 @@ import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { usersSlice } from 'store/slices/users';
+import { ThemeProvider } from 'styled-components';
 import { fillInput } from 'utils/test-utils';
 
 import { ManageUsers } from './ManageUsers';
@@ -104,7 +105,9 @@ describe('Manage Users Component', () => {
       <Formik initialValues={{}} onSubmit={noop}>
         <Provider store={store}>
           <Router history={history}>
-            <ManageUsers />
+            <ThemeProvider theme={{ tenant: {}, css: {} }}>
+              <ManageUsers />
+            </ThemeProvider>
           </Router>
         </Provider>
       </Formik>,
