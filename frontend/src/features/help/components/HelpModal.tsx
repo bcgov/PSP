@@ -1,7 +1,7 @@
 import variables from 'assets/scss/_variables.module.scss';
+import { Button } from 'components/common/buttons/Button';
 import TooltipIcon from 'components/common/TooltipIcon';
 import React, { FunctionComponent } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';

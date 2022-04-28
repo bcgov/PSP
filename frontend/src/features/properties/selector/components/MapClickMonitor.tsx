@@ -1,9 +1,11 @@
+import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDraftMarkerSynchronizer from 'hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from 'hooks/usePrevious';
 import { geoJSON } from 'leaflet';
 import * as React from 'react';
-import { useAppSelector } from 'store/hooks';
+import { useContext } from 'react';
 
 import { IMapProperty } from '../models';
 
@@ -14,33 +16,37 @@ interface IMapClickMonitorProps {
 export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = ({
   addProperty,
 }) => {
-  const feature = useAppSelector(store => store.parcelLayerData?.parcelLayerFeature);
-  const previous = usePrevious(feature);
+  const { selectedFeature } = useContext(SelectedPropertyContext);
+  const previous = usePrevious(selectedFeature);
   useDraftMarkerSynchronizer('properties');
 
   useDeepCompareEffect(() => {
     if (
-      feature &&
-      previous !== feature &&
+      selectedFeature &&
+      previous !== selectedFeature &&
       previous !== undefined &&
-      feature?.properties?.IS_SELECTED
+      selectedFeature?.properties?.IS_SELECTED
     ) {
-      const latLng = geoJSON(feature.geometry)
-        .getBounds()
-        .getCenter();
-      addProperty({
-        pid: feature?.properties?.PID_NUMBER ?? '',
-        pin: feature?.properties?.PIN ?? '',
-        latitude: latLng.lat ?? '',
-        longitude: latLng.lng ?? '',
-        planNumber: feature?.properties?.PLAN_NUMBER ?? '',
-        address: 'placeholder', //todo: need alternate source for this
-        legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer,
-        district: feature?.properties?.REGIONAL_DISTRICT ?? '', // todo: this returns a named district,
-      });
+      addProperty(mapFeatureToProperty(selectedFeature));
     }
-  }, [addProperty, feature, previous]);
+  }, [addProperty, selectedFeature, previous]);
   return <></>;
+};
+
+export const mapFeatureToProperty = (selectedFeature: Feature<Geometry, GeoJsonProperties>) => {
+  const latLng = geoJSON(selectedFeature.geometry)
+    .getBounds()
+    .getCenter();
+  return {
+    pid: selectedFeature?.properties?.PID_NUMBER ?? '',
+    pin: selectedFeature?.properties?.PIN ?? '',
+    latitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? '',
+    longitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? '',
+    planNumber: selectedFeature?.properties?.PLAN_NUMBER ?? '',
+    address: 'placeholder', //todo: need alternate source for this
+    legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer,
+    district: selectedFeature?.properties?.REGIONAL_DISTRICT ?? '', // todo: this returns a named district,
+  } as IMapProperty;
 };
 
 export default MapClickMonitor;

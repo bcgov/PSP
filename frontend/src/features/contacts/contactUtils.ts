@@ -187,9 +187,9 @@ export function formAddressToApiAddress(
 ) {
   return {
     ...formAddress,
-    countryId: parseInt(formAddress.countryId.toString()) || 0,
-    provinceId: parseInt(formAddress.provinceId.toString()) || 0,
-    addressTypeId: stringToTypeCode(formAddress.addressTypeId),
+    countryId: parseInt(formAddress?.countryId.toString()) || 0,
+    provinceId: parseInt(formAddress?.provinceId.toString()) || 0,
+    addressTypeId: stringToTypeCode(formAddress?.addressTypeId),
   } as IEditablePersonAddress | IEditableOrganizationAddress;
 }
 
@@ -198,7 +198,7 @@ export function apiAddressToFormAddress(address?: IBaseAddress) {
 
   return {
     ...address,
-    addressTypeId: typeCodeToString(address.addressTypeId),
+    addressTypeId: typeCodeToString(address?.addressTypeId),
   } as IEditablePersonAddressForm | IEditableOrganizationAddressForm;
 }
 

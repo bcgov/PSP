@@ -11,9 +11,12 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a Workflow class.
         /// </summary>
         /// <param name="workflowTypeId"></param>
-        public PimsWorkflowModel(string workflowTypeId):this()
+        public PimsWorkflowModel(string workflowTypeId) : this()
         {
-            if (string.IsNullOrWhiteSpace(workflowTypeId)) throw new ArgumentException($"Argument '{nameof(workflowTypeId)}' is required.", nameof(workflowTypeId));
+            if (string.IsNullOrWhiteSpace(workflowTypeId))
+            {
+                throw new ArgumentException($"Argument '{nameof(workflowTypeId)}' is required.", nameof(workflowTypeId));
+            }
 
             this.WorkflowModelTypeCode = workflowTypeId;
         }

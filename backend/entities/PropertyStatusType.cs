@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a PropertyStatusType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyStatusType(string id):this()
+        public PimsPropertyStatusType(string id) : this()
         {
             Id = id;
         }

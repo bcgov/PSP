@@ -1,4 +1,4 @@
-import { IconButton } from 'components/common/styles';
+import { IconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';

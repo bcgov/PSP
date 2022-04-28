@@ -1,5 +1,5 @@
+import { RemoveButton } from 'components/common/buttons';
 import { InlineInput } from 'components/common/form/styles';
-import RemoveButton from 'components/common/RemoveButton';
 import { NoPaddingRow } from 'components/common/styles';
 import DraftCircleNumber from 'features/properties/selector/components/DraftCircleNumber';
 import { getIn, useFormikContext } from 'formik';

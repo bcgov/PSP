@@ -11,6 +11,8 @@ namespace Pims.Api.Repositories.EDMS
     /// </summary>
     public interface IDocumentRepository
     {
+        Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+
         Task<ExternalResult<QueryResult<DocumentDetail>>> GetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
 
         Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId);

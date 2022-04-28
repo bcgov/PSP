@@ -22,9 +22,12 @@ namespace Pims.Dal.Entities
         /// <param name="province"></param>
         /// <param name="district"></param>
         /// <param name="postal"></param>
-        public PimsAddress(string address1, string address2, string municipality, PimsProvinceState province, PimsDistrict district, string postal):this()
+        public PimsAddress(string address1, string address2, string municipality, PimsProvinceState province, PimsDistrict district, string postal) : this()
         {
-            if (String.IsNullOrWhiteSpace(address1)) throw new ArgumentException($"Argument '{nameof(address1)}' is required.", nameof(address1));
+            if (String.IsNullOrWhiteSpace(address1))
+            {
+                throw new ArgumentException($"Argument '{nameof(address1)}' is required.", nameof(address1));
+            }
 
             this.StreetAddress1 = address1;
             this.StreetAddress2 = address2;

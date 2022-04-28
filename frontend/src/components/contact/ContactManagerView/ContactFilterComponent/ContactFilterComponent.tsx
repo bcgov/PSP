@@ -1,7 +1,6 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
-import { SearchButton } from 'components/common/form';
+import { ResetButton, SearchButton } from 'components/common/buttons';
 import { RadioGroup } from 'components/common/form/RadioGroup';
-import ResetButton from 'components/common/form/ResetButton';
 import { InlineInput } from 'components/common/form/styles';
 import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
 import { Form, Formik } from 'formik';

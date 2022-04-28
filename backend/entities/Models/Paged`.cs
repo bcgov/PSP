@@ -62,9 +62,20 @@ namespace Pims.Dal.Entities.Models
         /// <param name="quantity"></param>
         public Paged(IEnumerable<TModel> items, int page = 1, int quantity = 10)
         {
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (page < 1) throw new ArgumentOutOfRangeException(nameof(page));
-            if (quantity < 1) throw new ArgumentOutOfRangeException(nameof(quantity));
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            if (page < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(page));
+            }
+
+            if (quantity < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(quantity));
+            }
 
             this.Items.AddRange(items);
             this.Page = page;
@@ -81,10 +92,25 @@ namespace Pims.Dal.Entities.Models
         /// <param name="total"></param>
         public Paged(IEnumerable<TModel> items, int page, int quantity, int total)
         {
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (page < 1) throw new ArgumentOutOfRangeException(nameof(page));
-            if (quantity < 1) throw new ArgumentOutOfRangeException(nameof(quantity));
-            if (total < 0) throw new ArgumentOutOfRangeException(nameof(total));
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            if (page < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(page));
+            }
+
+            if (quantity < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(quantity));
+            }
+
+            if (total < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(total));
+            }
 
             this.Items.AddRange(items);
             this.Page = page;
@@ -102,7 +128,10 @@ namespace Pims.Dal.Entities.Models
         /// <returns></returns>
         public Paged<T> To<T>(Func<IEnumerable<TModel>, IEnumerable<T>> converter)
         {
-            if (converter == null) throw new ArgumentNullException(nameof(converter));
+            if (converter == null)
+            {
+                throw new ArgumentNullException(nameof(converter));
+            }
 
             return new Paged<T>(converter(this.Items), this.Page, this.Quantity, this.Total);
         }

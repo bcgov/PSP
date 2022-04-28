@@ -1,5 +1,6 @@
+import { LinkButton } from 'components/common/buttons';
 import { useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 export interface ILeaseTenantsProps {
   tenantNames: string[];
@@ -35,9 +36,9 @@ const LeaseTenants: React.FunctionComponent<ILeaseTenantsProps> = props => {
       <Row key="showMoreKey" className="mx-0 align-items-end">
         <Col />
         <Col md="auto">
-          <Button variant="link" onClick={() => setExpanded(!isExpanded)}>
+          <LinkButton onClick={() => setExpanded(!isExpanded)}>
             {isExpanded ? 'hide' : `[+${names.length - rowItems.length} more...]`}
-          </Button>
+          </LinkButton>
         </Col>
       </Row>,
     );

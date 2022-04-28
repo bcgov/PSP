@@ -181,6 +181,7 @@ const sampleContactResponse = [
   {
     id: 'P2',
     personId: 2,
+    organizationId: 5,
     rowVersion: 0,
     summary: 'Bob Billy Smith',
     surname: 'Smith',

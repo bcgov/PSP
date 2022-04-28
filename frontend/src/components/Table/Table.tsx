@@ -3,7 +3,7 @@ import './Table.scss';
 import classnames from 'classnames';
 import classNames from 'classnames';
 import clsx from 'classnames';
-import { Button } from 'components/common/form/Button';
+import { Button } from 'components/common/buttons/Button';
 import { SelectedText } from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Form, Formik, FormikProps } from 'formik';

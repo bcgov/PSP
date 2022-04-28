@@ -74,8 +74,14 @@ namespace Pims.Dal.Helpers.Extensions
         public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
-            if (requireAll) user.ThrowIfNotAllAuthorized(permission);
-            else user.ThrowIfNotAuthorized(permission, message);
+            if (requireAll)
+            {
+                user.ThrowIfNotAllAuthorized(permission);
+            }
+            else
+            {
+                user.ThrowIfNotAuthorized(permission, message);
+            }
 
             return entity;
         }

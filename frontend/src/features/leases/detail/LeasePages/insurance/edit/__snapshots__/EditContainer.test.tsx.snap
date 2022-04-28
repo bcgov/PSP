@@ -296,7 +296,140 @@ exports[`Lease Insurance renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
+  .c0.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c0.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c0.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c0.btn.btn-primary {
+  border: none;
+}
+
+.c0.btn.btn-secondary {
+  background: none;
+}
+
+.c0.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
+  background: none;
+}
+
+.c0.btn.btn-light {
+  border: none;
+}
+
+.c0.btn.btn-dark {
+  border: none;
+}
+
+.c0.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c0.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
+}
+
+.c0.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+<div
     class="justify-content-md-end row"
   >
     <div
@@ -307,21 +440,29 @@ exports[`Lease Insurance renders as expected 1`] = `
         class="col"
       >
         <button
-          class="mr-5 btn btn-secondary"
+          class="c0 Button mr-5 btn btn-secondary"
           type="button"
         >
-          Cancel
+          <div
+            class="Button__value"
+          >
+            Cancel
+          </div>
         </button>
       </div>
       <div
         class="col"
       >
         <button
-          class="mr-5 btn btn-primary"
+          class="c0 Button Button--disabled mr-5 btn btn-primary"
           disabled=""
           type="button"
         >
-          Save
+          <div
+            class="Button__value"
+          >
+            Save
+          </div>
         </button>
       </div>
     </div>

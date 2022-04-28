@@ -1,6 +1,5 @@
 import { InlineForm, InlineInput } from 'components/common/form/styles';
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
-import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 
 export const ListPage = styled.div`
@@ -30,13 +29,6 @@ export const PageToolbar = styled.div`
 export const Spacer = styled.div`
   display: flex;
   flex: 1 1 auto;
-`;
-
-export const FileIcon = styled(Button)`
-  background-color: #fff !important;
-  color: ${({ theme, disabled }) =>
-    disabled ? theme.css.disabledColor : theme.css.primaryColor} !important;
-  padding: 6px 0.5rem;
 `;
 
 export const FilterBox = styled(InlineForm)`

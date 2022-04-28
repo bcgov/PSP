@@ -33,6 +33,7 @@
   filterBoxColor: $filter-box-color;
   draftColor: $draft-color;
   linkColor: $link-color;
+  linkHoverColor: $link-hover-color;
   subtleColor: $subtle-color;
   discardedColor: $discarded-color;
   dangerBackgroundColor: $danger-background-color;
@@ -50,4 +51,7 @@
   headingBorderColor: $heading-border-color;
   // map popup
   mapPopupBackgroundColor: $map-popup-background-color;
+  // buttons
+  buttonOutlineColor: $icon-light-color;
+  buttonInfoColor: $button-info-color;
 }

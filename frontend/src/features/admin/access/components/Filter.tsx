@@ -1,6 +1,6 @@
 import './Filter.scss';
 
-import { Button } from 'components/common/form/Button';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { IMenuItemProps, Menu } from 'components/menu/Menu';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
@@ -86,7 +86,7 @@ export const AccessRequestFilter = (props: IProps) => {
             />
           </TooltipWrapper>
           <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
-            <Button variant="secondary" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
+            <Button variant="info" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
           </TooltipWrapper>
         </Col>
       </Row>

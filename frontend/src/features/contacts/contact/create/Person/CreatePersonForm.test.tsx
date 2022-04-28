@@ -75,6 +75,7 @@ const getOrganization = jest.fn(() => mockOrganization);
 (useApiContacts as jest.Mock).mockReturnValue({ getOrganization });
 
 const addPerson = jest.fn();
+
 (useAddContact as jest.Mock).mockReturnValue({ addPerson });
 
 describe('CreatePersonForm', () => {
@@ -115,6 +116,7 @@ describe('CreatePersonForm', () => {
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
+      addPerson.mockResolvedValue({ ...mockPerson, id: 1 });
       const { getSaveButton, container } = setup();
 
       // provide required fields
@@ -131,6 +133,10 @@ describe('CreatePersonForm', () => {
       const save = getSaveButton();
       userEvent.click(save);
       await waitFor(() => expect(addPerson).toBeCalledWith(mockPerson, expect.anything(), false));
+
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/contact/P1');
+      });
     });
   });
 });

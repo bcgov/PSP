@@ -1,4 +1,5 @@
-import { AsyncTypeahead, Button, Check, Input } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
+import { AsyncTypeahead, Check, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -94,7 +95,7 @@ export const CreatePersonForm: React.FunctionComponent = () => {
       const personResponse = await addPerson(newPerson, setShowDuplicateModal, allowDuplicate);
 
       if (!!personResponse?.id) {
-        history.push('/contact/list');
+        history.push(`/contact/P${personResponse?.id}`);
       }
     } finally {
       setSubmitting(false);

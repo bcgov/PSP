@@ -22,7 +22,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="key"></param>
         /// <param name="name"></param>
-        public PimsRole(Guid key, string name):this()
+        public PimsRole(Guid key, string name) : this()
         {
             this.RoleUid = key;
             this.Name = name;

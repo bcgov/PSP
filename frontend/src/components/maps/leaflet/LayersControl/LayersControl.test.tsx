@@ -1,11 +1,11 @@
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { cleanup, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import L from 'leaflet';
 import { noop } from 'lodash';
 import { useState } from 'react';
+import { cleanup, render, waitFor } from 'utils/test-utils';
 import { createMapContainer, deferred } from 'utils/test-utils';
 
 import LayersControl from './LayersControl';
@@ -21,10 +21,10 @@ function Template({ openByDefault = false }) {
 function setup(ui = <Template />, setMap = noop) {
   // create a promise to wait for the map to be ready (which happens after initial render)
   const { promise, resolve } = deferred();
-  const wrapper = createMapContainer(resolve, setMap);
-  const component = render(ui, { wrapper });
+  const Wrapper = createMapContainer(resolve, setMap);
+  const utils = render(<Wrapper>{ui}</Wrapper>);
   return {
-    component,
+    ...utils,
     ready: promise,
     findLayerList: () => document.querySelector('#layersContainer') as HTMLElement,
     findToggleButton: () => document.querySelector('#layersControlButton') as HTMLElement,
@@ -42,8 +42,8 @@ describe('LayersControl View', () => {
   afterEach(cleanup);
 
   it('renders correctly', () => {
-    const { component } = setup();
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should render the layers control button', async () => {

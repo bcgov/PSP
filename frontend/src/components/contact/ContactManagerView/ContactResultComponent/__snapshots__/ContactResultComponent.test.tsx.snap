@@ -8,7 +8,140 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  .c3 {
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  border: none;
+}
+
+.c5.btn.btn-secondary {
+  background: none;
+}
+
+.c5.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  background: none;
+}
+
+.c5.btn.btn-light {
+  border: none;
+}
+
+.c5.btn.btn-dark {
+  border: none;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -16,26 +149,6 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.c5.c5.btn {
-  background-color: unset;
-  border: 0;
-}
-
-.c5.c5.btn:hover,
-.c5.c5.btn:active {
-  background-color: unset;
-}
-
-.c5.c5.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c5.c5.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
 }
 
 .c0 {
@@ -65,6 +178,29 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
 .c1 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c6.c6.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c6.c6.btn:hover,
+.c6.c6.btn:focus,
+.c6.c6.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c6.c6.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c6.c6.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
 
 .c4 {
@@ -503,31 +639,35 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 btn btn-light"
+                class="c5 Button c6 btn btn-light"
                 title="View Contact"
                 type="button"
               >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="Button__value"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
-                  />
-                </svg>
+                  <svg
+                    fill="currentColor"
+                    height="22"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                    />
+                  </svg>
+                </div>
               </button>
             </div>
           </div>
@@ -649,31 +789,35 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 btn btn-light"
+                class="c5 Button c6 btn btn-light"
                 title="View Contact"
                 type="button"
               >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="Button__value"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
-                  />
-                </svg>
+                  <svg
+                    fill="currentColor"
+                    height="22"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                    />
+                  </svg>
+                </div>
               </button>
             </div>
           </div>
@@ -795,31 +939,35 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 btn btn-light"
+                class="c5 Button c6 btn btn-light"
                 title="View Contact"
                 type="button"
               >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="Button__value"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
-                  />
-                </svg>
+                  <svg
+                    fill="currentColor"
+                    height="22"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                    />
+                  </svg>
+                </div>
               </button>
             </div>
           </div>

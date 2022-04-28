@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a PropertyTenureType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyTenureType(string id):this()
+        public PimsPropertyTenureType(string id) : this()
         {
             Id = id;
         }

@@ -1,9 +1,8 @@
 import userEvent from '@testing-library/user-event';
 import { Claims } from 'constants/index';
-import { useApiResearch } from 'hooks/pims-api/useApiResearch';
+import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { mockLookups } from 'mocks/mockLookups';
-import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
@@ -14,9 +13,9 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/pims-api/useApiResearch');
+jest.mock('hooks/pims-api/useApiResearchFile');
 const getResearchFiles = jest.fn();
-(useApiResearch as jest.Mock).mockReturnValue({
+(useApiResearchFile as jest.Mock).mockReturnValue({
   getResearchFiles,
 });
 

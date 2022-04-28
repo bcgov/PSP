@@ -31,6 +31,8 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
     tenants: formLease.tenants.map(tenant => ({
       ...tenant,
       leaseId: formLease.id,
+      personId: tenant.id?.startsWith('P') ? tenant.personId : undefined,
+      organizationId: tenant.id?.startsWith('O') ? tenant.organizationId : undefined,
     })),
   } as ILease;
 };
@@ -94,8 +96,8 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     properties: formLease.properties.map(formProperty => ({
       ...formProperty,
       pin: stringToNull(formProperty.pin),
-      areaUnit: stringToNull(formProperty.areaUnit),
-      areaUnitType: stringToTypeCode(formProperty.areaUnitType),
+      landArea: stringToNull(formProperty.landArea),
+      areaUnitType: stringToTypeCode(formProperty.areaUnitType?.id),
     })),
   } as ILease;
 };

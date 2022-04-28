@@ -58,20 +58,45 @@ namespace Pims.Dal.Repositories
 
             if (filter != null)
             {
-                if (filter.Page < 1) filter.Page = 1;
-                if (filter.Quantity < 1) filter.Quantity = 1;
-                if (filter.Quantity > 50) filter.Quantity = 50;
-                if (filter.Sort == null) filter.Sort = System.Array.Empty<string>();
+                if (filter.Page < 1)
+                {
+                    filter.Page = 1;
+                }
+
+                if (filter.Quantity < 1)
+                {
+                    filter.Quantity = 1;
+                }
+
+                if (filter.Quantity > 50)
+                {
+                    filter.Quantity = 50;
+                }
+
+                if (filter.Sort == null)
+                {
+                    filter.Sort = System.Array.Empty<string>();
+                }
 
                 if (!string.IsNullOrWhiteSpace(filter.Name))
+                {
                     query = query.Where(a => EF.Functions.Like(a.OrganizationName, $"%{filter.Name}%"));
+                }
+
                 if (filter.IsDisabled != null)
+                {
                     query = query.Where(a => a.IsDisabled == filter.IsDisabled);
+                }
+
                 if (filter.Id > 0)
+                {
                     query = query.Where(a => a.OrganizationId == filter.Id);
+                }
 
                 if (filter.Sort.Any())
+                {
                     query = query.OrderByProperty(filter.Sort);
+                }
             }
             var organizations = query.Skip((filter.Page - 1) * filter.Quantity).Take(filter.Quantity);
             return new Paged<PimsOrganization>(organizations.ToArray(), filter.Page, filter.Quantity, query.Count());

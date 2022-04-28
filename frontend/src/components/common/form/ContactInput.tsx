@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import { Button, Input } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
+import { Input } from 'components/common/form';
 import { getIn, useFormikContext } from 'formik';
 import { IContactSearchResult } from 'interfaces';
 import React from 'react';
