@@ -24,9 +24,11 @@ namespace Pims.Ltsa.Models
         /// The current state of the charge in relationship with the title.  Only active Charges are presented on Current View of Title. Note: Pending Release - appears that this state is used only as an examination aid, it is not publicly shown, and appears to control ALTOS behavior so that the Examiner can see which charge they are about to release.
         /// </summary>
         /// <value>The current state of the charge in relationship with the title.  Only active Charges are presented on Current View of Title. Note: Pending Release - appears that this state is used only as an examination aid, it is not publicly shown, and appears to control ALTOS behavior so that the Examiner can see which charge they are about to release.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
@@ -48,9 +50,11 @@ namespace Pims.Ltsa.Models
         /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; 
         /// </summary>
         /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; </value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum CancellationTypeEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum I for value: I
             /// </summary>
