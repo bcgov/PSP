@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>PID</name>
+   <name>saveButton</name>
    <tag></tag>
-   <elementGuidId>7cff0483-81d9-4268-8250-6401c11af2e3</elementGuidId>
+   <elementGuidId>882346c1-f2c1-49e4-93fc-443fa0fc5b39</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//input[@name='pinOrPid']</value>
+         <value>//button[contains(text(),'Save')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
