@@ -41,7 +41,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
   },
   {
     Header: 'Location',
-    accessor: p => p.address.municipality,
+    accessor: p => p.address?.municipality,
     align: 'left',
     width: 50,
     filter: {
