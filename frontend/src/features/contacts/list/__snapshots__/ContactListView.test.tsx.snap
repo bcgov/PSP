@@ -8,22 +8,137 @@ exports[`Contact List View matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  .c7 {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
 }
 
-.c7 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+.c11.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c11.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c11.btn.btn-primary {
+  border: none;
+}
+
+.c11.btn.btn-secondary {
+  background: none;
+}
+
+.c11.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
+  background: none;
+}
+
+.c11.btn.btn-light {
+  border: none;
+}
+
+.c11.btn.btn-dark {
+  border: none;
+}
+
+.c11.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c11.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c11.Button--icon-only:focus {
+  outline: none;
+}
+
+.c11.Button--icon-only .Button__icon {
+  margin-right: 0;
 }
 
 .c6 {
@@ -34,35 +149,6 @@ exports[`Contact List View matches snapshot 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.c11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-left: 0.5rem;
-}
-
-.c13 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c12 {
-  width: 1.6rem;
-  height: 1.6rem;
 }
 
 .c5.form-group {
@@ -111,6 +197,53 @@ exports[`Contact List View matches snapshot 1`] = `
 
 .c5 .form-label {
   margin-bottom: unset;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c14 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c13 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c7 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .c4 {
@@ -388,7 +521,7 @@ exports[`Contact List View matches snapshot 1`] = `
                       class="c10 col-auto"
                     >
                       <button
-                        class="Button Button--icon-only primary btn btn-primary"
+                        class="c11 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         type="button"
@@ -416,7 +549,7 @@ exports[`Contact List View matches snapshot 1`] = `
                       class="c10 col-auto"
                     >
                       <button
-                        class="Button Button--icon-only btn btn-info"
+                        class="c11 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         type="button"
@@ -521,10 +654,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     Summary
                     <div
-                      class="c11"
+                      class="c12"
                     >
                       <svg
-                        class="c12"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -539,7 +672,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c13"
+                        class="c14"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -566,10 +699,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     First Name
                     <div
-                      class="c11"
+                      class="c12"
                     >
                       <svg
-                        class="c12"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -584,7 +717,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c13"
+                        class="c14"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -611,10 +744,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     Last Name
                     <div
-                      class="c11"
+                      class="c12"
                     >
                       <svg
-                        class="c12"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -629,7 +762,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c13"
+                        class="c14"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -656,10 +789,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     Organization
                     <div
-                      class="c11"
+                      class="c12"
                     >
                       <svg
-                        class="c12"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -674,7 +807,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c13"
+                        class="c14"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -725,10 +858,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     City
                     <div
-                      class="c11"
+                      class="c12"
                     >
                       <svg
-                        class="c12"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -743,7 +876,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c13"
+                        class="c14"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"

@@ -1,4 +1,5 @@
-import { Button, Input, Select } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
+import { Input, Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';

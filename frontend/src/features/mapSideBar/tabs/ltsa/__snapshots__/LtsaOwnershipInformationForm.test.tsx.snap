@@ -1,0 +1,3169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LtsaOwnershipInformationForm component renders ownership information form 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+<h2
+    class="c0"
+  >
+    Ownership Information
+  </h2>
+  .c3 {
+  font-weight: bold;
+}
+
+.c4 {
+  padding: 1rem 2rem;
+}
+
+.c2 {
+  padding: 1.5rem 2rem 0 2rem;
+}
+
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c0 {
+  border: 2px solid #909090;
+  border-radius: 5px;
+  margin-bottom: 0rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Fractional ownership:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <p>
+              1/1
+            </p>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Joint tenancy:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <p>
+              No
+            </p>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Ownership remarks:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.ownershipRemarks"
+                name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.ownershipRemarks"
+                title=""
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c4"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Owner name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            MORRIS GRAVES BAYKEY 
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Incorporation number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.incorporationNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Occupation:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.occupationDescription"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.occupationDescription"
+              title="RETIRED"
+              value="RETIRED"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Address:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              BCBRITISHCOLUMBIA
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              CANADA
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div
+      class="c4"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Owner name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            KATHLEEN LOIS BAYKEY 
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Incorporation number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.incorporationNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Occupation:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.occupationDescription"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.occupationDescription"
+              title="RETIRED"
+              value="RETIRED"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Address:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.address.addressLine1"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.address.addressLine1"
+                  title="4431 SPANTON DRIVE"
+                  value="4431 SPANTON DRIVE"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              DELTA, BCBRITISHCOLUMBIA
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              CANADA, V4K 2W4
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div
+      class="c4"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Owner name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            ROCK TYLER BAYKEY 
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Incorporation number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.incorporationNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Occupation:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.occupationDescription"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.occupationDescription"
+              title="CARE TAKER"
+              value="CARE TAKER"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Address:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              BCBRITISHCOLUMBIA
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              CANADA
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div
+      class="c4"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Owner name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            PATRICIA GAIL BAYKEY 
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Incorporation number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.incorporationNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Occupation:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.occupationDescription"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.occupationDescription"
+              title="SELF EMPLOYED"
+              value="SELF EMPLOYED"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Address:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.address.addressLine1"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.address.addressLine1"
+                  title="4629 RIVER ROAD WEST"
+                  value="4629 RIVER ROAD WEST"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              DELTA, BCBRITISHCOLUMBIA
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              CANADA, V4K 1R9
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div
+      class="c4"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Owner name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            CLIFFORD LIETZ 
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Incorporation number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.incorporationNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Occupation:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.occupationDescription"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.occupationDescription"
+              title="SHOP FOREMAN"
+              value="SHOP FOREMAN"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Address:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              BCBRITISHCOLUMBIA
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              CANADA
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div
+      class="c4"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Owner name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            LEILAH MARIA LIETZ 
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Incorporation number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.incorporationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.incorporationNumber"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Occupation:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.occupationDescription"
+              name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.occupationDescription"
+              title="HOMEMAKER"
+              value="HOMEMAKER"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c3"
+          >
+            Address:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.address.addressLine1"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.address.addressLine1"
+                  title="4369 - 41B STREET"
+                  value="4369 - 41B STREET"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              DELTA, BCBRITISHCOLUMBIA
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              CANADA, V4K 2K8
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`LtsaTabView component renders as expected when provided valid ltsa data object and requested on datetime 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.8rem;
+  font-style: italic;
+}
+
+.c11 {
+  float: right;
+  cursor: pointer;
+}
+
+.c10 {
+  padding: 1rem 2rem;
+}
+
+.c9 {
+  padding: 1.5rem 2rem 0 2rem;
+}
+
+.c8 {
+  background-color: #f2f2f2;
+}
+
+.c7 {
+  border: 2px solid #909090;
+  border-radius: 5px;
+  margin-bottom: 0rem;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0.c0.c0 input,
+.c0.c0.c0 select,
+.c0.c0.c0 textarea {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.c0.c0.c0 .form-label {
+  font-weight: bold;
+}
+
+<form
+    action="#"
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        This data was retrived from LTSA on 06-Apr-2022 11:32 AM
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Title Details
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Title number:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              disabled=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleIdentifier.titleNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.titleIdentifier.titleNumber"
+              title="BL264819"
+              value="BL264819"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Land title district:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              disabled=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleIdentifier.landTitleDistrict"
+              name="titleOrders.0.orderedProduct.fieldedData.titleIdentifier.landTitleDistrict"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Taxation authorities:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              disabled=""
+              id="input-titleOrders.0.orderedProduct.fieldedData.taxAuthorities"
+              name="titleOrders.0.orderedProduct.fieldedData.taxAuthorities"
+              title="Delta, City of"
+            >
+              Delta, City of
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Land
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            PID:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
+              name="titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
+              title="009-212-434"
+              value="009-212-434"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Legal Description:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            LOT 4 EXCEPT: FIRSTLY: PART ON STATUTORY RIGHT OF WAY PLAN 30557;
+SECONDLY: PART ON STATUTORY RIGHT OF WAY PLAN 45999A;
+DISTRICT LOT 26 GROUP 2 AND SECTION 11 TOWNSHIP 6 NEW WESTMINSTER DISTRICT
+PLAN 24843
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+            >
+              Legal Notations: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+              title="CV1442411"
+              value="CV1442411"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+            >
+              Status: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+            >
+              Cancellation date: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        />
+        <div
+          class="col"
+        >
+          <p>
+            THIS CERTIFICATE OF TITLE MAY BE AFFECTED BY THE AGRICULTURAL LAND
+COMMISSION ACT, SEE AGRICULTURAL LAND RESERVE PLAN NO. 2
+DEPOSITED JULY 30TH, 1974.
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+            >
+              Legal Notations: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+              title="CV1442412"
+              value="CV1442412"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+            >
+              Status: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+            >
+              Cancellation date: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        />
+        <div
+          class="col"
+        >
+          <p>
+            ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
+10.2.1981 UNDER NO. T17084 PLAN NO. 61216
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+            >
+              Legal Notations: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+              title="CV1442414"
+              value="CV1442414"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+            >
+              Status: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c6 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+            >
+              Cancellation date: 
+            </label>
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        />
+        <div
+          class="col"
+        >
+          <p>
+            LAND HEREIN CHARGED UNDER THE
+MUNICIPAL ACT, PART 25
+D.F. D21890
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Ownership Information
+      </h2>
+      <div
+        class="c7"
+      >
+        <div
+          class="c8"
+        >
+          <div
+            class="c9"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="col-4"
+              >
+                <label
+                  class="c5"
+                >
+                  Fractional ownership:
+                </label>
+              </div>
+              <div
+                class="col"
+              >
+                <p>
+                  1/1
+                </p>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="col-4"
+              >
+                <label
+                  class="c5"
+                >
+                  Joint tenancy:
+                </label>
+              </div>
+              <div
+                class="col"
+              >
+                <p>
+                  No
+                </p>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="col-4"
+              >
+                <label
+                  class="c5"
+                >
+                  Ownership remarks:
+                </label>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.ownershipRemarks"
+                    name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.ownershipRemarks"
+                    title=""
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c10"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Owner name:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <p>
+                MORRIS GRAVES BAYKEY 
+              </p>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Incorporation number:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.incorporationNumber"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Occupation:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.occupationDescription"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.0.occupationDescription"
+                  title="RETIRED"
+                  value="RETIRED"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Address:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  BCBRITISHCOLUMBIA
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  CANADA
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="c10"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Owner name:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <p>
+                KATHLEEN LOIS BAYKEY 
+              </p>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Incorporation number:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.incorporationNumber"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Occupation:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.occupationDescription"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.occupationDescription"
+                  title="RETIRED"
+                  value="RETIRED"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Address:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.address.addressLine1"
+                      name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.1.address.addressLine1"
+                      title="4431 SPANTON DRIVE"
+                      value="4431 SPANTON DRIVE"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  DELTA, BCBRITISHCOLUMBIA
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  CANADA, V4K 2W4
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="c10"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Owner name:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <p>
+                ROCK TYLER BAYKEY 
+              </p>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Incorporation number:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.incorporationNumber"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Occupation:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.occupationDescription"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.2.occupationDescription"
+                  title="CARE TAKER"
+                  value="CARE TAKER"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Address:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  BCBRITISHCOLUMBIA
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  CANADA
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="c10"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Owner name:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <p>
+                PATRICIA GAIL BAYKEY 
+              </p>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Incorporation number:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.incorporationNumber"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Occupation:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.occupationDescription"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.occupationDescription"
+                  title="SELF EMPLOYED"
+                  value="SELF EMPLOYED"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Address:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.address.addressLine1"
+                      name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.3.address.addressLine1"
+                      title="4629 RIVER ROAD WEST"
+                      value="4629 RIVER ROAD WEST"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  DELTA, BCBRITISHCOLUMBIA
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  CANADA, V4K 1R9
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="c10"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Owner name:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <p>
+                CLIFFORD LIETZ 
+              </p>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Incorporation number:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.incorporationNumber"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Occupation:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.occupationDescription"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.4.occupationDescription"
+                  title="SHOP FOREMAN"
+                  value="SHOP FOREMAN"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Address:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  BCBRITISHCOLUMBIA
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  CANADA
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="c10"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Owner name:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <p>
+                LEILAH MARIA LIETZ 
+              </p>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Incorporation number:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.incorporationNumber"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.incorporationNumber"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Occupation:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.occupationDescription"
+                  name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.occupationDescription"
+                  title="HOMEMAKER"
+                  value="HOMEMAKER"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col-4"
+            >
+              <label
+                class="c5"
+              >
+                Address:
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.address.addressLine1"
+                      name="titleOrders.0.orderedProduct.fieldedData.ownershipGroups.0.titleOwners.5.address.addressLine1"
+                      title="4369 - 41B STREET"
+                      value="4369 - 41B STREET"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  DELTA, BCBRITISHCOLUMBIA
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  CANADA, V4K 2K8
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Charges, Liens and Interests
+        <svg
+          class="c11"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M7 14l5-5 5 5z"
+          />
+        </svg>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Nature:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
+                title="STATUTORY RIGHT-OF-WAY"
+                value="STATUTORY RIGHT-OF-WAY"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registration #:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
+                title="H107642"
+                value="H107642"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered date:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
+                title="1972-10-23T21:38:00Z"
+                value="1972-10-23T21:38:00Z"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered owner:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                title="BRITISH COLUMBIA HYDRO AND POWER AUTHORITY"
+                value="BRITISH COLUMBIA HYDRO AND POWER AUTHORITY"
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Nature:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
+                title="STATUTORY RIGHT-OF-WAY"
+                value="STATUTORY RIGHT-OF-WAY"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registration #:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
+                title="N35326"
+                value="N35326"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered date:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
+                title="1977-04-14T22:32:00Z"
+                value="1977-04-14T22:32:00Z"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered owner:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                title="THE CORPORATION OF DELTA"
+                value="THE CORPORATION OF DELTA"
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Nature:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
+                title="MORTGAGE"
+                value="MORTGAGE"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registration #:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+                title="BL158885"
+                value="BL158885"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered date:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.applicationReceivedDate"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.applicationReceivedDate"
+                title="1997-05-07T16:51:00Z"
+                value="1997-05-07T16:51:00Z"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered owner:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                title="RICHMOND SAVINGS CREDIT UNION"
+                value="RICHMOND SAVINGS CREDIT UNION"
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Nature:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
+                title="MORTGAGE"
+                value="MORTGAGE"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registration #:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
+                title="BR248606"
+                value="BR248606"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered date:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
+                title="2001-09-25T18:11:00Z"
+                value="2001-09-25T18:11:00Z"
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Nature:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
+                title="STATUTORY RIGHT OF WAY"
+                value="STATUTORY RIGHT OF WAY"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registration #:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
+                title="CA5338545"
+                value="CA5338545"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered date:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
+                title="2016-07-13T21:01:28Z"
+                value="2016-07-13T21:01:28Z"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c5"
+            >
+              Registered owner:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+                title="ROGERS COMMUNICATIONS INC."
+                value="ROGERS COMMUNICATIONS INC."
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-4"
+          />
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
+                name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
+                title="BC0921753"
+                value="BC0921753"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Duplicate Indefeasible Title
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            To:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+              title="last"
+              value="last"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Application #:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+              title="12345"
+              value="12345"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Document district code:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+              title="test district code"
+              value="test district code"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Certificate text:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+              name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+              title="certificate text"
+              value="certificate text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Transfers
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Nature:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+              title="disposition text"
+              value="disposition text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Registration #:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+              title="54321"
+              value="54321"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Registered date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+              name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+              title="district"
+              value="district"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Pending applications:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              disabled=""
+              id="input-parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+              name="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+              title="0"
+              value="0"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3"
+    >
+      <h2
+        class="c4"
+      >
+        Notes
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Miscellaneous notes:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <p>
+            SRW PLAN 33784
+SRW PLAN 41816
+SRW PLAN 50351
+DF L24824
+
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c5"
+          >
+            Parcel status:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              disabled=""
+              id="input-parcelInfo.orderedProduct.fieldedData.status"
+              name="parcelInfo.orderedProduct.fieldedData.status"
+              title="ACTIVE"
+              value="ACTIVE"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

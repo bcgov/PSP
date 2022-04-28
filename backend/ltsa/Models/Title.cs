@@ -25,9 +25,11 @@ namespace Pims.Ltsa.Models
         /// Indicates the state with respect to Title lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to Title lifecycle.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum TitleStatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum REGISTERED for value: REGISTERED
             /// </summary>

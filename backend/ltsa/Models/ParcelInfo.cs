@@ -25,9 +25,11 @@ namespace Pims.Ltsa.Models
         /// Indicates the state with respect to Parcel lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to Parcel lifecycle.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum ACTIVE for value: ACTIVE
             /// </summary>

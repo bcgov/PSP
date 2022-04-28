@@ -1,10 +1,11 @@
+import { Button } from 'components/common/buttons/Button';
 import { Claims } from 'constants/claims';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import { useCallback, useEffect } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';

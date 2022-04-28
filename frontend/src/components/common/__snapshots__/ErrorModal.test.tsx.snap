@@ -5,6 +5,12 @@ exports[`Error modal tests... renders correctly 1`] = `
   aria-hidden="true"
 >
   <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
     class="container"
   />
 </div>

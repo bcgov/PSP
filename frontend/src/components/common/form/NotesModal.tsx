@@ -1,8 +1,8 @@
+import { IconButton } from 'components/common/buttons';
 import { TextArea } from 'components/common/form';
 import GenericModal from 'components/common/GenericModal';
-import { IconButton } from 'components/common/styles';
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';

@@ -140,13 +140,6 @@ export const mockProperties = [
     longitude: 123,
     name: 'test name',
     description: 'test',
-    evaluations: [
-      {
-        evaluatedOn: '2021-05-14T17:15:58.193Z',
-        key: 1,
-        value: 10000,
-      },
-    ],
     addressId: mockAddress.id,
     address: mockAddress,
     landArea: 123,
@@ -169,13 +162,6 @@ export const mockProperties = [
     longitude: 123,
     name: 'test name',
     description: 'test',
-    evaluations: [
-      {
-        evaluatedOn: '2021-05-14T17:15:58.193Z',
-        key: 1,
-        value: 10000,
-      },
-    ],
     addressId: mockAddress.id,
     address: mockAddress,
     landArea: 123,
@@ -198,13 +184,6 @@ export const mockProperties = [
     longitude: 123,
     name: 'test name',
     description: 'test',
-    evaluations: [
-      {
-        evaluatedOn: '2021-05-14T17:15:58.193Z',
-        key: 1,
-        value: 10000,
-      },
-    ],
     addressId: mockAddress.id,
     address: mockAddress,
     landArea: 123,

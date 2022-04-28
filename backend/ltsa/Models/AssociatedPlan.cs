@@ -23,9 +23,11 @@ namespace Pims.Ltsa.Models
         /// Type of the associated plan
         /// </summary>
         /// <value>Type of the associated plan</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum PlanTypeEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum PLAN for value: PLAN
             /// </summary>

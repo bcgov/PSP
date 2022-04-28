@@ -17,9 +17,11 @@ namespace Pims.Ltsa.Models
     /// Land title district code (e.g. VI)
     /// </summary>
     /// <value>Land title district code (e.g. VI)</value>
+    [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LandTitleDistrictCode
     {
+        Unknown = 0,
         /// <summary>
         /// Enum KA for value: KA
         /// </summary>

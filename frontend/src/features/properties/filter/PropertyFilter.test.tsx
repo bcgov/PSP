@@ -1,16 +1,14 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import filterSlice from 'store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { TenantProvider } from 'tenants';
+import { cleanup, fireEvent, render, waitFor } from 'utils/test-utils';
 import { fillInput } from 'utils/test-utils';
+import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
 import { IPropertyFilter } from './IPropertyFilter';
@@ -85,13 +83,9 @@ const defaultFilter: IPropertyFilter = {
 };
 
 const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
-  <TenantProvider>
-    <Provider store={getStore(filter)}>
-      <Router history={history}>
-        <PropertyFilter defaultFilter={filter} onChange={onFilterChange} />
-      </Router>
-    </Provider>
-  </TenantProvider>
+  <TestCommonWrapper store={getStore(filter)} history={history}>
+    <PropertyFilter defaultFilter={filter} onChange={onFilterChange} />
+  </TestCommonWrapper>
 );
 
 describe('MapFilterBar', () => {

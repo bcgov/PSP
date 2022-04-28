@@ -1,6 +1,7 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { IconButton, InlineFlexDiv } from 'components/common/styles';
+import { IconButton } from 'components/common/buttons';
+import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';

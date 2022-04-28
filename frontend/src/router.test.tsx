@@ -42,7 +42,6 @@ describe('PSP routing', () => {
         history={history}
         store={{
           network: {},
-          properties: { parcels: [], draftProperties: [] },
           keycloakReady: true,
           loadingBar: {},
           lookupCode: { lookupCodes: [] },

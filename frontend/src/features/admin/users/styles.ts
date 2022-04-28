@@ -1,5 +1,3 @@
-import variables from 'assets/scss/_variables.module.scss';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
 
@@ -26,12 +24,6 @@ export const WithShadow = styled(Container)`
 export const TableContainer = styled(Container)`
   margin-top: 1rem;
   margin-bottom: 4rem;
-`;
-
-export const FileIcon = styled(Button)`
-  background-color: #fff !important;
-  color: ${variables.primaryColor} !important;
-  padding: 0.6rem 0.5rem;
 `;
 
 export const Ribbon = styled.div`

@@ -4,8 +4,6 @@ import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
 import { isEmpty } from 'lodash';
 import { useContext, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { saveParcelLayerFeature } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import {
   LayerPopupInformation,
@@ -37,16 +35,12 @@ interface IUseActiveParcelMapLayer {
 const useActiveFeatureLayer = ({
   selectedProperty,
   mapRef,
-  layerPopup,
   setLayerPopup,
-  parcelLayerFeature,
 }: IUseActiveParcelMapLayer) => {
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
-  const { isSelecting } = useContext(SelectedPropertyContext);
-  const dispatch = useDispatch();
-
+  const { isSelecting, setSelectedFeature } = useContext(SelectedPropertyContext);
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
     setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
@@ -104,9 +98,13 @@ const useActiveFeatureLayer = ({
           feature,
         } as any);
       }
-      feature.properties = { ...feature.properties, IS_SELECTED: isSelecting };
+      feature.properties = {
+        ...feature.properties,
+        IS_SELECTED: isSelecting,
+        CLICK_LAT_LNG: latLng,
+      };
       activeFeatureLayer?.addData(feature);
-      dispatch(saveParcelLayerFeature(feature));
+      setSelectedFeature(feature);
     }
   };
 
