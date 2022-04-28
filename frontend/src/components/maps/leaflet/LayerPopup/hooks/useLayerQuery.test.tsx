@@ -9,7 +9,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 const mockStore = configureMockStore([thunk]);
-const getStore = (values?: any) => mockStore(values ?? { parcel: { draftProperties: [] } });
+const getStore = (values?: any) => mockStore(values);
 const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>
     <ToastContainer

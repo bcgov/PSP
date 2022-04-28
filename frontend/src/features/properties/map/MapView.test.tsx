@@ -24,7 +24,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { IPropertyState, propertiesSlice } from 'store/slices/properties';
 import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
@@ -128,9 +127,6 @@ const mockDetails = {
 
 const store = mockStore({
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: {
-    draftProperties: [],
-  } as IPropertyState,
   [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 });
 

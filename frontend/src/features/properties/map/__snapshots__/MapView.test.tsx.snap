@@ -1,0 +1,581 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapView Renders the map 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5 {
+  padding-right: 0;
+}
+
+.c5 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c6:not(:first-child) {
+  padding-left: 0;
+}
+
+.c6:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c8 div:nth-child(1) div:nth-child(1) {
+  cursor: auto;
+}
+
+.c8 div:nth-child(1) div:nth-child(1) svg {
+  fill: #909090;
+}
+
+.c8 div:nth-child(2) div:nth-child(1) {
+  cursor: pointer;
+}
+
+.c8 div:nth-child(2) div:nth-child(1) svg {
+  fill: #003366;
+}
+
+.c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c10 svg {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.c11 {
+  grid-area: map;
+}
+
+.c11 .leaflet-div-icon {
+  background: none;
+  border: none;
+}
+
+.c11 .leaflet-div-icon img {
+  width: inherit;
+  height: inherit;
+  -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+  filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+}
+
+.c11 .leaflet-container {
+  height: 100%;
+  margin: auto;
+}
+
+.c11 .leaflet-container .leaflet-popup-content-wrapper {
+  border-radius: 0;
+}
+
+.c11 .leaflet-container .leaflet-popup-content {
+  margin: 0rem;
+}
+
+.c11 .leaflet-container .leaflet-control-container .leaflet-top {
+  z-index: 500;
+}
+
+.c11 .leaflet-control-layers.leaflet-control-layers-expanded {
+  border-radius: 0rem;
+}
+
+.c11 .leaflet-control-layers .leaflet-control-layers-overlays {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 1rem;
+  width: 15rem;
+}
+
+.c11 .leaflet-control-layers .leaflet-control-layers-overlays label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: 'filter filter' 'map map';
+  -webkit-transition: margin 1s,width 1s;
+  transition: margin 1s,width 1s;
+  position: relative;
+}
+
+.c2.sidebar {
+  grid-template-rows: 0 1fr;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.c4 {
+  -webkit-transition: margin 1s;
+  transition: margin 1s;
+  grid-area: filter;
+  background-color: #f2f2f2;
+  box-shadow: 0px 4px 5px rgba(0,0,0,0.2);
+  z-index: 500;
+}
+
+.c4 .map-filter-bar {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.c4 .map-filter-bar .vl {
+  border-left: 6px solid rgba(96,96,96,0.2);
+  height: 4rem;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-width: 0.2rem;
+}
+
+.c4 .map-filter-bar .btn-primary {
+  color: white;
+  font-weight: bold;
+  height: 3.5rem;
+  width: 3.5rem;
+  min-height: unset;
+  padding: 0;
+}
+
+.c4 .map-filter-bar .form-control {
+  font-size: 1.4rem;
+}
+
+.c4 .form-group {
+  margin-bottom: 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  width: 93rem;
+  min-width: 93rem;
+  max-width: 93rem;
+  margin-left: -93rem;
+  padding: 1.4rem 3.6rem;
+  padding-bottom: 2rem;
+  overflow: hidden;
+  -webkit-transition: 1s;
+  transition: 1s;
+  position: relative;
+}
+
+.c1 h1 {
+  border-bottom: none;
+  margin-bottom: 0.2rem;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+}
+
+.c0.draft-cursor,
+.c0.draft-cursor .leaflet-grab,
+.c0.draft-cursor .leaflet-interactive {
+  cursor: url(icon-draft.svg) 48.5 81,pointer;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    />
+    <div
+      class="c2 px-0 map"
+    >
+      <div
+        class="c3"
+      >
+        <div
+          class="spinner-border text-warning"
+          data-testid="filter-backdrop-loading"
+        />
+      </div>
+      <div
+        class="c4 px-0 container-fluid"
+      >
+        <form
+          class=""
+          novalidate=""
+        >
+          <div
+            class="map-filter-bar pb-4 form-row"
+          >
+            <div
+              class="col-auto"
+            >
+              <span>
+                Search:
+              </span>
+            </div>
+            <div
+              class="col-xl-3 col-lg-4 col-md-5 col-6"
+            >
+              <div
+                class="idir-input-group flex-nowrap row"
+              >
+                <div
+                  class="c5 col-auto"
+                >
+                  <div
+                    class="input-group-prepend"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-searchBy"
+                        name="searchBy"
+                      >
+                        <option
+                          class="option"
+                          value="pinOrPid"
+                        >
+                          PID/PIN
+                        </option>
+                        <option
+                          class="option"
+                          value="address"
+                        >
+                          Address
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c6 col"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-pinOrPid"
+                      name="pinOrPid"
+                      placeholder="Enter a PID or PIN"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c7 Button Button--icon-only primary btn btn-primary"
+                data-testid="search"
+                id="search-button"
+                type="submit"
+              >
+                <div
+                  class="Button__icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c7 Button Button--icon-only btn btn-info"
+                data-testid="reset-button"
+                id="reset-button"
+                type="reset"
+              >
+                <div
+                  class="Button__icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="bar-item col-auto"
+            >
+              <div
+                class="c8"
+              >
+                <div
+                  class="c9"
+                >
+                  <div
+                    class="c10"
+                  >
+                    <svg>
+                      icon-map.svg
+                    </svg>
+                  </div>
+                </div>
+                <div
+                  class="c9"
+                >
+                  <div
+                    class="c10"
+                  >
+                    <svg>
+                      icon-table.svg
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        class="c11"
+      >
+        <div />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

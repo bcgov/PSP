@@ -6,7 +6,6 @@ export * from './leaseStatusTypes';
 export * from './organizationIdentifierTypes';
 export * from './organizationTypes';
 export * from './projectRiskTypes';
-export * from './projectStatusTypes';
 export * from './projectTierTypes';
 export * from './projectTypes';
 export * from './propertyAdjacentLandTypes';

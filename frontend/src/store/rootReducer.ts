@@ -6,10 +6,8 @@ import keycloakReadySlice from 'store/slices/keycloakReady/keycloakReadySlice';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import mapViewZoomSlice from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import { lookupCodesSlice } from './slices/lookupCodes/lookupCodesSlice';
-import { propertiesSlice } from './slices/properties/propertiesSlice';
 import { systemConstantsSlice } from './slices/systemConstants/systemConstantsSlice';
 import { tenantsSlice } from './slices/tenants';
 import { usersSlice } from './slices/users/usersSlice';
@@ -22,11 +20,9 @@ export const reducer = {
   [systemConstantsSlice.name]: systemConstantsSlice.reducer,
   [networkSlice.name]: networkSlice.reducer,
   [leafletMouseSlice.name]: leafletMouseSlice.reducer,
-  [parcelLayerDataSlice.name]: parcelLayerDataSlice.reducer,
   [jwtSlice.name]: jwtSlice.reducer,
   [filterSlice.name]: filterSlice.reducer,
   [keycloakReadySlice.name]: keycloakReadySlice.reducer,
   [mapViewZoomSlice.name]: mapViewZoomSlice.reducer,
   [tenantsSlice.name]: tenantsSlice.reducer,
-  [propertiesSlice.name]: propertiesSlice.reducer,
 };

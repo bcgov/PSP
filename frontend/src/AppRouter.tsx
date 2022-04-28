@@ -7,7 +7,7 @@ import CreateContactContainer from 'features/contacts/contact/create/CreateConta
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
 import { AddLeaseContainer } from 'features/leases';
-import ResearchListView from 'features/research/list/ResearchListView';
+import { ResearchListView } from 'features/research/list/ResearchListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
