@@ -145,7 +145,7 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       <label
         class="form-label"
       >
-        Area
+        Lease Area
       </label>
       <div
         class="flex-nowrap row"
@@ -316,7 +316,7 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       <label
         class="form-label"
       >
-        Area
+        Lease Area
       </label>
       <div
         class="flex-nowrap row"
