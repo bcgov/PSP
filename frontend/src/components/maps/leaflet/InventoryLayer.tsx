@@ -8,6 +8,7 @@ import { uniqBy } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { toast } from 'react-toastify';
+import { useAppSelector } from 'store/store';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
@@ -137,6 +138,9 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const [loadingTiles, setLoadingTiles] = useState(false);
   const { loadProperties } = useApi();
   const { changed: filterChanged } = useFilterContext();
+  const draftProperties: PointFeature[] = useAppSelector(
+    state => state.properties?.draftProperties ?? [],
+  );
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -224,6 +228,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
 
   return (
     <PointClusterer
+      draftPoints={draftProperties}
       points={features}
       zoom={zoom}
       bounds={bbox}

@@ -41,17 +41,17 @@ namespace Pims.Api.Test.Controllers.Lease
         #endregion
 
         #region Tests
-        #region GetProperties
+        #region GetLeases
         /// <summary>
         /// Make a successful request that includes the latitude.
         /// </summary>
         [Theory]
         [MemberData(nameof(LeaseFilters))]
-        public void GetProperties_All_Success(SModel.LeaseFilterModel filter)
+        public void GetLeases_All_Success(SModel.LeaseFilterModel filter)
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -80,7 +80,7 @@ namespace Pims.Api.Test.Controllers.Lease
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView, uri);
+            var controller = helper.CreateController<SearchController>(Permissions.LeaseView, uri);
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
@@ -108,7 +108,7 @@ namespace Pims.Api.Test.Controllers.Lease
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
@@ -128,7 +128,7 @@ namespace Pims.Api.Test.Controllers.Lease
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
+            var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
 
             var service = helper.GetService<Mock<IPimsRepository>>();
 

@@ -25,9 +25,11 @@ namespace Pims.Ltsa.Models
         /// The current status of the charge in relationship with the Strata Common Property.  Only active Charges are presented on Current View of Title.
         /// </summary>
         /// <value>The current status of the charge in relationship with the Strata Common Property.  Only active Charges are presented on Current View of Title.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
@@ -49,9 +51,11 @@ namespace Pims.Ltsa.Models
         /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; 
         /// </summary>
         /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; </value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum CancellationTypeEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum I for value: I
             /// </summary>

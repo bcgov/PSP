@@ -16,6 +16,9 @@ namespace Pims.Dal.Entities
         [Column("ROLL_NUMBER")]
         [StringLength(32)]
         public string RollNumber { get; set; }
+        [Column("ADDRESS_ID")]
+        [StringLength(255)]
+        public string AddressId { get; set; }
         [Column("PRIMARY_FLAG")]
         public bool? PrimaryFlag { get; set; }
         [Column("UNIT_NUMBER")]

@@ -24,9 +24,11 @@ namespace Pims.Ltsa.Models
         /// Indicates the state with respect to the Transfer of Charge Ownership lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to the Transfer of Charge Ownership lifecycle.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum CreatingApplicationStatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum Draft for value: Draft
             /// </summary>
@@ -48,9 +50,11 @@ namespace Pims.Ltsa.Models
         /// Indicates the state with respect to the Transfer of Charge Ownership lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to the Transfer of Charge Ownership lifecycle.</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum CancellingApplicationStatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum Draft for value: Draft
             /// </summary>

@@ -24,9 +24,11 @@ namespace Pims.Ltsa.Models
         /// Parcel Status
         /// </summary>
         /// <value>Parcel Status</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum ParcelStatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum AActive for value: A - Active
             /// </summary>

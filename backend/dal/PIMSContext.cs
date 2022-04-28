@@ -134,6 +134,10 @@ namespace Pims.Dal
         public virtual DbSet<PimsProjectType> PimsProjectTypes { get; set; }
         public virtual DbSet<PimsProjectWorkflowModel> PimsProjectWorkflowModels { get; set; }
         public virtual DbSet<PimsProjectWorkflowModelHist> PimsProjectWorkflowModelHists { get; set; }
+        public virtual DbSet<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
+        public virtual DbSet<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
+        public virtual DbSet<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
+        public virtual DbSet<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
         public virtual DbSet<PimsProperty> PimsProperties { get; set; }
         public virtual DbSet<PimsPropertyActivity> PimsPropertyActivities { get; set; }
         public virtual DbSet<PimsPropertyActivityHist> PimsPropertyActivityHists { get; set; }
@@ -154,6 +158,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropertyOrganizationHist> PimsPropertyOrganizationHists { get; set; }
         public virtual DbSet<PimsPropertyPropertyServiceFile> PimsPropertyPropertyServiceFiles { get; set; }
         public virtual DbSet<PimsPropertyPropertyServiceFileHist> PimsPropertyPropertyServiceFileHists { get; set; }
+        public virtual DbSet<PimsPropertyResearchFile> PimsPropertyResearchFiles { get; set; }
+        public virtual DbSet<PimsPropertyResearchFileHist> PimsPropertyResearchFileHists { get; set; }
         public virtual DbSet<PimsPropertyRoadType> PimsPropertyRoadTypes { get; set; }
         public virtual DbSet<PimsPropertyServiceFile> PimsPropertyServiceFiles { get; set; }
         public virtual DbSet<PimsPropertyServiceFileHist> PimsPropertyServiceFileHists { get; set; }
@@ -166,6 +172,13 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropertyType> PimsPropertyTypes { get; set; }
         public virtual DbSet<PimsProvinceState> PimsProvinceStates { get; set; }
         public virtual DbSet<PimsRegion> PimsRegions { get; set; }
+        public virtual DbSet<PimsRequestSourceType> PimsRequestSourceTypes { get; set; }
+        public virtual DbSet<PimsResearchFile> PimsResearchFiles { get; set; }
+        public virtual DbSet<PimsResearchFileHist> PimsResearchFileHists { get; set; }
+        public virtual DbSet<PimsResearchFilePurpose> PimsResearchFilePurposes { get; set; }
+        public virtual DbSet<PimsResearchFilePurposeHist> PimsResearchFilePurposeHists { get; set; }
+        public virtual DbSet<PimsResearchFileStatusType> PimsResearchFileStatusTypes { get; set; }
+        public virtual DbSet<PimsResearchPurposeType> PimsResearchPurposeTypes { get; set; }
         public virtual DbSet<PimsRole> PimsRoles { get; set; }
         public virtual DbSet<PimsRoleClaim> PimsRoleClaims { get; set; }
         public virtual DbSet<PimsRoleClaimHist> PimsRoleClaimHists { get; set; }
@@ -196,6 +209,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsUserOrganizationHist> PimsUserOrganizationHists { get; set; }
         public virtual DbSet<PimsUserRole> PimsUserRoles { get; set; }
         public virtual DbSet<PimsUserRoleHist> PimsUserRoleHists { get; set; }
+        public virtual DbSet<PimsVolumeUnitType> PimsVolumeUnitTypes { get; set; }
         public virtual DbSet<PimsVolumetricType> PimsVolumetricTypes { get; set; }
         public virtual DbSet<PimsWorkflowModel> PimsWorkflowModels { get; set; }
         public virtual DbSet<PimsWorkflowModelHist> PimsWorkflowModelHists { get; set; }
@@ -369,7 +383,7 @@ namespace Pims.Dal
             modelBuilder.Entity<BcaAssessmentArea>(entity =>
             {
                 entity.HasKey(e => e.AreaCode)
-                    .HasName("PK__BCA_ASSE__FC7CF8094B7DBA6B");
+                    .HasName("BCASAR_PK");
 
                 entity.HasComment("Represents a folio group for a single BCA assessment area.");
 
@@ -657,6 +671,8 @@ namespace Pims.Dal
 
             modelBuilder.Entity<BcaFolioAddress>(entity =>
             {
+                entity.Property(e => e.AddressId).HasComment("Unique address identifier provided by BC Assessment.");
+
                 entity.Property(e => e.City).HasComment("City name.");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -1271,7 +1287,7 @@ namespace Pims.Dal
             modelBuilder.Entity<BcaJurisdiction>(entity =>
             {
                 entity.HasKey(e => e.JurisdictionCode)
-                    .HasName("PK__BCA_JURI__A318B2B5A46D67D0");
+                    .HasName("BCAJUR_PK");
 
                 entity.Property(e => e.JurisdictionCode).HasComment("The BCA code that identifies the jurisdiction.");
 
@@ -1579,45 +1595,45 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FormattedMailingAddrLine6).HasComment("Formatted address line for mailing purposes: Line 6 consists of Site and Compartment label and values");
 
-                entity.Property(e => e.MailingAddrAttention).HasComment("Attention, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrAttention).HasComment("Attention, as required for mail to be sent to the owner?s mailing address.");
 
                 entity.Property(e => e.MailingAddrBulkMailCode).HasComment("Identifies when five or more properties are linked to a name record or when five or more name records with a single mailing address are linked to a folio.");
 
-                entity.Property(e => e.MailingAddrCareOf).HasComment("Care Of, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrCareOf).HasComment("Care Of, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrCity).HasComment("City, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrCity).HasComment("City, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrCompartment).HasComment("Compartment, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrCompartment).HasComment("Compartment, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrCountry).HasComment("Country, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrCountry).HasComment("Country, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrDeliveryInstallationType).HasComment("Delivery installation type, as required for mail to be sent to the ownerï¿½s mailing address.  E.g. Station, Post Office, Letter Carrier Depot, etc.");
+                entity.Property(e => e.MailingAddrDeliveryInstallationType).HasComment("Delivery installation type, as required for mail to be sent to the owner?s mailing address.  E.g. Station, Post Office, Letter Carrier Depot, etc.");
 
-                entity.Property(e => e.MailingAddrFloor).HasComment("Floor, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrFloor).HasComment("Floor, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrFreeForm).HasComment("Additional mailing address information not fitting in any of the predefined fields, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrFreeForm).HasComment("Additional mailing address information not fitting in any of the predefined fields, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrModeOfDelivery).HasComment("Mode of Delivery, as required for mail to be sent to the ownerï¿½s mailing address.  e.g. Rural Route, Post Office Box, General Delivery, etc.");
+                entity.Property(e => e.MailingAddrModeOfDelivery).HasComment("Mode of Delivery, as required for mail to be sent to the owner?s mailing address.  e.g. Rural Route, Post Office Box, General Delivery, etc.");
 
-                entity.Property(e => e.MailingAddrModeOfDeliveryValue).HasComment("Mode of delivery value, as required for mail to be sent to the ownerï¿½s mailing address.  e.g. RR 876, PO Box 19, etc.");
+                entity.Property(e => e.MailingAddrModeOfDeliveryValue).HasComment("Mode of delivery value, as required for mail to be sent to the owner?s mailing address.  e.g. RR 876, PO Box 19, etc.");
 
-                entity.Property(e => e.MailingAddrPostalZip).HasComment("Postal or zip code, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrPostalZip).HasComment("Postal or zip code, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrProvinceState).HasComment("Province or state, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrProvinceState).HasComment("Province or state, as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrSite).HasComment("Site value, as required for mail to be sent to the ownerï¿½s mailing address.  e.g. Site 10.");
+                entity.Property(e => e.MailingAddrSite).HasComment("Site value, as required for mail to be sent to the owner?s mailing address.  e.g. Site 10.");
 
-                entity.Property(e => e.MailingAddrStreetDirectionPrefix).HasComment("Further refinement of the street name to facilitate location of building (pre-directional), as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrStreetDirectionPrefix).HasComment("Further refinement of the street name to facilitate location of building (pre-directional), as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetDirectionSuffix).HasComment("Further refinement of the street name to facilitate location of building (post-directional), as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrStreetDirectionSuffix).HasComment("Further refinement of the street name to facilitate location of building (post-directional), as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetName).HasComment("Road name assigned by a local government (municipality), as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrStreetName).HasComment("Road name assigned by a local government (municipality), as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetNumber).HasComment("Street number assigned by a local government (municipality), as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrStreetNumber).HasComment("Street number assigned by a local government (municipality), as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetType).HasComment("Street type assigned by a local government (municipality), as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrStreetType).HasComment("Street type assigned by a local government (municipality), as required for mail to be sent to the owner?s mailing address.");
 
-                entity.Property(e => e.MailingAddrUnitNumber).HasComment("Apartment or Suite or Unit Number, as required for mail to be sent to the ownerï¿½s mailing address.");
+                entity.Property(e => e.MailingAddrUnitNumber).HasComment("Apartment or Suite or Unit Number, as required for mail to be sent to the owner?s mailing address.");
 
                 entity.HasOne(d => d.RollNumberNavigation)
                     .WithMany(p => p.BcaOwnershipGroups)
@@ -3457,6 +3473,184 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsPropPropAdjacentLandType>(entity =>
+            {
+                entity.HasKey(e => e.PropPropAdjacentLandTypeId)
+                    .HasName("PRPALT_PK");
+
+                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ADJACENT_LAND_TYPE");
+
+                entity.Property(e => e.PropPropAdjacentLandTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.PropertyAdjacentLandTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
+                    .HasForeignKey(d => d.PropertyAdjacentLandTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRADJL_PIM_PRPALT_FK");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropAdjacentLandTypes)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPALT_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropAnomalyType>(entity =>
+            {
+                entity.HasKey(e => e.PropPropAnomalyTypeId)
+                    .HasName("PRPRAT_PK");
+
+                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ANOMALY_TYPE");
+
+                entity.Property(e => e.PropPropAnomalyTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.PropertyAnomalyTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropPropAnomalyTypes)
+                    .HasForeignKey(d => d.PropertyAnomalyTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRANOM_PIM_PRPRAT_FK");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropAnomalyTypes)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPRAT_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropRoadType>(entity =>
+            {
+                entity.HasKey(e => e.PropPropRoadTypeId)
+                    .HasName("PRPRRT_PK");
+
+                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ROAD_TYPE");
+
+                entity.Property(e => e.PropPropRoadTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ROAD_TYPE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropRoadTypes)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPRRT_FK");
+
+                entity.HasOne(d => d.PropertyRoadTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropPropRoadTypes)
+                    .HasForeignKey(d => d.PropertyRoadTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRROAD_PIM_PRPRRT_FK");
+            });
+
+            modelBuilder.Entity<PimsPropPropTenureType>(entity =>
+            {
+                entity.HasKey(e => e.PropPropTenureTypeId)
+                    .HasName("PRPRTT_PK");
+
+                entity.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_TENURE_TYPE");
+
+                entity.Property(e => e.PropPropTenureTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_TENURE_TYPE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.PropertyTenureTypeCode).HasDefaultValueSql("('UNKNOWN')");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropPropTenureTypes)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRPRTT_FK");
+
+                entity.HasOne(d => d.PropertyTenureTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropPropTenureTypes)
+                    .HasForeignKey(d => d.PropertyTenureTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPTNR_PIM_PRPRTT_FK");
+            });
+
             modelBuilder.Entity<PimsProperty>(entity =>
             {
                 entity.HasKey(e => e.PropertyId)
@@ -3530,8 +3724,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.VolumetricMeasurement).HasComment("Volumetric measurement of the parcel.");
 
-                entity.Property(e => e.VolumetricUnitTypeCode).HasComment("Volumetric measurement unit of the parcel.");
-
                 entity.Property(e => e.Zoning).HasComment("Current property zoning");
 
                 entity.Property(e => e.ZoningPotential).HasComment("Potential property zoning");
@@ -3539,7 +3731,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsProperties)
                     .HasForeignKey(d => d.AddressId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ADDRSS_PIM_PRPRTY_FK");
 
                 entity.HasOne(d => d.DistrictCodeNavigation)
@@ -3553,20 +3744,9 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.PropMgmtOrgId)
                     .HasConstraintName("PIM_ORG_PIM_PRPRTY_FK");
 
-                entity.HasOne(d => d.PropertyAdjacentLandTypeCodeNavigation)
-                    .WithMany(p => p.PimsProperties)
-                    .HasForeignKey(d => d.PropertyAdjacentLandTypeCode)
-                    .HasConstraintName("PIM_PRADJL_PIM_PRPRTY_FK");
-
-                entity.HasOne(d => d.PropertyAnomalyTypeCodeNavigation)
-                    .WithMany(p => p.PimsProperties)
-                    .HasForeignKey(d => d.PropertyAnomalyTypeCode)
-                    .HasConstraintName("PIM_PRANOM_PIM_PRPRTY_FK");
-
                 entity.HasOne(d => d.PropertyAreaUnitTypeCodeNavigation)
-                    .WithMany(p => p.PimsPropertyPropertyAreaUnitTypeCodeNavigations)
+                    .WithMany(p => p.PimsProperties)
                     .HasForeignKey(d => d.PropertyAreaUnitTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_FK");
 
                 entity.HasOne(d => d.PropertyClassificationTypeCodeNavigation)
@@ -3586,22 +3766,11 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.PropertyManagerId)
                     .HasConstraintName("PIM_PERSON_PIM_PRPRTY_FK");
 
-                entity.HasOne(d => d.PropertyRoadTypeCodeNavigation)
-                    .WithMany(p => p.PimsProperties)
-                    .HasForeignKey(d => d.PropertyRoadTypeCode)
-                    .HasConstraintName("PIM_PRROAD_PIM_PRPRTY_FK");
-
                 entity.HasOne(d => d.PropertyStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsProperties)
                     .HasForeignKey(d => d.PropertyStatusTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PRPSTS_PIM_PRPRTY_FK");
-
-                entity.HasOne(d => d.PropertyTenureTypeCodeNavigation)
-                    .WithMany(p => p.PimsProperties)
-                    .HasForeignKey(d => d.PropertyTenureTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PRPTNR_PIM_PRPRTY_FK");
 
                 entity.HasOne(d => d.PropertyTypeCodeNavigation)
                     .WithMany(p => p.PimsProperties)
@@ -3621,15 +3790,15 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_SPDCLT_PIM_PRPRTY_FK");
 
+                entity.HasOne(d => d.VolumeUnitTypeCodeNavigation)
+                    .WithMany(p => p.PimsProperties)
+                    .HasForeignKey(d => d.VolumeUnitTypeCode)
+                    .HasConstraintName("PIM_VOLUTY_PIM_PRPRTY_FK");
+
                 entity.HasOne(d => d.VolumetricTypeCodeNavigation)
                     .WithMany(p => p.PimsProperties)
                     .HasForeignKey(d => d.VolumetricTypeCode)
                     .HasConstraintName("PIM_PRVOLT_PIM_PRPRTY_FK");
-
-                entity.HasOne(d => d.VolumetricUnitTypeCodeNavigation)
-                    .WithMany(p => p.PimsPropertyVolumetricUnitTypeCodeNavigations)
-                    .HasForeignKey(d => d.VolumetricUnitTypeCode)
-                    .HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_VOL_FK");
             });
 
             modelBuilder.Entity<PimsPropertyActivity>(entity =>
@@ -4049,6 +4218,66 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsPropertyResearchFile>(entity =>
+            {
+                entity.HasKey(e => e.PropertyResearchFileId)
+                    .HasName("PRSCRC_PK");
+
+                entity.Property(e => e.PropertyResearchFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_RESEARCH_FILE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+
+                entity.Property(e => e.PropertyName).HasComment("Descriptivee reference for the property being researched.");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.PimsPropertyResearchFiles)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_PRPRTY_PIM_PRSCRC_FK");
+
+                entity.HasOne(d => d.ResearchFile)
+                    .WithMany(p => p.PimsPropertyResearchFiles)
+                    .HasForeignKey(d => d.ResearchFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RESRCH_PIM_PRSCRC_FK");
+            });
+
+            modelBuilder.Entity<PimsPropertyResearchFileHist>(entity =>
+            {
+                entity.HasKey(e => e.PropertyResearchFileHistId)
+                    .HasName("PIMS_PRSCRC_H_PK");
+
+                entity.Property(e => e.PropertyResearchFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_RESEARCH_FILE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsPropertyRoadType>(entity =>
             {
                 entity.HasKey(e => e.PropertyRoadTypeCode)
@@ -4323,6 +4552,239 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+            });
+
+            modelBuilder.Entity<PimsRequestSourceType>(entity =>
+            {
+                entity.HasKey(e => e.RequestSourceTypeCode)
+                    .HasName("RQSRCT_PK");
+
+                entity.HasComment("Code table to describe source ot the research request");
+
+                entity.Property(e => e.RequestSourceTypeCode).HasComment("Code indicating the source of the research request.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the code indicating the source of the research request.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
+            modelBuilder.Entity<PimsResearchFile>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFileId)
+                    .HasName("RESRCH_PK");
+
+                entity.HasComment("Property research file");
+
+                entity.Property(e => e.ResearchFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ExpropriationNotes).HasComment("Notes associated with an expropriation.");
+
+                entity.Property(e => e.IsExpropriation).HasComment("Is this an expropriation?");
+
+                entity.Property(e => e.Name).HasComment("Name given to the research file.");
+
+                entity.Property(e => e.RequestDate).HasComment("Date of the research request.");
+
+                entity.Property(e => e.RequestDescription).HasComment("Description of the research request.");
+
+                entity.Property(e => e.RequestorName).HasComment("Name of the research requestor.");
+
+                entity.Property(e => e.RequestorOrganization).HasComment("Organization associated with the research requestor.");
+
+                entity.Property(e => e.ResearchCompletionDate).HasComment("Date the research request was completed.");
+
+                entity.Property(e => e.ResearchFileStatusTypeCode).HasDefaultValueSql("('ACTIVE')");
+
+                entity.Property(e => e.ResearchResult).HasComment("Result of the research request.");
+
+                entity.Property(e => e.RfileNumber)
+                    .HasDefaultValueSql("('RFILE-UNKNOWN')")
+                    .HasComment("R-File number assigned to the research file, formatted value from PIMS_RFILE_NUMBER_SEQ sequence generator");
+
+                entity.Property(e => e.RoadAlias).HasComment("Alias(es) of roads associated with this research request.");
+
+                entity.Property(e => e.RoadName).HasComment("Name(s) of roads associated with this research request.");
+
+                entity.HasOne(d => d.RequestSourceTypeCodeNavigation)
+                    .WithMany(p => p.PimsResearchFiles)
+                    .HasForeignKey(d => d.RequestSourceTypeCode)
+                    .HasConstraintName("PIM_RQSRCT_PIM_RESRCH_FK");
+
+                entity.HasOne(d => d.RequestorNameNavigation)
+                    .WithMany(p => p.PimsResearchFiles)
+                    .HasForeignKey(d => d.RequestorName)
+                    .HasConstraintName("PIM_PERSON_PIM_RESRCH_FK");
+
+                entity.HasOne(d => d.RequestorOrganizationNavigation)
+                    .WithMany(p => p.PimsResearchFiles)
+                    .HasForeignKey(d => d.RequestorOrganization)
+                    .HasConstraintName("PIM_ORG_PIM_RESRCH_FK");
+
+                entity.HasOne(d => d.ResearchFileStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsResearchFiles)
+                    .HasForeignKey(d => d.ResearchFileStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RSRCHS_PIM_RESRCH_FK");
+            });
+
+            modelBuilder.Entity<PimsResearchFileHist>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFileHistId)
+                    .HasName("PIMS_RESRCH_H_PK");
+
+                entity.Property(e => e.ResearchFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsResearchFilePurpose>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFilePurposeId)
+                    .HasName("RSFLPR_PK");
+
+                entity.Property(e => e.ResearchFilePurposeId)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ]')");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ResearchPurposeTypeCode).HasDefaultValueSql("('GENENQ')");
+
+                entity.HasOne(d => d.ResearchFile)
+                    .WithMany(p => p.PimsResearchFilePurposes)
+                    .HasForeignKey(d => d.ResearchFileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RESRCH_PIM_RSFLPR_FK");
+
+                entity.HasOne(d => d.ResearchPurposeTypeCodeNavigation)
+                    .WithMany(p => p.PimsResearchFilePurposes)
+                    .HasForeignKey(d => d.ResearchPurposeTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RSHPRT_PIM_RSFLPR_FK");
+            });
+
+            modelBuilder.Entity<PimsResearchFilePurposeHist>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFilePurposeHistId)
+                    .HasName("PIMS_RSFLPR_H_PK");
+
+                entity.Property(e => e.ResearchFilePurposeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.ResearchFilePurposeId).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<PimsResearchFileStatusType>(entity =>
+            {
+                entity.HasKey(e => e.ResearchFileStatusTypeCode)
+                    .HasName("RSRCHS_PK");
+
+                entity.HasComment("Code table to describe property adjacent land type.");
+
+                entity.Property(e => e.ResearchFileStatusTypeCode).HasComment("Code indicating the status of the research file.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the code indicating the status of the research file.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
+            modelBuilder.Entity<PimsResearchPurposeType>(entity =>
+            {
+                entity.HasKey(e => e.ResearchPurposeTypeCode)
+                    .HasName("RSHPRT_PK");
+
+                entity.HasComment("Code table to describe the purpose ot the research request");
+
+                entity.Property(e => e.ResearchPurposeTypeCode).HasComment("Code indicating the purpose of the research request.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the code indicating the purpose of the research request.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
             });
 
             modelBuilder.Entity<PimsRole>(entity =>
@@ -5030,6 +5492,34 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsVolumeUnitType>(entity =>
+            {
+                entity.HasKey(e => e.VolumeUnitTypeCode)
+                    .HasName("VOLUTY_PK");
+
+                entity.HasComment("The volume unit used for measuring Properties.");
+
+                entity.Property(e => e.VolumeUnitTypeCode).HasComment("The volume unit used for measuring Properties.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Translation of the code value into a description that can be displayed to the user.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is still active or is now disabled.");
+            });
+
             modelBuilder.Entity<PimsVolumetricType>(entity =>
             {
                 entity.HasKey(e => e.VolumetricTypeCode)
@@ -5372,6 +5862,22 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_ROAD_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROP_PROP_TENURE_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -5428,6 +5934,14 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_PROPERTY_RESEARCH_FILE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PROPERTY_RESEARCH_FILE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_PROPERTY_SERVICE_FILE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -5445,6 +5959,26 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROPERTY_TAX_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_PURPOSE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RFILE_NUMBER_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

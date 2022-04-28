@@ -34,19 +34,18 @@ namespace Pims.Dal.Entities
         [StringLength(20)]
         public string PropertyClassificationTypeCode { get; set; }
         [Column("ADDRESS_ID")]
-        public long AddressId { get; set; }
+        public long? AddressId { get; set; }
         [Column("REGION_CODE")]
         public short RegionCode { get; set; }
         [Column("DISTRICT_CODE")]
         public short DistrictCode { get; set; }
-        [Required]
-        [Column("PROPERTY_TENURE_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyTenureTypeCode { get; set; }
-        [Required]
         [Column("PROPERTY_AREA_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyAreaUnitTypeCode { get; set; }
+        [Required]
+        [Column("PROPERTY_DATA_SOURCE_TYPE_CODE")]
+        [StringLength(20)]
+        public string PropertyDataSourceTypeCode { get; set; }
         [Required]
         [Column("PROPERTY_STATUS_TYPE_CODE")]
         [StringLength(20)]
@@ -55,10 +54,12 @@ namespace Pims.Dal.Entities
         [Column("SURPLUS_DECLARATION_TYPE_CODE")]
         [StringLength(20)]
         public string SurplusDeclarationTypeCode { get; set; }
-        [Required]
-        [Column("PROPERTY_DATA_SOURCE_TYPE_CODE")]
+        [Column("VOLUMETRIC_TYPE_CODE")]
         [StringLength(20)]
-        public string PropertyDataSourceTypeCode { get; set; }
+        public string VolumetricTypeCode { get; set; }
+        [Column("VOLUME_UNIT_TYPE_CODE")]
+        [StringLength(20)]
+        public string VolumeUnitTypeCode { get; set; }
         [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE", TypeName = "date")]
         public DateTime PropertyDataSourceEffectiveDate { get; set; }
         [Column("NAME")]
@@ -81,6 +82,13 @@ namespace Pims.Dal.Entities
         public string SurplusDeclarationComment { get; set; }
         [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
         public DateTime? SurplusDeclarationDate { get; set; }
+        [Column("MUNICIPAL_ZONING")]
+        [StringLength(100)]
+        public string MunicipalZoning { get; set; }
+        [Column("IS_VOLUMETRIC_PARCEL")]
+        public bool? IsVolumetricParcel { get; set; }
+        [Column("VOLUMETRIC_MEASUREMENT")]
+        public float? VolumetricMeasurement { get; set; }
         [Column("IS_OWNED")]
         public bool IsOwned { get; set; }
         [Column("IS_PROPERTY_OF_INTEREST")]
@@ -89,6 +97,8 @@ namespace Pims.Dal.Entities
         public bool IsVisibleToOtherAgencies { get; set; }
         [Column("IS_SENSITIVE")]
         public bool IsSensitive { get; set; }
+        [Column("IS_PROVINCIAL_PUBLIC_HWY")]
+        public bool? IsProvincialPublicHwy { get; set; }
         [Column("ZONING")]
         [StringLength(50)]
         public string Zoning { get; set; }
@@ -133,29 +143,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("VOLUMETRIC_UNIT_TYPE_CODE")]
-        [StringLength(20)]
-        public string VolumetricUnitTypeCode { get; set; }
-        [Column("PROPERTY_ANOMALY_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyAnomalyTypeCode { get; set; }
-        [Column("PROPERTY_ROAD_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyRoadTypeCode { get; set; }
-        [Column("PROPERTY_ADJACENT_LAND_TYPE_CODE")]
-        [StringLength(20)]
-        public string PropertyAdjacentLandTypeCode { get; set; }
-        [Column("VOLUMETRIC_TYPE_CODE")]
-        [StringLength(20)]
-        public string VolumetricTypeCode { get; set; }
-        [Column("MUNICIPAL_ZONING")]
-        [StringLength(100)]
-        public string MunicipalZoning { get; set; }
-        [Column("IS_VOLUMETRIC_PARCEL")]
-        public bool? IsVolumetricParcel { get; set; }
-        [Column("VOLUMETRIC_MEASUREMENT")]
-        public float? VolumetricMeasurement { get; set; }
-        [Column("IS_PROVINCIAL_PUBLIC_HWY")]
-        public bool? IsProvincialPublicHwy { get; set; }
     }
 }

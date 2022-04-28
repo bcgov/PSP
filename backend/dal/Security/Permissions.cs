@@ -70,6 +70,18 @@ namespace Pims.Dal.Security
         LeaseEdit = 21,
 
         [Display(GroupName = "lease", Name = "lease-delete", Description = "Can delete existing leases.")]
-        LeaseDelete = 22
+        LeaseDelete = 22,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-view", Description = "Can view research files.")]
+        ResearchFileView = 23,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-add", Description = "Can add new research files.")]
+        ResearchFileAdd = 24,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-edit", Description = "Can edit existing research files.")]
+        ResearchFileEdit = 25,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-delete", Description = "Can delete existing research files.")]
+        ResearchFileDelete = 26
     }
 }

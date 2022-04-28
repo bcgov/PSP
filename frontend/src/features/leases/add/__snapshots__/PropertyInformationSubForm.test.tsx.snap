@@ -195,9 +195,21 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              value="ACRE"
+            >
+              Acres
+            </option>
+            <option
+              class="option"
+              value="FEET2"
+            >
+              Feet sq
+            </option>
+            <option
+              class="option"
               value="HA"
             >
-              Hectare
+              Hectares
             </option>
             <option
               class="option"

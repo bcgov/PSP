@@ -1,8 +1,10 @@
 import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
+import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
 import { ICluster, PointFeature } from '../types';
+import DraftMarker from './SvgMarkers/DraftMarker';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
@@ -69,6 +71,17 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
     return parcelIconSelect;
   }
   return parcelIcon;
+};
+
+// parcel icon (green) highlighted
+export const getDraftIcon = (text: string) => {
+  return L.divIcon({
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+    html: ReactDOMServer.renderToStaticMarkup(<DraftMarker text={text} />),
+  });
 };
 
 /**

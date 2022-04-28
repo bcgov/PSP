@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
+import { ModalProps as BsModalProps } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
+import styled from 'styled-components';
 
 export enum ModalSize {
   XLARGE = 'modal-xl',
@@ -68,31 +70,47 @@ export interface ModalProps {
   /** optional override to control the x button in the top right of the modal. Default is to show. */
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
-  size?: ModalSize;
+  modalSize?: ModalSize;
   className?: string;
+  /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
+  asPopup?: boolean;
+  show?: boolean;
 }
 
 /**
  * Generic Component used to display modal popups to the user.
  * @param props customize the component with custom text, and an operation to take when the component is closed.
  */
-const GenericModal = (props: ModalProps) => {
+export const GenericModal = (props: BsModalProps & ModalProps) => {
+  const {
+    display,
+    setDisplay,
+    handleOk,
+    handleCancel,
+    title,
+    message,
+    okButtonVariant,
+    okButtonText,
+    cancelButtonVariant,
+    cancelButtonText,
+    closeButton,
+  } = props;
   const [show, setShow] = useState(true);
 
   if (
-    props.display !== undefined &&
-    props.setDisplay === undefined &&
-    props.handleOk === undefined &&
-    props.handleCancel === undefined
+    display !== undefined &&
+    setDisplay === undefined &&
+    handleOk === undefined &&
+    handleCancel === undefined
   ) {
     throw Error('Modal has insufficient parameters');
   }
-  const showState = props.display !== undefined ? props.display : show;
-  const showControl = props.setDisplay !== undefined ? props.setDisplay : setShow;
+  const showState = display !== undefined ? display : show;
+  const showControl = setDisplay !== undefined ? setDisplay : setShow;
 
   const close = () => {
-    if (props.handleCancel !== undefined) {
-      props.handleCancel();
+    if (handleCancel !== undefined) {
+      handleCancel();
     } else {
       showControl(false);
     }
@@ -107,35 +125,70 @@ const GenericModal = (props: ModalProps) => {
   };
 
   return (
-    <Container>
-      <Modal
-        show={showState}
-        onHide={close}
-        dialogClassName={classNames(props.size, props.className)}
-      >
-        <Modal.Header closeButton={props.closeButton}>
-          <Modal.Title>{props.title}</Modal.Title>
-        </Modal.Header>
+    <ModalContainer {...props} show={showState}>
+      <Modal.Header closeButton={closeButton}>
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>{props.message}</Modal.Body>
+      <Modal.Body>{message}</Modal.Body>
 
-        <Modal.Footer>
-          {props.cancelButtonText && (
-            <Button
-              variant={props.cancelButtonVariant ?? 'secondary'}
-              onClick={close}
-              style={{ width: 'unset' }}
-            >
-              {props.cancelButtonText}
-            </Button>
-          )}
-          <Button variant={props.okButtonVariant ?? 'primary'} onClick={ok}>
-            {props.okButtonText ?? 'Ok'}
+      <Modal.Footer>
+        {cancelButtonText && (
+          <Button
+            variant={cancelButtonVariant ?? 'secondary'}
+            onClick={close}
+            style={{ width: 'unset' }}
+          >
+            {cancelButtonText}
           </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+        )}
+        <Button variant={okButtonVariant ?? 'primary'} onClick={ok}>
+          {okButtonText ?? 'Ok'}
+        </Button>
+      </Modal.Footer>
+    </ModalContainer>
   );
 };
+
+const ModalContainer = (props: BsModalProps & ModalProps) =>
+  !props.asPopup ? (
+    <Container>
+      <Modal
+        {...props}
+        show={props.show}
+        onHide={props.close}
+        dialogClassName={classNames(props.modalSize, props.className)}
+      >
+        {props.children}
+      </Modal>
+    </Container>
+  ) : props.show ? (
+    <PopupContainer className={classNames(props.modalSize, props.className)}>
+      {props.children}
+    </PopupContainer>
+  ) : null;
+
+const PopupContainer = styled.div`
+  position: fixed;
+  background-color: white;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+  top: 0;
+  z-index: 1;
+  .modal-header {
+    height: 3.8rem;
+    padding: 0 1rem;
+    background-color: ${({ theme }) => theme.css.primaryColor};
+    .h4 {
+      color: white;
+      font-family: BcSans-Bold;
+      font-size: 2.2rem;
+      height: 2.75rem;
+    }
+    .close {
+      color: white;
+      opacity: 1;
+    }
+  }
+`;
 
 export default GenericModal;

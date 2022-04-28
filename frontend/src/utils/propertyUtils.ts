@@ -34,11 +34,11 @@ export const pidPadded = (pid?: string) => {
  * The pidParser is used to return a numeric pid value from a formatted pid.
  * @param {string} pid This is the target PID to be parsed
  */
-export const pidParser = (pid?: string | number): number | undefined => {
+export const pidParser = (pid?: string | number | null): number | undefined => {
   if (typeof pid === 'number') {
     return pid;
   }
-  if (pid !== undefined) {
+  if (pid !== undefined && pid !== null) {
     const regex = /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d)/;
     const format = pid.match(regex);
     if (format !== null && format.length === 4) {

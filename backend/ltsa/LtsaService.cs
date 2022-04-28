@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Pims.Ltsa
@@ -27,7 +28,6 @@ namespace Pims.Ltsa
         private TokenModel _token = null;
         private readonly JsonSerializerOptions _jsonSerializerOptions = null;
         private readonly ILogger<ILtsaService> _logger;
-        private readonly int MAX_RETRIES = 5;
         private readonly AsyncRetryPolicy _authPolicy;
         #endregion
         #region Properties
@@ -101,7 +101,7 @@ namespace Pims.Ltsa
         {
             var orderProcessingPolicy = Policy
                 .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
-                 .WaitAndRetryAsync(MAX_RETRIES, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                 .WaitAndRetryAsync(Options.MaxRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             try
             {
@@ -137,7 +137,8 @@ namespace Pims.Ltsa
                 try
                 {
                     error = JsonSerializer.Deserialize<Error>(errorContent, _jsonSerializerOptions);
-                } catch (JsonException)
+                }
+                catch (JsonException)
                 {
                     error = new Error(new List<String>() { ex.Message });
                 }
@@ -267,7 +268,7 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T: IFieldedData
+        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
             return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);

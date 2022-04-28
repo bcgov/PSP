@@ -42,6 +42,7 @@ export interface IProperty {
   region?: string;
   districtId?: number;
   district?: string;
+  planNumber?: string;
 
   latitude?: number;
   longitude?: number;

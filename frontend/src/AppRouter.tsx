@@ -7,6 +7,7 @@ import CreateContactContainer from 'features/contacts/contact/create/CreateConta
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
 import { AddLeaseContainer } from 'features/leases';
+import ResearchListView from 'features/research/list/ResearchListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -200,6 +201,15 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
+          exact
+          path="/research/list"
+          component={ResearchListView}
+          layout={AuthLayout}
+          claim={Claims.RESEARCH_VIEW}
+          title={getTitle('View Research Files')}
+        />
+        <AppRoute
+          protected
           path="/admin/user/:key?"
           component={EditUserPage}
           layout={AuthLayout}
@@ -212,7 +222,6 @@ const AppRouter: React.FC = () => {
           component={TestFileManagement}
           layout={AuthLayout}
         />
-
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
       </Switch>
     </Suspense>

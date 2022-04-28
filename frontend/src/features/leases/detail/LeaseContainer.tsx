@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import {
-  BackToSearchButton,
   LeaseBreadCrumb,
   LeaseHeader,
   LeaseIndex,
@@ -148,7 +147,6 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
           onClickManagement={onClickManagement}
         />
         <LeaseHeader lease={lease} />
-        <BackToSearchButton />
         <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
         <LeasePageForm
           refreshLease={refresh}

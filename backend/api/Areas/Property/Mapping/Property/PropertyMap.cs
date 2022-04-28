@@ -1,3 +1,4 @@
+using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Property.Models.Property;
@@ -16,10 +17,10 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.PropertyType, src => src.PropertyTypeCodeNavigation)
 
                 // TODO: These navigation properties will be changed to many to many in next DB schema change
-                .Map(dest => dest.Anomalies, src => src.PropertyAnomalyTypeCodeNavigation != null ? new[] { src.PropertyAnomalyTypeCodeNavigation } : null)
-                .Map(dest => dest.Tenure, src => src.PropertyTenureTypeCodeNavigation != null ? new[] { src.PropertyTenureTypeCodeNavigation } : null)
-                .Map(dest => dest.RoadType, src => src.PropertyRoadTypeCodeNavigation != null ? new[] { src.PropertyRoadTypeCodeNavigation } : null)
-                .Map(dest => dest.AdjacentLand, src => src.PropertyAdjacentLandTypeCodeNavigation != null ? new[] { src.PropertyAdjacentLandTypeCodeNavigation } : null)
+                .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes.Select(a => a.PropertyAnomalyTypeCodeNavigation))
+                .Map(dest => dest.Tenure, src => src.PimsPropPropTenureTypes.Select(t => t.PropertyTenureTypeCodeNavigation))
+                .Map(dest => dest.RoadType, src => src.PimsPropPropRoadTypes.Select(r => r.PropertyRoadTypeCodeNavigation))
+                .Map(dest => dest.AdjacentLand, src => src.PimsPropPropAdjacentLandTypes.Select(l => l.PropertyAdjacentLandTypeCodeNavigation))
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
                 .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
@@ -35,7 +36,7 @@ namespace Pims.Api.Areas.Property.Mapping.Property
 
                 .Map(dest => dest.IsVolumetricParcel, src => src.IsVolumetricParcel)
                 .Map(dest => dest.VolumetricMeasurement, src => src.VolumetricMeasurement)
-                .Map(dest => dest.VolumetricUnit, src => src.VolumetricUnitTypeCodeNavigation)
+                .Map(dest => dest.VolumetricUnit, src => src.VolumeUnitTypeCodeNavigation)
                 .Map(dest => dest.VolumetricType, src => src.VolumetricTypeCodeNavigation)
 
                 .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)

@@ -23,9 +23,11 @@ namespace Pims.Ltsa.Models
         /// Indicate the status for the order  1. Cancelled - the order should be cancelled. 
         /// </summary>
         /// <value>Indicate the status for the order  1. Cancelled - the order should be cancelled. </value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum Cancelled for value: Cancelled
             /// </summary>

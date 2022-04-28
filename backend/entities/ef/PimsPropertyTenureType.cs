@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsPropertyTenureType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
+            PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProperty.PropertyTenureTypeCodeNavigation))]
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsPropPropTenureType.PropertyTenureTypeCodeNavigation))]
+        public virtual ICollection<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
     }
 }

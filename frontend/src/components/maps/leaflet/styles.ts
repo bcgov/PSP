@@ -3,6 +3,16 @@ import styled from 'styled-components';
 export const MapContainer = styled.div`
   grid-area: map;
 
+  .leaflet-div-icon {
+    background: none;
+    border: none;
+    img {
+      width: inherit;
+      height: inherit;
+      filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+    }
+  }
+
   .leaflet-container {
     /* Subtract the header, nav-bar and footer sizes */
     height: 100%;
@@ -48,4 +58,7 @@ export const MapGrid = styled.div`
     grid-template-rows: 0 1fr;
     transition: 1s;
   }
+
+  transition: margin 1s, width 1s;
+  position: relative;
 `;

@@ -8,55 +8,55 @@ exports[`Property list view matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  .c0 {
+  .c1 {
   padding-right: 0;
 }
 
-.c0 .form-control {
+.c1 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c1:not(:first-child) {
+.c2:not(:first-child) {
   padding-left: 0;
 }
 
-.c1:not(:first-child) .form-control {
+.c2:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c2 div:nth-child(2) div:nth-child(1) {
+.c3 div:nth-child(2) div:nth-child(1) {
   cursor: auto;
 }
 
-.c2 div:nth-child(2) div:nth-child(1) svg {
+.c3 div:nth-child(2) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c2 div:nth-child(1) div:nth-child(1) {
+.c3 div:nth-child(1) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c2 div:nth-child(1) div:nth-child(1) svg {
+.c3 div:nth-child(1) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c3 {
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -73,16 +73,62 @@ exports[`Property list view matches snapshot 1`] = `
   align-items: center;
 }
 
-.c4 svg {
+.c5 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
 }
 
-.c5 {
+.c6 {
   background-color: #fff !important;
   color: primaryColor !important;
   padding: 6px 0.5rem;
+}
+
+.c0 {
+  -webkit-transition: margin 1s;
+  transition: margin 1s;
+  grid-area: filter;
+  background-color: $filter-background-color;
+  box-shadow: 0px 4px 5px rgba(0,0,0,0.2);
+  z-index: 500;
+}
+
+.c0 .map-filter-bar {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.c0 .map-filter-bar .vl {
+  border-left: 6px solid rgba(96,96,96,0.2);
+  height: 4rem;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-width: 0.2rem;
+}
+
+.c0 .map-filter-bar .btn-primary {
+  color: white;
+  font-weight: bold;
+  height: 3.5rem;
+  width: 3.5rem;
+  min-height: unset;
+  padding: 0;
+}
+
+.c0 .map-filter-bar .form-control {
+  font-size: 1.4rem;
+}
+
+.c0 .form-group {
+  margin-bottom: 0;
 }
 
 <div
@@ -92,7 +138,7 @@ exports[`Property list view matches snapshot 1`] = `
       class="filter-container border-bottom container-fluid"
     >
       <div
-        class="px-0 map-filter-container container-fluid"
+        class="c0 px-0 container-fluid"
       >
         <form
           class=""
@@ -112,10 +158,10 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-xl-3 col-lg-4 col-md-5 col-6"
             >
               <div
-                class="row"
+                class="idir-input-group flex-nowrap row"
               >
                 <div
-                  class="c0 col-auto"
+                  class="c1 col-auto"
                 >
                   <div
                     class="input-group-prepend"
@@ -145,7 +191,7 @@ exports[`Property list view matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c1 col"
+                  class="c2 col"
                 >
                   <div
                     class="input form-group"
@@ -222,13 +268,13 @@ exports[`Property list view matches snapshot 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c2"
+                class="c3"
               >
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
-                    class="c4"
+                    class="c5"
                   >
                     <svg>
                       icon-map.svg
@@ -236,10 +282,10 @@ exports[`Property list view matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
-                    class="c4"
+                    class="c5"
                   >
                     <svg>
                       icon-table.svg
@@ -265,7 +311,7 @@ exports[`Property list view matches snapshot 1`] = `
           class="menu"
         />
         <button
-          class="c5 btn btn-primary"
+          class="c6 btn btn-primary"
           type="button"
         >
           <svg
@@ -284,7 +330,7 @@ exports[`Property list view matches snapshot 1`] = `
           </svg>
         </button>
         <button
-          class="c5 btn btn-primary"
+          class="c6 btn btn-primary"
           type="button"
         >
           <svg

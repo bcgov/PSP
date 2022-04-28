@@ -22,9 +22,11 @@ namespace Pims.Ltsa.Models
         /// Status of the title
         /// </summary>
         /// <value>Status of the title</value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum REGISTERED for value: REGISTERED
             /// </summary>

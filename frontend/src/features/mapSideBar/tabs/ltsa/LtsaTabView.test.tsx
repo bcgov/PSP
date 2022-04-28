@@ -12,10 +12,16 @@ describe('LtsaTabView component', () => {
     renderOptions: RenderOptions & ILtsaTabViewProps & { lease?: IFormLease } = {},
   ) => {
     // render component under test
-    const component = render(<LtsaTabView ltsaData={renderOptions.ltsaData} />, {
-      ...renderOptions,
-      history,
-    });
+    const component = render(
+      <LtsaTabView
+        ltsaData={renderOptions.ltsaData}
+        ltsaRequestedOn={renderOptions.ltsaRequestedOn}
+      />,
+      {
+        ...renderOptions,
+        history,
+      },
+    );
 
     return {
       component,
@@ -31,15 +37,19 @@ describe('LtsaTabView component', () => {
     expect(spinner).toBeVisible();
   });
 
-  it('renders as expected when provided valid ltsa data object', () => {
-    const { component } = setup({ ltsaData: mockLtsaResponse });
+  it('renders as expected when provided valid ltsa data object and requested on datetime', () => {
+    const { component } = setup({
+      ltsaData: mockLtsaResponse,
+      ltsaRequestedOn: new Date('06-Apr-2022 11:32 AM'),
+    });
+
     expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('does not throw an exception for an invalid ltsa data object', () => {
     const {
       component: { getByText },
-    } = setup({ ltsaData: {} as LtsaOrders });
+    } = setup({ ltsaData: {} as LtsaOrders, ltsaRequestedOn: new Date() });
     expect(getByText('Title Details')).toBeVisible();
   });
 });

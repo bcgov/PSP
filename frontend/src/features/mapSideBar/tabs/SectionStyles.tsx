@@ -2,10 +2,6 @@ import { Form } from 'formik';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
-export const StyledScrollable = styled.div`
-  overflow-y: auto;
-`;
-
 export const StyledFormSection = styled.div`
   margin: 1.5rem;
   padding: 1.5rem;
@@ -21,6 +17,7 @@ export const StyledSectionHeader = styled.h2`
 `;
 
 export const StyledReadOnlyForm = styled(Form)`
+  position: relative;
   &&& {
     input,
     select,
@@ -55,4 +52,20 @@ export const TableCaption = styled.label`
   padding-bottom: 0.7rem;
   margin-bottom: 0;
   border-bottom: 2px solid #8c8c8c;
+`;
+
+export const StyledInlineMessageSection = styled.div`
+  margin: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  background-color: white;
+  text-align: left;
+`;
+
+export const InlineMessage = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+  font-style: italic;
 `;

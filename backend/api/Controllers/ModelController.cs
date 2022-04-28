@@ -1,15 +1,11 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Policies;
-using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Pims.Api.Areas.Lease.Controllers
+namespace Pims.Api.Areas.Dummy.Controllers
 {
     /// <summary>
-    /// LeaseController class, provides endpoints for interacting with leases.
+    /// ModelController class, provides endpoints for interacting with leases.
     /// </summary>
-    [Authorize]
     [ApiController]
     [ApiVersion("2.0")]
     [Area("models")]
@@ -19,7 +15,7 @@ namespace Pims.Api.Areas.Lease.Controllers
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a LeaseController class, initializes it with the specified arguments.
+        /// Creates a new instance of a ModelController class, initializes it with the specified arguments.
         /// </summary>
         public ModelController()
         {
@@ -31,12 +27,24 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{id:long}")]
-        [HasPermission(Permissions.LeaseView)]
+        [HttpGet("dummy/person/{id:long}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PersonModel), 200)]
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult GetPerson(int id)
+        {
+            return new JsonResult(id);
+        }
+
+        // <summary>
+        /// Get the lease for the specified primary key 'id'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("dummy/research/{id:long}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Pims.Api.Models.Concepts.ResearchFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetResearchFile(int id)
         {
             return new JsonResult(id);
         }

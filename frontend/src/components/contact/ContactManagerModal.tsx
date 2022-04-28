@@ -43,7 +43,7 @@ export const ContactManagerModal: React.FunctionComponent<IContactManagerModalPr
       cancelButtonText="Cancel"
       handleOk={props.handleModalOk}
       handleCancel={props.handleModalCancel}
-      size={ModalSize.XLARGE}
+      modalSize={ModalSize.XLARGE}
     ></GenericModal>
   );
 };

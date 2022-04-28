@@ -113,7 +113,7 @@ namespace Pims.Api.Helpers.Middleware
             }
             else if (ex is KeyNotFoundException)
             {
-                code = HttpStatusCode.BadRequest;
+                code = HttpStatusCode.NotFound;
                 message = "Item does not exist.";
 
                 _logger.LogDebug(ex, "Middleware caught unhandled exception.");

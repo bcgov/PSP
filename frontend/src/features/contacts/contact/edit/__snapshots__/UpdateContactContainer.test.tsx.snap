@@ -132,13 +132,20 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   display: none;
 }
 
-.c12.c12:hover {
+.c12.c12 > div:hover {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
-.c12.c12:hover .text {
+.c12.c12 > div:hover .text {
   display: inline;
 }
 
@@ -763,6 +770,9 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                         width="2rem"
                         xmlns="http://www.w3.org/2000/svg"
                       >
+                        <title>
+                          remove
+                        </title>
                         <path
                           d="M0 0h24v24H0z"
                           fill="none"

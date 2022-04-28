@@ -1,21 +1,15 @@
-import './PropertyFilter.scss';
-
-import {
-  Form,
-  ResetButton,
-  SearchButton,
-  SearchToggle,
-  SearchToggleOption,
-} from 'components/common/form';
+import { Form, ResetButton, SearchButton } from 'components/common/form';
+import { SelectInput } from 'components/common/List/SelectInput';
 import { TableSort } from 'components/Table/TableSort';
 import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
+import { useHistory } from 'react-router';
 import { FilterBarSchema } from 'utils/YupSchema';
 
-import { PropertyFilterOptions } from './';
 import { IPropertyFilter } from './IPropertyFilter';
+import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 
 /**
  * PropertyFilter component properties.
@@ -59,6 +53,8 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     setSorting: onSorting,
   });
 
+  const history = useHistory();
+
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
     return values;
@@ -73,7 +69,13 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     changeFilter(defaultFilter);
   };
 
-  const handlePageToggle = () => {};
+  const handlePageToggle = (option: SearchToggleOption) => {
+    if (option === SearchToggleOption.Map) {
+      history.push('/mapview');
+    } else if (option === SearchToggleOption.List) {
+      history.push('/properties/list');
+    }
+  };
 
   return (
     <Formik<IPropertyFilter>
@@ -93,7 +95,21 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
               <span>Search:</span>
             </Col>
             <Col xs="6" md="5" lg="4" xl="3">
-              <PropertyFilterOptions />
+              <SelectInput<
+                {
+                  pinOrPid: string;
+                  address: string;
+                },
+                IPropertyFilter
+              >
+                field="searchBy"
+                defaultKey="pinOrPid"
+                selectOptions={[
+                  { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+                  { label: 'Address', key: 'address', placeholder: 'Enter an address' },
+                ]}
+                className="idir-input-group"
+              />
             </Col>
             <Col xs="auto">
               <SearchButton
@@ -111,7 +127,13 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
               />
             </Col>
             <Col xs="auto" className="bar-item">
-              <SearchToggle onClick={handlePageToggle} toolId={'toggle'} toggle={toggle} />
+              <PropertySearchToggle
+                onPageToggle={option => {
+                  handlePageToggle(option);
+                }}
+                toolId={'toggle'}
+                toggle={toggle}
+              />
             </Col>
           </Form.Row>
         </Form>
