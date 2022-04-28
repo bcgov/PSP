@@ -1,7 +1,7 @@
 import classNames from 'classnames';
+import { Button } from 'components/common/buttons/Button';
 import React, { useState } from 'react';
 import { ModalProps as BsModalProps } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import styled from 'styled-components';

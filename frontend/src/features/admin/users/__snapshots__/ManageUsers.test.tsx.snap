@@ -1,7 +1,163 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Manage Users Component Snapshot matches 1`] = `
-.c6 {
+.c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  border: none;
+}
+
+.c2.btn.btn-secondary {
+  background: none;
+}
+
+.c2.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  background: none;
+}
+
+.c2.btn.btn-light {
+  border: none;
+}
+
+.c2.btn.btn-dark {
+  border: none;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5.c5.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c5.c5.btn:hover,
+.c5.c5.btn:focus,
+.c5.c5.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c5.c5.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c5.c5.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -20,17 +176,17 @@ exports[`Manage Users Component Snapshot matches 1`] = `
   margin-left: 0.5rem;
 }
 
+.c9 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .c8 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c7 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c9 {
+.c10 {
   margin-top: 0.3rem;
 }
 
@@ -50,7 +206,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
   padding: 0;
 }
 
-.c2 {
+.c3 {
   padding: 1.6rem 3.2rem;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -65,18 +221,12 @@ exports[`Manage Users Component Snapshot matches 1`] = `
   z-index: 500;
 }
 
-.c5 {
+.c6 {
   margin-top: 1rem;
   margin-bottom: 4rem;
 }
 
 .c4 {
-  background-color: #fff !important;
-  color: primaryColor !important;
-  padding: 0.6rem 0.5rem;
-}
-
-.c3 {
   text-align: right;
   margin-right: 5rem;
 }
@@ -205,7 +355,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item flex-grow-0 col"
           >
             <button
-              class="Button Button--icon-only bg-warning btn btn-primary"
+              class="c2 Button Button--icon-only bg-warning btn btn-primary"
               data-testid="search"
               id="search-button"
               type="submit"
@@ -233,7 +383,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item flex-grow-0 col"
           >
             <button
-              class="Button Button--icon-only btn btn-info"
+              class="c2 Button Button--icon-only btn btn-info"
               data-testid="reset-button"
               id="reset-button"
               type="reset"
@@ -262,33 +412,37 @@ exports[`Manage Users Component Snapshot matches 1`] = `
     </div>
   </div>
   <div
-    class="c2"
+    class="c3"
   >
     <div
-      class="c3"
+      class="c4"
     >
       <button
-        class="c4 btn btn-primary"
+        class="c2 Button c5 btn btn-primary"
         type="button"
       >
-        <svg
-          data-testid="excel-icon"
-          fill="currentColor"
-          height="36"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 384 512"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="Button__value"
         >
-          <path
-            d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-          />
-        </svg>
+          <svg
+            data-testid="excel-icon"
+            fill="currentColor"
+            height="36"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 384 512"
+            width="36"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+            />
+          </svg>
+        </div>
       </button>
     </div>
     <div
-      class="c5 container-fluid"
+      class="c6 container-fluid"
     >
       <div
         class="table"
@@ -314,10 +468,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 IDIR/BCeID
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -332,7 +486,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -359,10 +513,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 First name
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -377,7 +531,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -404,10 +558,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 Last name
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -422,7 +576,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -449,10 +603,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 Email
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -467,7 +621,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -494,10 +648,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 Position
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -512,7 +666,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -539,10 +693,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 Active
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -557,7 +711,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -608,10 +762,10 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               >
                 Created On
                 <div
-                  class="c6"
+                  class="c7"
                 >
                   <svg
-                    class="c7"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -626,7 +780,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1025,7 +1179,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                   style="display: flex;"
                 >
                   <span
-                    class="c9"
+                    class="c10"
                   >
                     Show
                   </span>
@@ -1036,7 +1190,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     value="10"
                   />
                   <span
-                    class="c9"
+                    class="c10"
                   >
                     Entries
                   </span>

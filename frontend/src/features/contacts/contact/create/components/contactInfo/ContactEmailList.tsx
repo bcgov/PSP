@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { LinkButton } from 'components/common/buttons';
 import { ArrayHelpers, FieldArray } from 'formik';
 import { IEditableContactMethodForm } from 'interfaces/editable-contact';
 import React from 'react';
@@ -38,9 +38,9 @@ export const ContactEmailList: React.FunctionComponent<IContactEmailList> = ({
               onRemove={onRemove(array, index, arrayHelpers)}
             />
           ))}
-          <Button variant="link" onClick={() => arrayHelpers.push({ ...emptyContactMethod })}>
+          <LinkButton onClick={() => arrayHelpers.push({ ...emptyContactMethod })}>
             + Add another email address
-          </Button>
+          </LinkButton>
         </>
       )}
     </FieldArray>

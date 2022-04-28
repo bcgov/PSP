@@ -14,7 +14,8 @@ import thunk from 'redux-thunk';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { TenantProvider } from 'tenants';
+import { ThemeProvider } from 'styled-components';
+import { TenantConsumer, TenantProvider } from 'tenants';
 
 import ManageAccessRequests from './ManageAccessRequests';
 
@@ -84,13 +85,19 @@ const componentRender = (store: any) => {
   process.env.REACT_APP_TENANT = 'MOTI';
   let component = create(
     <TenantProvider>
-      <Formik initialValues={{}} onSubmit={noop}>
-        <Router history={history}>
-          <Provider store={store}>
-            <ManageAccessRequests />
-          </Provider>
-        </Router>
-      </Formik>
+      <TenantConsumer>
+        {({ tenant }) => (
+          <Formik initialValues={{}} onSubmit={noop}>
+            <Router history={history}>
+              <Provider store={store}>
+                <ThemeProvider theme={{ tenant, css: {} }}>
+                  <ManageAccessRequests />
+                </ThemeProvider>
+              </Provider>
+            </Router>
+          </Formik>
+        )}
+      </TenantConsumer>
     </TenantProvider>,
   );
   return component;

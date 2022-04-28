@@ -22,5 +22,3 @@ export const SearchButton: React.FC<ButtonProps> = ({ ...props }) => {
     </TooltipWrapper>
   );
 };
-
-export default SearchButton;

@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
 import { TableProps } from 'components/Table/Table';
 import { Claims, LeaseTermStatusTypes } from 'constants/index';
 import { useFormikContext } from 'formik';

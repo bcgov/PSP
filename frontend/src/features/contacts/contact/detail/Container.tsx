@@ -1,8 +1,8 @@
+import { IconButton } from 'components/common/buttons';
 import { ProtectedComponent } from 'components/common/ProtectedComponent';
-import { IconButton } from 'components/common/styles';
 import { Claims } from 'constants/claims';
 import { useContactDetail } from 'features/contacts/hooks/useContactDetail';
-import * as React from 'react';
+import React from 'react';
 import { Col } from 'react-bootstrap';
 import { MdEdit } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';

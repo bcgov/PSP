@@ -1,5 +1,4 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
@@ -7,15 +6,16 @@ import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { accessRequestsSlice, IAccessRequestsState } from 'store/slices/accessRequests';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
+import { cleanup, fireEvent, render, waitFor } from 'utils/test-utils';
 import { fillInput } from 'utils/test-utils';
+import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import * as actionTypes from '../../../constants/actionTypes';
 import AccessRequestPage from './AccessRequestPage';
@@ -74,20 +74,13 @@ const successStore = mockStore({
 // Store without status of 200
 const store = mockStore({
   [lookupCodesSlice.name]: lCodes,
-  [networkSlice.name]: {
-    addRequestAccess: requestAccess,
-  },
+  [networkSlice.name]: {},
+  [accessRequestsSlice.name]: { accessRequest: { id: 0 } } as IAccessRequestsState,
 });
 
 // Render component under test
-const testRender = () =>
-  render(
-    <Provider store={successStore}>
-      <Router history={history}>
-        <AccessRequestPage />
-      </Router>
-    </Provider>,
-  );
+const testRender = (mockStore = successStore) =>
+  render(<AccessRequestPage />, { store: mockStore, history });
 
 describe('AccessRequestPage', () => {
   afterEach(() => {
@@ -101,11 +94,9 @@ describe('AccessRequestPage', () => {
   describe('component functionality when requestAccess status is 200 and fetching is false', () => {
     it('initializes form with null for organizations and roles', () => {
       const componentRender = mount(
-        <Provider store={successStore}>
-          <Router history={history}>
-            <AccessRequestPage />
-          </Router>
-        </Provider>,
+        <TestCommonWrapper store={successStore} history={history}>
+          <AccessRequestPage />
+        </TestCommonWrapper>,
       );
       expect(
         componentRender
@@ -134,20 +125,14 @@ describe('AccessRequestPage', () => {
     });
 
     it('does not show success message by default', () => {
-      const component = mount(
-        <Provider store={store}>
-          <Router history={history}>
-            <AccessRequestPage />
-          </Router>
-        </Provider>,
-      );
-      expect(component.find('div.alert').isEmpty).toBeTruthy();
+      const { container } = testRender(store);
+      expect(container.querySelector('div.alert')).toBeNull();
     });
   });
 
   it('renders correctly', () => {
-    const { container } = testRender();
-    expect(container.firstChild).toMatchSnapshot();
+    const { asFragment } = testRender();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders dropdown for roles', () => {

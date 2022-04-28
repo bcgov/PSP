@@ -8,7 +8,174 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c0 {
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c4.c4.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c4.c4.btn .text {
+  display: none;
+}
+
+.c4.c4.btn:hover,
+.c4.c4.btn:active,
+.c4.c4.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c4.c4.btn:hover .text,
+.c4.c4.btn:active .text,
+.c4.c4.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c0 {
   margin: 0;
 }
 
@@ -32,54 +199,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-}
-
-.c4.c4 {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c4.c4 .text {
-  display: none;
-}
-
-.c4.c4 > div:hover {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c4.c4 > div:hover .text {
-  display: inline;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
 }
 
 .c1 {
@@ -161,45 +280,41 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
     <div
       class="col-md-2"
     >
-      <div
-        class="c3 h-100"
+      <button
+        class="c3 Button c4 btn btn-link"
+        type="button"
       >
-        <button
-          class="Button c4 btn btn-link"
-          type="button"
+        <div
+          class="Button__value"
         >
-          <div
-            class="Button__value"
+          <svg
+            fill="currentColor"
+            height="2rem"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2rem"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              fill="currentColor"
-              height="2rem"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="2rem"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>
-                remove
-              </title>
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-              />
-            </svg>
-             
-            <span
-              class="text"
-            >
-              Remove
-            </span>
-          </div>
-        </button>
-      </div>
+            <title>
+              remove
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+           
+          <span
+            class="text"
+          >
+            Remove
+          </span>
+        </div>
+      </button>
     </div>
   </div>
 </DocumentFragment>

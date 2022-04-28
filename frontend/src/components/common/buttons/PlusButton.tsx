@@ -22,5 +22,3 @@ export const PlusButton: React.FC<IPlusButtonProps> = ({ toolId, toolText, ...pr
     </TooltipWrapper>
   );
 };
-
-export default PlusButton;
