@@ -12,6 +12,7 @@ jobs:
     env:
       CI: true
       working-directory: ./frontend
+      sonar-url: https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca/
 
     strategy:
       matrix:
@@ -62,7 +63,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          SONAR_URL: ${{ env.sonar-url }}
           PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
           PROJECT_NAME: PIMS-APP
         with:
@@ -87,7 +88,7 @@ jobs:
         if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == '' && github.event.pull_request.head.repo.full_name == github.repository
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          SONAR_HOST_URL: ${{ env.SONAR_URL }}
           PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -103,7 +104,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          SONAR_HOST_URL: ${{ env.SONAR_URL }}
           PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
