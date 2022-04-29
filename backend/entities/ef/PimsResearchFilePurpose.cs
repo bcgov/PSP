@@ -15,8 +15,7 @@ namespace Pims.Dal.Entities
     {
         [Key]
         [Column("RESEARCH_FILE_PURPOSE_ID")]
-        [StringLength(40)]
-        public string ResearchFilePurposeId { get; set; }
+        public long ResearchFilePurposeId { get; set; }
         [Column("RESEARCH_FILE_ID")]
         public long ResearchFileId { get; set; }
         [Required]
