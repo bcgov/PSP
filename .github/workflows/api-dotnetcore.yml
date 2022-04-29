@@ -100,19 +100,17 @@ jobs:
       - name: SonarScanner for .NET 6 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@v2.1.2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           dotnetBuildArguments: ${{env.working-directory}}
           dotnetTestArguments: ${{env.working-directory}} --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           # Optional extra command arguments the the SonarScanner 'begin' command
           sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" -d:sonar.qualitygate.wait=true
           # The key of the SonarQube project
-          sonarProjectKey: ${{secrets.PROJECT_KEY_API}}
+          sonarProjectKey: 483bc59d-f9ef-428c-866e-581d9ea69eab
           # The name of the SonarQube project
           sonarProjectName: PIMS-API
           # The SonarQube server URL. For SonarCloud, skip this setting.
-          sonarHostname: ${{secrets.SONAR_URL}}
+          sonarHostname: https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca/
 
       - name: Find Comment
         if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
