@@ -63,7 +63,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_URL: ${{ env.sonar-url }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
+          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
           PROJECT_NAME: PIMS-APP
         with:
           projectBaseDir: ${{env.working-directory}}
