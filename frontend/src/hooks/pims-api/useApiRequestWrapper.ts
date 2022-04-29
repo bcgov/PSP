@@ -48,7 +48,6 @@ export const useApiRequestWrapper = <ResponseType>({
         setLoading(true);
         setError(undefined);
         setResponse(undefined);
-        console.log(args);
         const response = (await handleAxiosResponse(
           dispatch,
           requestName,
