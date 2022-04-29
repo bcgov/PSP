@@ -18,7 +18,7 @@ import { MotiInventoryHeader } from './MotiInventoryHeader';
 import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from './tabs/propertyAssociations/PropertyAssociationTabView';
-import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
+import { PropertyDetailsTabView } from './tabs/propertyDetails/detail/PropertyDetailsTabView';
 
 export interface IMotiInventoryContainerProps {
   onClose: () => void;
