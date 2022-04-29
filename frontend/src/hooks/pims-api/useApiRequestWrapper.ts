@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import useIsMounted from 'hooks/useIsMounted';
 import { IApiError } from 'interfaces/IApiError';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { handleAxiosResponse } from 'utils';
 
@@ -41,37 +41,40 @@ export const useApiRequestWrapper = <ResponseType>({
   const isMounted = useIsMounted();
 
   // allow direct access to the api wrapper function in case direct invocation is required by consumer.
-  const wrappedApiRequest = useCallback<() => Promise<ResponseType | undefined>>(async () => {
-    try {
-      // reset initial state whenever a request is started.
-      setLoading(true);
-      setError(undefined);
-      setResponse(undefined);
-      const response = (await handleAxiosResponse(
-        dispatch,
-        requestName,
-        requestFunction(),
-      )) as ResponseType;
-      if (!isMounted()) {
-        return;
+  const wrappedApiRequest = useCallback<() => Promise<ResponseType | undefined>>(
+    async (...args) => {
+      try {
+        // reset initial state whenever a request is started.
+        setLoading(true);
+        setError(undefined);
+        setResponse(undefined);
+        const response = (await handleAxiosResponse(
+          dispatch,
+          requestName,
+          requestFunction(args),
+        )) as ResponseType;
+        if (!isMounted()) {
+          return;
+        }
+        setResponse(response);
+        onSuccess && onSuccess(response);
+        return response;
+      } catch (e) {
+        if (!axios.isAxiosError(e)) {
+          throw e;
+        }
+        if (!isMounted()) {
+          return;
+        }
+        const axiosError = e as AxiosError<IApiError>;
+        onError && onError(axiosError);
+        setError(axiosError);
+      } finally {
+        setLoading(false);
       }
-      setResponse(response);
-      onSuccess && onSuccess(response);
-      return response;
-    } catch (e) {
-      if (!axios.isAxiosError(e)) {
-        throw e;
-      }
-      if (!isMounted()) {
-        return;
-      }
-      const axiosError = e as AxiosError<IApiError>;
-      onError && onError(axiosError);
-      setError(axiosError);
-    } finally {
-      setLoading(false);
-    }
-  }, [dispatch, isMounted, onError, onSuccess, requestFunction, requestName]);
+    },
+    [dispatch, isMounted, onError, onSuccess, requestFunction, requestName],
+  );
 
   useEffect(() => {
     if (invoke) {
@@ -79,10 +82,14 @@ export const useApiRequestWrapper = <ResponseType>({
     }
   }, [wrappedApiRequest, invoke]);
 
-  return {
-    error: error,
-    response: response,
-    loading: loading,
-    refresh: wrappedApiRequest,
-  } as IResponseWrapper<ResponseType>;
+  return useMemo(
+    () =>
+      ({
+        error: error,
+        response: response,
+        loading: loading,
+        refresh: wrappedApiRequest,
+      } as IResponseWrapper<ResponseType>),
+    [error, loading, response, wrappedApiRequest],
+  );
 };

@@ -22,6 +22,7 @@ export const DetailResearchContainer: React.FunctionComponent<IDetailResearchCon
 
   useEffect(() => {
     async function fetchResearchFile() {
+      console.log(props.researchFileId);
       var retrieved = await retrieveResearchFile(props.researchFileId);
       setResearchFile(retrieved);
     }
