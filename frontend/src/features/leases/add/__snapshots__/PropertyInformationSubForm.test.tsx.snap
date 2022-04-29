@@ -302,7 +302,7 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
             class="form-label"
             for="input-properties.0.landArea"
           >
-            Area: 
+            Lease Area: 
           </label>
           <input
             class="form-control"
