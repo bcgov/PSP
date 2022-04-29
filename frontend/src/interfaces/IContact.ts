@@ -32,27 +32,27 @@ export interface IContactMethod {
   value: string;
 }
 
-export interface IContactPerson {
-  id: number;
+export interface IContactEntity {
   isDisabled: boolean;
-  fullName: string;
-  preferredName: string;
-  organizations?: IContactOrganization[];
   addresses?: IContactAddress[];
   contactMethods?: IContactMethod[];
   comment: string;
 }
 
-export interface IContactOrganization {
-  id: string;
+export interface IContactPerson extends IContactEntity {
+  id: number;
   isDisabled: boolean;
+  fullName: string;
+  preferredName: string;
+  organizations?: IContactOrganization[];
+}
+
+export interface IContactOrganization extends IContactEntity {
+  id: string;
   name: string;
   alias: string;
   incorporationNumber: string;
   persons?: IContactPerson[];
-  addresses?: IContactAddress[];
-  contactMethods?: IContactMethod[];
-  comment: string;
 }
 
 export interface IContact {

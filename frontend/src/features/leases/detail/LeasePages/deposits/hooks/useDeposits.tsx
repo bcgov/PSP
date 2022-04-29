@@ -2,7 +2,6 @@ import { useApiLeaseDeposits } from 'hooks/pims-api/useApiLeaseDeposits';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { useDispatch } from 'react-redux';
-import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 import { handleAxiosResponse } from 'utils';
 
@@ -32,8 +31,6 @@ export const useLeaseDeposits = () => {
       } else {
         toast.error('Error saving lease deposit, refresh your page and try again');
       }
-    } finally {
-      dispatch(hideLoading());
     }
   };
 
@@ -49,8 +46,6 @@ export const useLeaseDeposits = () => {
       } else {
         toast.error('Error saving lease deposit note, refresh your page and try again');
       }
-    } finally {
-      dispatch(hideLoading());
     }
   };
 
@@ -66,8 +61,6 @@ export const useLeaseDeposits = () => {
       } else {
         toast.error('Error deleting lease deposit, refresh your page and try again');
       }
-    } finally {
-      dispatch(hideLoading());
     }
   };
 

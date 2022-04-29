@@ -144,16 +144,6 @@ exports[`CreatePersonForm renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c6 button.close {
-  font-size: 2.4rem;
-}
-
-.c4 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -231,6 +221,16 @@ exports[`CreatePersonForm renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c6 button.close {
+  font-size: 2.4rem;
+}
+
+.c4 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
 .c9 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -249,22 +249,6 @@ exports[`CreatePersonForm renders as expected 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-}
-
-.c5 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(0,51,102);
-  text-decoration: none solid rgb(0,51,102);
-  line-height: 2.9rem;
-}
-
-.c12 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
 }
 
 .c1 {
@@ -323,19 +307,35 @@ exports[`CreatePersonForm renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c8 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
 .c15 {
   font-size: 1.6rem;
   font-weight: 400;
   -webkit-text-decoration: none solid rgb(170,170,170);
   text-decoration: none solid rgb(170,170,170);
   line-height: 2rem;
+}
+
+.c5 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c12 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c8 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 <div

@@ -31,7 +31,7 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
 
   useEffect(() => {
     async function fetchResearchFile() {
-      var retrieved = await retrieveResearchFile(props.researchFileId);
+      var retrieved = await retrieveResearchFile();
       setResearchFile(retrieved);
       if (retrieved !== undefined) {
         setForm(UpdateResearchFormModel.fromApi(retrieved));

@@ -144,12 +144,6 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c4 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -182,7 +176,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   gap: 0.5rem;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -191,6 +185,12 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   -ms-flex-direction: row;
   flex-direction: row;
   gap: 1.6rem;
+}
+
+.c4 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
 }
 
 .c10.c10.btn {
@@ -247,7 +247,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   justify-content: flex-start;
 }
 
-.c5 {
+.c11 {
   font-size: 2rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(0,51,102);
@@ -255,7 +255,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   line-height: 2.9rem;
 }
 
-.c11 {
+.c12 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -311,7 +311,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   color: red;
 }
 
-.c13 {
+.c14 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -319,19 +319,27 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c7 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c14 {
+.c15 {
   font-size: 1.6rem;
   font-weight: 400;
   -webkit-text-decoration: none solid rgb(170,170,170);
   text-decoration: none solid rgb(170,170,170);
   line-height: 2rem;
+}
+
+.c5 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c7 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 <div
@@ -715,12 +723,12 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           class="c4"
         >
           <h2
-            class="c5"
+            class="c11"
           >
             Address
           </h2>
           <h3
-            class="c11"
+            class="c12"
           >
             Mailing Address
           </h3>
@@ -891,7 +899,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           class="c4"
         >
           <h3
-            class="c11"
+            class="c12"
           >
             Property Address
           </h3>
@@ -1062,7 +1070,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           class="c4"
         >
           <h3
-            class="c11"
+            class="c12"
           >
             Billing Address
           </h3>
@@ -1233,15 +1241,15 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
           class="c4"
         >
           <div
-            class="c12"
+            class="c13"
           >
             <label
-              class="c13 form-label"
+              class="c14 form-label"
             >
               Comments
             </label>
             <span
-              class="c14"
+              class="c15"
             >
               (Optional)
             </span>
