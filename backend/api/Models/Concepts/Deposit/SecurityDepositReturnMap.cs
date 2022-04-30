@@ -13,6 +13,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.ClaimsAgainst, src => src.ClaimsAgainst)
                 .Map(dest => dest.ReturnAmount, src => src.ReturnAmount)
+                .Map(dest => dest.InterestPaid, src => src.InterestPaid)
                 .Map(dest => dest.ReturnDate, src => src.ReturnDate)
                 .Map(dest => dest.ContactHolder, src => src.PimsSecurityDepositReturnHolder)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
@@ -23,6 +24,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.ClaimsAgainst, src => src.ClaimsAgainst)
                 .Map(dest => dest.ReturnAmount, src => src.ReturnAmount)
+                .Map(dest => dest.InterestPaid, src => src.InterestPaid)
                 .Map(dest => dest.ReturnDate, src => src.ReturnDate)
                 .Map(dest => dest.PimsSecurityDepositReturnHolder, src => src.ContactHolder)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
