@@ -241,7 +241,7 @@ exports[`Lease Insurance renders as expected 1`] = `
                 id="input-insurances.0.coverageLimit"
                 name="insurances.0.coverageLimit"
                 placeholder=""
-                value="777"
+                value="777.00"
               />
             </div>
           </div>

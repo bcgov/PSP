@@ -119,7 +119,7 @@ const CurrencyInput = ({
       <div className="input-tooltip-wrapper">
         <MaskedInput
           id={`input-${field}`}
-          value={value}
+          value={value ? value.toFixed(2) : value}
           mask={currencyMask}
           name={field}
           onChange={(e: any) => {
