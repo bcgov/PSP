@@ -4,6 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { getCurrentFiscalYear } from 'utils';
 import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import ExportAggregatedLeasesContainer, {
@@ -54,7 +55,8 @@ describe('PaymentsContainer component', () => {
       component: { getByDisplayValue },
     } = await setup();
 
-    expect(getByDisplayValue('2021-22')).toBeVisible();
+    //this is based on the mocked value
+    expect(getByDisplayValue('2020-21')).toBeVisible();
   });
 
   it('makes a get request for an aggregated report', async () => {
@@ -67,7 +69,7 @@ describe('PaymentsContainer component', () => {
 
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toEqual(
-        '/reports/leases/aggregated?fiscalYearStart=2021',
+        `/reports/leases/aggregated?fiscalYearStart=2020`,
       );
     });
   });

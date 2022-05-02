@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
@@ -21,7 +21,9 @@ export const useUpdateContact = () => {
     }
   }, []);
 
-  const { refresh: updatePerson } = useApiRequestWrapper({
+  const { execute: updatePerson } = useApiRequestWrapper<
+    (person: IEditablePerson) => Promise<AxiosResponse<IEditablePerson, any>>
+  >({
     requestFunction: useCallback(async (person: IEditablePerson) => await putPerson(person), [
       putPerson,
     ]),
@@ -30,7 +32,9 @@ export const useUpdateContact = () => {
     onError: onError,
   });
 
-  const { refresh: updateOrganization } = useApiRequestWrapper({
+  const { execute: updateOrganization } = useApiRequestWrapper<
+    (person: IEditableOrganization) => Promise<AxiosResponse<IEditableOrganization, any>>
+  >({
     requestFunction: useCallback(
       async (organization: IEditableOrganization) => await putOrganization(organization),
       [putOrganization],

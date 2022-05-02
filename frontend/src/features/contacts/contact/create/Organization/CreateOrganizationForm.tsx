@@ -18,7 +18,7 @@ import { useMemo, useRef, useState } from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
-import OrganizationSubForm from '../../Person/OrganizationSubForm';
+import OrganizationSubForm from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
 
 /**

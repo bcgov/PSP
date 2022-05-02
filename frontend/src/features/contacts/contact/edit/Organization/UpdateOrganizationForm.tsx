@@ -26,7 +26,7 @@ import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 
-import { OrganizationSubForm } from '../../Person/OrganizationSubForm';
+import { OrganizationSubForm } from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
 
 /**

@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import { IApiError } from 'interfaces/IApiError';
@@ -12,7 +12,9 @@ import { toast } from 'react-toastify';
 export const useUpdateResearch = () => {
   const { putResearchFile } = useApiResearchFile();
 
-  const { refresh } = useApiRequestWrapper({
+  const { execute } = useApiRequestWrapper<
+    (researchFile: Api_ResearchFile) => Promise<AxiosResponse<Api_ResearchFile, any>>
+  >({
     requestFunction: useCallback(
       async (researchFile: Api_ResearchFile) => await putResearchFile(researchFile),
       [putResearchFile],
@@ -28,5 +30,5 @@ export const useUpdateResearch = () => {
     }, []),
   });
 
-  return { updateResearchFile: refresh };
+  return { updateResearchFile: execute };
 };

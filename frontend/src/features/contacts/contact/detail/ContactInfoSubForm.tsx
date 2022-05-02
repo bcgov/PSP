@@ -43,7 +43,7 @@ const ContactInfoSubForm: React.FunctionComponent<IContactInfoSubFormProps> = ({
         <Col md="10">
           {emails.length === 0 && <span>N.A</span>}
           {emails.map((field: ContactInfoField, index: number) => (
-            <Styled.RowAligned key={'person-email-' + index}>
+            <Styled.RowAligned key={'contact-email-' + index}>
               <Col data-testid="email-value">{field.info}</Col>
               <Col>
                 <em>{field.label}</em>
@@ -59,7 +59,7 @@ const ContactInfoSubForm: React.FunctionComponent<IContactInfoSubFormProps> = ({
         <Col md="10">
           {phoneNumbers.length === 0 && <span>N.A</span>}
           {phoneNumbers.map((field: ContactInfoField, index: number) => (
-            <Styled.RowAligned key={'person-phone-' + index}>
+            <Styled.RowAligned key={'contact-phone-' + index}>
               <Col data-testid="phone-value">{phoneFormatter(field.info)}</Col>
               <Col>
                 <em>{field.label}</em>

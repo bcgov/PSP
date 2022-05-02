@@ -1,17 +1,19 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import { IApiError } from 'interfaces/IApiError';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
-
-import { useApiRequestWrapper } from './../../../../../hooks/pims-api/useApiRequestWrapper';
 
 /**
  * hook that retrieves a research file.
  */
 export const useGetResearch = () => {
   const { getResearchFile } = useApiResearchFile();
-  const { refresh } = useApiRequestWrapper({
+  const { execute } = useApiRequestWrapper<
+    (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFile, any>>
+  >({
     requestFunction: useCallback(
       async (researchFileId: number) => await getResearchFile(researchFileId),
       [getResearchFile],
@@ -26,5 +28,5 @@ export const useGetResearch = () => {
       }
     }, []),
   });
-  return { retrieveResearchFile: refresh };
+  return { retrieveResearchFile: execute };
 };

@@ -5,54 +5,65 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { handleAxiosResponse } from 'utils';
 
-export interface IResponseWrapper<ResponseType> {
-  error: AxiosError;
-  response: ResponseType;
-  refresh: (...args: any[]) => Promise<ResponseType | undefined>;
+export interface IResponseWrapper<
+  FunctionType extends (...args: any[]) => Promise<AxiosResponse<unknown | undefined>>
+> {
+  error: AxiosError<IApiError, any> | undefined;
+  response: Awaited<ReturnType<FunctionType>>['data'] | undefined;
+  execute: (
+    ...params: Parameters<FunctionType> | []
+  ) => Promise<Awaited<ReturnType<FunctionType>>['data'] | undefined>;
   loading?: boolean;
 }
 
-export interface IApiRequestWrapper<ResponseType> {
-  requestFunction: (...args: any[]) => Promise<AxiosResponse<ResponseType, any>>;
+export interface IApiRequestWrapper<
+  FunctionType extends (...args: any[]) => Promise<AxiosResponse<unknown | undefined>>
+> {
+  requestFunction: FunctionType;
   requestName: string;
-  onSuccess?: (response: ResponseType) => void;
+  onSuccess?: (response: Awaited<ReturnType<FunctionType>>['data'] | undefined) => void;
   onError?: (e: AxiosError<IApiError>) => void;
   invoke?: boolean;
 }
 
+type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
+
 /**
  * Wrapper for api requests that tracks the state of the response. Also returns the wrapped api request directly.
- * @param {() => AxiosPromise<ResponseType>} requestFunction Any promise that returns an axios response an success and an axios error on failure.
+ * @param {(...params: Parameters<FunctionType>) => AxiosPromise<ResponseType>} requestFunction Any promise that returns an axios response an success and an axios error on failure.
  * @param {string} requestName A unique name used to identify this wrapped request.
- * @param {(response: ResponseType) => void} onSuccess A function to execute when the request completes successfully.
+ * @param {(response: Awaited<ReturnType<FunctionType>>) => void} onSuccess A function to execute when the request completes successfully.
  * @param {(e: AxiosError) => void} onError A function to execute when the request throws an error.
+ * @param {boolean} invoke immediately invoke the wrapped function.
  */
-export const useApiRequestWrapper = <ResponseType>({
+export const useApiRequestWrapper = <
+  FunctionType extends (...args: any[]) => Promise<AxiosResponse<unknown | undefined>>
+>({
   requestFunction,
   requestName,
   onSuccess,
   onError,
   invoke,
-}: IApiRequestWrapper<ResponseType>): IResponseWrapper<ResponseType> => {
-  const [loading, setLoading] = useState<boolean | undefined>();
+}: IApiRequestWrapper<FunctionType>): IResponseWrapper<FunctionType> => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError<IApiError>>();
-  const [response, setResponse] = useState<ResponseType>();
+  const [response, setResponse] = useState<Awaited<ReturnType<FunctionType>>['data'] | undefined>();
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
 
   // allow direct access to the api wrapper function in case direct invocation is required by consumer.
-  const wrappedApiRequest = useCallback<() => Promise<ResponseType | undefined>>(
+  const wrappedApiRequest = useCallback<
+    (...params: Parameters<FunctionType> | []) => Promise<unknown | undefined>
+  >(
     async (...args) => {
       try {
         // reset initial state whenever a request is started.
         setLoading(true);
         setError(undefined);
         setResponse(undefined);
-        const response = (await handleAxiosResponse(
-          dispatch,
-          requestName,
-          requestFunction(...args),
-        )) as ResponseType;
+        const response = await handleAxiosResponse<
+          Awaited<ReturnType<FunctionType>>['data'] | undefined
+        >(dispatch, requestName, requestFunction(...args));
         if (!isMounted()) {
           return;
         }
@@ -70,6 +81,9 @@ export const useApiRequestWrapper = <ResponseType>({
         onError && onError(axiosError);
         setError(axiosError);
       } finally {
+        if (!isMounted()) {
+          return;
+        }
         setLoading(false);
       }
     },
@@ -83,13 +97,12 @@ export const useApiRequestWrapper = <ResponseType>({
   }, [wrappedApiRequest, invoke]);
 
   return useMemo(
-    () =>
-      ({
-        error: error,
-        response: response,
-        loading: loading,
-        refresh: wrappedApiRequest,
-      } as IResponseWrapper<ResponseType>),
+    () => ({
+      error: error,
+      response: response,
+      loading: loading,
+      execute: wrappedApiRequest,
+    }),
     [error, loading, response, wrappedApiRequest],
   );
 };
