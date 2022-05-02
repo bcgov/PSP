@@ -4,7 +4,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { getCurrentFiscalYear } from 'utils';
 import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import ExportAggregatedLeasesContainer, {

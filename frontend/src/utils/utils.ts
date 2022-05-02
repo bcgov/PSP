@@ -1,4 +1,4 @@
-import { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
