@@ -1,7 +1,7 @@
 import { IPaginateProperties } from 'constants/API';
 import { IPagedItems, IProperty } from 'interfaces';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
-import { Api_PropertyAssociations } from 'models/api/Property';
+import { Api_Property, Api_PropertyAssociations } from 'models/api/Property';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -34,6 +34,10 @@ export const useApiProperties = () => {
             },
           },
         ),
+      getPropertyConceptWithPid: (pid: string) =>
+        api.get<Api_Property>(`/properties/concept/${pid}`),
+      putPropertyConcept: (property: Api_Property) =>
+        api.put<Api_Property>(`/properties/concept/${property.pid}`, property),
     }),
     [api],
   );
