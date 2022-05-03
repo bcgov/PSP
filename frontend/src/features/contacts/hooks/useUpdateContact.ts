@@ -1,72 +1,48 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { IApiError } from 'interfaces/IApiError';
-import { useDispatch } from 'react-redux';
-import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
-import { logError } from 'store/slices/network/networkSlice';
 
 /**
  * hook that updates a contact.
  */
 export const useUpdateContact = () => {
   const { putPerson, putOrganization } = useApiContacts();
-  const dispatch = useDispatch();
 
-  const updatePerson = async (person: IEditablePerson) => {
-    try {
-      dispatch(showLoading());
-      const response = await putPerson(person);
-      toast.success('Contact saved');
-      return response?.data;
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        const axiosError = e as AxiosError<IApiError>;
-        if (axiosError?.response?.status === 400) {
-          toast.error(axiosError?.response.data.error);
-        } else {
-          toast.error('Unable to save. Please try again.');
-        }
-        dispatch(
-          logError({
-            name: 'UpdatePerson',
-            status: axiosError?.response?.status,
-            error: axiosError,
-          }),
-        );
-      }
-    } finally {
-      dispatch(hideLoading());
+  const onSuccess = useCallback(() => toast.success('Contact saved'), []);
+  const onError = useCallback((axiosError: AxiosError<IApiError>) => {
+    if (axiosError?.response?.status === 400) {
+      toast.error(axiosError?.response.data.error);
+    } else {
+      toast.error('Unable to save. Please try again.');
     }
-  };
+  }, []);
 
-  const updateOrganization = async (organization: IEditableOrganization) => {
-    try {
-      dispatch(showLoading());
-      const response = await putOrganization(organization);
-      toast.success('Contact saved');
-      return response?.data;
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        const axiosError = e as AxiosError<IApiError>;
-        if (axiosError?.response?.status === 400) {
-          toast.error(axiosError?.response.data.error);
-        } else {
-          toast.error('Unable to save. Please try again.');
-        }
-        dispatch(
-          logError({
-            name: 'UpdateOrganization',
-            status: axiosError?.response?.status,
-            error: axiosError,
-          }),
-        );
-      }
-    } finally {
-      dispatch(hideLoading());
-    }
-  };
+  const { execute: updatePerson } = useApiRequestWrapper<
+    (person: IEditablePerson) => Promise<AxiosResponse<IEditablePerson, any>>
+  >({
+    requestFunction: useCallback(async (person: IEditablePerson) => await putPerson(person), [
+      putPerson,
+    ]),
+    requestName: 'UpdatePerson',
+    onSuccess: onSuccess,
+    onError: onError,
+  });
+
+  const { execute: updateOrganization } = useApiRequestWrapper<
+    (person: IEditableOrganization) => Promise<AxiosResponse<IEditableOrganization, any>>
+  >({
+    requestFunction: useCallback(
+      async (organization: IEditableOrganization) => await putOrganization(organization),
+      [putOrganization],
+    ),
+    requestName: 'UpdateOrganization',
+    onSuccess: onSuccess,
+    onError: onError,
+  });
 
   return { updatePerson, updateOrganization };
 };

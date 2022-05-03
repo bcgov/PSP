@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
@@ -113,18 +113,18 @@ export const formikFieldMemo = (
  * @param actionType All dispatched GenericNetworkActions will use this action type.
  * @param axiosPromise The result of an axios.get, .put, ..., call.
  */
-export const handleAxiosResponse = (
+export const handleAxiosResponse = <ResponseType>(
   dispatch: Function,
   actionType: string,
-  axiosPromise: Promise<any>,
-): Promise<any> => {
+  axiosPromise: Promise<AxiosResponse<ResponseType>>,
+): Promise<ResponseType> => {
   dispatch(logRequest(actionType));
   dispatch(showLoading());
   return axiosPromise
-    .then((response: any) => {
+    .then((response: AxiosResponse<ResponseType>) => {
       dispatch(logSuccess({ name: actionType }));
       dispatch(hideLoading());
-      return response.data ?? response;
+      return response?.data;
     })
     .catch((axiosError: AxiosError) => {
       dispatch(

@@ -4,7 +4,7 @@ interface IDraftMarkerProps {
   text?: string;
 }
 
-export const DraftMarker: React.FunctionComponent<IDraftMarkerProps> = ({ text }) => {
+export const DraftMarker: React.FunctionComponent<IDraftMarkerProps> = ({ text, children }) => {
   return (
     <svg
       version="1.2"
@@ -74,6 +74,7 @@ export const DraftMarker: React.FunctionComponent<IDraftMarkerProps> = ({ text }
         <text x={text?.length === 1 ? 7 : 4} y="15" textLength="1.25rem">
           {text?.length ?? 0 <= 2 ? text : '..'}
         </text>
+        {children}
       </svg>
       <title>{text}</title>
     </svg>
