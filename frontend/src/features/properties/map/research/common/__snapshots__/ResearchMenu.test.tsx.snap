@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResearchMenu component renders as expected when provided no research file 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+.c1 {
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.c1.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c2 {
+  font-size: 1.5rem;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 selected row"
+      data-testid="menu-item-row-0"
+    >
+      <div
+        class="col-1"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 192 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+          />
+        </svg>
+      </div>
+      <div
+        class="col"
+      >
+        First label
+      </div>
+    </div>
+    <div
+      class="c1 row"
+      data-testid="menu-item-row-1"
+    >
+      <div
+        class="col-1"
+      />
+      <div
+        class="pr-2 col-auto"
+      >
+        <div
+          class="c2"
+        >
+          1
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        Second
+      </div>
+    </div>
+    <div
+      class="c1 row"
+      data-testid="menu-item-row-2"
+    >
+      <div
+        class="col-1"
+      />
+      <div
+        class="pr-2 col-auto"
+      >
+        <div
+          class="c2"
+        >
+          2
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        Third
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

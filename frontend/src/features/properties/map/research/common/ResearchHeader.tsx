@@ -2,6 +2,7 @@ import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
 export interface IResearchHeaderProps {
@@ -59,9 +60,18 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
             </HeaderField>
           </Col>
         </Row>
+        <StyledDivider />
       </Col>
     </Row>
   );
 };
 
 export default ResearchHeader;
+
+const StyledDivider = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+`;
