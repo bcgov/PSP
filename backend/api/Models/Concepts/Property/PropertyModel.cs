@@ -161,12 +161,12 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The property zoning potential.
         /// </summary>
         public string ZoningPotential { get; set; }
-        
+
         /// <summary>
         /// get/set - The location of the property.
         /// </summary>
         public GeometryModel Location { get; set; }
-        
+
         /// <summary>
         /// get/set - The property's district.
         /// </summary>

@@ -1,11 +1,15 @@
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { Formik, FormikHelpers } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
+import { Api_Property } from 'models/api/Property';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useGetProperty } from '../hooks/useGetProperty';
-import { fromApi, UpdatePropertyDetailsForm } from './models';
+import { useGetProperty, useUpdateProperty } from '../hooks';
+import { defaultUpdateProperty, fromApi, toApi, UpdatePropertyDetailsFormModel } from './models';
+import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 
 export interface IUpdatePropertyDetailsContainerProps {
   pid: string;
@@ -15,8 +19,9 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
   const isMounted = useIsMounted();
   const history = useHistory();
   const { retrieveProperty } = useGetProperty();
+  const { updateProperty } = useUpdateProperty();
 
-  const [initialForm, setForm] = useState<UpdatePropertyDetailsForm | undefined>(undefined);
+  const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
 
   useEffect(() => {
     async function fetchProperty() {
@@ -27,14 +32,50 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     }
   }, [props.pid, retrieveProperty]);
 
+  // save handler - sends updated property information to backend and redirects back to view screen
+  const savePropertyInformation = async (
+    values: UpdatePropertyDetailsFormModel,
+    formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
+  ) => {
+    const apiProperty: Api_Property = toApi(values);
+    const response = await updateProperty(apiProperty);
+
+    if (!!response?.pid) {
+      formikHelpers.resetForm();
+      history.replace(`/mapview/property${apiProperty.pid}`);
+    }
+
+    formikHelpers.setSubmitting(false);
+  };
+
+  if (initialForm === undefined) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
+
   return (
     <>
-      <Content vertical>{/* Formik form goes here */}</Content>
+      <Content vertical>
+        <Formik<UpdatePropertyDetailsFormModel>
+          enableReinitialize
+          initialValues={initialForm || defaultUpdateProperty}
+          onSubmit={savePropertyInformation}
+        >
+          {formikProps => <UpdatePropertyDetailsForm {...formikProps} />}
+        </Formik>
+      </Content>
       <Footer></Footer>
     </>
   );
 };
 
-const Content = styled(Scrollable)``;
+const Content = styled(Scrollable)`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+`;
 
 const Footer = styled.div``;
