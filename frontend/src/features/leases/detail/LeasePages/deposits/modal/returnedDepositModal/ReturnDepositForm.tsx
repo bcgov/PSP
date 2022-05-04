@@ -175,7 +175,7 @@ export const SubHeaderSection = styled.div`
 `;
 
 const StyledReturningDepositLink = styled.a`
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 `;
 
 const StyledReturnInfoContainer = styled.p`
@@ -183,6 +183,6 @@ const StyledReturnInfoContainer = styled.p`
 `;
 
 const FaExternalLinkAltIcon = styled(FaExternalLinkAlt)`
-  height: 0.9em;
+  height: 0.7em;
   margin-left: 1rem;
 `;
