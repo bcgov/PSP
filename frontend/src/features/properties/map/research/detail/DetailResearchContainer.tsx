@@ -1,5 +1,6 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -7,6 +8,7 @@ import { MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 
 import ResearchHeader from '../common/ResearchHeader';
+import ResearchMenu from '../common/ResearchMenu';
 import { useGetResearch } from '../hooks/useGetResearch';
 import DetailResearchForm from './DetailResearchForm';
 
@@ -19,6 +21,8 @@ export const DetailResearchContainer: React.FunctionComponent<IDetailResearchCon
   const { retrieveResearchFile } = useGetResearch();
 
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
+
+  const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
 
   useEffect(() => {
     async function fetchResearchFile() {
@@ -45,9 +49,25 @@ export const DetailResearchContainer: React.FunctionComponent<IDetailResearchCon
       onClose={props.onClose}
       showCloseButton
     >
-      <StyledFormWrapper>
-        <DetailResearchForm researchFile={researchFile} />
-      </StyledFormWrapper>
+      <ResearchFileLayout
+        leftComponent={
+          <ResearchMenu
+            items={[
+              'R-File summary',
+              'NW corner at Central Park and Boulevard Road',
+              'Property name 2',
+              'Property name 3',
+            ]}
+            selectedIndex={selectedMenuIndex}
+            setSelectedIndex={setSelectedMenuIndex}
+          />
+        }
+        bodyComponent={
+          <StyledFormWrapper>
+            <DetailResearchForm researchFile={researchFile} />
+          </StyledFormWrapper>
+        }
+      ></ResearchFileLayout>
     </MapSideBarLayout>
   );
 };
