@@ -229,7 +229,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 }
 
 .c4 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .c3 {
@@ -237,7 +237,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 }
 
 .c5 {
-  height: 0.9em;
+  height: 0.7em;
   margin-left: 1rem;
 }
 
@@ -780,7 +780,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 }
 
 .c4 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .c3 {
@@ -788,7 +788,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 }
 
 .c5 {
-  height: 0.9em;
+  height: 0.7em;
   margin-left: 1rem;
 }
 
