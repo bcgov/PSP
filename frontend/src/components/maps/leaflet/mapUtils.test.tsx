@@ -1,5 +1,4 @@
 import {
-  AddressTypes,
   PropertyAreaUnitTypes,
   PropertyClassificationTypes,
   PropertyDataSourceTypes,

@@ -6,7 +6,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
 import {
-  AddressTypes,
   Claims,
   PropertyAreaUnitTypes,
   PropertyClassificationTypes,
