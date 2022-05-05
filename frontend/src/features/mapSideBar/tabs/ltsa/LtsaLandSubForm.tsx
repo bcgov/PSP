@@ -33,7 +33,7 @@ export const LtsaLandSubForm: React.FunctionComponent<ILtsaLandSubFormProps> = (
                       <SectionField label="PID">
                         <Input field={`${withNameSpace(innerNameSpace, 'parcelIdentifier')}`} />
                       </SectionField>
-                      <SectionField label="Legal Description">
+                      <SectionField label="Legal description">
                         <p>{getIn(land, 'fullLegalDescription')}</p>
                       </SectionField>
                       {index < lands.length - 1 && <hr></hr>}

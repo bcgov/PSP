@@ -28,7 +28,7 @@ const LtsaLegalNotationsSubForm: React.FunctionComponent<ILtsaLegalNotationsSubF
                   <Row className="pb-2">
                     <Col>
                       <InlineInput
-                        label="Legal Notations:"
+                        label="Legal notations:"
                         field={`${withNameSpace(innerNameSpace, 'legalNotationNumber')}`}
                       />
                     </Col>
