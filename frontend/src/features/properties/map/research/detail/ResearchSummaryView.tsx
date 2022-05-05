@@ -26,11 +26,11 @@ interface DetailResearchFile {
   researchFilePurposes?: string[];
 }
 
-export interface IDetailResearchFormProps {
+export interface IResearchSummaryViewProps {
   researchFile: Api_ResearchFile;
 }
 
-const DetailResearchForm: React.FunctionComponent<IDetailResearchFormProps> = props => {
+const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
   const detail: DetailResearchFile = {
     id: props.researchFile.id,
     name: props.researchFile.name,
@@ -114,7 +114,7 @@ const DetailResearchForm: React.FunctionComponent<IDetailResearchFormProps> = pr
   );
 };
 
-export default DetailResearchForm;
+export default ResearchSummaryView;
 
 const StyledSummarySection = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};

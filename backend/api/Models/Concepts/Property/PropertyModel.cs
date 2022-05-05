@@ -120,7 +120,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The land area of the parcel.
         /// </summary>
-        public float LandArea { get; set; }
+        public float? LandArea { get; set; }
 
         /// <summary>
         /// get/set - Whether the property is a volumetric parcel.

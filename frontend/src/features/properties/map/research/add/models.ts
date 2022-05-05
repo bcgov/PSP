@@ -1,6 +1,7 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { Api_Property } from 'models/api/Property';
 import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { pidParser } from 'utils';
 
 export class ResearchForm {
   public id?: number;
@@ -47,8 +48,8 @@ export class PropertyForm {
 
   public toApi(): Api_Property {
     return {
-      pid: Number(this.pid),
-      pin: Number(this.pin),
+      pid: pidParser(this.pid),
+      pin: this.pin !== undefined ? Number(this.pin) : undefined,
       landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
       /*region: { id: this.regionId },

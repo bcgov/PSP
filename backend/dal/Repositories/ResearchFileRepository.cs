@@ -46,7 +46,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PimsPersonOrganizations)
                     .ThenInclude(o => o.Organization)
                 .Include(r => r.RequestorOrganizationNavigation)
-                .Include(r => r.PimsPropertyResearchFiles).FirstOrDefault();
+                .Include(r => r.PimsPropertyResearchFiles)
+                    .ThenInclude(rp => rp.Property)
+                .FirstOrDefault();
         }
 
         /// <summary>

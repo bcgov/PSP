@@ -1,8 +1,7 @@
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { IDetailResearchFormProps } from './DetailResearchForm';
-import DetailResearchForm from './DetailResearchForm';
+import ResearchSummaryView, { IResearchSummaryViewProps } from './ResearchSummaryView';
 
 const testResearchFile: Api_ResearchFile = {
   id: 5,
@@ -44,10 +43,10 @@ const testResearchFile: Api_ResearchFile = {
   rowVersion: 9,
 };
 
-describe('DetailResearchForm component', () => {
-  const setup = (renderOptions: RenderOptions & IDetailResearchFormProps) => {
+describe('ResearchSummaryView component', () => {
+  const setup = (renderOptions: RenderOptions & IResearchSummaryViewProps) => {
     // render component under test
-    const component = render(<DetailResearchForm researchFile={renderOptions.researchFile} />, {
+    const component = render(<ResearchSummaryView researchFile={renderOptions.researchFile} />, {
       ...renderOptions,
     });
 
