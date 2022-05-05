@@ -1,8 +1,10 @@
-import { PropertyStatusTypes } from 'constants';
-import { AreaUnitTypes } from 'constants/areaUnitTypes';
-import { PropertyTypes } from 'constants/propertyTypes';
-import { VolumetricParcelTypes } from 'constants/volumetricParcelTypes';
-import { VolumeUnitTypes } from 'constants/volumeUnitTypes';
+import {
+  AreaUnitTypes,
+  PropertyStatusTypes,
+  PropertyTypes,
+  VolumetricParcelTypes,
+  VolumeUnitTypes,
+} from 'constants/index';
 import { GeoJsonProperties } from 'geojson';
 import { Api_Address } from 'models/api/Address';
 import { Api_Property } from 'models/api/Property';
