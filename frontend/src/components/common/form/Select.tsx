@@ -138,9 +138,15 @@ export const Select: React.FC<SelectProps> = ({
               field,
               value.map((x: any) => +x),
             );
+            return;
           } else if (type === 'number' && !isNaN(parseInt(value))) {
             setFieldValue(field, parseInt(value));
+            return;
+          } else if (type === 'number' && value === '') {
+            setFieldValue(field, undefined);
+            return;
           }
+
           handleBlur(e);
         }}
       >

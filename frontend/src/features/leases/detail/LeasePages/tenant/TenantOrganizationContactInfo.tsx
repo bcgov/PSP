@@ -1,11 +1,16 @@
 import { Form, Input } from 'components/common/form';
+import { getPrimaryContact } from 'features/contacts/contactUtils';
 import * as Styled from 'features/leases/detail/styles';
-import { FieldArrayRenderProps } from 'formik';
+import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
+import { IFormLease } from 'interfaces';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { phoneFormatter, withNameSpace } from 'utils/formUtils';
+import { formatApiPersonNames } from 'utils/personUtils';
 
 import AddressSubForm from '../AddressSubForm';
+import { FormTenant } from './Tenant';
 
 export interface ITenantOrganizationContactInfoProps {
   nameSpace: string;
@@ -18,15 +23,29 @@ export interface ITenantOrganizationContactInfoProps {
  */
 export const TenantOrganizationContactInfo: React.FunctionComponent<ITenantOrganizationContactInfoProps &
   Partial<FieldArrayRenderProps>> = ({ nameSpace, disabled }) => {
+  const { values } = useFormikContext<IFormLease>();
+  const tenant: FormTenant = getIn(values, nameSpace);
+  let primaryContact = tenant?.initialPrimaryContact;
+  if (primaryContact?.id !== tenant?.primaryContactId) {
+    primaryContact = tenant?.primaryContactId
+      ? getPrimaryContact(tenant?.primaryContactId, tenant)
+      : undefined;
+  }
+  const primaryContactName = formatApiPersonNames(primaryContact);
   return (
     <>
       <Styled.FormGrid>
         <Form.Label>Tenant organization:</Form.Label>
-        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'name')} />
-        <Form.Label>Contact name:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'contactName')} />
-        <Styled.LeaseH3>Contact Info</Styled.LeaseH3>
-        <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'summary')} />
+        <Form.Label>Primary Contact:</Form.Label>
+        <Form.Group className="input">
+          <StyledLink to={`/contact/P${primaryContact?.id}`}>{primaryContactName}</StyledLink>
+        </Form.Group>
+        <Styled.LeaseH3>Tenant information</Styled.LeaseH3>
+        <AddressSubForm
+          nameSpace={withNameSpace(nameSpace, 'mailingAddress')}
+          disabled={disabled}
+        />
         <br />
         <Form.Label>E-mail address:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'email')} />
@@ -56,4 +75,7 @@ const StyledLargeTextInput = styled(Input)`
   }
 `;
 
+const StyledLink = styled(Link)`
+  padding: 0.6rem 1.2rem;
+`;
 export default TenantOrganizationContactInfo;

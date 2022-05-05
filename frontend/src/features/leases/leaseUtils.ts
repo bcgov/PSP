@@ -1,11 +1,12 @@
-import { ContactMethodTypes } from 'constants/contactMethodType';
 import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
-import { IAddFormLease, ILease } from 'interfaces';
-import { getContactMethodValue } from 'utils/contactMethodUtil';
+import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
+import { IAddFormLease, IFormLeaseTerm, ILease } from 'interfaces';
+import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { stringToNull, stringToTypeCode } from 'utils/formUtils';
 import { formatNames } from 'utils/personUtils';
 
 import { IFormLease } from './../../interfaces/ILease';
+import { apiLeaseTermToFormLeaseTerm } from './../../interfaces/ILeaseTerm';
 
 /**
  * return all of the person tenant names and organization tenant names of this lease
@@ -28,50 +29,29 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
     expiryDate: stringToNull(formLease.expiryDate),
     renewalDate: stringToNull(formLease.renewalDate),
     responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
-    tenants: formLease.tenants.map(tenant => ({
-      ...tenant,
-      leaseId: formLease.id,
-      personId: tenant.id?.startsWith('P') ? tenant.personId : undefined,
-      organizationId: tenant.id?.startsWith('O') ? tenant.organizationId : undefined,
+    tenants: formLease.tenants.map<Api_LeaseTenant>(tenant => ({
+      id: tenant.leaseTenantId,
+      leaseId: formLease.id ?? 0,
+      organizationId: !tenant.personId ? tenant.organizationId : undefined,
+      personId: tenant.personId,
+      primaryContactId: tenant?.primaryContactId,
+      note: tenant.note,
     })),
   } as ILease;
 };
 
-export const apiLeaseToFormLease = (lease?: ILease) => {
-  return !!lease
-    ? ({
-        ...lease,
-        tenants: lease.tenants.map(tenant => {
-          var addresses = tenant.person?.personAddresses ?? [];
-          var firstAddress = addresses.length > 0 ? addresses[0].address : undefined;
-          return {
-            summary: !!tenant.person
-              ? `${tenant.person?.firstName} ${
-                  !!tenant.person?.middleNames ? tenant.person?.middleNames : ''
-                } ${tenant.person?.surname}`
-              : tenant.organization?.name,
-            firstName: tenant.person?.firstName,
-            surname: tenant.person?.surname,
-            email:
-              getContactMethodValue(tenant.person?.contactMethods, ContactMethodTypes.WorkEmail) ??
-              tenant.organization?.email,
-            mailingAddress:
-              firstAddress?.streetAddress1 ?? tenant.organization?.address?.streetAddress1,
-            municipalityName:
-              firstAddress?.municipality ?? tenant.organization?.address?.municipality,
-            provinceState:
-              firstAddress?.province?.code ?? tenant.organization?.address?.provinceCode,
-            note: tenant.note,
-            personId: tenant.personId,
-            organizationId: tenant.organizationId,
-            leaseId: tenant.leaseId,
-            rowVersion: tenant.rowVersion,
-            leaseTenantId: tenant.leaseTenantId,
-            id: !!tenant.personId ? `P${tenant.personId}` : `O${tenant.organizationId}`,
-          };
-        }),
-      } as IFormLease) // TODO, Type coercion might be hiding type issues
-    : undefined;
+export const apiLeaseToFormLease = (lease?: ILease): IFormLease | undefined => {
+  if (!lease) {
+    return undefined;
+  }
+  const formLease: IFormLease = {
+    ...lease,
+    amount: lease.amount ?? '',
+    tfaFileNo: lease.tfaFileNo ?? '',
+    terms: lease.terms.map<IFormLeaseTerm>(term => apiLeaseTermToFormLeaseTerm(term)) ?? [],
+    tenants: lease.tenants.map<FormTenant>(tenant => new FormTenant(tenant)) ?? [],
+  };
+  return formLease;
 };
 
 export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {

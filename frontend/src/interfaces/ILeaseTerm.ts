@@ -1,7 +1,12 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { stringToNull } from 'utils/formUtils';
 
-import { formLeasePaymentToApiPayment, IFormLeasePayment, ILeasePayment } from './ILeasePayment';
+import {
+  apiLeasePaymentToFormPayment,
+  formLeasePaymentToApiPayment,
+  IFormLeasePayment,
+  ILeasePayment,
+} from './ILeasePayment';
 import ITypeCode, { defaultTypeCode } from './ITypeCode';
 export interface ILeaseTerm {
   id?: number;
@@ -34,8 +39,8 @@ export interface IFormLeaseTerm
       gstAmount: NumberFieldValue;
       paymentDueDate: string;
       paymentNote: string;
-      isGstEligible: boolean;
-      isTermExercised: boolean;
+      isGstEligible?: boolean;
+      isTermExercised?: boolean;
       payments: IFormLeasePayment[];
     }
   > {}
@@ -77,5 +82,21 @@ export const formLeaseTermToApiLeaseTerm = (
       : undefined,
     statusTypeCode: formLeaseTerm.statusTypeCode?.id ? formLeaseTerm.statusTypeCode : undefined,
     payments: formLeaseTerm.payments.map(payment => formLeasePaymentToApiPayment(payment)),
+  };
+};
+
+export const apiLeaseTermToFormLeaseTerm = (apiLeaseTerm: ILeaseTerm): IFormLeaseTerm => {
+  return {
+    ...apiLeaseTerm,
+    expiryDate: apiLeaseTerm.expiryDate ?? '',
+    renewalDate: apiLeaseTerm.renewalDate ?? '',
+    endDateHist: apiLeaseTerm.endDateHist ?? '',
+    paymentAmount: apiLeaseTerm.paymentAmount ?? '',
+    gstAmount: apiLeaseTerm.gstAmount ?? '',
+    paymentDueDate: apiLeaseTerm.paymentDueDate ?? '',
+    paymentNote: apiLeaseTerm.paymentNote ?? '',
+    payments: apiLeaseTerm.payments.map((payment: ILeasePayment) =>
+      apiLeasePaymentToFormPayment(payment),
+    ),
   };
 };

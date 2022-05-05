@@ -6,6 +6,7 @@ export interface IContactSearchResult {
   id: string;
   personId?: number;
   organizationId?: number;
+  organization?: Api_Organization;
   leaseTenantId?: number;
   isDisabled?: boolean;
   summary?: string;
@@ -19,6 +20,8 @@ export interface IContactSearchResult {
   provinceState?: string;
   provinceStateId?: number;
   note?: string;
+  landline?: string;
+  mobile?: string;
 }
 
 export function fromContact(baseModel: Api_Contact): IContactSearchResult {

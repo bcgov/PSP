@@ -16,8 +16,12 @@ import {
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
 import { IContactPerson } from 'interfaces/IContact';
+import { Api_Organization, Api_OrganizationPerson } from 'models/api/Organization';
 import { stringToBoolean, stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
 import { formatFullName } from 'utils/personUtils';
+
+import { Api_Address } from './../../models/api/Address';
+import { Api_Person } from './../../models/api/Person';
 
 export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditablePerson {
   // exclude form-specific fields from API payload object
@@ -151,11 +155,28 @@ export function apiOrganizationToFormOrganization(organization?: IEditableOrgani
   return formValues;
 }
 
-export function getApiMailingAddress(contact: IEditablePerson | IEditableOrganization) {
+export function getApiMailingAddress(
+  contact: IEditablePerson | IEditableOrganization,
+): IBaseAddress | undefined {
   if (!contact) return undefined;
 
   const addresses: IBaseAddress[] = contact.addresses || [];
   return addresses.find(addr => addr.addressTypeId?.id === AddressTypes.Mailing);
+}
+
+export function getApiPersonOrOrgMailingAddress(
+  contact: Api_Person | Api_Organization,
+): Api_Address | undefined {
+  if (!contact) return undefined;
+
+  return (
+    (contact as Api_Person).personAddresses?.find(
+      addr => addr?.addressUsageType?.id === AddressTypes.Mailing && addr.address,
+    )?.address ??
+    (contact as Api_Organization).organizationAddresses?.find(
+      addr => addr?.addressUsageType?.id === AddressTypes.Mailing,
+    )?.address
+  );
 }
 
 function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boolean {
@@ -232,3 +253,21 @@ function isEmail(contactMethod?: IEditableContactMethodForm): boolean {
 function isPhone(contactMethod?: IEditableContactMethodForm): boolean {
   return !!contactMethod && PhoneContactMethods.includes(contactMethod.contactMethodTypeCode);
 }
+
+export const getDefaultContact = (organization?: {
+  organizationPersons?: Api_OrganizationPerson[];
+}): Api_Person | undefined => {
+  if (organization?.organizationPersons?.length === 1) {
+    return organization?.organizationPersons[0]?.person;
+  }
+  return undefined;
+};
+
+export const getPrimaryContact = (
+  primaryContactId: number,
+  organization?: {
+    organizationPersons?: Api_OrganizationPerson[];
+  },
+): Api_Person | undefined => {
+  return organization?.organizationPersons?.find(op => op.personId === primaryContactId)?.person;
+};

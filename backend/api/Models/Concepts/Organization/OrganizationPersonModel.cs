@@ -9,6 +9,11 @@ namespace Pims.Api.Models.Concepts
         public PersonModel Person { get; set; }
 
         /// <summary>
+        /// get/set - The relationship person id.
+        /// </summary>
+        public long PersonId { get; set; }
+
+        /// <summary>
         /// get/set - The relationship organization id.
         /// </summary>
         public long OrganizationId { get; set; }
