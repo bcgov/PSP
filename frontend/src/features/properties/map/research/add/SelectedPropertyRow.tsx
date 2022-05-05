@@ -28,6 +28,8 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   const planNumber = getIn(values, `${withNameSpace(nameSpace, 'planNumber')}`);
   let propertyIdentifier = getLatLngText(values, nameSpace);
 
+  console.log(values);
+
   if (!!pid) {
     propertyIdentifier = `PID: ${pidFormatter(pid)}`;
   } else if (!!pin) {

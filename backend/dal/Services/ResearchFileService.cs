@@ -39,26 +39,24 @@ namespace Pims.Dal.Services
 
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
-                var pid = researchProperty.Property.Pid.Value;
-                try
+                if (researchProperty.Property.Pid.HasValue)
                 {
-                    var foundProperty = _propertyRepository.GetByPid(pid);
-                    researchProperty.Property = foundProperty;
+                    var pid = researchProperty.Property.Pid.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        researchProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException e)
+                    {
+                        _logger.LogDebug("Adding new property with pid:{prop}", pid);
+                        PopulateResearchFile(researchProperty.Property);
+                    }
                 }
-                catch (KeyNotFoundException e)
+                else
                 {
-                    _logger.LogDebug("Adding new property with pid:{prop}", pid);
-                    researchProperty.Property.PropertyClassificationTypeCode = "CORESTRAT"; // Todo: should be "UNKNOWN"
-                    researchProperty.Property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
-                    researchProperty.Property.PropertyDataSourceTypeCode = "PAIMS"; // Todo: should be "PMBC"
-
-                    researchProperty.Property.PropertyTypeCode = "UNKNOWN";
-
-                    researchProperty.Property.PropertyStatusTypeCode = "UNSURVYED"; // Todo: should be 'UNKNOWN';
-                    researchProperty.Property.SurplusDeclarationTypeCode = "UNKNOWN";
-
-                    researchProperty.Property.RegionCode = 1; // TODO: this reallly needs to come from the app
-                    researchProperty.Property.DistrictCode = 1; // TODO: this reallly needs to come from the app
+                    _logger.LogDebug("Adding new property without a pid");
+                    PopulateResearchFile(researchProperty.Property);
                 }
             }
 
@@ -84,6 +82,21 @@ namespace Pims.Dal.Services
             _logger.LogDebug("Research file search with filter", filter);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
             return _researchFileRepository.GetPage(filter);
+        }
+
+        private void PopulateResearchFile(PimsProperty property)
+        {
+            property.PropertyClassificationTypeCode = "CORESTRAT"; // Todo: should be "UNKNOWN"
+            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
+            property.PropertyDataSourceTypeCode = "PAIMS"; // Todo: should be "PMBC"
+
+            property.PropertyTypeCode = "UNKNOWN";
+
+            property.PropertyStatusTypeCode = "UNSURVYED"; // Todo: should be 'UNKNOWN';
+            property.SurplusDeclarationTypeCode = "UNKNOWN";
+
+            property.RegionCode = 1; // TODO: this reallly needs to come from the app
+            property.DistrictCode = 1; // TODO: this reallly needs to come from the app
         }
     }
 }

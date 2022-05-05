@@ -17,7 +17,7 @@ const ResearchMenu: React.FunctionComponent<IResearchMenuProps> = props => {
       {props.items.map((label: string, index: number) => (
         <StyledRow
           data-testid={`menu-item-row-${index}`}
-          className={props.selectedIndex === index ? 'selected' : ''}
+          className={`no-gutters ${props.selectedIndex === index ? 'selected' : ''}`}
           onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
         >
           <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
@@ -51,6 +51,8 @@ const StyledRow = styled(Row)`
   }
   font-weight: normal;
   cursor: pointer;
+
+  padding-bottom: 0.5rem;
 `;
 
 const CircleThing = styled.div`
