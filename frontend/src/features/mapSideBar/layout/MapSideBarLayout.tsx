@@ -1,12 +1,8 @@
-import { IconButton } from 'components/common/buttons';
-import ProtectedComponent from 'components/common/ProtectedComponent';
 import * as Styled from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { Claims } from 'constants/index';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
 import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
@@ -16,9 +12,7 @@ interface IMapSideBarLayoutProps {
   icon: React.ReactNode | React.FunctionComponent;
   footer?: React.ReactNode | React.FunctionComponent;
   showCloseButton?: boolean;
-  showEditButton?: boolean;
   onClose?: () => void;
-  onEdit?: () => void;
 }
 
 /**
@@ -30,7 +24,6 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
   header,
   icon,
   showCloseButton,
-  showEditButton,
   ...props
 }) => {
   return (
@@ -46,20 +39,6 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
                 </Styled.H1>
               </Col>
 
-              {showEditButton && (
-                <Col xs="auto">
-                  <ProtectedComponent hideIfNotAuthorized claims={[Claims.PROPERTY_EDIT]}>
-                    <TooltipWrapper
-                      toolTipId="edit-sidebar-tooltip"
-                      toolTip="Edit Property Information"
-                    >
-                      <IconButton title="Edit Property" variant="light" onClick={props.onEdit}>
-                        <MdEdit size={22} />
-                      </IconButton>
-                    </TooltipWrapper>
-                  </ProtectedComponent>
-                </Col>
-              )}
               {showCloseButton && (
                 <Col xs="auto">
                   <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">

@@ -26,11 +26,12 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
   useEffect(() => {
     async function fetchProperty() {
       const retrieved = await retrieveProperty(props.pid);
-      if (retrieved !== undefined) {
+      if (retrieved !== undefined && isMounted()) {
         setForm(fromApi(retrieved));
       }
     }
-  }, [props.pid, retrieveProperty]);
+    fetchProperty();
+  }, [isMounted, props.pid, retrieveProperty]);
 
   // save handler - sends updated property information to backend and redirects back to view screen
   const savePropertyInformation = async (
