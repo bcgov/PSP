@@ -1,7 +1,6 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import {
   AccessRequestStatus,
-  AddressTypes,
   OrganizationIdentifierTypes,
   OrganizationTypes,
   PropertyClassificationTypes,

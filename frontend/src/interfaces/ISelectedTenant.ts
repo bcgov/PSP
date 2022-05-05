@@ -1,4 +1,3 @@
-import { IContactSearchResult } from 'interfaces';
 import { Api_Contact } from 'models/api/Contact';
 import { Api_Organization } from 'models/api/Organization';
 import { Api_Person } from 'models/api/Person';
