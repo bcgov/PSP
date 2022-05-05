@@ -697,7 +697,7 @@ exports[`Contact List View matches snapshot 1`] = `
                   <div
                     class="sortable-column"
                   >
-                    First Name
+                    First name
                     <div
                       class="c12"
                     >
@@ -742,7 +742,7 @@ exports[`Contact List View matches snapshot 1`] = `
                   <div
                     class="sortable-column"
                   >
-                    Last Name
+                    Last name
                     <div
                       class="c12"
                     >
@@ -844,7 +844,7 @@ exports[`Contact List View matches snapshot 1`] = `
                   <div
                     class="sortable-column"
                   >
-                    Mailing Address
+                    Mailing address
                   </div>
                 </div>
                 <div

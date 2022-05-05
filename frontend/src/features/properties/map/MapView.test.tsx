@@ -112,7 +112,6 @@ const mockDetails = {
     regionId: 1,
     districtId: 1,
     address: {
-      addressTypeId: AddressTypes.Mailing,
       streetAddress1: '1234 mock Street',
       streetAddress2: 'N/A',
       municipality: '',

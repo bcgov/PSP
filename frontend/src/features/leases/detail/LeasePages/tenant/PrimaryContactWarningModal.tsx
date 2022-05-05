@@ -6,26 +6,24 @@ import * as React from 'react';
 import { FormTenant } from './Tenant';
 
 interface IPrimaryContactWarningModalProps {
-  display?: Function;
-  setDisplay: (display: Function | undefined) => void;
+  saveCallback?: Function;
+  setSaveCallback: (display: Function | undefined) => void;
   lease: IFormLease | undefined;
-  onSave?: Function;
   onCancel?: Function;
 }
 
 const PrimaryContactWarningModal: React.FunctionComponent<IPrimaryContactWarningModalProps> = ({
-  display,
-  setDisplay,
+  saveCallback,
+  setSaveCallback,
   lease,
   onCancel,
-  onSave,
 }) => {
   const warningOrgs = lease ? getOrgsWithNoPrimaryContact(lease) : [];
   const warningOrgNames = warningOrgs.map(org => org.summary);
   return (
     <GenericModal
-      display={!!display}
-      setDisplay={() => setDisplay(undefined)}
+      display={!!saveCallback}
+      setDisplay={() => setSaveCallback(undefined)}
       title="Confirm save"
       message={
         <>
@@ -38,13 +36,12 @@ const PrimaryContactWarningModal: React.FunctionComponent<IPrimaryContactWarning
       okButtonText="Save"
       cancelButtonText="Cancel"
       handleCancel={onCancel}
-      handleOk={() => display && display()}
+      handleOk={() => saveCallback && saveCallback()}
     />
   );
 };
 
 export const getOrgsWithNoPrimaryContact = (lease: IFormLease): FormTenant[] => {
-  console.log(lease.tenants);
   return filter(
     lease.tenants.filter((tenant: FormTenant) => {
       return (

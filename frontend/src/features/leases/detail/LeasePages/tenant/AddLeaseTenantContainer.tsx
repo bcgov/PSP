@@ -61,8 +61,8 @@ export const AddLeaseTenantContainer: React.FunctionComponent<IAddLeaseTenantCon
         formikRef={formikRef}
       />
       <PrimaryContactWarningModal
-        display={handleSubmit}
-        setDisplay={setHandleSubmit}
+        saveCallback={handleSubmit}
+        setSaveCallback={setHandleSubmit}
         onCancel={() => setHandleSubmit(undefined)}
         lease={formikRef?.current?.values}
       />
