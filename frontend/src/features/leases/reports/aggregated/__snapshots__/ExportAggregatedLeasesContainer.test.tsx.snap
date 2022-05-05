@@ -258,6 +258,12 @@ exports[`PaymentsContainer component renders as expected 1`] = `
             >
               2020-21
             </option>
+            <option
+              class="option"
+              value="2022"
+            >
+              2022-23
+            </option>
           </select>
         </div>
         <svg
