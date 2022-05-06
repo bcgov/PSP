@@ -126,13 +126,7 @@ export const getColumns = ({
       Cell: renderMoney,
     },
     {
-      Header: () => (
-        <>
-          Returned amount
-          <br />
-          (without interest)
-        </>
-      ),
+      Header: 'Returned amount (without interest)',
       accessor: 'returnAmount',
       align: 'right',
       maxWidth: 50,

@@ -492,9 +492,7 @@ Integer nec odio.
               <div
                 class="sortable-column"
               >
-                Returned amount
-                <br />
-                (without interest)
+                Returned amount (without interest)
               </div>
             </div>
             <div
