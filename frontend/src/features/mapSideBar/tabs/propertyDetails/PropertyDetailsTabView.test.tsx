@@ -30,7 +30,7 @@ describe('PropertyDetailsTabView component', () => {
 
   it('does not throw an exception for an invalid data object', () => {
     const { getByText } = setup({ property: {} as IPropertyApiModel });
-    expect(getByText('Property attributes')).toBeVisible();
+    expect(getByText('Property Attributes')).toBeVisible();
   });
 
   it('shows highway/road multi-select when tenure status is Highway/Road', () => {
