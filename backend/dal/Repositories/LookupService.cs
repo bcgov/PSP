@@ -213,6 +213,20 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsPropertyAnomalyType> GetPropertyAnomalyTypes()
+        {
+            return this.Context.PimsPropertyAnomalyTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyRoadType> GetPropertyRoadTypes()
+        {
+            return this.Context.PimsPropertyRoadTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes()
+        {
+            return this.Context.PimsPropertyAdjacentLandTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }

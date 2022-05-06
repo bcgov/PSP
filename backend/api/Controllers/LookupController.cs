@@ -101,12 +101,15 @@ namespace Pims.Api.Controllers
             var provinces = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetProvinces());
             var regions = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetRegions());
             var roleCodes = _mapper.Map<Model.RoleModel[]>(_pimsService.Lookup.GetRoles());
-            var securtyDepositTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetSecurityDepositTypes());
+            var securityDepositTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetSecurityDepositTypes());
             var tenureTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTenureTypes());
             var researchStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchFileStatusTypes());
             var requestSourceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GeRequestSourceTypes());
             var researchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchPurposeTypes());
             var propertyResearchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyResearchPurposeTypes());
+            var propertyAnomalyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAnomalyTypes());
+            var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyRoadTypes());
+            var propertyAdjacentLandTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAdjacentLandTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -133,12 +136,15 @@ namespace Pims.Api.Controllers
             codes.AddRange(provinces);
             codes.AddRange(regions);
             codes.AddRange(roleCodes);
-            codes.AddRange(securtyDepositTypes);
+            codes.AddRange(securityDepositTypes);
             codes.AddRange(tenureTypes);
             codes.AddRange(researchStatusTypes);
             codes.AddRange(requestSourceTypes);
             codes.AddRange(researchPurposeTypes);
             codes.AddRange(propertyResearchPurposeTypes);
+            codes.AddRange(propertyAnomalyTypes);
+            codes.AddRange(propertyRoadTypes);
+            codes.AddRange(propertyAdjacentLandTypes);
 
             return new JsonResult(codes);
         }

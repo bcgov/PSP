@@ -40,6 +40,10 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsRequestSourceType> GeRequestSourceTypes();
         IEnumerable<PimsResearchPurposeType> GetResearchPurposeTypes();
         IEnumerable<PimsPropResearchPurposeType> GetPropertyResearchPurposeTypes();
+        IEnumerable<PimsPropertyAnomalyType> GetPropertyAnomalyTypes();
+         IEnumerable<PimsPropertyRoadType> GetPropertyRoadTypes();
+         IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes();
+
     }
 }
 
