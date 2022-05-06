@@ -154,7 +154,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       <h2
         class="c2"
       >
-        Property attributes
+        Property Attributes
       </h2>
       <div
         class="pb-2 row"
@@ -233,7 +233,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <label
             class="c3"
           >
-            Agricultural Land Reserve:
+            Agricultural land reserve:
           </label>
         </div>
         <div
@@ -426,7 +426,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <label
             class="c3"
           >
-            Provincial Public Hwy:
+            Provincial public hwy:
           </label>
         </div>
         <div
