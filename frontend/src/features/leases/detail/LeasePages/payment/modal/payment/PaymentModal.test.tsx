@@ -6,7 +6,7 @@ import { defaultFormLeasePayment } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, prettyDOM, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { IPaymentModalProps, PaymentModal } from './PaymentModal';
 

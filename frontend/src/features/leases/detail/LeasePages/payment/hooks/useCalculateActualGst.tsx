@@ -24,7 +24,6 @@ export const useCalculateActualGst = (isGstEligible?: boolean) => {
         setFieldValue('amountGst', calculatedGst);
         setFieldValue('amountPreTax', calculatedPreTax);
       } else {
-        console.log('correcitn');
         setFieldValue('amountPreTax', amountTotal);
         setFieldValue('amountGst', '');
       }
