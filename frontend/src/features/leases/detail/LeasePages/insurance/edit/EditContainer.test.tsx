@@ -113,8 +113,8 @@ describe('Lease Insurance', () => {
 
     const homeLimit = result.container.querySelector(`input[name="insurances.0.coverageLimit"]`);
     const carLimit = result.container.querySelector(`input[name="insurances.1.coverageLimit"]`);
-    expect(homeLimit).toHaveValue(mockInsuranceHome.coverageLimit?.toFixed(2));
-    expect(carLimit).toHaveValue(testInsuranceCar.coverageLimit?.toFixed(2));
+    expect(homeLimit).toHaveValue(`$${mockInsuranceHome.coverageLimit?.toFixed(2)}`);
+    expect(carLimit).toHaveValue(`$${testInsuranceCar.coverageLimit?.toFixed(2)}`);
 
     const formDescriptions = result.getAllByTestId('insurance-form-description');
     expect(formDescriptions[0] as HTMLInputElement).toHaveValue(

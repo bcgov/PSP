@@ -101,7 +101,6 @@ export const fillInput = async (
         value: value,
       },
     });
-    fireEvent.focusOut(input);
   }
   fireEvent.blur(input);
 

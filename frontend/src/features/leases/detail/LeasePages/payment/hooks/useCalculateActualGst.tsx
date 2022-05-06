@@ -8,7 +8,7 @@ import { SystemConstants, useSystemConstants } from 'store/slices/systemConstant
  * @param isGstEligible do not perform calculation if payment term is not gst eligible.
  */
 export const useCalculateActualGst = (isGstEligible?: boolean) => {
-  const { values, touched, setFieldValue } = useFormikContext<IFormLeasePayment>();
+  const { values, touched, setFieldValue, isSubmitting } = useFormikContext<IFormLeasePayment>();
   const amountTotalTouched = getIn(touched, 'amountTotal');
   const amountTotal = getIn(values, 'amountTotal');
   const { getSystemConstant } = useSystemConstants();
@@ -17,16 +17,17 @@ export const useCalculateActualGst = (isGstEligible?: boolean) => {
 
   //auto fill dependent fields if amount total is edited.
   useEffect(() => {
-    if (amountTotalTouched) {
+    if (amountTotalTouched && !isSubmitting) {
       if (gstDecimal && isGstEligible) {
         const calculatedPreTax = amountTotal / (gstDecimal / 100 + 1);
         const calculatedGst = amountTotal - calculatedPreTax;
         setFieldValue('amountGst', calculatedGst);
         setFieldValue('amountPreTax', calculatedPreTax);
       } else {
+        console.log('correcitn');
         setFieldValue('amountPreTax', amountTotal);
         setFieldValue('amountGst', '');
       }
     }
-  }, [gstDecimal, setFieldValue, amountTotalTouched, isGstEligible, amountTotal]);
+  }, [gstDecimal, setFieldValue, amountTotalTouched, isGstEligible, amountTotal, isSubmitting]);
 };

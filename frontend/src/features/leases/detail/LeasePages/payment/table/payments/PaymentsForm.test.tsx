@@ -251,12 +251,12 @@ describe('PaymentsForm component', () => {
       expect(row).not.toBeNull();
       expect(footer).not.toBeNull();
       expect(findFooterCell(footer, 1)?.textContent).toBe('(2) payments');
-      expect(findCell(row, 2)?.textContent).toBe('$1,100');
-      expect(findFooterCell(footer, 2)?.textContent).toBe('$2,200');
-      expect(findCell(row, 3)?.textContent).toBe('$100');
-      expect(findFooterCell(footer, 3)?.textContent).toBe('$200');
-      expect(findCell(row, 4)?.textContent).toBe('$1,200');
-      expect(findFooterCell(footer, 4)?.textContent).toBe('$2,400');
+      expect(findCell(row, 2)?.textContent).toBe('$1,100.00');
+      expect(findFooterCell(footer, 2)?.textContent).toBe('$2,200.00');
+      expect(findCell(row, 3)?.textContent).toBe('$100.00');
+      expect(findFooterCell(footer, 3)?.textContent).toBe('$200.00');
+      expect(findCell(row, 4)?.textContent).toBe('$1,200.00');
+      expect(findFooterCell(footer, 4)?.textContent).toBe('$2,400.00');
     });
   });
   describe('interactive functionality', () => {

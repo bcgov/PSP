@@ -204,7 +204,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
               style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
-              $1,234
+              $1,234.00
             </div>
             <div
               class="td"
@@ -212,7 +212,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
               style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
-              $1,234
+              $1,234.00
             </div>
             <div
               class="td"
@@ -220,7 +220,7 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
               style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
-              $123
+              $123.00
             </div>
             <div
               class="td"
