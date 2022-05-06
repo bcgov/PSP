@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import MultiselectBase from 'multiselect-react-dropdown';
-import { type } from 'os';
 import React, { forwardRef } from 'react';
 import Form from 'react-bootstrap/Form';
 
@@ -61,6 +60,9 @@ export interface IMultiselectProps extends Omit<IMultiselectBaseProps, 'id' | 's
   formGroupClassName?: string;
 }
 
+/**
+ * Formik-connected <Multiselect> form control
+ */
 export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>((props, ref) => {
   const {
     field,
@@ -74,7 +76,7 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
     ...rest
   } = props;
 
-  const { values, setFieldValue, errors, touched } = useFormikContext();
+  const { values, setFieldValue, setFieldTouched, errors, touched } = useFormikContext();
   const formikValue = getIn(values, field) as Array<any>;
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
@@ -83,6 +85,7 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
   // Allow external consumers to handle onSelect, onRemove events via callbacks
   const onChange = (selectedList: any[], func?: Function) => {
     setFieldValue(field, selectedList);
+    setFieldTouched(field, true);
     if (typeof func === 'function') {
       func(selectedList);
     }

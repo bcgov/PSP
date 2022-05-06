@@ -1,7 +1,9 @@
-import { Input, Text, TextArea } from 'components/common/form';
+import { Input, Multiselect, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Form, FormikProps, getIn } from 'formik';
+import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import Api_TypeCode from 'models/api/TypeCode';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -16,6 +18,10 @@ import { UpdatePropertyDetailsFormModel } from './models';
 export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetailsFormModel>> = ({
   values,
 }) => {
+  // Lookup codes
+  const { getByType } = useLookupCodeHelpers();
+  const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES);
+
   // multi-selects
   const tenureStatus = getIn(values, 'tenure') as Api_TypeCode<string>[];
   const adjacentLand = getIn(values, 'adjacentLand') as Api_TypeCode<string>[];
@@ -50,15 +56,13 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
           <Input field="municipalZoning" />
         </SectionField>
         <SectionField label="Anomalies">
-          {/* <Multiselect
-            disable
-            disablePreSelectedValues
+          <Multiselect
+            field="anomalies"
+            displayValue="name"
+            options={anomalyOptions}
             hidePlaceholder
             placeholder=""
-            selectedValues={anomalies}
-            displayValue="description"
-            style={readOnlyMultiSelectStyle}
-          /> */}
+          />
         </SectionField>
       </Section>
 
