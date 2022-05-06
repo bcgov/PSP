@@ -64,6 +64,20 @@ export function booleanToString(value?: boolean): string {
   return value.toString();
 }
 
+export function stringToNullableBoolean(value: string): boolean | null {
+  if (value === 'null') {
+    return null;
+  }
+  return value === 'true';
+}
+
+export function nullableBooleanToString(value?: boolean | null): string {
+  if (typeof value === 'undefined' || value === null) {
+    return 'null';
+  }
+  return value.toString();
+}
+
 export function yesNoUnknownToBoolean(value: string): boolean | null {
   if (value?.toLowerCase() === 'yes') return true;
   else if (value?.toLowerCase() === 'no') return false;
