@@ -12,6 +12,10 @@ namespace Pims.Api.Models
         public string AppLastUpdateUserid { get; set; }
 
         public string AppCreateUserid { get; set; }
+
+        public Guid? AppLastUpdateUserGuid { get; set; }
+
+        public Guid? AppCreateUserGuid { get; set; }
         #endregion
     }
 }

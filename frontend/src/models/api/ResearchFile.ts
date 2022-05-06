@@ -48,6 +48,8 @@ export interface Api_ResearchFile extends Api_ConcurrentVersion {
   appLastUpdateTimestamp?: string;
   appLastUpdateUserid?: string;
   appCreateUserid?: string;
+  appCreateUserGuid?: string;
+  appLastUpdateUserGuid?: string;
 }
 
 export interface Api_ResearchFilePurpose extends Api_ConcurrentVersion {

@@ -30,5 +30,6 @@ namespace Pims.Dal.Repositories
         PimsUser UpdateOnly(PimsUser update);
         PimsUser UpdateWithoutSave(PimsUser update);
         void Delete(PimsUser delete);
+        PimsUser GetUserInfo(Guid keycloakUserId);
     }
 }

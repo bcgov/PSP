@@ -1,3 +1,4 @@
+import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -33,7 +34,11 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           </Col>
           <Col className="text-right">
             Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by
-            <span> {researchFile?.appCreateUserid} </span>
+            <UserNameTooltip
+              key={'appCreateBy'}
+              userName={researchFile?.appCreateUserid}
+              userGuid={researchFile?.appCreateUserGuid}
+            />
           </Col>
         </Row>
         <Row>
@@ -44,7 +49,12 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           </Col>
           <Col className="text-right">
             Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
-            by <span>{researchFile?.appLastUpdateUserid}</span>
+            by
+            <UserNameTooltip
+              key={'appUpdateBy'}
+              userName={researchFile?.appLastUpdateUserid}
+              userGuid={researchFile?.appLastUpdateUserGuid}
+            />
           </Col>
         </Row>
         <Row>

@@ -15,6 +15,8 @@ namespace Pims.Api.Mapping
                 .Map(dest => dest.AppLastUpdateTimestamp, src => src.AppLastUpdateTimestamp)
                 .Map(dest => dest.AppLastUpdateUserid, src => src.AppLastUpdateUserid)
                 .Map(dest => dest.AppCreateUserid, src => src.AppCreateUserid)
+                .Map(dest => dest.AppLastUpdateUserGuid, src => src.AppLastUpdateUserGuid)
+                .Map(dest => dest.AppCreateUserGuid, src => src.AppCreateUserGuid)
                 .Inherits<Entity.IBaseEntity, Models.BaseModel>();
 
             config.NewConfig<Models.BaseAppModel, Entity.IDisableBaseAppEntity>()
@@ -25,6 +27,8 @@ namespace Pims.Api.Mapping
                 .Map(dest => dest.AppLastUpdateTimestamp, src => src.AppLastUpdateTimestamp)
                 .Map(dest => dest.AppLastUpdateUserid, src => src.AppLastUpdateUserid)
                 .Map(dest => dest.AppCreateUserid, src => src.AppCreateUserid)
+                .Map(dest => dest.AppLastUpdateUserGuid, src => src.AppLastUpdateUserGuid)
+                .Map(dest => dest.AppCreateUserGuid, src => src.AppCreateUserGuid)
                 .Inherits<Models.BaseModel, Entity.IBaseEntity>();
         }
     }
