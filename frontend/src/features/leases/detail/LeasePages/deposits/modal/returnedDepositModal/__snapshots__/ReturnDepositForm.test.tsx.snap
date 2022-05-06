@@ -379,8 +379,10 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-interestPaid"
+              inputmode="numeric"
               name="interestPaid"
               placeholder=""
+              type="text"
               value=""
             />
           </div>
@@ -934,8 +936,10 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-interestPaid"
+              inputmode="numeric"
               name="interestPaid"
               placeholder=""
+              type="text"
               value=""
             />
           </div>
