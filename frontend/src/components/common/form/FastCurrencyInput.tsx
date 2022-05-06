@@ -132,7 +132,7 @@ const CurrencyInput = ({
           required={required}
           placeholder={placeholder || ''}
         />
-        {!!tooltip && <TooltipIcon toolTipId="currency" toolTip={tooltip} />}
+        {!label && !!tooltip && <TooltipIcon toolTipId="currency" toolTip={tooltip} />}
 
         <ErrorMessage component="div" className="invalid-feedback" name={field}></ErrorMessage>
       </div>

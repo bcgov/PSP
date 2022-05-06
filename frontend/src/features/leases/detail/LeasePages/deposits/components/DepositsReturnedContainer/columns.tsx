@@ -18,6 +18,7 @@ export class ReturnListEntry {
   public depositAmount: number;
   public claimsAgainst: number;
   public returnAmount: number;
+  public interestPaid: number;
   public returnDate: string;
   public contactHolder?: Api_Contact;
 
@@ -33,6 +34,7 @@ export class ReturnListEntry {
     this.depositAmount = parentDeposit.amountPaid;
     this.claimsAgainst = baseDeposit.claimsAgainst || 0;
     this.returnAmount = baseDeposit.returnAmount;
+    this.interestPaid = baseDeposit.interestPaid;
     this.returnDate = baseDeposit.returnDate || '';
     this.contactHolder = baseDeposit.contactHolder;
   }
@@ -98,12 +100,12 @@ export const getColumns = ({
 }: IPaymentColumnProps): ColumnWithProps<ReturnListEntry>[] => {
   return [
     {
-      Header: 'Deposit Type',
+      Header: 'Deposit type',
       accessor: 'depositTypeDescription',
       maxWidth: 50,
     },
     {
-      Header: 'Termination or Surrender Date',
+      Header: 'Termination or Surrender date',
       accessor: 'terminationDate',
       align: 'right',
       maxWidth: 50,
@@ -117,21 +119,28 @@ export const getColumns = ({
       Cell: renderMoney,
     },
     {
-      Header: 'Claims against Deposit',
+      Header: 'Claims against deposit',
       accessor: 'claimsAgainst',
       align: 'right',
       maxWidth: 50,
       Cell: renderMoney,
     },
     {
-      Header: 'Returned Amount',
+      Header: 'Returned amount (without interest)',
       accessor: 'returnAmount',
       align: 'right',
       maxWidth: 50,
       Cell: renderMoney,
     },
     {
-      Header: 'Return Date',
+      Header: 'Interest paid',
+      accessor: 'interestPaid',
+      align: 'right',
+      maxWidth: 50,
+      Cell: renderMoney,
+    },
+    {
+      Header: 'Return date',
       accessor: 'returnDate',
       align: 'right',
       maxWidth: 50,
@@ -139,7 +148,7 @@ export const getColumns = ({
     },
 
     {
-      Header: 'Payee Name',
+      Header: 'Payee name',
       accessor: 'contactHolder',
       maxWidth: 70,
       Cell: renderHolder,

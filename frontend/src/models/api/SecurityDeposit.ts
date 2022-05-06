@@ -20,6 +20,7 @@ export interface Api_SecurityDepositReturn extends Api_ConcurrentVersion {
   terminationDate?: string;
   claimsAgainst?: number;
   returnAmount: number;
+  interestPaid: number;
   returnDate?: string;
   contactHolder?: Api_Contact;
 }

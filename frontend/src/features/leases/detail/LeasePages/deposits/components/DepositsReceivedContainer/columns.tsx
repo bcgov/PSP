@@ -100,7 +100,7 @@ export const getColumns = ({
 }: IPaymentColumnProps): ColumnWithProps<DepositListEntry>[] => {
   return [
     {
-      Header: 'Deposit Type',
+      Header: 'Deposit type',
       accessor: 'depositTypeDescription',
       maxWidth: 50,
     },
@@ -110,14 +110,14 @@ export const getColumns = ({
       minWidth: 150,
     },
     {
-      Header: 'Amount Paid',
+      Header: 'Amount paid',
       accessor: 'amountPaid',
       align: 'right',
       maxWidth: 40,
       Cell: renderMoney,
     },
     {
-      Header: 'Paid Date',
+      Header: 'Paid date',
       accessor: 'paidDate',
       align: 'right',
       maxWidth: 50,

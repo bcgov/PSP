@@ -7,6 +7,7 @@ import { IContactSearchResult } from 'interfaces';
 import * as React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 import { formatMoney } from 'utils';
 
@@ -95,6 +96,27 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
             </Row>
             <Row>
               <Col>
+                <FastCurrencyInput
+                  formikProps={formikProps}
+                  label="Interest paid ($):"
+                  field="interestPaid"
+                  tooltip="This is the interest paid on the deposit, if any, for the entire term the deposit is held.​​​​​​​"
+                />
+              </Col>
+              <Col>
+                <StyledReturnInfoContainer>
+                  <StyledReturningDepositLink
+                    target="_blank"
+                    href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+                  >
+                    Returning deposits in BC
+                  </StyledReturningDepositLink>
+                  <FaExternalLinkAltIcon />
+                </StyledReturnInfoContainer>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
                 <InlineFastDatePicker
                   formikProps={formikProps}
                   label="Returned date:"
@@ -150,4 +172,17 @@ const StyledFormBody = styled.form`
 
 export const SubHeaderSection = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+const StyledReturningDepositLink = styled.a`
+  font-size: 1.3rem;
+`;
+
+const StyledReturnInfoContainer = styled.p`
+  margin-top: 3.5rem;
+`;
+
+const FaExternalLinkAltIcon = styled(FaExternalLinkAlt)`
+  height: 0.7em;
+  margin-left: 1rem;
 `;

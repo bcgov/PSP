@@ -52,7 +52,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c4.btn {
+.c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -82,49 +82,49 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c7.btn.btn-primary {
   border: none;
 }
 
-.c4.btn.btn-secondary {
+.c7.btn.btn-secondary {
   background: none;
 }
 
-.c4.btn.btn-info {
+.c7.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   background: none;
 }
 
-.c4.btn.btn-light {
+.c7.btn.btn-light {
   border: none;
 }
 
-.c4.btn.btn-dark {
+.c7.btn.btn-dark {
   border: none;
 }
 
-.c4.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -144,9 +144,9 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -155,14 +155,14 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -173,15 +173,15 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c4.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -202,7 +202,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c3 {
+.c6 {
   border-radius: 0.3rem;
   padding: 12px 6px 6px 12px;
   min-height: 2.5em;
@@ -210,7 +210,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   border: #606060 solid 0.1rem;
 }
 
-.c3.is-invalid {
+.c6.is-invalid {
   border: solid 0.1rem;
 }
 
@@ -226,6 +226,19 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 
 .c0 .form-group input {
   width: 90%;
+}
+
+.c4 {
+  font-size: 1.3rem;
+}
+
+.c3 {
+  margin-top: 3.5rem;
+}
+
+.c5 {
+  height: 0.7em;
+  margin-left: 1rem;
 }
 
 <form
@@ -329,6 +342,83 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         class="col"
       >
         <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-interestPaid"
+          >
+            Interest paid ($): 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-interestPaid"
+              name="interestPaid"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <p
+          class="c3"
+        >
+          <a
+            class="c4"
+            href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+            target="_blank"
+          >
+            Returning deposits in BC
+          </a>
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+            />
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
           class="required c1 form-group"
         >
           <label
@@ -380,7 +470,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c3"
+                class="c6"
               />
               <div
                 class="d-none input form-group"
@@ -397,7 +487,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
               class="pl-0 align-self-center col-auto"
             >
               <button
-                class="c4 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
+                class="c7 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
                 disabled=""
                 type="button"
               >
@@ -428,7 +518,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c4 Button Button--icon-only px-2 btn btn-primary"
+                class="c7 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
@@ -513,7 +603,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c4.btn {
+.c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -543,49 +633,49 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c7.btn.btn-primary {
   border: none;
 }
 
-.c4.btn.btn-secondary {
+.c7.btn.btn-secondary {
   background: none;
 }
 
-.c4.btn.btn-info {
+.c7.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   background: none;
 }
 
-.c4.btn.btn-light {
+.c7.btn.btn-light {
   border: none;
 }
 
-.c4.btn.btn-dark {
+.c7.btn.btn-dark {
   border: none;
 }
 
-.c4.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -605,9 +695,9 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   padding: 0;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -616,14 +706,14 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -634,15 +724,15 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   opacity: 0.65;
 }
 
-.c4.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -663,7 +753,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c3 {
+.c6 {
   border-radius: 0.3rem;
   padding: 12px 6px 6px 12px;
   min-height: 2.5em;
@@ -671,7 +761,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   border: #606060 solid 0.1rem;
 }
 
-.c3.is-invalid {
+.c6.is-invalid {
   border: solid 0.1rem;
 }
 
@@ -687,6 +777,19 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 
 .c0 .form-group input {
   width: 90%;
+}
+
+.c4 {
+  font-size: 1.3rem;
+}
+
+.c3 {
+  margin-top: 3.5rem;
+}
+
+.c5 {
+  height: 0.7em;
+  margin-left: 1rem;
 }
 
 <form
@@ -790,6 +893,83 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         class="col"
       >
         <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-interestPaid"
+          >
+            Interest paid ($): 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-interestPaid"
+              name="interestPaid"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <p
+          class="c3"
+        >
+          <a
+            class="c4"
+            href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+            target="_blank"
+          >
+            Returning deposits in BC
+          </a>
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+            />
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
           class="required c1 form-group"
         >
           <label
@@ -841,7 +1021,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
               class="col"
             >
               <div
-                class="c3"
+                class="c6"
               />
               <div
                 class="d-none input form-group"
@@ -858,7 +1038,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
               class="pl-0 align-self-center col-auto"
             >
               <button
-                class="c4 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
+                class="c7 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
                 disabled=""
                 type="button"
               >
@@ -889,7 +1069,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c4 Button Button--icon-only px-2 btn btn-primary"
+                class="c7 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
