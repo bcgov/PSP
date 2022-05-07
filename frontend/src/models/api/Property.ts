@@ -18,9 +18,9 @@ export interface Api_Property extends Api_ConcurrentVersion {
 
   // multi-selects
   anomalies?: Api_TypeCode<string>[];
-  tenure?: Api_TypeCode<string>[];
-  roadType?: Api_TypeCode<string>[];
-  adjacentLand?: Api_TypeCode<string>[];
+  tenures?: Api_TypeCode<string>[];
+  roadTypes?: Api_TypeCode<string>[];
+  adjacentLands?: Api_TypeCode<string>[];
 
   status?: Api_TypeCode<string>;
   region?: Api_TypeCode<number>;

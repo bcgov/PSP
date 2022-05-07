@@ -1,5 +1,6 @@
-import { Input, Multiselect, Text, TextArea } from 'components/common/form';
+import { Input, Multiselect, Select, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Form, FormikProps, getIn } from 'formik';
@@ -19,17 +20,22 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
   values,
 }) => {
   // Lookup codes
-  const { getByType } = useLookupCodeHelpers();
+  const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES);
+  const tenureOptions = getByType(API.PROPERTY_TENURE_TYPES);
+  const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES);
+  const adjacentLandOptions = getByType(API.PROPERTY_ADJACENT_LAND_TYPES);
+  const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
 
   // multi-selects
-  const tenureStatus = getIn(values, 'tenure') as Api_TypeCode<string>[];
-  const adjacentLand = getIn(values, 'adjacentLand') as Api_TypeCode<string>[];
+  const tenureStatus = getIn(values, 'tenures') as Api_TypeCode<string>[];
+  const adjacentLands = getIn(values, 'adjacentLands') as Api_TypeCode<string>[];
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.HighwayRoad);
   const isAdjacentLand = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.AdjacentLand);
   const isIndianReserve =
-    isAdjacentLand && adjacentLand?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
+    isAdjacentLand &&
+    adjacentLands?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
 
   return (
@@ -59,52 +65,46 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
           <Multiselect
             field="anomalies"
             displayValue="name"
-            options={anomalyOptions}
-            hidePlaceholder
             placeholder=""
+            hidePlaceholder
+            options={anomalyOptions}
           />
         </SectionField>
       </Section>
 
       <Section header="Tenure Status">
         <SectionField label="Tenure status">
-          {/* <Multiselect
-            disable
-            disablePreSelectedValues
-            hidePlaceholder
+          <Multiselect
+            field="tenures"
+            displayValue="name"
             placeholder=""
-            selectedValues={tenureStatus}
-            displayValue="description"
-            style={readOnlyMultiSelectStyle}
-          /> */}
+            hidePlaceholder
+            options={tenureOptions}
+          />
         </SectionField>
         <SectionField label="Provincial Public Hwy">
-          {/* TODO: YES / NO / UNKNOWN component */}
+          <YesNoSelect field="isProvincialPublicHwy"></YesNoSelect>
         </SectionField>
         {isHighwayRoad && (
           <SectionField label="Highway / Road">
-            {/* <Multiselect
-              disable
-              disablePreSelectedValues
-              hidePlaceholder
+            <Multiselect
+              field="roadTypes"
+              displayValue="name"
               placeholder=""
-              selectedValues={roadType}
-              displayValue="description"
-              style={readOnlyMultiSelectStyle}
-            /> */}
+              hidePlaceholder
+              options={roadTypeOptions}
+            />
           </SectionField>
         )}
         {isAdjacentLand && (
           <SectionField label="Adjacent land">
-            {/* <Multiselect
-              disable
-              disablePreSelectedValues
-              hidePlaceholder
+            <Multiselect
+              field="adjacentLands"
+              displayValue="name"
               placeholder=""
-              selectedValues={adjacentLand}
-              displayValue="description"
-              style={readOnlyMultiSelectStyle}
-            /> */}
+              hidePlaceholder
+              options={adjacentLandOptions}
+            />
           </SectionField>
         )}
       </Section>
@@ -148,7 +148,11 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
             {isVolumetricParcel && (
               <>
                 <SectionField label="Type">
-                  <Text field="volumetricType.description" />
+                  <Select
+                    field="volumetricType"
+                    options={volumetricTypeOptions}
+                    placeholder={values.volumetricType ? undefined : 'Please Select'}
+                  />
                 </SectionField>
 
                 <Row>
