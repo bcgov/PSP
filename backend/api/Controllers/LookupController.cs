@@ -110,6 +110,8 @@ namespace Pims.Api.Controllers
             var propertyAnomalyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAnomalyTypes());
             var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyRoadTypes());
             var propertyAdjacentLandTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAdjacentLandTypes());
+            var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumeUnitTypes());
+            var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumetricTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -145,6 +147,8 @@ namespace Pims.Api.Controllers
             codes.AddRange(propertyAnomalyTypes);
             codes.AddRange(propertyRoadTypes);
             codes.AddRange(propertyAdjacentLandTypes);
+            codes.AddRange(volumeUnitTypes);
+            codes.AddRange(propertyVolumetricTypes);
 
             return new JsonResult(codes);
         }

@@ -18,6 +18,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropertyType> GetPropertyTypes();
         IEnumerable<PimsPropertyClassificationType> GetPropertyClassificationTypes();
         IEnumerable<PimsAreaUnitType> GetPropertyAreaUnitTypes();
+        IEnumerable<PimsVolumeUnitType> GetPropertyVolumeUnitTypes();
         IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes();
         IEnumerable<PimsRole> GetRoles();
         IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes();
@@ -43,7 +44,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropertyAnomalyType> GetPropertyAnomalyTypes();
          IEnumerable<PimsPropertyRoadType> GetPropertyRoadTypes();
          IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes();
-
+         IEnumerable<PimsVolumetricType> GetPropertyVolumetricTypes();
     }
 }
 
