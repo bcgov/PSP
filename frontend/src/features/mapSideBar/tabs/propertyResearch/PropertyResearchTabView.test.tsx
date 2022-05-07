@@ -1,6 +1,4 @@
-import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { render, RenderOptions } from 'utils/test-utils';
 
