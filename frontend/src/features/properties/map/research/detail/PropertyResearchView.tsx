@@ -1,8 +1,13 @@
 import axios, { AxiosError } from 'axios';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
-import { InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
+import {
+  InventoryTabNames,
+  InventoryTabs,
+  TabInventoryView,
+} from 'features/mapSideBar/tabs/InventoryTabs';
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/PropertyDetailsTabView';
+import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
@@ -76,14 +81,37 @@ const PropertyResearchView: React.FunctionComponent<IPropertyResearchViewProps> 
     func();
   }, [getLtsaData, pid, isMounted]);
 
-  return (
-    <InventoryTabs
-      LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
-      PropertyView={
-        showPropertyInfoTab ? <PropertyDetailsTabView property={propertyViewForm} /> : null
-      }
-    />
-  );
+  const tabViews: TabInventoryView[] = [];
+
+  tabViews.push({
+    content: <LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />,
+    key: InventoryTabNames.title,
+    name: 'Title',
+  });
+
+  tabViews.push({
+    content: <></>,
+    key: InventoryTabNames.value,
+    name: 'Value',
+  });
+
+  tabViews.push({
+    content: <PropertyResearchTabView researchFile={props.researchFileProperty} />,
+    key: InventoryTabNames.research,
+    name: 'Property Research',
+  });
+
+  const defaultTab = InventoryTabNames.research;
+
+  if (showPropertyInfoTab) {
+    tabViews.push({
+      content: <PropertyDetailsTabView property={propertyViewForm} />,
+      key: InventoryTabNames.property,
+      name: 'Property Details',
+    });
+  }
+
+  return <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />;
 };
 
 export default PropertyResearchView;

@@ -14,8 +14,14 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
   const leftColumnLabel = '4';
   const researchFile = props.researchFile;
 
-  const region = researchFile?.researchProperties?.map(x => x.property?.region).join(', ');
-  const district = researchFile?.researchProperties?.map(x => x.property?.district).join(', ');
+  const region = researchFile?.researchProperties
+    ?.map(x => x.property?.region?.description)
+    .filter(x => x !== undefined && x !== '')
+    .join(', ');
+  const district = researchFile?.researchProperties
+    ?.map(x => x.property?.district?.description)
+    .filter(x => x !== undefined && x !== '')
+    .join(', ');
   return (
     <Row>
       <Col>

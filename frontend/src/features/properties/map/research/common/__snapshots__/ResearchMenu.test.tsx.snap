@@ -18,6 +18,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
 .c1 {
   font-weight: normal;
   cursor: pointer;
+  padding-bottom: 0.5rem;
 }
 
 .c1.selected {
@@ -49,7 +50,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
     class="c0"
   >
     <div
-      class="c1 selected row"
+      class="c1 no-gutters selected row"
       data-testid="menu-item-row-0"
     >
       <div
@@ -76,7 +77,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
       </div>
     </div>
     <div
-      class="c1 row"
+      class="c1 no-gutters  row"
       data-testid="menu-item-row-1"
     >
       <div
@@ -98,7 +99,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
       </div>
     </div>
     <div
-      class="c1 row"
+      class="c1 no-gutters  row"
       data-testid="menu-item-row-2"
     >
       <div

@@ -11,19 +11,29 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropertyResearchFileId)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.IsLegalOpinionRequired, src => src.IsLegalOpinionRequired)
+                .Map(dest => dest.IsLegalOpinionObtained, src => src.IsLegalOpinionObtained)
+                .Map(dest => dest.DocumentReference, src => src.DocumentReference)
+                .Map(dest => dest.ResearchSummary, src => src.ResearchSummary)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.ResearchFile, src => src.ResearchFile)
+                .Map(dest => dest.PurposeTypes, src => src.PimsPrfPropResearchPurposeTypes)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<ResearchFilePropertyModel, Entity.PimsPropertyResearchFile>()
                 .Map(dest => dest.PropertyResearchFileId, src => src.Id)
+                .Map(dest => dest.PropertyId, src => src.Property.Id)
+                .Map(dest => dest.ResearchFileId, src => src.ResearchFile.Id)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Map(dest => dest.Property, src => src.Property)
-                .Map(dest => dest.ResearchFile, src => src.ResearchFile)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.IsLegalOpinionRequired, src => src.IsLegalOpinionRequired)
+                .Map(dest => dest.IsLegalOpinionObtained, src => src.IsLegalOpinionObtained)
+                .Map(dest => dest.DocumentReference, src => src.DocumentReference)
+                .Map(dest => dest.ResearchSummary, src => src.ResearchSummary)
+                .Map(dest => dest.PimsPrfPropResearchPurposeTypes, src => src.PurposeTypes)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }

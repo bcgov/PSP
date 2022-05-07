@@ -54,7 +54,7 @@ export const DetailResearchContainer: React.FunctionComponent<IDetailResearchCon
 
     if (researchProperty.propertyName !== undefined) {
       return researchProperty.propertyName;
-    } else if (researchProperty.property != undefined) {
+    } else if (researchProperty.property !== undefined) {
       const property = researchProperty.property;
       if (property.pin !== undefined) {
         return property.pin.toString();
@@ -66,7 +66,7 @@ export const DetailResearchContainer: React.FunctionComponent<IDetailResearchCon
         return `${property.location.coordinate?.x} + ${property.location.coordinate?.y}`;
       }
     }
-    return '2';
+    return 'Property';
   }
 
   return (

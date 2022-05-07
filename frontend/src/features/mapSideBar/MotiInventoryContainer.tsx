@@ -13,7 +13,7 @@ import { pidFormatter } from 'utils';
 import { usePropertyDetails } from './hooks/usePropertyDetails';
 import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
-import { InventoryTabs } from './tabs/InventoryTabs';
+import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
@@ -83,6 +83,31 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     func();
   }, [getLtsaData, props.pid, isMounted]);
 
+  const tabViews: TabInventoryView[] = [];
+
+  tabViews.push({
+    content: <LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />,
+    key: InventoryTabNames.title,
+    name: 'Title',
+  });
+
+  tabViews.push({
+    content: <></>,
+    key: InventoryTabNames.value,
+    name: 'Value',
+  });
+
+  var defaultTab = InventoryTabNames.title;
+
+  if (showPropertyInfoTab) {
+    tabViews.push({
+      content: <PropertyDetailsTabView property={propertyViewForm} />,
+      key: InventoryTabNames.property,
+      name: 'Property Details',
+    });
+    defaultTab = InventoryTabNames.property;
+  }
+
   return (
     <MapSideBarLayout
       title="Property Information"
@@ -93,12 +118,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
       showCloseButton
       onClose={props.onClose}
     >
-      <InventoryTabs
-        LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
-        PropertyView={
-          showPropertyInfoTab ? <PropertyDetailsTabView property={propertyViewForm} /> : null
-        }
-      />
+      <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />
     </MapSideBarLayout>
   );
 };
