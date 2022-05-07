@@ -89,5 +89,23 @@ namespace Pims.Api.Areas.Property.Controllers
             return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
         }
         #endregion
+
+        #region Concept Endpoints
+        /// <summary>
+        /// Get the property for the specified unique 'pid'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("concept/{pid}")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Pims.Api.Models.Concepts.PropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        public IActionResult GetConceptPropertyWithPid(string pid)
+        {
+            var property = _pimsService.Property.GetByPid(pid);
+
+            return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
+        }
+        #endregion
     }
 }
