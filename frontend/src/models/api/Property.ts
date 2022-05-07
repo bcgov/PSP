@@ -40,7 +40,7 @@ export interface Api_Property extends Api_ConcurrentVersion {
   latitude?: number;
   longitude?: number;
 
-  landArea: number;
+  landArea?: number;
   landLegalDescription?: string;
   encumbranceReason?: string;
   isSensitive?: boolean;

@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { useEffect, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ResearchFooter from '../common/ResearchFooter';
@@ -21,6 +21,7 @@ export interface IAddResearchContainerProps {
 }
 
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
+  const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
     SelectedPropertyContext,
@@ -46,11 +47,13 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     };
   }, [initialForm, selectedResearchFeature, setSelectedResearchFeature]);
 
-  const saveResearchFile = async (researchFile: Api_ResearchFile, onSuccess: () => void) => {
+  const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
+    console.log(response);
     if (!!response?.name) {
-      onSuccess();
-      props.onClose();
+      formikRef.current?.setSubmitting(false);
+      formikRef.current?.resetForm();
+      history.replace(`/mapview/research/${response.id}/edit`);
     }
   };
 
@@ -81,12 +84,9 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       <Formik<ResearchForm>
         innerRef={formikRef}
         initialValues={initialForm}
-        onSubmit={async (values: ResearchForm, formikHelpers) => {
+        onSubmit={async (values: ResearchForm) => {
           const researchFile: Api_ResearchFile = values.toApi();
-          await saveResearchFile(researchFile, () => {
-            formikHelpers.setSubmitting(false);
-            formikHelpers.resetForm();
-          });
+          await saveResearchFile(researchFile);
         }}
         validationSchema={AddResearchFileYupSchema}
       >
