@@ -325,7 +325,7 @@ exports[`DepositsContainer renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $500
+                $500.00
               </div>
               <div
                 class="td"
@@ -383,7 +383,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $2,000
+                $2,000.00
               </div>
               <div
                 class="td"

@@ -43,6 +43,7 @@ const mockDeposits: Api_SecurityDeposit[] = [
 const mockDepositReturns: Api_SecurityDepositReturn[] = [
   {
     id: 1,
+    interestPaid: 1,
     parentDepositId: 7,
     terminationDate: '2022-02-01',
     claimsAgainst: 1234.0,
