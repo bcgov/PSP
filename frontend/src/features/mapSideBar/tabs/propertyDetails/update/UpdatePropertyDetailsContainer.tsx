@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
-import { defaultUpdateProperty, fromApi, toApi, UpdatePropertyDetailsFormModel } from './models';
+import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 
 export interface IUpdatePropertyDetailsContainerProps {
@@ -27,8 +27,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     async function fetchProperty() {
       const retrieved = await retrieveProperty(props.pid);
       if (retrieved !== undefined && isMounted()) {
-        // TODO: implement fromApi
-        // setForm(fromApi(retrieved));
+        setForm(UpdatePropertyDetailsFormModel.fromApi(retrieved));
       }
     }
     fetchProperty();
@@ -39,7 +38,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     values: UpdatePropertyDetailsFormModel,
     formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
   ) => {
-    const apiProperty: Api_Property = toApi(values);
+    const apiProperty: Api_Property = values.toApi();
     const response = await updateProperty(apiProperty);
 
     if (!!response?.pid) {
@@ -50,9 +49,9 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     formikHelpers.setSubmitting(false);
   };
 
-  // if (initialForm === undefined) {
-  //   return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
-  // }
+  if (initialForm === undefined) {
+    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
 
   return (
     <>
