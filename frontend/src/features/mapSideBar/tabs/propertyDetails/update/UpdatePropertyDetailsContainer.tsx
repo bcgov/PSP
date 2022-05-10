@@ -27,7 +27,8 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     async function fetchProperty() {
       const retrieved = await retrieveProperty(props.pid);
       if (retrieved !== undefined && isMounted()) {
-        setForm(fromApi(retrieved));
+        // TODO: implement fromApi
+        // setForm(fromApi(retrieved));
       }
     }
     fetchProperty();
@@ -49,9 +50,9 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     formikHelpers.setSubmitting(false);
   };
 
-  if (initialForm === undefined) {
-    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
-  }
+  // if (initialForm === undefined) {
+  //   return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  // }
 
   return (
     <>

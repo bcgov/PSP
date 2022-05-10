@@ -14,6 +14,7 @@ import { stringToBoolean } from 'utils/formUtils';
 import { Section } from '../../Section';
 import { SectionField, StyledFieldLabel } from '../../SectionField';
 import { InlineContainer, LeftBorderCol } from '../../SectionStyles';
+import { LandMeasurementTable } from './components/LandMeasurementTable/LandMeasurementTable';
 import { UpdatePropertyDetailsFormModel } from './models';
 
 export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetailsFormModel>> = ({
@@ -37,6 +38,9 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
     isAdjacentLand &&
     adjacentLands?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
+
+  let landArea = getIn(values, 'landArea') as number;
+  let areaUnit = getIn(values, 'areaUnit') as Api_TypeCode<string>;
 
   return (
     <StyledForm>
@@ -124,7 +128,9 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
         <Row>
           <Col>
             <Row>
-              <Col className="col-10">{/* <LandMeasurementTable data={landMeasurement} /> */}</Col>
+              <Col className="col-10">
+                <LandMeasurementTable landArea={landArea} areaUnit={areaUnit} />
+              </Col>
             </Row>
           </Col>
           <LeftBorderCol>
