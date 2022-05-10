@@ -32,9 +32,10 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
+  const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
 
   // First, fetch property information from PSP API
-  const { getPropertyWithPid } = useProperties();
+  const { getPropertyWithPid, getPropertyWithPidLoading: propertyLoading } = useProperties();
   useEffect(() => {
     const func = async () => {
       try {
@@ -52,6 +53,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError?.response?.status === 404) {
             setShowPropertyInfoTab(false);
+            setActiveTab(InventoryTabNames.title);
           }
         }
       }
@@ -64,7 +66,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   // additional information which we store in a different model (IPropertyDetailsForm)
   const propertyViewForm = usePropertyDetails(apiProperty);
 
-  const { getLtsaData } = useLtsa();
+  const { getLtsaData, ltsaLoading } = useLtsa();
   useEffect(() => {
     const func = async () => {
       setLtsaDataRequestedOn(new Date());
@@ -112,7 +114,13 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     <MapSideBarLayout
       title="Property Information"
       header={
-        <MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} onZoom={props.onZoom} />
+        <MotiInventoryHeader
+          ltsaData={ltsaData}
+          ltsaLoading={ltsaLoading}
+          propertyLoading={propertyLoading}
+          property={apiProperty}
+          onZoom={props.onZoom}
+        />
       }
       icon={<LotIcon className="mr-1" />}
       showCloseButton

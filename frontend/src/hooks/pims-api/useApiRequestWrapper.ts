@@ -13,7 +13,7 @@ export interface IResponseWrapper<
   execute: (
     ...params: Parameters<FunctionType> | []
   ) => Promise<Awaited<ReturnType<FunctionType>>['data'] | undefined>;
-  loading?: boolean;
+  loading: boolean;
 }
 
 export interface IApiRequestWrapper<
@@ -24,6 +24,8 @@ export interface IApiRequestWrapper<
   onSuccess?: (response: Awaited<ReturnType<FunctionType>>['data'] | undefined) => void;
   onError?: (e: AxiosError<IApiError>) => void;
   invoke?: boolean;
+  skipErrorLogCodes?: number[];
+  throwError?: boolean;
 }
 
 type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
@@ -44,6 +46,8 @@ export const useApiRequestWrapper = <
   onSuccess,
   onError,
   invoke,
+  skipErrorLogCodes,
+  throwError,
 }: IApiRequestWrapper<FunctionType>): IResponseWrapper<FunctionType> => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError<IApiError>>();
@@ -63,7 +67,7 @@ export const useApiRequestWrapper = <
         setResponse(undefined);
         const response = await handleAxiosResponse<
           Awaited<ReturnType<FunctionType>>['data'] | undefined
-        >(dispatch, requestName, requestFunction(...args));
+        >(dispatch, requestName, requestFunction(...args), skipErrorLogCodes);
         if (!isMounted()) {
           return;
         }
@@ -80,13 +84,25 @@ export const useApiRequestWrapper = <
         const axiosError = e as AxiosError<IApiError>;
         onError && onError(axiosError);
         setError(axiosError);
+        if (throwError) {
+          throw e;
+        }
       } finally {
         if (isMounted()) {
           setLoading(false);
         }
       }
     },
-    [dispatch, isMounted, onError, onSuccess, requestFunction, requestName],
+    [
+      dispatch,
+      requestName,
+      requestFunction,
+      skipErrorLogCodes,
+      isMounted,
+      onSuccess,
+      onError,
+      throwError,
+    ],
   );
 
   useEffect(() => {

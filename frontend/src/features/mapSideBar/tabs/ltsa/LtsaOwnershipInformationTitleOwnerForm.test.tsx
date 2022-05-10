@@ -1,12 +1,12 @@
 import { Formik } from 'formik';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
+import { mockLtsaResponse } from 'mocks/filterDataMock';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import LtsaOwnershipInformationTitleOwnerForm, {
   ILtsaOwnershipInformationTitleOwnerFormProps,
 } from './LtsaOwnershipInformationTitleOwnerForm';
-import { mockLtsaResponse } from './LtsaTabView.test';
 
 describe('LtsaOwnershipInformationTitleOwnerForm component', () => {
   const setup = (

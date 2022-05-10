@@ -1,9 +1,9 @@
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
+import { mockLtsaResponse } from 'mocks/filterDataMock';
 import { render, RenderOptions, RenderResult, userEvent } from 'utils/test-utils';
 
 import { MotiInventoryHeader } from './MotiInventoryHeader';
-import { mockLtsaResponse } from './tabs/ltsa/LtsaTabView.test';
 
 const onZoom = jest.fn();
 describe('MotiInventoryHeader component', () => {
@@ -11,11 +11,15 @@ describe('MotiInventoryHeader component', () => {
     renderOptions: RenderOptions & {
       ltsaData?: LtsaOrders;
       property?: IPropertyApiModel;
+      ltsaLoading?: boolean;
+      propertyLoading?: boolean;
     } = {},
   ): RenderResult => {
     // render component under test
     const result = render(
       <MotiInventoryHeader
+        ltsaLoading={!!renderOptions.ltsaLoading}
+        propertyLoading={!!renderOptions.propertyLoading}
         ltsaData={renderOptions.ltsaData}
         property={renderOptions.property}
         onZoom={onZoom}
@@ -34,7 +38,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('renders a spinner when the data is loading', () => {
-    const { getByTestId } = setup();
+    const { getByTestId } = setup({ ltsaLoading: true });
 
     const spinner = getByTestId('filter-backdrop-loading');
     expect(spinner).toBeVisible();
@@ -43,6 +47,8 @@ describe('MotiInventoryHeader component', () => {
   it('displays PID', async () => {
     const result = setup({
       ltsaData: mockLtsaResponse,
+      ltsaLoading: false,
+      propertyLoading: false,
       property: undefined,
     });
     // PID is shown
@@ -57,6 +63,8 @@ describe('MotiInventoryHeader component', () => {
     };
     const result = setup({
       ltsaData: undefined,
+      ltsaLoading: false,
+      propertyLoading: false,
       property: testProperty,
     });
     // PID is shown
@@ -67,6 +75,8 @@ describe('MotiInventoryHeader component', () => {
     const testProperty: IPropertyApiModel = {} as any;
     const { getByTitle } = setup({
       ltsaData: undefined,
+      ltsaLoading: false,
+      propertyLoading: false,
       property: testProperty,
     });
     const zoomButton = getByTitle('Zoom Map');
@@ -78,6 +88,8 @@ describe('MotiInventoryHeader component', () => {
     const { getByTitle } = setup({
       ltsaData: undefined,
       property: undefined,
+      ltsaLoading: false,
+      propertyLoading: false,
     });
 
     const zoomButton = getByTitle('Zoom Map');

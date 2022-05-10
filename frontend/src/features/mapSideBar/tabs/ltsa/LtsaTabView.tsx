@@ -1,4 +1,5 @@
 import { Input, TextArea } from 'components/common/form';
+import { FormSection } from 'components/common/form/styles';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Form, Formik, getIn } from 'formik';
 import { LtsaOrders, OrderParent, ParcelInfo, TaxAuthority } from 'interfaces/ltsaModels';
@@ -24,76 +25,90 @@ import LtsaTransferSubForm from './LtsaTransferSubForm';
 export interface ILtsaTabViewProps {
   ltsaData?: LtsaOrders;
   ltsaRequestedOn?: Date;
+  loading: boolean;
 }
 
 export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
   ltsaData,
   ltsaRequestedOn,
+  loading,
 }) => {
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
-  const isLoading = ltsaData === undefined;
 
   return (
     <>
-      <LoadingBackdrop show={isLoading} parentScreen={true} />
-      <Formik initialValues={ltsaData ?? defaultLtsaData} onSubmit={noop} enableReinitialize={true}>
-        <StyledForm>
-          {ltsaRequestedOn && (
-            <StyledInlineMessageSection>
-              <InlineMessage>
+      <LoadingBackdrop show={loading} parentScreen={true} />
+      {!loading && !ltsaData ? (
+        <FormSection>
+          <b>
+            Failed to load data from LTSA.
+            <br /> Refresh this page to try again, or select a different property.
+          </b>
+        </FormSection>
+      ) : (
+        <Formik
+          initialValues={ltsaData ?? defaultLtsaData}
+          onSubmit={noop}
+          enableReinitialize={true}
+        >
+          <StyledForm>
+            {ltsaRequestedOn && (
+              <StyledInlineMessageSection>
+                <InlineMessage>
                 This data was retrieved from LTSA on{' '}
-                {moment(ltsaRequestedOn).format('DD-MMM-YYYY h:mm A')}
-              </InlineMessage>
-            </StyledInlineMessageSection>
-          )}
-          <StyledFormSection>
-            <StyledSectionHeader>Title Details</StyledSectionHeader>
-            <SectionField label="Title number">
-              <Input
-                disabled
-                field={withNameSpace(titleNameSpace, 'titleIdentifier.titleNumber')}
-              />
-            </SectionField>
-            <SectionField label="Land title district">
-              <Input
-                disabled
-                field={withNameSpace(titleNameSpace, 'titleIdentifier.landTitleDistrict')}
-              />
-            </SectionField>
-            <SectionField label="Taxation authorities">
-              <TextArea
-                disabled
-                field={withNameSpace(titleNameSpace, 'taxAuthorities')}
-                mapFunction={(taxAuthority: TaxAuthority) => taxAuthority.authorityName}
-              />
-            </SectionField>
-          </StyledFormSection>
-          <StyledFormSection>
-            <LtsaLandSubForm nameSpace={titleNameSpace} />
-          </StyledFormSection>
-          <StyledFormSection>
-            <LtsaOwnershipInformationForm nameSpace={titleNameSpace} />
-          </StyledFormSection>
-          <StyledFormSection>
-            <LtsaChargeSubForm nameSpace={titleNameSpace} />
-          </StyledFormSection>
-          <StyledFormSection>
-            <LtsaDuplicateTitleSubForm nameSpace={titleNameSpace} />
-          </StyledFormSection>
-          <StyledFormSection>
-            <LtsaTransferSubForm nameSpace={titleNameSpace} />
-          </StyledFormSection>
-          <StyledFormSection>
-            <StyledSectionHeader>Notes</StyledSectionHeader>
-            <SectionField label="Miscellaneous notes">
-              <p>{getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes')}</p>
-            </SectionField>
-            <SectionField label="Parcel status">
-              <Input disabled field="parcelInfo.orderedProduct.fieldedData.status" />
-            </SectionField>
-          </StyledFormSection>
-        </StyledForm>
-      </Formik>
+                  {moment(ltsaRequestedOn).format('DD-MMM-YYYY h:mm A')}
+                </InlineMessage>
+              </StyledInlineMessageSection>
+            )}
+            <StyledFormSection>
+              <StyledSectionHeader>Title Details</StyledSectionHeader>
+              <SectionField label="Title number">
+                <Input
+                  disabled
+                  field={withNameSpace(titleNameSpace, 'titleIdentifier.titleNumber')}
+                />
+              </SectionField>
+              <SectionField label="Land title district">
+                <Input
+                  disabled
+                  field={withNameSpace(titleNameSpace, 'titleIdentifier.landTitleDistrict')}
+                />
+              </SectionField>
+              <SectionField label="Taxation authorities">
+                <TextArea
+                  disabled
+                  field={withNameSpace(titleNameSpace, 'taxAuthorities')}
+                  mapFunction={(taxAuthority: TaxAuthority) => taxAuthority.authorityName}
+                />
+              </SectionField>
+            </StyledFormSection>
+            <StyledFormSection>
+              <LtsaLandSubForm nameSpace={titleNameSpace} />
+            </StyledFormSection>
+            <StyledFormSection>
+              <LtsaOwnershipInformationForm nameSpace={titleNameSpace} />
+            </StyledFormSection>
+            <StyledFormSection>
+              <LtsaChargeSubForm nameSpace={titleNameSpace} />
+            </StyledFormSection>
+            <StyledFormSection>
+              <LtsaDuplicateTitleSubForm nameSpace={titleNameSpace} />
+            </StyledFormSection>
+            <StyledFormSection>
+              <LtsaTransferSubForm nameSpace={titleNameSpace} />
+            </StyledFormSection>
+            <StyledFormSection>
+              <StyledSectionHeader>Notes</StyledSectionHeader>
+              <SectionField label="Miscellaneous notes">
+                <p>{getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes')}</p>
+              </SectionField>
+              <SectionField label="Parcel status">
+                <Input disabled field="parcelInfo.orderedProduct.fieldedData.status" />
+              </SectionField>
+            </StyledFormSection>
+          </StyledForm>
+        </Formik>
+      )}
     </>
   );
 };

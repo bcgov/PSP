@@ -24,19 +24,22 @@ import {
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
+  loading: boolean;
 }
 
 /**
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ property }) => {
+export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({
+  property,
+  loading,
+}) => {
   const values = property !== undefined ? property : toFormValues(defaultPropertyInfo);
-  const isLoading = property === undefined;
 
   return (
     <>
-      <LoadingBackdrop show={isLoading} parentScreen={true} />
+      <LoadingBackdrop show={loading} parentScreen={true} />
       <Formik
         initialValues={values}
         onSubmit={noop}

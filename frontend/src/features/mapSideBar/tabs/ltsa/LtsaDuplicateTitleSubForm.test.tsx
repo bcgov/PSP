@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { noop } from 'lodash';
+import { mockLtsaResponse } from 'mocks/filterDataMock';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import LtsaDuplicateTitleSubForm, { ILtsaDuplicateTitleSubForm } from './LtsaDuplicateTitleSubForm';
-import { mockLtsaResponse } from './LtsaTabView.test';
 
 describe('LtsaDuplicateTitleSubForm component', () => {
   const setup = (
