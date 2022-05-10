@@ -277,13 +277,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
               </g>
             </g>
             <text
-              textLength="1.25rem"
-              x="7"
-              y="15"
-            >
-              1
-            </text>
-            <text
               class="c1"
               textLength="1.25rem"
               x="7"
