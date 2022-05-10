@@ -63,7 +63,6 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   };
 
   const handleCancel = () => {
-    formikRef.current?.resetForm();
     props.onClose();
   };
 
@@ -96,8 +95,9 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
 
             <Prompt
               when={
-                (formikProps.dirty || formikProps.values.properties.length > 0) &&
-                formikProps.submitCount === 0
+                formikProps.dirty ||
+                (formikProps.values.properties !== initialForm.properties &&
+                  formikProps.submitCount === 0)
               }
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
