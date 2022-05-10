@@ -15,6 +15,7 @@ import { Section } from '../../Section';
 import { SectionField, StyledFieldLabel } from '../../SectionField';
 import { InlineContainer, LeftBorderCol } from '../../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
+import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
 import { UpdatePropertyDetailsFormModel } from './models';
 
 export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetailsFormModel>> = ({
@@ -27,7 +28,6 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
   const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES);
   const adjacentLandOptions = getByType(API.PROPERTY_ADJACENT_LAND_TYPES);
   const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
-
   // multi-selects
   const tenureStatus = getIn(values, 'tenures') as Api_TypeCode<string>[];
   const adjacentLands = getIn(values, 'adjacentLands') as Api_TypeCode<string>[];
@@ -38,9 +38,12 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
     isAdjacentLand &&
     adjacentLands?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
-
-  let landArea = getIn(values, 'landArea') as number;
-  let areaUnit = getIn(values, 'areaUnit') as Api_TypeCode<string>;
+  // area measurements table inputs
+  const landArea = getIn(values, 'landArea') as number;
+  const areaUnit = getIn(values, 'areaUnit') as Api_TypeCode<string>;
+  // volume measurements table inputs
+  const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
+  const volumetricUnit = getIn(values, 'volumetricUnit') as Api_TypeCode<string>;
 
   return (
     <StyledForm>
@@ -129,7 +132,7 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
           <Col>
             <Row>
               <Col className="col-10">
-                <LandMeasurementTable landArea={landArea} areaUnit={areaUnit} />
+                <LandMeasurementTable area={landArea} areaUnit={areaUnit} />
               </Col>
             </Row>
           </Col>
@@ -163,7 +166,10 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
 
                 <Row>
                   <Col className="col-10">
-                    {/* <VolumetricMeasurementTable data={volumeMeasurement} /> */}
+                    <VolumetricMeasurementTable
+                      volume={volumetricMeasurement}
+                      volumeUnit={volumetricUnit}
+                    />
                   </Col>
                 </Row>
               </>
@@ -173,7 +179,7 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
       </Section>
 
       <Section header="Notes">
-        <TextArea field="notes" />
+        <TextArea field="notes" rows={4} />
       </Section>
     </StyledForm>
   );

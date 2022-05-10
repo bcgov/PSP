@@ -2,17 +2,18 @@ import { AreaUnitTypes } from 'constants/index';
 import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
 import Api_TypeCode from 'models/api/TypeCode';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { convertArea, round } from 'utils';
 
+import { StyledTable } from '../styles';
+
 export interface IUpdateLandMeasurementTableProps {
-  landArea: number;
+  area: number;
   areaUnit: Api_TypeCode<string>;
   onChange?: (landArea: number, areaUnit: Api_TypeCode<string>) => void;
 }
 
 export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = ({
-  landArea,
+  area,
   areaUnit,
   onChange,
 }) => {
@@ -20,10 +21,10 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
 
   // derive our internal state from props
   const initialState: Record<string, number> = {
-    [AreaUnitTypes.SquareMeters]: convertArea(landArea, areaUnitId, AreaUnitTypes.SquareMeters),
-    [AreaUnitTypes.SquareFeet]: convertArea(landArea, areaUnitId, AreaUnitTypes.SquareFeet),
-    [AreaUnitTypes.Hectares]: convertArea(landArea, areaUnitId, AreaUnitTypes.Hectares),
-    [AreaUnitTypes.Acres]: convertArea(landArea, areaUnitId, AreaUnitTypes.Acres),
+    [AreaUnitTypes.SquareMeters]: convertArea(area, areaUnitId, AreaUnitTypes.SquareMeters),
+    [AreaUnitTypes.SquareFeet]: convertArea(area, areaUnitId, AreaUnitTypes.SquareFeet),
+    [AreaUnitTypes.Hectares]: convertArea(area, areaUnitId, AreaUnitTypes.Hectares),
+    [AreaUnitTypes.Acres]: convertArea(area, areaUnitId, AreaUnitTypes.Acres),
   };
 
   // keep track of which input is receiving user input
@@ -206,42 +207,3 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
     </>
   );
 };
-
-const StyledTable = styled.div`
-  &.table {
-    .no-rows-message {
-      align-items: flex-start;
-    }
-    .tbody {
-      .tr {
-        display: flex;
-        flex: 1 0 auto;
-        min-width: 60px;
-
-        .td {
-          display: flex;
-          flex: 100 0 auto;
-          box-sizing: border-box;
-          min-height: 3.6rem;
-          min-width: 30px;
-          width: 100px;
-          flex-wrap: wrap;
-          align-items: center;
-
-          &.right {
-            justify-content: right;
-            text-align: right;
-          }
-          &.left {
-            justify-content: left;
-            text-align: left;
-          }
-
-          input {
-            max-width: 12.5rem;
-          }
-        }
-      }
-    }
-  }
-`;

@@ -87,7 +87,7 @@ export const defaultUpdateProperty: UpdatePropertyDetailsFormModel = {
   latitude: undefined,
   longitude: undefined,
   landLegalDescription: '',
-  landArea: 1,
+  landArea: 0,
   areaUnit: { id: AreaUnitTypes.Hectares },
   volumetricMeasurement: 0,
   volumetricUnit: { id: VolumeUnitTypes.CubicMeters },
