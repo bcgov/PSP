@@ -1,12 +1,9 @@
 import { AreaUnitTypes } from 'constants/index';
 import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
 import Api_TypeCode from 'models/api/TypeCode';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { formatNumber } from 'utils';
-import { convertArea } from 'utils/convertUtils';
-
-import { createColumns, generateTableData, roundToTwoDecimals } from './helpers';
+import { convertArea, round } from 'utils';
 
 export interface IUpdateLandMeasurementTableProps {
   landArea: number;
@@ -14,26 +11,29 @@ export interface IUpdateLandMeasurementTableProps {
   onChange?: (landArea: number, areaUnit: Api_TypeCode<string>) => void;
 }
 
-export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = props => {
-  const { landArea, areaUnit, onChange } = props;
+export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = ({
+  landArea,
+  areaUnit,
+  onChange,
+}) => {
+  const areaUnitId = areaUnit.id || AreaUnitTypes.Hectares;
 
-  // populate data array from input props
-  const data = useMemo(() => generateTableData(landArea, areaUnit), [areaUnit, landArea]);
-
-  // derive our internal state from values in the data table above
-  const initialState = data.reduce((dictionary, next) => {
-    dictionary[next.unit] = next.value;
-    return dictionary;
-  }, {} as Record<string, number>);
+  // derive our internal state from props
+  const initialState: Record<string, number> = {
+    [AreaUnitTypes.SquareMeters]: convertArea(landArea, areaUnitId, AreaUnitTypes.SquareMeters),
+    [AreaUnitTypes.SquareFeet]: convertArea(landArea, areaUnitId, AreaUnitTypes.SquareFeet),
+    [AreaUnitTypes.Hectares]: convertArea(landArea, areaUnitId, AreaUnitTypes.Hectares),
+    [AreaUnitTypes.Acres]: convertArea(landArea, areaUnitId, AreaUnitTypes.Acres),
+  };
 
   // keep track of which input is receiving user input
   const [focus, setFocus] = useState('');
   const [state, setState] = useState(initialState);
 
-  const sqMeters = roundToTwoDecimals(state[AreaUnitTypes.SquareMeters]);
-  const sqFeet = roundToTwoDecimals(state[AreaUnitTypes.SquareFeet]);
-  const ha = roundToTwoDecimals(state[AreaUnitTypes.Hectares]);
-  const acres = roundToTwoDecimals(state[AreaUnitTypes.Acres]);
+  const sqMeters = round(state[AreaUnitTypes.SquareMeters], 2);
+  const sqFeet = round(state[AreaUnitTypes.SquareFeet], 2);
+  const ha = round(state[AreaUnitTypes.Hectares], 2);
+  const acres = round(state[AreaUnitTypes.Acres], 2);
 
   // update dependent fields based on user input
   useEffect(() => {

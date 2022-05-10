@@ -10,6 +10,17 @@ import { ILookupCode } from 'store/slices/lookupCodes';
 import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
 
 /**
+ * Rounds the supplied number to a certain number of decimal places
+ * @param value The number to round
+ * @param decimalPlaces The number of decimal places. Defaults to 2
+ * @returns The rounded number
+ */
+export function round(value: number, decimalPlaces = 2): number {
+  const factorOfTen = Math.pow(10, decimalPlaces);
+  return Math.round((value + Number.EPSILON) * factorOfTen) / factorOfTen;
+}
+
+/**
  * Convert the specified 'input' value into a decimal or undefined.
  * @param input The string value to convert to a decimal.
  */
