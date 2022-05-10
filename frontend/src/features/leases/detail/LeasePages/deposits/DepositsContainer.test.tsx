@@ -50,7 +50,6 @@ const mockDepositReturns: Api_SecurityDepositReturn[] = [
     returnAmount: 123.0,
     returnDate: '2022-02-16',
     rowVersion: 1,
-    interestPaid: 0,
   },
 ];
 
