@@ -14,7 +14,7 @@ import { stringToBoolean } from 'utils/formUtils';
 import { Section } from '../../Section';
 import { SectionField, StyledFieldLabel } from '../../SectionField';
 import { InlineContainer, LeftBorderCol } from '../../SectionStyles';
-import { LandMeasurementTable } from './components/LandMeasurementTable/LandMeasurementTable';
+import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { UpdatePropertyDetailsFormModel } from './models';
 
 export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetailsFormModel>> = ({
