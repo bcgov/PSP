@@ -54,7 +54,8 @@ describe('PaymentsContainer component', () => {
       component: { getByDisplayValue },
     } = await setup();
 
-    expect(getByDisplayValue('2021-22')).toBeVisible();
+    //this is based on the mocked value
+    expect(getByDisplayValue('2020-21')).toBeVisible();
   });
 
   it('makes a get request for an aggregated report', async () => {
@@ -67,7 +68,7 @@ describe('PaymentsContainer component', () => {
 
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toEqual(
-        '/reports/leases/aggregated?fiscalYearStart=2021',
+        `/reports/leases/aggregated?fiscalYearStart=2020`,
       );
     });
   });
