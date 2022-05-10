@@ -6,7 +6,6 @@ import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
 import { ICluster, PointFeature } from '../types';
-import DraftMarker from './SvgMarkers/DraftMarker';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
