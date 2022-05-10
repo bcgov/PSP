@@ -1,5 +1,7 @@
+import { DraftCircleNumber } from 'features/properties/selector/components/DraftCircleNumber';
 import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
@@ -80,7 +82,7 @@ export const getDraftIcon = (text: string) => {
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
-    html: ReactDOMServer.renderToStaticMarkup(<DraftMarker text={text} />),
+    html: ReactDOMServer.renderToStaticMarkup(<DraftCircleNumber text={text} />),
   });
 };
 
