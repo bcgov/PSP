@@ -1,7 +1,7 @@
 import { VolumeUnitTypes } from 'constants/index';
 import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
 import Api_TypeCode from 'models/api/TypeCode';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { convertVolume, round } from 'utils';
 
 import { StyledTable } from '../styles';
@@ -69,6 +69,17 @@ export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTablePro
     }
   }, [focus, cubicFeet]);
 
+  const handleInputChange = useCallback(
+    (newValue: number, volumeUnitId: string) => {
+      setFocus(volumeUnitId);
+      setState(prevState => ({ ...prevState, [volumeUnitId]: newValue }));
+      if (typeof onChange === 'function') {
+        onChange(newValue, { id: volumeUnitId });
+      }
+    },
+    [onChange],
+  );
+
   return (
     <>
       <TableCaption>Volumetric measurement</TableCaption>
@@ -81,13 +92,9 @@ export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTablePro
                   type="number"
                   step=".01"
                   value={cubicMeters}
-                  onChange={e => {
-                    setFocus(VolumeUnitTypes.CubicMeters);
-                    setState(prevState => ({
-                      ...prevState,
-                      [VolumeUnitTypes.CubicMeters]: e.target.valueAsNumber,
-                    }));
-                  }}
+                  onChange={e =>
+                    handleInputChange(e.target.valueAsNumber, VolumeUnitTypes.CubicMeters)
+                  }
                 />
               </div>
               <div role="cell" title="" className="td left">
@@ -104,13 +111,9 @@ export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTablePro
                   type="number"
                   step=".01"
                   value={cubicFeet}
-                  onChange={e => {
-                    setFocus(VolumeUnitTypes.CubicFeet);
-                    setState(prevState => ({
-                      ...prevState,
-                      [VolumeUnitTypes.CubicFeet]: e.target.valueAsNumber,
-                    }));
-                  }}
+                  onChange={e =>
+                    handleInputChange(e.target.valueAsNumber, VolumeUnitTypes.CubicFeet)
+                  }
                 />
               </div>
               <div role="cell" title="" className="td left">

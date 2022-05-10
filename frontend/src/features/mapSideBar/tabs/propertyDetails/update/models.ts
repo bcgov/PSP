@@ -40,7 +40,6 @@ export interface UpdatePropertyDetailsFormModel {
   status?: Api_TypeCode<string>;
 
   // multi-selects
-
   anomalies?: Api_TypeCode<string>[];
   tenure?: Api_TypeCode<string>[];
   roadType?: Api_TypeCode<string>[];

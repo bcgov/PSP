@@ -1,7 +1,7 @@
 import { AreaUnitTypes } from 'constants/index';
 import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
 import Api_TypeCode from 'models/api/TypeCode';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { convertArea, round } from 'utils';
 
 import { StyledTable } from '../styles';
@@ -113,6 +113,17 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
     }
   }, [focus, acres]);
 
+  const handleInputChange = useCallback(
+    (newValue: number, areaUnitId: string) => {
+      setFocus(areaUnitId);
+      setState(prevState => ({ ...prevState, [areaUnitId]: newValue }));
+      if (typeof onChange === 'function') {
+        onChange(newValue, { id: areaUnitId });
+      }
+    },
+    [onChange],
+  );
+
   return (
     <>
       <TableCaption>Land measurement</TableCaption>
@@ -125,13 +136,9 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
                   type="number"
                   step=".01"
                   value={sqMeters}
-                  onChange={e => {
-                    setFocus(AreaUnitTypes.SquareMeters);
-                    setState(prevState => ({
-                      ...prevState,
-                      [AreaUnitTypes.SquareMeters]: e.target.valueAsNumber,
-                    }));
-                  }}
+                  onChange={e =>
+                    handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareMeters)
+                  }
                 />
               </div>
               <div role="cell" title="" className="td left">
@@ -146,13 +153,9 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
                   type="number"
                   step=".01"
                   value={sqFeet}
-                  onChange={e => {
-                    setFocus(AreaUnitTypes.SquareFeet);
-                    setState(prevState => ({
-                      ...prevState,
-                      [AreaUnitTypes.SquareFeet]: e.target.valueAsNumber,
-                    }));
-                  }}
+                  onChange={e =>
+                    handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareFeet)
+                  }
                 />
               </div>
               <div role="cell" title="" className="td left">
@@ -167,13 +170,7 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
                   type="number"
                   step=".01"
                   value={ha}
-                  onChange={e => {
-                    setFocus(AreaUnitTypes.Hectares);
-                    setState(prevState => ({
-                      ...prevState,
-                      [AreaUnitTypes.Hectares]: e.target.valueAsNumber,
-                    }));
-                  }}
+                  onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Hectares)}
                 />
               </div>
               <div role="cell" title="" className="td left">
@@ -188,13 +185,7 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
                   type="number"
                   step=".01"
                   value={acres}
-                  onChange={e => {
-                    setFocus(AreaUnitTypes.Acres);
-                    setState(prevState => ({
-                      ...prevState,
-                      [AreaUnitTypes.Acres]: e.target.valueAsNumber,
-                    }));
-                  }}
+                  onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Acres)}
                 />
               </div>
               <div role="cell" title="" className="td left">
