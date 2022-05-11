@@ -37,7 +37,7 @@ export const UpdatePropertyView: React.FunctionComponent<IUpdatePropertyViewProp
       innerRef={formikRef}
       initialValues={UpdatePropertyFormModel.fromApi(props.researchFileProperty)}
       onSubmit={async (values: UpdatePropertyFormModel) => {
-        const researchFile: Api_ResearchFile = values.toApi();
+        const researchFile: Api_ResearchFileProperty = values.toApi();
         await savePropertyFile(researchFile);
       }}
     >

@@ -65,9 +65,9 @@ describe('PaymentModal component', () => {
 
     await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
     await fillInput(document.body, 'leasePaymentMethodType.id', 'CHEQ', 'select');
-    await fillInput(document.body, 'amountTotal', '1200.00');
     await fillInput(document.body, 'amountPreTax', '1150');
     await fillInput(document.body, 'amountGst', '50');
+    await fillInput(document.body, 'amountTotal', '1200');
     const saveButton = getByText('Save payment');
     userEvent.click(saveButton);
     await waitFor(() => expect(onSave).toHaveBeenCalled());
@@ -75,8 +75,8 @@ describe('PaymentModal component', () => {
       ...defaultFormLeasePayment,
       receivedDate: '2020-01-01',
       amountTotal: 1200,
-      amountPreTax: 1150,
-      amountGst: 50,
+      amountPreTax: 1200,
+      amountGst: '',
       leasePaymentMethodType: {
         id: 'CHEQ',
       },

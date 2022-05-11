@@ -52,14 +52,14 @@ export class UpdatePropertyFormModel {
       base.isLegalOpinionRequired === undefined
         ? 'unknown'
         : base.isLegalOpinionRequired
-        ? 'true'
-        : 'false';
+        ? 'yes'
+        : 'no';
     model.isLegalOpinionObtained =
       base.isLegalOpinionObtained === undefined
         ? 'unknown'
         : base.isLegalOpinionObtained
-        ? 'true'
-        : 'false';
+        ? 'yes'
+        : 'no';
     model.documentReference = base.documentReference;
     model.researchSummary = base.researchSummary;
     model.propertyId = base.property?.id;
@@ -82,13 +82,13 @@ export class UpdatePropertyFormModel {
       isLegalOpinionRequired:
         this.isLegalOpinionRequired === undefined || this.isLegalOpinionRequired === 'unknown'
           ? undefined
-          : this.isLegalOpinionRequired === 'true'
+          : this.isLegalOpinionRequired === 'yes'
           ? true
           : false,
       isLegalOpinionObtained:
         this.isLegalOpinionObtained === undefined || this.isLegalOpinionObtained === 'unknown'
           ? undefined
-          : this.isLegalOpinionObtained === 'true'
+          : this.isLegalOpinionObtained === 'yes'
           ? true
           : false,
       documentReference: this.documentReference,

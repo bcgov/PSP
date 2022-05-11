@@ -49,6 +49,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
+    console.log(response);
     if (!!response?.name) {
       formikRef.current?.setSubmitting(false);
       formikRef.current?.resetForm();

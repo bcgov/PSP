@@ -81,10 +81,9 @@ export const useApiRequestWrapper = <
         onError && onError(axiosError);
         setError(axiosError);
       } finally {
-        if (!isMounted()) {
-          return;
+        if (isMounted()) {
+          setLoading(false);
         }
-        setLoading(false);
       }
     },
     [dispatch, isMounted, onError, onSuccess, requestFunction, requestName],
