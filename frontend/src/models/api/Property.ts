@@ -1,6 +1,7 @@
 import Api_TypeCode from 'interfaces/ITypeCode';
 
 import { Api_Address } from './Address';
+import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_Coordinate {
@@ -12,15 +13,15 @@ export interface Api_Geometry {
   coordinate?: Api_Coordinate;
 }
 
-export interface Api_Property extends Api_ConcurrentVersion {
+export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   propertyType?: Api_TypeCode<string>;
 
   // multi-selects
-  anomalies?: Api_TypeCode<string>[];
-  tenures?: Api_TypeCode<string>[];
-  roadTypes?: Api_TypeCode<string>[];
-  adjacentLands?: Api_TypeCode<string>[];
+  anomalies?: Api_PropertyAnomaly[];
+  tenures?: Api_PropertyTenure[];
+  roadTypes?: Api_PropertyRoad[];
+  adjacentLands?: Api_PropertyAdjacentLand[];
 
   status?: Api_TypeCode<string>;
   region?: Api_TypeCode<number>;
@@ -62,12 +63,31 @@ export interface Api_Property extends Api_ConcurrentVersion {
   zoningPotential?: string;
   municipalZoning?: string;
 
-  appCreateTimestamp?: string;
-  updatedOn?: string;
-  updatedByEmail?: string;
-  updatedByName?: string;
-
   notes?: string;
+}
+
+export interface Api_PropertyAnomaly extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  propertyId?: number;
+  propertyAnomalyTypeCode?: Api_TypeCode<string>;
+}
+
+export interface Api_PropertyRoad extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  propertyId?: number;
+  propertyRoadTypeCode?: Api_TypeCode<string>;
+}
+
+export interface Api_PropertyAdjacentLand extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  propertyId?: number;
+  propertyAdjacentLandTypeCode?: Api_TypeCode<string>;
+}
+
+export interface Api_PropertyTenure extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  propertyId?: number;
+  propertyTenureTypeCode?: Api_TypeCode<string>;
 }
 
 export interface Api_PropertyAssociations {
