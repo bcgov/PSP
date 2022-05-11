@@ -22,7 +22,7 @@ export interface Api_ResearchFileProperty extends Api_ConcurrentVersion {
   isLegalOpinionObtained?: boolean;
   documentReference?: string;
   researchSummary?: string;
-  propertyPurpose?: Api_ResearchFilePropertyPurposeType[];
+  purposeTypes?: Api_ResearchFilePropertyPurposeType[];
 }
 
 export interface Api_ResearchFile extends Api_ConcurrentVersion {

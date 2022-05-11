@@ -8,31 +8,57 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
   <div
     class="Toastify"
   />
-  .c2 {
+  .c3 {
   font-weight: bold;
 }
 
-.c0 {
+.c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+}
+
+.c0 {
+  text-align: right;
 }
 
 <div
     class=""
   >
     <div
-      class="c0"
+      class="c0 mr-3 my-1"
+    >
+      <button
+        class="btn btn-link"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="2rem"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 576 512"
+          width="2rem"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="c1"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         Roads
       </h2>
@@ -43,7 +69,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Road name:
           </label>
@@ -61,7 +87,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Road alias:
           </label>
@@ -74,10 +100,10 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       </div>
     </div>
     <div
-      class="c0"
+      class="c1"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         Research Request
       </h2>
@@ -88,7 +114,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Research purpose:
           </label>
@@ -104,7 +130,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Request date:
           </label>
@@ -122,7 +148,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Source of request:
           </label>
@@ -140,7 +166,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Requester:
           </label>
@@ -158,7 +184,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Description of request:
           </label>
@@ -170,10 +196,10 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       a request description
     </div>
     <div
-      class="c0"
+      class="c1"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         Result
       </h2>
@@ -184,7 +210,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Research completed on:
           </label>
@@ -202,7 +228,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Result of request:
           </label>
@@ -214,10 +240,10 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       A research result
     </div>
     <div
-      class="c0"
+      class="c1"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         Expropriation
       </h2>
@@ -228,7 +254,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Expropriation?:
           </label>
@@ -246,7 +272,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
           class="col-4"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Expropriation notes:
           </label>

@@ -2,13 +2,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsPropResearchPurposeType class, provides an entity for the datamodel to manage research property status types.
+    /// PimsPropResearchPurposeType class, provides an entity for the datamodel to manage property research purpose types.
     /// </summary>
     public partial class PimsPropResearchPurposeType : ITypeEntity<string>
     {
         #region Properties
         /// <summary>
-        /// get/set - Primary key to identify research file property purpose type.
+        /// get/set - Primary key to identify research file purpose type.
         /// </summary>
         [NotMapped]
         public string Id { get => PropResearchPurposeTypeCode; set => PropResearchPurposeTypeCode = value; }

@@ -91,6 +91,23 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
 
+        /// <summary>
+        /// Update the specified property on the passed research file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{researchFileId:long}/properties/{researchFilePropertyId:long}")]
+        [HasPermission(Permissions.ResearchFileEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResearchFilePropertyModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchFile" })]
+        public IActionResult UpdateTerm(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
+        {
+            var researchFilePropertyEntity = _mapper.Map<Dal.Entities.PimsPropertyResearchFile>(researchFilePropertyModel);
+            var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyId, researchFilePropertyModel.ResearchFile.RowVersion, researchFilePropertyEntity);
+
+            return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
 
         #endregion
     }

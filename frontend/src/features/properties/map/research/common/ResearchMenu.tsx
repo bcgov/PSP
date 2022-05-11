@@ -5,17 +5,18 @@ import styled from 'styled-components';
 export interface IResearchMenuProps {
   items: string[];
   selectedIndex: number;
-  setSelectedIndex: (index: number) => void;
+  onChange: (index: number) => void;
 }
 
 const ResearchMenu: React.FunctionComponent<IResearchMenuProps> = props => {
   const handleClick = (index: number) => {
-    props.setSelectedIndex(index);
+    props.onChange(index);
   };
   return (
     <StyledMenuWrapper>
       {props.items.map((label: string, index: number) => (
         <StyledRow
+          key={`menu-item-row-${index}`}
           data-testid={`menu-item-row-${index}`}
           className={`no-gutters ${props.selectedIndex === index ? 'selected' : ''}`}
           onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
@@ -23,9 +24,9 @@ const ResearchMenu: React.FunctionComponent<IResearchMenuProps> = props => {
           <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
           {index !== 0 && (
             <Col xs="auto" className="pr-2">
-              <CircleThing className={props.selectedIndex === index ? 'selected' : ''}>
+              <StyledIconWrapper className={props.selectedIndex === index ? 'selected' : ''}>
                 {index}
-              </CircleThing>
+              </StyledIconWrapper>
             </Col>
           )}
           <Col>{label}</Col>
@@ -42,6 +43,7 @@ const StyledMenuWrapper = styled.div`
   padding: 0px;
   margin: 0px;
   width: 100%;
+  color: ${({ theme }) => theme.css.linkColor};
 `;
 
 const StyledRow = styled(Row)`
@@ -55,8 +57,7 @@ const StyledRow = styled(Row)`
   padding-bottom: 0.5rem;
 `;
 
-const CircleThing = styled.div`
-  color: ${({ theme }) => theme.css.primary};
+const StyledIconWrapper = styled.div`
   &.selected {
     background-color: ${props => props.theme.css.accentColor};
   }
