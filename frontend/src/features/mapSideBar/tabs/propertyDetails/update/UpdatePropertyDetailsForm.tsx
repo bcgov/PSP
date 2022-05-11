@@ -1,3 +1,4 @@
+import { Button } from 'components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { YesNoSelect } from 'components/common/form/YesNoSelect';
@@ -7,7 +8,8 @@ import { Form, FormikProps, getIn } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import Api_TypeCode from 'models/api/TypeCode';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { ButtonToolbar, Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { stringToBoolean } from 'utils/formUtils';
 
@@ -21,6 +23,7 @@ import { UpdatePropertyDetailsFormModel } from './models';
 export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetailsFormModel>> = ({
   values,
 }) => {
+  const location = useHistory();
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES);
@@ -44,6 +47,10 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
   // volume measurements table inputs
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
+
+  const onCancel = () => {
+    location.goBack();
+  };
 
   return (
     <StyledForm>
@@ -181,6 +188,17 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
       <Section header="Notes">
         <TextArea field="notes" rows={4} />
       </Section>
+
+      <Row className="m-0 justify-content-md-end">
+        <ButtonToolbar className="cancelSave">
+          <Button className="mr-5" variant="secondary" type="button" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button className="mr-5" type="submit">
+            Save
+          </Button>
+        </ButtonToolbar>
+      </Row>
     </StyledForm>
   );
 };
