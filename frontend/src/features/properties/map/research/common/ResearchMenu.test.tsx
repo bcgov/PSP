@@ -2,16 +2,16 @@ import { fireEvent, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 
-const setSelectedIndex = jest.fn();
+const onChange = jest.fn();
 
 describe('ResearchMenu component', () => {
   const setup = (renderOptions: RenderOptions & IResearchMenuProps) => {
     // render component under test
     const component = render(
       <ResearchMenu
-        setSelectedIndex={renderOptions.setSelectedIndex}
         selectedIndex={renderOptions.selectedIndex}
         items={renderOptions.items}
+        onChange={renderOptions.onChange}
       />,
       {
         ...renderOptions,
@@ -32,7 +32,7 @@ describe('ResearchMenu component', () => {
     const { component } = setup({
       items: testItems,
       selectedIndex: 0,
-      setSelectedIndex,
+      onChange,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -44,7 +44,7 @@ describe('ResearchMenu component', () => {
     } = setup({
       items: testItems,
       selectedIndex: 0,
-      setSelectedIndex,
+      onChange,
     });
 
     expect(getByText(testItems[0])).toBeVisible();
@@ -59,7 +59,7 @@ describe('ResearchMenu component', () => {
     } = setup({
       items: testItems,
       selectedIndex: 1,
-      setSelectedIndex,
+      onChange,
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
@@ -70,6 +70,6 @@ describe('ResearchMenu component', () => {
     await waitFor(() => {
       fireEvent.click(secondItem);
     });
-    expect(setSelectedIndex).toHaveBeenCalledWith(2);
+    expect(onChange).toHaveBeenCalledWith(2);
   });
 });

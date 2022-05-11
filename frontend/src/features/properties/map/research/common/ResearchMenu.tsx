@@ -5,12 +5,12 @@ import styled from 'styled-components';
 export interface IResearchMenuProps {
   items: string[];
   selectedIndex: number;
-  setSelectedIndex: (index: number) => void;
+  onChange: (index: number) => void;
 }
 
 const ResearchMenu: React.FunctionComponent<IResearchMenuProps> = props => {
   const handleClick = (index: number) => {
-    props.setSelectedIndex(index);
+    props.onChange(index);
   };
   return (
     <StyledMenuWrapper>
@@ -42,6 +42,7 @@ const StyledMenuWrapper = styled.div`
   padding: 0px;
   margin: 0px;
   width: 100%;
+  color: ${({ theme }) => theme.css.linkColor};
 `;
 
 const StyledRow = styled(Row)`
@@ -56,7 +57,6 @@ const StyledRow = styled(Row)`
 `;
 
 const CircleThing = styled.div`
-  color: ${({ theme }) => theme.css.primary};
   &.selected {
     background-color: ${props => props.theme.css.accentColor};
   }

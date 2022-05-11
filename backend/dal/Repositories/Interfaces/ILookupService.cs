@@ -39,6 +39,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsResearchFileStatusType> GetResearchFileStatusTypes();
         IEnumerable<PimsRequestSourceType> GeRequestSourceTypes();
         IEnumerable<PimsResearchPurposeType> GetResearchPurposeTypes();
+        IEnumerable<PimsPropResearchPurposeType> GetPropertyResearchPurposeTypes();
     }
 }
 

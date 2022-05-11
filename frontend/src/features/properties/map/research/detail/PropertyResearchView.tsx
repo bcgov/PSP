@@ -21,6 +21,7 @@ import { pidFormatter } from 'utils';
 
 export interface IPropertyResearchViewProps {
   researchFileProperty: Api_ResearchFileProperty;
+  setEditMode: (isEditing: boolean) => void;
 }
 
 const PropertyResearchView: React.FunctionComponent<IPropertyResearchViewProps> = props => {
@@ -96,7 +97,12 @@ const PropertyResearchView: React.FunctionComponent<IPropertyResearchViewProps> 
   });
 
   tabViews.push({
-    content: <PropertyResearchTabView researchFile={props.researchFileProperty} />,
+    content: (
+      <PropertyResearchTabView
+        researchFile={props.researchFileProperty}
+        setEditMode={props.setEditMode}
+      />
+    ),
     key: InventoryTabNames.research,
     name: 'Property Research',
   });

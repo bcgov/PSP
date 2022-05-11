@@ -15,19 +15,19 @@ import { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { ResearchFilePurposeFormModel, UpdateResearchFormModel } from './models';
+import { ResearchFilePurposeFormModel, UpdateResearchSummaryFormModel } from './models';
 
 interface MultiSelectOption {
   id: string;
   text: string;
 }
 
-export interface IUpdateResearchFormProps {
-  formikProps: FormikProps<UpdateResearchFormModel>;
+export interface IUpdateSummaryFormProps {
+  formikProps: FormikProps<UpdateResearchSummaryFormModel>;
 }
 
-const UpdateResearchForm: React.FunctionComponent<IUpdateResearchFormProps> = props => {
-  const { values } = useFormikContext<UpdateResearchFormModel>();
+const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = props => {
+  const { values } = useFormikContext<UpdateResearchSummaryFormModel>();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);
 
@@ -189,7 +189,7 @@ const UpdateResearchForm: React.FunctionComponent<IUpdateResearchFormProps> = pr
   );
 };
 
-export default UpdateResearchForm;
+export default UpdateSummaryForm;
 
 const StyledSummarySection = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};

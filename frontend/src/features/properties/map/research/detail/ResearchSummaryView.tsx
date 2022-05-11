@@ -2,6 +2,8 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledFormSection, StyledSectionHeader } from 'features/mapSideBar/tabs/SectionStyles';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
+import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 import { formatApiPersonNames } from 'utils/personUtils';
@@ -28,6 +30,7 @@ interface DetailResearchFile {
 
 export interface IResearchSummaryViewProps {
   researchFile: Api_ResearchFile;
+  setEditMode: (editable: boolean) => void;
 }
 
 const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
@@ -73,6 +76,16 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
 
   return (
     <StyledSummarySection>
+      <StyledEditWrapper className="mr-3 my-1">
+        <Button
+          variant="link"
+          onClick={() => {
+            props.setEditMode(true);
+          }}
+        >
+          <FaEdit size={'2rem'} />
+        </Button>
+      </StyledEditWrapper>
       <StyledFormSection>
         <StyledSectionHeader>Roads</StyledSectionHeader>
         <SectionField label="Road name">{detail.roadName}</SectionField>
@@ -115,6 +128,12 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
 };
 
 export default ResearchSummaryView;
+
+const StyledEditWrapper = styled.div`
+  color: ${props => props.theme.css.primary};
+
+  text-align: right;
+`;
 
 const StyledSummarySection = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -84,6 +85,14 @@ namespace Pims.Dal.Services
             return _researchFileRepository.GetPage(filter);
         }
 
+        public PimsResearchFile UpdateProperty(long researchFileId, long researchFilePropertyId, long researchFileVersion, PimsPropertyResearchFile propertyResearchFile)
+        {
+            _logger.LogInformation("Updating property research file...");
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
+            ValidateVersion(researchFileId, researchFileVersion);
+            return _researchFileRepository.UpdateProperty(researchFileId, propertyResearchFile);
+        }
+
         private void PopulateResearchFile(PimsProperty property)
         {
             property.PropertyClassificationTypeCode = "CORESTRAT"; // Todo: should be "UNKNOWN"
@@ -97,6 +106,15 @@ namespace Pims.Dal.Services
 
             property.RegionCode = 1; // TODO: this reallly needs to come from the app
             property.DistrictCode = 1; // TODO: this reallly needs to come from the app
+        }
+
+        private void ValidateVersion(long researchFileId, long researchFileVersion)
+        {
+            long currentRowVersion = _researchFileRepository.GetRowVersion(researchFileId);
+            if (currentRowVersion != researchFileVersion)
+            {
+                throw new DbUpdateConcurrencyException("You are working with an older version of this research file, please refresh the application and retry.");
+            }
         }
     }
 }

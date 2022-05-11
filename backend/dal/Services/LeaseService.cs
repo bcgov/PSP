@@ -1,5 +1,5 @@
-using Pims.Dal.Repositories;
 using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 
 namespace Pims.Dal.Services
 {
@@ -10,6 +10,7 @@ namespace Pims.Dal.Services
         {
             _leaseRepository = leaseRepository;
         }
+
         public bool IsRowVersionEqual(long leaseId, long rowVersion)
         {
             long currentRowVersion = _leaseRepository.GetRowVersion(leaseId);

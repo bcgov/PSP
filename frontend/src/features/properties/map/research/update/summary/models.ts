@@ -31,7 +31,7 @@ export class ResearchFilePurposeFormModel {
   }
 }
 
-export class UpdateResearchFormModel {
+export class UpdateResearchSummaryFormModel {
   public id?: number;
   public name?: string;
   public roadName?: string;
@@ -53,8 +53,8 @@ export class UpdateResearchFormModel {
   public researchFilePurposes?: ResearchFilePurposeFormModel[];
   public rowVersion?: number;
 
-  public static fromApi(base: Api_ResearchFile): UpdateResearchFormModel {
-    var model = new UpdateResearchFormModel();
+  public static fromApi(base: Api_ResearchFile): UpdateResearchSummaryFormModel {
+    var model = new UpdateResearchSummaryFormModel();
     model.id = base.id;
     model.name = base.name;
     model.roadName = base.roadName;

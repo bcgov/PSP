@@ -6,11 +6,16 @@ import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './Proper
 
 const history = createMemoryHistory();
 
+const setEditMode = jest.fn();
+
 describe('PropertyResearchTabView component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & IPropertyResearchTabViewProps) => {
     const component = render(
-      <PropertyResearchTabView researchFile={renderOptions.researchFile} />,
+      <PropertyResearchTabView
+        researchFile={renderOptions.researchFile}
+        setEditMode={renderOptions.setEditMode}
+      />,
       {
         history,
       },
@@ -22,7 +27,7 @@ describe('PropertyResearchTabView component', () => {
   };
 
   it('renders as expected when provided valid data object', () => {
-    const { asFragment } = setup({ researchFile: fakePropertyResearch });
+    const { asFragment } = setup({ researchFile: fakePropertyResearch, setEditMode });
     expect(asFragment()).toMatchSnapshot();
   });
 });
@@ -38,7 +43,7 @@ const fakePropertyResearch: Api_ResearchFileProperty = {
   isLegalOpinionObtained: true,
   documentReference: 'A document reference',
   researchSummary: 'Research sumary notes',
-  propertyPurpose: [
+  purposeTypes: [
     { propertyPurposeType: { id: 'TYPE_A', description: 'Type A' } },
     { propertyPurposeType: { id: 'TYPE_B', description: 'Type B' } },
   ],

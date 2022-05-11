@@ -6,8 +6,8 @@ import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { UpdateResearchFormModel } from './models';
-import UpdateResearchForm from './UpdateResearchForm';
+import { UpdateResearchSummaryFormModel } from './models';
+import UpdateSummaryForm from './UpdateSummaryForm';
 
 const testResearchFile: Api_ResearchFile = {
   id: 5,
@@ -55,11 +55,13 @@ const storeState = {
 };
 
 describe('UpdateResearchForm component', () => {
-  const setup = (renderOptions: RenderOptions & { initialValues: UpdateResearchFormModel }) => {
+  const setup = (
+    renderOptions: RenderOptions & { initialValues: UpdateResearchSummaryFormModel },
+  ) => {
     // render component under test
     const component = render(
       <Formik onSubmit={noop} initialValues={renderOptions.initialValues}>
-        {formikProps => <UpdateResearchForm formikProps={formikProps} />}
+        {formikProps => <UpdateSummaryForm formikProps={formikProps} />}
       </Formik>,
       {
         ...renderOptions,
@@ -78,7 +80,7 @@ describe('UpdateResearchForm component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    var initialValues = UpdateResearchFormModel.fromApi(testResearchFile);
+    var initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
     const { component } = setup({ initialValues });
     expect(component.asFragment()).toMatchSnapshot();
   });

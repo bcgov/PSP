@@ -43,12 +43,20 @@ const testResearchFile: Api_ResearchFile = {
   rowVersion: 9,
 };
 
+const setEditMode = jest.fn();
+
 describe('ResearchSummaryView component', () => {
   const setup = (renderOptions: RenderOptions & IResearchSummaryViewProps) => {
     // render component under test
-    const component = render(<ResearchSummaryView researchFile={renderOptions.researchFile} />, {
-      ...renderOptions,
-    });
+    const component = render(
+      <ResearchSummaryView
+        researchFile={renderOptions.researchFile}
+        setEditMode={renderOptions.setEditMode}
+      />,
+      {
+        ...renderOptions,
+      },
+    );
 
     return {
       component,
@@ -60,7 +68,7 @@ describe('ResearchSummaryView component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    const { component } = setup({ researchFile: testResearchFile });
+    const { component } = setup({ researchFile: testResearchFile, setEditMode });
     expect(component.asFragment()).toMatchSnapshot();
   });
 });

@@ -1,7 +1,6 @@
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
-import { DetailResearchContainer } from 'features/properties/map/research/detail/DetailResearchContainer';
-import UpdateResearchContainer from 'features/properties/map/research/update/UpdateResearchContainer';
+import ResearchContainer from 'features/properties/map/research/ResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
 import React, { useCallback, useState } from 'react';
@@ -23,7 +22,6 @@ export enum MapSidebarContextType {
 export enum MapViewState {
   MAP_ONLY = 'map_only',
   RESEARCH_ADD = 'research_add',
-  RESEARCH_EDIT = 'research_edit',
   RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
 }
@@ -63,11 +61,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
           currentState = MapViewState.RESEARCH_ADD;
         } else if (parts.length >= 4 && isNumber(Number(parts[3]))) {
           researchId = Number(parts[3]);
-          if (parts.length === 5 && parts[4] === 'edit') {
-            currentState = MapViewState.RESEARCH_EDIT;
-          } else {
-            currentState = MapViewState.RESEARCH_VIEW;
-          }
+          currentState = MapViewState.RESEARCH_VIEW;
         } else {
           currentState = MapViewState.MAP_ONLY;
         }
@@ -90,15 +84,9 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         setSidebarComponent(<AddResearchContainer onClose={handleClose} />);
         setShowSideBar(true);
         break;
-      case MapViewState.RESEARCH_EDIT:
-        setSidebarComponent(
-          <UpdateResearchContainer researchFileId={researchId} onClose={handleClose} />,
-        );
-        setShowSideBar(true);
-        break;
       case MapViewState.RESEARCH_VIEW:
         setSidebarComponent(
-          <DetailResearchContainer researchFileId={researchId} onClose={handleClose} />,
+          <ResearchContainer researchFileId={researchId} onClose={handleClose} />,
         );
         setShowSideBar(true);
         break;

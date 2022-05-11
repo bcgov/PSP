@@ -2,6 +2,8 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { StyledFormSection, StyledSectionHeader } from 'features/mapSideBar/tabs/SectionStyles';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
+import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 
 interface PropertyResearchFile {
@@ -16,6 +18,7 @@ interface PropertyResearchFile {
 
 export interface IPropertyResearchTabViewProps {
   researchFile: Api_ResearchFileProperty;
+  setEditMode: (isEditing: boolean) => void;
 }
 
 const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewProps> = props => {
@@ -23,8 +26,9 @@ const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewP
     id: props.researchFile.id || 0,
     descriptiveName: props.researchFile.propertyName || '',
     purpose:
-      props.researchFile.propertyPurpose?.map(x => x.propertyPurposeType?.description).join(', ') ||
-      '',
+      props.researchFile.purposeTypes
+        ?.map(x => x.propertyPurposeType?.description || '')
+        .join(', ') || '',
     legalOpinionRequired:
       props.researchFile.isLegalOpinionRequired !== undefined
         ? props.researchFile.isLegalOpinionRequired
@@ -43,6 +47,16 @@ const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewP
 
   return (
     <StyledSummarySection>
+      <StyledEditWrapper className="mr-3 my-1">
+        <Button
+          variant="link"
+          onClick={() => {
+            props.setEditMode(true);
+          }}
+        >
+          <FaEdit size={'2rem'} />
+        </Button>
+      </StyledEditWrapper>
       <StyledFormSection>
         <StyledSectionHeader>Property of Interest</StyledSectionHeader>
         <SectionField label="Descriptive name">{detail.descriptiveName}</SectionField>
@@ -64,4 +78,10 @@ export default PropertyResearchTabView;
 
 const StyledSummarySection = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+const StyledEditWrapper = styled.div`
+  color: ${props => props.theme.css.primary};
+
+  text-align: right;
 `;
