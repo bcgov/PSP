@@ -144,6 +144,6 @@ const CloseIcon = styled(FaWindowClose)`
   cursor: pointer;
   fill: ${props => props.theme.css.textColor};
   &:hover {
-    fill: ${props => props.theme.css.darkVariantColor};
+    fill: ${props => props.theme.css.dangerColor};
   }
 `;
