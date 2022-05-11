@@ -432,7 +432,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
       <div
         class="c2"
       >
-        This data was retrived from LTSA on 06-Apr-2022 11:32 AM
+        This data was retrieved from LTSA on 06-Apr-2022 11:32 AM
       </div>
     </div>
     <div
