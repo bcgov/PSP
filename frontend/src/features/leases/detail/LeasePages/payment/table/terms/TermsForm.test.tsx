@@ -100,16 +100,16 @@ describe('TermsForm component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
   test.each([
-    ['ANNUAL', '$1,000', '$1,050'],
-    ['SEMIANN', '$1,000', '$2,100'],
-    ['QUARTER', '$1,000', '$4,200'],
-    ['BIMONTH', '$1,000', '$6,300'],
-    ['MONTHLY', '$1,000', '$12,600'],
-    ['BIWEEK', '$1,000', '$26,250'],
-    ['WEEKLY', '$1,000', '$52,500'],
-    ['DAILY', '$1,000', '$366,450'],
-    ['PREPAID', '$1,000', '$1,050'],
-    ['NOMINAL', '$1,000', '$1,050'],
+    ['ANNUAL', '$1,000.00', '$1,050.00'],
+    ['SEMIANN', '$1,000.00', '$2,100.00'],
+    ['QUARTER', '$1,000.00', '$4,200.00'],
+    ['BIMONTH', '$1,000.00', '$6,300.00'],
+    ['MONTHLY', '$1,000.00', '$12,600.00'],
+    ['BIWEEK', '$1,000.00', '$26,250.00'],
+    ['WEEKLY', '$1,000.00', '$52,500.00'],
+    ['DAILY', '$1,000.00', '$366,450.00'],
+    ['PREPAID', '$1,000.00', '$1,050.00'],
+    ['NOMINAL', '$1,000.00', '$1,050.00'],
   ])(
     'performs %s calculation correctly',
     async (frequency: string, amount: string, total: string) => {
@@ -160,8 +160,8 @@ describe('TermsForm component', () => {
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
     expect(findCell(row, 6)?.textContent).toBe('-');
-    expect(findCell(row, 7)?.textContent).toBe('$1,000');
-    expect(findCell(row, 8)?.textContent).toBe('$12,000');
+    expect(findCell(row, 7)?.textContent).toBe('$1,000.00');
+    expect(findCell(row, 8)?.textContent).toBe('$12,000.00');
   });
 
   it('Does not display certain fields if the amount is not supplied', async () => {
@@ -181,7 +181,7 @@ describe('TermsForm component', () => {
 
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
-    expect(findCell(row, 4)?.textContent).toBe('$0');
+    expect(findCell(row, 4)?.textContent).toBe('$0.00');
     expect(findCell(row, 7)?.textContent).toBe('-');
     expect(findCell(row, 8)?.textContent).toBe('-');
   });
@@ -205,8 +205,8 @@ describe('TermsForm component', () => {
     expect(row).not.toBeNull();
     expect(findCell(row, 5)?.textContent).toBe('N');
     expect(findCell(row, 6)?.textContent).toBe('-');
-    expect(findCell(row, 7)?.textContent).toBe('$1,000');
-    expect(findCell(row, 8)?.textContent).toBe('$12,000');
+    expect(findCell(row, 7)?.textContent).toBe('$1,000.00');
+    expect(findCell(row, 8)?.textContent).toBe('$12,000.00');
   });
 
   it('Does not calculate payments if term is not exercised', async () => {
@@ -246,7 +246,7 @@ describe('TermsForm component', () => {
 
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
-    expect(findCell(row, 9)?.textContent).toBe('$2');
+    expect(findCell(row, 9)?.textContent).toBe('$2.00');
   });
 
   it('displays the first column correctly', async () => {

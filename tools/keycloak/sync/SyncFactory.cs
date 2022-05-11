@@ -382,7 +382,7 @@ namespace Pims.Tools.Keycloak.Sync
 
             // Add keycloak users to PIMS.
             // Only add users who don't exist.
-            foreach (var kuser in kusers.Where(u => !users.Any(pu => pu.BusinessIdentifier == u.Username)))
+            foreach (var kuser in kusers.Where(u => !users.Any(pu => pu.KeycloakUserId == u.Id)))
             {
                 try
                 {

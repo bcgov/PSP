@@ -2,11 +2,10 @@ import './FastCurrencyInput.scss';
 
 import classNames from 'classnames';
 import { ErrorMessage, FormikProps, getIn } from 'formik';
-import { memo, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { ColProps } from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import MaskedInput from 'react-text-mask';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import NumberFormat from 'react-number-format';
 import { formikFieldMemo, isPositiveNumberOrZero } from 'utils';
 
 import TooltipIcon from '../TooltipIcon';
@@ -82,10 +81,6 @@ const CurrencyInput = ({
   },
   ...rest
 }: CurrencyInputProps) => {
-  const currencyMask = createNumberMask({
-    ...defaultMaskOptions,
-    allowNegative: rest.allowNegative,
-  });
   value = value ? value : getIn(values, field);
   const error = getIn(errors, field);
   let touch = getIn(touched, field);
@@ -117,19 +112,24 @@ const CurrencyInput = ({
         </Form.Label>
       )}
       <div className="input-tooltip-wrapper">
-        <MaskedInput
+        <NumberFormat
           id={`input-${field}`}
-          value={value ? value.toFixed(2) : value}
-          mask={currencyMask}
+          value={value}
           name={field}
           onChange={(e: any) => {
             const cleanValue = e.target.value.replace(/[^0-9.]/g, '');
             setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
           }}
-          onBlur={handleBlur}
+          onBlur={(e: any) => {
+            handleBlur(e);
+          }}
           className={classNames('form-control input-number', innerClassName, isInvalid, isValid)}
           disabled={disabled}
           required={required}
+          fixedDecimalScale={true}
+          decimalScale={2}
+          prefix={'$'}
+          thousandSeparator
           placeholder={placeholder || ''}
         />
         {!label && !!tooltip && <TooltipIcon toolTipId="currency" toolTip={tooltip} />}
