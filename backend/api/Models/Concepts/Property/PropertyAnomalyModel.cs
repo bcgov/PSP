@@ -6,7 +6,12 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - Property anomaly id.
         /// </summary>
-        public string Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Parent property id.
+        /// </summary>
+        public long PropertyId { get; set; }
 
         /// <summary>
         /// get/set - Anomaly type code.
