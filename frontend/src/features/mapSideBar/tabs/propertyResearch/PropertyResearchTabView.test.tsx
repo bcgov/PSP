@@ -42,7 +42,7 @@ const fakePropertyResearch: Api_ResearchFileProperty = {
   isLegalOpinionRequired: true,
   isLegalOpinionObtained: true,
   documentReference: 'A document reference',
-  researchSummary: 'Research sumary notes',
+  researchSummary: 'Research summary notes',
   purposeTypes: [
     { propertyPurposeType: { id: 'TYPE_A', description: 'Type A' } },
     { propertyPurposeType: { id: 'TYPE_B', description: 'Type B' } },

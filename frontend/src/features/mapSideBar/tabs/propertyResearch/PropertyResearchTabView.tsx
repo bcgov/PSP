@@ -13,7 +13,7 @@ interface PropertyResearchFile {
   legalOpinionRequired: string;
   legalOpinionObtained: string;
   documentReference: string;
-  sumaryNotes: string;
+  summaryNotes: string;
 }
 
 export interface IPropertyResearchTabViewProps {
@@ -42,7 +42,7 @@ const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewP
           : 'No'
         : '',
     documentReference: props.researchFile.documentReference || '',
-    sumaryNotes: props.researchFile.researchSummary || '',
+    summaryNotes: props.researchFile.researchSummary || '',
   };
 
   return (
@@ -68,7 +68,7 @@ const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewP
       <StyledFormSection>
         <StyledSectionHeader>Research Summary</StyledSectionHeader>
         <SectionField label="Summary notes" />
-        {detail.sumaryNotes}
+        {detail.summaryNotes}
       </StyledFormSection>
     </StyledSummarySection>
   );
