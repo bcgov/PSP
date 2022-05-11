@@ -3,6 +3,8 @@ import { getIn, useFormikContext } from 'formik';
 import MultiselectBase from 'multiselect-react-dropdown';
 import React, { forwardRef } from 'react';
 import Form from 'react-bootstrap/Form';
+import { FaWindowClose } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import TooltipIcon from '../TooltipIcon';
 import TooltipWrapper from '../TooltipWrapper';
@@ -71,6 +73,7 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
     required,
     tooltip,
     displayErrorTooltips,
+    style,
     onSelect,
     onRemove,
     ...rest
@@ -81,6 +84,9 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
+
+  // merge internal styles with the ones passed in props
+  const mergedStyle = { ...defaultStyle, ...style };
 
   // Allow external consumers to handle onSelect, onRemove events via callbacks
   const onChange = (selectedList: any[], func?: Function) => {
@@ -102,6 +108,8 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
           ref={ref as any}
           id={`multiselect-${field}`}
           selectedValues={formikValue}
+          style={mergedStyle}
+          customCloseIcon={<CloseIcon size={16} />}
           onSelect={selectedList => onChange(selectedList, onSelect)}
           onRemove={selectedList => onChange(selectedList, onRemove)}
         />
@@ -111,3 +119,31 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
     </Form.Group>
   );
 });
+
+const defaultStyle = {
+  chips: {
+    background: '#F2F2F2',
+    borderRadius: '4px',
+    color: 'black',
+    fontSize: '16px',
+    marginRight: '1em',
+  },
+  multiselectContainer: {
+    width: 'auto',
+    color: 'black',
+    paddingBottom: '12px',
+  },
+  searchBox: {
+    background: 'white',
+    border: '1px solid #606060',
+  },
+};
+
+const CloseIcon = styled(FaWindowClose)`
+  margin-left: 0.5rem;
+  cursor: pointer;
+  fill: ${props => props.theme.css.textColor};
+  &:hover {
+    fill: ${props => props.theme.css.darkVariantColor};
+  }
+`;
