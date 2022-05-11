@@ -2,40 +2,38 @@ import TabView from 'components/common/TabView';
 import * as React from 'react';
 import { Tab } from 'react-bootstrap';
 
+export interface TabInventoryView {
+  content: React.ReactNode;
+  key: InventoryTabNames;
+  name: string;
+}
+
 interface IInventoryTabsProps {
-  PropertyView: React.ReactNode;
-  LtsaView: React.ReactNode;
+  defaultTabKey: InventoryTabNames;
+  tabViews: TabInventoryView[];
 }
 
 export enum InventoryTabNames {
   property = 'property',
   title = 'title',
   value = 'value',
-  styles = 'styles',
+  research = 'research',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
  * @param param0 object containing all react components for the corresponding tabs.
  */
 export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
-  PropertyView,
-  LtsaView,
+  defaultTabKey,
+  tabViews,
 }) => {
-  const showPropertyInfo = PropertyView !== null;
-
   return (
-    <TabView
-      defaultActiveKey={showPropertyInfo ? InventoryTabNames.property : InventoryTabNames.title}
-    >
-      <Tab eventKey={InventoryTabNames.title} title="Title">
-        {LtsaView}
-      </Tab>
-      <Tab eventKey={InventoryTabNames.value} title="Value"></Tab>
-      {showPropertyInfo && (
-        <Tab eventKey={InventoryTabNames.property} title="Property Details">
-          {PropertyView}
+    <TabView defaultActiveKey={defaultTabKey}>
+      {tabViews.map((view: TabInventoryView, index: number) => (
+        <Tab eventKey={view.key} title={view.name} key={`inventory-tab-${index}`}>
+          {view.content}
         </Tab>
-      )}
+      ))}
     </TabView>
   );
 };

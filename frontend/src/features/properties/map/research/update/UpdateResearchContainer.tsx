@@ -43,8 +43,8 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await updateResearchFile(researchFile);
     if (!!response?.name) {
-      //props.onClose();
       formikRef.current?.resetForm();
+      formikRef.current?.setSubmitting(false);
       history.replace(`/mapview/research/${researchFile.id}`);
     }
   };
@@ -86,10 +86,9 @@ export const UpdateResearchContainer: React.FunctionComponent<IUpdateResearchCon
         enableReinitialize
         innerRef={formikRef}
         initialValues={initialForm || new UpdateResearchFormModel()}
-        onSubmit={async (values: UpdateResearchFormModel, formikHelpers) => {
+        onSubmit={async (values: UpdateResearchFormModel) => {
           const researchFile: Api_ResearchFile = values.toApi();
-          saveResearchFile(researchFile);
-          formikHelpers.setSubmitting(false);
+          await saveResearchFile(researchFile);
         }}
       >
         {formikProps => (

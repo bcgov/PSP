@@ -46,7 +46,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PimsPersonOrganizations)
                     .ThenInclude(o => o.Organization)
                 .Include(r => r.RequestorOrganizationNavigation)
-                .Include(r => r.PimsPropertyResearchFiles).FirstOrDefault();
+                .Include(r => r.PimsPropertyResearchFiles)
+                    .ThenInclude(rp => rp.Property)
+                .FirstOrDefault();
         }
 
         /// <summary>
@@ -104,12 +106,12 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Generate a new R File in format RFile-XXXXXXXXXX using the research id.
+        /// Generate a new R File in format R-X using the research id.
         /// </summary>
         private string GenerateRFileNumber()
         {
             long nextResearchFileId = this.GetNextResearchSequenceValue();
-            return $"RFile-{nextResearchFileId.ToString().PadLeft(10, '0')}";
+            return $"R-{nextResearchFileId}";
         }
 
         /// <summary>

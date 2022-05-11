@@ -38,11 +38,11 @@ export const mapFeatureToProperty = (selectedFeature: Feature<Geometry, GeoJsonP
     .getBounds()
     .getCenter();
   return {
-    pid: selectedFeature?.properties?.PID_NUMBER ?? '',
-    pin: selectedFeature?.properties?.PIN ?? '',
-    latitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? '',
-    longitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? '',
-    planNumber: selectedFeature?.properties?.PLAN_NUMBER ?? '',
+    pid: selectedFeature?.properties?.PID_NUMBER ?? undefined,
+    pin: selectedFeature?.properties?.PIN ?? undefined,
+    latitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? undefined,
+    longitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? undefined,
+    planNumber: selectedFeature?.properties?.PLAN_NUMBER ?? undefined,
     address: 'placeholder', //todo: need alternate source for this
     legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer,
     district: selectedFeature?.properties?.REGIONAL_DISTRICT ?? '', // todo: this returns a named district,

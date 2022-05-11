@@ -5,12 +5,24 @@ import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Property } from './Property';
 
+export interface Api_ResearchFilePropertyPurposeType extends Api_ConcurrentVersion {
+  id?: number;
+  propertyPurposeType?: Api_TypeCode<string>;
+  propertyResearchFileId?: number;
+}
+
 export interface Api_ResearchFileProperty extends Api_ConcurrentVersion {
   id?: number;
   isDisabled?: boolean;
   displayOrder?: number;
   property?: Api_Property;
   researchFile?: Api_ResearchFile;
+  propertyName?: string;
+  isLegalOpinionRequired?: boolean;
+  isLegalOpinionObtained?: boolean;
+  documentReference?: string;
+  researchSummary?: string;
+  propertyPurpose?: Api_ResearchFilePropertyPurposeType[];
 }
 
 export interface Api_ResearchFile extends Api_ConcurrentVersion {

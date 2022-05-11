@@ -33,8 +33,8 @@ export class ReturnListEntry {
     this.terminationDate = baseDeposit.terminationDate || '';
     this.depositAmount = parentDeposit.amountPaid;
     this.claimsAgainst = baseDeposit.claimsAgainst || 0;
-    this.returnAmount = baseDeposit.returnAmount;
-    this.interestPaid = baseDeposit.interestPaid;
+    this.returnAmount = baseDeposit.returnAmount || 0;
+    this.interestPaid = baseDeposit.interestPaid || 0;
     this.returnDate = baseDeposit.returnDate || '';
     this.contactHolder = baseDeposit.contactHolder;
   }

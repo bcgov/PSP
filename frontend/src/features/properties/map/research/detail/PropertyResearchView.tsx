@@ -1,46 +1,45 @@
-import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
 import axios, { AxiosError } from 'axios';
+import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
+import {
+  InventoryTabNames,
+  InventoryTabs,
+  TabInventoryView,
+} from 'features/mapSideBar/tabs/InventoryTabs';
+import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
+import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/PropertyDetailsTabView';
+import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
 import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { pidFormatter } from 'utils';
 
-import { usePropertyDetails } from './hooks/usePropertyDetails';
-import MapSideBarLayout from './layout/MapSideBarLayout';
-import { MotiInventoryHeader } from './MotiInventoryHeader';
-import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
-import LtsaTabView from './tabs/ltsa/LtsaTabView';
-import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
-
-export interface IMotiInventoryContainerProps {
-  onClose: () => void;
-  pid?: string;
-  onZoom: (apiProperty?: IPropertyApiModel | undefined) => void;
+export interface IPropertyResearchViewProps {
+  researchFileProperty: Api_ResearchFileProperty;
 }
 
-/**
- * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
- */
-export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryContainerProps> = props => {
+const PropertyResearchView: React.FunctionComponent<IPropertyResearchViewProps> = props => {
   const isMounted = useIsMounted();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
 
+  const pid = props.researchFileProperty?.property?.pid?.toString();
+
   // First, fetch property information from PSP API
   const { getPropertyWithPid } = useProperties();
   useEffect(() => {
     const func = async () => {
       try {
-        if (!!props.pid) {
-          const propInfo = await getPropertyWithPid(props.pid);
-          if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
+        if (!!pid) {
+          const propInfo = await getPropertyWithPid(pid);
+          if (isMounted() && propInfo.pid === pidFormatter(pid)) {
             setApiProperty(propInfo);
             setShowPropertyInfoTab(true);
           }
@@ -58,7 +57,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     };
 
     func();
-  }, [getPropertyWithPid, isMounted, props.pid]);
+  }, [getPropertyWithPid, isMounted, pid]);
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
@@ -69,19 +68,18 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     const func = async () => {
       setLtsaDataRequestedOn(new Date());
       setLtsaData(undefined);
-      if (!!props.pid) {
-        const ltsaData = await getLtsaData(pidFormatter(props.pid));
+      if (!!pid) {
+        const ltsaData = await getLtsaData(pidFormatter(pid));
         if (
           isMounted() &&
-          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier ===
-            pidFormatter(props.pid)
+          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
         ) {
           setLtsaData(ltsaData);
         }
       }
     };
     func();
-  }, [getLtsaData, props.pid, isMounted]);
+  }, [getLtsaData, pid, isMounted]);
 
   const tabViews: TabInventoryView[] = [];
 
@@ -97,7 +95,13 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     name: 'Value',
   });
 
-  var defaultTab = InventoryTabNames.title;
+  tabViews.push({
+    content: <PropertyResearchTabView researchFile={props.researchFileProperty} />,
+    key: InventoryTabNames.research,
+    name: 'Property Research',
+  });
+
+  const defaultTab = InventoryTabNames.research;
 
   if (showPropertyInfoTab) {
     tabViews.push({
@@ -105,27 +109,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
       key: InventoryTabNames.property,
       name: 'Property Details',
     });
-    defaultTab = InventoryTabNames.property;
   }
 
-  return (
-    <MapSideBarLayout
-      title="Property Information"
-      header={
-        <MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} onZoom={props.onZoom} />
-      }
-      icon={<LotIcon className="mr-1" />}
-      showCloseButton
-      onClose={props.onClose}
-    >
-      <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />
-    </MapSideBarLayout>
-  );
+  return <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />;
 };
 
-export default MotiInventoryContainer;
-
-const LotIcon = styled(LotSvg)`
-  width: 3rem;
-  height: 3rem;
-`;
+export default PropertyResearchView;

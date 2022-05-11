@@ -1,8 +1,7 @@
 import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { prettyFormatDate } from 'utils';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import UpdateResearchHeader, { IUpdateResearchHeaderProps } from './UpdateResearchHeader';
+import ResearchSummaryView, { IResearchSummaryViewProps } from './ResearchSummaryView';
 
 const testResearchFile: Api_ResearchFile = {
   id: 5,
@@ -44,10 +43,10 @@ const testResearchFile: Api_ResearchFile = {
   rowVersion: 9,
 };
 
-describe('UpdateResearchHeader component', () => {
-  const setup = (renderOptions: RenderOptions & IUpdateResearchHeaderProps) => {
+describe('ResearchSummaryView component', () => {
+  const setup = (renderOptions: RenderOptions & IResearchSummaryViewProps) => {
     // render component under test
-    const component = render(<UpdateResearchHeader researchFile={renderOptions.researchFile} />, {
+    const component = render(<ResearchSummaryView researchFile={renderOptions.researchFile} />, {
       ...renderOptions,
     });
 
@@ -61,19 +60,7 @@ describe('UpdateResearchHeader component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    const { component } = setup({});
+    const { component } = setup({ researchFile: testResearchFile });
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('renders as expected when provided a list of properties', async () => {
-    const {
-      component: { getByText },
-    } = await setup({ researchFile: testResearchFile });
-
-    expect(getByText(testResearchFile.rfileNumber as string)).toBeVisible();
-    expect(getByText(testResearchFile.name as string)).toBeVisible();
-
-    expect(getByText(prettyFormatDate(testResearchFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatDate(testResearchFile.appLastUpdateTimestamp))).toBeVisible();
   });
 });

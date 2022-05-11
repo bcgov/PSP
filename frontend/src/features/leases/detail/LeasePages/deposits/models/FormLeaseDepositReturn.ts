@@ -54,11 +54,11 @@ export class FormLeaseDepositReturn {
     model.parentDepositAmount = parentDeposit.amountPaid;
 
     model.id = baseModel.id;
-    model.parentDepositId = baseModel.parentDepositId;
+    model.parentDepositId = baseModel.parentDepositId || 0;
     model.terminationDate = baseModel.terminationDate || '';
     model.claimsAgainst = baseModel.claimsAgainst || '';
-    model.returnAmount = baseModel.returnAmount;
-    model.interestPaid = baseModel.interestPaid;
+    model.returnAmount = baseModel.returnAmount || '';
+    model.interestPaid = baseModel.interestPaid || '';
     model.returnDate = baseModel.returnDate || '';
     model.contactHolder =
       baseModel.contactHolder !== undefined ? fromContact(baseModel.contactHolder) : undefined;
