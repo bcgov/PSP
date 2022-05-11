@@ -19,12 +19,12 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { pidFormatter } from 'utils';
 
-export interface IPropertyResearchViewProps {
+export interface IPropertyResearchContainerProps {
   researchFileProperty: Api_ResearchFileProperty;
   setEditMode: (isEditing: boolean) => void;
 }
 
-const PropertyResearchView: React.FunctionComponent<IPropertyResearchViewProps> = props => {
+const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContainerProps> = props => {
   const isMounted = useIsMounted();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
@@ -120,4 +120,4 @@ const PropertyResearchView: React.FunctionComponent<IPropertyResearchViewProps> 
   return <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />;
 };
 
-export default PropertyResearchView;
+export default PropertyResearchContainer;

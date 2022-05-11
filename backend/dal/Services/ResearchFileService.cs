@@ -95,9 +95,9 @@ namespace Pims.Dal.Services
 
         private void PopulateResearchFile(PimsProperty property)
         {
-            property.PropertyClassificationTypeCode = "CORESTRAT"; // Todo: should be "UNKNOWN"
+            property.PropertyClassificationTypeCode = "UNKNOWN";
             property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
-            property.PropertyDataSourceTypeCode = "PAIMS"; // Todo: should be "PMBC"
+            property.PropertyDataSourceTypeCode = "PMBC";
 
             property.PropertyTypeCode = "UNKNOWN";
 

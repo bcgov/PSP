@@ -177,7 +177,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="col"
         />
       </div>
-      Research sumary notes
+      Research summary notes
     </div>
   </div>
 </DocumentFragment>
