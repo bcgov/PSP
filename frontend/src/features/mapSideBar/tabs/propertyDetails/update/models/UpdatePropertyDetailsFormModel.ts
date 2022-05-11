@@ -73,14 +73,14 @@ export class UpdatePropertyDetailsFormModel {
     model.description = base.description;
     model.latitude = base.latitude;
     model.longitude = base.longitude;
-    model.landArea = base.landArea;
     model.landLegalDescription = base.landLegalDescription;
-    // model.areaUnitTypeCode = base.areaUnitTypeCode;
+    model.landArea = base.landArea;
+    model.areaUnitTypeCode = base.areaUnit?.id;
 
     model.isVolumetricParcel = booleanToString(base.isVolumetricParcel);
     model.volumetricMeasurement = base.volumetricMeasurement;
-    // model.volumetricUnitTypeCode = base.volumetricUnitTypeCode;
-    // model.volumetricParcelTypeCode = base.volumetricParcelTypeCode;
+    model.volumetricUnitTypeCode = base.volumetricUnit?.id;
+    model.volumetricParcelTypeCode = base.volumetricType?.id;
 
     // model.propertyTypeCode = base.propertyTypeCode;
     // model.statusTypeCode = base.statusTypeCode;

@@ -1,6 +1,5 @@
 import { VolumeUnitTypes } from 'constants/index';
 import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
-import Api_TypeCode from 'models/api/TypeCode';
 import React, { useCallback, useEffect, useState } from 'react';
 import { convertVolume, round } from 'utils';
 
@@ -8,21 +7,27 @@ import { StyledTable } from '../styles';
 
 export interface IVolumetricMeasurementTableProps {
   volume: number;
-  volumeUnit: Api_TypeCode<string>;
-  onChange?: (volume: number, volumeUnit: Api_TypeCode<string>) => void;
+  volumeUnitTypeCode: string;
+  onChange?: (volume: number, volumeUnitTypeCode: string) => void;
 }
 
 export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTableProps> = ({
   volume,
-  volumeUnit,
+  volumeUnitTypeCode,
   onChange,
 }) => {
-  const volumeUnitId = volumeUnit.id || VolumeUnitTypes.CubicMeters;
-
   // derive our internal state from props
   const initialState: Record<string, number> = {
-    [VolumeUnitTypes.CubicMeters]: convertVolume(volume, volumeUnitId, VolumeUnitTypes.CubicMeters),
-    [VolumeUnitTypes.CubicFeet]: convertVolume(volume, volumeUnitId, VolumeUnitTypes.CubicFeet),
+    [VolumeUnitTypes.CubicMeters]: convertVolume(
+      volume,
+      volumeUnitTypeCode,
+      VolumeUnitTypes.CubicMeters,
+    ),
+    [VolumeUnitTypes.CubicFeet]: convertVolume(
+      volume,
+      volumeUnitTypeCode,
+      VolumeUnitTypes.CubicFeet,
+    ),
   };
 
   // keep track of which input is receiving user input
@@ -70,11 +75,11 @@ export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTablePro
   }, [focus, cubicFeet]);
 
   const handleInputChange = useCallback(
-    (newValue: number, volumeUnitId: string) => {
-      setFocus(volumeUnitId);
-      setState(prevState => ({ ...prevState, [volumeUnitId]: newValue }));
+    (newValue: number, volumeUnitTypeCode: string) => {
+      setFocus(volumeUnitTypeCode);
+      setState(prevState => ({ ...prevState, [volumeUnitTypeCode]: newValue }));
       if (typeof onChange === 'function') {
-        onChange(newValue, { id: volumeUnitId });
+        onChange(newValue, volumeUnitTypeCode);
       }
     },
     [onChange],

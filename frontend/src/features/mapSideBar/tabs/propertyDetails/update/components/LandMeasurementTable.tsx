@@ -1,6 +1,5 @@
 import { AreaUnitTypes } from 'constants/index';
 import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
-import Api_TypeCode from 'models/api/TypeCode';
 import React, { useCallback, useEffect, useState } from 'react';
 import { convertArea, round } from 'utils';
 
@@ -8,23 +7,21 @@ import { StyledTable } from '../styles';
 
 export interface IUpdateLandMeasurementTableProps {
   area: number;
-  areaUnit: Api_TypeCode<string>;
-  onChange?: (landArea: number, areaUnit: Api_TypeCode<string>) => void;
+  areaUnitTypeCode: string;
+  onChange?: (landArea: number, areaUnitTypeCode: string) => void;
 }
 
 export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = ({
   area,
-  areaUnit,
+  areaUnitTypeCode,
   onChange,
 }) => {
-  const areaUnitId = areaUnit.id || AreaUnitTypes.Hectares;
-
   // derive our internal state from props
   const initialState: Record<string, number> = {
-    [AreaUnitTypes.SquareMeters]: convertArea(area, areaUnitId, AreaUnitTypes.SquareMeters),
-    [AreaUnitTypes.SquareFeet]: convertArea(area, areaUnitId, AreaUnitTypes.SquareFeet),
-    [AreaUnitTypes.Hectares]: convertArea(area, areaUnitId, AreaUnitTypes.Hectares),
-    [AreaUnitTypes.Acres]: convertArea(area, areaUnitId, AreaUnitTypes.Acres),
+    [AreaUnitTypes.SquareMeters]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareMeters),
+    [AreaUnitTypes.SquareFeet]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareFeet),
+    [AreaUnitTypes.Hectares]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Hectares),
+    [AreaUnitTypes.Acres]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Acres),
   };
 
   // keep track of which input is receiving user input
@@ -114,11 +111,11 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
   }, [focus, acres]);
 
   const handleInputChange = useCallback(
-    (newValue: number, areaUnitId: string) => {
-      setFocus(areaUnitId);
-      setState(prevState => ({ ...prevState, [areaUnitId]: newValue }));
+    (newValue: number, areaUnitTypeCode: string) => {
+      setFocus(areaUnitTypeCode);
+      setState(prevState => ({ ...prevState, [areaUnitTypeCode]: newValue }));
       if (typeof onChange === 'function') {
-        onChange(newValue, { id: areaUnitId });
+        onChange(newValue, areaUnitTypeCode);
       }
     },
     [onChange],

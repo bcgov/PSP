@@ -40,10 +40,10 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
   // area measurements table inputs
   const landArea = getIn(values, 'landArea') as number;
-  const areaUnit = getIn(values, 'areaUnit') as Api_TypeCode<string>;
+  const areaUnit = getIn(values, 'areaUnitTypeCode') as string;
   // volume measurements table inputs
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
-  const volumetricUnit = getIn(values, 'volumetricUnit') as Api_TypeCode<string>;
+  const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
 
   return (
     <StyledForm>
@@ -132,7 +132,7 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
           <Col>
             <Row>
               <Col className="col-10">
-                <LandMeasurementTable area={landArea} areaUnit={areaUnit} />
+                <LandMeasurementTable area={landArea} areaUnitTypeCode={areaUnit} />
               </Col>
             </Row>
           </Col>
@@ -158,9 +158,9 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
               <>
                 <SectionField label="Type">
                   <Select
-                    field="volumetricType"
+                    field="volumetricParcelTypeCode"
                     options={volumetricTypeOptions}
-                    placeholder={values.volumetricType ? undefined : 'Please Select'}
+                    placeholder={values.volumetricParcelTypeCode ? undefined : 'Please Select'}
                   />
                 </SectionField>
 
@@ -168,7 +168,7 @@ export const UpdatePropertyDetailsForm: React.FC<FormikProps<UpdatePropertyDetai
                   <Col className="col-10">
                     <VolumetricMeasurementTable
                       volume={volumetricMeasurement}
-                      volumeUnit={volumetricUnit}
+                      volumeUnitTypeCode={volumetricUnit}
                     />
                   </Col>
                 </Row>

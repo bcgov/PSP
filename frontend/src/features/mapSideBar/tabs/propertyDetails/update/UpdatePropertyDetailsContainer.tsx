@@ -58,7 +58,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
       <Content vertical>
         <Formik<UpdatePropertyDetailsFormModel>
           enableReinitialize
-          initialValues={initialForm || defaultUpdateProperty}
+          initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
           onSubmit={savePropertyInformation}
         >
           {formikProps => <UpdatePropertyDetailsForm {...formikProps} />}
