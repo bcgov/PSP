@@ -51,6 +51,8 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsPropertyResearchFiles)
                     .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
                     .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
+                .Include(r => r.PimsResearchFilePurposes)
+                    .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
                 .FirstOrDefault();
         }
 
@@ -63,8 +65,11 @@ namespace Pims.Dal.Repositories
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
-            researchFile.RfileNumber = GenerateRFileNumber();
+            long nextResearchFileId = this.GetNextResearchSequenceValue();
 
+            researchFile.RfileNumber = GenerateRFileNumber(nextResearchFileId);
+
+            researchFile.ResearchFileId = nextResearchFileId;
             this.Context.PimsResearchFiles.Add(researchFile);
             return researchFile;
         }
@@ -78,7 +83,40 @@ namespace Pims.Dal.Repositories
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
-            researchFile.RfileNumber = GenerateRFileNumber();
+            var currentPurposes = Context.PimsResearchFiles
+                .SelectMany(x => x.PimsResearchFilePurposes)
+                .Where(x => x.ResearchFileId == researchFile.Id)
+                .AsNoTracking()
+                .ToList();
+
+            List<PimsResearchFilePurpose> purposes = new List<PimsResearchFilePurpose>();
+
+            foreach (var selectedPurpose in researchFile.PimsResearchFilePurposes)
+            {
+                var currentPurpose = currentPurposes.FirstOrDefault(x => x.ResearchPurposeTypeCode == selectedPurpose.ResearchPurposeTypeCode);
+
+                // If the code is already on the list, add the existing one, otherwise add the incomming one
+                if (currentPurpose != null)
+                {
+                    purposes.Add(currentPurpose);
+                    Context.Entry(currentPurpose).State = EntityState.Unchanged;
+                }
+                else
+                {
+                    purposes.Add(selectedPurpose);
+                    Context.Entry(selectedPurpose).State = EntityState.Added;
+                }
+            }
+
+            // The ones not on the new set should be deleted
+            List<PimsResearchFilePurpose> differenceSet = currentPurposes.Where(x => !purposes.Any(y => y.ResearchPurposeTypeCode == x.ResearchPurposeTypeCode)).ToList();
+            foreach (var deletedPurpose in differenceSet)
+            {
+                purposes.Add(deletedPurpose);
+                Context.Entry(deletedPurpose).State = EntityState.Deleted;
+            }
+
+            researchFile.PimsResearchFilePurposes = purposes;
 
             this.Context.PimsResearchFiles.Update(researchFile);
             return researchFile;
@@ -172,10 +210,9 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Generate a new R File in format R-X using the research id.
         /// </summary>
-        private string GenerateRFileNumber()
+        private static string GenerateRFileNumber(long id)
         {
-            long nextResearchFileId = this.GetNextResearchSequenceValue();
-            return $"R-{nextResearchFileId}";
+            return $"R-{id}";
         }
 
         /// <summary>
