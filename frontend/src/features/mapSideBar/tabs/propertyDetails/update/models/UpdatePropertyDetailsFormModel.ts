@@ -1,15 +1,13 @@
-import {
-  AreaUnitTypes,
-  PropertyStatusTypes,
-  PropertyTypes,
-  VolumetricParcelTypes,
-  VolumeUnitTypes,
-} from 'constants/index';
 import { GeoJsonProperties } from 'geojson';
-import { Api_Address } from 'models/api/Address';
 import { Api_Property } from 'models/api/Property';
-import Api_TypeCode from 'models/api/TypeCode';
 import { booleanToString, stringToBoolean } from 'utils/formUtils';
+
+import {
+  PropertyAdjacentLandFormModel,
+  PropertyAnomalyFormModel,
+  PropertyRoadFormModel,
+  PropertyTenureFormModel,
+} from '.';
 
 export class UpdatePropertyDetailsFormModel {
   id?: number;
@@ -43,10 +41,10 @@ export class UpdatePropertyDetailsFormModel {
   statusTypeCode?: string;
 
   // multi-selects
-  anomalies?: Api_TypeCode<string>[];
-  tenure?: Api_TypeCode<string>[];
-  roadType?: Api_TypeCode<string>[];
-  adjacentLand?: Api_TypeCode<string>[];
+  anomalies?: PropertyAnomalyFormModel[];
+  tenures?: PropertyTenureFormModel[];
+  roadTypes?: PropertyRoadFormModel[];
+  adjacentLands?: PropertyAdjacentLandFormModel[];
 
   motiRegion?: GeoJsonProperties;
   highwaysDistrict?: GeoJsonProperties;
@@ -69,10 +67,15 @@ export class UpdatePropertyDetailsFormModel {
     model.zoningPotential = base.zoningPotential;
     model.municipalZoning = base.municipalZoning;
     model.notes = base.notes;
+
     model.name = base.name;
     model.description = base.description;
+    model.isSensitive = base.isSensitive;
+    model.isProvincialPublicHwy = base.isProvincialPublicHwy;
+
     model.latitude = base.latitude;
     model.longitude = base.longitude;
+
     model.landLegalDescription = base.landLegalDescription;
     model.landArea = base.landArea;
     model.areaUnitTypeCode = base.areaUnit?.id;
@@ -82,14 +85,14 @@ export class UpdatePropertyDetailsFormModel {
     model.volumetricUnitTypeCode = base.volumetricUnit?.id;
     model.volumetricParcelTypeCode = base.volumetricType?.id;
 
-    // model.propertyTypeCode = base.propertyTypeCode;
-    // model.statusTypeCode = base.statusTypeCode;
+    model.propertyTypeCode = base.propertyType?.id;
+    model.statusTypeCode = base.status?.id;
 
     // multi-selects
-    // model.anomalies = base.anomalies;
-    // model.tenure = base.tenure;
-    // model.roadType = base.roadType;
-    // model.adjacentLand = base.adjacentLand;
+    model.anomalies = base.anomalies?.map(e => PropertyAnomalyFormModel.fromApi(e));
+    model.tenures = base.tenures?.map(e => PropertyTenureFormModel.fromApi(e));
+    model.roadTypes = base.roadTypes?.map(e => PropertyRoadFormModel.fromApi(e));
+    model.adjacentLands = base.adjacentLands?.map(e => PropertyAdjacentLandFormModel.fromApi(e));
 
     // model. = base.;
     // model. = base.;

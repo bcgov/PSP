@@ -1,8 +1,8 @@
-import Api_TypeCode from 'interfaces/ITypeCode';
 
 import { Api_Address } from './Address';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import Api_TypeCode from './TypeCode';
 
 export interface Api_Coordinate {
   x?: number;
