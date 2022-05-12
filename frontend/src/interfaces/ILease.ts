@@ -1,8 +1,10 @@
+import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
+import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import { Api_Person } from 'models/api/Person';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
-import { IFormProperty, IInsurance, ILeaseImprovement, IOrganization, IProperty, ITenant } from '.';
+import { IFormProperty, IInsurance, ILeaseImprovement, IOrganization, IProperty } from '.';
 import { IFormLeaseTerm, ILeaseTerm } from './ILeaseTerm';
 import { IRegion } from './IRegion';
 import ITypeCode from './ITypeCode';
@@ -42,7 +44,7 @@ export interface ILease {
   documentationReference?: string;
   tenantNotes: string[];
   insurances: IInsurance[];
-  tenants: ITenant[];
+  tenants: Api_LeaseTenant[];
   terms: ILeaseTerm[];
   properties: IProperty[];
   persons: Api_Person[];
@@ -69,6 +71,7 @@ export interface IFormLease
       region?: IRegion;
       programType?: ITypeCode<string>;
       terms: IFormLeaseTerm[];
+      tenants: FormTenant[];
     }
   > {}
 
@@ -95,6 +98,7 @@ export interface IAddFormLease
   > {}
 
 export const defaultLease: ILease = {
+  tfaFileNo: undefined,
   organizations: [],
   persons: [],
   properties: [],

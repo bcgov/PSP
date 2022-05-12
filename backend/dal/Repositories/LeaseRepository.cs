@@ -109,6 +109,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(o => o.Address)
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
+                    .ThenInclude(o => o.PimsPersonAddresses)
+                    .ThenInclude(o => o.AddressUsageTypeCodeNavigation)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Person)
                     .ThenInclude(o => o.PimsContactMethods)
                     .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
 
@@ -119,11 +123,21 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
                     .ThenInclude(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(o => o.AddressUsageTypeCodeNavigation)
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
                     .ThenInclude(o => o.Address)
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
                     .ThenInclude(o => o.PimsContactMethods)
                     .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.PrimaryContact)
+
+                .Include(l => l.PimsLeaseTenants)
+                    .ThenInclude(t => t.LessorTypeCodeNavigation)
 
                 .Include(t => t.PimsPropertyImprovements)
 

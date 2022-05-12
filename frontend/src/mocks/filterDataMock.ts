@@ -1,7 +1,6 @@
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import {
   AccessRequestStatus,
-  AddressTypes,
   OrganizationIdentifierTypes,
   OrganizationTypes,
   PropertyClassificationTypes,
@@ -71,7 +70,6 @@ export const mockOrganizationLookups = [
 
 export const mockAddress: IAddress = {
   id: 1,
-  addressTypeId: AddressTypes.Mailing,
   streetAddress1: '1234 mock Street',
   streetAddress2: 'N/A',
   municipality: 'Victoria',

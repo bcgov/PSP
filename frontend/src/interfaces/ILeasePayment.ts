@@ -48,6 +48,16 @@ export const formLeasePaymentToApiPayment = (
   };
 };
 
+export const apiLeasePaymentToFormPayment = (apiLeasePayment: ILeasePayment): IFormLeasePayment => {
+  return {
+    ...apiLeasePayment,
+    amountGst: apiLeasePayment.amountGst ?? '',
+    amountPst: apiLeasePayment.amountPst ?? '',
+    amountPreTax: apiLeasePayment.amountPreTax ?? '',
+    amountTotal: apiLeasePayment.amountTotal ?? '',
+  };
+};
+
 export const defaultFormLeasePayment: IFormLeasePayment = {
   id: 0,
   leaseTermId: 0,

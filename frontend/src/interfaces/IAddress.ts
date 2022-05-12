@@ -5,7 +5,6 @@ import { NumberFieldValue } from 'typings/NumberFieldValue';
  */
 export interface IAddress {
   id?: number;
-  addressTypeId: string;
   addressType?: string;
   regionId?: number;
   region?: string;
@@ -19,8 +18,8 @@ export interface IAddress {
   streetAddress1: string;
   streetAddress2?: string;
   streetAddress3?: string;
-  municipality: string;
-  postal: string;
+  municipality?: string;
+  postal?: string;
   latitude?: number;
   longitude?: number;
   rowVersion?: number;
@@ -42,7 +41,6 @@ export interface IFormAddress
 
 export const defaultAddress: IFormAddress = {
   addressType: '',
-  addressTypeId: '',
   municipality: '',
   postal: '',
   provinceId: '',

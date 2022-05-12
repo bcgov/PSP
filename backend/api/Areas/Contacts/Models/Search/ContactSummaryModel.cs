@@ -1,3 +1,4 @@
+using Pims.Api.Models.Concepts;
 namespace Pims.Api.Areas.Contact.Models.Search
 {
     public class ContactSummaryModel
@@ -17,6 +18,8 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// get/set - The primary key to identify the organization.
         /// </summary>
         public long? OrganizationId { get; set; }
+
+        public OrganizationModel Organization { get; set; }
 
         /// <summary>
         /// get/set - The concurrency row version.

@@ -41,7 +41,7 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 100,
   },
   {
-    Header: 'Mailing Address',
+    Header: 'Mailing address',
     accessor: 'mailingAddress',
     align: 'left',
     minWidth: 80,
