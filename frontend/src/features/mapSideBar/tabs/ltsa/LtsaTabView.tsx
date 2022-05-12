@@ -55,7 +55,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
             {ltsaRequestedOn && (
               <StyledInlineMessageSection>
                 <InlineMessage>
-                This data was retrieved from LTSA on{' '}
+                  This data was retrieved from LTSA on{' '}
                   {moment(ltsaRequestedOn).format('DD-MMM-YYYY h:mm A')}
                 </InlineMessage>
               </StyledInlineMessageSection>

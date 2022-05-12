@@ -88,7 +88,13 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const tabViews: TabInventoryView[] = [];
 
   tabViews.push({
-    content: <LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />,
+    content: (
+      <LtsaTabView
+        ltsaData={ltsaData}
+        ltsaRequestedOn={ltsaDataRequestedOn}
+        loading={ltsaLoading}
+      />
+    ),
     key: InventoryTabNames.title,
     name: 'Title',
   });
@@ -103,7 +109,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
 
   if (showPropertyInfoTab) {
     tabViews.push({
-      content: <PropertyDetailsTabView property={propertyViewForm} />,
+      content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
       key: InventoryTabNames.property,
       name: 'Property Details',
     });
@@ -126,7 +132,12 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
       showCloseButton
       onClose={props.onClose}
     >
-      <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />
+      <InventoryTabs
+        tabViews={tabViews}
+        defaultTabKey={defaultTab}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
     </MapSideBarLayout>
   );
 };
