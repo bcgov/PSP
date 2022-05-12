@@ -48,7 +48,10 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             IEnumerable<PimsContactMgrVw> contacts = this.Context.GenerateContactQuery(filter).ToArray();
 
@@ -78,7 +81,10 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateContactQuery(filter);

@@ -299,7 +299,9 @@ namespace Pims.Core.Extensions
         public static NetTopologySuite.Geometries.Envelope GetEnvelopNullValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, NetTopologySuite.Geometries.Envelope defaultValue = null)
         {
             if (!dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value))
+            {
                 return defaultValue;
+            }
 
             var values = value.ToString().Split(',');
             return NetTopologySuite.Geometries.Envelope.Parse($"Env[{values[0]}:{values[1]},{values[2]}:{values[3]}]");
@@ -320,7 +322,10 @@ namespace Pims.Core.Extensions
             var baseType = nullabletype ?? type;
             var found = dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value);
 
-            if (!found) return defaultValue;
+            if (!found)
+            {
+                return defaultValue;
+            }
 
             try
             {

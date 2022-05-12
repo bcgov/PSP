@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a LeaseResponsibilityType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLeaseResponsibilityType(string id):this()
+        public PimsLeaseResponsibilityType(string id) : this()
         {
             Id = id;
         }

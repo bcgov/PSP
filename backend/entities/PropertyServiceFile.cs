@@ -23,7 +23,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a PropertyServiceFile class.
         /// </summary>
         /// <param name="type"></param>
-        public PimsPropertyServiceFile(PimsPropertyServiceFileType type):this()
+        public PimsPropertyServiceFile(PimsPropertyServiceFileType type) : this()
         {
             this.PropertyServiceFileTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
             this.PropertyServiceFileTypeCode = type.Id;

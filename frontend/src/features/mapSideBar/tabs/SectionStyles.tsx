@@ -1,5 +1,6 @@
 import { Form } from 'formik';
 import { Col } from 'react-bootstrap';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styled from 'styled-components';
 
 export const StyledFormSection = styled.div`
@@ -68,4 +69,13 @@ export const InlineMessage = styled.div`
   align-items: center;
   gap: 0.8rem;
   font-style: italic;
+`;
+
+export const ArrowDropDownIcon = styled(MdArrowDropDown)`
+  float: right;
+  cursor: pointer;
+`;
+export const ArrowDropUpIcon = styled(MdArrowDropUp)`
+  float: right;
+  cursor: pointer;
 `;

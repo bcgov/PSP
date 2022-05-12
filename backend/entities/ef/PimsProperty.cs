@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_PROPERTY")]
     [Index(nameof(AddressId), Name = "PRPRTY_ADDRESS_ID_IDX")]
     [Index(nameof(DistrictCode), Name = "PRPRTY_DISTRICT_CODE_IDX")]
+    [Index(nameof(PphStatusTypeCode), Name = "PRPRTY_PPH_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(PropertyAreaUnitTypeCode), Name = "PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX")]
     [Index(nameof(PropertyClassificationTypeCode), Name = "PRPRTY_PROPERTY_CLASSIFICATION_TYPE_CODE_IDX")]
     [Index(nameof(PropertyDataSourceTypeCode), Name = "PRPRTY_PROPERTY_DATA_SOURCE_TYPE_CODE_IDX")]
@@ -83,6 +84,9 @@ namespace Pims.Dal.Entities
         [Column("VOLUME_UNIT_TYPE_CODE")]
         [StringLength(20)]
         public string VolumeUnitTypeCode { get; set; }
+        [Column("PPH_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string PphStatusTypeCode { get; set; }
         [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE", TypeName = "date")]
         public DateTime PropertyDataSourceEffectiveDate { get; set; }
         [Column("NAME")]
@@ -134,6 +138,13 @@ namespace Pims.Dal.Entities
         public bool? IsSensitive { get; set; }
         [Column("IS_PROVINCIAL_PUBLIC_HWY")]
         public bool? IsProvincialPublicHwy { get; set; }
+        [Column("PPH_STATUS_UPDATE_USERID")]
+        [StringLength(30)]
+        public string PphStatusUpdateUserid { get; set; }
+        [Column("PPH_STATUS_UPDATE_TIMESTAMP", TypeName = "datetime")]
+        public DateTime? PphStatusUpdateTimestamp { get; set; }
+        [Column("IS_RWY_BELT_DOM_PATENT")]
+        public bool? IsRwyBeltDomPatent { get; set; }
         [Column("ZONING")]
         [StringLength(50)]
         public string Zoning { get; set; }
@@ -185,6 +196,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(DistrictCode))]
         [InverseProperty(nameof(PimsDistrict.PimsProperties))]
         public virtual PimsDistrict DistrictCodeNavigation { get; set; }
+        [ForeignKey(nameof(PphStatusTypeCode))]
+        [InverseProperty(nameof(PimsPphStatusType.PimsProperties))]
+        public virtual PimsPphStatusType PphStatusTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(PropMgmtOrgId))]
         [InverseProperty(nameof(PimsOrganization.PimsProperties))]
         public virtual PimsOrganization PropMgmtOrg { get; set; }

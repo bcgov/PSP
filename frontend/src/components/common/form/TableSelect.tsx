@@ -1,10 +1,11 @@
+import { Button } from 'components/common/buttons/Button';
 import { DisplayError } from 'components/common/form';
 import * as Styled from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
 import { getIn, useFormikContext } from 'formik';
 import _ from 'lodash';
 import React, { ReactNode, useMemo } from 'react';
-import { Button, Container, FormControlProps } from 'react-bootstrap';
+import { Container, FormControlProps } from 'react-bootstrap';
 import { getColumnsWithRemove } from 'utils/columnUtils';
 
 export interface ISelectedTableHeaderProps {

@@ -52,7 +52,7 @@ export const PropertyRow: React.FunctionComponent<IPropertyRowProps> = ({
           <Styled.SmallInlineSelect
             disabled={!pid && !pin}
             options={areaUnitTypes}
-            field={withNameSpace(nameSpace, 'areaUnitId')}
+            field={withNameSpace(nameSpace, 'areaUnitType.id')}
             placeholder=" "
           />
           <Styled.RemoveButton variant="link" onClick={onRemove}>

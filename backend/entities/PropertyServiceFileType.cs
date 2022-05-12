@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public PimsPropertyServiceFileType(string id):this()
+        public PimsPropertyServiceFileType(string id) : this()
         {
             Id = id;
         }

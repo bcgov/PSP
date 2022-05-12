@@ -24,7 +24,7 @@ namespace Pims.Dal.Entities
         /// <param name="lease"></param>
         /// <param name="person"></param>
         /// <param name="organization"></param>
-        public PimsLeaseTenant(PimsLease lease, PimsPerson person, PimsOrganization organization, PimsLessorType lessorType):this()
+        public PimsLeaseTenant(PimsLease lease, PimsPerson person, PimsOrganization organization, PimsLessorType lessorType) : this()
         {
             this.LeaseId = lease?.LeaseId ?? throw new ArgumentNullException(nameof(lease));
             this.Lease = lease;

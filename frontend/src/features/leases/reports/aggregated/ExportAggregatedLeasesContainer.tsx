@@ -18,6 +18,7 @@ export interface IExportAggregatedLeasesContainer {
 
 export const ExportAggregatedLeasesContainer: React.FunctionComponent<IExportAggregatedLeasesContainerProps> = props => {
   const { exportAggregatedLeases } = useLeaseExport();
+  const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());
   return (
     <Formik
       initialValues={{
@@ -68,8 +69,6 @@ export const generateFiscalYearOptions = (minYear: number, maxYear: number) => {
   }
   return options;
 };
-
-const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());
 
 const ClickableDownload = styled(FaDownload)`
   &:hover {

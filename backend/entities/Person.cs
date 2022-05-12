@@ -32,8 +32,15 @@ namespace Pims.Dal.Entities
         /// <param name="firstname"></param>
         public PimsPerson(string surname, string firstname, PimsAddress address) : this()
         {
-            if (String.IsNullOrWhiteSpace(surname)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(surname));
-            if (String.IsNullOrWhiteSpace(firstname)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(firstname));
+            if (String.IsNullOrWhiteSpace(surname))
+            {
+                throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(surname));
+            }
+
+            if (String.IsNullOrWhiteSpace(firstname))
+            {
+                throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(firstname));
+            }
 
             this.Surname = surname;
             this.FirstName = firstname;

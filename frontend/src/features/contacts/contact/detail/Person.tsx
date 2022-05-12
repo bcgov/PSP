@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { phoneFormatter } from 'utils/formUtils';
 
 import * as Styled from '../../styles';
+import { sortAddresses } from './utils';
 
 export interface PersonViewProps {
   person: IContactPerson;
@@ -53,8 +54,9 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   if (person.addresses === undefined) {
     personAddresses = [];
   } else {
-    personAddresses = person.addresses.reduce(
-      (accumulator: AddressField[], value: IContactAddress) => {
+    personAddresses = person.addresses
+      .sort(sortAddresses)
+      .reduce((accumulator: AddressField[], value: IContactAddress) => {
         accumulator.push({
           label: value.addressType.description || '',
           streetAddress1: value.streetAddress1,
@@ -68,9 +70,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
         });
 
         return accumulator;
-      },
-      [],
-    );
+      }, []);
   }
 
   return (

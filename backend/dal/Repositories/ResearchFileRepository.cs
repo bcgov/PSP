@@ -30,6 +30,25 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Retrieves the research file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PimsResearchFile GetById(long id)
+        {
+            return this.Context.PimsResearchFiles.AsNoTracking()
+                .Where(x => x.ResearchFileId == id)
+                .Include(r => r.ResearchFileStatusTypeCodeNavigation)
+                .Include(r => r.RequestSourceTypeCodeNavigation)
+                .Include(r => r.RequestorNameNavigation)
+                    .ThenInclude(p => p.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Organization)
+                .Include(r => r.RequestorOrganizationNavigation)
+                .Include(r => r.PimsPropertyResearchFiles).FirstOrDefault();
+        }
+
         /// <summary>
         /// Add the specified research file to the datasource.
         /// </summary>
@@ -46,15 +65,33 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get a page with an array of leases within the specified filters.
-        /// Note that the 'researchFilter' will control the 'page' and 'quantity'.
+        /// Update the specified research file.
+        /// </summary>
+        /// <param name="researchFile"></param>
+        /// <returns></returns>
+        public PimsResearchFile Update(PimsResearchFile researchFile)
+        {
+            researchFile.ThrowIfNull(nameof(researchFile));
+
+            researchFile.RfileNumber = GenerateRFileNumber();
+
+            this.Context.PimsResearchFiles.Update(researchFile);
+            return researchFile;
+        }
+
+        /// <summary>
+        /// Get a page with an array of research files within the specified filters.
+        /// Note that the 'filter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         public Paged<PimsResearchFile> GetPage(ResearchFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
-            if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateResearchQuery(filter);
@@ -67,19 +104,19 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Generate a new L File in format RFile-XXXXXXXXXX using the lease id. Add the lease id and lfileno to the passed lease.
+        /// Generate a new R File in format RFile-XXXXXXXXXX using the research id.
         /// </summary>
         private string GenerateRFileNumber()
         {
-            long nextResearchFileId = this.GetNextLeaseSequenceValue();
+            long nextResearchFileId = this.GetNextResearchSequenceValue();
             return $"RFile-{nextResearchFileId.ToString().PadLeft(10, '0')}";
         }
 
         /// <summary>
-        /// Get the next available id from the PIMS_RESEARCH_FILE_ID_SEQ
+        /// Get the next available id from the PIMS_RESEARCH_FILE_ID_SEQ.
         /// </summary>
         /// <param name="context"></param>
-        private long GetNextLeaseSequenceValue()
+        private long GetNextResearchSequenceValue()
         {
             SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
             {

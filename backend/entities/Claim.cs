@@ -18,7 +18,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="key"></param>
         /// <param name="name"></param>
-        public PimsClaim(Guid key, string name):this()
+        public PimsClaim(Guid key, string name) : this()
         {
             this.ClaimUid = key;
             this.Name = name;

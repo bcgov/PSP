@@ -10,6 +10,7 @@ import {
   TypeaheadModel,
 } from 'react-bootstrap-typeahead';
 import { FaSearch } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import TooltipIcon from '../TooltipIcon';
 import TooltipWrapper from '../TooltipWrapper';
@@ -104,7 +105,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
   );
 
   return (
-    <Form.Group className={cx({ required: required }, className)}>
+    <StyledFormGroup className={cx({ required: required }, className)}>
       {label && <Form.Label htmlFor={`typeahead-${field}`}>{label}</Form.Label>}
       {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
@@ -140,9 +141,16 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
         </BaseAsyncTypeahead>
       </TooltipWrapper>
       {!displayErrorTooltips && <DisplayError field={field} />}
-    </Form.Group>
+    </StyledFormGroup>
   );
 }
+
+const StyledFormGroup = styled(Form.Group)`
+  // This is the close button of the type-ahead
+  button.close {
+    font-size: 2.4rem;
+  }
+`;
 
 // React.forwardRef allows to pass a "ref" to the wrapped AsyncTypeahead to invoke methods on the inner typeahead - e.g. ref.clear(), ref.blur() etc
 // See https://www.carlrippon.com/react-forwardref-typescript/

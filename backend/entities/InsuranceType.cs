@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a InsuranceType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsInsuranceType(string id):this()
+        public PimsInsuranceType(string id) : this()
         {
             Id = id;
         }

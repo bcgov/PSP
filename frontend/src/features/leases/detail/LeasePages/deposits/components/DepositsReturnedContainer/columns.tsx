@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
 import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, renderDate, renderMoney } from 'components/Table';
 import Claims from 'constants/claims';

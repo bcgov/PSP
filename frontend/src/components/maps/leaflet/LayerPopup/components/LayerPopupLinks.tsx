@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { LinkButton } from 'components/common/buttons';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
@@ -26,12 +26,10 @@ export const LayerPopupLinks: React.FC<ILayerPopupLinksProps> = ({
 
   return (
     <StyledContainer>
-      <Button variant="link" onClick={onZoomToBounds}>
-        Zoom map
-      </Button>
-      <Button variant="link" onClick={onEllipsisClick ?? noop}>
+      <LinkButton onClick={onZoomToBounds}>Zoom map</LinkButton>
+      <LinkButton onClick={onEllipsisClick ?? noop}>
         <FaEllipsisH />
-      </Button>
+      </LinkButton>
     </StyledContainer>
   );
 };

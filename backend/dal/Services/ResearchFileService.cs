@@ -24,6 +24,13 @@ namespace Pims.Dal.Services
             _propertyRepository = propertyRepository;
         }
 
+        public PimsResearchFile GetById(long id)
+        {
+            _logger.LogInformation("Getting research file with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+            return _researchFileRepository.GetById(id);
+        }
+
         public PimsResearchFile Add(PimsResearchFile researchFile)
         {
             _logger.LogInformation("Adding research file...");
@@ -56,6 +63,16 @@ namespace Pims.Dal.Services
             }
 
             var newResearchFile = _researchFileRepository.Add(researchFile);
+            _researchFileRepository.CommitTransaction();
+            return newResearchFile;
+        }
+
+        public PimsResearchFile Update(PimsResearchFile researchFile)
+        {
+            _logger.LogInformation("Updating research file...");
+            _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
+
+            var newResearchFile = _researchFileRepository.Update(researchFile);
             _researchFileRepository.CommitTransaction();
             return newResearchFile;
         }

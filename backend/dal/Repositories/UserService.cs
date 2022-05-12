@@ -105,7 +105,11 @@ namespace Pims.Dal.Repositories
                 this.Context.CommitTransaction();
             }
 
-            if (!exists) this.Logger.LogInformation($"User Activated: '{username}' - '{key}'.");
+            if (!exists)
+            {
+                this.Logger.LogInformation($"User Activated: '{username}' - '{key}'.");
+            }
+
             return user;
         }
         /// <summary>
@@ -156,23 +160,56 @@ namespace Pims.Dal.Repositories
 
             if (filter != null)
             {
-                if (filter.Page < 1) filter.Page = 1;
-                if (filter.Quantity < 1) filter.Quantity = 1;
-                if (filter.Quantity > 50) filter.Quantity = 50;
-                if (filter.Sort == null) filter.Sort = Array.Empty<string>();
+                if (filter.Page < 1)
+                {
+                    filter.Page = 1;
+                }
+
+                if (filter.Quantity < 1)
+                {
+                    filter.Quantity = 1;
+                }
+
+                if (filter.Quantity > 50)
+                {
+                    filter.Quantity = 50;
+                }
+
+                if (filter.Sort == null)
+                {
+                    filter.Sort = Array.Empty<string>();
+                }
 
                 if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifierValue))
+                {
                     query = query.Where(u => EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifierValue}%"));
+                }
+
                 if (!string.IsNullOrWhiteSpace(filter.FirstName))
+                {
                     query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
+                }
+
                 if (!string.IsNullOrWhiteSpace(filter.Surname))
+                {
                     query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.Surname}%"));
+                }
+
                 if (!string.IsNullOrWhiteSpace(filter.Position))
+                {
                     query = query.Where(u => EF.Functions.Like(u.Position, $"%{filter.Position}%"));
+                }
+
                 if (!string.IsNullOrWhiteSpace(filter.Email))
+                {
                     query = query.Where(u => u.Person.PimsContactMethods.Any(cm => EF.Functions.Like(cm.ContactMethodValue, $"%{filter.Email}%")));
+                }
+
                 if (filter.IsDisabled != null)
+                {
                     query = query.Where(u => u.IsDisabled == filter.IsDisabled);
+                }
+
                 if (!string.IsNullOrWhiteSpace(filter.Role))
                     query = query.Where(u => u.PimsUserRoles.Any(r =>
                         EF.Functions.Like(r.Role.Name, $"%{filter.Role}")));
@@ -311,7 +348,11 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsUser Add(PimsUser add)
         {
-            if (add == null) throw new ArgumentNullException(nameof(add), "user cannot be null.");
+            if (add == null)
+            {
+                throw new ArgumentNullException(nameof(add), "user cannot be null.");
+            }
+
             add.IssueDate = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
@@ -408,7 +449,9 @@ namespace Pims.Dal.Repositories
             {
                 var remove = user.PimsUserRoles.FirstOrDefault(r2 => r2.RoleId == r.RoleId);
                 if (remove != null)
+                {
                     this.Context.Entry(remove).State = EntityState.Deleted;
+                }
             });
 
             var addOrganizations = update.PimsUserOrganizations.Except(user.PimsUserOrganizations, new UserOrganizationOrganizationIdComparer());
@@ -418,7 +461,9 @@ namespace Pims.Dal.Repositories
             {
                 var remove = user.PimsUserOrganizations.FirstOrDefault(o2 => o2.OrganizationId == o.OrganizationId && o2.RoleId == o.RoleId);
                 if (remove != null)
+                {
                     this.Context.Entry(remove).State = EntityState.Deleted;
+                }
             });
             user.Note = update.Note;
             user.Position = update.Position;
@@ -481,7 +526,10 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds)
         {
-            if (organizationIds == null) throw new ArgumentNullException(nameof(organizationIds));
+            if (organizationIds == null)
+            {
+                throw new ArgumentNullException(nameof(organizationIds));
+            }
 
             return this.Context.PimsUsers
                 .Include(u => u.Person)

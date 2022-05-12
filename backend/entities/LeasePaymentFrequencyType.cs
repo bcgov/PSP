@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a LeasePaymentFrequencyType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLeasePmtFreqType(string id):this()
+        public PimsLeasePmtFreqType(string id) : this()
         {
             Id = id;
         }

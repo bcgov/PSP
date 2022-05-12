@@ -54,7 +54,7 @@ namespace Pims.Dal.Services
 
         public void ValidateRowVersion(long personId, long rowVersion)
         {
-            if(_personRepository.GetRowVersion(personId) != rowVersion)
+            if (_personRepository.GetRowVersion(personId) != rowVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this contact, please refresh the application and retry.");
             }

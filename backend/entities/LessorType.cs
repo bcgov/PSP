@@ -25,7 +25,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a LessorType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLessorType(string id):this()
+        public PimsLessorType(string id) : this()
         {
             Id = id;
         }

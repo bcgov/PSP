@@ -38,11 +38,19 @@ namespace Pims.Keycloak.Configuration
         public override void Validate()
         {
             if (String.IsNullOrWhiteSpace(this.Authority))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:Authority is invalid or missing.");
+            }
+
             if (String.IsNullOrWhiteSpace(this.Audience))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:Audience is invalid or missing.");
+            }
+
             if (String.IsNullOrWhiteSpace(this.Client))
+            {
                 throw new ConfigurationException("The configuration for Keycloak:Client is invalid or missing.");
+            }
         }
         #endregion
     }

@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResearchHeader component renders as expected when provided no research file 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-6"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label>
+                Research file #:
+              </label>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-right col"
+        >
+          Created: 
+          <strong />
+           by
+          <span>
+              
+          </span>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-6"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label>
+                R-file name:
+              </label>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-right col"
+        >
+          Last updated: 
+          <strong />
+           by 
+          <span />
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-6"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label>
+                MoTI region:
+              </label>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="justify-content-end row"
+          >
+            <div
+              class="pr-0 text-left col-auto"
+            >
+              <label>
+                Status:
+              </label>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-6"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label>
+                Ministry district:
+              </label>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -8,44 +8,184 @@ exports[`NotesModal component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c0.c0.btn {
-  background-color: unset;
-  border: 0;
+  .c0.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
 }
 
-.c0.c0.btn:hover,
-.c0.c0.btn:active {
-  background-color: unset;
+.c0.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
 }
 
-.c0.c0.btn svg {
+.c0.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c0.btn.btn-primary {
+  border: none;
+}
+
+.c0.btn.btn-secondary {
+  background: none;
+}
+
+.c0.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
+  background: none;
+}
+
+.c0.btn.btn-light {
+  border: none;
+}
+
+.c0.btn.btn-dark {
+  border: none;
+}
+
+.c0.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c0.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
+}
+
+.c0.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1.c1.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c1.c1.btn:hover,
+.c1.c1.btn:focus,
+.c1.c1.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c1.c1.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c0.c0.btn svg:hover {
+.c1.c1.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
 <button
-    class="c0 btn btn-light"
+    class="c0 Button c1 btn btn-light"
     title="notes"
     type="button"
   >
-    <svg
-      fill="currentColor"
-      height="1em"
-      stroke="currentColor"
-      stroke-width="0"
-      viewBox="0 0 384 512"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      class="Button__value"
     >
-      <path
-        d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"
-      />
-    </svg>
+      <svg
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 384 512"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"
+        />
+      </svg>
+    </div>
   </button>
   <div
     class="container"

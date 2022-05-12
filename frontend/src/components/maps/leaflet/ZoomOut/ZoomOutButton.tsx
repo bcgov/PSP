@@ -1,8 +1,7 @@
-import variables from 'assets/scss/_variables.module.scss';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { LatLngBounds } from 'leaflet';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import styled from 'styled-components';
@@ -10,10 +9,12 @@ import styled from 'styled-components';
 import Control from '../Control/Control';
 
 const ZoomButton = styled(Button)`
-  background-color: #ffffff !important;
-  color: ${variables.darkVariantColor} !important;
-  width: 4rem;
-  height: 4rem;
+  &&.btn {
+    background-color: #ffffff;
+    color: ${({ theme }) => theme.css.darkVariantColor};
+    width: 4rem;
+    height: 4rem;
+  }
 `;
 
 export type ZoomOutProps = {

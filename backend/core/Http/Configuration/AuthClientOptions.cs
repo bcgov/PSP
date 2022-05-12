@@ -46,11 +46,19 @@ namespace Pims.Core.Http.Configuration
         public virtual void Validate()
         {
             if (String.IsNullOrWhiteSpace(this.Authority))
+            {
                 throw new ConfigurationException("The configuration for OpenIdConnect:Authority is invalid or missing.");
+            }
+
             if (String.IsNullOrWhiteSpace(this.Audience))
+            {
                 throw new ConfigurationException("The configuration for OpenIdConnect:Audience is invalid or missing.");
+            }
+
             if (String.IsNullOrWhiteSpace(this.Client))
+            {
                 throw new ConfigurationException("The configuration for OpenIdConnect:Client is invalid or missing.");
+            }
         }
         #endregion
     }

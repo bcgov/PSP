@@ -1,4 +1,5 @@
-import { Button, Input } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
+import { Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -85,7 +86,7 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
       );
 
       if (!!organizationResponse?.id) {
-        history.push('/contact/list');
+        history.push(`/contact/O${organizationResponse?.id}`);
       }
     } finally {
       setSubmitting(false);

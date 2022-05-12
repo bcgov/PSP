@@ -1,6 +1,6 @@
+import { RemoveButton } from 'components/common/buttons';
 import { Input, Select } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
-import * as Styled from 'features/contacts/contact/create/styles';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
@@ -40,9 +40,9 @@ export const ContactEmail: React.FunctionComponent<IContactEmail> = ({ namespace
         <Col md={2} style={{ paddingLeft: 0, paddingTop: '3rem' }}>
           {onRemove && (
             <Stack justifyContent="flex-start" className="h-100">
-              <Styled.RemoveButton onClick={onRemove}>
+              <RemoveButton onRemove={onRemove}>
                 <MdClose size="2rem" /> <span className="text">Remove</span>
-              </Styled.RemoveButton>
+              </RemoveButton>
             </Stack>
           )}
         </Col>

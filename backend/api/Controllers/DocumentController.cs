@@ -34,6 +34,20 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
+        /// <summary>
+        /// Retrieves the list of document types.
+        /// </summary>
+        [HttpGet("types")]
+        [HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(string), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public IActionResult GetDocumentTypes()
+        {
+            var ast = _documentService.GetDocumentTypes();
+            return new JsonResult(ast);
+        }
+
         /// <summary>
         /// Retrieves a list of documents.
         /// </summary>
@@ -68,9 +82,9 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public IActionResult UploadDocument([FromForm] IFormFile file)
+        public IActionResult UploadDocument([FromForm] int documentType, [FromForm] IFormFile file)
         {
-            var ast = _documentService.UploadDocument(1, file);
+            var ast = _documentService.UploadDocument(documentType, file);
             return new JsonResult(ast);
         }
 

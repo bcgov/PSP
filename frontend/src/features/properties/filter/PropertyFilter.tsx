@@ -1,4 +1,5 @@
-import { Form, ResetButton, SearchButton } from 'components/common/form';
+import { ResetButton, SearchButton } from 'components/common/buttons';
+import { Form } from 'components/common/form';
 import { SelectInput } from 'components/common/List/SelectInput';
 import { TableSort } from 'components/Table/TableSort';
 import { Formik } from 'formik';

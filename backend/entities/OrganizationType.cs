@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a OrganizationType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsOrganizationType(string id):this()
+        public PimsOrganizationType(string id) : this()
         {
             Id = id;
         }

@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public PimsOrgIdentifierType(string id):this()
+        public PimsOrgIdentifierType(string id) : this()
         {
             Id = id;
         }
