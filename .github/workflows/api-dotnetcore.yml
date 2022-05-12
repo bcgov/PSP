@@ -12,6 +12,7 @@ jobs:
     env:
       working-directory: ./backend
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GIT_BRANCH: "${{github.ref}}"
 
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +25,7 @@ jobs:
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
 
       - name: Install dependencies
         run: dotnet restore
@@ -114,6 +115,19 @@ jobs:
           sonarProjectName: PIMS-API
           # The SonarQube server URL. For SonarCloud, skip this setting.
           sonarHostname: ${{secrets.SONAR_URL}}
+
+      # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
+      - name: Failure notification to Teams Channel
+        env:
+          MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
+        if: env.MS_TEAMS_NOTIFY_URL != '' && failure() && steps.scan.outcome == 'failure' && github.event_name == 'push'
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
+          notification-summary: PIMS Sonar Scan FAILED in ${{env.GIT_BRANCH}} environment
+          notification-color: ff0000
+          timezone: America/Los_Angeles
 
       - name: Find Comment
         if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
