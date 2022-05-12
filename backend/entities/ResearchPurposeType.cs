@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsResearchPurposeType class, provides an entity for the datamodel to manage research status types.
+    /// PimsResearchPurposeType class, provides an entity for the datamodel to manage research purpose types.
     /// </summary>
     public partial class PimsResearchPurposeType : ITypeEntity<string>
     {

@@ -1,4 +1,6 @@
-import { IContactAddress } from 'interfaces/IContact';
+import { ContactInfoField } from 'features/contacts/interfaces';
+import { Dictionary } from 'interfaces/Dictionary';
+import { IContactAddress, IContactMethod } from 'interfaces/IContact';
 
 import { AddressTypes } from './../../../../constants/addressTypes';
 
@@ -16,6 +18,33 @@ export const sortAddresses = (a1: IContactAddress, a2: IContactAddress) => {
 
   return -1;
 };
+
+export function getContactInfo(
+  validTypes: Dictionary<string>,
+  contactMethods?: IContactMethod[],
+): ContactInfoField[] {
+  if (contactMethods === undefined) {
+    return [];
+  }
+  // Get only the valid types
+  let filteredFields = contactMethods.reduce(
+    (accumulator: ContactInfoField[], method: IContactMethod) => {
+      if (Object.keys(validTypes).includes(method.contactMethodType.id)) {
+        accumulator.push({
+          info: method.value,
+          label: validTypes[method.contactMethodType.id],
+        });
+      }
+      return accumulator;
+    },
+    [],
+  );
+
+  // Sort according to the dictionary order
+  return filteredFields.sort((a, b) => {
+    return Object.values(validTypes).indexOf(a.label) - Object.values(validTypes).indexOf(b.label);
+  });
+}
 
 export const fakeAddresses = [
   {

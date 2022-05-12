@@ -8,7 +8,21 @@ exports[`ResearchHeader component renders as expected when provided no research 
   <div
     class="Toastify"
   />
-  <div
+  .c0 {
+  font-style: italic;
+  font-weight: bold;
+  color: black;
+}
+
+.c1 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+<div
     class="row"
   >
     <div
@@ -43,8 +57,15 @@ exports[`ResearchHeader component renders as expected when provided no research 
           Created: 
           <strong />
            by
-          <span>
-              
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon"
+          >
+            <span
+              class="c0"
+            >
+              USER
+            </span>
           </span>
         </div>
       </div>
@@ -76,8 +97,17 @@ exports[`ResearchHeader component renders as expected when provided no research 
         >
           Last updated: 
           <strong />
-           by 
-          <span />
+           by
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon"
+          >
+            <span
+              class="c0"
+            >
+              USER
+            </span>
+          </span>
         </div>
       </div>
       <div
@@ -148,6 +178,9 @@ exports[`ResearchHeader component renders as expected when provided no research 
           </div>
         </div>
       </div>
+      <div
+        class="c1"
+      />
     </div>
   </div>
 </DocumentFragment>

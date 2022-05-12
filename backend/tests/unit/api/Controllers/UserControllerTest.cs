@@ -1,3 +1,4 @@
+using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -7,6 +8,7 @@ using Pims.Core.Comparers;
 using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
+using Pims.Dal.Repositories;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
@@ -14,6 +16,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using KModel = Pims.Keycloak.Models;
+using Model = Pims.Api.Areas.Admin.Models.User;
 
 namespace PimsApi.Test.Controllers
 {
@@ -37,20 +40,12 @@ namespace PimsApi.Test.Controllers
             // Arrange
             var user = PrincipalHelper.CreateForRole();
             var helper = new TestHelper();
-            var options = new Pims.Keycloak.Configuration.KeycloakOptions()
-            {
-                Authority = "test",
-                Audience = "test",
-                Client = "test",
-                OpenIdConnect = new OpenIdConnectOptions()
-                {
-                    Token = "test",
-                    UserInfo = "test"
-                }
-            };
+
             var optionsMonitor = new Mock<IOptionsMonitor<Pims.Keycloak.Configuration.KeycloakOptions>>();
-            optionsMonitor.Setup(m => m.CurrentValue).Returns(options);
-            var controller = helper.CreateController<UserController>(user, optionsMonitor.Object);
+            optionsMonitor.Setup(m => m.CurrentValue).Returns(GetKeycloakOptions());
+            var userService = new Mock<IUserService>();
+
+            var controller = helper.CreateController<UserController>(user, optionsMonitor.Object, userService.Object);
 
             var service = helper.GetService<Mock<IProxyRequestClient>>();
             var model = new KModel.UserInfoModel()
@@ -72,7 +67,102 @@ namespace PimsApi.Test.Controllers
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
             service.Verify(m => m.ProxyGetAsync(It.IsAny<HttpRequest>(), It.IsAny<string>()), Times.Once());
         }
+
+        [Fact]
+        public void UserBasicInfo_Success()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+
+
+            var userEntity = new Pims.Dal.Entities.PimsUser();
+            userEntity.Person = new Pims.Dal.Entities.PimsPerson()
+            {
+                FirstName = "John",
+                Surname = "Carry"
+            };
+
+            var expectedResult = new Model.UserModel()
+            {
+                FirstName = "John",
+                Surname = "Carry"
+            };
+
+            var optionsMonitor = new Mock<IOptionsMonitor<Pims.Keycloak.Configuration.KeycloakOptions>>();
+            optionsMonitor.Setup(m => m.CurrentValue).Returns(GetKeycloakOptions());
+            var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
+
+            userService.Setup(x => x.GetUserInfo(It.IsAny<Guid>())).Returns(userEntity);
+
+            var controller = helper.CreateController<UserController>(user, optionsMonitor.Object, userService.Object, mapper.Object);
+
+            // Act
+            var result = controller.UserBasicInfo(Guid.NewGuid());
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
+            Assert.Equal(expectedResult, actualResult, new ShallowPropertyCompare());
+            userService.Verify(m => m.GetUserInfo(It.IsAny<Guid>()), Times.Once());
+        }
+
+        [Fact]
+        public void UserBasicInfo_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+
+            var userEntity = new Pims.Dal.Entities.PimsUser();
+            userEntity.Person = new Pims.Dal.Entities.PimsPerson()
+            {
+                FirstName = "John",
+                Surname = "Carry"
+            };
+
+            var optionsMonitor = new Mock<IOptionsMonitor<Pims.Keycloak.Configuration.KeycloakOptions>>();
+            optionsMonitor.Setup(m => m.CurrentValue).Returns(GetKeycloakOptions());
+            var userService = new Mock<IUserService>();
+            var mapper = new Mock<IMapper>();
+
+            userService.Setup(x => x.GetUserInfo(It.IsAny<Guid>())).Returns(userEntity);
+
+            var controller = helper.CreateController<UserController>(user, optionsMonitor.Object, userService.Object, mapper.Object);
+
+            var expectedResult = new Pims.Api.Models.ErrorResponseModel("Invalid keycloakUserId", "keycloakUserId should be a valid non empty guid");
+
+            // Act
+            var result = controller.UserBasicInfo(Guid.Empty);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<Pims.Api.Models.ErrorResponseModel>(actionResult.Value);
+            Assert.Equal(expectedResult, actualResult, new ShallowPropertyCompare());
+            userService.Verify(m => m.GetUserInfo(It.IsAny<Guid>()), Times.Never());
+        }
         #endregion
+
+        #region Helpers
+        private Pims.Keycloak.Configuration.KeycloakOptions GetKeycloakOptions()
+        {
+            var options = new Pims.Keycloak.Configuration.KeycloakOptions()
+            {
+                Authority = "test",
+                Audience = "test",
+                Client = "test",
+                OpenIdConnect = new OpenIdConnectOptions()
+                {
+                    Token = "test",
+                    UserInfo = "test"
+                }
+            };
+
+            return options;
+        }
+        #endregion
+
         #endregion
     }
 }

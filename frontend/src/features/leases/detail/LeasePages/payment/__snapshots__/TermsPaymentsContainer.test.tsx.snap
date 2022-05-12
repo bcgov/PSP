@@ -1033,7 +1033,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
-              $0
+              $0.00
             </div>
             <div
               class="td"
@@ -1057,7 +1057,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
-              $0
+              $0.00
             </div>
             <div
               class="td"

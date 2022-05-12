@@ -31,6 +31,8 @@ namespace Pims.Dal.Entities
         public decimal ReturnAmount { get; set; }
         [Column("RETURN_DATE", TypeName = "datetime")]
         public DateTime ReturnDate { get; set; }
+        [Column("INTEREST_PAID", TypeName = "money")]
+        public decimal? InterestPaid { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

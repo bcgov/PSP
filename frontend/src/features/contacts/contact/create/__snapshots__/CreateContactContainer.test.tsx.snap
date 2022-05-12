@@ -309,22 +309,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   justify-content: flex-start;
 }
 
-.c10 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(0,51,102);
-  text-decoration: none solid rgb(0,51,102);
-  line-height: 2.9rem;
-}
-
-.c17 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
 .c6 {
   width: 100%;
   overflow: auto;
@@ -381,13 +365,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   line-height: 2rem;
 }
 
-.c13 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
 .c20 {
   font-size: 1.6rem;
   font-weight: 400;
@@ -408,6 +385,29 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
+}
+
+.c10 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c17 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c13 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .c0 {

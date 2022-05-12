@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -46,7 +46,14 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PimsPersonOrganizations)
                     .ThenInclude(o => o.Organization)
                 .Include(r => r.RequestorOrganizationNavigation)
-                .Include(r => r.PimsPropertyResearchFiles).FirstOrDefault();
+                .Include(r => r.PimsPropertyResearchFiles)
+                    .ThenInclude(rp => rp.Property)
+                .Include(r => r.PimsPropertyResearchFiles)
+                    .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
+                    .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
+                .Include(r => r.PimsResearchFilePurposes)
+                    .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
+                .FirstOrDefault();
         }
 
         /// <summary>
@@ -58,8 +65,11 @@ namespace Pims.Dal.Repositories
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
-            researchFile.RfileNumber = GenerateRFileNumber();
+            long nextResearchFileId = this.GetNextResearchSequenceValue();
 
+            researchFile.RfileNumber = GenerateRFileNumber(nextResearchFileId);
+
+            researchFile.ResearchFileId = nextResearchFileId;
             this.Context.PimsResearchFiles.Add(researchFile);
             return researchFile;
         }
@@ -73,10 +83,104 @@ namespace Pims.Dal.Repositories
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
-            researchFile.RfileNumber = GenerateRFileNumber();
+            var currentPurposes = Context.PimsResearchFiles
+                .SelectMany(x => x.PimsResearchFilePurposes)
+                .Where(x => x.ResearchFileId == researchFile.Id)
+                .AsNoTracking()
+                .ToList();
+
+            List<PimsResearchFilePurpose> purposes = new List<PimsResearchFilePurpose>();
+
+            foreach (var selectedPurpose in researchFile.PimsResearchFilePurposes)
+            {
+                var currentPurpose = currentPurposes.FirstOrDefault(x => x.ResearchPurposeTypeCode == selectedPurpose.ResearchPurposeTypeCode);
+
+                // If the code is already on the list, add the existing one, otherwise add the incomming one
+                if (currentPurpose != null)
+                {
+                    purposes.Add(currentPurpose);
+                    Context.Entry(currentPurpose).State = EntityState.Unchanged;
+                }
+                else
+                {
+                    purposes.Add(selectedPurpose);
+                    Context.Entry(selectedPurpose).State = EntityState.Added;
+                }
+            }
+
+            // The ones not on the new set should be deleted
+            List<PimsResearchFilePurpose> differenceSet = currentPurposes.Where(x => !purposes.Any(y => y.ResearchPurposeTypeCode == x.ResearchPurposeTypeCode)).ToList();
+            foreach (var deletedPurpose in differenceSet)
+            {
+                purposes.Add(deletedPurpose);
+                Context.Entry(deletedPurpose).State = EntityState.Deleted;
+            }
+
+            researchFile.PimsResearchFilePurposes = purposes;
 
             this.Context.PimsResearchFiles.Update(researchFile);
             return researchFile;
+        }
+
+        /// <summary>
+        /// Update the properties on the research file.
+        /// </summary>
+        /// <param name="researchFileId"></param>
+        /// <param name="researchFileProperty"></param>
+        /// <returns></returns>
+        public PimsResearchFile UpdateProperty(long researchFileId, PimsPropertyResearchFile researchFileProperty)
+        {
+            var currentTypes = Context.PimsPropertyResearchFiles
+                .SelectMany(x => x.PimsPrfPropResearchPurposeTypes)
+                .Where(x => x.PropertyResearchFileId == researchFileProperty.Id)
+                .AsNoTracking()
+                .ToList();
+
+            List<PimsPrfPropResearchPurposeType> propertyTypes = new List<PimsPrfPropResearchPurposeType>();
+
+            foreach (var selectedType in researchFileProperty.PimsPrfPropResearchPurposeTypes)
+            {
+                var currentType = currentTypes.FirstOrDefault(x => x.PropResearchPurposeTypeCode == selectedType.PropResearchPurposeTypeCode);
+
+                // If the code is already on the list, add the existing one, otherwise add the incomming one
+                if (currentType != null)
+                {
+                    propertyTypes.Add(currentType);
+                    Context.Entry(currentType).State = EntityState.Unchanged;
+                }
+                else
+                {
+                    propertyTypes.Add(selectedType);
+                    Context.Entry(selectedType).State = EntityState.Added;
+                }
+            }
+
+            // The ones not on the new set should be deleted
+            List<PimsPrfPropResearchPurposeType> differenceSet = currentTypes.Where(x => !propertyTypes.Any(y => y.PropResearchPurposeTypeCode == x.PropResearchPurposeTypeCode)).ToList();
+            foreach (var deletedType in differenceSet)
+            {
+                propertyTypes.Add(deletedType);
+                Context.Entry(deletedType).State = EntityState.Deleted;
+            }
+
+            researchFileProperty.PimsPrfPropResearchPurposeTypes = propertyTypes;
+            this.Context.PimsPropertyResearchFiles.Update(researchFileProperty);
+            this.Context.CommitTransaction();
+
+            return GetById(researchFileId);
+        }
+
+        /// <summary>
+        /// Retrieves the version of the research file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public long GetRowVersion(long id)
+        {
+            return this.Context.PimsResearchFiles.AsNoTracking()
+                .Where(p => p.ResearchFileId == id)?
+                .Select(p => p.ConcurrencyControlNumber)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -104,12 +208,11 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Generate a new R File in format RFile-XXXXXXXXXX using the research id.
+        /// Generate a new R File in format R-X using the research id.
         /// </summary>
-        private string GenerateRFileNumber()
+        private static string GenerateRFileNumber(long id)
         {
-            long nextResearchFileId = this.GetNextResearchSequenceValue();
-            return $"RFile-{nextResearchFileId.ToString().PadLeft(10, '0')}";
+            return $"R-{id}";
         }
 
         /// <summary>

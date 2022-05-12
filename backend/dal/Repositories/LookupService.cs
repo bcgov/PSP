@@ -208,6 +208,11 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsPropResearchPurposeType> GetPropertyResearchPurposeTypes()
+        {
+            return this.Context.PimsPropResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
         #endregion
     }
 }

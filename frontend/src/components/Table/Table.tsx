@@ -206,7 +206,10 @@ const IndeterminateCheckbox = React.forwardRef(
           currentSelected.push(row.original);
         } else {
           if (currentSelected.find(selected => selected.id === row.original.id)) {
-            remove(currentSelected, row.original);
+            remove(
+              currentSelected,
+              currentSelected.find(selected => selected.id === row.original.id),
+            );
           } else {
             currentSelected.push(row.original);
           }

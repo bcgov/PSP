@@ -106,6 +106,7 @@ namespace Pims.Api.Controllers
             var researchStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchFileStatusTypes());
             var requestSourceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GeRequestSourceTypes());
             var researchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchPurposeTypes());
+            var propertyResearchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyResearchPurposeTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -137,6 +138,7 @@ namespace Pims.Api.Controllers
             codes.AddRange(researchStatusTypes);
             codes.AddRange(requestSourceTypes);
             codes.AddRange(researchPurposeTypes);
+            codes.AddRange(propertyResearchPurposeTypes);
 
             return new JsonResult(codes);
         }

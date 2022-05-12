@@ -1,49 +1,32 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import { IApiError } from 'interfaces/IApiError';
-import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
-import { logError } from 'store/slices/network/networkSlice';
 
 /**
  * hook that retrieves a research file.
  */
 export const useGetResearch = () => {
   const { getResearchFile } = useApiResearchFile();
-  const dispatch = useDispatch();
-
-  const retrieveResearchFile = useMemo(
-    () => async (researchFileId: number) => {
-      try {
-        dispatch(showLoading());
-        const response = await getResearchFile(researchFileId);
-        toast.success('Research File retrieved');
-        return response?.data;
-      } catch (e) {
-        if (axios.isAxiosError(e)) {
-          const axiosError = e as AxiosError<IApiError>;
-
-          if (axiosError?.response?.status === 400) {
-            toast.error(axiosError?.response.data.error);
-          } else {
-            toast.error('Retrieve research file error. Check responses and try again.');
-          }
-          dispatch(
-            logError({
-              name: 'retrieveResearchFile',
-              status: axiosError?.response?.status,
-              error: axiosError,
-            }),
-          );
-        }
-      } finally {
-        dispatch(hideLoading());
+  const { execute } = useApiRequestWrapper<
+    (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (researchFileId: number) => await getResearchFile(researchFileId),
+      [getResearchFile],
+    ),
+    requestName: 'retrieveResearchFile',
+    onSuccess: useCallback(() => toast.success('Research File retrieved'), []),
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+      } else {
+        toast.error('Retrieve research file error. Check responses and try again.');
       }
-    },
-    [dispatch, getResearchFile],
-  );
-
-  return { retrieveResearchFile };
+    }, []),
+  });
+  return { retrieveResearchFile: execute };
 };

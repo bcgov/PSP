@@ -26,6 +26,7 @@ const mockDeposit: Api_SecurityDeposit = {
 const mockReturnedDeposit: Api_SecurityDepositReturn = {
   parentDepositId: 7,
   returnAmount: 123,
+  interestPaid: 1,
   contactHolder: {
     id: 'P6',
     person: {
@@ -107,6 +108,7 @@ describe('ReturnedDepositModal component', () => {
     await fillInput(document.body, 'returnDate', '2020-01-02', 'datepicker');
     await fillInput(document.body, 'claimsAgainst', '1,000.00');
     await fillInput(document.body, 'returnAmount', '2,000.00');
+    await fillInput(document.body, 'interestPaid', '1.00');
     await fillInput(document.body, 'contactHolder.id', 'p1');
 
     const saveButton = getByText('Save');
@@ -121,6 +123,7 @@ describe('ReturnedDepositModal component', () => {
       parentDepositId: 7,
       parentDepositOtherDescription: '',
       returnAmount: 2000,
+      interestPaid: 1,
       returnDate: '2020-01-02',
       rowVersion: 0,
       terminationDate: '2020-01-01',

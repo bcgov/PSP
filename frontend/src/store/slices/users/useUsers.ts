@@ -109,7 +109,7 @@ export const useUsers = () => {
    * @return the updated user.
    */
   const update = useCallback(
-    async (updatedUser: IUser): Promise<IUser> => {
+    async (updatedUser: IUser): Promise<IUser | void> => {
       const axiosPromise = putUser(updatedUser).then(response => {
         dispatch(updateUser(response.data));
         return Promise.resolve(response);

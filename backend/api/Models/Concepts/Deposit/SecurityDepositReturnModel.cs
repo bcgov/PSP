@@ -35,6 +35,11 @@ namespace Pims.Api.Models.Concepts
         public decimal ReturnAmount { get; set; }
 
         /// <summary>
+        /// get/set - the interest paid.
+        /// </summary>
+        public decimal InterestPaid { get; set; }
+
+        /// <summary>
         /// get/set - The date when the deposit was returned.
         /// </summary>
         public DateTime ReturnDate { get; set; }

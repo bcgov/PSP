@@ -239,9 +239,11 @@ exports[`Lease Insurance renders as expected 1`] = `
               <input
                 class="form-control input-number"
                 id="input-insurances.0.coverageLimit"
+                inputmode="numeric"
                 name="insurances.0.coverageLimit"
                 placeholder=""
-                value="777"
+                type="text"
+                value="$777.00"
               />
             </div>
           </div>

@@ -30,7 +30,7 @@ export const PropertyInformation: React.FunctionComponent<IPropertyInformationPr
         <br />
         {landArea !== undefined ? (
           <>
-            <Form.Label>Area</Form.Label>
+            <Form.Label>Lease Area</Form.Label>
             {!disabled ? (
               <InputGroup
                 disabled={disabled}

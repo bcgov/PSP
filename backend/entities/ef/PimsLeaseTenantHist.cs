@@ -31,6 +31,8 @@ namespace Pims.Dal.Entities
         [Column("LESSOR_TYPE_CODE")]
         [StringLength(20)]
         public string LessorTypeCode { get; set; }
+        [Column("PRIMARY_CONTACT_ID")]
+        public long? PrimaryContactId { get; set; }
         [Column("NOTE")]
         [StringLength(2000)]
         public string Note { get; set; }

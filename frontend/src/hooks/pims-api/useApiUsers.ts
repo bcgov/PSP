@@ -25,6 +25,7 @@ export const useApiUsers = () => {
     () => ({
       activateUser: () => api.post<IUser>('/auth/activate'),
       getUser: (key: string) => api.get<IUser>(`/admin/users/${key}`),
+      getUserInfo: (key: string) => api.get<IUser>(`/users/info/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
         api.post<IPagedItems<IUser>>(`/admin/users/my/organization`, params),
       putUser: (user: IUser) =>

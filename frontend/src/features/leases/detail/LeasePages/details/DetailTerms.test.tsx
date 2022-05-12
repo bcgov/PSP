@@ -37,7 +37,7 @@ describe('DetailTermInformation component', () => {
         renewalCount: 31,
       },
     });
-    expect(getByDisplayValue('1000')).toBeVisible();
+    expect(getByDisplayValue('$1,000.00')).toBeVisible();
     expect(getByDisplayValue('31')).toBeVisible();
   });
   it('renders with the expected columns', () => {
