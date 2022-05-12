@@ -17,6 +17,7 @@ import { createMemoryHistory } from 'history';
 import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
+import { useLtsa } from 'hooks/useLtsa';
 import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
@@ -35,6 +36,13 @@ jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');
 jest.mock('hooks/useProperties');
 jest.mock('hooks/pims-api');
+jest.mock('hooks/useLtsa');
+
+const ltsaMock = {
+  getLtsaData: jest.fn(),
+  ltsaLoading: false,
+};
+(useLtsa as any).mockImplementation(() => ltsaMock);
 
 (useProperties as any).mockImplementation(() => ({
   deleteParcel: jest.fn(),
@@ -46,6 +54,7 @@ jest.mock('hooks/pims-api');
   fetchParcelDetail: jest.fn(),
   fetchParcelsDetail: jest.fn(),
   fetchParcels: jest.fn(),
+  getPropertyWithPid: jest.fn(),
 }));
 
 const largeMockParcels = [

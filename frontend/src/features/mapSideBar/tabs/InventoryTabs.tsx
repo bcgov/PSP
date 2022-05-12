@@ -11,6 +11,8 @@ export interface TabInventoryView {
 interface IInventoryTabsProps {
   defaultTabKey: InventoryTabNames;
   tabViews: TabInventoryView[];
+  activeTab: InventoryTabNames;
+  setActiveTab: (tab: InventoryTabNames) => void;
 }
 
 export enum InventoryTabNames {
@@ -26,9 +28,18 @@ export enum InventoryTabNames {
 export const InventoryTabs: React.FunctionComponent<IInventoryTabsProps> = ({
   defaultTabKey,
   tabViews,
+  activeTab,
+  setActiveTab,
 }) => {
   return (
-    <TabView defaultActiveKey={defaultTabKey}>
+    <TabView
+      defaultActiveKey={defaultTabKey}
+      activeKey={activeTab}
+      onSelect={(eventKey: string | null) => {
+        const tab = Object.values(InventoryTabNames).find(value => value === eventKey);
+        tab && setActiveTab(tab);
+      }}
+    >
       {tabViews.map((view: TabInventoryView, index: number) => (
         <Tab eventKey={view.key} title={view.name} key={`inventory-tab-${index}`}>
           {view.content}

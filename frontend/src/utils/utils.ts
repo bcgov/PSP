@@ -117,6 +117,7 @@ export const handleAxiosResponse = <ResponseType>(
   dispatch: Function,
   actionType: string,
   axiosPromise: Promise<AxiosResponse<ResponseType>>,
+  skipErrorLogCodes?: number[],
 ): Promise<ResponseType> => {
   dispatch(logRequest(actionType));
   dispatch(showLoading());
@@ -127,9 +128,14 @@ export const handleAxiosResponse = <ResponseType>(
       return response?.data;
     })
     .catch((axiosError: AxiosError) => {
-      dispatch(
-        logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
-      );
+      if (
+        !skipErrorLogCodes ||
+        (axiosError?.response?.status && !skipErrorLogCodes.includes(axiosError?.response?.status))
+      ) {
+        dispatch(
+          logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
+        );
+      }
       throw axiosError;
     })
     .finally(() => {

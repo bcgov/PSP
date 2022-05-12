@@ -1,16 +1,21 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { catchAxiosError } from 'customAxios';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
+import { IPagedItems, IProperty } from 'interfaces';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
+import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
 import { pidFormatter, pidPadded } from 'utils';
 import { downloadFile } from 'utils/download';
+
+import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
+
+const ignoreErrorCodes = [404];
 
 export const useProperties = () => {
   const dispatch = useDispatch();
@@ -22,33 +27,33 @@ export const useProperties = () => {
 
   const { getPropertyWithPidWfs } = useGeoServer();
 
-  /**
-   * fetch properties, passing the current bounds of the map.
-   */
-  const fetchProperties = useCallback(
-    async (propertyBounds: API.IPaginateProperties | null) => {
-      dispatch(logRequest(actionTypes.GET_PARCELS));
-      dispatch(showLoading());
-      return getPropertiesPaged(propertyBounds)
-        .then(response => {
-          dispatch(logSuccess({ name: actionTypes.GET_PARCELS }));
-          dispatch(hideLoading());
-          return Promise.resolve(response);
-        })
-        .catch(axiosError => {
-          dispatch(
-            logError({
-              name: actionTypes.GET_PARCELS,
-              status: axiosError?.response?.status,
-              error: axiosError,
-            }),
-          );
-          return Promise.reject(axiosError);
-        })
-        .finally(() => dispatch(hideLoading()));
-    },
-    [dispatch, getPropertiesPaged],
-  );
+  const fetchProperties = useApiRequestWrapper<
+    (
+      propertyBounds: API.IPaginateProperties | null,
+    ) => Promise<AxiosResponse<IPagedItems<IProperty>>>
+  >({
+    requestFunction: useCallback(
+      async (propertyBounds: API.IPaginateProperties | null) =>
+        await getPropertiesPaged(propertyBounds),
+      [getPropertiesPaged],
+    ),
+    requestName: actionTypes.GET_PARCELS,
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
+  const {
+    execute: getPropertyWithPidWrapped,
+    loading: getPropertyWithPidLoading,
+  } = useApiRequestWrapper<(pid: string) => Promise<AxiosResponse<IPropertyApiModel>>>({
+    requestFunction: useCallback(
+      async (pid: string) => await getPropertyWithPid(pidFormatter(pid)),
+      [getPropertyWithPid],
+    ),
+    requestName: actionTypes.GET_PARCELS,
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
 
   /**
    * Make an AJAX request to fetch the specified 'property' from inventory.
@@ -56,39 +61,23 @@ export const useProperties = () => {
    */
   const fetchPropertyWithPid = useCallback(
     async (pid: string): Promise<IPropertyApiModel> => {
-      dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
-      dispatch(showLoading());
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
       //   1. to the REST API to fetch property field attributes (e.g. address, etc)
       //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
       return Promise.all([
-        getPropertyWithPid(pidFormatter(pid)),
+        getPropertyWithPidWrapped(pidFormatter(pid)),
         getPropertyWithPidWfs(pidPadded(pid)),
-      ])
-        .then(([propertyResponse, wfsResponse]) => {
-          const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: IPropertyApiModel = {
-            ...propertyResponse.data,
-            latitude,
-            longitude,
-          };
-          dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
-          dispatch(hideLoading());
-          return property;
-        })
-        .catch(axiosError => {
-          dispatch(
-            logError({
-              name: actionTypes.GET_PARCEL_DETAIL,
-              status: axiosError?.response?.status,
-              error: axiosError,
-            }),
-          );
-          return Promise.reject(axiosError);
-        })
-        .finally(() => dispatch(hideLoading()));
+      ]).then(([propertyResponse, wfsResponse]) => {
+        const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
+        const property: IPropertyApiModel = {
+          ...propertyResponse,
+          latitude,
+          longitude,
+        };
+        return property;
+      });
     },
-    [dispatch, getPropertyWithPid, getPropertyWithPidWfs],
+    [getPropertyWithPidWrapped, getPropertyWithPidWfs],
   );
 
   /**
@@ -126,6 +115,7 @@ export const useProperties = () => {
   return {
     getProperties: fetchProperties,
     getPropertyWithPid: fetchPropertyWithPid,
+    getPropertyWithPidLoading: getPropertyWithPidLoading,
     exportProperties,
   };
 };

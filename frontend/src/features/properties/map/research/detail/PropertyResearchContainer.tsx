@@ -30,11 +30,12 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
+  const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
 
   const pid = props.researchFileProperty?.property?.pid?.toString();
 
   // First, fetch property information from PSP API
-  const { getPropertyWithPid } = useProperties();
+  const { getPropertyWithPid, getPropertyWithPidLoading: propertyLoading } = useProperties();
   useEffect(() => {
     const func = async () => {
       try {
@@ -64,7 +65,7 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
   // additional information which we store in a different model (IPropertyDetailsForm)
   const propertyViewForm = usePropertyDetails(apiProperty);
 
-  const { getLtsaData } = useLtsa();
+  const { getLtsaData, ltsaLoading } = useLtsa();
   useEffect(() => {
     const func = async () => {
       setLtsaDataRequestedOn(new Date());
@@ -85,7 +86,13 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
   const tabViews: TabInventoryView[] = [];
 
   tabViews.push({
-    content: <LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />,
+    content: (
+      <LtsaTabView
+        ltsaData={ltsaData}
+        ltsaRequestedOn={ltsaDataRequestedOn}
+        loading={ltsaLoading}
+      />
+    ),
     key: InventoryTabNames.title,
     name: 'Title',
   });
@@ -111,13 +118,20 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
 
   if (showPropertyInfoTab) {
     tabViews.push({
-      content: <PropertyDetailsTabView property={propertyViewForm} />,
+      content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
       key: InventoryTabNames.property,
       name: 'Property Details',
     });
   }
 
-  return <InventoryTabs tabViews={tabViews} defaultTabKey={defaultTab} />;
+  return (
+    <InventoryTabs
+      tabViews={tabViews}
+      defaultTabKey={defaultTab}
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+    />
+  );
 };
 
 export default PropertyResearchContainer;

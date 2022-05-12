@@ -13,7 +13,7 @@ describe('PropertyDetailsTabView component', () => {
   const setup = (renderOptions: RenderOptions & { property?: IPropertyApiModel } = {}) => {
     const { property, ...rest } = renderOptions;
     const formValues = toFormValues(property);
-    const component = render(<PropertyDetailsTabView property={formValues} />, {
+    const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
       history,
     });
