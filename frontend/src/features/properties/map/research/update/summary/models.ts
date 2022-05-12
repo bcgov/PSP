@@ -110,7 +110,7 @@ export class UpdateResearchSummaryFormModel {
       rowVersion: this.rowVersion,
       requestorPerson: toPerson(this.requestor),
       requestorOrganization: toOrganization(this.requestor),
-      //researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()),
+      researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()),
     };
   }
 }
