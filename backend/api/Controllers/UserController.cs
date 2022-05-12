@@ -1,11 +1,15 @@
+using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Api.Helpers.Extensions;
 using Pims.Core.Http;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Threading.Tasks;
 using KModel = Pims.Keycloak.Models;
+using Model = Pims.Api.Areas.Admin.Models.User;
 
 namespace Pims.Api.Controllers
 {
@@ -22,6 +26,8 @@ namespace Pims.Api.Controllers
         #region Variables
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
         private readonly IProxyRequestClient _requestClient;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
@@ -30,10 +36,14 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="optionsKeycloak"></param>
         /// <param name="requestClient"></param>
-        public UserController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IProxyRequestClient requestClient)
+        /// <param name="userService"></param>
+        /// <param name="mapper"></param>
+        public UserController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IProxyRequestClient requestClient, IUserService userService, IMapper mapper)
         {
             _optionsKeycloak = optionsKeycloak.CurrentValue;
             _requestClient = requestClient;
+            _userService = userService;
+            _mapper = mapper;
         }
         #endregion
 
@@ -53,6 +63,27 @@ namespace Pims.Api.Controllers
             _optionsKeycloak.OpenIdConnect.Validate();
             var response = await _requestClient.ProxyGetAsync(Request, $"{_optionsKeycloak.Authority}{_optionsKeycloak.OpenIdConnect.UserInfo}");
             return await response.HandleResponseAsync<KModel.UserInfoModel>();
+        }
+
+        /// <summary>
+        /// Returns user person info for given keycloakUserId.
+        /// </summary>
+        /// <param name="keycloakUserId"></param>
+        /// <returns>User person info.</returns>
+        [HttpGet("info/{keycloakUserId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Model.UserModel), 200)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "userInfo" })]
+        public IActionResult UserBasicInfo([FromRoute] Guid keycloakUserId)
+        {
+            if (keycloakUserId == Guid.Empty)
+            {
+                return new JsonResult(new Models.ErrorResponseModel("Invalid keycloakUserId", "keycloakUserId should be a valid non empty guid"));
+            }
+            var entity = _userService.GetUserInfo(keycloakUserId);
+            var user = _mapper.Map<Model.UserModel>(entity);
+            return new JsonResult(user);
         }
         #endregion
     }
