@@ -35,7 +35,6 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           <Col className="text-right">
             Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by
             <UserNameTooltip
-              key={'appCreateBy'}
               userName={researchFile?.appCreateUserid}
               userGuid={researchFile?.appCreateUserGuid}
             />
@@ -51,7 +50,6 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
             Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
             by
             <UserNameTooltip
-              key={'appUpdateBy'}
               userName={researchFile?.appLastUpdateUserid}
               userGuid={researchFile?.appLastUpdateUserGuid}
             />

@@ -1,4 +1,5 @@
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
+import useIsMounted from 'hooks/useIsMounted';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -14,12 +15,13 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
   userGuid,
   userName,
 }) => {
+  const isMounted = useIsMounted();
   const { getUserInfo } = useApiUsers();
   const [userNameInfo, setUserNameInfo] = React.useState<string>('');
   React.useEffect(() => {
     if (userGuid) {
       getUserInfo(userGuid).then(({ data }) => {
-        if (data) {
+        if (data && isMounted()) {
           const { firstName, surname, middleName } = data;
           const nameArr: string[] = [];
           if (firstName) nameArr.push(firstName);
@@ -29,7 +31,7 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
         }
       });
     }
-  }, [userGuid, getUserInfo]);
+  }, [userGuid, isMounted, getUserInfo]);
 
   return (
     <TooltipIcon
