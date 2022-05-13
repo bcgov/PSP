@@ -58,6 +58,11 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<short> Region { get; set; }
 
         /// <summary>
+        /// get/set - The property's district.
+        /// </summary>
+        public TypeModel<short> District { get; set; }
+
+        /// <summary>
         /// get/set - The data source effective date
         /// </summary>
         public DateTime DataSourceEffectiveDate { get; set; }
@@ -166,11 +171,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The location of the property.
         /// </summary>
         public GeometryModel Location { get; set; }
-
-        /// <summary>
-        /// get/set - The property's district.
-        /// </summary>
-        public CodeTypeModel District { get; set; }
 
         /// <summary>
         /// get/set - The property notes.

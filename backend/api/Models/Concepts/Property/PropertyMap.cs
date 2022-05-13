@@ -58,7 +58,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PropertyStatusTypeCode, src => src.Status.Id)
                 .Map(dest => dest.PropertyTypeCode, src => src.PropertyType.Id)
                 .Map(dest => dest.Address, src => src.Address)
-                .Map(dest => dest.DistrictCode, src => src.District.Code)
+                .Map(dest => dest.DistrictCode, src => src.District.Id)
                 .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Map(dest => dest.Location, src => src.Location)
 
