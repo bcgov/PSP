@@ -1,6 +1,6 @@
 import { GeoJsonProperties } from 'geojson';
 import { Api_Property } from 'models/api/Property';
-import { booleanToString, stringToBoolean } from 'utils/formUtils';
+import { booleanToString, fromTypeCode, stringToBoolean, toTypeCode } from 'utils/formUtils';
 
 import {
   PropertyAdjacentLandFormModel,
@@ -40,6 +40,12 @@ export class UpdatePropertyDetailsFormModel {
   propertyTypeCode?: string;
   statusTypeCode?: string;
 
+  regionTypeCode?: number;
+  regionTypeCodeDescription?: string;
+
+  districtTypeCode?: number;
+  districtTypeCodeDescription?: string;
+
   // multi-selects
   anomalies?: PropertyAnomalyFormModel[];
   tenures?: PropertyTenureFormModel[];
@@ -55,7 +61,6 @@ export class UpdatePropertyDetailsFormModel {
     reserveName?: string;
   };
 
-  // TODO: finish off conversion of complex mappings
   static fromApi(base: Api_Property): UpdatePropertyDetailsFormModel {
     const model = new UpdatePropertyDetailsFormModel();
     model.id = base.id;
@@ -78,15 +83,21 @@ export class UpdatePropertyDetailsFormModel {
 
     model.landLegalDescription = base.landLegalDescription;
     model.landArea = base.landArea;
-    model.areaUnitTypeCode = base.areaUnit?.id;
+    model.areaUnitTypeCode = fromTypeCode(base.areaUnit);
 
     model.isVolumetricParcel = booleanToString(base.isVolumetricParcel);
     model.volumetricMeasurement = base.volumetricMeasurement;
-    model.volumetricUnitTypeCode = base.volumetricUnit?.id;
-    model.volumetricParcelTypeCode = base.volumetricType?.id;
+    model.volumetricUnitTypeCode = fromTypeCode(base.volumetricUnit);
+    model.volumetricParcelTypeCode = fromTypeCode(base.volumetricType);
 
-    model.propertyTypeCode = base.propertyType?.id;
-    model.statusTypeCode = base.status?.id;
+    model.propertyTypeCode = fromTypeCode(base.propertyType);
+    model.statusTypeCode = fromTypeCode(base.status);
+
+    model.districtTypeCode = fromTypeCode<number>(base.district);
+    model.districtTypeCodeDescription = base.district?.description;
+
+    model.regionTypeCode = fromTypeCode(base.region);
+    model.regionTypeCodeDescription = base.region?.description;
 
     // multi-selects
     model.anomalies = base.anomalies?.map(e => PropertyAnomalyFormModel.fromApi(e));
@@ -94,28 +105,9 @@ export class UpdatePropertyDetailsFormModel {
     model.roadTypes = base.roadTypes?.map(e => PropertyRoadFormModel.fromApi(e));
     model.adjacentLands = base.adjacentLands?.map(e => PropertyAdjacentLandFormModel.fromApi(e));
 
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-    // model. = base.;
-
     return model;
   }
 
-  // TODO: finish off conversion of complex mappings
   toApi(): Api_Property {
     return {
       id: this.id,
@@ -129,12 +121,27 @@ export class UpdatePropertyDetailsFormModel {
       notes: this.notes,
       name: this.name,
       description: this.description,
+      isSensitive: this.isSensitive,
+      isProvincialPublicHwy: this.isProvincialPublicHwy,
       latitude: this.latitude,
       longitude: this.longitude,
-      landArea: this.landArea,
+      location: { coordinate: { x: this.longitude, y: this.latitude } },
       landLegalDescription: this.landLegalDescription,
+      landArea: this.landArea,
+      areaUnit: toTypeCode(this.areaUnitTypeCode),
       isVolumetricParcel: stringToBoolean(this.isVolumetricParcel as string),
       volumetricMeasurement: this.volumetricMeasurement,
+      volumetricUnit: toTypeCode(this.volumetricUnitTypeCode),
+      volumetricType: toTypeCode(this.volumetricParcelTypeCode),
+      propertyType: toTypeCode(this.propertyTypeCode),
+      status: toTypeCode(this.statusTypeCode),
+      district: toTypeCode(this.districtTypeCode),
+      region: toTypeCode(this.regionTypeCode),
+      // multi-selects
+      anomalies: this.anomalies?.map(e => e.toApi()),
+      tenures: this.tenures?.map(e => e.toApi()),
+      roadTypes: this.roadTypes?.map(e => e.toApi()),
+      adjacentLands: this.adjacentLands?.map(e => e.toApi()),
     };
   }
 }

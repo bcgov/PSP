@@ -18,6 +18,7 @@ export class PropertyAnomalyFormModel {
   toApi(): Api_PropertyAnomaly {
     return {
       id: this.id,
+      propertyId: this.propertyId,
       propertyAnomalyTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,

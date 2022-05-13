@@ -25,7 +25,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
 
   status?: Api_TypeCode<string>;
   region?: Api_TypeCode<number>;
-  district?: Api_TypeCode<string>;
+  district?: Api_TypeCode<number>;
 
   dataSource?: Api_TypeCode<string>;
   dataSourceEffectiveDate?: string;

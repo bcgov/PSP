@@ -18,6 +18,7 @@ export class PropertyTenureFormModel {
   toApi(): Api_PropertyTenure {
     return {
       id: this.id,
+      propertyId: this.propertyId,
       propertyTenureTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,

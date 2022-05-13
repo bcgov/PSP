@@ -18,6 +18,7 @@ export class PropertyAdjacentLandFormModel {
   toApi(): Api_PropertyAdjacentLand {
     return {
       id: this.id,
+      propertyId: this.propertyId,
       propertyAdjacentLandTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,

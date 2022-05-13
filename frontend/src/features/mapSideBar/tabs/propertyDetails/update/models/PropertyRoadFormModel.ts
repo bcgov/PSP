@@ -18,6 +18,7 @@ export class PropertyRoadFormModel {
   toApi(): Api_PropertyRoad {
     return {
       id: this.id,
+      propertyId: this.propertyId,
       propertyRoadTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,
