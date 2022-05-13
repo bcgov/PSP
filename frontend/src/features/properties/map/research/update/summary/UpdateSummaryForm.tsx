@@ -4,8 +4,8 @@ import { RadioGroup } from 'components/common/form/RadioGroup';
 import { InlineFastDatePicker } from 'components/common/form/styles';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import * as API from 'constants/API';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledFormSection, StyledSectionHeader } from 'features/mapSideBar/tabs/SectionStyles';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces';
@@ -75,17 +75,16 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
 
   return (
     <StyledSummarySection>
-      <StyledFormSection>
-        <StyledSectionHeader>Roads</StyledSectionHeader>
+      <Section header="Roads">
         <SectionField label="Road name">
           <Input field="roadName" />
         </SectionField>
         <SectionField label="Road alias">
           <Input field="roadAlias" />
         </SectionField>
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Research Request</StyledSectionHeader>
+      </Section>
+
+      <Section header="Research Request">
         <SectionField label="Research purpose">
           <Multiselect
             id="purpose-selector"
@@ -147,17 +146,17 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
         )}
         <SectionField label="Description of request" />
         <TextArea field="requestDescription" required={true} />
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Result</StyledSectionHeader>
+      </Section>
+
+      <Section header="Result">
         <SectionField label="Research completed on">
           <InlineFastDatePicker formikProps={props.formikProps} field="researchCompletionDate" />
         </SectionField>
         <SectionField label="Result of request" />
         <TextArea field="researchResult" required={true} />
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Expropriation</StyledSectionHeader>
+      </Section>
+
+      <Section header="Expropriation">
         <SectionField label="Expropriation?">
           <RadioGroup
             field="isExpropriation"
@@ -176,7 +175,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
         </SectionField>
         <SectionField label="Expropriation notes" />
         <TextArea field="expropriationNotes" required={true} />
-      </StyledFormSection>
+      </Section>
       <ContactManagerModal
         display={showContactManager}
         setDisplay={setShowContactManager}

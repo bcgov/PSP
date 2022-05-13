@@ -15,6 +15,7 @@ import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
 import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
+import PropertyAssociationTabView from './tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
 export interface IMotiInventoryContainerProps {
@@ -115,6 +116,19 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     });
     defaultTab = InventoryTabNames.property;
   }
+
+  tabViews.push({
+    content: (
+      <PropertyAssociationTabView
+        researchFiles={[]}
+        aquisitionFiles={[]}
+        aquisitionLeases={[]}
+        aquisitionDispotitions={[]}
+      />
+    ),
+    key: InventoryTabNames.pims,
+    name: 'PIMS Files',
+  });
 
   return (
     <MapSideBarLayout

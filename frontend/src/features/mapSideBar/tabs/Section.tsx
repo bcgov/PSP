@@ -1,12 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Collapse } from 'react-bootstrap';
 
-import { StyledFormSection, StyledSectionHeader } from './SectionStyles';
+import {
+  ArrowDropDownIcon,
+  ArrowDropUpIcon,
+  StyledFormSection,
+  StyledSectionHeader,
+} from './SectionStyles';
 
-export const Section: React.FC<{ header: string }> = ({ header, children }) => {
+interface SectionProps {
+  icon?: string;
+  header: string;
+  isCollapsable?: boolean;
+  initiallyExpanded?: boolean;
+}
+
+export const Section: React.FC<SectionProps> = ({
+  icon,
+  header,
+  children,
+  isCollapsable,
+  initiallyExpanded,
+}) => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
     <StyledFormSection>
-      <StyledSectionHeader>{header}</StyledSectionHeader>
-      {children}
+      <StyledSectionHeader>
+        {icon}
+        {header}
+
+        {isCollapsable && isCollapsed && (
+          <ArrowDropDownIcon
+            onClick={() => {
+              setIsCollapsed(!isCollapsed);
+            }}
+          />
+        )}
+        {isCollapsable && !isCollapsed && (
+          <ArrowDropUpIcon
+            onClick={() => {
+              setIsCollapsed(!isCollapsed);
+            }}
+          />
+        )}
+      </StyledSectionHeader>
+
+      <Collapse in={!isCollapsable || !isCollapsed}>
+        <div>{children}</div>
+      </Collapse>
     </StyledFormSection>
   );
 };
