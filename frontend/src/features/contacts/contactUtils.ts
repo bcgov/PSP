@@ -17,7 +17,7 @@ import {
 } from 'interfaces/editable-contact';
 import { IContactPerson } from 'interfaces/IContact';
 import { Api_Organization, Api_OrganizationPerson } from 'models/api/Organization';
-import { stringToBoolean, stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
+import { fromTypeCode, stringToBoolean, stringToNull, toTypeCode } from 'utils/formUtils';
 import { formatFullName } from 'utils/personUtils';
 
 import { Api_Address } from './../../models/api/Address';
@@ -210,7 +210,7 @@ export function formAddressToApiAddress(
     ...formAddress,
     countryId: parseInt(formAddress?.countryId.toString()) || 0,
     provinceId: parseInt(formAddress?.provinceId.toString()) || 0,
-    addressTypeId: stringToTypeCode(formAddress?.addressTypeId),
+    addressTypeId: toTypeCode(formAddress?.addressTypeId),
   } as IEditablePersonAddress | IEditableOrganizationAddress;
 }
 
@@ -219,7 +219,7 @@ export function apiAddressToFormAddress(address?: IBaseAddress) {
 
   return {
     ...address,
-    addressTypeId: typeCodeToString(address?.addressTypeId),
+    addressTypeId: fromTypeCode(address?.addressTypeId),
   } as IEditablePersonAddressForm | IEditableOrganizationAddressForm;
 }
 
@@ -227,7 +227,7 @@ function formContactMethodToApiContactMethod(formContactMethod: IEditableContact
   return {
     ...formContactMethod,
     value: stringToNull(formContactMethod.value),
-    contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
+    contactMethodTypeCode: toTypeCode(formContactMethod.contactMethodTypeCode),
   } as IEditableContactMethod;
 }
 
@@ -236,7 +236,7 @@ function apiContactMethodToFormContactMethod(contactMethod?: IEditableContactMet
 
   return {
     ...contactMethod,
-    contactMethodTypeCode: typeCodeToString(contactMethod.contactMethodTypeCode),
+    contactMethodTypeCode: fromTypeCode(contactMethod.contactMethodTypeCode),
   } as IEditableContactMethodForm;
 }
 
