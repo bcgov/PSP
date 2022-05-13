@@ -28,6 +28,7 @@ export const UpdateLeaseContainer: React.FunctionComponent = props => {
   const onSubmit = async (lease: IAddFormLease) => {
     try {
       const leaseToUpdate = addFormLeaseToApiLease(lease);
+
       const updatedLease = await updateLease(leaseToUpdate, (userOverrideMessage?: string) =>
         setAddLeaseParams({ lease: leaseToUpdate, userOverride: userOverrideMessage }),
       );

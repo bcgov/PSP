@@ -1,3 +1,4 @@
+import { SelectOption } from 'components/common/form';
 import ITypeCode from 'interfaces/ITypeCode';
 
 /**
@@ -62,3 +63,21 @@ export function booleanToString(value?: boolean): string {
   }
   return value.toString();
 }
+
+export function yesNoUnknownToBoolean(value: string): boolean | null {
+  if (value?.toLowerCase() === 'yes') return true;
+  else if (value?.toLowerCase() === 'no') return false;
+  return null;
+}
+
+export function booleanToYesNoUnknownString(value?: boolean): string {
+  if (value === true) return 'Yes';
+  else if (value === false) return 'No';
+  return 'Unknown';
+}
+
+export const yesNoUnknownOptions: SelectOption[] = [
+  { label: 'Unknown', value: '' },
+  { label: 'Yes', value: 'Yes' },
+  { label: 'No', value: 'No' },
+];

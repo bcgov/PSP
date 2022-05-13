@@ -1,4 +1,4 @@
-import { Form, Input } from 'components/common/form';
+import { Form, Input, TextArea } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as Styled from 'features/leases/detail/styles';
 import { FormControl } from 'features/leases/detail/styles';
@@ -88,6 +88,21 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'lFileNo')} />
         <Form.Label>MoTI contact:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
+        <Form.Label>Physical lease/license exists:</Form.Label>
+        <FormControl
+          disabled
+          value={getIn(values, withNameSpace(nameSpace, 'hasPhysicalLicense'))}
+        />
+        <Form.Label>Digital lease/license exists:</Form.Label>
+        <FormControl
+          disabled
+          value={getIn(values, withNameSpace(nameSpace, 'hasDigitalLicense'))}
+        />
+        <Form.Label>Location of documents:</Form.Label>
+        <TextAreaInput
+          disabled={disabled}
+          field={withNameSpace(nameSpace, 'documentationReference')}
+        />
         <Form.Label>LIS #:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'tfaFileNo')} />
         <Form.Label>PS #:</Form.Label>
@@ -103,4 +118,7 @@ const LargeTextInput = styled(Input)`
   }
 `;
 
+const TextAreaInput = styled(TextArea)`
+  padding: 0.6rem 1.2rem;
+`;
 export default DetailAdministration;
