@@ -12,7 +12,7 @@ import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 
 export interface IUpdatePropertyDetailsContainerProps {
-  pid: string;
+  pid?: string;
 }
 
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
@@ -25,9 +25,11 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
 
   useEffect(() => {
     async function fetchProperty() {
-      const retrieved = await retrieveProperty(props.pid);
-      if (retrieved !== undefined && isMounted()) {
-        setForm(UpdatePropertyDetailsFormModel.fromApi(retrieved));
+      if (!!props.pid) {
+        const retrieved = await retrieveProperty(props.pid);
+        if (retrieved !== undefined && isMounted()) {
+          setForm(UpdatePropertyDetailsFormModel.fromApi(retrieved));
+        }
       }
     }
     fetchProperty();
