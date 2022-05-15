@@ -6,6 +6,7 @@ using Pims.Api.Areas.Property.Models.Property;
 using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
+using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Property.Controllers
@@ -22,7 +23,8 @@ namespace Pims.Api.Areas.Property.Controllers
     public class PropertyController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IPimsRepository _pimsRepository;
+        private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -30,11 +32,13 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Creates a new instance of a PropertyController class, initializes it with the specified arguments.
         /// </summary>
+        /// <param name="pimsRepository"></param>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public PropertyController(IPimsRepository pimsService, IMapper mapper)
+        public PropertyController(IPimsRepository pimsRepository, IPimsService pimsService, IMapper mapper)
         {
+            _pimsRepository = pimsRepository;
             _pimsService = pimsService;
             _mapper = mapper;
         }
@@ -52,7 +56,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetPropertyWithPid(string pid)
         {
-            var property = _pimsService.Property.GetByPid(pid);
+            var property = _pimsRepository.Property.GetByPid(pid);
 
             return new JsonResult(_mapper.Map<PropertyModel>(property));
         }
@@ -68,7 +72,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperty(int id)
         {
-            var property = _pimsService.Property.Get(id);
+            var property = _pimsRepository.Property.Get(id);
 
             return new JsonResult(_mapper.Map<PropertyModel>(property));
         }
@@ -102,9 +106,26 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetConceptPropertyWithPid(string pid)
         {
-            var property = _pimsService.Property.GetByPid(pid);
+            var property = _pimsService.PropertyService.GetByPid(pid);
 
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
+        }
+
+        /// <summary>
+        /// Update the specified contact, and attached properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("concept/{pid}")]
+        [HasPermission(Permissions.PropertyEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        public IActionResult UpdatePerson([FromBody] Pims.Api.Models.Concepts.PropertyModel propertyModel)
+        {
+            var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);
+            var updatedProperty = _pimsService.PropertyService.Update(propertyEntity);
+
+            return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(updatedProperty));
         }
         #endregion
     }

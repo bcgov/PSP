@@ -205,6 +205,32 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
+
+        /// <summary>
+        /// Update the passed property in the database assuming the user has the required claims.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public PimsProperty Update(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Id;
+            var existingProperty = this.Context.PimsProperties.FirstOrDefault(p => p.PropertyId == propertyId)
+                 ?? throw new KeyNotFoundException();
+
+            // update main entity - PimsProperty
+            this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
+
+            // update direct relationships - anomalies, tenures, etc
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+
+            return existingProperty;
+        }
+
         #endregion
     }
 }
