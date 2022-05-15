@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {

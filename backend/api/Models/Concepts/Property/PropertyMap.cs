@@ -49,7 +49,7 @@ namespace Pims.Api.Models.Concepts
 
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()
                 .Map(dest => dest.Id, src => src.Id)
