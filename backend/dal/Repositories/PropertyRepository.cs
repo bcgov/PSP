@@ -219,6 +219,21 @@ namespace Pims.Dal.Repositories
             var existingProperty = this.Context.PimsProperties.FirstOrDefault(p => p.PropertyId == propertyId)
                  ?? throw new KeyNotFoundException();
 
+            // ignore a number of properties that we don't the frontend to override - for now
+            property.Boundary = existingProperty.Boundary;
+            property.Location = existingProperty.Location;
+            property.AddressId = existingProperty.AddressId;
+            property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
+            property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
+            property.PropertyClassificationTypeCode = existingProperty.PropertyClassificationTypeCode;
+            property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
+            property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
+            property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
+            property.IsOwned = existingProperty.IsOwned;
+            property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest;
+            property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
+            property.IsSensitive = existingProperty.IsSensitive;
+
             // update main entity - PimsProperty
             this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
 
