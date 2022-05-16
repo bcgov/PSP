@@ -1,5 +1,4 @@
 import { SelectOption } from 'components/common/form';
-import ITypeCode from 'interfaces/ITypeCode';
 import Api_TypeCode from 'models/api/TypeCode';
 
 /**

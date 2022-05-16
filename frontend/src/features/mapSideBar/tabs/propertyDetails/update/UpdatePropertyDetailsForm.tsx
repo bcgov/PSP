@@ -18,7 +18,13 @@ import { SectionField, StyledFieldLabel } from '../../SectionField';
 import { InlineContainer, LeftBorderCol } from '../../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
-import { UpdatePropertyDetailsFormModel } from './models';
+import {
+  PropertyAdjacentLandFormModel,
+  PropertyAnomalyFormModel,
+  PropertyRoadFormModel,
+  PropertyTenureFormModel,
+  UpdatePropertyDetailsFormModel,
+} from './models';
 
 export interface IUpdatePropertyDetailsFormProps
   extends FormikProps<UpdatePropertyDetailsFormModel> {
@@ -31,20 +37,31 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
 }) => {
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
-  const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES);
-  const tenureOptions = getByType(API.PROPERTY_TENURE_TYPES);
-  const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES);
-  const adjacentLandOptions = getByType(API.PROPERTY_ADJACENT_LAND_TYPES);
   const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
+  const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map(x =>
+    PropertyAnomalyFormModel.fromLookup(x),
+  );
+  const tenureOptions = getByType(API.PROPERTY_TENURE_TYPES).map(x =>
+    PropertyTenureFormModel.fromLookup(x),
+  );
+  const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES).map(x =>
+    PropertyRoadFormModel.fromLookup(x),
+  );
+  const adjacentLandOptions = getByType(API.PROPERTY_ADJACENT_LAND_TYPES).map(x =>
+    PropertyAdjacentLandFormModel.fromLookup(x),
+  );
+
   // multi-selects
-  const tenureStatus = getIn(values, 'tenures') as Api_TypeCode<string>[];
-  const adjacentLands = getIn(values, 'adjacentLands') as Api_TypeCode<string>[];
+  const tenureStatus = getIn(values, 'tenures') as PropertyTenureFormModel[];
+  const adjacentLands = getIn(values, 'adjacentLands') as PropertyAdjacentLandFormModel[];
   // show/hide conditionals
-  const isHighwayRoad = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.HighwayRoad);
-  const isAdjacentLand = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.AdjacentLand);
+  const isHighwayRoad = tenureStatus?.some(obj => obj.typeCode === PropertyTenureTypes.HighwayRoad);
+  const isAdjacentLand = tenureStatus?.some(
+    obj => obj.typeCode === PropertyTenureTypes.AdjacentLand,
+  );
   const isIndianReserve =
     isAdjacentLand &&
-    adjacentLands?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
+    adjacentLands?.some(obj => obj.typeCode === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
   // area measurements table inputs
   const landArea = getIn(values, 'landArea') as number;
@@ -80,7 +97,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
           <SectionField label="Anomalies">
             <Multiselect
               field="anomalies"
-              displayValue="name"
+              displayValue="typeDescription"
               placeholder=""
               hidePlaceholder
               options={anomalyOptions}
@@ -92,7 +109,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
           <SectionField label="Tenure status">
             <Multiselect
               field="tenures"
-              displayValue="name"
+              displayValue="typeDescription"
               placeholder=""
               hidePlaceholder
               options={tenureOptions}
@@ -105,7 +122,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
             <SectionField label="Highway / Road">
               <Multiselect
                 field="roadTypes"
-                displayValue="name"
+                displayValue="typeDescription"
                 placeholder=""
                 hidePlaceholder
                 options={roadTypeOptions}
@@ -116,7 +133,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
             <SectionField label="Adjacent land">
               <Multiselect
                 field="adjacentLands"
-                displayValue="name"
+                displayValue="typeDescription"
                 placeholder=""
                 hidePlaceholder
                 options={adjacentLandOptions}
