@@ -1,11 +1,9 @@
-import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikHelpers } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_Property } from 'models/api/Property';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
@@ -45,40 +43,29 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
 
     if (!!response?.pid) {
       formikHelpers.resetForm();
-      history.replace(`/mapview/property${apiProperty.pid}`);
+      history.replace(`/mapview/property/${apiProperty.pid}`);
     }
 
     formikHelpers.setSubmitting(false);
   };
+
+  const onCancel = useCallback(() => {
+    if (!!initialForm?.pid) {
+      history.replace(`/mapview/property/${initialForm.pid}`);
+    }
+  }, [history, initialForm?.pid]);
 
   if (initialForm === undefined) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
   return (
-    <>
-      <Content vertical>
-        <Formik<UpdatePropertyDetailsFormModel>
-          enableReinitialize
-          initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
-          onSubmit={savePropertyInformation}
-        >
-          {formikProps => <UpdatePropertyDetailsForm {...formikProps} />}
-        </Formik>
-      </Content>
-      <Footer></Footer>
-    </>
+    <Formik<UpdatePropertyDetailsFormModel>
+      enableReinitialize
+      initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
+      onSubmit={savePropertyInformation}
+    >
+      {formikProps => <UpdatePropertyDetailsForm {...formikProps} onCancel={onCancel} />}
+    </Formik>
   );
 };
-
-const Content = styled(Scrollable)`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;
-
-const Footer = styled.div``;
