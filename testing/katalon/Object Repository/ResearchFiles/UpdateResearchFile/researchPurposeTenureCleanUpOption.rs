@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>researchPurposeTenureCleanUpOption</name>
+   <tag></tag>
+   <elementGuidId>58682752-3922-450c-ae4b-75c2bf119eab</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//div[@id='purpose-selector']/div[2]/ul/li[4]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>li</value>
+      <webElementGuid>cf9f3620-dcdc-44c8-abc5-1e13f00639cb</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>option    </value>
+      <webElementGuid>4cfc08ba-a0f4-478c-9eaa-9677086a989f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tenure Clean-Up</value>
+      <webElementGuid>eec50d94-52b2-4499-99e9-0d52dce45e13</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;purpose-selector&quot;)/div[@class=&quot;optionListContainer displayBlock&quot;]/ul[@class=&quot;optionContainer&quot;]/li[@class=&quot;option&quot;]</value>
+      <webElementGuid>a04eb087-20b8-46b8-8d38-6d4613541b43</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>li</value>
+      <webElementGuid>1ed86c0f-3dc9-427c-969b-626c4e9fab85</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>option    </value>
+      <webElementGuid>fceb7478-8e12-47e4-bfc7-6fc5965e4976</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tenure Clean-Up</value>
+      <webElementGuid>6f2c8908-9619-407f-9f6f-1303f4db3a4a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;purpose-selector&quot;)/div[@class=&quot;optionListContainer displayBlock&quot;]/ul[@class=&quot;optionContainer&quot;]/li[@class=&quot;option&quot;]</value>
+      <webElementGuid>6377f6fe-8ff4-4c13-88ed-552c54cd03e4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>li</value>
+      <webElementGuid>0042a9cf-4e05-46c5-8076-8145260a0018</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>option    </value>
+      <webElementGuid>61ed1226-f5a9-4547-9fb3-2b7ba1d60566</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tenure Clean-Up</value>
+      <webElementGuid>f9ab21fa-298b-4964-bca0-f66795ac0a4e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;purpose-selector&quot;)/div[@class=&quot;optionListContainer displayBlock&quot;]/ul[@class=&quot;optionContainer&quot;]/li[@class=&quot;option&quot;]</value>
+      <webElementGuid>1294d0a0-5f23-4486-93aa-1c3b0d5d24e1</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>li</value>
+      <webElementGuid>01b50f2d-e84c-4f92-b719-c0d7a039fff7</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>option    </value>
+      <webElementGuid>46f95c13-506c-466c-a231-e34dc8e73971</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tenure Clean-Up</value>
+      <webElementGuid>ca8ecd6d-4af7-434b-8da1-81f656086042</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;purpose-selector&quot;)/div[@class=&quot;optionListContainer displayBlock&quot;]/ul[@class=&quot;optionContainer&quot;]/li[@class=&quot;option&quot;]</value>
+      <webElementGuid>fd233688-5062-4f61-a90a-7f40b27b8be0</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//div[@id='purpose-selector']/div[2]/ul/li[4]</value>
+      <webElementGuid>3c99dd35-26ee-4485-a918-e6d18842c552</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Management'])[2]/following::li[1]</value>
+      <webElementGuid>35c871fc-a2eb-4f09-b091-d060d45ef0ef</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='General Enquiry'])[1]/following::li[2]</value>
+      <webElementGuid>57c37e35-1101-4c80-a850-0eb5d0a426f6</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Request date:'])[1]/preceding::li[1]</value>
+      <webElementGuid>e58beece-74da-4cfa-a6db-0e4808d41342</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Source of request:'])[1]/preceding::li[1]</value>
+      <webElementGuid>c32b4a0d-1ec3-4e43-8172-61c5b881b062</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Tenure Clean-Up']/parent::*</value>
+      <webElementGuid>df1d0528-f01e-4a91-905a-2c54523039b3</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//li[4]</value>
+      <webElementGuid>a78626e5-9c95-4bee-8a97-f292a24c5e2e</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//li[(text() = 'Tenure Clean-Up' or . = 'Tenure Clean-Up')]</value>
+      <webElementGuid>e6f94ec8-e2c2-4362-a085-1c4e2b9d204b</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
