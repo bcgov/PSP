@@ -174,6 +174,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
           ltsaLoading={ltsaLoading}
           propertyLoading={propertyLoading}
           property={apiProperty}
+          showEditButton={props.readOnly}
           onEdit={onEditPropertyInformation}
           onZoom={props.onZoom}
         />
