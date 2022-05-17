@@ -1,18 +1,10 @@
 import Api_TypeCode from 'interfaces/ITypeCode';
-import { Moment } from 'moment';
 
 import { Api_Address } from './Address';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_Coordinate {
-  /**
-   * @format double
-   */
   x?: number;
-
-  /**
-   * @format double
-   */
   y?: number;
 }
 
@@ -23,10 +15,10 @@ export interface Api_Geometry {
 export interface Api_Property extends Api_ConcurrentVersion {
   id?: number;
   pid?: number;
-  pin?: number | '';
+  pin?: number;
   status?: string;
   dataSource?: string;
-  dataSourceEffectiveDate?: Date | string | Moment;
+  dataSourceEffectiveDate?: string;
   classification?: string;
   tenure?: Api_TypeCode<string>;
   name?: string;
@@ -50,8 +42,26 @@ export interface Api_Property extends Api_ConcurrentVersion {
   zoning?: string;
   zoningPotential?: string;
 
-  appCreateTimestamp?: Date | string | Moment;
-  updatedOn?: Date | string | Moment;
+  appCreateTimestamp?: string;
+  updatedOn?: string;
   updatedByEmail?: string;
   updatedByName?: string;
+}
+
+export interface Api_PropertyAssociations {
+  id?: string;
+  pid?: string;
+  leaseAssociations?: Api_PropertyAssociation[];
+  researchAssociations?: Api_PropertyAssociation[];
+  aquisitionAssociations?: Api_PropertyAssociation[];
+  dispositionAssociations?: Api_PropertyAssociation[];
+}
+
+export interface Api_PropertyAssociation {
+  id?: number;
+  fileNumber?: string;
+  fileName?: string;
+  createdDateTime?: string;
+  createdBy?: string;
+  status?: string;
 }

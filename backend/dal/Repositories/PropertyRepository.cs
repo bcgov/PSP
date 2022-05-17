@@ -180,6 +180,28 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
             return property;
         }
+
+        /// <summary>
+        /// Get the property for the specified PID value.
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public PimsProperty GetAssociations(string pid)
+        {
+            int parsedPid = pid.ConvertPID();
+
+            PimsProperty property = this.Context.PimsProperties
+                .Include(p => p.PimsPropertyLeases)
+                    .ThenInclude(pl => pl.Lease)
+                    .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
+                .Include(p => p.PimsPropertyResearchFiles)
+                    .ThenInclude(pr => pr.ResearchFile)
+                    .ThenInclude(r => r.ResearchFileStatusTypeCodeNavigation)
+                .FirstOrDefault(p => p.Pid == parsedPid);
+
+            return property;
+        }
+
         #endregion
     }
 }

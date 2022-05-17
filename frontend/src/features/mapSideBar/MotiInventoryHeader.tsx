@@ -35,17 +35,17 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           <Col xs="11">
             <Row>
               <Col xs="8">
-                <HeaderField label={'Civic Address'}>-</HeaderField>
+                <HeaderField label="Civic Address:">-</HeaderField>
               </Col>
               <Col>
-                <HeaderField className="justify-content-end" label={'PID:'}>
+                <HeaderField className="justify-content-end" label="PID:">
                   {pid}
                 </HeaderField>
               </Col>
             </Row>
             <Row>
               <Col xs="8">
-                <HeaderField label={'Plan #'}>
+                <HeaderField label="Plan #:">
                   {planNumbers.map((planNumber: string, index: number) => (
                     <span key={'plannumber-' + index} className="pr-3">
                       {planNumber}
@@ -54,7 +54,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
                 </HeaderField>
               </Col>
               <Col>
-                <HeaderField label={'Land parcel type:'} className="justify-content-end">
+                <HeaderField label="Land parcel type:" className="justify-content-end">
                   {props.property?.propertyType?.description}
                 </HeaderField>
               </Col>

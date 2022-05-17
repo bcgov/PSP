@@ -3,9 +3,11 @@ import axios, { AxiosError } from 'axios';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
+import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
+import { Api_PropertyAssociations } from 'models/api/Property';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
@@ -31,6 +33,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const isMounted = useIsMounted();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
+  const [propertyAssociations, setPropertyAssociations] = useState<
+    Api_PropertyAssociations | undefined
+  >(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
   const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
@@ -62,6 +67,24 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
 
     func();
   }, [getPropertyWithPid, isMounted, props.pid]);
+
+  const {
+    getPropertyAssociations,
+    isLoading: propertyAssociationsLoading,
+  } = usePropertyAssociations();
+
+  useEffect(() => {
+    const func = async () => {
+      if (props.pid !== undefined) {
+        const response = await getPropertyAssociations(props.pid);
+        if (response?.id !== undefined) {
+          setPropertyAssociations(response);
+        }
+      }
+    };
+
+    func();
+  }, [getPropertyAssociations, props.pid]);
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
@@ -120,10 +143,8 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   tabViews.push({
     content: (
       <PropertyAssociationTabView
-        researchFiles={[]}
-        aquisitionFiles={[]}
-        aquisitionLeases={[]}
-        aquisitionDispotitions={[]}
+        isLoading={propertyAssociationsLoading}
+        associations={propertyAssociations}
       />
     ),
     key: InventoryTabNames.pims,

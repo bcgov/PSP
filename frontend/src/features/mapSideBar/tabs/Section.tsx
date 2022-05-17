@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Collapse } from 'react-bootstrap';
+import { Col, Collapse, Row } from 'react-bootstrap';
 
 import {
   ArrowDropDownIcon,
@@ -9,14 +9,12 @@ import {
 } from './SectionStyles';
 
 interface SectionProps {
-  icon?: string;
-  header: string;
+  header: React.ReactNode;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
 }
 
 export const Section: React.FC<SectionProps> = ({
-  icon,
   header,
   children,
   isCollapsable,
@@ -26,23 +24,25 @@ export const Section: React.FC<SectionProps> = ({
   return (
     <StyledFormSection>
       <StyledSectionHeader>
-        {icon}
-        {header}
-
-        {isCollapsable && isCollapsed && (
-          <ArrowDropDownIcon
-            onClick={() => {
-              setIsCollapsed(!isCollapsed);
-            }}
-          />
-        )}
-        {isCollapsable && !isCollapsed && (
-          <ArrowDropUpIcon
-            onClick={() => {
-              setIsCollapsed(!isCollapsed);
-            }}
-          />
-        )}
+        <Row>
+          <Col>{header}</Col>
+          <Col xs="1">
+            {isCollapsable && isCollapsed && (
+              <ArrowDropDownIcon
+                onClick={() => {
+                  setIsCollapsed(!isCollapsed);
+                }}
+              />
+            )}
+            {isCollapsable && !isCollapsed && (
+              <ArrowDropUpIcon
+                onClick={() => {
+                  setIsCollapsed(!isCollapsed);
+                }}
+              />
+            )}
+          </Col>
+        </Row>
       </StyledSectionHeader>
 
       <Collapse in={!isCollapsable || !isCollapsed}>
