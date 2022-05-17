@@ -95,7 +95,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PimsProperty Get(int id)
+        public PimsProperty Get(long id)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
@@ -106,9 +106,17 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
                 .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAnomalyTypes)
+                    .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
+                .Include(p => p.PimsPropPropRoadTypes)
+                    .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAdjacentLandTypes)
+                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(p => p.VolumetricTypeCodeNavigation)
+                .Include(p => p.VolumeUnitTypeCodeNavigation)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
@@ -161,6 +169,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)

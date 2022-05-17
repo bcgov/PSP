@@ -43,7 +43,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
 
     if (!!response?.pid) {
       formikHelpers.resetForm();
-      history.replace(`/mapview/property/${apiProperty.pid}`);
+      history.push(`/mapview/property/${apiProperty.pid}`);
     }
 
     formikHelpers.setSubmitting(false);
@@ -51,7 +51,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
 
   const onCancel = useCallback(() => {
     if (!!initialForm?.pid) {
-      history.replace(`/mapview/property/${initialForm.pid}`);
+      history.push(`/mapview/property/${initialForm.pid}`);
     }
   }, [history, initialForm?.pid]);
 

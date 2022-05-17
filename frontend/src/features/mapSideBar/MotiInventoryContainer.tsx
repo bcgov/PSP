@@ -49,7 +49,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   useEffect(() => {
     const func = async () => {
       try {
-        if (!!props.pid) {
+        if (!!props.pid && !!props.readOnly) {
           const propInfo = await getPropertyWithPid(props.pid);
           if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
             setApiProperty(propInfo);
@@ -70,7 +70,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     };
 
     func();
-  }, [getPropertyWithPid, isMounted, props.pid]);
+  }, [getPropertyWithPid, isMounted, props.pid, props.readOnly]);
 
   const {
     getPropertyAssociations,

@@ -7,7 +7,6 @@ import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Form, FormikProps, getIn } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import Api_TypeCode from 'models/api/TypeCode';
 import React from 'react';
 import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -33,6 +32,7 @@ export interface IUpdatePropertyDetailsFormProps
 
 export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps> = ({
   values,
+  setFieldValue,
   onCancel,
 }) => {
   // Lookup codes
@@ -158,7 +158,14 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
             <Col>
               <Row>
                 <Col className="col-10">
-                  <LandMeasurementTable area={landArea} areaUnitTypeCode={areaUnit} />
+                  <LandMeasurementTable
+                    area={landArea}
+                    areaUnitTypeCode={areaUnit}
+                    onChange={(landArea, areaUnitTypeCode) => {
+                      setFieldValue('landArea', landArea);
+                      setFieldValue('areaUnitTypeCode', areaUnitTypeCode);
+                    }}
+                  />
                 </Col>
               </Row>
             </Col>
@@ -195,6 +202,10 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
                       <VolumetricMeasurementTable
                         volume={volumetricMeasurement}
                         volumeUnitTypeCode={volumetricUnit}
+                        onChange={(volume, volumeUnitTypeCode) => {
+                          setFieldValue('volumetricMeasurement', volume);
+                          setFieldValue('volumetricUnitTypeCode', volumeUnitTypeCode);
+                        }}
                       />
                     </Col>
                   </Row>

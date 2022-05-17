@@ -20,6 +20,13 @@ namespace Pims.Dal.Services
             _propertyRepository = propertyRepository;
         }
 
+        public PimsProperty GetById(long id)
+        {
+            _logger.LogInformation("Getting property with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            return _propertyRepository.Get(id);
+        }
+
         public PimsProperty GetByPid(string pid)
         {
             _logger.LogInformation("Getting property with pid {pid}", pid);
@@ -34,7 +41,8 @@ namespace Pims.Dal.Services
 
             var newProperty = _propertyRepository.Update(property);
             _propertyRepository.CommitTransaction();
-            return newProperty;
+
+            return GetById(newProperty.Id);
         }
     }
 }
