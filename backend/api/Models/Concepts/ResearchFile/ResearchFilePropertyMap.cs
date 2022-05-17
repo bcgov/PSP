@@ -24,6 +24,7 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<ResearchFilePropertyModel, Entity.PimsPropertyResearchFile>()
                 .Map(dest => dest.PropertyResearchFileId, src => src.Id)
+                .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
                 .Map(dest => dest.ResearchFileId, src => src.ResearchFile.Id)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
