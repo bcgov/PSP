@@ -35,7 +35,7 @@ describe('PropertyInformation component', () => {
   };
   it('renders minimally as expected', () => {
     const { component } = setup({
-      nameSpace: 'properties',
+      nameSpace: 'properties.0',
       lease: { ...defaultFormLease, properties: [mockParcel] },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -43,14 +43,12 @@ describe('PropertyInformation component', () => {
 
   it('renders a complete lease as expected', () => {
     const { component } = setup({
-      nameSpace: 'properties',
+      nameSpace: 'properties.0',
       lease: {
         ...defaultFormLease,
         properties: [mockParcel],
         amount: 1,
         description: 'a test description',
-        landArea: 111,
-        areaUnit: 'Hectares',
         programName: 'A program',
         lFileNo: '222',
         tfaFileNo: 333,
@@ -62,5 +60,48 @@ describe('PropertyInformation component', () => {
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
+  });
+
+  it('does not render the area if the value is not set', () => {
+    const { component } = setup({
+      nameSpace: 'properties.0',
+      lease: {
+        ...defaultFormLease,
+        properties: [{ ...mockParcel, landArea: undefined }],
+        amount: 1,
+        description: 'a test description',
+        programName: 'A program',
+        lFileNo: '222',
+        tfaFileNo: 333,
+        psFileNo: '444',
+        motiName: 'test moti name',
+        note: 'a test note',
+        expiryDate: '2022-01-01',
+        startDate: '2020-01-01',
+      },
+    });
+    expect(component.queryByText('Area')).toBeNull();
+  });
+
+  it('will render the land area if no area unit is set', () => {
+    const { component } = setup({
+      nameSpace: 'properties.0',
+      lease: {
+        ...defaultFormLease,
+        properties: [{ ...mockParcel, landArea: 123 }],
+        amount: 1,
+        description: 'a test description',
+        programName: 'A program',
+        lFileNo: '222',
+        tfaFileNo: 333,
+        psFileNo: '444',
+        motiName: 'test moti name',
+        note: 'a test note',
+        expiryDate: '2022-01-01',
+        startDate: '2020-01-01',
+      },
+    });
+    expect(component.getByDisplayValue('123')).toBeVisible();
+    expect(component.queryByDisplayValue('undefined')).toBeNull();
   });
 });

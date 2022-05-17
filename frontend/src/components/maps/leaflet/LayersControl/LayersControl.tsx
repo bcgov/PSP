@@ -1,9 +1,8 @@
-import variables from 'assets/scss/_variables.module.scss';
 import clsx from 'classnames';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import L from 'leaflet';
 import React, { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 import { FaLayerGroup } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -31,7 +30,7 @@ const LayersContainer = styled.div`
 const LayersHeader = styled.div`
   width: 100%;
   height: 8rem;
-  background-color: ${variables.slideOutBlue};
+  background-color: ${({ theme }) => theme.css.slideOutBlue};
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -65,19 +64,21 @@ const Title = styled.p`
 `;
 
 const ControlButton = styled(Button)`
-  width: 5.2rem;
-  height: 5.2rem;
-  position: absolute;
-  top: 0;
-  left: -5.1rem;
-  background-color: #fff;
-  color: ${variables.slideOutBlue};
-  border-color: ${variables.slideOutBlue};
-  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
-  &.open {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    top: 2.6rem;
+  &.btn {
+    width: 5.2rem;
+    height: 5.2rem;
+    position: absolute;
+    top: 0;
+    left: -5.1rem;
+    background-color: #fff;
+    color: ${({ theme }) => theme.css.slideOutBlue};
+    border-color: ${({ theme }) => theme.css.slideOutBlue};
+    box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
+    &.open {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      top: 2.6rem;
+    }
   }
 `;
 

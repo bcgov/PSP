@@ -36,9 +36,12 @@ namespace Pims.Dal.Entities
         /// <param name="keycloakUserId"></param>
         /// <param name="username"></param>
         /// <param name="person"></param>
-        public PimsUser(Guid keycloakUserId, string username, PimsPerson person):this()
+        public PimsUser(Guid keycloakUserId, string username, PimsPerson person) : this()
         {
-            if (String.IsNullOrWhiteSpace(username)) throw new ArgumentException($"Argument '{nameof(username)}' is required.", nameof(username));
+            if (String.IsNullOrWhiteSpace(username))
+            {
+                throw new ArgumentException($"Argument '{nameof(username)}' is required.", nameof(username));
+            }
 
             this.BusinessIdentifierValue = username;
             this.GuidIdentifierValue = keycloakUserId;

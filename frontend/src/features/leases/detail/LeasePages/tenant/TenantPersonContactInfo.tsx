@@ -22,9 +22,12 @@ export const TenantPersonContactInfo: React.FunctionComponent<ITenantPersonConta
     <>
       <Styled.FormGrid>
         <Form.Label>Tenant Name:</Form.Label>
-        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'fullName')} />
+        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'summary')} />
         <Styled.LeaseH3>Contact Info</Styled.LeaseH3>
-        <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+        <AddressSubForm
+          nameSpace={withNameSpace(nameSpace, 'mailingAddress')}
+          disabled={disabled}
+        />
         <br />
         <Form.Label>E-mail address:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'email')} />

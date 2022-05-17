@@ -1,6 +1,5 @@
 import './PointClusterer.scss';
 
-import { AddressTypes } from 'constants/index';
 import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
@@ -53,7 +52,6 @@ export const convertToProperty = (
     longitude: longitude,
     address: {
       id: property.ADDRESS_ID,
-      addressTypeId: AddressTypes.Mailing,
       municipality: property.MUNICIPALITY_NAME,
       provinceId: 1,
       province: property.PROVINCE_STATE_CODE,
@@ -256,15 +254,14 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
         .then(apiProperty => {
           const propertyData = apiProperty.data;
           const propertyAddress = propertyData.address;
-          const teunure = propertyData?.tenure !== undefined ? propertyData?.tenure[0] : undefined;
+          const tenure = propertyData?.tenure !== undefined ? propertyData?.tenure[0] : undefined;
           const property: IProperty = {
             ...propertyData,
             pid: propertyData.pid || '',
             status: propertyData.status?.id,
             dataSource: propertyData.dataSource?.id,
-            tenure: teunure?.id,
+            tenure: tenure?.id,
             address: {
-              addressTypeId: '',
               provinceId: propertyAddress?.province?.id || 0,
               streetAddress1: propertyAddress?.streetAddress1 || '',
               streetAddress2: propertyAddress?.streetAddress2,

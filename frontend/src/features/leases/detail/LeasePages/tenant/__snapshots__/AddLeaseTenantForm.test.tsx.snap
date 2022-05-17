@@ -28,15 +28,148 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
     </a>
     ) before you can find them here.
   </p>
-  .c14 {
+  .c10.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c10.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c10.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c10.btn.btn-primary {
+  border: none;
+}
+
+.c10.btn.btn-secondary {
+  background: none;
+}
+
+.c10.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
+  background: none;
+}
+
+.c10.btn.btn-light {
+  border: none;
+}
+
+.c10.btn.btn-dark {
+  border: none;
+}
+
+.c10.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c10.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c10.Button--icon-only:focus {
+  outline: none;
+}
+
+.c10.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c15 {
   margin-top: 3rem;
   font-size: 1.4rem;
 }
 
-.c14 .table .tr .td:first-of-type,
-.c14 .table .tr .td:nth-of-type(2),
-.c14 .table .tr .th:first-of-type,
-.c14 .table .tr .th:nth-of-type(2) {
+.c15 .table .tr .td:first-of-type,
+.c15 .table .tr .td:nth-of-type(2),
+.c15 .table .tr .th:first-of-type,
+.c15 .table .tr .th:nth-of-type(2) {
   border-left: 0;
   border-right: 0;
   padding: 0;
@@ -70,11 +203,11 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c13 {
+.c14 {
   font-size: 1.4rem;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -93,17 +226,17 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
+.c13 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .c12 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c11 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c15 {
+.c16 {
   z-index: 100;
   width: 100%;
   padding: 0.5rem 0;
@@ -122,7 +255,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   background-color: white;
 }
 
-.c15 .btn {
+.c16 .btn {
   min-height: 3rem;
 }
 
@@ -454,7 +587,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                         class="c9 col-auto"
                       >
                         <button
-                          class="Button Button--icon-only primary btn btn-primary"
+                          class="c10 Button Button--icon-only primary btn btn-primary"
                           data-testid="search"
                           id="search-button"
                           type="button"
@@ -482,7 +615,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                         class="c9 col-auto"
                       >
                         <button
-                          class="Button Button--icon-only btn btn-info"
+                          class="c10 Button Button--icon-only btn btn-info"
                           data-testid="reset-button"
                           id="reset-button"
                           type="button"
@@ -607,10 +740,10 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     >
                       Summary
                       <div
-                        class="c10"
+                        class="c11"
                       >
                         <svg
-                          class="c11"
+                          class="c12"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -625,7 +758,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c12"
+                          class="c13"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -650,12 +783,12 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      First Name
+                      First name
                       <div
-                        class="c10"
+                        class="c11"
                       >
                         <svg
-                          class="c11"
+                          class="c12"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -670,7 +803,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c12"
+                          class="c13"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -695,12 +828,12 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      Last Name
+                      Last name
                       <div
-                        class="c10"
+                        class="c11"
                       >
                         <svg
-                          class="c11"
+                          class="c12"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -715,7 +848,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c12"
+                          class="c13"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -742,10 +875,10 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     >
                       Organization
                       <div
-                        class="c10"
+                        class="c11"
                       >
                         <svg
-                          class="c11"
+                          class="c12"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -760,7 +893,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c12"
+                          class="c13"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -797,7 +930,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      Mailing Address
+                      Mailing address
                     </div>
                   </div>
                   <div
@@ -811,10 +944,10 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     >
                       City
                       <div
-                        class="c10"
+                        class="c11"
                       >
                         <svg
-                          class="c11"
+                          class="c12"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -829,7 +962,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                           />
                         </svg>
                         <svg
-                          class="c12"
+                          class="c13"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -890,7 +1023,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 class="ml-auto align-self-center col-auto"
               >
                 <p
-                  class="c13"
+                  class="c14"
                 >
                   0 selected
                 </p>
@@ -902,14 +1035,18 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
           </div>
         </div>
         <button
-          class="btn btn-secondary"
+          class="c10 Button btn btn-secondary"
           type="button"
         >
-          Add selected tenants
+          <div
+            class="Button__value"
+          >
+            Add selected tenants
+          </div>
         </button>
       </div>
       <div
-        class="c14"
+        class="c15"
       >
         <h2
           class="c1"
@@ -920,7 +1057,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
           Your selections will be saved to the lease/license when you click the final "Save" button.
         </p>
         <p
-          class="c13"
+          class="c14"
         >
           0 Tenants associated with this Lease/License
         </p>
@@ -935,7 +1072,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 460px;"
+              style="display: flex; flex: 1 0 auto; min-width: 570px;"
             >
               <div
                 class="th"
@@ -983,36 +1120,12 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 300 0 auto; min-width: 200px; width: 300px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"
                 >
-                  Last Name
-                </div>
-              </div>
-              <div
-                class="th"
-                colspan="1"
-                role="columnheader"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              >
-                <div
-                  class="sortable-column"
-                >
-                  First Name
-                </div>
-              </div>
-              <div
-                class="th"
-                colspan="1"
-                role="columnheader"
-                style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              >
-                <div
-                  class="sortable-column"
-                >
-                  Organization
+                  Primary contact
                 </div>
               </div>
               <div
@@ -1036,7 +1149,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 <div
                   class="sortable-column"
                 >
-                  Mailing Address
+                  Mailing address
                 </div>
               </div>
               <div
@@ -1099,10 +1212,10 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c15"
+      class="c16"
     >
       <button
-        class="Button btn btn-secondary"
+        class="c10 Button btn btn-secondary"
         type="button"
       >
         <div
@@ -1112,7 +1225,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
         </div>
       </button>
       <button
-        class="Button Button--disabled btn btn-primary"
+        class="c10 Button Button--disabled btn btn-primary"
         disabled=""
         type="button"
       >

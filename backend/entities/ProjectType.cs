@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a ProjectType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsProjectType(string id):this()
+        public PimsProjectType(string id) : this()
         {
             Id = id;
         }

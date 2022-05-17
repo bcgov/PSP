@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a PropertyImprovementType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyImprovementType(string id):this()
+        public PimsPropertyImprovementType(string id) : this()
         {
             Id = id;
         }

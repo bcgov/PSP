@@ -78,7 +78,10 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult GetLeases([FromBody] LeaseFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            if (!filter.IsValid()) throw new BadRequestException("Property filter must contain valid values.");
+            if (!filter.IsValid())
+            {
+                throw new BadRequestException("Property filter must contain valid values.");
+            }
 
             var leases = _pimsService.Lease.GetPage((LeaseFilter)filter);
             return new JsonResult(_mapper.Map<Api.Models.PageModel<LeaseModel>>(leases));

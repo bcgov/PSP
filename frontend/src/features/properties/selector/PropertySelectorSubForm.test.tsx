@@ -1,6 +1,5 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { propertiesSlice } from 'store/slices/properties';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { IMapProperty } from './models';
@@ -18,9 +17,7 @@ const testProperty: IMapProperty = {
 
 const mockStore = configureMockStore([thunk]);
 
-const store = mockStore({
-  [propertiesSlice.name]: {},
-});
+const store = mockStore({});
 
 describe('PropertySelectorSubForm component', () => {
   const setup = (renderOptions: RenderOptions & IPropertySelectorSubFormProps) => {

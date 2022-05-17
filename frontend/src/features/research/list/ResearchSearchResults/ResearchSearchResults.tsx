@@ -1,8 +1,11 @@
 import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
+import { Claims } from 'constants/claims';
+import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 const columns: ColumnWithProps<IResearchSearchResult>[] = [
@@ -14,6 +17,17 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
+    Cell: (props: CellProps<IResearchSearchResult>) => {
+      const { hasClaim } = useKeycloakWrapper();
+      if (hasClaim(Claims.CONTACT_VIEW)) {
+        return (
+          <Link to={`/mapview/research/${props.row.original.id}/view`}>
+            {props.row.original.rfileNumber}
+          </Link>
+        );
+      }
+      return props.row.original.rfileNumber;
+    },
   },
   {
     Header: 'Research file name',

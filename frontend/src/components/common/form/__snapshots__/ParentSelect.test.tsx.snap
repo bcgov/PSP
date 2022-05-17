@@ -1,8 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
+.c0 button.close {
+  font-size: 2.4rem;
+}
+
 <div
-  className="form-group"
+  className="c0 form-group"
 >
   <div
     className="rbt"

@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a SecurityDepositType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsSecurityDepositType(string id):this()
+        public PimsSecurityDepositType(string id) : this()
         {
             Id = id;
         }

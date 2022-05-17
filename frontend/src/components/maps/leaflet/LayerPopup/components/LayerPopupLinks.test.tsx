@@ -1,7 +1,7 @@
-import { cleanup, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import L from 'leaflet';
 import { useMap } from 'react-leaflet';
+import { cleanup, render } from 'utils/test-utils';
 
 import { IPopupContentProps } from './LayerPopupContent';
 import { LayerPopupLinks } from './LayerPopupLinks';

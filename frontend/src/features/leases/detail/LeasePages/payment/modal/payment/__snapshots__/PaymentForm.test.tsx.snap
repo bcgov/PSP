@@ -210,8 +210,10 @@ exports[`PaymentForm component renders as expected 1`] = `
         <input
           class="form-control input-number"
           id="input-amountTotal"
+          inputmode="numeric"
           name="amountTotal"
           placeholder=""
+          type="text"
           value=""
         />
       </div>
@@ -260,8 +262,10 @@ exports[`PaymentForm component renders as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-amountPreTax"
+              inputmode="numeric"
               name="amountPreTax"
               placeholder=""
+              type="text"
               value=""
             />
           </div>
@@ -281,8 +285,10 @@ exports[`PaymentForm component renders as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-amountGst"
+              inputmode="numeric"
               name="amountGst"
               placeholder=""
+              type="text"
               value=""
             />
           </div>
@@ -503,8 +509,10 @@ exports[`PaymentForm component renders with data as expected 1`] = `
         <input
           class="form-control input-number"
           id="input-amountTotal"
+          inputmode="numeric"
           name="amountTotal"
           placeholder=""
+          type="text"
           value=""
         />
       </div>
@@ -553,8 +561,10 @@ exports[`PaymentForm component renders with data as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-amountPreTax"
+              inputmode="numeric"
               name="amountPreTax"
               placeholder=""
+              type="text"
               value=""
             />
           </div>
@@ -574,8 +584,10 @@ exports[`PaymentForm component renders with data as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-amountGst"
+              inputmode="numeric"
               name="amountGst"
               placeholder=""
+              type="text"
               value=""
             />
           </div>

@@ -37,6 +37,9 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsLeasePaymentStatusType> GetLeasePaymentStatusTypes();
         IEnumerable<PimsLeasePaymentMethodType> GetLeasePaymentMethodTypes();
         IEnumerable<PimsResearchFileStatusType> GetResearchFileStatusTypes();
+        IEnumerable<PimsRequestSourceType> GeRequestSourceTypes();
+        IEnumerable<PimsResearchPurposeType> GetResearchPurposeTypes();
+        IEnumerable<PimsPropResearchPurposeType> GetPropertyResearchPurposeTypes();
     }
 }
 

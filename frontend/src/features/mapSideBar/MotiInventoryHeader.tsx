@@ -1,4 +1,4 @@
-import { IconButton } from 'components/common/styles';
+import { IconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
@@ -12,6 +12,8 @@ import { HeaderField } from './tabs/HeaderField';
 
 interface IMotiInventoryHeaderProps {
   ltsaData?: LtsaOrders;
+  ltsaLoading: boolean;
+  propertyLoading: boolean;
   property?: IPropertyApiModel;
   onZoom?: (apiProperty?: IPropertyApiModel | undefined) => void;
 }
@@ -24,7 +26,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
       : (props.ltsaData?.parcelInfo.orderedProduct.fieldedData
           .associatedPlans as AssociatedPlan[]).map(x => x.planNumber);
 
-  const isLoading = props.ltsaData === undefined || props.property === undefined;
+  const isLoading = props.ltsaLoading || props.propertyLoading;
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />

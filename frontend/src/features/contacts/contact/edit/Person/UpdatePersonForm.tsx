@@ -1,23 +1,13 @@
-import { AsyncTypeahead, Button, Check, Input, Select } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
+import { Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
 import { AddressTypes } from 'constants/addressTypes';
-import { CountryCodes } from 'constants/countryCodes';
 import {
-  Address,
   CancelConfirmationModal,
-  CommentNotes,
-  ContactEmailList,
-  ContactPhoneList,
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
-import {
-  hasAddress,
-  hasEmail,
-  hasPhoneNumber,
-  PersonValidationSchema,
-} from 'features/contacts/contact/create/validation';
 import * as Styled from 'features/contacts/contact/edit/styles';
 import {
   apiAddressToFormAddress,
@@ -27,28 +17,22 @@ import {
 } from 'features/contacts/contactUtils';
 import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
 import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  getIn,
-  validateYupSchema,
-  yupToFormErrors,
-} from 'formik';
-import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
+import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { usePrevious } from 'hooks/usePrevious';
-import { IAutocompletePrediction } from 'interfaces';
 import {
   defaultCreatePerson,
   getDefaultAddress,
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
 import { useEffect, useMemo, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import PersonSubForm from '../../Person/PersonSubForm';
+import { onValidatePerson } from '../../utils/contactUtils';
 
 /**
  * Formik-connected form to Update Individual Contacts
@@ -62,26 +46,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   const formPerson = useMemo(() => apiPersonToFormPerson(person), [person]);
 
   // validation needs to be adjusted when country == OTHER
-  const { countries } = useAddressHelpers();
-  const otherCountryId = useMemo(
-    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
-    [countries],
-  );
-
-  const onValidate = (values: IEditablePersonForm) => {
-    try {
-      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
-      // combine yup schema validation with custom rules
-      const errors = {} as any;
-      if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
-        errors.needsContactMethod =
-          'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
-      }
-      return errors;
-    } catch (err) {
-      return yupToFormErrors(err);
-    }
-  };
+  const { otherCountryId } = useAddressHelpers();
 
   const onSubmit = async (
     formPerson: IEditablePersonForm,
@@ -105,7 +70,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
       component={UpdatePersonComponent}
       initialValues={!!formPerson ? { ...defaultCreatePerson, ...formPerson } : defaultCreatePerson}
       enableReinitialize
-      validate={onValidate}
+      validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
       onSubmit={onSubmit}
     />
   );
@@ -132,28 +97,6 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   const organizationId = getIn(values, 'organization.id');
   const useOrganizationAddress = getIn(values, 'useOrganizationAddress');
   const previousUseOrganizationAddress = usePrevious(useOrganizationAddress);
-
-  // organization type-ahead state
-  const { getOrganizationPredictions } = useApiAutocomplete();
-  const [isTypeaheadLoading, setIsTypeaheadLoading] = useState(false);
-  const [matchedOrgs, setMatchedOrgs] = useState<IAutocompletePrediction[]>([]);
-
-  // fetch autocomplete suggestions from server
-  const handleTypeaheadSearch = async (query: string) => {
-    try {
-      setIsTypeaheadLoading(true);
-      const { data } = await getOrganizationPredictions(query);
-      setMatchedOrgs(data.predictions);
-      setIsTypeaheadLoading(false);
-    } catch (e) {
-      setMatchedOrgs([]);
-      toast.error('Failed to get autocomplete results for supplied organization', {
-        autoClose: 7000,
-      });
-    } finally {
-      setIsTypeaheadLoading(false);
-    }
-  };
 
   const onCancel = () => {
     if (dirty) {
@@ -231,89 +174,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
               </Styled.RowAligned>
             </FormSection>
 
-            <FormSection>
-              <Row>
-                <Col md={4}>
-                  <Input field="firstName" label="First Name" required />
-                </Col>
-                <Col md={3}>
-                  <Input field="middleNames" label="Middle" />
-                </Col>
-                <Col>
-                  <Input field="surname" label="Last Name" required />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={7}>
-                  <Input field="preferredName" label="Preferred Name" />
-                </Col>
-                <Col></Col>
-              </Row>
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Organization</Styled.H2>
-              <Row>
-                <Col md={7}>
-                  <AsyncTypeahead
-                    field="organization"
-                    label="Link to an existing organization"
-                    labelKey="text"
-                    isLoading={isTypeaheadLoading}
-                    options={matchedOrgs}
-                    onSearch={handleTypeaheadSearch}
-                  />
-                </Col>
-              </Row>
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Contact info</Styled.H2>
-              <Styled.SectionMessage
-                appearance={getIn(errors, 'needsContactMethod') ? 'error' : 'information'}
-                gap="0.5rem"
-              >
-                <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
-                <p>
-                  Contacts must have a minimum of one method of contact to be saved. <br />
-                  <em>(ex: email,phone or address)</em>
-                </p>
-              </Styled.SectionMessage>
-              <ContactEmailList
-                field="emailContactMethods"
-                contactEmails={values.emailContactMethods}
-              />
-              <br />
-              <ContactPhoneList
-                field="phoneContactMethods"
-                contactPhones={values.phoneContactMethods}
-              />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Address</Styled.H2>
-              <Styled.H3>Mailing Address</Styled.H3>
-              <Check
-                field="useOrganizationAddress"
-                postLabel="Use mailing address from organization"
-                disabled={!organizationId}
-              />
-              <Address namespace="mailingAddress" disabled={useOrganizationAddress} />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H3>Property Address</Styled.H3>
-              <Address namespace="propertyAddress" />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H3>Billing Address</Styled.H3>
-              <Address namespace="billingAddress" />
-            </FormSection>
-
-            <FormSection>
-              <CommentNotes />
-            </FormSection>
+            <PersonSubForm />
           </FlexBox>
         </Styled.Form>
       </Styled.ScrollingFormLayout>

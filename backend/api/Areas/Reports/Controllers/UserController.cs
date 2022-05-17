@@ -88,7 +88,9 @@ namespace Pims.Api.Areas.Reports.Controllers
             var accept = (string)this.Request.Headers["Accept"] ?? throw new BadRequestException($"HTTP request header 'Accept' is required.");
 
             if (accept != ContentTypes.CONTENT_TYPE_CSV && accept != ContentTypes.CONTENT_TYPE_EXCEL && accept != ContentTypes.CONTENT_TYPE_EXCELX)
+            {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
+            }
 
             filter.Quantity = all ? _pimsService.User.Count() : filter.Quantity;
             var page = _pimsService.User.Get(filter);

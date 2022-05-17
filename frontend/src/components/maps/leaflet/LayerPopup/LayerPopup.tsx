@@ -1,8 +1,9 @@
+import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import { Feature, GeoJsonProperties } from 'geojson';
 import { LatLng, LatLngBounds } from 'leaflet';
-import noop from 'lodash/noop';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Popup } from 'react-leaflet';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { LayerPopupContent, PopupContentConfig } from '.';
@@ -50,6 +51,9 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({
   onAddToParcel,
   onViewPropertyInfo,
 }) => {
+  const history = useHistory();
+  const { setSelectedResearchFeature, selectedFeature } = useContext(SelectedPropertyContext);
+
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;
   // open/close map popup fly-out menu
@@ -60,6 +64,11 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({
   // bubble up the non-inventory property - based on their PID
   const handleViewPropertyInfo = () => {
     onViewPropertyInfo(pid);
+  };
+
+  const handleCreateResearchFile = () => {
+    selectedFeature && setSelectedResearchFeature(selectedFeature);
+    history.push('/mapview/research/new');
   };
 
   const handlePopupClose = useCallback(() => {
@@ -89,7 +98,7 @@ export const LayerPopup: React.FC<ILayerPopupProps> = ({
           <StyledFlyoutContainer>
             <LayerPopupFlyout
               onViewPropertyInfo={handleViewPropertyInfo}
-              onCreateResearchFile={noop}
+              onCreateResearchFile={handleCreateResearchFile}
             />
           </StyledFlyoutContainer>
         )}

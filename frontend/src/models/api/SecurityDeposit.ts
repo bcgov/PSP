@@ -16,10 +16,11 @@ export interface Api_SecurityDeposit extends Api_ConcurrentVersion {
 
 export interface Api_SecurityDepositReturn extends Api_ConcurrentVersion {
   id?: number;
-  parentDepositId: number;
+  parentDepositId?: number;
   terminationDate?: string;
   claimsAgainst?: number;
-  returnAmount: number;
+  returnAmount?: number;
+  interestPaid?: number;
   returnDate?: string;
   contactHolder?: Api_Contact;
 }

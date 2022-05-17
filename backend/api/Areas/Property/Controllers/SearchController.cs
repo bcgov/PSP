@@ -76,7 +76,10 @@ namespace Pims.Api.Areas.Property.Controllers
         public IActionResult GetProperties([FromBody] PropertyFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            if (!filter.IsValid()) throw new BadRequestException("Property filter must contain valid values.");
+            if (!filter.IsValid())
+            {
+                throw new BadRequestException("Property filter must contain valid values.");
+            }
 
             var page = _pimsService.Property.GetPage((PropertyFilter)filter);
             var result = _mapper.Map<BModel.PageModel<Models.Search.PropertyModel>>(page);

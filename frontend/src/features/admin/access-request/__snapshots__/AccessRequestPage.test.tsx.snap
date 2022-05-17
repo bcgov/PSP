@@ -1,230 +1,370 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AccessRequestPage renders correctly 1`] = `
-<div
-  class="accessRequestPage"
->
-  <div>
-    <h3>
-      Access Request
-    </h3>
-  </div>
-  <hr />
+<DocumentFragment>
   <div
-    class="container-fluid"
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c0.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c0.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c0.btn.btn-primary {
+  border: none;
+}
+
+.c0.btn.btn-secondary {
+  background: none;
+}
+
+.c0.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
+  background: none;
+}
+
+.c0.btn.btn-light {
+  border: none;
+}
+
+.c0.btn.btn-dark {
+  border: none;
+}
+
+.c0.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c0.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
+}
+
+.c0.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+<div
+    class="accessRequestPage"
   >
+    <div>
+      <h3>
+        Access Request
+      </h3>
+    </div>
+    <hr />
     <div
-      class="justify-content-md-center row"
+      class="container-fluid"
     >
-      <form
-        class="userInfo"
-        novalidate=""
+      <div
+        class="justify-content-md-center row"
       >
-        <div
-          class="fade alert alert-primary show"
-          role="alert"
-        >
-          You will receive an email when your request is reviewed.
-        </div>
-        <div
-          class="input form-group"
-        >
-          <label
-            class="form-label"
-            for="input-user.businessIdentifierValue"
-          >
-            IDIR/BCeID
-             
-          </label>
-          <input
-            class="form-control"
-            id="input-user.businessIdentifierValue"
-            name="user.businessIdentifierValue"
-            readonly=""
-            type="text"
-            value=""
-          />
-        </div>
-        <div
-          class="row"
+        <form
+          class="userInfo"
+          novalidate=""
         >
           <div
-            class="col"
+            class="fade alert alert-primary show"
+            role="alert"
+          >
+            You will receive an email when your request is reviewed.
+          </div>
+          <div
+            class="input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-user.businessIdentifierValue"
+            >
+              IDIR/BCeID 
+            </label>
+            <input
+              class="form-control"
+              id="input-user.businessIdentifierValue"
+              name="user.businessIdentifierValue"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="row"
           >
             <div
-              class="input form-group"
+              class="col"
             >
-              <label
-                class="form-label"
-                for="input-user.firstName"
+              <div
+                class="input form-group"
               >
-                First Name
-                 
-              </label>
-              <input
-                class="form-control"
-                id="input-user.firstName"
-                name="user.firstName"
-                readonly=""
-                type="text"
-                value=""
-              />
+                <label
+                  class="form-label"
+                  for="input-user.firstName"
+                >
+                  First Name 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-user.firstName"
+                  name="user.firstName"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-user.surname"
+                >
+                  Last Name 
+                </label>
+                <input
+                  class="form-control"
+                  id="input-user.surname"
+                  name="user.surname"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+              </div>
             </div>
           </div>
           <div
-            class="col"
+            class="input form-group"
           >
-            <div
-              class="input form-group"
+            <label
+              class="form-label"
+              for="input-user.email"
             >
-              <label
-                class="form-label"
-                for="input-user.surname"
+              Email 
+            </label>
+            <input
+              class="form-control"
+              id="input-user.email"
+              name="user.email"
+              readonly=""
+              type="email"
+              value=""
+            />
+          </div>
+          <div
+            class="input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-user.position"
+            >
+              Position 
+            </label>
+            <input
+              class="form-control"
+              id="input-user.position"
+              name="user.position"
+              placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
+              title=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="check-roles form-group"
+          >
+            <label
+              class="form-label"
+            >
+              Role 
+              <a
+                href="https://github.com/bcgov/PSP/wiki/Architecture-Security"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Last Name
-                 
-              </label>
-              <input
-                class="form-control"
-                id="input-user.surname"
-                name="user.surname"
-                readonly=""
-                type="text"
-                value=""
-              />
+                Role Descriptions
+              </a>
+            </label>
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-roleId"
+                name="roleId"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Please Select
+                </option>
+                <option
+                  class="option"
+                  value="1"
+                >
+                  roleVal
+                </option>
+              </select>
             </div>
           </div>
-        </div>
-        <div
-          class="input form-group"
-        >
-          <label
-            class="form-label"
-            for="input-user.email"
+          <div
+            class="required textarea input form-group"
           >
-            Email
-             
-          </label>
-          <input
-            class="form-control"
-            id="input-user.email"
-            name="user.email"
-            readonly=""
-            type="email"
-            value=""
-          />
-        </div>
-        <div
-          class="input form-group"
-        >
-          <label
-            class="form-label"
-            for="input-user.position"
-          >
-            Position
-             
-          </label>
-          <input
-            class="form-control"
-            id="input-user.position"
-            name="user.position"
-            placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
-            title=""
-            type="text"
-            value=""
-          />
-        </div>
-        <div
-          class="check-roles form-group"
-        >
-          <label
-            class="form-label"
-          >
-            Role
-             
+            <label
+              class="form-label"
+              for="input-note"
+            >
+              Notes 
+            </label>
+            <textarea
+              class="form-control"
+              id="input-note"
+              name="note"
+              placeholder="Please specify why you need access to PIMS and include your manager's name."
+              title=""
+            />
+          </div>
+          <p>
+            By clicking request, you agree to our 
             <a
-              href="https://github.com/bcgov/PSP/wiki/Architecture-Security"
+              href="https://www2.gov.bc.ca//gov/content/home/disclaimer"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Role Descriptions
+              Terms and Conditions
             </a>
-          </label>
-          <div
-            class="required form-group"
-          >
-            <select
-              class="form-select form-control"
-              id="input-roleId"
-              name="roleId"
-              required=""
+             and that you have read our 
+            <a
+              href="http://www.gov.bc.ca/gov/content/home/privacy"
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              <option
-                value=""
-              >
-                Please Select
-              </option>
-              <option
-                class="option"
-                value="1"
-              >
-                roleVal
-              </option>
-            </select>
-          </div>
-        </div>
-        <div
-          class="required textarea input form-group"
-        >
-          <label
-            class="form-label"
-            for="input-note"
-          >
-            Notes
-             
-          </label>
-          <textarea
-            class="form-control"
-            id="input-note"
-            name="note"
-            placeholder="Please specify why you need access to PIMS and include your manager's name."
-            title=""
-          />
-        </div>
-        <p>
-          By clicking request, you agree to our
-           
-          <a
-            href="https://www2.gov.bc.ca//gov/content/home/disclaimer"
-          >
-            Terms and Conditions
-          </a>
-           and that you have read our
-           
-          <a
-            href="http://www.gov.bc.ca/gov/content/home/privacy"
-          >
-            Privacy Policy
-          </a>
-          .
-        </p>
-        <div
-          class="justify-content-md-center row"
-        >
+              Privacy Policy
+            </a>
+            .
+          </p>
           <div
-            class="cancelSave btn-toolbar"
-            role="toolbar"
+            class="justify-content-md-center row"
           >
-            <button
-              class="mr-5 btn btn-primary"
-              type="submit"
+            <div
+              class="cancelSave btn-toolbar"
+              role="toolbar"
             >
-              Submit
-            </button>
+              <button
+                class="c0 Button mr-5 btn btn-primary"
+                type="submit"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Submit
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

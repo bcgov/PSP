@@ -1,4 +1,5 @@
-import { Button, Input, Select } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
+import { Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -7,16 +8,8 @@ import {
   Address,
   CancelConfirmationModal,
   CommentNotes,
-  ContactEmailList,
-  ContactPhoneList,
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
-import {
-  hasAddress,
-  hasEmail,
-  hasPhoneNumber,
-  OrganizationValidationSchema,
-} from 'features/contacts/contact/create/validation';
 import * as Styled from 'features/contacts/contact/edit/styles';
 import {
   apiOrganizationToFormOrganization,
@@ -24,20 +17,17 @@ import {
 } from 'features/contacts/contactUtils';
 import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDetail';
 import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  getIn,
-  validateYupSchema,
-  yupToFormErrors,
-} from 'formik';
+import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
 import { defaultCreateOrganization, IEditableOrganizationForm } from 'interfaces/editable-contact';
 import { IContactPerson } from 'interfaces/IContact';
+import React from 'react';
 import { useMemo, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
+
+import { OrganizationSubForm } from '../../Organization/OrganizationSubForm';
+import { onValidateOrganization } from '../../utils/contactUtils';
 
 /**
  * Formik-connected form to Update Organizational Contacts
@@ -46,23 +36,6 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
   const { updateOrganization } = useUpdateContact();
   const { otherCountryId } = useAddressHelpers();
-
-  const onValidate = (values: IEditableOrganizationForm) => {
-    const errors = {} as any;
-    try {
-      // combine yup schema validation with custom rules
-      if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
-        errors.needsContactMethod =
-          'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
-      }
-      validateYupSchema(values, OrganizationValidationSchema, true, {
-        otherCountry: otherCountryId,
-      });
-      return errors;
-    } catch (err) {
-      return { ...errors, ...yupToFormErrors(err) };
-    }
-  };
 
   const onSubmit = async (
     formOrganization: IEditableOrganizationForm,
@@ -95,7 +68,9 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
     <Formik
       component={UpdateOrganization}
       initialValues={initialValues}
-      validate={onValidate}
+      validate={(values: IEditableOrganizationForm) =>
+        onValidateOrganization(values, otherCountryId)
+      }
       enableReinitialize
       onSubmit={onSubmit}
     />
@@ -177,47 +152,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
               </Styled.RowAligned>
             </FormSection>
 
-            <FormSection>
-              <Row>
-                <Col>
-                  <Input field="name" label="Organization Name" required />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Input field="alias" label="Alias" />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <Input field="incorporationNumber" label="Incorporation Number" />
-                </Col>
-                <Col></Col>
-              </Row>
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Contact info</Styled.H2>
-              <Styled.SectionMessage
-                appearance={isContactMethodInvalid ? 'error' : 'information'}
-                gap="0.5rem"
-              >
-                <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
-                <p>
-                  Contacts must have a minimum of one method of contact to be saved. <br />
-                  <em>(ex: email,phone or address)</em>
-                </p>
-              </Styled.SectionMessage>
-              <ContactEmailList
-                field="emailContactMethods"
-                contactEmails={values.emailContactMethods}
-              />
-              <br />
-              <ContactPhoneList
-                field="phoneContactMethods"
-                contactPhones={values.phoneContactMethods}
-              />
-            </FormSection>
+            <OrganizationSubForm isContactMethodInvalid={isContactMethodInvalid} />
 
             <FormSection className="position-relative">
               <Styled.TopRightCorner>

@@ -24,7 +24,10 @@ namespace Pims.Dal.Entities
         /// <param name="abbreviation"></param>
         public MotiTableAttribute(string name, string abbreviation) : base(name)
         {
-            if (String.IsNullOrWhiteSpace(abbreviation)) throw new ArgumentException("Abbreviation cannot be null, empty, or whitespace.", nameof(abbreviation));
+            if (String.IsNullOrWhiteSpace(abbreviation))
+            {
+                throw new ArgumentException("Abbreviation cannot be null, empty, or whitespace.", nameof(abbreviation));
+            }
 
             this.Abbreviation = abbreviation;
         }

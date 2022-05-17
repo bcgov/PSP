@@ -78,8 +78,8 @@ describe('PaymentForm component', () => {
     await fillInput(container, 'amountTotal', '1050');
     const amountPreTax = await findByLabelText('Expected payment ($)');
     const amountGst = await findByLabelText('GST ($)');
-    expect(amountPreTax).toHaveValue('1000');
-    expect(amountGst).toHaveValue('50');
+    expect(amountPreTax).toHaveValue('$1,000.00');
+    expect(amountGst).toHaveValue('$50.00');
   });
 
   it('Entering a total amount results in a calculated pre tax amount when gst is not enabled', async () => {
@@ -90,7 +90,7 @@ describe('PaymentForm component', () => {
 
     await fillInput(container, 'amountTotal', '1000');
     const amountPreTax = await findByLabelText('Expected payment ($)');
-    expect(amountPreTax).toHaveValue('1000');
+    expect(amountPreTax).toHaveValue('$1,000.00');
   });
 
   it('Entering a total amount results in a calculated pre tax amount when gst constant is not available', async () => {
@@ -107,6 +107,6 @@ describe('PaymentForm component', () => {
 
     await fillInput(container, 'amountTotal', '1000');
     const amountPreTax = await findByLabelText('Expected payment ($)');
-    expect(amountPreTax).toHaveValue('1000');
+    expect(amountPreTax).toHaveValue('$1,000.00');
   });
 });

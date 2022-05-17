@@ -1,0 +1,846 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateResearchForm component renders as expected when provided no research file 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c4.c4.form-control.is-valid {
+  background-image: none;
+}
+
+.c4.c4.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c6.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c6.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c6.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c6.btn.btn-primary {
+  border: none;
+}
+
+.c6.btn.btn-secondary {
+  background: none;
+}
+
+.c6.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  background: none;
+}
+
+.c6.btn.btn-light {
+  border: none;
+}
+
+.c6.btn.btn-dark {
+  border: none;
+}
+
+.c6.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c6.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c6.Button--icon-only:focus {
+  outline: none;
+}
+
+.c6.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+
+.c3 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c5 {
+  border-radius: 0.3rem;
+  padding: 12px 6px 6px 12px;
+  min-height: 2.5em;
+  background-image: none;
+  border: #606060 solid 0.1rem;
+}
+
+.c5.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c7.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c7.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  row-gap: 0.4rem;
+  -webkit-column-gap: unset;
+  column-gap: unset;
+}
+
+.c7.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c7.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c7.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c7 .form-label {
+  margin-bottom: unset;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0"
+    >
+      <h2
+        class="c1"
+      >
+        Roads
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Road name:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-roadName"
+              name="roadName"
+              title="Test road name"
+              value="Test road name"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Road alias:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-roadAlias"
+              name="roadAlias"
+              title="Test road alias"
+              value="Test road alias"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+    >
+      <h2
+        class="c1"
+      >
+        Research Request
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Research purpose:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div>
+            <div
+              class="multiselect-container multiSelectContainer  "
+              id="purpose-selector"
+              style="width: auto; color: black; padding-bottom: 12px;"
+            >
+              <div
+                class="search-wrapper searchWrapper "
+                style="background: white; border: 1px solid #606060;"
+              >
+                <input
+                  autocomplete="off"
+                  class="searchBox "
+                  id="purpose-selector_input"
+                  name="search_name_input"
+                  placeholder="Select Research Purpose"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="optionListContainer displayNone"
+              >
+                <ul
+                  class="optionContainer"
+                >
+                  <li
+                    class="option  highlightOption highlight  "
+                  >
+                    Acquisition
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Disposition
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    General Enquiry
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Management
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Tenure Clean-Up
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Request date:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c3 form-group"
+          >
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c4 form-control date-picker"
+                  id="datepicker-requestDate"
+                  name="requestDate"
+                  placeholder="--/--/----"
+                  type="text"
+                  value="04/14/2022"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Source of request:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="required form-group"
+          >
+            <select
+              class="form-select form-control"
+              data-testid="requestSource"
+              id="input-requestSourceTypeCode"
+              name="requestSourceTypeCode"
+              required=""
+            >
+              <option
+                class="option"
+                value="DISTRICT"
+              >
+                District
+              </option>
+              <option
+                class="option"
+                value="EXTRQST"
+              >
+                External Request
+              </option>
+              <option
+                class="option"
+                value="FOI"
+              >
+                Freedom Of Information (FOI)
+              </option>
+              <option
+                class="option"
+                value="HQ"
+              >
+                Headquarters (HQ)
+              </option>
+              <option
+                class="option"
+                value="INTLGL"
+              >
+                Legal Counsel (Internal)
+              </option>
+              <option
+                class="option"
+                value="NONFOI"
+              >
+                Public Enquiry (non-FOI)
+              </option>
+              <option
+                class="option"
+                value="OTHERMIN"
+              >
+                Other Ministry
+              </option>
+              <option
+                class="option"
+                value="PROJECT"
+              >
+                Project
+              </option>
+              <option
+                class="option"
+                value="REGION"
+              >
+                Region
+              </option>
+              <option
+                class="option"
+                value="SURVEYOR"
+              >
+                Surveyor
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Requester:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="input form-group"
+          >
+            <div
+              class="align-items-center row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="c5"
+                >
+                  Dairy Queen Forever! Property Management
+                </div>
+                <div
+                  class="d-none input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-requestor.id"
+                    name="requestor.id"
+                    title="O3"
+                    value="O3"
+                  />
+                </div>
+              </div>
+              <div
+                class="pl-0 align-self-center col-auto"
+              >
+                <button
+                  class="c6 Button Button--icon-only px-2 btn btn-secondary"
+                  type="button"
+                >
+                  <div
+                    class="Button__icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="20"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+              <div
+                class="pl-0 col-auto"
+              >
+                <button
+                  class="c6 Button Button--icon-only px-2 btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="20"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Description of request:
+          </label>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+      <div
+        class="required textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-requestDescription"
+          name="requestDescription"
+          title="a request description"
+        >
+          a request description
+        </textarea>
+      </div>
+    </div>
+    <div
+      class="c0"
+    >
+      <h2
+        class="c1"
+      >
+        Result
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Research completed on:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c3 form-group"
+          >
+            <div
+              class="react-datepicker-wrapper d-block"
+            >
+              <div
+                class="react-datepicker__input-container"
+              >
+                <input
+                  autocomplete="off"
+                  class="c4 form-control date-picker"
+                  id="datepicker-researchCompletionDate"
+                  name="researchCompletionDate"
+                  placeholder="--/--/----"
+                  type="text"
+                  value="03/30/2022"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Result of request:
+          </label>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+      <div
+        class="required textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-researchResult"
+          name="researchResult"
+          title="A research result"
+        >
+          A research result
+        </textarea>
+      </div>
+    </div>
+    <div
+      class="c0"
+    >
+      <h2
+        class="c1"
+      >
+        Expropriation
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Expropriation?:
+          </label>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c7 form-group"
+          >
+            <div
+              class="radio-group"
+            >
+              <div
+                class="c8"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    checked=""
+                    class="form-check-input position-static"
+                    id="input-false"
+                    name="isExpropriation"
+                    type="radio"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="input-isExpropriation"
+                >
+                  No
+                </label>
+              </div>
+              <div
+                class="c8"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input position-static"
+                    id="input-true"
+                    name="isExpropriation"
+                    type="radio"
+                    value="true"
+                  />
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="input-isExpropriation"
+                >
+                  Yes
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="col-4"
+        >
+          <label
+            class="c2"
+          >
+            Expropriation notes:
+          </label>
+        </div>
+        <div
+          class="col"
+        />
+      </div>
+      <div
+        class="required textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-expropriationNotes"
+          name="expropriationNotes"
+          title="An expropriation note"
+        >
+          An expropriation note
+        </textarea>
+      </div>
+    </div>
+    <div
+      class="container"
+    />
+  </div>
+</DocumentFragment>
+`;

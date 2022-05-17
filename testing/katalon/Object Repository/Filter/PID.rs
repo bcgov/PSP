@@ -6,12 +6,11 @@
    <elementGuidId>7cff0483-81d9-4268-8250-6401c11af2e3</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@name='pid']</value>
+         <key>BASIC</key>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value></value>
+         <key>XPATH</key>
+         <value>//input[@name='pinOrPid']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

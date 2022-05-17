@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Research.Controllers
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Area("research")]
+    [Area("researchfiles")]
     [Route("v{version:apiVersion}/[area]/search")]
     [Route("[area]/search")]
     public class SearchController : ControllerBase
@@ -79,7 +79,10 @@ namespace Pims.Api.Areas.Research.Controllers
         public IActionResult GetResearchFiles([FromBody] ResearchFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            if (!filter.IsValid()) throw new BadRequestException("Research filter must contain valid values.");
+            if (!filter.IsValid())
+            {
+                throw new BadRequestException("Research filter must contain valid values.");
+            }
 
             var researchFiles = pimsService.ResearchFileService.GetPage((ResearchFilter)filter);
             return new JsonResult(mapper.Map<Api.Models.PageModel<ResearchFileModel>>(researchFiles));

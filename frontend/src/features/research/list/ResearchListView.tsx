@@ -1,6 +1,6 @@
-import { Button } from 'components/common/form';
+import { Button } from 'components/common/buttons/Button';
 import Claims from 'constants/claims';
-import { useApiResearch } from 'hooks/pims-api/useApiResearch';
+import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
@@ -22,7 +22,7 @@ import * as Styled from './styles';
  */
 export const ResearchListView: React.FunctionComponent = () => {
   const history = useHistory();
-  const { getResearchFiles } = useApiResearch();
+  const { getResearchFiles } = useApiResearchFile();
   const { hasClaim } = useKeycloakWrapper();
   const {
     results,

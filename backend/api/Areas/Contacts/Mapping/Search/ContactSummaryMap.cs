@@ -12,6 +12,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Search
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.Organization, src => src.Organization)
                 .Map(dest => dest.Summary, src => src.Summary)
                 .Map(dest => dest.Surname, src => src.Surname)
                 .Map(dest => dest.FirstName, src => src.FirstName)

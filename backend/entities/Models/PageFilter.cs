@@ -81,7 +81,10 @@ namespace Pims.Dal.Entities.Models
         /// <returns></returns>
         private static int CalcPage(int startIndex, int quantity)
         {
-            if (startIndex < quantity) return 1;
+            if (startIndex < quantity)
+            {
+                return 1;
+            }
 
             return startIndex / quantity;
         }

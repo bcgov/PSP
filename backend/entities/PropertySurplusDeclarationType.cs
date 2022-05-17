@@ -19,7 +19,7 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a SurplusDeclarationType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsSurplusDeclarationType(string id):this()
+        public PimsSurplusDeclarationType(string id) : this()
         {
             Id = id;
         }

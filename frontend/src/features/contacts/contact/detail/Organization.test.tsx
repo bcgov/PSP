@@ -11,6 +11,7 @@ import { phoneFormatter } from 'utils/formUtils';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import OrganizationView, { OrganizationViewProps } from './Organization';
+import { fakeAddresses } from './utils';
 
 const fakeOrganization: IContactOrganization = {
   id: '123',
@@ -186,13 +187,14 @@ describe('Contact OrganizationView component', () => {
     });
 
     var phoneValueElements = component.getAllByTestId('phone-value');
-    expect(phoneValueElements.length).toBe(4);
+    expect(phoneValueElements.length).toBe(5);
 
     // Verify that the display is in the correct order
     expect(phoneValueElements[0].textContent).toBe(phoneFormatter(workMobile.value));
     expect(phoneValueElements[1].textContent).toBe(phoneFormatter(workPhone.value));
-    expect(phoneValueElements[2].textContent).toBe(phoneFormatter(personalPhone.value));
+    expect(phoneValueElements[2].textContent).toBe(phoneFormatter(personalMobile.value));
     expect(phoneValueElements[3].textContent).toBe(phoneFormatter(faxPhone.value));
+    expect(phoneValueElements[4].textContent).toBe(phoneFormatter(personalPhone.value));
   });
 
   it('Shows address information', () => {
@@ -292,6 +294,22 @@ describe('Contact OrganizationView component', () => {
     expect(personElements[0].textContent).toBe(person1.fullName);
     expect(personElements[1].textContent).toBe(person2.fullName);
     expect(personElements[2].textContent).toBe(person3.fullName);
+  });
+
+  it('Orders address information correctly', () => {
+    const { component } = setup({
+      organization: {
+        ...fakeOrganization,
+        addresses: fakeAddresses,
+      },
+    });
+
+    var addressElements = component.getAllByTestId('contact-organization-address');
+    expect(addressElements.length).toBe(3);
+
+    expect(addressElements[0].children[0]).toHaveTextContent('Mailing address');
+    expect(addressElements[1].children[0]).toHaveTextContent('Property address');
+    expect(addressElements[2].children[0]).toHaveTextContent('Billing address');
   });
 
   it('Shows comment information', () => {

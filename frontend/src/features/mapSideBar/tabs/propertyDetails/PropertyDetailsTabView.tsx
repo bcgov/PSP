@@ -24,19 +24,22 @@ import {
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
+  loading: boolean;
 }
 
 /**
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({ property }) => {
+export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({
+  property,
+  loading,
+}) => {
   const values = property !== undefined ? property : toFormValues(defaultPropertyInfo);
-  const isLoading = property === undefined;
 
   return (
     <>
-      <LoadingBackdrop show={isLoading} parentScreen={true} />
+      <LoadingBackdrop show={loading} parentScreen={true} />
       <Formik
         initialValues={values}
         onSubmit={noop}
@@ -67,7 +70,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
 
   return (
     <StyledReadOnlyForm>
-      <Section header="Property attributes">
+      <Section header="Property Attributes">
         <SectionField label="MOTI region">
           <Text field="motiRegion.REGION_NAME" />
         </SectionField>
@@ -81,7 +84,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
         <SectionField label="Electoral district">
           <Text field="electoralDistrict.ED_NAME" />
         </SectionField>
-        <SectionField label="Agricultural Land Reserve">
+        <SectionField label="Agricultural land reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Land parcel type">
@@ -115,7 +118,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Provincial Public Hwy">
+        <SectionField label="Provincial public hwy">
           {isProvincialHighway === true && <Text>Yes</Text>}
           {isProvincialHighway === false && <Text>No</Text>}
           {isProvincialHighway === undefined && <Text>Unknown</Text>}

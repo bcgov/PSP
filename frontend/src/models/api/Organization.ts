@@ -17,6 +17,7 @@ export interface Api_Organization extends Api_ConcurrentVersion {
 
 export interface Api_OrganizationPerson extends Api_ConcurrentVersion {
   person?: Api_Person;
+  personId?: number;
   organizationId?: number;
   isDisabled?: boolean;
 }

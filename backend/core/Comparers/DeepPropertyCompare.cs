@@ -23,8 +23,15 @@ namespace Pims.Core.Comparers
         public new bool Equals([AllowNull] object x, [AllowNull] object y)
         {
             // Only root objects cannot be null.  Child objects that are null will be equal.
-            if (x == null || y == null || GetHashCode(x) != GetHashCode(y) || x.GetType() != y.GetType()) return false;
-            if (x == y) return true;
+            if (x == null || y == null || GetHashCode(x) != GetHashCode(y) || x.GetType() != y.GetType())
+            {
+                return false;
+            }
+
+            if (x == y)
+            {
+                return true;
+            }
 
             var type = x.GetType();
             var children = type.GetCachedProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty).Where(p => !p.PropertyType.IsValueType && p.PropertyType != typeof(string) && !p.PropertyType.IsEnumerable());
@@ -32,8 +39,15 @@ namespace Pims.Core.Comparers
             {
                 var cx = p.GetValue(x);
                 var cy = p.GetValue(y);
-                if ((cx == null && cy != null) || (cx != null && cy == null)) return false;
-                if (cx == null && cy == null) return true; // Both are null, therefore equal.
+                if ((cx == null && cy != null) || (cx != null && cy == null))
+                {
+                    return false;
+                }
+
+                if (cx == null && cy == null)
+                {
+                    return true; // Both are null, therefore equal.
+                }
 
                 var sct = typeof(DeepPropertyCompare<>);
                 var scgt = sct.MakeGenericType(p.PropertyType);
@@ -41,7 +55,10 @@ namespace Pims.Core.Comparers
                 var method = scgt.GetMethod(nameof(Equals), BindingFlags.Public | BindingFlags.Instance, null, new[] { p.PropertyType, p.PropertyType }, null)
                         ?? scgt.GetMethod(nameof(Equals), BindingFlags.Public | BindingFlags.Instance, null, new[] { typeof(object), typeof(object) }, null);
 
-                if (!(bool)method.Invoke(csc, new[] { cx, cy })) return false;
+                if (!(bool)method.Invoke(csc, new[] { cx, cy }))
+                {
+                    return false;
+                }
             }
 
             var collections = type.GetCachedProperties().Where(p => p.PropertyType != typeof(string) && p.PropertyType.IsEnumerable());
@@ -63,15 +80,25 @@ namespace Pims.Core.Comparers
                     lcy.Add(item);
                 }
 
-                if (lcx.Count != lcy.Count) return false;
+                if (lcx.Count != lcy.Count)
+                {
+                    return false;
+                }
 
                 for (var i = 0; i < lcx.Count; i++)
                 {
                     var cxitem = lcx[i];
                     var cyitem = lcy[i];
 
-                    if ((cxitem == null && cyitem != null) || (cxitem != null && cyitem == null)) return false;
-                    if (cxitem == null && cyitem == null) return true; // Both are null, therefore equal.
+                    if ((cxitem == null && cyitem != null) || (cxitem != null && cyitem == null))
+                    {
+                        return false;
+                    }
+
+                    if (cxitem == null && cyitem == null)
+                    {
+                        return true; // Both are null, therefore equal.
+                    }
 
                     var ctype = p.PropertyType.GetItemType();
                     var sct = typeof(DeepPropertyCompare<>);
@@ -80,7 +107,10 @@ namespace Pims.Core.Comparers
                     var method = scgt.GetMethod(nameof(Equals), BindingFlags.Public | BindingFlags.Instance, null, new[] { ctype, ctype }, null)
                         ?? scgt.GetMethod(nameof(Equals), BindingFlags.Public | BindingFlags.Instance, null, new[] { typeof(object), typeof(object) }, null);
 
-                    if (!(bool)method.Invoke(csc, new[] { cxitem, cyitem })) return false;
+                    if (!(bool)method.Invoke(csc, new[] { cxitem, cyitem }))
+                    {
+                        return false;
+                    }
                 }
             }
 

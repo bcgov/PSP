@@ -1,5 +1,4 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { act, cleanup, render } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
@@ -12,6 +11,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { usersSlice } from 'store/slices/users';
+import { act, cleanup, render } from 'utils/test-utils';
 
 import EditUserPage from './EditUserPage';
 

@@ -20,7 +20,7 @@ export const PropertyInformation: React.FunctionComponent<IPropertyInformationPr
   Partial<FieldArrayRenderProps>> = ({ nameSpace, disabled }) => {
   const formikProps = useFormikContext<IFormLease>();
 
-  const areaUnit = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnit'));
+  const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'landArea'));
   return (
     <li>
@@ -28,16 +28,23 @@ export const PropertyInformation: React.FunctionComponent<IPropertyInformationPr
       <Styled.FormGrid>
         <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
         <br />
-        <Form.Label>Area</Form.Label>
-        {!disabled ? (
-          <InputGroup
-            disabled={disabled}
-            field={withNameSpace(nameSpace, 'landArea')}
-            postText={areaUnit}
-          />
-        ) : (
-          <Styled.FormControl disabled={disabled} value={`${landArea} ${areaUnit}`} />
-        )}
+        {landArea !== undefined ? (
+          <>
+            <Form.Label>Lease Area</Form.Label>
+            {!disabled ? (
+              <InputGroup
+                disabled={disabled}
+                field={withNameSpace(nameSpace, 'landArea')}
+                postText={areaUnitType?.description ?? ''}
+              />
+            ) : (
+              <Styled.FormControl
+                disabled={disabled}
+                value={`${landArea} ${areaUnitType?.description ?? ''}`}
+              />
+            )}
+          </>
+        ) : null}
       </Styled.FormGrid>
     </li>
   );

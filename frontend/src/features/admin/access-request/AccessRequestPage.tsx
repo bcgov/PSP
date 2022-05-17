@@ -1,5 +1,6 @@
 import './AccessRequestPage.scss';
 
+import { Button } from 'components/common/buttons/Button';
 import { ISnackbarState, Snackbar } from 'components/common/Snackbar';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as API from 'constants/API';
@@ -11,7 +12,6 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IAccessRequest, IAccessRequestUserInfo } from 'interfaces';
 import React, { useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -180,8 +180,14 @@ const AccessRequestPage = () => {
 
                 <p>
                   By clicking request, you agree to our{' '}
-                  <a href={DISCLAIMER_URL}>Terms and Conditions</a> and that you have read our{' '}
-                  <a href={PRIVACY_POLICY_URL}>Privacy Policy</a>.
+                  <a target="_blank" rel="noopener noreferrer" href={DISCLAIMER_URL}>
+                    Terms and Conditions
+                  </a>{' '}
+                  and that you have read our{' '}
+                  <a target="_blank" rel="noopener noreferrer" href={PRIVACY_POLICY_URL}>
+                    Privacy Policy
+                  </a>
+                  .
                 </p>
                 {alert.show && (
                   <Snackbar

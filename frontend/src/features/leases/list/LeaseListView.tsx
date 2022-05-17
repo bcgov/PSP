@@ -1,4 +1,4 @@
-import { Button } from 'components/common/form';
+import { Button, IconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
@@ -90,16 +90,16 @@ export const LeaseListView: React.FunctionComponent = () => {
             </Col>
             <Col md="auto" className="px-0">
               <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-                <Styled.FileIcon>
-                  <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
-                </Styled.FileIcon>
+                <IconButton onClick={() => fetch('excel')}>
+                  <FaFileExcel data-testid="excel-icon" size={36} />
+                </IconButton>
               </TooltipWrapper>
             </Col>
             <Col md="auto" className="px-0">
               <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
-                <Styled.FileIcon>
-                  <FaFileAlt data-testid="csv-icon" size={36} onClick={() => fetch('csv')} />
-                </Styled.FileIcon>
+                <IconButton onClick={() => fetch('csv')}>
+                  <FaFileAlt data-testid="csv-icon" size={36} />
+                </IconButton>
               </TooltipWrapper>
             </Col>
           </Row>
@@ -128,7 +128,8 @@ export const LeaseListView: React.FunctionComponent = () => {
 };
 
 const StyledAddButton = styled(Button)`
-  &.btn.btn-primary {
+  &.btn.btn-primary,
+  &.btn.btn-primary:active {
     background-color: ${props => props.theme.css.completedColor};
   }
 `;

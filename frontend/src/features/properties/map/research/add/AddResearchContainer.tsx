@@ -1,31 +1,59 @@
+import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useRef } from 'react';
+import { useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ResearchFooter from '../common/ResearchFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
-import AddResearchFooter from './AddResearchFooter';
 import AddResearchForm from './AddResearchForm';
-import { ResearchForm } from './models';
+import { PropertyForm, ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;
 }
 
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
+  const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const initialForm = new ResearchForm();
+  const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
+    SelectedPropertyContext,
+  );
+  const initialForm = useMemo(() => {
+    const researchForm = new ResearchForm();
+    if (!!selectedResearchFeature) {
+      researchForm.properties = [new PropertyForm(mapFeatureToProperty(selectedResearchFeature))];
+    }
+    return researchForm;
+  }, [selectedResearchFeature]);
   const { addResearchFile } = useAddResearch();
+
+  useEffect(() => {
+    if (!!selectedResearchFeature && !!formikRef.current) {
+      formikRef.current.resetForm();
+      formikRef.current?.setFieldValue('properties', [
+        new PropertyForm(mapFeatureToProperty(selectedResearchFeature)),
+      ]);
+    }
+    return () => {
+      setSelectedResearchFeature(null);
+    };
+  }, [initialForm, selectedResearchFeature, setSelectedResearchFeature]);
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
+    console.log(response);
     if (!!response?.name) {
-      props.onClose();
+      formikRef.current?.setSubmitting(false);
+      formikRef.current?.resetForm();
+      history.replace(`/mapview/research/${response.id}/edit`);
     }
   };
 
@@ -35,7 +63,6 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   };
 
   const handleCancel = () => {
-    formikRef.current?.resetForm();
     props.onClose();
   };
 
@@ -44,7 +71,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       title="Create Research File"
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
-        <AddResearchFooter
+        <ResearchFooter
           isSubmitting={formikRef.current?.isSubmitting}
           onSave={handleSave}
           onCancel={handleCancel}
@@ -56,11 +83,9 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       <Formik<ResearchForm>
         innerRef={formikRef}
         initialValues={initialForm}
-        onSubmit={async (values: ResearchForm, formikHelpers) => {
+        onSubmit={async (values: ResearchForm) => {
           const researchFile: Api_ResearchFile = values.toApi();
-          saveResearchFile(researchFile);
-          formikHelpers.setSubmitting(false);
-          formikHelpers.resetForm();
+          await saveResearchFile(researchFile);
         }}
         validationSchema={AddResearchFileYupSchema}
       >
@@ -69,7 +94,11 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
             <AddResearchForm />
 
             <Prompt
-              when={formikProps.dirty && formikProps.submitCount === 0}
+              when={
+                formikProps.dirty ||
+                (formikProps.values.properties !== initialForm.properties &&
+                  formikProps.submitCount === 0)
+              }
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
           </StyledFormWrapper>

@@ -46,13 +46,13 @@ export const PropertyRow: React.FunctionComponent<IPropertyRowProps> = ({
         <StyledInlineFlexDiv>
           <Styled.SmallInlineInput
             disabled={!pid && !pin}
-            label="Area:"
+            label="Lease Area:"
             field={withNameSpace(nameSpace, 'landArea')}
           />
           <Styled.SmallInlineSelect
             disabled={!pid && !pin}
             options={areaUnitTypes}
-            field={withNameSpace(nameSpace, 'areaUnitId')}
+            field={withNameSpace(nameSpace, 'areaUnitType.id')}
             placeholder=" "
           />
           <Styled.RemoveButton variant="link" onClick={onRemove}>

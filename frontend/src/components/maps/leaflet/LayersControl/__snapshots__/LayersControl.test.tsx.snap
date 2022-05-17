@@ -2,7 +2,146 @@
 
 exports[`LayersControl View renders correctly 1`] = `
 <DocumentFragment>
-  .c4 {
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c1.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c1.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c1.btn.btn-primary {
+  border: none;
+}
+
+.c1.btn.btn-secondary {
+  background: none;
+}
+
+.c1.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
+  background: none;
+}
+
+.c1.btn.btn-light {
+  border: none;
+}
+
+.c1.btn.btn-dark {
+  border: none;
+}
+
+.c1.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c1.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c1.Button--icon-only:focus {
+  outline: none;
+}
+
+.c1.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -17,22 +156,22 @@ exports[`LayersControl View renders correctly 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c4 .form-group .form-check label {
+.c5 .form-group .form-check label {
   font-weight: bold;
   color: textColor;
   font-size: 1.3rem;
 }
 
-.c5 {
+.c6 {
   margin-right: 1rem;
   font-size: 1.5rem;
 }
 
-.c6 {
+.c7 {
   margin-bottom: 0rem;
 }
 
-.c6 .form-check {
+.c7 .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -43,11 +182,11 @@ exports[`LayersControl View renders correctly 1`] = `
   align-items: center;
 }
 
-.c6 .form-check input {
+.c7 .form-check input {
   margin-top: 0rem;
 }
 
-.c6 .form-check label {
+.c7 .form-check label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -76,33 +215,31 @@ exports[`LayersControl View renders correctly 1`] = `
   height: 0rem;
 }
 
-.c3 {
+.c4 {
   width: 100%;
   height: calc(100% - 8rem);
   padding: 1.6rem;
 }
 
-.c3.open {
+.c4.open {
   overflow-y: scroll;
 }
 
-.c2 {
+.c3 {
   font-size: 3rem;
 }
 
-.c1 {
+.c2.btn {
   width: 5.2rem;
   height: 5.2rem;
   position: absolute;
   top: 0;
   left: -5.1rem;
   background-color: #fff;
-  color: slideOutBlue;
-  border-color: slideOutBlue;
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
-.c1.open {
+.c2.btn.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   top: 2.6rem;
@@ -198,27 +335,31 @@ exports[`LayersControl View renders correctly 1`] = `
               id="layersContainer"
             >
               <button
-                class="c1 btn btn-outline-secondary"
+                class="c1 Button c2 btn btn-outline-secondary"
                 id="layersControlButton"
                 type="button"
               >
-                <svg
-                  class="c2"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="Button__value"
                 >
-                  <path
-                    d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
-                  />
-                </svg>
+                  <svg
+                    class="c3"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
+                    />
+                  </svg>
+                </div>
               </button>
               <div
-                class="c3"
+                class="c4"
               >
                 <form
                   action="#"
@@ -230,11 +371,11 @@ exports[`LayersControl View renders correctly 1`] = `
                       class="list-group"
                     >
                       <div
-                        class="c4 list-group-item"
+                        class="c5 list-group-item"
                         id="Administrative Boundaries"
                       >
                         <svg
-                          class="c5"
+                          class="c6"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -248,7 +389,7 @@ exports[`LayersControl View renders correctly 1`] = `
                           />
                         </svg>
                         <div
-                          class="c6 form-group"
+                          class="c7 form-group"
                         >
                           <div
                             class="form-check"
@@ -267,11 +408,11 @@ exports[`LayersControl View renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c4 list-group-item"
+                        class="c5 list-group-item"
                         id="firstNations"
                       >
                         <svg
-                          class="c5"
+                          class="c6"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -285,7 +426,7 @@ exports[`LayersControl View renders correctly 1`] = `
                           />
                         </svg>
                         <div
-                          class="c6 form-group"
+                          class="c7 form-group"
                         >
                           <div
                             class="form-check"
@@ -304,11 +445,11 @@ exports[`LayersControl View renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c4 list-group-item"
+                        class="c5 list-group-item"
                         id="landOwnership"
                       >
                         <svg
-                          class="c5"
+                          class="c6"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -322,7 +463,7 @@ exports[`LayersControl View renders correctly 1`] = `
                           />
                         </svg>
                         <div
-                          class="c6 form-group"
+                          class="c7 form-group"
                         >
                           <div
                             class="form-check"
@@ -341,11 +482,11 @@ exports[`LayersControl View renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c4 list-group-item"
+                        class="c5 list-group-item"
                         id="zoning"
                       >
                         <svg
-                          class="c5"
+                          class="c6"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -359,7 +500,7 @@ exports[`LayersControl View renders correctly 1`] = `
                           />
                         </svg>
                         <div
-                          class="c6 form-group"
+                          class="c7 form-group"
                         >
                           <div
                             class="form-check"
@@ -378,11 +519,11 @@ exports[`LayersControl View renders correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c4 list-group-item"
+                        class="c5 list-group-item"
                         id="electoral"
                       >
                         <svg
-                          class="c5"
+                          class="c6"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -396,7 +537,7 @@ exports[`LayersControl View renders correctly 1`] = `
                           />
                         </svg>
                         <div
-                          class="c6 form-group"
+                          class="c7 form-group"
                         >
                           <div
                             class="form-check"

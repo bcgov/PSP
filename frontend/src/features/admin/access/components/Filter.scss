@@ -8,7 +8,7 @@
       align-items: left;
 
       &.actions {
-        :first-child {
+        .btn {
           margin-right: 1rem;
         }
       }

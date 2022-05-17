@@ -1,7 +1,7 @@
 import classNames from 'classnames';
+import { Button } from 'components/common/buttons/Button';
 import React, { useState } from 'react';
 import { ModalProps as BsModalProps } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import styled from 'styled-components';
@@ -153,20 +153,38 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
 const ModalContainer = (props: BsModalProps & ModalProps) =>
   !props.asPopup ? (
     <Container>
-      <Modal
+      <StyledModal
         {...props}
         show={props.show}
         onHide={props.close}
         dialogClassName={classNames(props.modalSize, props.className)}
       >
         {props.children}
-      </Modal>
+      </StyledModal>
     </Container>
   ) : props.show ? (
     <PopupContainer className={classNames(props.modalSize, props.className)}>
       {props.children}
     </PopupContainer>
   ) : null;
+
+const StyledModal = styled(Modal)`
+  .modal-header {
+    height: 3.8rem;
+    padding: 0 1rem;
+    background-color: ${({ theme }) => theme.css.primaryColor};
+    .h4 {
+      color: white;
+      font-family: BcSans-Bold;
+      font-size: 2.2rem;
+      height: 2.75rem;
+    }
+    .close {
+      color: white;
+      opacity: 1;
+    }
+  }
+`;
 
 const PopupContainer = styled.div`
   position: fixed;

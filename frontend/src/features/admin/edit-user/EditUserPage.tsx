@@ -1,5 +1,6 @@
 import './EditUserPage.scss';
 
+import { Button } from 'components/common/buttons/Button';
 import { Label } from 'components/common/Label';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
@@ -7,7 +8,6 @@ import { AUTHORIZATION_URL } from 'constants/strings';
 import { Field, Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';

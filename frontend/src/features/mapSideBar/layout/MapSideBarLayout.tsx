@@ -77,7 +77,9 @@ const Content = styled.div`
 
 const TitleBar = styled.div``;
 
-const Header = styled.div``;
+const Header = styled.div`
+  position: relative;
+`;
 
 const Footer = styled.div``;
 

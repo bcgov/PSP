@@ -53,8 +53,10 @@ describe('useProperties functions', () => {
       const mockResponse = { items: mockProperties };
       mockAxios.onGet(url).reply(200, mockResponse);
 
-      const { getProperties } = setup();
-      await getProperties(null);
+      const {
+        getProperties: { execute },
+      } = setup();
+      await execute(null);
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
@@ -63,8 +65,10 @@ describe('useProperties functions', () => {
     it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
 
-      const { getProperties } = setup();
-      await expect(getProperties(null)).rejects.toThrow();
+      const {
+        getProperties: { execute },
+      } = setup();
+      await expect(execute(null)).rejects.toThrow();
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();

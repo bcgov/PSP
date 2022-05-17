@@ -122,6 +122,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsPersonHist> PimsPersonHists { get; set; }
         public virtual DbSet<PimsPersonOrganization> PimsPersonOrganizations { get; set; }
         public virtual DbSet<PimsPersonOrganizationHist> PimsPersonOrganizationHists { get; set; }
+        public virtual DbSet<PimsPphStatusType> PimsPphStatusTypes { get; set; }
+        public virtual DbSet<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; }
         public virtual DbSet<PimsProject> PimsProjects { get; set; }
         public virtual DbSet<PimsProjectHist> PimsProjectHists { get; set; }
         public virtual DbSet<PimsProjectNote> PimsProjectNotes { get; set; }
@@ -138,6 +140,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
         public virtual DbSet<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
         public virtual DbSet<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
+        public virtual DbSet<PimsPropResearchPurposeType> PimsPropResearchPurposeTypes { get; set; }
         public virtual DbSet<PimsProperty> PimsProperties { get; set; }
         public virtual DbSet<PimsPropertyActivity> PimsPropertyActivities { get; set; }
         public virtual DbSet<PimsPropertyActivityHist> PimsPropertyActivityHists { get; set; }
@@ -1595,45 +1598,45 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FormattedMailingAddrLine6).HasComment("Formatted address line for mailing purposes: Line 6 consists of Site and Compartment label and values");
 
-                entity.Property(e => e.MailingAddrAttention).HasComment("Attention, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrAttention).HasComment("Attention, as required for mail to be sent to the owners mailing address.");
 
                 entity.Property(e => e.MailingAddrBulkMailCode).HasComment("Identifies when five or more properties are linked to a name record or when five or more name records with a single mailing address are linked to a folio.");
 
-                entity.Property(e => e.MailingAddrCareOf).HasComment("Care Of, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrCareOf).HasComment("Care Of, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrCity).HasComment("City, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrCity).HasComment("City, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrCompartment).HasComment("Compartment, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrCompartment).HasComment("Compartment, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrCountry).HasComment("Country, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrCountry).HasComment("Country, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrDeliveryInstallationType).HasComment("Delivery installation type, as required for mail to be sent to the owner?s mailing address.  E.g. Station, Post Office, Letter Carrier Depot, etc.");
+                entity.Property(e => e.MailingAddrDeliveryInstallationType).HasComment("Delivery installation type, as required for mail to be sent to the owners mailing address.  E.g. Station, Post Office, Letter Carrier Depot, etc.");
 
-                entity.Property(e => e.MailingAddrFloor).HasComment("Floor, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrFloor).HasComment("Floor, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrFreeForm).HasComment("Additional mailing address information not fitting in any of the predefined fields, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrFreeForm).HasComment("Additional mailing address information not fitting in any of the predefined fields, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrModeOfDelivery).HasComment("Mode of Delivery, as required for mail to be sent to the owner?s mailing address.  e.g. Rural Route, Post Office Box, General Delivery, etc.");
+                entity.Property(e => e.MailingAddrModeOfDelivery).HasComment("Mode of Delivery, as required for mail to be sent to the owners mailing address.  e.g. Rural Route, Post Office Box, General Delivery, etc.");
 
-                entity.Property(e => e.MailingAddrModeOfDeliveryValue).HasComment("Mode of delivery value, as required for mail to be sent to the owner?s mailing address.  e.g. RR 876, PO Box 19, etc.");
+                entity.Property(e => e.MailingAddrModeOfDeliveryValue).HasComment("Mode of delivery value, as required for mail to be sent to the owners mailing address.  e.g. RR 876, PO Box 19, etc.");
 
-                entity.Property(e => e.MailingAddrPostalZip).HasComment("Postal or zip code, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrPostalZip).HasComment("Postal or zip code, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrProvinceState).HasComment("Province or state, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrProvinceState).HasComment("Province or state, as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrSite).HasComment("Site value, as required for mail to be sent to the owner?s mailing address.  e.g. Site 10.");
+                entity.Property(e => e.MailingAddrSite).HasComment("Site value, as required for mail to be sent to the owners mailing address.  e.g. Site 10.");
 
-                entity.Property(e => e.MailingAddrStreetDirectionPrefix).HasComment("Further refinement of the street name to facilitate location of building (pre-directional), as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrStreetDirectionPrefix).HasComment("Further refinement of the street name to facilitate location of building (pre-directional), as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetDirectionSuffix).HasComment("Further refinement of the street name to facilitate location of building (post-directional), as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrStreetDirectionSuffix).HasComment("Further refinement of the street name to facilitate location of building (post-directional), as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetName).HasComment("Road name assigned by a local government (municipality), as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrStreetName).HasComment("Road name assigned by a local government (municipality), as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetNumber).HasComment("Street number assigned by a local government (municipality), as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrStreetNumber).HasComment("Street number assigned by a local government (municipality), as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrStreetType).HasComment("Street type assigned by a local government (municipality), as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrStreetType).HasComment("Street type assigned by a local government (municipality), as required for mail to be sent to the owners mailing address.");
 
-                entity.Property(e => e.MailingAddrUnitNumber).HasComment("Apartment or Suite or Unit Number, as required for mail to be sent to the owner?s mailing address.");
+                entity.Property(e => e.MailingAddrUnitNumber).HasComment("Apartment or Suite or Unit Number, as required for mail to be sent to the owners mailing address.");
 
                 entity.HasOne(d => d.RollNumberNavigation)
                     .WithMany(p => p.BcaOwnershipGroups)
@@ -2304,21 +2307,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DocumentationReference).HasComment("Location of documents pertianing to the lease/license");
 
-                entity.Property(e => e.HasDigitalFile)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicator that digital file exists");
+                entity.Property(e => e.HasDigitalFile).HasComment("Indicator that digital file exists");
 
-                entity.Property(e => e.HasDigitalLicense)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicator that digital license exists");
+                entity.Property(e => e.HasDigitalLicense).HasComment("Indicator that digital license exists");
 
-                entity.Property(e => e.HasPhysicalFile)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicator that phyical file exists");
+                entity.Property(e => e.HasPhysicalFile).HasComment("Indicator that phyical file exists");
 
-                entity.Property(e => e.HasPhysicialLicense)
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Indicator that physical license exists");
+                entity.Property(e => e.HasPhysicialLicense).HasComment("Indicator that physical license exists");
 
                 entity.Property(e => e.InspectionDate).HasComment("Inspection date");
 
@@ -2768,6 +2763,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.Note).HasComment("Notes associated with the lease/tenant relationship.");
+
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsLeaseTenants)
                     .HasForeignKey(d => d.LeaseId)
@@ -2786,9 +2783,14 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_ORG_PIM_TENANT_FK");
 
                 entity.HasOne(d => d.Person)
-                    .WithMany(p => p.PimsLeaseTenants)
+                    .WithMany(p => p.PimsLeaseTenantPeople)
                     .HasForeignKey(d => d.PersonId)
                     .HasConstraintName("PIM_PERSON_PIM_TENANT_FK");
+
+                entity.HasOne(d => d.PrimaryContact)
+                    .WithMany(p => p.PimsLeaseTenantPrimaryContacts)
+                    .HasForeignKey(d => d.PrimaryContactId)
+                    .HasConstraintName("PIM_PERSON_PIM_PRIMARY_CONTACT_FK");
             });
 
             modelBuilder.Entity<PimsLeaseTenantHist>(entity =>
@@ -3209,6 +3211,75 @@ namespace Pims.Dal
                 entity.Property(e => e.PersonOrganizationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsPphStatusType>(entity =>
+            {
+                entity.HasKey(e => e.PphStatusTypeCode)
+                    .HasName("PPHSTT_PK");
+
+                entity.HasComment("Code table to describe the Provincial Public Highway status.");
+
+                entity.Property(e => e.PphStatusTypeCode).HasComment("Code indicating the Provincial Public Highway status");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the code indicating the purpose of the property research");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
+            modelBuilder.Entity<PimsPrfPropResearchPurposeType>(entity =>
+            {
+                entity.HasKey(e => e.PrfPropResearchPurposeId)
+                    .HasName("PRSPRP_PK");
+
+                entity.Property(e => e.PrfPropResearchPurposeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.PropResearchPurposeTypeCodeNavigation)
+                    .WithMany(p => p.PimsPrfPropResearchPurposeTypes)
+                    .HasForeignKey(d => d.PropResearchPurposeTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_RRESPT_PIM_PRSPRP_FK");
+
+                entity.HasOne(d => d.PropertyResearchFile)
+                    .WithMany(p => p.PimsPrfPropResearchPurposeTypes)
+                    .HasForeignKey(d => d.PropertyResearchFileId)
+                    .HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
             });
 
             modelBuilder.Entity<PimsProject>(entity =>
@@ -3651,6 +3722,34 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_PRPTNR_PIM_PRPRTT_FK");
             });
 
+            modelBuilder.Entity<PimsPropResearchPurposeType>(entity =>
+            {
+                entity.HasKey(e => e.PropResearchPurposeTypeCode)
+                    .HasName("RRESPT_PK");
+
+                entity.HasComment("Code table to describe the purpose ot the property research");
+
+                entity.Property(e => e.PropResearchPurposeTypeCode).HasComment("Code indicating the purpose of the property research");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the code indicating the purpose of the property research");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is disabled.");
+            });
+
             modelBuilder.Entity<PimsProperty>(entity =>
             {
                 entity.HasKey(e => e.PropertyId)
@@ -3688,6 +3787,10 @@ namespace Pims.Dal
 
                 entity.Property(e => e.IsProvincialPublicHwy).HasComment("Is this property a provincial public highway?");
 
+                entity.Property(e => e.IsRwyBeltDomPatent)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if this property is original federal vs. provincial ownership.");
+
                 entity.Property(e => e.IsSensitive)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this a sensitive property?");
@@ -3716,6 +3819,10 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Pin).HasComment("Property number");
 
+                entity.Property(e => e.PphStatusUpdateTimestamp).HasComment("Date / time that the Provincial Public Highway status was updated.");
+
+                entity.Property(e => e.PphStatusUpdateUserid).HasComment("Userid that updated the Provincial Public Highway status.");
+
                 entity.Property(e => e.PropertyDataSourceEffectiveDate).HasComment("Date the property was officially registered");
 
                 entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
@@ -3738,6 +3845,11 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.DistrictCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_DSTRCT_PIM_PRPRTY_FK");
+
+                entity.HasOne(d => d.PphStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsProperties)
+                    .HasForeignKey(d => d.PphStatusTypeCode)
+                    .HasConstraintName("PIM_PPHSTT_PIM_PRPRTY_FK");
 
                 entity.HasOne(d => d.PropMgmtOrg)
                     .WithMany(p => p.PimsProperties)
@@ -4249,11 +4361,19 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
 
+                entity.Property(e => e.DocumentReference).HasComment("URL / reference to a LAN Drive");
+
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code is disabled.");
 
-                entity.Property(e => e.PropertyName).HasComment("Descriptivee reference for the property being researched.");
+                entity.Property(e => e.IsLegalOpinionObtained).HasComment("Indicates whether a legal opinion was obtained (0 = No, 1 = Yes, null = Unknown)");
+
+                entity.Property(e => e.IsLegalOpinionRequired).HasComment("Indicates whether a legal opinion is required (0 = No, 1 = Yes, null = Unknown)");
+
+                entity.Property(e => e.PropertyName).HasComment("Descriptive reference for the property being researched.");
+
+                entity.Property(e => e.ResearchSummary).HasComment("Summary of the property research.");
 
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropertyResearchFiles)
@@ -4678,9 +4798,7 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ResearchFilePurposeId)
                     .HasName("RSFLPR_PK");
 
-                entity.Property(e => e.ResearchFilePurposeId)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ]')");
+                entity.Property(e => e.ResearchFilePurposeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -4727,8 +4845,6 @@ namespace Pims.Dal
                 entity.Property(e => e.ResearchFilePurposeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.ResearchFilePurposeId).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsResearchFileStatusType>(entity =>
@@ -5007,6 +5123,8 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.InterestPaid).HasComment("Interest paid on the deposit to the deposit holder");
 
                 entity.Property(e => e.ReturnAmount).HasComment("Amount returned minus claims");
 
@@ -5821,6 +5939,10 @@ namespace Pims.Dal
             modelBuilder.HasSequence("PIMS_PERSON_ORGANIZATION_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(21474483647);
 
             modelBuilder.HasSequence("PIMS_PROJECT_H_ID_SEQ")
                 .HasMin(1)

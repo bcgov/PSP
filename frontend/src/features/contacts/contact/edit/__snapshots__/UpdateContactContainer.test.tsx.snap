@@ -8,7 +8,140 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c1 {
+  .c13.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c13.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c13.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c13.btn.btn-primary {
+  border: none;
+}
+
+.c13.btn.btn-secondary {
+  background: none;
+}
+
+.c13.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
+  background: none;
+}
+
+.c13.btn.btn-light {
+  border: none;
+}
+
+.c13.btn.btn-dark {
+  border: none;
+}
+
+.c13.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c13.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c13.Button--icon-only:focus {
+  outline: none;
+}
+
+.c13.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1 {
   grid-area: breadcrumb;
 }
 
@@ -37,7 +170,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   gap: 1.6rem;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -48,7 +181,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   gap: 0.5rem;
 }
 
-.c14 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -59,7 +192,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   gap: 1.6rem;
 }
 
-.c17 {
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -67,6 +200,40 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+}
+
+.c14.c14.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c14.c14.btn .text {
+  display: none;
+}
+
+.c14.c14.btn:hover,
+.c14.c14.btn:active,
+.c14.c14.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c14.c14.btn:hover .text,
+.c14.c14.btn:active .text,
+.c14.c14.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
 }
 
 .c2 {
@@ -107,13 +274,17 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   padding-right: 1rem;
 }
 
+.c9 button.close {
+  font-size: 2.4rem;
+}
+
 .c6 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
 }
 
-.c15 {
+.c17 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -121,35 +292,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c12.c12 {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c12.c12 .text {
-  display: none;
-}
-
-.c12.c12 > div:hover {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c12.c12 > div:hover .text {
-  display: inline;
-}
-
-.c16 {
+.c18 {
   font-size: 1.6rem;
   font-weight: 400;
   -webkit-text-decoration: none solid rgb(170,170,170);
@@ -157,7 +300,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -185,7 +328,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   line-height: 2.9rem;
 }
 
-.c13 {
+.c15 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -235,14 +378,14 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   color: red;
 }
 
-.c10 {
+.c11 {
   color: #494949;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c18 {
+.c20 {
   width: 100%;
   padding: 1rem 4rem;
   gap: 2rem;
@@ -457,7 +600,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col-md-7"
               >
                 <div
-                  class="form-group"
+                  class="c9 form-group"
                 >
                   <label
                     class="form-label"
@@ -527,7 +670,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
               Contact info
             </h2>
             <div
-              class="c9 c10"
+              class="c10 c11"
             >
               <svg
                 class="mt-2"
@@ -620,10 +763,10 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 style="padding-left: 0px; padding-top: 3rem;"
               >
                 <div
-                  class="c11 h-100"
+                  class="c12 h-100"
                 >
                   <button
-                    class="Button c12 btn btn-link"
+                    class="c13 Button c14 btn btn-link"
                     type="button"
                   >
                     <div
@@ -638,6 +781,9 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                         width="2rem"
                         xmlns="http://www.w3.org/2000/svg"
                       >
+                        <title>
+                          remove
+                        </title>
                         <path
                           d="M0 0h24v24H0z"
                           fill="none"
@@ -658,7 +804,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
               </div>
             </div>
             <button
-              class="Button btn btn-link"
+              class="c13 Button btn btn-link"
               type="button"
             >
               <div
@@ -751,49 +897,45 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col-md-2"
                 style="padding-left: 0px; padding-top: 3rem;"
               >
-                <div
-                  class="c11 h-100"
+                <button
+                  class="c13 Button c14 btn btn-link"
+                  type="button"
                 >
-                  <button
-                    class="Button c12 btn btn-link"
-                    type="button"
+                  <div
+                    class="Button__value"
                   >
-                    <div
-                      class="Button__value"
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        fill="currentColor"
-                        height="2rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="2rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <title>
-                          remove
-                        </title>
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                       
-                      <span
-                        class="text"
-                      >
-                        Remove
-                      </span>
-                    </div>
-                  </button>
-                </div>
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
               </div>
             </div>
             <button
-              class="Button btn btn-link"
+              class="c13 Button btn btn-link"
               type="button"
             >
               <div
@@ -812,7 +954,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
               Address
             </h2>
             <h3
-              class="c13"
+              class="c15"
             >
               Mailing Address
             </h3>
@@ -879,7 +1021,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button btn btn-link"
+                  class="c13 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1009,7 +1151,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
             class="c6"
           >
             <h3
-              class="c13"
+              class="c15"
             >
               Property Address
             </h3>
@@ -1050,7 +1192,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button btn btn-link"
+                  class="c13 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1180,7 +1322,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
             class="c6"
           >
             <h3
-              class="c13"
+              class="c15"
             >
               Billing Address
             </h3>
@@ -1221,7 +1363,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="Button btn btn-link"
+                  class="c13 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -1351,15 +1493,15 @@ exports[`UpdateContactContainer renders as expected 1`] = `
             class="c6"
           >
             <div
-              class="c14"
+              class="c16"
             >
               <label
-                class="c15 form-label"
+                class="c17 form-label"
               >
                 Comments
               </label>
               <span
-                class="c16"
+                class="c18"
               >
                 (Optional)
               </span>
@@ -1382,10 +1524,10 @@ exports[`UpdateContactContainer renders as expected 1`] = `
       </form>
     </div>
     <div
-      class="c17 c18"
+      class="c19 c20"
     >
       <button
-        class="Button btn btn-secondary"
+        class="c13 Button btn btn-secondary"
         type="button"
       >
         <div
@@ -1395,7 +1537,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
         </div>
       </button>
       <button
-        class="Button btn btn-primary"
+        class="c13 Button btn btn-primary"
         type="button"
       >
         <div

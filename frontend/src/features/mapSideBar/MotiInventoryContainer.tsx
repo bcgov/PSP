@@ -13,7 +13,7 @@ import { pidFormatter } from 'utils';
 import { usePropertyDetails } from './hooks/usePropertyDetails';
 import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
-import { InventoryTabs } from './tabs/InventoryTabs';
+import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
 import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
 
@@ -32,9 +32,10 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
+  const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
 
   // First, fetch property information from PSP API
-  const { getPropertyWithPid } = useProperties();
+  const { getPropertyWithPid, getPropertyWithPidLoading: propertyLoading } = useProperties();
   useEffect(() => {
     const func = async () => {
       try {
@@ -52,6 +53,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError?.response?.status === 404) {
             setShowPropertyInfoTab(false);
+            setActiveTab(InventoryTabNames.title);
           }
         }
       }
@@ -64,7 +66,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   // additional information which we store in a different model (IPropertyDetailsForm)
   const propertyViewForm = usePropertyDetails(apiProperty);
 
-  const { getLtsaData } = useLtsa();
+  const { getLtsaData, ltsaLoading } = useLtsa();
   useEffect(() => {
     const func = async () => {
       setLtsaDataRequestedOn(new Date());
@@ -83,21 +85,58 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     func();
   }, [getLtsaData, props.pid, isMounted]);
 
+  const tabViews: TabInventoryView[] = [];
+
+  tabViews.push({
+    content: (
+      <LtsaTabView
+        ltsaData={ltsaData}
+        ltsaRequestedOn={ltsaDataRequestedOn}
+        loading={ltsaLoading}
+      />
+    ),
+    key: InventoryTabNames.title,
+    name: 'Title',
+  });
+
+  tabViews.push({
+    content: <></>,
+    key: InventoryTabNames.value,
+    name: 'Value',
+  });
+
+  var defaultTab = InventoryTabNames.title;
+
+  if (showPropertyInfoTab) {
+    tabViews.push({
+      content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
+      key: InventoryTabNames.property,
+      name: 'Property Details',
+    });
+    defaultTab = InventoryTabNames.property;
+  }
+
   return (
     <MapSideBarLayout
       title="Property Information"
       header={
-        <MotiInventoryHeader ltsaData={ltsaData} property={apiProperty} onZoom={props.onZoom} />
+        <MotiInventoryHeader
+          ltsaData={ltsaData}
+          ltsaLoading={ltsaLoading}
+          propertyLoading={propertyLoading}
+          property={apiProperty}
+          onZoom={props.onZoom}
+        />
       }
       icon={<LotIcon className="mr-1" />}
       showCloseButton
       onClose={props.onClose}
     >
       <InventoryTabs
-        LtsaView={<LtsaTabView ltsaData={ltsaData} ltsaRequestedOn={ltsaDataRequestedOn} />}
-        PropertyView={
-          showPropertyInfoTab ? <PropertyDetailsTabView property={propertyViewForm} /> : null
-        }
+        tabViews={tabViews}
+        defaultTabKey={defaultTab}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
     </MapSideBarLayout>
   );

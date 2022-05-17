@@ -76,7 +76,10 @@ namespace Pims.Dal
         /// <returns></returns>
         public static IServiceCollection AddPimsContext(this IServiceCollection repositories, IHostEnvironment env, string connectionString)
         {
-            if (string.IsNullOrWhiteSpace(connectionString)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(connectionString));
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(connectionString));
+            }
 
             repositories.AddDbContext<PimsContext>(options =>
             {

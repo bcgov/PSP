@@ -74,8 +74,14 @@ namespace Pims.Dal.Helpers.Extensions
         public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
-            if (requireAll) user.ThrowIfNotAllAuthorized(permission);
-            else user.ThrowIfNotAuthorized(permission, message);
+            if (requireAll)
+            {
+                user.ThrowIfNotAllAuthorized(permission);
+            }
+            else
+            {
+                user.ThrowIfNotAuthorized(permission, message);
+            }
 
             return entity;
         }
@@ -95,8 +101,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type</typeparam>
-        /// <typeparam name="I">The type of the id property</typeparam>
+        /// <typeparam name="T">The parent entity type.</typeparam>
+        /// <typeparam name="I">The type of the id property.</typeparam>
         /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
@@ -139,8 +145,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type</typeparam>
-        /// <typeparam name="I">The type of the id property</typeparam>
+        /// <typeparam name="T">The parent entity type.</typeparam>
+        /// <typeparam name="I">The type of the id property.</typeparam>
         /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
@@ -162,15 +168,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type</typeparam>
-        /// <typeparam name="I">The type of the id property</typeparam>
+        /// <typeparam name="T">The parent entity type.</typeparam>
+        /// <typeparam name="I">The type of the id property.</typeparam>
         /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation</param>
-        /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity</param>
+        /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
         public static void UpdateGrandchild<T, I, C>(
             this PimsContext context,
             Expression<Func<T, object>> childNavigation,

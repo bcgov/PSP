@@ -49,11 +49,18 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsTenant UpdateTenant(PimsTenant tenant)
         {
-            if (tenant == null) throw new ArgumentNullException(nameof(tenant));
+            if (tenant == null)
+            {
+                throw new ArgumentNullException(nameof(tenant));
+            }
+
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
             var originalTenant = this.Context.PimsTenants.FirstOrDefault(t => t.Code == tenant.Code);
 
-            if (originalTenant == null) throw new KeyNotFoundException();
+            if (originalTenant == null)
+            {
+                throw new KeyNotFoundException();
+            }
 
             originalTenant.Name = tenant.Name;
             originalTenant.Description = tenant.Description;

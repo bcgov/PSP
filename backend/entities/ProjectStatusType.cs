@@ -23,7 +23,7 @@ namespace Pims.Dal.Entities
         /// <param name="id"></param>
         /// <param name="codeGroup"></param>
         /// <param name="text"></param>
-        public PimsProjectStatusType(string id, string codeGroup, string text):this()
+        public PimsProjectStatusType(string id, string codeGroup, string text) : this()
         {
             this.CodeGroup = codeGroup ?? throw new ArgumentNullException(nameof(codeGroup));
             this.Text = text ?? throw new ArgumentNullException(nameof(text));

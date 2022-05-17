@@ -6,7 +6,7 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLngBounds, Map as LeafletMap } from 'leaflet';
+import { LatLngBounds, Map as LeafletMap, TileLayer as LeafletTileLayer } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -112,8 +112,10 @@ const Map: React.FC<MapProps> = ({
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
+  // a reference to the basemap tile layer since the layer url is immutable
+  const tileRef = useRef<LeafletTileLayer>(null);
 
-  const { setPropertyInfo, propertyInfo } = useContext(SelectedPropertyContext);
+  const { setPropertyInfo, propertyInfo, selectedFeature } = useContext(SelectedPropertyContext);
 
   if (mapRef.current && !propertyInfo) {
     const center = mapRef.current.getCenter();
@@ -121,7 +123,7 @@ const Map: React.FC<MapProps> = ({
     lng = center.lng;
   }
 
-  const parcelLayerFeature = useAppSelector(state => state.parcelLayerData?.parcelLayerFeature);
+  const parcelLayerFeature = selectedFeature;
   const { showLocationDetails } = useActiveFeatureLayer({
     selectedProperty: propertyInfo,
     layerPopup,
@@ -165,6 +167,7 @@ const Map: React.FC<MapProps> = ({
     const { previous, current } = e;
     setBaseLayers([current, previous]);
     setActiveBasemap(current);
+    tileRef?.current?.setUrl(current.url);
   };
 
   useEffect(() => {
@@ -240,7 +243,12 @@ const Map: React.FC<MapProps> = ({
             moveend={handleBounds}
           />
           {activeBasemap && (
-            <TileLayer attribution={activeBasemap.attribution} url={activeBasemap.url} zIndex={0} />
+            <TileLayer
+              ref={tileRef}
+              attribution={activeBasemap.attribution}
+              url={activeBasemap.url}
+              zIndex={0}
+            />
           )}
           {!!layerPopup && (
             <LayerPopup
