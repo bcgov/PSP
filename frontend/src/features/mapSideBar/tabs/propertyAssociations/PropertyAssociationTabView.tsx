@@ -31,6 +31,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
         isCollapsable
       >
         <AssociationContent
+          associationName="research"
           aquisitionFiles={props.associations?.researchAssociations}
           linkUrlMask="/mapview/research/|id|/view"
         />
@@ -46,6 +47,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
         isCollapsable
       >
         <AssociationContent
+          associationName="aquisition"
           aquisitionFiles={props.associations?.aquisitionAssociations}
           linkUrlMask="/aquisition/|id|/details"
         />
@@ -61,6 +63,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
         isCollapsable
       >
         <AssociationContent
+          associationName="lease"
           aquisitionFiles={props.associations?.leaseAssociations}
           linkUrlMask="/lease/|id|/details"
         />
@@ -76,6 +79,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
         isCollapsable
       >
         <AssociationContent
+          associationName="disposition"
           aquisitionFiles={props.associations?.dispositionAssociations}
           linkUrlMask="/dispositions/|id|/details"
         />

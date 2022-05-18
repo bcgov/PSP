@@ -15,12 +15,13 @@ interface IPimsInfo {
 }
 
 export interface IAssociationContentProps {
+  associationName: string;
   aquisitionFiles?: Api_PropertyAssociation[];
   linkUrlMask: string;
 }
 
 const AssociationContent: React.FunctionComponent<IAssociationContentProps> = props => {
-  const noDataMessage = 'There are no aquisition files availiable';
+  const noDataMessage = `There are no ${props.associationName} files availiable`;
   if (props.aquisitionFiles === undefined) {
     return <>{noDataMessage}</>;
   }
@@ -55,29 +56,31 @@ const aquisitionColumns: ColumnWithProps<IPimsInfo>[] = [
     Cell: (props: CellProps<IPimsInfo>) => {
       return <Link to={props.row.original.linkUrl}>{props.row.original.fileIdentifier}</Link>;
     },
+    width: 50,
   },
   {
     Header: 'File name',
     accessor: 'fileName',
     align: 'left',
-    minWidth: 200,
   },
   {
     Header: 'Created by',
     accessor: 'createdBy',
     align: 'left',
+    width: 50,
   },
   {
     Header: 'Created date',
     accessor: 'createdDate',
     align: 'left',
     Cell: renderDate,
+    width: 80,
   },
   {
     Header: 'Status',
     accessor: 'status',
     align: 'left',
-    width: 100,
+    width: 60,
   },
 ];
 

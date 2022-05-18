@@ -10,45 +10,9 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
   />
   .c0 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
 }
 
-.c1 {
-  float: right;
-  cursor: pointer;
-}
-
-<h2
-    class="c0"
-  >
-    Charges, Liens and Interests
-    <svg
-      class="c1"
-      fill="currentColor"
-      height="1em"
-      stroke="currentColor"
-      stroke-width="0"
-      viewBox="0 0 24 24"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M0 0h24v24H0z"
-        fill="none"
-      />
-      <path
-        d="M7 14l5-5 5 5z"
-      />
-    </svg>
-  </h2>
-  .c0 {
-  font-weight: bold;
-}
-
-<div
-    class="collapse show"
-  >
+<div>
     <div
       class="pb-2 row"
     >

@@ -193,7 +193,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
                 class="pr-0 text-left col-auto"
               >
                 <label>
-                  Civic Address
+                  Civic Address:
                 </label>
               </div>
               <div
@@ -239,7 +239,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
                 class="pr-0 text-left col-auto"
               >
                 <label>
-                  Plan #
+                  Plan #:
                 </label>
               </div>
               <div
