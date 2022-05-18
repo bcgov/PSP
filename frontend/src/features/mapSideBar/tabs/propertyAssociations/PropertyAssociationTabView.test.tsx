@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 import { Api_PropertyAssociations } from 'models/api/Property';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import PropertyAssociationTabView, {
