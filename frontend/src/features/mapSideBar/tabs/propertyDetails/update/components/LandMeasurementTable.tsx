@@ -6,14 +6,14 @@ import { convertArea, round } from 'utils';
 import { StyledTable } from '../styles';
 
 export interface IUpdateLandMeasurementTableProps {
-  area: number;
-  areaUnitTypeCode: string;
+  area?: number;
+  areaUnitTypeCode?: string;
   onChange?: (landArea: number, areaUnitTypeCode: string) => void;
 }
 
 export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = ({
-  area,
-  areaUnitTypeCode,
+  area = 0,
+  areaUnitTypeCode = AreaUnitTypes.Hectares,
   onChange,
 }) => {
   // derive our internal state from props

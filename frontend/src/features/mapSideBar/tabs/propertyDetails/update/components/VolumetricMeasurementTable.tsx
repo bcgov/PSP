@@ -6,14 +6,14 @@ import { convertVolume, round } from 'utils';
 import { StyledTable } from '../styles';
 
 export interface IVolumetricMeasurementTableProps {
-  volume: number;
-  volumeUnitTypeCode: string;
+  volume?: number;
+  volumeUnitTypeCode?: string;
   onChange?: (volume: number, volumeUnitTypeCode: string) => void;
 }
 
 export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTableProps> = ({
-  volume,
-  volumeUnitTypeCode,
+  volume = 0,
+  volumeUnitTypeCode = VolumeUnitTypes.CubicMeters,
   onChange,
 }) => {
   // derive our internal state from props

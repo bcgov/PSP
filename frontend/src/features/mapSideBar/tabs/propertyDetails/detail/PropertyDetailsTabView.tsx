@@ -70,7 +70,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
 
   return (
     <StyledReadOnlyForm>
-      <Section header="Property Attributes">
+      <Section header="Property attributes">
         <SectionField label="MOTI region">
           <Text field="motiRegion.REGION_NAME" />
         </SectionField>
