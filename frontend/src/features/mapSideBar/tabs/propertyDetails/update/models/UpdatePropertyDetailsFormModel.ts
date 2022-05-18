@@ -52,14 +52,12 @@ export class UpdatePropertyDetailsFormModel {
   roadTypes?: PropertyRoadFormModel[];
   adjacentLands?: PropertyAdjacentLandFormModel[];
 
+  // map layer metadata for this property location (lat,lng)
+  isALR?: boolean;
   motiRegion?: GeoJsonProperties;
   highwaysDistrict?: GeoJsonProperties;
   electoralDistrict?: GeoJsonProperties;
-  isALR?: boolean;
-  firstNations?: {
-    bandName?: string;
-    reserveName?: string;
-  };
+  firstNations?: GeoJsonProperties;
 
   static fromApi(base: Api_Property): UpdatePropertyDetailsFormModel {
     const model = new UpdatePropertyDetailsFormModel();

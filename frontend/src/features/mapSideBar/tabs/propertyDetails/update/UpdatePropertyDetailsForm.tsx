@@ -7,7 +7,7 @@ import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Form, FormikProps, getIn } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { stringToBoolean } from 'utils/formUtils';
@@ -38,6 +38,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
+  const propertyTypeOptions = getOptionsByType(API.PROPERTY_LAND_PARCEL_TYPES);
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map(x =>
     PropertyAnomalyFormModel.fromLookup(x),
   );
@@ -70,6 +71,14 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
 
+  useEffect(() => {
+    if (!isVolumetricParcel) {
+      setFieldValue('volumetricMeasurement', 0);
+      setFieldValue('volumetricUnitTypeCode', undefined);
+      setFieldValue('volumetricParcelTypeCode', undefined);
+    }
+  }, [isVolumetricParcel, setFieldValue]);
+
   return (
     <StyledForm>
       <Content vertical>
@@ -90,7 +99,13 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
           <SectionField label="Agricultural Land Reserve">
             <Text>{values.isALR ? 'Yes' : 'No'}</Text>
           </SectionField>
-          <SectionField label="Land parcel type">{/* TODO */}</SectionField>
+          <SectionField label="Land parcel type">
+            <Select
+              field="propertyTypeCode"
+              options={propertyTypeOptions}
+              placeholder={values.propertyTypeCode ? undefined : 'Please Select'}
+            />
+          </SectionField>
           <SectionField label="Municipal zoning">
             <Input field="municipalZoning" />
           </SectionField>
@@ -145,10 +160,10 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
         {isIndianReserve && (
           <Section header="First Nations Information">
             <SectionField label="Band name">
-              <Text field="firstNations.bandName" />
+              <Text field="firstNations.BAND_NAME" />
             </SectionField>
             <SectionField label="Reserve name">
-              <Text field="firstNations.reserveName" />
+              <Text field="firstNations.ENGLISH_NAME" />
             </SectionField>
           </Section>
         )}

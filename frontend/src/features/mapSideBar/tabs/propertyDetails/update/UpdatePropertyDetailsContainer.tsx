@@ -1,6 +1,8 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikHelpers } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
+import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
+import isNumber from 'lodash/isNumber';
 import { Api_Property } from 'models/api/Property';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +20,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
   const history = useHistory();
   const { retrieveProperty } = useGetProperty();
   const { updateProperty } = useUpdateProperty();
+  const { queryAll } = useQueryMapLayersByLocation();
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
 
@@ -26,12 +29,24 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
       if (!!props.pid) {
         const retrieved = await retrieveProperty(props.pid);
         if (retrieved !== undefined && isMounted()) {
-          setForm(UpdatePropertyDetailsFormModel.fromApi(retrieved));
+          const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
+
+          // This triggers API calls to DataBC map layers
+          if (isNumber(retrieved.latitude) && isNumber(retrieved.longitude)) {
+            const layers = await queryAll({ lat: retrieved.latitude, lng: retrieved.longitude });
+            formValues.isALR = !!layers.isALR;
+            formValues.motiRegion = layers.motiRegion;
+            formValues.highwaysDistrict = layers.highwaysDistrict;
+            formValues.electoralDistrict = layers.electoralDistrict;
+            formValues.firstNations = layers.firstNations;
+          }
+
+          setForm(formValues);
         }
       }
     }
     fetchProperty();
-  }, [isMounted, props.pid, retrieveProperty]);
+  }, [isMounted, props.pid, queryAll, retrieveProperty]);
 
   // save handler - sends updated property information to backend and redirects back to view screen
   const savePropertyInformation = async (

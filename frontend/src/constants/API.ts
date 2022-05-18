@@ -80,6 +80,7 @@ export const RESEARCH_FILE_STATUS_TYPES = 'PimsResearchFileStatusType';
 export const REQUEST_SOURCE_TYPES = 'PimsRequestSourceType';
 export const RESEARCH_PURPOSE_TYPES = 'PimsResearchPurposeType';
 export const PROPERTY_RESEARCH_PURPOSE_TYPES = 'PimsPropResearchPurposeType';
+export const PROPERTY_LAND_PARCEL_TYPES = 'PimsPropertyType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations
