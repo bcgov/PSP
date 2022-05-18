@@ -33,8 +33,8 @@ describe('AssociationHeader component', () => {
     const iconContent = 'test icon';
     const titleText = 'test title';
     const testCount = 3;
-    testCount;
-    const { container, getByText } = setup({
+
+    const { getByText } = setup({
       icon: <>{iconContent}</>,
       title: titleText,
       count: 3,
