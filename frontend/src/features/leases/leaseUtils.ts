@@ -2,7 +2,6 @@ import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
 import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
 import { IAddFormLease, IFormLeaseTerm, ILease } from 'interfaces';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
-
 import {
   booleanToYesNoUnknownString,
   stringToNull,

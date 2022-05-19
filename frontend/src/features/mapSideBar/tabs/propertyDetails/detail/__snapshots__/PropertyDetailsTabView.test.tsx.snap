@@ -154,362 +154,368 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       <h2
         class="c2"
       >
-        Property attributes
-      </h2>
-      <div
-        class="pb-2 row"
-      >
         <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            MOTI region:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <span
-            class=""
-          />
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Highways district:
-          </label>
-        </div>
-        <div
-          class="col"
+          class="row"
         >
           <div
-            class="c4"
+            class="col"
           >
-            <span
-              class=""
-            />
-            -
+            Property attributes
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              MOTI region:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
             <span
               class=""
             />
           </div>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Electoral district:
-          </label>
+            <label
+              class="c3"
+            >
+              Highways district:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="c4"
+            >
+              <span
+                class=""
+              />
+              -
+              <span
+                class=""
+              />
+            </div>
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          <span
-            class=""
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Electoral district:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <span
+              class=""
+            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Agricultural land reserve:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <span
+              class=""
+            >
+              No
+            </span>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Land parcel type:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <span
+              class=""
+            >
+              Titled
+            </span>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Municipal zoning:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <span
+              class=""
+            >
+              Some municipal zoning comments
+            </span>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Anomalies:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div>
+              <div
+                class="multiselect-container multiSelectContainer disable_ms "
+                id="multiselectContainerReact"
+                style="opacity: 1;"
+              >
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="padding: 0px;"
+                >
+                  <span
+                    class="chip  false disableSelection"
+                    style="opacity: 1; background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    Building liens
+                  </span>
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    disabled=""
+                    id="search_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Tenure Status
+          </div>
+          <div
+            class="col-1"
           />
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Agricultural land reserve:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <span
-            class=""
-          >
-            No
-          </span>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Land parcel type:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <span
-            class=""
-          >
-            Titled
-          </span>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Municipal zoning:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <span
-            class=""
-          >
-            Some municipal zoning comments
-          </span>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Anomalies:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <div>
-            <div
-              class="multiselect-container multiSelectContainer disable_ms "
-              id="multiselectContainerReact"
-              style="opacity: 1;"
-            >
-              <div
-                class="search-wrapper searchWrapper "
-                style="padding: 0px;"
-              >
-                <span
-                  class="chip  false disableSelection"
-                  style="opacity: 1; background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                >
-                  Building liens
-                </span>
-                <input
-                  autocomplete="off"
-                  class="searchBox "
-                  disabled=""
-                  id="search_input"
-                  name="search_name_input"
-                  placeholder=""
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                class="optionListContainer displayNone"
-              >
-                <ul
-                  class="optionContainer"
-                >
-                  <span
-                    class="notFound"
-                  >
-                    No Options Available
-                  </span>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="c1"
-    >
-      <h2
-        class="c2"
-      >
-        Tenure Status
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Tenure status:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <div>
-            <div
-              class="multiselect-container multiSelectContainer disable_ms "
-              id="multiselectContainerReact"
-              style="opacity: 1;"
-            >
-              <div
-                class="search-wrapper searchWrapper "
-                style="padding: 0px;"
-              >
-                <span
-                  class="chip  false disableSelection"
-                  style="opacity: 1; background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                >
-                  Closed Road
-                </span>
-                <input
-                  autocomplete="off"
-                  class="searchBox "
-                  disabled=""
-                  id="search_input"
-                  name="search_name_input"
-                  placeholder=""
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                class="optionListContainer displayNone"
-              >
-                <ul
-                  class="optionContainer"
-                >
-                  <span
-                    class="notFound"
-                  >
-                    No Options Available
-                  </span>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
-          >
-            Provincial public hwy:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          <span
-            class=""
-          >
-            Unknown
-          </span>
-        </div>
-      </div>
-    </div>
-    <div
-      class="c1"
-    >
-      <h2
-        class="c2"
-      >
-        Area
-      </h2>
-      <div
-        class="row"
-      >
-        <div
-          class="col"
+          class="pb-2 row"
         >
           <div
-            class="row"
+            class="col-4"
           >
-            <div
-              class="col-10 col"
+            <label
+              class="c3"
             >
-              <label
-                class="c5"
-              >
-                Land measurement
-              </label>
+              Tenure status:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div>
               <div
-                class="table c6"
-                data-testid="land-measurements"
-                role="table"
+                class="multiselect-container multiSelectContainer disable_ms "
+                id="multiselectContainerReact"
+                style="opacity: 1;"
               >
                 <div
-                  class="thead thead-light"
+                  class="search-wrapper searchWrapper "
+                  style="padding: 0px;"
                 >
-                  <div
-                    class="tr"
-                    role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 60px;"
+                  <span
+                    class="chip  false disableSelection"
+                    style="opacity: 1; background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
                   >
-                    <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: none;"
-                    >
-                      <div
-                        class="sortable-column"
-                      >
-                         
-                      </div>
-                    </div>
-                    <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: none;"
-                    >
-                      <div
-                        class="sortable-column"
-                      >
-                         
-                      </div>
-                    </div>
-                  </div>
+                    Closed Road
+                  </span>
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    disabled=""
+                    id="search_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
                 </div>
                 <div
-                  class="tbody"
-                  role="rowgroup"
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Provincial public hwy:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <span
+              class=""
+            >
+              Unknown
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Area
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-10 col"
+              >
+                <label
+                  class="c5"
+                >
+                  Land measurement
+                </label>
+                <div
+                  class="table c6"
+                  data-testid="land-measurements"
+                  role="table"
                 >
                   <div
-                    class="tr-wrapper"
+                    class="thead thead-light"
                   >
                     <div
                       class="tr"
@@ -517,98 +523,137 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
                       style="display: flex; flex: 1 0 auto; min-width: 60px;"
                     >
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: none;"
                       >
-                        10,000
+                        <div
+                          class="sortable-column"
+                        >
+                           
+                        </div>
                       </div>
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="th"
+                        colspan="1"
+                        role="columnheader"
+                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: none;"
                       >
-                        sq. metres
+                        <div
+                          class="sortable-column"
+                        >
+                           
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="tr-wrapper"
+                    class="tbody"
+                    role="rowgroup"
                   >
                     <div
-                      class="tr"
-                      role="row"
-                      style="display: flex; flex: 1 0 auto; min-width: 60px;"
+                      class="tr-wrapper"
                     >
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
                       >
-                        107,639.1
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        sq. feet
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          10,000
+                        </div>
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          sq. metres
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="tr-wrapper"
-                  >
                     <div
-                      class="tr"
-                      role="row"
-                      style="display: flex; flex: 1 0 auto; min-width: 60px;"
+                      class="tr-wrapper"
                     >
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
                       >
-                        1
-                      </div>
-                      <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
-                      >
-                        hectares
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          107,639.1
+                        </div>
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          sq. feet
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="tr-wrapper"
-                  >
                     <div
-                      class="tr"
-                      role="row"
-                      style="display: flex; flex: 1 0 auto; min-width: 60px;"
+                      class="tr-wrapper"
                     >
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
                       >
-                        2.47
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          1
+                        </div>
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          hectares
+                        </div>
                       </div>
+                    </div>
+                    <div
+                      class="tr-wrapper"
+                    >
                       <div
-                        class="td"
-                        role="cell"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                        title=""
+                        class="tr"
+                        role="row"
+                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
                       >
-                        acres
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          2.47
+                        </div>
+                        <div
+                          class="td"
+                          role="cell"
+                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                          title=""
+                        >
+                          acres
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -616,65 +661,65 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
               </div>
             </div>
           </div>
-        </div>
-        <div
-          class="c7 col"
-        >
-          <label
-            class="c3"
-          >
-            Is this a volumetric parcel?
-          </label>
           <div
-            class="c8 form-group"
+            class="c7 col"
           >
+            <label
+              class="c3"
+            >
+              Is this a volumetric parcel?
+            </label>
             <div
-              class="radio-group"
+              class="c8 form-group"
             >
               <div
-                class="c9 pb-3"
+                class="radio-group"
               >
                 <div
-                  class="form-check"
+                  class="c9 pb-3"
                 >
-                  <input
-                    class="form-check-input position-static"
-                    disabled=""
-                    id="input-true"
-                    name="isVolumetricParcel"
-                    type="radio"
-                    value="true"
-                  />
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input position-static"
+                      disabled=""
+                      id="input-true"
+                      name="isVolumetricParcel"
+                      type="radio"
+                      value="true"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="input-isVolumetricParcel"
+                  >
+                    Yes
+                  </label>
                 </div>
-                <label
-                  class="form-check-label form-label"
-                  for="input-isVolumetricParcel"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="c9 pb-3"
-              >
                 <div
-                  class="form-check"
+                  class="c9 pb-3"
                 >
-                  <input
-                    checked=""
-                    class="form-check-input position-static"
-                    disabled=""
-                    id="input-false"
-                    name="isVolumetricParcel"
-                    type="radio"
-                    value="false"
-                  />
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input position-static"
+                      disabled=""
+                      id="input-false"
+                      name="isVolumetricParcel"
+                      type="radio"
+                      value="false"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="input-isVolumetricParcel"
+                  >
+                    No
+                  </label>
                 </div>
-                <label
-                  class="form-check-label form-label"
-                  for="input-isVolumetricParcel"
-                >
-                  No
-                </label>
               </div>
             </div>
           </div>
@@ -687,11 +732,26 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       <h2
         class="c2"
       >
-        Notes
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Notes
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.
-      </p>
+      <div
+        class="collapse show"
+      >
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.
+        </p>
+      </div>
     </div>
   </form>
 </DocumentFragment>
