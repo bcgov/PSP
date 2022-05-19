@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-interface IPimsInfo {
+interface IAssociationInfo {
   id: string;
   linkUrl: string;
   fileIdentifier: string;
@@ -16,16 +16,16 @@ interface IPimsInfo {
 
 export interface IAssociationContentProps {
   associationName: string;
-  aquisitionFiles?: Api_PropertyAssociation[];
+  associations?: Api_PropertyAssociation[];
   linkUrlMask: string;
 }
 
 const AssociationContent: React.FunctionComponent<IAssociationContentProps> = props => {
-  const noDataMessage = `There are no ${props.associationName} files availiable`;
-  if (props.aquisitionFiles === undefined) {
+  const noDataMessage = `There are no ${props.associationName} files available`;
+  if (props.associations === undefined) {
     return <>{noDataMessage}</>;
   }
-  const tableData = props.aquisitionFiles.map<IPimsInfo>(x => {
+  const tableData = props.associations.map<IAssociationInfo>(x => {
     return {
       id: x.id?.toString() || '',
       linkUrl: props.linkUrlMask.replace('|id|', x.id?.toString() || ''),
@@ -37,9 +37,9 @@ const AssociationContent: React.FunctionComponent<IAssociationContentProps> = pr
     };
   });
   return (
-    <Table<IPimsInfo>
-      name="acquisitionFiles"
-      columns={aquisitionColumns}
+    <Table<IAssociationInfo>
+      name="associationFiles"
+      columns={acquisitionColumns}
       data={tableData ?? []}
       manualSortBy={true}
       noRowsMessage={noDataMessage}
@@ -48,12 +48,12 @@ const AssociationContent: React.FunctionComponent<IAssociationContentProps> = pr
   );
 };
 
-const aquisitionColumns: ColumnWithProps<IPimsInfo>[] = [
+const acquisitionColumns: ColumnWithProps<IAssociationInfo>[] = [
   {
     Header: 'File #',
     accessor: 'fileIdentifier',
     align: 'left',
-    Cell: (props: CellProps<IPimsInfo>) => {
+    Cell: (props: CellProps<IAssociationInfo>) => {
       return <Link to={props.row.original.linkUrl}>{props.row.original.fileIdentifier}</Link>;
     },
     width: 50,

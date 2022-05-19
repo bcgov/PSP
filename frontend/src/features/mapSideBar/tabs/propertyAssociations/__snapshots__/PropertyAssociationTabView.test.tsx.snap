@@ -134,7 +134,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
       >
         <div
           class="table"
-          data-testid="acquisitionFiles"
+          data-testid="associationFiles"
           role="table"
         >
           <div
@@ -351,7 +351,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
       <div
         class="collapse"
       >
-        There are no aquisition files availiable
+        There are no acquisition files available
       </div>
     </div>
     <div
@@ -438,7 +438,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
       >
         <div
           class="table"
-          data-testid="acquisitionFiles"
+          data-testid="associationFiles"
           role="table"
         >
           <div
@@ -655,7 +655,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
       <div
         class="collapse"
       >
-        There are no disposition files availiable
+        There are no disposition files available
       </div>
     </div>
   </div>

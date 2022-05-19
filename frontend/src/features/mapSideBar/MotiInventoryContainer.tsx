@@ -74,16 +74,13 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   } = usePropertyAssociations();
 
   useEffect(() => {
-    const func = async () => {
+    async function fetchResearchFile() {
       if (props.pid !== undefined) {
         const response = await getPropertyAssociations(props.pid);
-        if (response?.id !== undefined) {
-          setPropertyAssociations(response);
-        }
+        setPropertyAssociations(response);
       }
-    };
-
-    func();
+    }
+    fetchResearchFile();
   }, [getPropertyAssociations, props.pid]);
 
   // After API property object has been received, we query relevant map layers to find

@@ -32,7 +32,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
       >
         <AssociationContent
           associationName="research"
-          aquisitionFiles={props.associations?.researchAssociations}
+          associations={props.associations?.researchAssociations}
           linkUrlMask="/mapview/research/|id|/view"
         />
       </Section>
@@ -41,15 +41,15 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
           <AssociationHeader
             icon={<MdOutlineRealEstateAgent title="Acquisition-Files" size="2.5rem" />}
             title="Acquisition Files"
-            count={props.associations?.aquisitionAssociations?.length}
+            count={props.associations?.acquisitionAssociations?.length}
           />
         }
         isCollapsable
       >
         <AssociationContent
-          associationName="aquisition"
-          aquisitionFiles={props.associations?.aquisitionAssociations}
-          linkUrlMask="/aquisition/|id|/details"
+          associationName="acquisition"
+          associations={props.associations?.acquisitionAssociations}
+          linkUrlMask="/acquisition/|id|/details"
         />
       </Section>
       <Section
@@ -64,7 +64,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
       >
         <AssociationContent
           associationName="lease"
-          aquisitionFiles={props.associations?.leaseAssociations}
+          associations={props.associations?.leaseAssociations}
           linkUrlMask="/lease/|id|/details"
         />
       </Section>
@@ -80,7 +80,7 @@ const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTa
       >
         <AssociationContent
           associationName="disposition"
-          aquisitionFiles={props.associations?.dispositionAssociations}
+          associations={props.associations?.dispositionAssociations}
           linkUrlMask="/dispositions/|id|/details"
         />
       </Section>

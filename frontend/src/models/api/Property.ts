@@ -53,7 +53,7 @@ export interface Api_PropertyAssociations {
   pid?: string;
   leaseAssociations?: Api_PropertyAssociation[];
   researchAssociations?: Api_PropertyAssociation[];
-  aquisitionAssociations?: Api_PropertyAssociation[];
+  acquisitionAssociations?: Api_PropertyAssociation[];
   dispositionAssociations?: Api_PropertyAssociation[];
 }
 
