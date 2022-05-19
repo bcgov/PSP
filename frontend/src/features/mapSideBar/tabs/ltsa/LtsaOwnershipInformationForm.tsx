@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledSectionHeader } from '../SectionStyles';
 import LtsaOwnershipInformationTitleOwnerForm from './LtsaOwnershipInformationTitleOwnerForm';
 
 export interface ILtsaOwnershipInformationFormProps {
@@ -20,7 +19,6 @@ export const LtsaOwnershipInformationForm: React.FunctionComponent<ILtsaOwnershi
   const ownershipGroups = getIn(values, withNameSpace(nameSpace, 'ownershipGroups')) ?? [];
   return (
     <React.Fragment key={`ownership-info-main-row-${nameSpace}`}>
-      <StyledSectionHeader>Ownership Information</StyledSectionHeader>
       {ownershipGroups.length === 0 && 'this title has no ownership information'}
       <FieldArray
         name={withNameSpace(nameSpace, 'ownershipGroups')}

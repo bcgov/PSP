@@ -15,5 +15,6 @@ namespace Pims.Dal.Repositories
         PimsProperty Get(int id);
         PimsProperty GetByPid(string pid);
         PimsProperty GetByPid(int pid);
+        PimsProperty GetAssociations(string pid);
     }
 }

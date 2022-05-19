@@ -5,7 +5,6 @@ import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledSectionHeader } from '../SectionStyles';
 export interface ILtsaTransferSubFormProps {
   nameSpace?: string;
 }
@@ -17,7 +16,6 @@ export const LtsaTransferSubForm: React.FunctionComponent<ILtsaTransferSubFormPr
   const transfers = getIn(values, withNameSpace(nameSpace, 'titleTransfersOrDispositions')) ?? [];
   return (
     <>
-      <StyledSectionHeader>Transfers</StyledSectionHeader>
       {transfers.length === 0 && 'this title has no transfers'}
       <FieldArray
         name={withNameSpace(nameSpace, 'titleTransfersOrDispositions')}

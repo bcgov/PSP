@@ -60,96 +60,111 @@ exports[`PropertyResearchTabView component renders as expected when provided val
       <h2
         class="c2"
       >
-        Property of Interest
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Property of Interest
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Descriptive name:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          The Research Property name
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Descriptive name:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Purpose:
-          </label>
+            The Research Property name
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          Type A, Type B
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Legal opinion req'd?:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          Yes
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Purpose:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Legal opinion obtained?:
-          </label>
+            Type A, Type B
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          Yes
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Document reference:
-          </label>
+            <label
+              class="c3"
+            >
+              Legal opinion req'd?:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            Yes
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          A document reference
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legal opinion obtained?:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            Yes
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Document reference:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            A document reference
+          </div>
         </div>
       </div>
     </div>
@@ -159,25 +174,40 @@ exports[`PropertyResearchTabView component renders as expected when provided val
       <h2
         class="c2"
       >
-        Research Summary
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Research Summary
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Summary notes:
-          </label>
+            <label
+              class="c3"
+            >
+              Summary notes:
+            </label>
+          </div>
+          <div
+            class="col"
+          />
         </div>
-        <div
-          class="col"
-        />
+        Research summary notes
       </div>
-      Research summary notes
     </div>
   </div>
 </DocumentFragment>

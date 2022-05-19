@@ -20,6 +20,7 @@ export enum InventoryTabNames {
   title = 'title',
   value = 'value',
   research = 'research',
+  pims = 'pims',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.

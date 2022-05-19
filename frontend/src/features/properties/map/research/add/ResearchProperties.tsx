@@ -1,5 +1,4 @@
-import * as Styled from 'components/common/styles';
-import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, useFormikContext } from 'formik';
@@ -37,8 +36,7 @@ const ResearchProperties: React.FunctionComponent = () => {
                 />
               </Col>
             </Row>
-            <StyledFormSection>
-              <Styled.H3>Selected properties</Styled.H3>
+            <Section header="Selected properties">
               <SelectedPropertyHeaderRow />
               {values.properties.map((property, index, properties) => (
                 <SelectedPropertyRow
@@ -50,7 +48,7 @@ const ResearchProperties: React.FunctionComponent = () => {
               ))}
 
               {values.properties.length === 0 && <span>No Properties selected</span>}
-            </StyledFormSection>
+            </Section>
           </>
         )}
       </FieldArray>

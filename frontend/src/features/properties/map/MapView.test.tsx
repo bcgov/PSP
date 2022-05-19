@@ -18,6 +18,7 @@ import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
 import { useLtsa } from 'hooks/useLtsa';
+import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
@@ -35,6 +36,7 @@ const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');
 jest.mock('hooks/useProperties');
+jest.mock('hooks/usePropertyAssociations');
 jest.mock('hooks/pims-api');
 jest.mock('hooks/useLtsa');
 
@@ -55,6 +57,10 @@ const ltsaMock = {
   fetchParcelsDetail: jest.fn(),
   fetchParcels: jest.fn(),
   getPropertyWithPid: jest.fn(),
+}));
+
+(usePropertyAssociations as any).mockImplementation(() => ({
+  getPropertyAssociations: jest.fn(),
 }));
 
 const largeMockParcels = [

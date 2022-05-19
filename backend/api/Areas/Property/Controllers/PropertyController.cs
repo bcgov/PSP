@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Areas.Property.Models.Property;
 using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Property.Controllers
 {
@@ -47,13 +48,13 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{pid}")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Property.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetPropertyWithPid(string pid)
         {
             var property = _pimsService.Property.GetByPid(pid);
 
-            return new JsonResult(_mapper.Map<Models.Property.PropertyModel>(property));
+            return new JsonResult(_mapper.Map<PropertyModel>(property));
         }
 
         /// <summary>
@@ -63,13 +64,29 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{id:int}")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Property.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperty(int id)
         {
             var property = _pimsService.Property.Get(id);
 
-            return new JsonResult(_mapper.Map<Models.Property.PropertyModel>(property));
+            return new JsonResult(_mapper.Map<PropertyModel>(property));
+        }
+
+        /// <summary>
+        /// Get the property associations for the specified unique 'pid'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{pid}/associations")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyAssociationModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        public IActionResult GetPropertyAssociationsWithPid(string pid)
+        {
+            var property = _pimsService.Property.GetAssociations(pid);
+
+            return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
         }
         #endregion
     }
