@@ -3,7 +3,7 @@ import { CellProps } from 'react-table';
 import styled from 'styled-components';
 import { formatNumber } from 'utils';
 
-import { TableCaption } from '../../SectionStyles';
+import { TableCaption } from '../../../SectionStyles';
 
 export const VolumetricMeasurementTable: React.FC<{ data?: any[] }> = ({ data = [] }) => {
   return (

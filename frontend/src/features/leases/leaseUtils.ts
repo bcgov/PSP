@@ -5,7 +5,7 @@ import { Api_LeaseTenant } from 'models/api/LeaseTenant';
 import {
   booleanToYesNoUnknownString,
   stringToNull,
-  stringToTypeCode,
+  toTypeCode,
   yesNoUnknownToBoolean,
 } from 'utils/formUtils';
 import { formatNames } from 'utils/personUtils';
@@ -67,15 +67,15 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     renewalCount: parseInt(formLease.renewalCount.toString()) || 0,
     tfaFileNo: parseInt(formLease?.tfaFileNo?.toString() || '') || 0,
     amount: parseFloat(formLease.amount.toString()) || 0.0,
-    paymentReceivableType: stringToTypeCode(formLease.paymentReceivableType),
-    categoryType: stringToTypeCode(formLease.categoryType),
-    purposeType: stringToTypeCode(formLease.purposeType),
-    responsibilityType: stringToTypeCode(formLease.responsibilityType),
-    initiatorType: stringToTypeCode(formLease.initiatorType || LeaseInitiatorTypes.Hq),
-    statusType: stringToTypeCode(formLease.statusType),
-    type: stringToTypeCode(formLease.type),
+    paymentReceivableType: toTypeCode(formLease.paymentReceivableType),
+    categoryType: toTypeCode(formLease.categoryType),
+    purposeType: toTypeCode(formLease.purposeType),
+    responsibilityType: toTypeCode(formLease.responsibilityType),
+    initiatorType: toTypeCode(formLease.initiatorType || LeaseInitiatorTypes.Hq),
+    statusType: toTypeCode(formLease.statusType),
+    type: toTypeCode(formLease.type),
     region: { regionCode: formLease.region },
-    programType: stringToTypeCode(formLease.programType),
+    programType: toTypeCode(formLease.programType),
     expiryDate: stringToNull(formLease.expiryDate),
     psFileNo: stringToNull(formLease.psFileNo),
     renewalDate: stringToNull(formLease.renewalDate),
@@ -86,7 +86,7 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
       ...formProperty,
       pin: stringToNull(formProperty.pin),
       landArea: stringToNull(formProperty.landArea),
-      areaUnitType: stringToTypeCode(formProperty.areaUnitType?.id),
+      areaUnitType: toTypeCode(formProperty.areaUnitType?.id),
     })),
   } as ILease;
 };

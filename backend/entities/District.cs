@@ -8,6 +8,11 @@ namespace Pims.Dal.Entities
     public partial class PimsDistrict : ICodeEntity<short>
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify district.
+        /// </summary>
+        [NotMapped]
+        public short Id { get => DistrictCode; set => DistrictCode = value; }
         [NotMapped]
         public short Code { get => DistrictCode; set => DistrictCode = value; }
         [NotMapped]

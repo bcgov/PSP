@@ -223,6 +223,7 @@ exports[`Research List View matches snapshot 1`] = `
 }
 
 .c1 {
+  width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;

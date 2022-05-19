@@ -1,11 +1,13 @@
 import { IconButton } from 'components/common/buttons';
+import ProtectedComponent from 'components/common/ProtectedComponent';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { Claims } from 'constants/index';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { AssociatedPlan, LtsaOrders } from 'interfaces/ltsaModels';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { MdZoomIn } from 'react-icons/md';
+import { FaEdit, FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { HeaderField } from './tabs/HeaderField';
@@ -15,7 +17,9 @@ interface IMotiInventoryHeaderProps {
   ltsaLoading: boolean;
   propertyLoading: boolean;
   property?: IPropertyApiModel;
+  showEditButton?: boolean;
   onZoom?: (apiProperty?: IPropertyApiModel | undefined) => void;
+  onEdit?: () => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
@@ -32,7 +36,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <HeaderWrapper>
         <Row>
-          <Col xs="11">
+          <Col xs="10">
             <Row>
               <Col xs="8">
                 <HeaderField label="Civic Address:">-</HeaderField>
@@ -60,18 +64,29 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
               </Col>
             </Row>
           </Col>
-          <Col xs="1" className="d-flex p-0 align-items-center justify-content-end">
-            <IconButton
-              variant="info"
-              className="float-right"
-              disabled={!props.onZoom}
-              title="Zoom Map"
-              onClick={() => props?.onZoom && props?.onZoom(props.property)}
-            >
-              <TooltipWrapper toolTipId="property-zoom-map" toolTip="Zoom Map">
-                <MdZoomIn size={22} />
-              </TooltipWrapper>
-            </IconButton>
+          <Col xs="2" className="d-flex p-0 align-items-center justify-content-end">
+            {props.showEditButton && (
+              <ProtectedComponent hideIfNotAuthorized claims={[Claims.PROPERTY_EDIT]}>
+                <TooltipWrapper
+                  toolTipId="edit-sidebar-tooltip"
+                  toolTip="Edit Property Information"
+                >
+                  <IconButton title="Edit Property" variant="light" onClick={props.onEdit}>
+                    <FaEdit size={22} />
+                  </IconButton>
+                </TooltipWrapper>
+              </ProtectedComponent>
+            )}
+            <TooltipWrapper toolTipId="property-zoom-map" toolTip="Zoom Map">
+              <IconButton
+                variant="info"
+                disabled={!props.onZoom}
+                title="Zoom Map"
+                onClick={() => props?.onZoom && props?.onZoom(props.property)}
+              >
+                <FaSearchPlus size={22} />
+              </IconButton>
+            </TooltipWrapper>
           </Col>
         </Row>
       </HeaderWrapper>

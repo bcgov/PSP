@@ -7,7 +7,7 @@ import {
 } from 'features/mapSideBar/tabs/InventoryTabs';
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
-import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/PropertyDetailsTabView';
+import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';

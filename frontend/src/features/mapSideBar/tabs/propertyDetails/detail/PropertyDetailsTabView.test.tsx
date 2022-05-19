@@ -30,7 +30,7 @@ describe('PropertyDetailsTabView component', () => {
 
   it('does not throw an exception for an invalid data object', () => {
     const { getByText } = setup({ property: {} as IPropertyApiModel });
-    expect(getByText('Property Attributes')).toBeVisible();
+    expect(getByText(/property attributes/i)).toBeVisible();
   });
 
   it('shows highway/road multi-select when tenure status is Highway/Road', () => {
@@ -61,7 +61,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
-    expect(getByText('First Nations Information')).toBeVisible();
+    expect(getByText(/First Nations Information/i)).toBeVisible();
   });
 
   it('does not show first nations information when adjacent land is not Indian Reserve', () => {
@@ -72,7 +72,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { queryByText } = setup({ property });
-    expect(queryByText('First Nations Information')).toBeNull();
+    expect(queryByText(/First Nations Information/i)).toBeNull();
   });
 
   it('shows additional volume measurements for volumetric parcels', () => {
@@ -82,7 +82,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
-    expect(getByText('Volumetric measurement')).toBeVisible();
+    expect(getByText(/Volumetric measurement/i)).toBeVisible();
   });
 
   it('does not show shows additional volume measurements for non-volumetric parcels', () => {
@@ -92,7 +92,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { queryByText } = setup({ property });
-    expect(queryByText('Volumetric measurement')).toBeNull();
+    expect(queryByText(/Volumetric measurement/i)).toBeNull();
   });
 });
 

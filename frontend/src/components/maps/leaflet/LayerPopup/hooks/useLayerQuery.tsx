@@ -15,6 +15,7 @@ export interface IUserLayerQuery {
   findOneWhereContains: (
     latlng: LatLngLiteral,
     geometryName?: string,
+    spatialReferenceId?: number,
   ) => Promise<FeatureCollection>;
   /**
    * function to find GeoJSON shape matching the passed non-zero padded pid.
@@ -66,10 +67,14 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
-    async (latlng: LatLngLiteral, geometryName: string = 'SHAPE'): Promise<FeatureCollection> => {
+    async (
+      latlng: LatLngLiteral,
+      geometryName: string = 'SHAPE',
+      spatialReferenceId: number = 4326,
+    ): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios().get<FeatureCollection>(
-          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=4326;POINT ( ${latlng.lng} ${latlng.lat}))`,
+          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
         )
       )?.data;
       return data;

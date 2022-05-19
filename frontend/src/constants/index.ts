@@ -1,5 +1,6 @@
 export * from './accessStatus';
 export * from './addressTypes';
+export * from './areaUnitTypes';
 export * from './claims';
 export * from './environment';
 export * from './leaseStatusTypes';
@@ -15,4 +16,7 @@ export * from './propertyDataSourceTypes';
 export * from './propertyServiceFileTypes';
 export * from './propertyStatusTypes';
 export * from './propertyTenureTypes';
+export * from './propertyTypes';
 export * from './roles';
+export * from './volumetricParcelTypes';
+export * from './volumeUnitTypes';
