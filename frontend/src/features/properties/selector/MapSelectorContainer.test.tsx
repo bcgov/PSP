@@ -36,7 +36,7 @@ describe('MapSelectorContainer component', () => {
         <MapSelectorContainer
           onRemoveProperty={onRemoveProperty}
           onSelectedProperty={onSelectedProperty}
-          selectedProperties={renderOptions.selectedProperties ?? []}
+          existingProperties={renderOptions.existingProperties ?? []}
         />
       </Formik>,
       {
@@ -84,14 +84,14 @@ describe('MapSelectorContainer component', () => {
   it('lists selected properties', () => {
     const {
       component: { getByText },
-    } = setup({ selectedProperties: [testProperty] });
+    } = setup({ existingProperties: [testProperty] });
     expect(getByText('PID: 123-456-789')).toBeVisible();
   });
 
   it('selected properties can be removed', () => {
     const {
       component: { getByText },
-    } = setup({ selectedProperties: [testProperty] });
+    } = setup({ existingProperties: [testProperty] });
     const removeButton = getByText('Remove');
     userEvent.click(removeButton);
     expect(onRemoveProperty).toHaveBeenCalled();
@@ -102,7 +102,7 @@ describe('MapSelectorContainer component', () => {
     const {
       component: { getByText, getByTitle, findByTestId, container },
     } = setup({
-      selectedProperties: [],
+      existingProperties: [],
     });
 
     const searchTab = getByText('Search');
@@ -131,7 +131,7 @@ describe('MapSelectorContainer component', () => {
     const {
       component: { getByText, getByTitle, findByTestId, container },
     } = setup({
-      selectedProperties: featuresToIdentifiedMapProperty(mockPropertyLayerSearchResponse as any),
+      existingProperties: featuresToIdentifiedMapProperty(mockPropertyLayerSearchResponse as any),
     });
 
     const searchTab = getByText('Search');

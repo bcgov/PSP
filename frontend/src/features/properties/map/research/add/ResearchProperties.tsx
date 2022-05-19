@@ -27,7 +27,7 @@ const ResearchProperties: React.FunctionComponent = () => {
                     const formProperty = new PropertyForm(newProperty);
                     push(formProperty);
                   }}
-                  selectedProperties={values.properties}
+                  existingProperties={values.properties}
                   onRemoveProperty={remove}
                 />
               </Col>

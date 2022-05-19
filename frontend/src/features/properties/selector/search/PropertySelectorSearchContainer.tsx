@@ -12,17 +12,17 @@ import { getPropertyIdentifier } from '../utils';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
 
 export interface IPropertySelectorSearchContainerProps {
-  onSelectedProperty: (properties: IMapProperty) => void;
   selectedProperties: IMapProperty[];
+  setSelectedProperties: (properties: IMapProperty[]) => void;
 }
 
 export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertySelectorSearchContainerProps> = ({
-  onSelectedProperty,
   selectedProperties,
+  setSelectedProperties,
 }) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
-  const [selectedTableProperties, setSelectedTableProperties] = useState<IMapProperty[]>([]);
+
   const {
     findByPid,
     findByPin,
@@ -54,16 +54,11 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     <>
       <PropertySearchSelectorFormView
         onSearch={setLayerSearch}
-        selectedProperties={selectedTableProperties}
+        selectedProperties={selectedProperties}
         search={layerSearch}
         searchResults={searchResults}
         loading={findByPidLoading || findByPinLoading || findByPlanNumberLoading}
-        onSelectedProperties={setSelectedTableProperties}
-        onAddProperties={(selectedProperties: IMapProperty[]) => {
-          selectedProperties.forEach((property: IMapProperty) =>
-            onSelectedProperty({ ...property, id: getPropertyIdentifier(property) }),
-          );
-        }}
+        onSelectedProperties={setSelectedProperties}
       />
 
       <MapClickMonitor addProperty={noop} />

@@ -26,7 +26,7 @@ describe('PropertySelectorSearchContainer component', () => {
     const component = render(
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <PropertySelectorSearchContainer
-          onSelectedProperty={onSelectedProperty}
+          setSelectedProperties={onSelectedProperty}
           selectedProperties={[]}
         />
       </Formik>,

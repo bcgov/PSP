@@ -14,7 +14,6 @@ const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 
 const onSelectedProperties = jest.fn();
-const onAddProperties = jest.fn();
 const onSearch = jest.fn();
 
 describe('PropertySearchSelectorFormView component', () => {
@@ -23,7 +22,6 @@ describe('PropertySearchSelectorFormView component', () => {
     const component = render(
       <PropertySearchSelectorFormView
         onSearch={onSearch}
-        onAddProperties={onAddProperties}
         onSelectedProperties={onSelectedProperties}
         searchResults={renderOptions.searchResults ?? []}
         loading={renderOptions.loading ?? false}
@@ -179,18 +177,6 @@ describe('PropertySearchSelectorFormView component', () => {
       userEvent.click(checkbox);
       expect(checkbox).toBeChecked();
       expect(onSelectedProperties).toHaveBeenCalledWith(expectedFeatureData);
-    });
-
-    it('selected results are added when clicking add button', async () => {
-      const {
-        component: { getByText },
-      } = setup({
-        searchResults: mockPropertyLayerSearchResponse.features,
-        selectedProperties: expectedFeatureData,
-      });
-      const addButton = getByText('Add to selection');
-      userEvent.click(addButton);
-      expect(onAddProperties).toHaveBeenCalledWith(expectedFeatureData);
     });
   });
 });

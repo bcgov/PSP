@@ -1,4 +1,3 @@
-import { Button } from 'components/common/buttons';
 import * as Styled from 'components/common/styles';
 import { Table } from 'components/Table';
 import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
@@ -10,7 +9,6 @@ import mapPropertyColumns from './mapPropertyColumns';
 
 export interface IPropertySearchSelectorFormViewProps {
   onSelectedProperties: (properties: IMapProperty[]) => void;
-  onAddProperties: (properties: IMapProperty[]) => void;
   selectedProperties: IMapProperty[];
   onSearch: (search: ILayerSearchCriteria) => void;
   searchResults: IMapProperty[];
@@ -20,7 +18,6 @@ export interface IPropertySearchSelectorFormViewProps {
 
 export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySearchSelectorFormViewProps> = ({
   onSelectedProperties,
-  onAddProperties,
   selectedProperties,
   onSearch,
   searchResults,
@@ -51,9 +48,6 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
           }
           pageSize={5}
         />
-        <Button variant="secondary" onClick={() => onAddProperties(selectedProperties)}>
-          Add to selection
-        </Button>
       </StyledFormSection>
     </>
   );

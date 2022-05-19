@@ -1,4 +1,5 @@
 import { ColumnWithProps } from 'components/Table';
+import { PidCell } from 'components/Table/PidCell';
 
 import { IMapProperty } from '../models';
 
@@ -9,6 +10,7 @@ const columns: ColumnWithProps<IMapProperty>[] = [
     align: 'left',
     maxWidth: 20,
     minWidth: 20,
+    Cell: PidCell,
   },
   {
     Header: 'PIN',

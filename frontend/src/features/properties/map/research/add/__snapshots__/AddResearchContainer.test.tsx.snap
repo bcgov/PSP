@@ -383,7 +383,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   height: auto;
 }
 
-.c7 .tab-content {
+.c7.tab-content {
   height: auto;
 }
 
@@ -880,16 +880,6 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                         class="align-self-center col-auto"
                       />
                     </div>
-                    <button
-                      class="c18 Button btn btn-secondary"
-                      type="button"
-                    >
-                      <div
-                        class="Button__value"
-                      >
-                        Add to selection
-                      </div>
-                    </button>
                   </div>
                 </div>
               </div>

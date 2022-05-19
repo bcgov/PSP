@@ -6,6 +6,8 @@ import styled from 'styled-components';
 interface IPropertySelectorTabsViewProps {
   MapSelectorView: React.ReactNode;
   ListSelectorView: React.ReactNode;
+  activeTab: SelectorTabNames;
+  setActiveTab: (tab: SelectorTabNames) => void;
 }
 
 export enum SelectorTabNames {
@@ -19,9 +21,18 @@ export enum SelectorTabNames {
 export const PropertySelectorTabsView: React.FunctionComponent<IPropertySelectorTabsViewProps> = ({
   MapSelectorView,
   ListSelectorView,
+  activeTab,
+  setActiveTab,
 }) => {
   return (
-    <StyledTabView defaultActiveKey={SelectorTabNames.map}>
+    <StyledTabView
+      defaultActiveKey={SelectorTabNames.map}
+      activeKey={activeTab}
+      onSelect={(eventKey: string | null) => {
+        const tab = Object.values(SelectorTabNames).find(value => value === eventKey);
+        tab && setActiveTab(tab);
+      }}
+    >
       <Tab eventKey={SelectorTabNames.map} title="Locate on Map">
         {MapSelectorView}
       </Tab>
@@ -34,7 +45,7 @@ export const PropertySelectorTabsView: React.FunctionComponent<IPropertySelector
 
 const StyledTabView = styled(TabView)`
   height: auto;
-  .tab-content {
+  &.tab-content {
     height: auto;
   }
 `;
