@@ -6,15 +6,15 @@ import {
 import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
 import * as React from 'react';
 
-import MapClickMonitor from './components/MapClickMonitor';
-import { IMapProperty } from './models';
-import PropertySelectorSubForm from './PropertySelectorSubForm';
+import MapClickMonitor from '../components/MapClickMonitor';
+import { IMapProperty } from '../models';
+import PropertyMapSelectorSubForm from './PropertyMapSelectorSubForm';
 
-export interface IPropertySelectorFormViewProps {
+export interface IPropertyMapSelectorFormViewProps {
   onSelectedProperty: (property: IMapProperty) => void;
 }
 
-const PropertySelectorFormView: React.FunctionComponent<IPropertySelectorFormViewProps> = ({
+const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorFormViewProps> = ({
   onSelectedProperty,
 }) => {
   const { setCursor } = React.useContext(SelectedPropertyContext);
@@ -39,7 +39,7 @@ const PropertySelectorFormView: React.FunctionComponent<IPropertySelectorFormVie
     <>
       <StyledFormSection>
         <Styled.H3>Select a property</Styled.H3>
-        <PropertySelectorSubForm
+        <PropertyMapSelectorSubForm
           onClickDraftMarker={onClickDraftMarker}
           onClickAway={onClickAway}
           selectedProperty={selectedProperty}
@@ -50,4 +50,4 @@ const PropertySelectorFormView: React.FunctionComponent<IPropertySelectorFormVie
   );
 };
 
-export default PropertySelectorFormView;
+export default PropertyMapSelectorFormView;

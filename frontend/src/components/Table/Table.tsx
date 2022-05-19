@@ -264,8 +264,8 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     columns,
     data,
     onRequestData,
-    totalItems,
-    pageCount,
+    totalItems: externalTotalItems,
+    pageCount: externalPageCount,
     selectedRows: externalSelectedRows,
     setSelectedRows: setExternalSelectedRows,
     footer,
@@ -278,10 +278,12 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     manualSortBy,
     isSingleSelect,
   } = props;
+  const totalItems = externalTotalItems ?? data?.length;
+  const pageCount =
+    pageSizeProp !== undefined
+      ? externalPageCount ?? Math.ceil(totalItems / pageSizeProp)
+      : undefined;
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
-  React.useEffect(() => {
-    selectedRowsRef.current = externalSelectedRows ?? [];
-  }, [externalSelectedRows]);
 
   const dataRef = React.useRef<T[]>(data ?? []);
   React.useEffect(() => {
@@ -353,7 +355,24 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     <IndeterminateCheckbox
                       {...row.getToggleRowSelectedProps()}
                       row={row}
-                      setSelected={setExternalSelectedRows}
+                      setSelected={(values: T[], blah: any) => {
+                        const allPreviouslySelected = instance.rows
+                          .filter(row => row.isSelected)
+                          .map(row => row.original);
+                        const previouslySelected = allPreviouslySelected.find(
+                          row => values.length === 1 && row.id === values[0].id,
+                        );
+                        if (previouslySelected) {
+                          setExternalSelectedRows &&
+                            setExternalSelectedRows(
+                              allPreviouslySelected.filter(row => row !== previouslySelected),
+                            );
+                        } else {
+                          setExternalSelectedRows &&
+                            setExternalSelectedRows &&
+                            setExternalSelectedRows([...allPreviouslySelected, ...values]);
+                        }
+                      }}
                       selectedRef={selectedRowsRef}
                       isSingleSelect={isSingleSelect}
                     />
@@ -502,7 +521,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderLoading = () => {
     return (
       <div className="table-loading">
-        <Spinner animation="border" role="status"></Spinner>
+        <Spinner animation="border" role="status" title="table-loading"></Spinner>
       </div>
     );
   };
@@ -672,6 +691,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     clickableTooltip,
     externalSelectedRows,
     selectedFlatRows,
+    page,
   ]);
 
   var canShowTotals: boolean = false;

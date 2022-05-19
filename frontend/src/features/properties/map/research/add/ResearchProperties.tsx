@@ -1,15 +1,10 @@
-import * as Styled from 'components/common/styles';
-import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, useFormikContext } from 'formik';
-import { isEqual } from 'lodash';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { PropertyForm, ResearchForm } from './models';
-import SelectedPropertyHeaderRow from './SelectedPropertyHeaderRow';
-import SelectedPropertyRow from './SelectedPropertyRow';
 
 const ResearchProperties: React.FunctionComponent = () => {
   const { values } = useFormikContext<ResearchForm>();
@@ -30,27 +25,13 @@ const ResearchProperties: React.FunctionComponent = () => {
                 <MapSelectorContainer
                   onSelectedProperty={(newProperty: IMapProperty) => {
                     const formProperty = new PropertyForm(newProperty);
-                    if (!values.properties.some(property => isEqual(formProperty, property))) {
-                      push(formProperty);
-                    }
+                    push(formProperty);
                   }}
+                  selectedProperties={values.properties}
+                  onRemoveProperty={remove}
                 />
               </Col>
             </Row>
-            <StyledFormSection>
-              <Styled.H3>Selected properties</Styled.H3>
-              <SelectedPropertyHeaderRow />
-              {values.properties.map((property, index, properties) => (
-                <SelectedPropertyRow
-                  key={`property.${property.latitude}-${property.longitude}-${property.pid}`}
-                  onRemove={() => remove(index)}
-                  nameSpace={`properties.${index}`}
-                  index={index}
-                />
-              ))}
-
-              {values.properties.length === 0 && <span>No Properties selected</span>}
-            </StyledFormSection>
           </>
         )}
       </FieldArray>

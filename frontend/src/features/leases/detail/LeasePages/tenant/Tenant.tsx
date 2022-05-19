@@ -130,7 +130,6 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
 
   const tenants: Api_LeaseTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
 
-  console.log(tenants);
   return (
     <FormSectionOne>
       <Formik initialValues={lease} onSubmit={() => {}} enableReinitialize>

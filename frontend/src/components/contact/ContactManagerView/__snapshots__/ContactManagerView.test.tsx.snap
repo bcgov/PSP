@@ -478,6 +478,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     class="c7 Button Button--icon-only primary btn btn-primary"
                     data-testid="search"
                     id="search-button"
+                    title="search"
                     type="button"
                   >
                     <div
@@ -506,6 +507,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     class="c7 Button Button--icon-only btn btn-info"
                     data-testid="reset-button"
                     id="reset-button"
+                    title="reset-button"
                     type="button"
                   >
                     <div
@@ -878,6 +880,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
           <div
             class="spinner-border"
             role="status"
+            title="table-loading"
           />
         </div>
       </div>

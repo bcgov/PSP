@@ -1,11 +1,14 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { layerData } from 'constants/toasts';
 import { Feature, FeatureCollection } from 'geojson';
+import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { LatLngLiteral } from 'leaflet';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
+
+import { toCqlFilter } from '../../mapUtils';
 
 export interface IUserLayerQuery {
   /**
@@ -20,12 +23,20 @@ export interface IUserLayerQuery {
    * function to find GeoJSON shape matching the passed non-zero padded pid.
    * @param pid
    */
-  findByPid: (pid: string) => Promise<FeatureCollection>;
+  findByPid: (pid: string, allBy?: boolean) => Promise<FeatureCollection | undefined>;
+  findByPidLoading: boolean;
   /**
    * function to find GeoJSON shape matching the passed pin.
    * @param pin
    */
-  findByPin: (pin: string) => Promise<FeatureCollection>;
+  findByPin: (pin: string, allBy?: boolean) => Promise<FeatureCollection | undefined>;
+  findByPinLoading: boolean;
+  /**
+   * function to find GeoJSON shape matching the passed planNumber.
+   * @param planNumber
+   */
+  findByPlanNumber: (planNumber: string, allBy?: boolean) => Promise<FeatureCollection | undefined>;
+  findByPlanNumberLoading: boolean;
   /**
    * function to find GeoJSON shape matching the passed administrative area.
    * @param city
@@ -34,8 +45,8 @@ export interface IUserLayerQuery {
 }
 
 const MAX_RETRIES = 2;
-const wfsAxios = () => {
-  const instance = axios.create({ timeout: 5000 });
+const wfsAxios = (timeout?: number) => {
+  const instance = axios.create({ timeout: timeout ?? 5000 });
   instance.defaults.raxConfig = {
     retry: MAX_RETRIES,
     instance: instance,
@@ -63,6 +74,7 @@ const wfsAxios = () => {
  * @param geometry the name of the geometry in the feature collection
  */
 export const useLayerQuery = (url: string): IUserLayerQuery => {
+  const baseAllUrl = `${url}&srsName=EPSG:4326`;
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
@@ -98,36 +110,69 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
     [baseUrl],
   );
 
-  const findByPid = useCallback(
-    async (pid: string): Promise<FeatureCollection> => {
-      //Do not make a request if we our currently cached response matches the requested pid.
-      const formattedPid = pid.replace(/-/g, '');
-      const data: FeatureCollection = (
-        await wfsAxios().get<FeatureCollection>(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)
-      ).data;
-      return data;
-    },
-    [baseUrl],
-  );
+  const { execute: findByPid, loading: findByPidLoading } = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (pid: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
+        //Do not make a request if we our currently cached response matches the requested pid.
+        const formattedPid = pid.replace(/-/g, '');
+        const data: AxiosResponse<FeatureCollection> = await wfsAxios(20000).get<FeatureCollection>(
+          `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PID: formattedPid }, true)}`,
+        );
+        return data;
+      },
+      [baseAllUrl, baseUrl],
+    ),
+    requestName: 'findByPid',
+  });
 
-  const findByPin = useCallback(
-    async (pin: string): Promise<FeatureCollection> => {
-      //Do not make a request if we our currently cached response matches the requested pid.
-      const data: FeatureCollection = (
-        await wfsAxios().get<FeatureCollection>(`${baseUrl}&CQL_FILTER=PIN=${pin}`)
-      ).data;
-      return data;
-    },
-    [baseUrl],
-  );
+  const { execute: findByPin, loading: findByPinLoading } = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (pin: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
+        //Do not make a request if we our currently cached response matches the requested pid.
+        const data: AxiosResponse<FeatureCollection> = await wfsAxios(20000).get<FeatureCollection>(
+          `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PIN: pin })}`,
+        );
+        return data;
+      },
+      [baseAllUrl, baseUrl],
+    ),
+    requestName: 'findByPin',
+  });
+
+  const { execute: findByPlanNumber, loading: findByPlanNumberLoading } = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (planNumber: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
+        //Do not make a request if we our currently cached response matches the requested pid.
+        const data: AxiosResponse<FeatureCollection> = await wfsAxios(20000).get<FeatureCollection>(
+          `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PLAN_NUMBER: planNumber })}`,
+        );
+        return data;
+      },
+      [baseAllUrl, baseUrl],
+    ),
+    requestName: 'planNumber',
+  });
 
   return useMemo(
     () => ({
       findOneWhereContains,
       findByPid,
+      findByPidLoading,
       findByPin,
+      findByPinLoading,
+      findByPlanNumber,
+      findByPlanNumberLoading,
       findByAdministrative,
     }),
-    [findByAdministrative, findByPid, findByPin, findOneWhereContains],
+    [
+      findByAdministrative,
+      findByPid,
+      findByPidLoading,
+      findByPin,
+      findByPinLoading,
+      findByPlanNumber,
+      findByPlanNumberLoading,
+      findOneWhereContains,
+    ],
   );
 };

@@ -4,15 +4,15 @@ import * as React from 'react';
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { IMapProperty } from './models';
+import { IMapProperty } from '../models';
 
-export interface IPropertySelectorSubFormProps {
+export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
   onClickAway: () => void;
   selectedProperty?: IMapProperty;
 }
 
-export const PropertySelectorSubForm: React.FunctionComponent<IPropertySelectorSubFormProps> = ({
+export const PropertyMapSelectorSubForm: React.FunctionComponent<IPropertyMapSelectorSubFormProps> = ({
   onClickDraftMarker,
   onClickAway,
   selectedProperty,
@@ -68,4 +68,4 @@ const GroupHeader = styled(Col)`
   margin-bottom: 1rem;
 `;
 
-export default PropertySelectorSubForm;
+export default PropertyMapSelectorSubForm;

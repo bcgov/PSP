@@ -1,6 +1,7 @@
 import TabView from 'components/common/TabView';
 import * as React from 'react';
 import { Tab } from 'react-bootstrap';
+import styled from 'styled-components';
 
 interface IPropertySelectorTabsViewProps {
   MapSelectorView: React.ReactNode;
@@ -20,11 +21,20 @@ export const PropertySelectorTabsView: React.FunctionComponent<IPropertySelector
   ListSelectorView,
 }) => {
   return (
-    <TabView defaultActiveKey={SelectorTabNames.map}>
+    <StyledTabView defaultActiveKey={SelectorTabNames.map}>
       <Tab eventKey={SelectorTabNames.map} title="Locate on Map">
         {MapSelectorView}
       </Tab>
-      <Tab eventKey={SelectorTabNames.list} title="Search"></Tab>
-    </TabView>
+      <Tab eventKey={SelectorTabNames.list} title="Search">
+        {ListSelectorView}
+      </Tab>
+    </StyledTabView>
   );
 };
+
+const StyledTabView = styled(TabView)`
+  height: auto;
+  .tab-content {
+    height: auto;
+  }
+`;

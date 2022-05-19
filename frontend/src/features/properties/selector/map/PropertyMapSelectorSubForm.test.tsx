@@ -2,8 +2,10 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { IMapProperty } from './models';
-import PropertySelectorSubForm, { IPropertySelectorSubFormProps } from './PropertySelectorSubForm';
+import { IMapProperty } from '../models';
+import PropertyMapSelectorSubForm, {
+  IPropertyMapSelectorSubFormProps,
+} from './PropertyMapSelectorSubForm';
 
 const onClickAway = jest.fn();
 const onClickDraftMarker = jest.fn();
@@ -20,10 +22,10 @@ const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 
 describe('PropertySelectorSubForm component', () => {
-  const setup = (renderOptions: RenderOptions & IPropertySelectorSubFormProps) => {
+  const setup = (renderOptions: RenderOptions & IPropertyMapSelectorSubFormProps) => {
     // render component under test
     const component = render(
-      <PropertySelectorSubForm
+      <PropertyMapSelectorSubForm
         onClickDraftMarker={renderOptions.onClickDraftMarker}
         onClickAway={renderOptions.onClickAway}
         selectedProperty={renderOptions.selectedProperty}
