@@ -44,4 +44,3 @@ describe('AssociationHeader component', () => {
     expect(getByText(testCount)).toBeVisible();
   });
 });
-4
