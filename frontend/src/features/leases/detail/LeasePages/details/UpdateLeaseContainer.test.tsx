@@ -65,6 +65,8 @@ describe('Update lease container component', () => {
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
+    await fillInput(container, 'hasPhysicalLicense', 'Unknown', 'select');
+    await fillInput(container, 'hasDigitalLicense', 'Unknown', 'select');
 
     mockAxios.onPut().reply(200, {});
     userEvent.click(getByText('Save'));
@@ -102,6 +104,9 @@ describe('Update lease container component', () => {
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
 
+    await fillInput(container, 'hasPhysicalLicense', 'Unknown', 'select');
+    await fillInput(container, 'hasDigitalLicense', 'Unknown', 'select');
+
     mockAxios.onPut().reply(409, { error: 'test message' });
     userEvent.click(getByText('Save'));
     userEvent.click(await findByText('Save Anyways'));
@@ -112,4 +117,4 @@ describe('Update lease container component', () => {
 });
 
 const expectedFormData =
-  '{"lFileNo":"","tfaFileNo":0,"expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"responsibilityType":{"id":"HQ"},"initiatorType":{"id":"PROJECT"},"type":{"id":"LICONSTRC"},"statusType":{"id":"ACTIVE"},"region":{"regionCode":"1"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"description":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"id":1}';
+  '{"lFileNo":"","tfaFileNo":0,"expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"responsibilityType":{"id":"HQ"},"initiatorType":{"id":"PROJECT"},"type":{"id":"LICONSTRC"},"statusType":{"id":"ACTIVE"},"region":{"regionCode":"1"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"description":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"hasDigitalLicense":null,"hasPhysicalLicense":null,"id":1}';

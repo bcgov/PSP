@@ -2,7 +2,12 @@ import { LeaseInitiatorTypes } from 'constants/leaseInitiatorTypes';
 import { FormTenant } from 'features/leases/detail/LeasePages/tenant/Tenant';
 import { IAddFormLease, IFormLeaseTerm, ILease } from 'interfaces';
 import { Api_LeaseTenant } from 'models/api/LeaseTenant';
-import { stringToNull, stringToTypeCode } from 'utils/formUtils';
+import {
+  booleanToYesNoUnknownString,
+  stringToNull,
+  stringToTypeCode,
+  yesNoUnknownToBoolean,
+} from 'utils/formUtils';
 import { formatNames } from 'utils/personUtils';
 
 import { IFormLease } from './../../interfaces/ILease';
@@ -48,6 +53,8 @@ export const apiLeaseToFormLease = (lease?: ILease): IFormLease | undefined => {
     ...lease,
     amount: lease.amount ?? '',
     tfaFileNo: lease.tfaFileNo ?? '',
+    hasDigitalLicense: booleanToYesNoUnknownString(lease.hasDigitalLicense),
+    hasPhysicalLicense: booleanToYesNoUnknownString(lease.hasPhysicalLicense),
     terms: lease.terms.map<IFormLeaseTerm>(term => apiLeaseTermToFormLeaseTerm(term)) ?? [],
     tenants: lease.tenants.map<FormTenant>(tenant => new FormTenant(tenant)) ?? [],
   };
@@ -73,6 +80,8 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     psFileNo: stringToNull(formLease.psFileNo),
     renewalDate: stringToNull(formLease.renewalDate),
     responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
+    hasDigitalLicense: yesNoUnknownToBoolean(formLease.hasDigitalLicense),
+    hasPhysicalLicense: yesNoUnknownToBoolean(formLease.hasPhysicalLicense),
     properties: formLease.properties.map(formProperty => ({
       ...formProperty,
       pin: stringToNull(formProperty.pin),
@@ -95,6 +104,8 @@ export const apiLeaseToAddFormLease = (lease?: ILease) => {
         type: lease.type?.id ?? '',
         region: lease?.region?.regionCode ?? '',
         programType: lease.programType?.id ?? '',
+        hasDigitalLicense: booleanToYesNoUnknownString(lease.hasDigitalLicense),
+        hasPhysicalLicense: booleanToYesNoUnknownString(lease.hasPhysicalLicense),
       } as IAddFormLease)
     : undefined;
 };
