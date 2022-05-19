@@ -77,8 +77,8 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
 // parcel icon (green) highlighted
 export const getDraftIcon = (text: string) => {
   return L.divIcon({
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconSize: [29, 45],
+    iconAnchor: [15, 45],
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
     html: ReactDOMServer.renderToStaticMarkup(<DraftCircleNumber text={text} />),
