@@ -88,7 +88,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetPropertyAssociationsWithPid(string pid)
         {
-            var property = _pimsService.Property.GetAssociations(pid);
+            var property = _pimsRepository.Property.GetAssociations(pid);
 
             return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
         }
