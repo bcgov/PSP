@@ -89,15 +89,9 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
         <Form.Label>MoTI contact:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
         <Form.Label>Physical lease/license exists:</Form.Label>
-        <FormControl
-          disabled
-          value={getIn(values, withNameSpace(nameSpace, 'hasPhysicalLicense'))}
-        />
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'hasPhysicalLicense')} />
         <Form.Label>Digital lease/license exists:</Form.Label>
-        <FormControl
-          disabled
-          value={getIn(values, withNameSpace(nameSpace, 'hasDigitalLicense'))}
-        />
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'hasDigitalLicense')} />
         <Form.Label>Location of documents:</Form.Label>
         <TextAreaInput
           disabled={disabled}

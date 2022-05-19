@@ -297,21 +297,33 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         Physical lease/license exists:
       </label>
-      <input
-        class="c3 form-control"
-        disabled=""
-        value="No"
-      />
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasPhysicalLicense"
+          name="hasPhysicalLicense"
+          title="No"
+          value="No"
+        />
+      </div>
       <label
         class="form-label"
       >
         Digital lease/license exists:
       </label>
-      <input
-        class="c3 form-control"
-        disabled=""
-        value="Yes"
-      />
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasDigitalLicense"
+          name="hasDigitalLicense"
+          title="Yes"
+          value="Yes"
+        />
+      </div>
       <label
         class="form-label"
       >
@@ -660,21 +672,33 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         Physical lease/license exists:
       </label>
-      <input
-        class="c3 form-control"
-        disabled=""
-        value="Unknown"
-      />
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasPhysicalLicense"
+          name="hasPhysicalLicense"
+          title="Unknown"
+          value="Unknown"
+        />
+      </div>
       <label
         class="form-label"
       >
         Digital lease/license exists:
       </label>
-      <input
-        class="c3 form-control"
-        disabled=""
-        value="Unknown"
-      />
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasDigitalLicense"
+          name="hasDigitalLicense"
+          title="Unknown"
+          value="Unknown"
+        />
+      </div>
       <label
         class="form-label"
       >
