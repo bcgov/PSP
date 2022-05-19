@@ -38,7 +38,6 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
         ListSelectorView={
           <PropertySelectorSearchContainer
             onSelectedProperty={(property: IMapProperty) => {
-              console.log(selectedPropertiesWithIds, property);
               if (
                 !selectedPropertiesWithIds.some(
                   selectedProperty => selectedProperty.id === property.id,

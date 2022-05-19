@@ -97,6 +97,35 @@ describe('MapSelectorContainer component', () => {
     expect(onRemoveProperty).toHaveBeenCalled();
   });
 
+  it('selected properties display a warning if added', async () => {
+    mockAxios.onGet().reply(200, mockPropertyLayerSearchResponse);
+    const {
+      component: { getByText, getByTitle, findByTestId, container },
+    } = setup({
+      selectedProperties: [],
+    });
+
+    const searchTab = getByText('Search');
+    userEvent.click(searchTab);
+    await fillInput(container, 'searchBy', 'pid', 'select');
+    await fillInput(container, 'pid', '123-456-789');
+    const searchButton = getByTitle('search');
+    userEvent.click(searchButton);
+    const checkbox = await findByTestId('selectrow-PID: 017-723-311');
+    userEvent.click(checkbox);
+    const addButton = getByText('Add to selection');
+    userEvent.click(addButton);
+
+    expect(onSelectedProperty).toHaveBeenCalledWith({
+      id: 'PID: 017-723-311',
+      latitude: 49.104223239999996,
+      longitude: -122.6414763,
+      pid: '017723311',
+      pin: '',
+      planNumber: 'LMS312',
+    });
+  });
+
   it('selected properties display a warning if added multiple times', async () => {
     mockAxios.onGet().reply(200, mockPropertyLayerSearchResponse);
     const {
