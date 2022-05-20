@@ -1,5 +1,4 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { organization } from 'constants/toasts';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { formatMoney, prettyFormatDate } from 'utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
@@ -101,7 +100,7 @@ describe('DepositsReturnedContainer component', () => {
 
   it('renders security deposit returns information as expected', () => {
     const depositReturn = mockDepositReturns[0];
-    const { findFirstRow, findCell, getByText } = setup({
+    const { findFirstRow, findCell } = setup({
       securityDeposits: [mockDeposit],
       depositReturns: [depositReturn],
       onEdit: mockCallback,
