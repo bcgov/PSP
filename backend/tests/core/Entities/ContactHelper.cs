@@ -24,8 +24,10 @@ namespace Pims.Core.Test
                 Summary = organization?.OrganizationName ?? person?.GetFullName(),
                 IsDisabled = isDisabled,
                 Organization = organization,
+                OrganizationId = organization?.Id,
                 Person = person,
-                OrganizationName = organization?.OrganizationName ?? "organization name",
+                PersonId = person?.Id,
+                OrganizationName = organization?.OrganizationName ?? "",
                 MunicipalityName = address.MunicipalityName,
             };
             return contact;
