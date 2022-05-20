@@ -23,6 +23,7 @@ const mockDeposits: Api_SecurityDeposit[] = [
     },
     depositReturns: [],
     rowVersion: 1,
+    contactHolder: { id: 'O3', organization: { name: 'test organization' } },
   },
   {
     id: 2,
@@ -37,6 +38,7 @@ const mockDeposits: Api_SecurityDeposit[] = [
     otherTypeDescription: 'TestCustomDeposit',
     depositReturns: [],
     rowVersion: 1,
+    contactHolder: { id: 'P1', person: { firstName: 'test', surname: 'person' } },
   },
 ];
 
@@ -125,5 +127,19 @@ describe('DepositsReceivedContainer component', () => {
     expect(findCell(dataRow, 1)?.textContent).toBe(deposit.description);
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(deposit.amountPaid));
     expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDate));
+    expect(findCell(dataRow, 4)?.textContent).toBe(deposit.contactHolder?.organization?.name);
+  });
+
+  it('renders security deposit return holders as links', () => {
+    const { getByText } = setup({
+      securityDeposits: mockDeposits,
+      onAdd: mockVoidCallback,
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      onReturn: mockCallback,
+    });
+
+    expect(getByText('test organization')).toHaveAttribute('href', '/contact/O3');
+    expect(getByText('test person')).toHaveAttribute('href', '/contact/P1');
   });
 });
