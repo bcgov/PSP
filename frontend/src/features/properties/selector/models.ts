@@ -6,5 +6,6 @@ export interface IMapProperty {
   planNumber?: string;
   address?: string;
   legalDescription?: string;
-  district?: string;
+  region?: number;
+  district?: number;
 }

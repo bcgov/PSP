@@ -21,6 +21,8 @@ export const PropertySelectorSubForm: React.FunctionComponent<IPropertySelectorS
   const planNumber = selectedProperty?.planNumber;
   const address = selectedProperty?.address;
   const legalDescription = selectedProperty?.legalDescription;
+  const region = selectedProperty?.region;
+  const district = selectedProperty?.district;
   return (
     <StyledFormRow>
       <Col md={4}>
@@ -33,6 +35,8 @@ export const PropertySelectorSubForm: React.FunctionComponent<IPropertySelectorS
         <SectionField label="PID">{pid}</SectionField>
         <SectionField label="Plan #">{planNumber}</SectionField>
         <SectionField label="Address">{address}</SectionField>
+        <SectionField label="Region">{region}</SectionField>
+        <SectionField label="District">{district}</SectionField>
         <Row>
           <Col md={12}>
             <BsForm.Label>Legal Description:</BsForm.Label>
