@@ -15,16 +15,18 @@ import useActiveFeatureLayer from './useActiveFeatureLayer';
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
 jest.mock('components/maps/leaflet/LayerPopup');
+
 let clearLayers = jest.fn();
 let addData = jest.fn();
-let findOneWhereContains = jest.fn();
-
 (geoJSON as jest.Mock).mockReturnValue({
   addTo: () => ({ clearLayers, addData } as any),
 });
-(useLayerQuery as jest.Mock).mockReturnValue({
-  findOneWhereContains: findOneWhereContains,
-});
+
+const useLayerQueryMock = {
+  findOneWhereContains: jest.fn(),
+  findMetadataByLocation: jest.fn(),
+};
+(useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -37,14 +39,17 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useActiveFeatureLayer hook tests', () => {
   beforeEach(() => {
+    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
+  });
+  afterEach(() => {
     clearLayers.mockClear();
     addData.mockClear();
-    findOneWhereContains.mockClear();
+    useLayerQueryMock.findOneWhereContains.mockClear();
+    useLayerQueryMock.findMetadataByLocation.mockClear();
   });
-  afterEach(() => {});
 
   it('sets the active feature only when there is a selected property', async () => {
-    findOneWhereContains.mockResolvedValue({ features: [{ properties: [{}] }] });
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({ features: [{ properties: [{}] }] });
     renderHook(
       () =>
         useActiveFeatureLayer({
@@ -58,14 +63,14 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
     });
   });
 
   it('does not set the active parcel when the selected property has no matching parcel data', async () => {
-    findOneWhereContains.mockResolvedValue({});
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({});
     renderHook(
       () =>
         useActiveFeatureLayer({
@@ -79,7 +84,7 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });
