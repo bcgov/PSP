@@ -146,11 +146,16 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
       geometryName: string = 'SHAPE',
       spatialReferenceId: number = 4326,
     ): Promise<Record<string, any>> => {
-      const collection = await findOneWhereContains(latlng, geometryName, spatialReferenceId);
-      if (collection?.features?.length > 0) {
-        return collection.features[0].properties || {};
+      try {
+        const collection = await findOneWhereContains(latlng, geometryName, spatialReferenceId);
+        if (collection?.features?.length > 0) {
+          return collection.features[0].properties || {};
+        }
+        return {};
+      } catch (error) {
+        // return empty object if map layer is not available
+        return {};
       }
-      return {};
     },
     [findOneWhereContains],
   );
