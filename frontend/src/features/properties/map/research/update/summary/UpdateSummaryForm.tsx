@@ -32,6 +32,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);
 
   const researchPurposeOptions = getByType(API.RESEARCH_PURPOSE_TYPES);
+  const researchStatusOptions = getOptionsByType(API.RESEARCH_FILE_STATUS_TYPES);
 
   const purposeFilterOptions: MultiSelectOption[] = researchPurposeOptions.map<MultiSelectOption>(
     x => {
@@ -75,6 +76,20 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
 
   return (
     <StyledSummarySection>
+      <Section header="Research File Information">
+        <SectionField label="R-file name">
+          <Input field="name" />
+        </SectionField>
+        <SectionField label="Status">
+          <Select
+            field="statusTypeCode"
+            data-testid="researchFileStatus"
+            required={true}
+            options={researchStatusOptions}
+            placeholder={values.statusTypeCode ? undefined : 'Please Select'}
+          />
+        </SectionField>
+      </Section>
       <Section header="Roads">
         <SectionField label="Road name">
           <Input field="roadName" />

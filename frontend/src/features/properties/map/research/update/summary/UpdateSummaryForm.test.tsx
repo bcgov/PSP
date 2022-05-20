@@ -84,4 +84,22 @@ describe('UpdateResearchForm component', () => {
     const { component } = setup({ initialValues });
     expect(component.asFragment()).toMatchSnapshot();
   });
+
+  it('renders the status field', () => {
+    const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
+    const {
+      component: { getByTestId },
+    } = setup({ initialValues });
+    expect(getByTestId('researchFileStatus')).toBeInTheDocument();
+  });
+
+  it('renders the file name field', () => {
+    const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
+    const {
+      component: { container },
+    } = setup({ initialValues });
+    const fileName = container.querySelector(`#input-name`);
+
+    expect(fileName).toBeInTheDocument();
+  });
 });
