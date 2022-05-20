@@ -120,7 +120,7 @@ jobs:
       - name: Failure notification to Teams Channel
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
-        if: env.MS_TEAMS_NOTIFY_URL != '' && failure() && steps.scan.outcome == 'failure' && (${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }})
+        if: env.MS_TEAMS_NOTIFY_URL != '' && failure() && steps.scan.outcome == 'failure'
         uses: jdcargile/ms-teams-notification@v1.3
         with:
           github-token: ${{ github.token }}
