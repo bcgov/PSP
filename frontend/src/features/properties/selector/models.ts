@@ -7,5 +7,7 @@ export interface IMapProperty {
   address?: string;
   legalDescription?: string;
   region?: number;
+  regionName?: string;
   district?: number;
+  districtName?: string;
 }

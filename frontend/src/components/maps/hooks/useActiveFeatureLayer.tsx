@@ -116,9 +116,11 @@ const useActiveFeatureLayer = ({
         IS_SELECTED: isSelecting,
         CLICK_LAT_LNG: latLng,
         REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
+        REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
         DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
           ? district.DISTRICT_NUMBER
           : DistrictCodes.Unknown,
+        DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
       };
       activeFeatureLayer?.addData(feature);
       setSelectedFeature(feature);
