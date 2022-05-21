@@ -146,7 +146,9 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         </div>
         <div
           class="col"
-        />
+        >
+          2 - South Coast
+        </div>
       </div>
       <div
         class="pb-2 row"
@@ -162,7 +164,9 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         </div>
         <div
           class="col"
-        />
+        >
+          2 - Vancouver Island
+        </div>
       </div>
       <div
         class="row"

@@ -13,6 +13,10 @@ const testProperty: IMapProperty = {
   planNumber: '123546',
   address: 'Test address 123',
   legalDescription: 'Test Legal Description',
+  region: 2,
+  regionName: 'South Coast',
+  district: 2,
+  districtName: 'Vancouver Island',
 };
 
 const mockStore = configureMockStore([thunk]);
@@ -65,5 +69,7 @@ describe('PropertySelectorSubForm component', () => {
     expect(getByText(`${testProperty.planNumber}`)).toBeVisible();
     expect(getByText(`${testProperty.address}`)).toBeVisible();
     expect(getByText(`${testProperty.legalDescription}`)).toBeVisible();
+    expect(getByText(`${testProperty.region} - ${testProperty.regionName}`)).toBeVisible();
+    expect(getByText(`${testProperty.district} - ${testProperty.districtName}`)).toBeVisible();
   });
 });

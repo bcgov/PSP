@@ -39,7 +39,12 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useActiveFeatureLayer hook tests', () => {
   beforeEach(() => {
-    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
+    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({
+      REGION_NUMBER: 2,
+      REGION_NAME: 'South Coast',
+      DISTRICT_NUMBER: 2,
+      DISTRICT_NAME: 'Vancouver Island',
+    });
   });
   afterEach(() => {
     clearLayers.mockClear();
@@ -63,9 +68,22 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
+    // call to parcelmap BC
     expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    // calls to region and district layers
+    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
+      expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          properties: expect.objectContaining({
+            REGION_NUMBER: 2,
+            REGION_NAME: 'South Coast',
+            DISTRICT_NUMBER: 2,
+            DISTRICT_NAME: 'Vancouver Island',
+          }),
+        }),
+      );
     });
   });
 
@@ -84,7 +102,10 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
+    // call to parcelmap BC
     expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    // calls to region and district layers
+    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });

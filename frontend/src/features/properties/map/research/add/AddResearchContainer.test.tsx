@@ -156,5 +156,9 @@ const selectedFeature = {
     OBJECTID: 584001723,
     SE_ANNO_CAD_DATA: null,
     IS_SELECTED: false,
+    REGION_NUMBER: 2,
+    REGION_NAME: 'South Coast',
+    DISTRICT_NUMBER: 2,
+    DISTRICT_NAME: 'Vancouver Island',
   },
 } as Feature<Geometry, GeoJsonProperties>;
