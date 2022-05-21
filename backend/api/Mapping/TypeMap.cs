@@ -20,12 +20,6 @@ namespace Pims.Api.Mapping
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
 
-            config.NewConfig<Model.TypeModel<short>, Entity.ICodeEntity<short>>()
-                .Map(dest => dest.Code, src => src.Id)
-                .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
-
             config.ForType(typeof(Model.TypeModel<string>), typeof(Entity.ITypeEntity<string>))
                 .Map("Id", "Id")
                 .Map("Description", "Description")
