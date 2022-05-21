@@ -443,6 +443,38 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                           />
                         </div>
                         <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="col-4"
+                          >
+                            <label
+                              class="c13"
+                            >
+                              Region:
+                            </label>
+                          </div>
+                          <div
+                            class="col"
+                          />
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="col-4"
+                          >
+                            <label
+                              class="c13"
+                            >
+                              District:
+                            </label>
+                          </div>
+                          <div
+                            class="col"
+                          />
+                        </div>
+                        <div
                           class="row"
                         >
                           <div
