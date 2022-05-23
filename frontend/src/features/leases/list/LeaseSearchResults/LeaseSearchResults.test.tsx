@@ -12,7 +12,7 @@ const setup = (renderOptions: RenderOptions & ILeaseSearchResultsProps = { resul
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');
   // long css selector to: get the FIRST header or table, then get the SVG up/down sort buttons
   const sortButtons = utils.container.querySelector(
-    '.table .thead .tr .th:nth-of-type(1) .sortable-column div',
+    '.table .thead .tr .sortable-column div',
   ) as HTMLElement;
   return {
     ...utils,
