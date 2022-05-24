@@ -83,7 +83,7 @@ const StyleMapView = styled.div`
   &.draft-cursor,
   &.draft-cursor .leaflet-grab,
   &.draft-cursor .leaflet-interactive {
-    cursor: url(${DraftSvg}) 48.5 81, pointer;
+    cursor: url(${DraftSvg}) 15 45, pointer;
   }
 `;
 
