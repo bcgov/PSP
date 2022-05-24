@@ -26,7 +26,7 @@ namespace Pims.Api.Areas.Property.Mapping.Property
             config.NewConfig<Entity.PimsPropertyResearchFile, Model.AssociationModel>()
                 .Map(dest => dest.Id, src => src.ResearchFileId)
                 .Map(dest => dest.FileNumber, src => src.ResearchFile.RfileNumber)
-                .Map(dest => dest.FileName, src => src.ResearchFile.RfileNumber)
+                .Map(dest => dest.FileName, src => src.ResearchFile.Name)
                 .Map(dest => dest.CreatedBy, src => src.ResearchFile.AppCreateUserid)
                 .Map(dest => dest.CreatedDateTime, src => src.ResearchFile.AppCreateTimestamp)
                 .Map(dest => dest.Status, src => src.ResearchFile.ResearchFileStatusTypeCodeNavigation.Description);
