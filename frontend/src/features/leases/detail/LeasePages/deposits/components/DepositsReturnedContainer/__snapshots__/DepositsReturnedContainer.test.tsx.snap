@@ -243,7 +243,13 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
               role="cell"
               style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
-            />
+            >
+              <a
+                href="/contact/O3"
+              >
+                test organization
+              </a>
+            </div>
             <div
               class="td"
               role="cell"
