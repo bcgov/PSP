@@ -6,7 +6,11 @@ import { stringToNull, stringToTypeCode } from 'utils/formUtils';
 import { formatNames } from 'utils/personUtils';
 
 import { IFormLease } from './../../interfaces/ILease';
-import { apiLeaseTermToFormLeaseTerm } from './../../interfaces/ILeaseTerm';
+import {
+  apiLeaseTermToFormLeaseTerm,
+  formLeaseTermToApiLeaseTerm,
+  ILeaseTerm,
+} from './../../interfaces/ILeaseTerm';
 
 /**
  * return all of the person tenant names and organization tenant names of this lease
@@ -29,6 +33,7 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
     expiryDate: stringToNull(formLease.expiryDate),
     renewalDate: stringToNull(formLease.renewalDate),
     responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
+    terms: formLease.terms.map<ILeaseTerm>(term => formLeaseTermToApiLeaseTerm(term)),
     tenants: formLease.tenants.map<Api_LeaseTenant>(tenant => ({
       id: tenant.leaseTenantId,
       leaseId: formLease.id ?? 0,

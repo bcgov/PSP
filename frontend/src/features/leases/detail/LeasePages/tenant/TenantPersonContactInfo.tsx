@@ -21,9 +21,10 @@ export const TenantPersonContactInfo: React.FunctionComponent<ITenantPersonConta
   return (
     <>
       <Styled.FormGrid>
+        <Styled.LeaseH3>Tenant Information</Styled.LeaseH3>
         <Form.Label>Tenant Name:</Form.Label>
         <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'summary')} />
-        <Styled.LeaseH3>Contact Info</Styled.LeaseH3>
+        <br />
         <AddressSubForm
           nameSpace={withNameSpace(nameSpace, 'mailingAddress')}
           disabled={disabled}
