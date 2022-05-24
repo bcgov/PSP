@@ -36,6 +36,7 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
     const properties = props.researchFile.researchProperties || [];
     const selectedPropertyIndex = props.selectedIndex - 1;
     const researchFileProperty = properties[selectedPropertyIndex];
+    researchFileProperty.researchFile = props.researchFile;
     if (props.isEditMode) {
       return (
         <UpdatePropertyView
