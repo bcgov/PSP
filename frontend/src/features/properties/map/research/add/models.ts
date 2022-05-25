@@ -2,6 +2,7 @@ import { IMapProperty } from 'features/properties/selector/models';
 import { Api_Property } from 'models/api/Property';
 import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { pidParser } from 'utils';
+import { toTypeCode } from 'utils/formUtils';
 
 export class ResearchForm {
   public id?: number;
@@ -33,8 +34,8 @@ export class PropertyForm {
   public longitude?: number;
   public planNumber?: string;
   public name?: string;
-  //public regionId?: number;
-  //public districtId?: number;
+  public regionId?: number;
+  public districtId?: number;
 
   constructor(property: IMapProperty) {
     this.pid = property.pid;
@@ -42,8 +43,8 @@ export class PropertyForm {
     this.latitude = property.latitude;
     this.longitude = property.longitude;
     this.planNumber = property.planNumber;
-    //this.regionId = property.dis;
-    //this.districtId = 0; //property.district;
+    this.regionId = property.region;
+    this.districtId = property.district;
   }
 
   public toApi(): Api_Property {
@@ -52,8 +53,8 @@ export class PropertyForm {
       pin: this.pin !== undefined ? Number(this.pin) : undefined,
       landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
-      /*region: { id: this.regionId },
-      district: { id: this.districtId },*/
+      region: toTypeCode(this.regionId),
+      district: toTypeCode(this.districtId),
     };
   }
 }

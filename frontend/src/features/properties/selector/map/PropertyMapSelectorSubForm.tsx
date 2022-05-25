@@ -21,6 +21,10 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<IPropertyMapSel
   const planNumber = selectedProperty?.planNumber;
   const address = selectedProperty?.address;
   const legalDescription = selectedProperty?.legalDescription;
+  const region = selectedProperty?.region;
+  const regionName = selectedProperty?.regionName;
+  const district = selectedProperty?.district;
+  const districtName = selectedProperty?.districtName;
   return (
     <StyledFormRow>
       <Col md={4}>
@@ -33,6 +37,12 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<IPropertyMapSel
         <SectionField label="PID">{pid}</SectionField>
         <SectionField label="Plan #">{planNumber}</SectionField>
         <SectionField label="Address">{address}</SectionField>
+        <SectionField label="Region">
+          {[region, regionName].filter(Boolean).join(' - ')}
+        </SectionField>
+        <SectionField label="District">
+          {[district, districtName].filter(Boolean).join(' - ')}
+        </SectionField>
         <Row>
           <Col md={12}>
             <BsForm.Label>Legal Description:</BsForm.Label>

@@ -236,7 +236,7 @@ const IndeterminateCheckbox = React.forwardRef(
   },
 );
 
-interface IIdentifiedObject {
+export interface IIdentifiedObject {
   id?: number | string;
 }
 
@@ -244,7 +244,7 @@ interface IIdentifiedObject {
  * A table component. Supports sorting, filtering and paging.
  * Uses `react-table` to handle table logic.
  */
-const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
+export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   props: PropsWithChildren<TableProps<T, TFilter>>,
 ): ReactElement => {
   const filterFormRef = useRef<FormikProps<any>>();

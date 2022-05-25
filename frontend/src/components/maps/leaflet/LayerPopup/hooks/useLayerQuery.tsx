@@ -14,10 +14,13 @@ export interface IUserLayerQuery {
   /**
    * function to find GeoJSON shape containing a point (x, y)
    * @param latlng = {lat, lng}
+   * @param geometryName the name of the geometry field for this layer; can be 'GEOMETRY' or 'SHAPE'
+   * @param spatialReferenceId the spatial reference of the location argument; common values are: 4326 (WGS84 - lat/lng) and 3005 (BC Albers)
    */
   findOneWhereContains: (
     latlng: LatLngLiteral,
     geometryName?: string,
+    spatialReferenceId?: number,
   ) => Promise<FeatureCollection>;
   /**
    * function to find GeoJSON shape matching the passed non-zero padded pid.
@@ -42,6 +45,18 @@ export interface IUserLayerQuery {
    * @param city
    */
   findByAdministrative: (city: string) => Promise<Feature | null>;
+
+  /**
+   * Function to query spatial layers and return layer metadata for the supplied location (x, y)
+   * @param latlng = {lat, lng}
+   * @param geometryName the name of the geometry field for this layer; can be 'GEOMETRY' or 'SHAPE'
+   * @param spatialReferenceId the spatial reference of the location argument; common values are: 4326 (WGS84 - lat/lng) and 3005 (BC Albers)
+   */
+  findMetadataByLocation: (
+    latlng: LatLngLiteral,
+    geometryName?: string,
+    spatialReferenceId?: number,
+  ) => Promise<Record<string, any>>;
 }
 
 const MAX_RETRIES = 2;
@@ -78,10 +93,14 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
-    async (latlng: LatLngLiteral, geometryName: string = 'SHAPE'): Promise<FeatureCollection> => {
+    async (
+      latlng: LatLngLiteral,
+      geometryName: string = 'SHAPE',
+      spatialReferenceId: number = 4326,
+    ): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios().get<FeatureCollection>(
-          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=4326;POINT ( ${latlng.lng} ${latlng.lat}))`,
+          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
         )
       )?.data;
       return data;
@@ -153,6 +172,26 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
     requestName: 'planNumber',
   });
 
+  const findMetadataByLocation = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName: string = 'SHAPE',
+      spatialReferenceId: number = 4326,
+    ): Promise<Record<string, any>> => {
+      try {
+        const collection = await findOneWhereContains(latlng, geometryName, spatialReferenceId);
+        if (collection?.features?.length > 0) {
+          return collection.features[0].properties || {};
+        }
+        return {};
+      } catch (error) {
+        // return empty object if map layer is not available
+        return {};
+      }
+    },
+    [findOneWhereContains],
+  );
+
   return useMemo(
     () => ({
       findOneWhereContains,
@@ -163,8 +202,10 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
       findByPlanNumber,
       findByPlanNumberLoading,
       findByAdministrative,
+      findMetadataByLocation,
     }),
     [
+      findMetadataByLocation,
       findByAdministrative,
       findByPid,
       findByPidLoading,

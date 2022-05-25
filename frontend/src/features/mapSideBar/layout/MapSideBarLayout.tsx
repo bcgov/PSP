@@ -1,6 +1,6 @@
 import * as Styled from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as React from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';

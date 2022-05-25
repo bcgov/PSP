@@ -42,6 +42,8 @@ export interface ILease {
   isOtherImprovement: boolean;
   returnNotes?: string; // security deposit notes (free form text)
   documentationReference?: string;
+  hasPhysicalLicense?: boolean;
+  hasDigitalLicense?: boolean;
   tenantNotes: string[];
   insurances: IInsurance[];
   tenants: Api_LeaseTenant[];
@@ -72,6 +74,8 @@ export interface IFormLease
       programType?: ITypeCode<string>;
       terms: IFormLeaseTerm[];
       tenants: FormTenant[];
+      hasPhysicalLicense?: string;
+      hasDigitalLicense?: string;
     }
   > {}
 
@@ -94,6 +98,8 @@ export interface IAddFormLease
       region: NumberFieldValue;
       programType?: string;
       properties: IFormProperty[];
+      hasPhysicalLicense: string;
+      hasDigitalLicense: string;
     }
   > {}
 
@@ -152,6 +158,8 @@ export const defaultFormLease: IFormLease = {
   returnNotes: '',
   terms: [],
   tenants: [],
+  hasDigitalLicense: 'Unknown',
+  hasPhysicalLicense: 'Unknown',
 };
 
 export const defaultAddFormLease: IAddFormLease = {
@@ -195,4 +203,6 @@ export const defaultAddFormLease: IAddFormLease = {
   improvements: [],
   securityDeposits: [],
   securityDepositReturns: [],
+  hasDigitalLicense: 'Unknown',
+  hasPhysicalLicense: 'Unknown',
 };
