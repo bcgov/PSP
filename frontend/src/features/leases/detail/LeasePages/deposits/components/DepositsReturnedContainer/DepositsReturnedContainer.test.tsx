@@ -16,8 +16,10 @@ const mockDepositReturns: Api_SecurityDepositReturn[] = [
     terminationDate: '2022-02-01',
     claimsAgainst: 1234.0,
     returnAmount: 123.0,
+    interestPaid: 1.0,
     returnDate: '2022-02-16',
     rowVersion: 1,
+    contactHolder: { id: 'O3', organization: { name: 'test organization' } },
   },
 ];
 
@@ -33,6 +35,7 @@ const mockDeposit: Api_SecurityDeposit = {
   },
   depositReturns: mockDepositReturns,
   rowVersion: 1,
+  contactHolder: { id: 'O3', organization: { name: 'test organization' } },
 };
 
 jest.mock('@react-keycloak/web');
@@ -111,6 +114,27 @@ describe('DepositsReturnedContainer component', () => {
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(mockDeposit.amountPaid));
     expect(findCell(dataRow, 3)?.textContent).toBe(formatMoney(depositReturn.claimsAgainst));
     expect(findCell(dataRow, 4)?.textContent).toBe(formatMoney(depositReturn.returnAmount));
-    expect(findCell(dataRow, 5)?.textContent).toBe(prettyFormatDate(depositReturn.returnDate));
+    expect(findCell(dataRow, 5)?.textContent).toBe(formatMoney(depositReturn.interestPaid));
+    expect(findCell(dataRow, 6)?.textContent).toBe(prettyFormatDate(depositReturn.returnDate));
+    expect(findCell(dataRow, 7)?.textContent).toBe(depositReturn.contactHolder?.organization?.name);
+  });
+
+  it('renders security deposit return holders as links', () => {
+    const depositReturn = mockDepositReturns[0];
+    const { getByText } = setup({
+      securityDeposits: [mockDeposit],
+      depositReturns: [
+        depositReturn,
+        {
+          ...depositReturn,
+          contactHolder: { id: 'P1', person: { firstName: 'test', surname: 'person' } },
+        },
+      ],
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+    });
+
+    expect(getByText('test organization')).toHaveAttribute('href', '/contact/O3');
+    expect(getByText('test person')).toHaveAttribute('href', '/contact/P1');
   });
 });

@@ -16,14 +16,18 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Organization, src => src.Organization)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Person, src => src.Person)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.PrimaryContact, src => src.PrimaryContact)
+                .Map(dest => dest.LessorType, src => src.LessorTypeCodeNavigation)
                 .Map(dest => dest.Note, src => src.Note)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.TenantModel, Entity.PimsLeaseTenant>()
                 .Map(dest => dest.LeaseTenantId, src => src.LeaseTenantId)
                 .Map(dest => dest.LeaseId, src => src.LeaseId)
-                .Map(dest => dest.OrganizationId, src => src.Id != null && src.Id.StartsWith('O') ? src.OrganizationId : null)
-                .Map(dest => dest.PersonId, src => src.Id != null && src.Id.StartsWith('P') ? src.PersonId : null)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.LessorTypeCode, src => src.PersonId != null ? LessorTypes.PERSON : LessorTypes.ORGANIZATION)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();

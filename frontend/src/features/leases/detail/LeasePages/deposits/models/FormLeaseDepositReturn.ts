@@ -11,6 +11,7 @@ export class FormLeaseDepositReturn {
   public terminationDate: string;
   public claimsAgainst: NumberFieldValue;
   public returnAmount: NumberFieldValue;
+  public interestPaid: NumberFieldValue;
   public returnDate: string;
   public contactHolder?: IContactSearchResult;
   public rowVersion: number;
@@ -24,6 +25,7 @@ export class FormLeaseDepositReturn {
     this.terminationDate = '';
     this.claimsAgainst = '';
     this.returnAmount = '';
+    this.interestPaid = '';
     this.returnDate = '';
     this.parentDepositAmount = 0;
     this.rowVersion = 0;
@@ -52,10 +54,11 @@ export class FormLeaseDepositReturn {
     model.parentDepositAmount = parentDeposit.amountPaid;
 
     model.id = baseModel.id;
-    model.parentDepositId = baseModel.parentDepositId;
+    model.parentDepositId = baseModel.parentDepositId || 0;
     model.terminationDate = baseModel.terminationDate || '';
     model.claimsAgainst = baseModel.claimsAgainst || '';
-    model.returnAmount = baseModel.returnAmount;
+    model.returnAmount = baseModel.returnAmount || '';
+    model.interestPaid = baseModel.interestPaid || '';
     model.returnDate = baseModel.returnDate || '';
     model.contactHolder =
       baseModel.contactHolder !== undefined ? fromContact(baseModel.contactHolder) : undefined;
@@ -70,6 +73,7 @@ export class FormLeaseDepositReturn {
       terminationDate: this.terminationDate === '' ? undefined : this.terminationDate,
       claimsAgainst: this.claimsAgainst === '' ? undefined : this.claimsAgainst,
       returnAmount: this.returnAmount === '' ? 0 : this.returnAmount,
+      interestPaid: this.interestPaid === '' ? 0 : this.interestPaid,
       returnDate: this.returnDate === '' ? undefined : this.returnDate,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : undefined,
       rowVersion: this.rowVersion,

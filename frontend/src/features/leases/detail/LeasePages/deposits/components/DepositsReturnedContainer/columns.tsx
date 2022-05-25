@@ -5,8 +5,10 @@ import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Contact } from 'models/api/Contact';
 import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
+import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 import { formatNames } from 'utils/personUtils';
@@ -18,6 +20,7 @@ export class ReturnListEntry {
   public depositAmount: number;
   public claimsAgainst: number;
   public returnAmount: number;
+  public interestPaid: number;
   public returnDate: string;
   public contactHolder?: Api_Contact;
 
@@ -32,7 +35,8 @@ export class ReturnListEntry {
     this.terminationDate = baseDeposit.terminationDate || '';
     this.depositAmount = parentDeposit.amountPaid;
     this.claimsAgainst = baseDeposit.claimsAgainst || 0;
-    this.returnAmount = baseDeposit.returnAmount;
+    this.returnAmount = baseDeposit.returnAmount || 0;
+    this.interestPaid = baseDeposit.interestPaid || 0;
     this.returnDate = baseDeposit.returnDate || '';
     this.contactHolder = baseDeposit.contactHolder;
   }
@@ -42,13 +46,13 @@ function renderHolder({ row: { original } }: CellProps<ReturnListEntry, string>)
   if (original.contactHolder !== undefined) {
     const holder = original.contactHolder;
     if (holder.person !== undefined) {
-      return formatNames([
-        holder.person.firstName,
-        holder.person.middleNames,
-        holder.person.surname,
-      ]);
+      return (
+        <Link to={`/contact/${holder.id}`}>
+          {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
+        </Link>
+      );
     } else if (holder.organization !== undefined) {
-      return holder.organization.name;
+      return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }
 
@@ -98,12 +102,12 @@ export const getColumns = ({
 }: IPaymentColumnProps): ColumnWithProps<ReturnListEntry>[] => {
   return [
     {
-      Header: 'Deposit Type',
+      Header: 'Deposit type',
       accessor: 'depositTypeDescription',
       maxWidth: 50,
     },
     {
-      Header: 'Termination or Surrender Date',
+      Header: 'Termination or Surrender date',
       accessor: 'terminationDate',
       align: 'right',
       maxWidth: 50,
@@ -117,21 +121,28 @@ export const getColumns = ({
       Cell: renderMoney,
     },
     {
-      Header: 'Claims against Deposit',
+      Header: 'Claims against deposit',
       accessor: 'claimsAgainst',
       align: 'right',
       maxWidth: 50,
       Cell: renderMoney,
     },
     {
-      Header: 'Returned Amount',
+      Header: 'Returned amount (without interest)',
       accessor: 'returnAmount',
       align: 'right',
       maxWidth: 50,
       Cell: renderMoney,
     },
     {
-      Header: 'Return Date',
+      Header: 'Interest paid',
+      accessor: 'interestPaid',
+      align: 'right',
+      maxWidth: 50,
+      Cell: renderMoney,
+    },
+    {
+      Header: 'Return date',
       accessor: 'returnDate',
       align: 'right',
       maxWidth: 50,
@@ -139,7 +150,7 @@ export const getColumns = ({
     },
 
     {
-      Header: 'Payee Name',
+      Header: 'Payee name',
       accessor: 'contactHolder',
       maxWidth: 70,
       Cell: renderHolder,

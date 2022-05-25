@@ -63,12 +63,15 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { findByText } = setup({ onClose, pid: '9212434', onZoom });
+    const { findByText, queryByTestId } = setup({ onClose, pid: '9212434', onZoom });
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
     });
-    expect(await findByText('Property attributes')).toBeInTheDocument();
+    expect(await findByText('Property Attributes')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+    });
   });
 
   it('hides the property information tab for non-inventory properties', async () => {
@@ -80,11 +83,13 @@ describe('MotiInventoryContainer component', () => {
     };
     mockAxios.onGet(new RegExp('/properties/*')).reply(404, error);
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { queryByText } = setup({ onClose, pid: '9212434', onZoom });
+    const { queryByText, getByText, queryByTestId } = setup({ onClose, pid: '9212434', onZoom });
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
     });
     expect(queryByText('Property attributes')).toBeNull();
+    expect(getByText('Title')).toHaveClass('active');
+    expect(queryByTestId('filter-backdrop-loading')).toBeNull();
   });
 });

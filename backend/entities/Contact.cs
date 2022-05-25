@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -14,6 +16,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Optional contact organization
         /// </summary>
+        ///
         public PimsOrganization Organization { get; set; }
 
         public PimsAddress Address { get; set; }

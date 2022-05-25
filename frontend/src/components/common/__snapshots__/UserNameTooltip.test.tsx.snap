@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserNameTooltip renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-style: italic;
+  font-weight: bold;
+  color: black;
+}
+
+<span
+    class="tooltip-icon"
+    data-testid="tooltip-icon"
+  >
+    <span
+      class="c0"
+    />
+  </span>
+</DocumentFragment>
+`;

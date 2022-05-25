@@ -124,16 +124,12 @@ namespace Pims.Dal.Entities
         [Required]
         [Column("IS_EXPIRED")]
         public bool? IsExpired { get; set; }
-        [Required]
         [Column("HAS_PHYSICAL_FILE")]
         public bool? HasPhysicalFile { get; set; }
-        [Required]
         [Column("HAS_DIGITAL_FILE")]
         public bool? HasDigitalFile { get; set; }
-        [Required]
         [Column("HAS_PHYSICIAL_LICENSE")]
         public bool? HasPhysicialLicense { get; set; }
-        [Required]
         [Column("HAS_DIGITAL_LICENSE")]
         public bool? HasDigitalLicense { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

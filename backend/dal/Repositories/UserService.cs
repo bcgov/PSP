@@ -544,6 +544,20 @@ namespace Pims.Dal.Repositories
                         && u.PimsUserRoles.Any(r => r.Role.PimsRoleClaims.Any(c => c.Claim.Name == Permissions.OrganizationAdmin.GetName()))
                 ));
         }
+
+        /// <summary>
+        /// Get the user with person info with the specified 'keycloakUserId'.
+        /// </summary>
+        /// <param name="keycloakUserId"></param>
+        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
+        /// <returns></returns>
+        public PimsUser GetUserInfo(Guid keycloakUserId)
+        {
+            return this.Context.PimsUsers
+                .Include(u => u.Person)
+                .AsNoTracking()
+                .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
+        }
         #endregion
     }
 }

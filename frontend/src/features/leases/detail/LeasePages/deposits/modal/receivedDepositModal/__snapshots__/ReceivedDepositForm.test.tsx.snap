@@ -307,9 +307,11 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-amountPaid"
+              inputmode="numeric"
               name="amountPaid"
               placeholder=""
               required=""
+              type="text"
               value=""
             />
           </div>
@@ -758,9 +760,11 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
             <input
               class="form-control input-number"
               id="input-amountPaid"
+              inputmode="numeric"
               name="amountPaid"
               placeholder=""
               required=""
+              type="text"
               value=""
             />
           </div>

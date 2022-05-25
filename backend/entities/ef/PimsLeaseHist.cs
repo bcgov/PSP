@@ -101,13 +101,13 @@ namespace Pims.Dal.Entities
         [Column("IS_EXPIRED")]
         public bool IsExpired { get; set; }
         [Column("HAS_PHYSICAL_FILE")]
-        public bool HasPhysicalFile { get; set; }
+        public bool? HasPhysicalFile { get; set; }
         [Column("HAS_DIGITAL_FILE")]
-        public bool HasDigitalFile { get; set; }
+        public bool? HasDigitalFile { get; set; }
         [Column("HAS_PHYSICIAL_LICENSE")]
-        public bool HasPhysicialLicense { get; set; }
+        public bool? HasPhysicialLicense { get; set; }
         [Column("HAS_DIGITAL_LICENSE")]
-        public bool HasDigitalLicense { get; set; }
+        public bool? HasDigitalLicense { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

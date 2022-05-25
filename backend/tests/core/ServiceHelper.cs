@@ -1,3 +1,4 @@
+using Moq;
 using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -45,6 +46,23 @@ namespace Pims.Core.Test
         {
             var user = PrincipalHelper.CreateForPermission(permission);
             return helper.CreateRepository<T>(dbName, user, args);
+        }
+
+        /// <summary>
+        /// Creates an instance of a service of the specified 'T' type and initializes it with the specified 'user'.
+        /// allows passing in a mocked PimsContext
+        /// Will use any 'args' passed in instead of generating defaults.
+        /// Once you create a service you can no longer add to the services collection.
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="mock"></param>
+        /// <param name="args"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T CreateMockRepository<T>(this TestHelper helper, ClaimsPrincipal user, PimsContext mock, params object[] args) where T : IRepository
+        {
+            helper.AddSingleton(user);
+            return helper.CreateRepository<T>(mock, args);
         }
 
         /// <summary>

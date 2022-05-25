@@ -76,12 +76,12 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<ILt
                           </Row>
                         )}
                         {(getIn(values, withNameSpace(innerNameSpace, 'address.city')) ||
-                          getIn(values, withNameSpace(innerNameSpace, 'address.province'))) && (
+                          getIn(values, withNameSpace(innerNameSpace, 'address.provinceName'))) && (
                           <Row>
                             <Col>
                               {getJoinedFieldValues(
                                 titleOwner?.address?.city,
-                                titleOwner?.address?.province as any,
+                                titleOwner?.address?.provinceName as any,
                               )}
                             </Col>
                           </Row>

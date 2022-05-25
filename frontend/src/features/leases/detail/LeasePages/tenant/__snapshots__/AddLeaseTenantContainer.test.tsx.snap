@@ -161,38 +161,6 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c15 {
-  margin-top: 3rem;
-  font-size: 1.4rem;
-}
-
-.c15 .table .tr .td:first-of-type,
-.c15 .table .tr .td:nth-of-type(2),
-.c15 .table .tr .th:first-of-type,
-.c15 .table .tr .th:nth-of-type(2) {
-  border-left: 0;
-  border-right: 0;
-  padding: 0;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c6 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
 .c5 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -234,6 +202,38 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
 .c12 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c15 {
+  margin-top: 3rem;
+  font-size: 1.4rem;
+}
+
+.c15 .table .tr .td:first-of-type,
+.c15 .table .tr .td:nth-of-type(2),
+.c15 .table .tr .th:first-of-type,
+.c15 .table .tr .th:nth-of-type(2) {
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .c16 {
@@ -783,7 +783,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      First Name
+                      First name
                       <div
                         class="c11"
                       >
@@ -828,7 +828,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      Last Name
+                      Last name
                       <div
                         class="c11"
                       >
@@ -930,7 +930,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     <div
                       class="sortable-column"
                     >
-                      Mailing Address
+                      Mailing address
                     </div>
                   </div>
                   <div
@@ -1072,7 +1072,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 460px;"
+              style="display: flex; flex: 1 0 auto; min-width: 570px;"
             >
               <div
                 class="th"
@@ -1120,36 +1120,12 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 300 0 auto; min-width: 200px; width: 300px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"
                 >
-                  Last Name
-                </div>
-              </div>
-              <div
-                class="th"
-                colspan="1"
-                role="columnheader"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              >
-                <div
-                  class="sortable-column"
-                >
-                  First Name
-                </div>
-              </div>
-              <div
-                class="th"
-                colspan="1"
-                role="columnheader"
-                style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              >
-                <div
-                  class="sortable-column"
-                >
-                  Organization
+                  Primary contact
                 </div>
               </div>
               <div
@@ -1173,7 +1149,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 <div
                   class="sortable-column"
                 >
-                  Mailing Address
+                  Mailing address
                 </div>
               </div>
               <div
@@ -1261,5 +1237,8 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
       </button>
     </div>
   </div>
+  <div
+    class="container"
+  />
 </DocumentFragment>
 `;

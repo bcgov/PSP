@@ -5,8 +5,10 @@ import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Contact } from 'models/api/Contact';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
+import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdUndo } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 import { formatNames } from 'utils/personUtils';
@@ -39,13 +41,13 @@ function renderHolder({ row: { original } }: CellProps<DepositListEntry, string>
   if (original.contactHolder !== undefined) {
     const holder = original.contactHolder;
     if (holder.person !== undefined) {
-      return formatNames([
-        holder.person.firstName,
-        holder.person.middleNames,
-        holder.person.surname,
-      ]);
+      return (
+        <Link to={`/contact/${holder.id}`}>
+          {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
+        </Link>
+      );
     } else if (holder.organization !== undefined) {
-      return holder.organization.name;
+      return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }
 
@@ -100,7 +102,7 @@ export const getColumns = ({
 }: IPaymentColumnProps): ColumnWithProps<DepositListEntry>[] => {
   return [
     {
-      Header: 'Deposit Type',
+      Header: 'Deposit type',
       accessor: 'depositTypeDescription',
       maxWidth: 50,
     },
@@ -110,14 +112,14 @@ export const getColumns = ({
       minWidth: 150,
     },
     {
-      Header: 'Amount Paid',
+      Header: 'Amount paid',
       accessor: 'amountPaid',
       align: 'right',
       maxWidth: 40,
       Cell: renderMoney,
     },
     {
-      Header: 'Paid Date',
+      Header: 'Paid date',
       accessor: 'paidDate',
       align: 'right',
       maxWidth: 50,

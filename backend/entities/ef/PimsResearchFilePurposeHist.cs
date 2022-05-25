@@ -19,10 +19,8 @@ namespace Pims.Dal.Entities
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Required]
         [Column("RESEARCH_FILE_PURPOSE_ID")]
-        [StringLength(40)]
-        public string ResearchFilePurposeId { get; set; }
+        public long ResearchFilePurposeId { get; set; }
         [Column("RESEARCH_FILE_ID")]
         public long ResearchFileId { get; set; }
         [Required]

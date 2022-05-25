@@ -54,7 +54,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     },
   },
   {
-    Header: 'First Name',
+    Header: 'First name',
     accessor: 'firstName',
     sortable: true,
     align: 'left',
@@ -62,7 +62,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 100,
   },
   {
-    Header: 'Last Name',
+    Header: 'Last name',
     accessor: 'surname',
     sortable: true,
     align: 'left',
@@ -85,7 +85,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     width: 100,
   },
   {
-    Header: 'Mailing Address',
+    Header: 'Mailing address',
     accessor: 'mailingAddress',
     align: 'left',
     minWidth: 80,

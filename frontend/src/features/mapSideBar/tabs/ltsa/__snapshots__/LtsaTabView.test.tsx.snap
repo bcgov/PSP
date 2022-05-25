@@ -266,7 +266,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
           <label
             class="c5"
           >
-            Legal Description:
+            Legal description:
           </label>
         </div>
         <div
@@ -293,7 +293,7 @@ PLAN 24843
               class="form-label"
               for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
             >
-              Legal Notations: 
+              Legal notations: 
             </label>
             <input
               class="form-control"
@@ -375,7 +375,7 @@ DEPOSITED JULY 30TH, 1974.
               class="form-label"
               for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
             >
-              Legal Notations: 
+              Legal notations: 
             </label>
             <input
               class="form-control"
@@ -456,7 +456,7 @@ DEPOSITED JULY 30TH, 1974.
               class="form-label"
               for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
             >
-              Legal Notations: 
+              Legal notations: 
             </label>
             <input
               class="form-control"
@@ -713,7 +713,7 @@ D.F. D21890
                 <div
                   class="col"
                 >
-                  BCBRITISHCOLUMBIA
+                  BRITISH COLUMBIA
                 </div>
               </div>
               <div
@@ -848,7 +848,7 @@ D.F. D21890
                 <div
                   class="col"
                 >
-                  DELTA, BCBRITISHCOLUMBIA
+                  DELTA, BRITISH COLUMBIA
                 </div>
               </div>
               <div
@@ -964,7 +964,7 @@ D.F. D21890
                 <div
                   class="col"
                 >
-                  BCBRITISHCOLUMBIA
+                  BRITISH COLUMBIA
                 </div>
               </div>
               <div
@@ -1099,7 +1099,7 @@ D.F. D21890
                 <div
                   class="col"
                 >
-                  DELTA, BCBRITISHCOLUMBIA
+                  DELTA, BRITISH COLUMBIA
                 </div>
               </div>
               <div
@@ -1215,7 +1215,7 @@ D.F. D21890
                 <div
                   class="col"
                 >
-                  BCBRITISHCOLUMBIA
+                  BRITISH COLUMBIA
                 </div>
               </div>
               <div
@@ -1350,7 +1350,7 @@ D.F. D21890
                 <div
                   class="col"
                 >
-                  DELTA, BCBRITISHCOLUMBIA
+                  DELTA, BRITISH COLUMBIA
                 </div>
               </div>
               <div

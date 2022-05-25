@@ -45,7 +45,7 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText },
     } = await setup({});
-    expect(getByLabelText('Area:')).toBeDisabled();
+    expect(getByLabelText('Lease Area:')).toBeDisabled();
   });
 
   it('unit type and area are enabled when pid entered', async () => {
@@ -53,7 +53,7 @@ describe('PropertyInformationSubForm component', () => {
       component: { getByLabelText, container },
     } = await setup({});
     await fillInput(container, 'properties.0.pid', '1');
-    expect(getByLabelText('Area:')).not.toBeDisabled();
+    expect(getByLabelText('Lease Area:')).not.toBeDisabled();
   });
 
   it('pin is disabled when pid is valued', async () => {
