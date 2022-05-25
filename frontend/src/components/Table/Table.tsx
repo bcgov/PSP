@@ -355,7 +355,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     <IndeterminateCheckbox
                       {...row.getToggleRowSelectedProps()}
                       row={row}
-                      setSelected={(values: T[], blah: any) => {
+                      setSelected={(values: T[]) => {
                         const allPreviouslySelected = instance.rows
                           .filter(row => row.isSelected)
                           .map(row => row.original);
