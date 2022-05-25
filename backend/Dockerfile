@@ -13,6 +13,7 @@ COPY entities/*.csproj entities/
 COPY tests/core/*.csproj tests/core/
 COPY tests/unit/api/*.csproj tests/unit/api/
 COPY tests/unit/dal/*.csproj tests/unit/dal/
+COPY tests/unit/mockdal/*.csproj tests/unit/mockdal/
 COPY dal/*.csproj dal/
 COPY dal.keycloak/*.csproj dal.keycloak/
 COPY keycloak/*.csproj keycloak/

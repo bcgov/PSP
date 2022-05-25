@@ -1,6 +1,6 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -85,9 +85,9 @@ namespace Pims.Dal.Entities.Models
         public override bool IsValid()
         {
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.SearchBy)
-                || !String.IsNullOrWhiteSpace(this.Summary)
-                || !String.IsNullOrWhiteSpace(this.Municipality);
+                && (!string.IsNullOrWhiteSpace(this.SearchBy)
+                || !string.IsNullOrWhiteSpace(this.Summary)
+                || !string.IsNullOrWhiteSpace(this.Municipality));
         }
         #endregion
     }

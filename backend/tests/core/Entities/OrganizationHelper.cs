@@ -27,7 +27,8 @@ namespace Pims.Core.Test
             return new Entity.PimsOrganization(name, type, identifierType, address)
             {
                 Id = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
+                PimsPersonOrganizations = new List<Entity.PimsPersonOrganization>(),
             };
         }
 
