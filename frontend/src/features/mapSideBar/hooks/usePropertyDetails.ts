@@ -15,7 +15,7 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   IPropertyDetailsForm,
   toFormValues,
-} from '../tabs/propertyDetails/PropertyDetailsTabView.helpers';
+} from '../tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 
 export function usePropertyDetails(property?: IPropertyApiModel): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();

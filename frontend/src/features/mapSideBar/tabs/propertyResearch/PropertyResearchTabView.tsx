@@ -1,10 +1,11 @@
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledFormSection, StyledSectionHeader } from 'features/mapSideBar/tabs/SectionStyles';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
+
+import { Section } from '../Section';
 
 interface PropertyResearchFile {
   id: number;
@@ -57,19 +58,17 @@ const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewP
           <FaEdit size={'2rem'} />
         </Button>
       </StyledEditWrapper>
-      <StyledFormSection>
-        <StyledSectionHeader>Property of Interest</StyledSectionHeader>
+      <Section header="Property of Interest">
         <SectionField label="Descriptive name">{detail.descriptiveName}</SectionField>
         <SectionField label="Purpose">{detail.purpose}</SectionField>
         <SectionField label="Legal opinion req'd?">{detail.legalOpinionRequired}</SectionField>
         <SectionField label="Legal opinion obtained?">{detail.legalOpinionObtained}</SectionField>
         <SectionField label="Document reference">{detail.documentReference}</SectionField>
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Research Summary</StyledSectionHeader>
+      </Section>
+      <Section header="Research Summary">
         <SectionField label="Summary notes" />
         {detail.summaryNotes}
-      </StyledFormSection>
+      </Section>
     </StyledSummarySection>
   );
 };

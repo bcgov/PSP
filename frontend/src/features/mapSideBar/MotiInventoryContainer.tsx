@@ -3,10 +3,13 @@ import axios, { AxiosError } from 'axios';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
+import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
-import React, { useEffect, useState } from 'react';
+import { Api_PropertyAssociations } from 'models/api/Property';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
@@ -15,11 +18,14 @@ import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
 import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
 import LtsaTabView from './tabs/ltsa/LtsaTabView';
-import { PropertyDetailsTabView } from './tabs/propertyDetails/PropertyDetailsTabView';
+import PropertyAssociationTabView from './tabs/propertyAssociations/PropertyAssociationTabView';
+import { PropertyDetailsTabView } from './tabs/propertyDetails/detail/PropertyDetailsTabView';
+import { UpdatePropertyDetailsContainer } from './tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 
 export interface IMotiInventoryContainerProps {
-  onClose: () => void;
   pid?: string;
+  readOnly?: boolean;
+  onClose: () => void;
   onZoom: (apiProperty?: IPropertyApiModel | undefined) => void;
 }
 
@@ -28,8 +34,12 @@ export interface IMotiInventoryContainerProps {
  */
 export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryContainerProps> = props => {
   const isMounted = useIsMounted();
+  const history = useHistory();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
+  const [propertyAssociations, setPropertyAssociations] = useState<
+    Api_PropertyAssociations | undefined
+  >(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
   const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
@@ -39,7 +49,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   useEffect(() => {
     const func = async () => {
       try {
-        if (!!props.pid) {
+        if (!!props.pid && !!props.readOnly) {
           const propInfo = await getPropertyWithPid(props.pid);
           if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
             setApiProperty(propInfo);
@@ -60,7 +70,22 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     };
 
     func();
-  }, [getPropertyWithPid, isMounted, props.pid]);
+  }, [getPropertyWithPid, isMounted, props.pid, props.readOnly]);
+
+  const {
+    getPropertyAssociations,
+    isLoading: propertyAssociationsLoading,
+  } = usePropertyAssociations();
+
+  useEffect(() => {
+    async function fetchResearchFile() {
+      if (props.pid !== undefined) {
+        const response = await getPropertyAssociations(props.pid);
+        setPropertyAssociations(response);
+      }
+    }
+    fetchResearchFile();
+  }, [getPropertyAssociations, props.pid]);
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
@@ -108,13 +133,37 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   var defaultTab = InventoryTabNames.title;
 
   if (showPropertyInfoTab) {
-    tabViews.push({
-      content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
-      key: InventoryTabNames.property,
-      name: 'Property Details',
-    });
+    if (props.readOnly) {
+      tabViews.push({
+        content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
+        key: InventoryTabNames.property,
+        name: 'Property Details',
+      });
+    } else {
+      tabViews.push({
+        content: <UpdatePropertyDetailsContainer pid={props.pid} />,
+        key: InventoryTabNames.property,
+        name: 'Property Details',
+      });
+    }
     defaultTab = InventoryTabNames.property;
   }
+
+  tabViews.push({
+    content: (
+      <PropertyAssociationTabView
+        isLoading={propertyAssociationsLoading}
+        associations={propertyAssociations}
+      />
+    ),
+    key: InventoryTabNames.pims,
+    name: 'PIMS Files',
+  });
+
+  const onEditPropertyInformation = useCallback(
+    () => history.push(`/mapview/property/${props.pid}/edit`),
+    [history, props.pid],
+  );
 
   return (
     <MapSideBarLayout
@@ -125,6 +174,8 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
           ltsaLoading={ltsaLoading}
           propertyLoading={propertyLoading}
           property={apiProperty}
+          showEditButton={props.readOnly}
+          onEdit={onEditPropertyInformation}
           onZoom={props.onZoom}
         />
       }

@@ -1,4 +1,5 @@
-import ITypeCode from 'interfaces/ITypeCode';
+import { SelectOption } from 'components/common/form';
+import Api_TypeCode from 'models/api/TypeCode';
 
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.
@@ -41,11 +42,11 @@ export function emptyStringToNull(value: any, originalValue: any) {
   return value;
 }
 
-export function stringToTypeCode<T = string>(value?: T) {
+export function toTypeCode<T = string>(value?: T): Api_TypeCode<T> | undefined {
   return !!value ? { id: value } : undefined;
 }
 
-export function typeCodeToString<T = string>(value?: ITypeCode<T>) {
+export function fromTypeCode<T = string>(value?: Api_TypeCode<T>): T | undefined {
   return value?.id;
 }
 
@@ -62,3 +63,35 @@ export function booleanToString(value?: boolean): string {
   }
   return value.toString();
 }
+
+export function stringToNullableBoolean(value: string): boolean | null {
+  if (value === 'null') {
+    return null;
+  }
+  return value === 'true';
+}
+
+export function nullableBooleanToString(value?: boolean | null): string {
+  if (typeof value === 'undefined' || value === null) {
+    return 'null';
+  }
+  return value.toString();
+}
+
+export function yesNoUnknownToBoolean(value: string): boolean | null {
+  if (value?.toLowerCase() === 'yes') return true;
+  else if (value?.toLowerCase() === 'no') return false;
+  return null;
+}
+
+export function booleanToYesNoUnknownString(value?: boolean): string {
+  if (value === true) return 'Yes';
+  else if (value === false) return 'No';
+  return 'Unknown';
+}
+
+export const yesNoUnknownOptions: SelectOption[] = [
+  { label: 'Unknown', value: '' },
+  { label: 'Yes', value: 'Yes' },
+  { label: 'No', value: 'No' },
+];

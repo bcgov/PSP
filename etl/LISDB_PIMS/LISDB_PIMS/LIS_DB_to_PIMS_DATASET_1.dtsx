@@ -12,8 +12,8 @@
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="276"
-  DTS:VersionGUID="{0A0E39C6-3D1C-41E7-958B-F64507AF8B15}">
+  DTS:VersionBuild="268"
+  DTS:VersionGUID="{8E635B3C-EF5D-4EA8-9A9A-4952A52BB303}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -667,34 +667,42 @@
                   </outputs>
                 </component>
                 <component
-                  refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1"
+                  refId="Package\Main Flow 1\LOAD LEASES\Derived Column"
                   componentClassID="Microsoft.DerivedColumn"
                   contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
                   description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
-                  name="Derived Column 1"
+                  name="Derived Column"
                   usesDispositions="true">
                   <inputs>
                     <input
-                      refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Inputs[Derived Column Input]"
+                      refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Inputs[Derived Column Input]"
                       description="Input to the Derived Column Transformation"
                       name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Inputs[Derived Column Input].Columns[LEASE_STATUS_TYPE_CODE]"
+                          cachedDataType="wstr"
+                          cachedLength="8"
+                          cachedName="LEASE_STATUS_TYPE_CODE"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]" />
+                      </inputColumns>
                       <externalMetadataColumns />
                     </input>
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output]"
+                      refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output]"
                       description="Default Output of the Derived Column Transformation"
                       exclusionGroup="1"
                       name="Derived Column Output"
-                      synchronousInputId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Inputs[Derived Column Input]">
+                      synchronousInputId="Package\Main Flow 1\LOAD LEASES\Derived Column.Inputs[Derived Column Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_TIME]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_TIME]"
                           name="ERROR_TIME"
                           truncationRowDisposition="FailComponent">
                           <properties>
@@ -712,12 +720,12 @@
                           </properties>
                         </outputColumn>
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          length="12"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                          length="10"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
                           name="ERROR_OPERATION_NAME"
                           truncationRowDisposition="FailComponent">
                           <properties>
@@ -725,22 +733,22 @@
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">"Insert Lease"</property>
+                              name="Expression">"PIMS_LEASE"</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">"Insert Lease"</property>
+                              name="FriendlyExpression">"PIMS_LEASE"</property>
                           </properties>
                         </outputColumn>
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          length="10"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                          length="11"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
                           name="ERROR_TASK_NAME"
                           truncationRowDisposition="FailComponent">
                           <properties>
@@ -748,22 +756,22 @@
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">"LOAD_LEASE"</property>
+                              name="Expression">"LOAD_LEASES"</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">"LOAD_LEASE"</property>
+                              name="FriendlyExpression">"LOAD_LEASES"</property>
                           </properties>
                         </outputColumn>
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          length="24"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                          length="29"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
                           name="ERROR_ETL_NAME"
                           truncationRowDisposition="FailComponent">
                           <properties>
@@ -771,17 +779,17 @@
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">"LIS_DB_to_PIMS_DATASET_1"</property>
+                              name="Expression">"LIS_DB_to_PIMS_DATA_MIGRATION"</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">"LIS_DB_to_PIMS_DATASET_1"</property>
+                              name="FriendlyExpression">"LIS_DB_to_PIMS_DATA_MIGRATION"</property>
                           </properties>
                         </outputColumn>
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output].Columns[ERROR_ROW]"
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
@@ -807,23 +815,23 @@
                       <externalMetadataColumns />
                     </output>
                     <output
-                      refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Error Output]"
+                      refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Error Output]"
                       description="Error Output of the Derived Column Transformation"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="Derived Column Error Output"
-                      synchronousInputId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Inputs[Derived Column Input]">
+                      synchronousInputId="Package\Main Flow 1\LOAD LEASES\Derived Column.Inputs[Derived Column Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -2436,174 +2444,6 @@ where [refTable].[FIRST_NAME] = ?</property>
                   </outputs>
                 </component>
                 <component
-                  refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1"
-                  componentClassID="Microsoft.OLEDBDestination"
-                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
-                  description="OLE DB Destination"
-                  name="PIMS ERROR LOG 1"
-                  usesDispositions="true"
-                  version="4">
-                  <properties>
-                    <property
-                      dataType="System.Int32"
-                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
-                      name="CommandTimeout">0</property>
-                    <property
-                      dataType="System.String"
-                      description="Specifies the name of the database object used to open a rowset."
-                      name="OpenRowset">[etl].[ETL_ERROR_LOG]</property>
-                    <property
-                      dataType="System.String"
-                      description="Specifies the variable that contains the name of the database object used to open a rowset."
-                      name="OpenRowsetVariable"></property>
-                    <property
-                      dataType="System.String"
-                      description="The SQL command to be executed."
-                      name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
-                    <property
-                      dataType="System.Int32"
-                      description="Specifies the column code page to use when code page information is unavailable from the data source."
-                      name="DefaultCodePage">1252</property>
-                    <property
-                      dataType="System.Boolean"
-                      description="Forces the use of the DefaultCodePage property value when describing character data."
-                      name="AlwaysUseDefaultCodePage">false</property>
-                    <property
-                      dataType="System.Int32"
-                      description="Specifies the mode used to access the database."
-                      name="AccessMode"
-                      typeConverter="AccessMode">3</property>
-                    <property
-                      dataType="System.Boolean"
-                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
-                      name="FastLoadKeepIdentity">false</property>
-                    <property
-                      dataType="System.Boolean"
-                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                      name="FastLoadKeepNulls">false</property>
-                    <property
-                      dataType="System.String"
-                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
-                    <property
-                      dataType="System.Int32"
-                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                      name="FastLoadMaxInsertCommitSize">2147483647</property>
-                  </properties>
-                  <connections>
-                    <connection
-                      refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[PIMS]"
-                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
-                      description="The OLE DB runtime connection used to access the database."
-                      name="OleDbConnection" />
-                  </connections>
-                  <inputs>
-                    <input
-                      refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input]"
-                      errorOrTruncationOperation="Insert"
-                      errorRowDisposition="FailComponent"
-                      hasSideEffects="true"
-                      name="OLE DB Destination Input">
-                      <inputColumns>
-                        <inputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
-                          cachedDataType="dbTimeStamp"
-                          cachedName="ERROR_TIME"
-                          externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_TIME]" />
-                        <inputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].Columns[ERROR_OPERATION_NAME]"
-                          cachedDataType="wstr"
-                          cachedLength="12"
-                          cachedName="ERROR_OPERATION_NAME"
-                          externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]" />
-                        <inputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].Columns[ERROR_TASK_NAME]"
-                          cachedDataType="wstr"
-                          cachedLength="10"
-                          cachedName="ERROR_TASK_NAME"
-                          externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]" />
-                        <inputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].Columns[ERROR_ETL_NAME]"
-                          cachedDataType="wstr"
-                          cachedLength="24"
-                          cachedName="ERROR_ETL_NAME"
-                          externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]" />
-                        <inputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].Columns[ERROR_ROW]"
-                          cachedDataType="wstr"
-                          cachedLength="20"
-                          cachedName="ERROR_ROW"
-                          externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_ROW]" />
-                      </inputColumns>
-                      <externalMetadataColumns
-                        isUsed="True">
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
-                          dataType="dbTimeStamp"
-                          name="ERROR_TIME" />
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
-                          dataType="wstr"
-                          length="100"
-                          name="ERROR_OPERATION_NAME" />
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
-                          dataType="wstr"
-                          length="100"
-                          name="ERROR_TASK_NAME" />
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
-                          dataType="wstr"
-                          length="100"
-                          name="ERROR_ETL_NAME" />
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
-                          dataType="nText"
-                          name="ERROR_ROW" />
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
-                          dataType="i4"
-                          name="ERROR_CODE" />
-                        <externalMetadataColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
-                          dataType="i4"
-                          name="ERROR_COLUMN" />
-                      </externalMetadataColumns>
-                    </input>
-                  </inputs>
-                  <outputs>
-                    <output
-                      refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Outputs[OLE DB Destination Error Output]"
-                      exclusionGroup="1"
-                      isErrorOut="true"
-                      name="OLE DB Destination Error Output"
-                      synchronousInputId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Inputs[OLE DB Destination Input]">
-                      <outputColumns>
-                        <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                          dataType="i4"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                          name="ErrorCode"
-                          specialFlags="1" />
-                        <outputColumn
-                          refId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                          dataType="i4"
-                          lineageId="Package\Main Flow 1\LOAD LEASES\PIMS ERROR LOG 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                          name="ErrorColumn"
-                          specialFlags="2" />
-                      </outputColumns>
-                      <externalMetadataColumns />
-                    </output>
-                  </outputs>
-                </component>
-                <component
                   refId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE"
                   componentClassID="Microsoft.OLEDBDestination"
                   contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
@@ -2671,7 +2511,7 @@ where [refTable].[FIRST_NAME] = ?</property>
                     <input
                       refId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input]"
                       errorOrTruncationOperation="Insert"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="RedirectRow"
                       hasSideEffects="true"
                       name="OLE DB Destination Input">
                       <inputColumns>
@@ -2812,7 +2652,7 @@ where [refTable].[FIRST_NAME] = ?</property>
                         <inputColumn
                           refId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input].Columns[LEASE_STATUS_TYPE_CODE]"
                           cachedDataType="wstr"
-                          cachedLength="6"
+                          cachedLength="8"
                           cachedName="LEASE_STATUS_TYPE_CODE"
                           externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_STATUS_TYPE_CODE]"
                           lineageId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]" />
@@ -3712,6 +3552,11 @@ where [refTable].[lease_id] = ?</property>
                           cachedLength="20"
                           cachedName="PIMS_LEASE_PURPOSE_TYPE_CODE_20"
                           lineageId="Package\Main Flow 1\LOAD LEASES\Force Size of Caterogy and Purpose Codes.Outputs[Data Conversion Output].Columns[PIMS_LEASE_PURPOSE_TYPE_CODE_20]" />
+                        <inputColumn
+                          refId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Inputs[Derived Column Input].Columns[Expiry_Date]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="Expiry_Date"
+                          lineageId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]" />
                       </inputColumns>
                       <externalMetadataColumns />
                     </input>
@@ -3775,7 +3620,7 @@ where [refTable].[lease_id] = ?</property>
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          length="6"
+                          length="8"
                           lineageId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]"
                           name="LEASE_STATUS_TYPE_CODE"
                           truncationRowDisposition="FailComponent">
@@ -3784,13 +3629,13 @@ where [refTable].[lease_id] = ?</property>
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">"ACTIVE"</property>
+                              name="Expression">#{Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]} &gt;= [GETDATE]() || [ISNULL](#{Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]}) ? "ACTIVE" : "INACTIVE"</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">"ACTIVE"</property>
+                              name="FriendlyExpression">Expiry_Date &gt;= GETDATE() || ISNULL(Expiry_Date) ? "ACTIVE" : "INACTIVE"</property>
                           </properties>
                         </outputColumn>
                       </outputColumns>
@@ -10340,7 +10185,7 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Outputs[Nominal]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[OLE DB Destination Error Output]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Derived Column 1.Inputs[Derived Column Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Derived Column.Inputs[Derived Column Input]"
                   name="OLE DB Destination Error Output"
                   startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Outputs[OLE DB Destination Error Output]" />
                 <path
@@ -13176,6 +13021,10 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null"
           TopLeft="752,363" />
         <NodeLayout
+          Size="177,42"
+          Id="Package\Main Flow 1\LOAD LEASES\OLE DB Destination"
+          TopLeft="2065,1535" />
+        <NodeLayout
           Size="132,42"
           Id="Package\Main Flow 1\LOAD LEASES\Union All 1"
           TopLeft="629,706" />
@@ -13199,6 +13048,10 @@ where [refTable].[PID] = ?</property>
           Size="149,42"
           Id="Package\Main Flow 1\LOAD LEASES\Set expired bit"
           TopLeft="655,1652" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Main Flow 1\LOAD LEASES\Derived Column"
+          TopLeft="2072,1660" />
         <NodeLayout
           Size="123,42"
           Id="Package\Main Flow 1\LOAD LEASES\Union All"
@@ -14338,25 +14191,15 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE">
+    design-time-name="Package\Main Flow 1\LOAD LEASES\OLE DB Destination">
     <Properties>
       <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[t_leasingsubpurpose]</Value>
+        <Name>DataSourceViewID</Name>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -14384,8 +14227,23 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\t_leasing + PID">
+    design-time-name="Package\Main Flow 1\LOAD LEASES\PSFile_No">
     <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -14428,6 +14286,29 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[t_leasingsubpurpose]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON">
     <Properties>
       <Property>
@@ -14451,6 +14332,14 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Main Flow 1\LOAD LEASES\t_leasing + PID">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code">
     <Properties>
       <Property>
@@ -14462,29 +14351,6 @@ where [refTable].[PID] = ?</property>
         <Name>UsedTableName</Name>
         <Value
           type="q3:string">[dbo].[PIMS_LEASE_PURPOSE_TYPE]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\PSFile_No">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -14560,7 +14426,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14654,7 +14522,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14676,7 +14546,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14698,7 +14570,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14720,7 +14594,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout

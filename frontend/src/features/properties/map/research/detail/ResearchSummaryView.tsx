@@ -1,5 +1,5 @@
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledFormSection, StyledSectionHeader } from 'features/mapSideBar/tabs/SectionStyles';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -86,13 +86,11 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
           <FaEdit size={'2rem'} />
         </Button>
       </StyledEditWrapper>
-      <StyledFormSection>
-        <StyledSectionHeader>Roads</StyledSectionHeader>
+      <Section header="Roads">
         <SectionField label="Road name">{detail.roadName}</SectionField>
         <SectionField label="Road alias">{detail.roadAlias}</SectionField>
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Research Request</StyledSectionHeader>
+      </Section>
+      <Section header="Research Request">
         <SectionField label="Research purpose">
           {detail.researchFilePurposes.join(', ')}
         </SectionField>
@@ -106,9 +104,8 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
         )}
         <SectionField label="Description of request" />
         {detail.requestDescription}
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Result</StyledSectionHeader>
+      </Section>
+      <Section header="Result">
         <SectionField label="Research completed on">
           {detail.researchCompletionDate !== undefined
             ? prettyFormatDate(detail.researchCompletionDate)
@@ -116,13 +113,12 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
         </SectionField>
         <SectionField label="Result of request" />
         {detail.researchResult}
-      </StyledFormSection>
-      <StyledFormSection>
-        <StyledSectionHeader>Expropriation</StyledSectionHeader>
+      </Section>
+      <Section header="Expropriation">
         <SectionField label="Expropriation?">{detail.isExpropriation ? 'Yes' : 'No'}</SectionField>
         <SectionField label="Expropriation notes" />
         {detail.expropriationNotes}
-      </StyledFormSection>
+      </Section>
     </StyledSummarySection>
   );
 };

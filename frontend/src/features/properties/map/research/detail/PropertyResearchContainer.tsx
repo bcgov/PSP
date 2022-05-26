@@ -6,14 +6,17 @@ import {
   TabInventoryView,
 } from 'features/mapSideBar/tabs/InventoryTabs';
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
-import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/PropertyDetailsTabView';
+import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
+import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
+import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
+import { Api_PropertyAssociations } from 'models/api/Property';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -29,6 +32,9 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
   const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
+  const [propertyAssociations, setPropertyAssociations] = useState<
+    Api_PropertyAssociations | undefined
+  >(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
   const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
 
@@ -83,6 +89,24 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     func();
   }, [getLtsaData, pid, isMounted]);
 
+  const {
+    getPropertyAssociations,
+    isLoading: propertyAssociationsLoading,
+  } = usePropertyAssociations();
+
+  useEffect(() => {
+    const func = async () => {
+      if (pid !== undefined) {
+        const response = await getPropertyAssociations(pid);
+        if (response?.id !== undefined) {
+          setPropertyAssociations(response);
+        }
+      }
+    };
+
+    func();
+  }, [getPropertyAssociations, pid]);
+
   const tabViews: TabInventoryView[] = [];
 
   tabViews.push({
@@ -123,6 +147,17 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
       name: 'Property Details',
     });
   }
+
+  tabViews.push({
+    content: (
+      <PropertyAssociationTabView
+        isLoading={propertyAssociationsLoading}
+        associations={propertyAssociations}
+      />
+    ),
+    key: InventoryTabNames.pims,
+    name: 'PIMS Files',
+  });
 
   return (
     <InventoryTabs
