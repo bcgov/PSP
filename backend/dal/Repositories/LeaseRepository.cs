@@ -232,16 +232,23 @@ namespace Pims.Dal.Repositories
                         (propertyLease.Property != null && propertyLease.Property.Pin != null && p.Pin == propertyLease.Property.Pin));
                 if (property?.PropertyId == null)
                 {
-                    throw new InvalidOperationException($"Property with PID {propertyLease?.Property?.Pid.ToString() ?? ""} does not exist");
+                    if (propertyLease?.Property?.Pid != -1)
+                    {
+                        throw new InvalidOperationException($"Property with PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} does not exist");
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Property with PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} does not exist");
+                    }
                 }
                 if (property?.PimsPropertyLeases.Any(p => p.LeaseId != lease.Id) == true && !userOverride && newLeaseProperties)
                 {
                     var genericOverrideErrorMsg = $"is attached to L-File # {property.PimsPropertyLeases.FirstOrDefault().Lease.LFileNo}";
                     if (propertyLease?.Property?.Pin != null)
                     {
-                        throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? ""} {genericOverrideErrorMsg}");
+                        throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                     }
-                    throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? ""} {genericOverrideErrorMsg}");
+                    throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                 }
                 propertyLease.PropertyId = property.PropertyId;
                 propertyLease.Property = null; //Do not attempt to update the associated property, just refer to it by id.

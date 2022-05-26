@@ -43,6 +43,8 @@ Create a coverage file requires generating a file for each test project and merg
 coverlet ./tests/unit/api/bin/Debug/netcoreapp3.1/Pims.Api.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.json" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" -f json
 
 coverlet ./tests/unit/dal/bin/Debug/netcoreapp3.1/Pims.Dal.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
+
+coverlet ./tests/unit/mockdal/bin/Debug/netcoreapp3.1/Pims.Dal.Mock.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
 ```
 
 ### DotNet

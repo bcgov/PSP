@@ -88,7 +88,7 @@ namespace Pims.Dal.Repositories
             }
             IEnumerable<PimsContactMgrVw> results = GetFilteredContacts(filter);
 
-            return new Paged<PimsContactMgrVw>(results, filter.Page, filter.Quantity, results.Count());
+            return new Paged<PimsContactMgrVw>(results, filter.Page, filter.Quantity, Count());
         }
 
         /// <summary>
@@ -110,34 +110,36 @@ namespace Pims.Dal.Repositories
         {
             filter.ThrowIfNull(nameof(filter));
 
-            var query = from c in this.Context.Set<PimsContactMgrVw>()
-                        join o in this.Context.Set<PimsOrganization>()
-                            on c.OrganizationId equals o.OrganizationId into contactOrganization
+            var query = from c in this.Context.PimsContactMgrVws
+                        join o in this.Context.PimsOrganizations
+                            on c.Organization equals o into contactOrganization
                         from co in contactOrganization.DefaultIfEmpty()
-                        join po in this.Context.Set<PimsPersonOrganization>()
-                            on co.OrganizationId equals po.OrganizationId into contactPersonOrganization
+                        join po in this.Context.PimsPersonOrganizations
+                            on co equals po.Organization into contactPersonOrganization
                         from copo in contactPersonOrganization.DefaultIfEmpty()
-                        join p in this.Context.Set<PimsPerson>()
-                            on copo.PersonId equals p.PersonId into contactPersonOrganizationPerson
+                        join p in this.Context.PimsPeople
+                            on new { person = copo != null ? copo.Person : null } equals new { person = p } into contactPersonOrganizationPerson
                         from copop in contactPersonOrganizationPerson.DefaultIfEmpty()
                         select new { Contact = c, Organization = co, PersonOrganization = copo, Person = copop };
 
             if (!string.IsNullOrWhiteSpace(filter.Municipality))
             {
-                query = query.Where(c => EF.Functions.Like(c.Contact.MunicipalityName, $"%{filter.Municipality}%"));
+                query = query.Where(c => c.Contact.MunicipalityName != null && c.Contact.MunicipalityName.Contains(filter.Municipality));
             }
 
-            var summary = filter.Summary.Trim();
+            var summary = filter.Summary?.Trim() ?? string.Empty;
 
             if (filter.SearchBy == "persons")
             {
                 query = query.Where(c => c.Contact.PersonId != null && c.Contact.Id.StartsWith("P"));
-                string[] nameParts = filter.Summary.Split(' ');
+                string[] nameParts = summary.Split(' ');
                 if (!string.IsNullOrWhiteSpace(summary))
                 {
                     foreach (string namePart in nameParts)
                     {
-                        query = query.Where(c => EF.Functions.Like(c.Contact.FirstName, $"%{namePart}%") || EF.Functions.Like(c.Contact.Surname, $"%{namePart}%") || EF.Functions.Like(c.Contact.MiddleNames, $"%{namePart}%"));
+                        query = query.Where(c => (c.Contact.FirstName != null && c.Contact.FirstName.Contains(namePart)) ||
+                        (c.Contact.Surname != null && c.Contact.Surname.Contains(namePart)) ||
+                        (c.Contact.MiddleNames != null && c.Contact.MiddleNames.Contains(namePart)));
                     }
                 }
             }
@@ -146,7 +148,7 @@ namespace Pims.Dal.Repositories
                 query = query.Where(c => c.Contact.OrganizationId != null && c.Contact.Id.StartsWith("O"));
                 if (!string.IsNullOrWhiteSpace(summary))
                 {
-                    query = query.Where(c => EF.Functions.Like(c.Contact.Summary, $"%{summary}%"));
+                    query = query.Where(c => c.Contact.Summary != null && c.Contact.Summary.Contains(summary));
                 }
             }
             else
@@ -156,7 +158,10 @@ namespace Pims.Dal.Repositories
                 {
                     foreach (string namePart in nameParts)
                     {
-                        query = query.Where(c => EF.Functions.Like(c.Contact.FirstName, $"%{namePart}%") || EF.Functions.Like(c.Contact.Surname, $"%{namePart}%") || EF.Functions.Like(c.Contact.MiddleNames, $"%{namePart}%") || EF.Functions.Like(c.Contact.OrganizationName, $"%{summary}%"));
+                        query = query.Where(c => (c.Contact.FirstName != null && c.Contact.FirstName.Contains(namePart)) ||
+                        (c.Contact.Surname != null && c.Contact.Surname.Contains(namePart)) ||
+                        (c.Contact.MiddleNames != null && c.Contact.MiddleNames.Contains(namePart)) ||
+                        (c.Contact.OrganizationName != null && c.Contact.OrganizationName.Contains(summary)));
                     }
                 }
             }
