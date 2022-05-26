@@ -1,10 +1,13 @@
 import TabView from 'components/common/TabView';
 import * as React from 'react';
 import { Tab } from 'react-bootstrap';
+import styled from 'styled-components';
 
 interface IPropertySelectorTabsViewProps {
   MapSelectorView: React.ReactNode;
   ListSelectorView: React.ReactNode;
+  activeTab: SelectorTabNames;
+  setActiveTab: (tab: SelectorTabNames) => void;
 }
 
 export enum SelectorTabNames {
@@ -18,13 +21,31 @@ export enum SelectorTabNames {
 export const PropertySelectorTabsView: React.FunctionComponent<IPropertySelectorTabsViewProps> = ({
   MapSelectorView,
   ListSelectorView,
+  activeTab,
+  setActiveTab,
 }) => {
   return (
-    <TabView defaultActiveKey={SelectorTabNames.map}>
+    <StyledTabView
+      defaultActiveKey={SelectorTabNames.map}
+      activeKey={activeTab}
+      onSelect={(eventKey: string | null) => {
+        const tab = Object.values(SelectorTabNames).find(value => value === eventKey);
+        tab && setActiveTab(tab);
+      }}
+    >
       <Tab eventKey={SelectorTabNames.map} title="Locate on Map">
         {MapSelectorView}
       </Tab>
-      <Tab eventKey={SelectorTabNames.list} title="Search"></Tab>
-    </TabView>
+      <Tab eventKey={SelectorTabNames.list} title="Search">
+        {ListSelectorView}
+      </Tab>
+    </StyledTabView>
   );
 };
+
+const StyledTabView = styled(TabView)`
+  height: auto;
+  &.tab-content {
+    height: auto;
+  }
+`;

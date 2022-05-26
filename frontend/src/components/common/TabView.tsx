@@ -3,9 +3,13 @@ import * as React from 'react';
 import { TabsProps } from 'react-bootstrap';
 import styled from 'styled-components';
 
-const TabView: React.FunctionComponent<TabsProps> = ({ children, ...props }) => {
+const TabView: React.FunctionComponent<TabsProps & { className?: string }> = ({
+  children,
+  className,
+  ...props
+}) => {
   return (
-    <StyledTabWrapper>
+    <StyledTabWrapper className={className}>
       <Styled.Tabs {...props}>{children}</Styled.Tabs>
     </StyledTabWrapper>
   );

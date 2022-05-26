@@ -203,7 +203,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
     const isDraft = draftPoints.length > 0;
     if (draftFeatureGroupRef.current && isDraft) {
       const group: L.FeatureGroup = draftFeatureGroupRef.current;
-      const groupBounds = group.getBounds();
+
       const validLatLngs = draftPoints.map(p => {
         const latLng: LatLng = {
           lat: p.geometry?.coordinates[1],
@@ -219,6 +219,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
           group.removeLayer(l);
         }
       });
+
+      const groupBounds = group.getBounds();
 
       if (groupBounds.isValid()) {
         filterState.setChanged(false);
