@@ -8,33 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACCESS_REQUEST")]
-    [Index(nameof(AccessRequestStatusTypeCode), Name = "ACRQST_ACCESS_REQUEST_STATUS_TYPE_CODE_IDX")]
-    [Index(nameof(RegionCode), Name = "ACRQST_REGION_CODE_IDX")]
-    [Index(nameof(RoleId), Name = "ACRQST_ROLE_ID_IDX")]
-    [Index(nameof(UserId), Name = "ACRQST_USER_ID_IDX")]
-    public partial class PimsAccessRequest
+    [Table("PIMS_REGION_USER")]
+    [Index(nameof(RegionCode), Name = "RGNUSR_REGION_CODE_IDX")]
+    [Index(nameof(UserId), nameof(RegionCode), Name = "RGNUSR_REGION_USER_TUC", IsUnique = true)]
+    [Index(nameof(UserId), Name = "RGNUSR_USER_ID_IDX")]
+    public partial class PimsRegionUser
     {
-        public PimsAccessRequest()
-        {
-            PimsAccessRequestOrganizations = new HashSet<PimsAccessRequestOrganization>();
-        }
-
         [Key]
-        [Column("ACCESS_REQUEST_ID")]
-        public long AccessRequestId { get; set; }
-        [Column("USER_ID")]
-        public long UserId { get; set; }
-        [Column("ROLE_ID")]
-        public long? RoleId { get; set; }
-        [Required]
-        [Column("ACCESS_REQUEST_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string AccessRequestStatusTypeCode { get; set; }
+        [Column("REGION_USER_ID")]
+        public long RegionUserId { get; set; }
         [Column("REGION_CODE")]
         public short RegionCode { get; set; }
-        [Column("NOTE")]
-        public string Note { get; set; }
+        [Column("USER_ID")]
+        public long UserId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -74,19 +62,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(AccessRequestStatusTypeCode))]
-        [InverseProperty(nameof(PimsAccessRequestStatusType.PimsAccessRequests))]
-        public virtual PimsAccessRequestStatusType AccessRequestStatusTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(RegionCode))]
-        [InverseProperty(nameof(PimsRegion.PimsAccessRequests))]
+        [InverseProperty(nameof(PimsRegion.PimsRegionUsers))]
         public virtual PimsRegion RegionCodeNavigation { get; set; }
-        [ForeignKey(nameof(RoleId))]
-        [InverseProperty(nameof(PimsRole.PimsAccessRequests))]
-        public virtual PimsRole Role { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty(nameof(PimsUser.PimsAccessRequests))]
+        [InverseProperty(nameof(PimsUser.PimsRegionUsers))]
         public virtual PimsUser User { get; set; }
-        [InverseProperty(nameof(PimsAccessRequestOrganization.AccessRequest))]
-        public virtual ICollection<PimsAccessRequestOrganization> PimsAccessRequestOrganizations { get; set; }
     }
 }
