@@ -1,7 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames';
 import { IGeoSearchParams } from 'constants/API';
-import { MAP_MAX_ZOOM } from 'constants/strings';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from 'constants/strings';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -248,6 +248,8 @@ const Map: React.FC<MapProps> = ({
               attribution={activeBasemap.attribution}
               url={activeBasemap.url}
               zIndex={0}
+              maxZoom={MAP_MAX_ZOOM}
+              maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
             />
           )}
           {!!layerPopup && (

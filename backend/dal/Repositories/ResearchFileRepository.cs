@@ -167,6 +167,9 @@ namespace Pims.Dal.Repositories
                 Context.Entry(deletedType).State = EntityState.Deleted;
             }
 
+            // Mark the property not to be changed.
+            Context.Entry(researchFileProperty.Property).State = EntityState.Unchanged;
+
             researchFileProperty.PimsPrfPropResearchPurposeTypes = propertyTypes;
             this.Context.PimsPropertyResearchFiles.Update(researchFileProperty);
             this.Context.CommitTransaction();

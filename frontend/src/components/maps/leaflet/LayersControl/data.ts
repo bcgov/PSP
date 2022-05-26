@@ -1,3 +1,5 @@
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from 'constants/strings';
+
 import { ILayerItem } from './types';
 
 export const layersTree: ILayerItem[] = [
@@ -18,6 +20,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 0,
         id: 'currentEconomicRegions',
         color: '#bbdefb',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'moti',
@@ -30,6 +34,8 @@ export const layersTree: ILayerItem[] = [
         format: 'image/png',
         zIndex: 21,
         id: 'moti',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'municipalities',
@@ -44,6 +50,8 @@ export const layersTree: ILayerItem[] = [
         id: 'municipalityLayer',
         opacity: 0.5,
         color: '#b39ddb',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'regionalDistricts ',
@@ -57,6 +65,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 19,
         id: 'regionalDistricts',
         opacity: 0.5,
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
     ],
   },
@@ -77,6 +87,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 10,
         id: 'firstNationsReserves',
         color: '#ebe0d7',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'firstNationTreatyAreas',
@@ -89,6 +101,8 @@ export const layersTree: ILayerItem[] = [
         format: 'image/png',
         zIndex: 10,
         id: 'firstNationTreatyAreas',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'firstNationTreatyLands',
@@ -101,6 +115,8 @@ export const layersTree: ILayerItem[] = [
         format: 'image/png',
         zIndex: 10,
         id: 'firstNationTreatyLands',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'firstNationTreatyRelatedLands',
@@ -113,6 +129,8 @@ export const layersTree: ILayerItem[] = [
         format: 'image/png',
         zIndex: 10,
         id: 'firstNationTreatyRelatedLands',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'firstNationTreatySideAgreement',
@@ -126,6 +144,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 10,
         id: 'firstNationTreatySideAgreement',
         color: '#ffc5ae',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
     ],
   },
@@ -146,6 +166,8 @@ export const layersTree: ILayerItem[] = [
         id: 'crownLeases',
         opacity: 0.5,
         color: '#8dc2d5',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'crownInventory',
@@ -159,6 +181,8 @@ export const layersTree: ILayerItem[] = [
         id: 'crownInventory',
         opacity: 0.5,
         color: '#fcc1eb',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'crownInclusions',
@@ -171,6 +195,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 5,
         id: 'crownInclusions',
         opacity: 0.5,
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'crownLandLicenses',
@@ -183,6 +209,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 5,
         id: 'crownLandLicenses',
         opacity: 0.5,
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'crownTenures',
@@ -195,6 +223,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 5,
         id: 'crownTenures',
         opacity: 0.5,
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'highways',
@@ -208,6 +238,8 @@ export const layersTree: ILayerItem[] = [
         id: 'highwaysLayer',
         color: '#e05700',
         authenticated: true,
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
       {
         key: 'parcelBoundaries',
@@ -220,6 +252,8 @@ export const layersTree: ILayerItem[] = [
         zIndex: 18,
         id: 'parcelLayer',
         color: '#ff9800',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
     ],
   },
@@ -241,6 +275,8 @@ export const layersTree: ILayerItem[] = [
         id: 'agriculturalLandReserveLines',
         opacity: 0.5,
         color: '#00b300',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
     ],
   },
@@ -262,6 +298,8 @@ export const layersTree: ILayerItem[] = [
         id: 'currentElectoralDistricts',
         opacity: 0.5,
         color: '#da2223',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
       },
     ],
   },

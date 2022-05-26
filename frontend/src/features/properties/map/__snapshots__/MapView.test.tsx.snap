@@ -390,7 +390,7 @@ exports[`MapView Renders the map 1`] = `
 .c0.draft-cursor,
 .c0.draft-cursor .leaflet-grab,
 .c0.draft-cursor .leaflet-interactive {
-  cursor: url(icon-draft.svg) 48.5 81,pointer;
+  cursor: url(icon-draft.svg) 15 45,pointer;
 }
 
 <div

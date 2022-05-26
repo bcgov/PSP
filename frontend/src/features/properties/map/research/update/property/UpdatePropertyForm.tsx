@@ -62,7 +62,7 @@ const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = pr
     <StyledSummarySection>
       <Section header="Property of Interest">
         <SectionField label="Descriptive name">
-          <Input field="propertyName" />
+          <Input field="propertyName" pattern={/^.{1,499}$/} />
         </SectionField>
         <SectionField label="Purpose">
           <Multiselect
@@ -103,7 +103,7 @@ const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = pr
           <Select field="isLegalOpinionObtained" options={opinionOptions} />
         </SectionField>
         <SectionField label="Document reference">
-          <Input field="documentReference" />
+          <Input field="documentReference" pattern={/^.{1,1999}$/} />
         </SectionField>
       </Section>
 
