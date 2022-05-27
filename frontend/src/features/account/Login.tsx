@@ -1,15 +1,12 @@
-import { Button, LinkButton } from 'components/common/buttons';
+import { Button } from 'components/common/buttons';
 import * as actionTypes from 'constants/actionTypes';
 import { Roles } from 'constants/roles';
 import { useQuery } from 'hooks/use-query';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Redirect } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { NEW_PIMS_USER } from 'store/slices/users';
