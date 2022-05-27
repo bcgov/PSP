@@ -301,27 +301,8 @@ exports[`login login renders correctly 1`] = `
           </div>
         </button>
         <p>
-          Sign into PIMS with your government issued IDIR or with your Business BCeID.
+          Sign into PIMS with your government issued IDIR
         </p>
-        <div
-          className="bceid row"
-        >
-          <button
-            className="c1 Button btn btn-link"
-            disabled={false}
-            onClick={[Function]}
-            type="button"
-          >
-            <div
-              className="Button__value"
-            >
-              Don't have a Business BCeID?
-            </div>
-          </button>
-        </div>
-        <div
-          className="row"
-        />
       </div>
       <div
         className="col-md-3 col-1"

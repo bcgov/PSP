@@ -1,5 +1,6 @@
 import { Button, LinkButton } from 'components/common/buttons';
 import * as actionTypes from 'constants/actionTypes';
+import { Roles } from 'constants/roles';
 import { useQuery } from 'hooks/use-query';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import React, { useState } from 'react';
@@ -22,7 +23,6 @@ import { LoginStyled } from './LoginStyled';
  */
 const Login = () => {
   const { redirect } = useQuery();
-  const [showInstruction, setShowInstruction] = useState(false);
   const keyCloakWrapper = useKeycloakWrapper();
   const keycloak = keyCloakWrapper.obj;
   const isIE = usingIE();
@@ -35,6 +35,8 @@ const Login = () => {
   if (keycloak?.authenticated) {
     if (activated?.status === NEW_PIMS_USER || !keyCloakWrapper?.roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
+    } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
+      return <Redirect to="/lease/list" />;
     }
     return <Redirect to={{ pathname: (redirect as string) || '/mapview' }} />;
   }
@@ -55,40 +57,7 @@ const Login = () => {
             <Button variant="primary" onClick={() => keycloak.login()}>
               Sign In
             </Button>
-            <p>Sign into PIMS with your government issued IDIR or with your Business BCeID.</p>
-            <Row className="bceid">
-              <LinkButton onClick={() => setShowInstruction(!showInstruction)}>
-                Don't have a Business BCeID?
-              </LinkButton>
-            </Row>
-            <Row>
-              {showInstruction && (
-                <Jumbotron>
-                  <p>
-                    1. Search to see if your entity is{' '}
-                    <a
-                      href="https://www.bceid.ca/directories/whitepages"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      already registered
-                    </a>{' '}
-                    <FaExternalLinkAlt />
-                  </p>
-                  <p>
-                    If you're not yet registered, <br></br>2.{' '}
-                    <a
-                      href="https://www.bceid.ca/os/?7169"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Register for your Business BCeID
-                    </a>{' '}
-                    <FaExternalLinkAlt />
-                  </p>
-                </Jumbotron>
-              )}
-            </Row>
+            <p>Sign into PIMS with your government issued IDIR</p>
           </Col>
           <Col xs={1} md={3} />
         </Row>
