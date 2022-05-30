@@ -5,7 +5,6 @@ import * as API from 'constants/API';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { accessRequestsSlice, IAccessRequestsState } from 'store/slices/accessRequests';
@@ -13,8 +12,7 @@ import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { cleanup, fireEvent, render, waitFor } from 'utils/test-utils';
-import { fillInput } from 'utils/test-utils';
+import { cleanup, render } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import * as actionTypes from '../../../constants/actionTypes';
