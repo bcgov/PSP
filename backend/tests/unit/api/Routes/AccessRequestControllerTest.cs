@@ -3,7 +3,6 @@ using Pims.Core.Extensions;
 using Pims.Core.Test;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Model = Pims.Api.Models.AccessRequest;
 
 namespace Pims.Api.Test.Routes
 {
@@ -46,7 +45,7 @@ namespace Pims.Api.Test.Routes
         public void AddAccessRequest_Route()
         {
             // Arrange
-            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.AddAccessRequest), typeof(Model.AccessRequestModel));
+            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.AddAccessRequest), typeof(Models.Concepts.AccessRequestModel));
 
             // Act
             // Assert
@@ -58,7 +57,7 @@ namespace Pims.Api.Test.Routes
         public void UpdateAccessRequest_Route()
         {
             // Arrange
-            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.UpdateAccessRequest), typeof(long), typeof(Model.AccessRequestModel));
+            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.UpdateAccessRequest), typeof(long), typeof(Models.Concepts.AccessRequestModel));
 
             // Act
             // Assert

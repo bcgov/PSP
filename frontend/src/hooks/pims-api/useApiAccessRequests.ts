@@ -3,6 +3,7 @@ import { IAccessRequest, IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
+import { Api_AccessRequest } from './../../models/api/AccessRequest';
 import { useAxiosApi } from '.';
 
 /**
@@ -15,13 +16,15 @@ export const useApiAccessRequests = () => {
 
   return React.useMemo(
     () => ({
-      getAccessRequest: () => api.get<IAccessRequest>(`/access/requests`),
+      getAccessRequest: () => api.get<Api_AccessRequest>(`/access/requests`),
+      getAccessRequestById: (accessRequestId: number) =>
+        api.get<Api_AccessRequest>(`/access/requests/${accessRequestId}`),
       getAccessRequestsPaged: (params: IPaginateAccessRequests) =>
         api.get<IPagedItems<IAccessRequest>>(
           `/admin/access/requests?${queryString.stringify(params)}`,
         ),
-      postAccessRequest: (accessRequest: IAccessRequest) => {
-        return api.request<IAccessRequest>({
+      postAccessRequest: (accessRequest: Api_AccessRequest) => {
+        return api.request<Api_AccessRequest>({
           url: `/access/requests${accessRequest.id === undefined ? '' : `/${accessRequest.id}`}`,
           method: accessRequest.id === undefined ? 'post' : 'put',
           data: accessRequest,

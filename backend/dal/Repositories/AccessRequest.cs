@@ -45,6 +45,7 @@ namespace Pims.Dal.Repositories
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
                 .Include(a => a.Role)
+                .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .AsNoTracking()
@@ -63,6 +64,7 @@ namespace Pims.Dal.Repositories
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
                 .Include(a => a.Role)
+                .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .AsNoTracking()
@@ -95,6 +97,7 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .Include(a => a.AccessRequestStatusTypeCodeNavigation)
+                .Include(a => a.RegionCodeNavigation)
                 .AsNoTracking();
 
             var userOrganizations = this.User.GetOrganizations();
@@ -173,7 +176,7 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsAccessRequests.Add(addRequest);
             this.Context.CommitTransaction();
-            return addRequest;
+            return Get(addRequest.AccessRequestId);
         }
 
         /// <summary>
@@ -202,6 +205,7 @@ namespace Pims.Dal.Repositories
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
                 .Include(a => a.Role)
+                .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .FirstOrDefault(a => a.AccessRequestId == updateRequest.AccessRequestId) ?? throw new KeyNotFoundException();
@@ -211,6 +215,7 @@ namespace Pims.Dal.Repositories
             accessRequest.ConcurrencyControlNumber = updateRequest.ConcurrencyControlNumber;
             accessRequest.Note = updateRequest.Note;
             accessRequest.AccessRequestStatusTypeCode = updateRequest.AccessRequestStatusTypeCode;
+            accessRequest.RegionCode = updateRequest.RegionCode;
 
             this.Context.PimsAccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();

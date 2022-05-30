@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from 'interfaces';
-import { mockAccessRequest } from 'mocks/filterDataMock';
+import { mockAccessRequest, mockApiAccessRequest } from 'mocks/filterDataMock';
 
 import { useApiAccessRequests } from '.';
 
@@ -63,7 +63,7 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Posts a new access request', async () => {
-    const newAccessRequest = { ...mockAccessRequest, id: undefined };
+    const newAccessRequest = { ...mockApiAccessRequest, id: undefined };
     mockAxios.onPost(`/access/requests`).reply(201, newAccessRequest);
     const { postAccessRequest } = setup();
     const response = await postAccessRequest(newAccessRequest);
@@ -73,9 +73,9 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Puts an existing access request', async () => {
-    mockAxios.onPut(`/access/requests/${mockAccessRequest.id}`).reply(200, mockAccessRequest);
+    mockAxios.onPut(`/access/requests/${mockApiAccessRequest.id}`).reply(200, mockAccessRequest);
     const { postAccessRequest } = setup();
-    const response = await postAccessRequest(mockAccessRequest);
+    const response = await postAccessRequest(mockApiAccessRequest);
 
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual(mockAccessRequest);

@@ -675,6 +675,57 @@ export const mockAccessRequest: IAccessRequest = {
   appCreateTimestamp: '2021-05-07T00:37:06.2457303',
 };
 
+export const mockApiAccessRequest = {
+  id: 7,
+  regionCode: {
+    id: 2,
+    description: 'Southern Interior Region',
+    isDisabled: false,
+  },
+  note: 'a note 2',
+  user: {
+    id: 5,
+    guidIdentifierValue: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    businessIdentifierValue: 'admin',
+    approvedById: 0,
+    position: 'A lovely person 4',
+    isDisabled: false,
+    lastLogin: '2022-05-30T18:09:53.87',
+    issueDate: '2022-05-27T22:25:29.807',
+    userRoles: [],
+    appCreateTimestamp: '2022-05-27T22:25:29.91',
+    appLastUpdateTimestamp: '2022-05-30T18:09:53.873',
+    appLastUpdateUserid: 'admin',
+    appCreateUserid: 'admin',
+    appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    rowVersion: 41,
+  },
+  userId: 5,
+  role: {
+    id: 14,
+    roleUid: 'c963dc33-8057-485c-a853-77e433eba465',
+    name: 'Finance',
+    description: 'Finance team members.',
+    isPublic: true,
+    isDisabled: false,
+    displayOrder: 0,
+    appCreateTimestamp: '2022-05-27T11:38:54.51',
+    appLastUpdateTimestamp: '2022-05-27T11:38:54.51',
+    appLastUpdateUserid: 'Seed Data',
+    appCreateUserid: 'Seed Data',
+    rowVersion: 1,
+  },
+  roleId: 14,
+  appCreateTimestamp: '2022-05-28T01:30:51.633',
+  appLastUpdateTimestamp: '2022-05-30T17:39:05.98',
+  appLastUpdateUserid: 'admin',
+  appCreateUserid: 'admin',
+  appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  rowVersion: 11,
+};
+
 export const mockParcelLayerResponse = {
   type: 'FeatureCollection',
   features: [

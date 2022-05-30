@@ -15,6 +15,36 @@
     background-color: $secondary-variant-color;
     color: #ffffff;
   }
+  &.bs-tooltip-top .arrow::before {
+    border-top-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-right .arrow::before {
+    border-right-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-left .arrow::before {
+    border-left-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: $secondary-variant-color;
+  }
+}
+
+.tooltip.tooltip-light {
+  .tooltip-inner {
+  background-color: $filter-box-color;
+  }
+  &.bs-tooltip-top .arrow::before {
+    border-top-color: $filter-box-color;
+  }
+  &.bs-tooltip-right .arrow::before {
+    border-right-color: $filter-box-color;
+  }
+  &.bs-tooltip-left .arrow::before {
+    border-left-color: $filter-box-color;
+  }
+  &.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: $filter-box-color;
+  }
 }
 
 .tooltip.show {
