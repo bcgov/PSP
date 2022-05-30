@@ -7,13 +7,10 @@ import { Api_AccessRequest } from './../../../models/api/AccessRequest';
 export class AccessRequestForm {
   public id: NumberFieldValue;
   public userId: NumberFieldValue;
-  public note: string;
-  public roleName: string;
   public roleId: NumberFieldValue;
+  public note: string;
   public accessRequestStatusTypeCodeId: string;
-  public accessRequestStatusTypeCodeName: string;
   public regionCodeId: NumberFieldValue;
-  public regionName: string;
   public appCreateTimestamp?: string;
   public email: string;
   public firstName: string;
@@ -28,12 +25,9 @@ export class AccessRequestForm {
     this.id = accessRequest.id ?? '';
     this.userId = accessRequest.userId;
     this.roleId = accessRequest.roleId ?? '';
-    this.roleName = accessRequest?.role?.name ?? '';
     this.note = accessRequest.note ?? '';
     this.accessRequestStatusTypeCodeId = accessRequest.accessRequestStatusTypeCode?.id ?? '';
-    this.accessRequestStatusTypeCodeName = accessRequest.accessRequestStatusTypeCode?.id ?? '';
     this.regionCodeId = accessRequest.regionCode?.id ?? '';
-    this.regionName = accessRequest.regionCode?.description ?? '';
     this.email =
       (accessRequest?.user?.person?.contactMethods &&
         getPreferredContactMethodValue(

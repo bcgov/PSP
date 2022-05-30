@@ -18,7 +18,7 @@ export const useApiAccessRequests = () => {
     () => ({
       getAccessRequest: () => api.get<Api_AccessRequest>(`/access/requests`),
       getAccessRequestById: (accessRequestId: number) =>
-        api.get<Api_AccessRequest>(`/admin/access/requests/${accessRequestId}`),
+        api.get<Api_AccessRequest>(`/access/requests/${accessRequestId}`),
       getAccessRequestsPaged: (params: IPaginateAccessRequests) =>
         api.get<IPagedItems<Api_AccessRequest>>(
           `/admin/access/requests?${queryString.stringify(params)}`,

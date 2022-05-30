@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
-using FluentAssertions;
 
 namespace PimsApi.Test.Controllers
 {
@@ -119,8 +118,8 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
-            Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
+            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            Assert.Equal(model.RegionCode, actualResult.RegionCode);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
@@ -246,8 +245,8 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
-            Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
+            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            Assert.Equal(model.RegionCode, actualResult.RegionCode);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
