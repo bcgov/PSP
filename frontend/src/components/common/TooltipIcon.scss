@@ -31,7 +31,7 @@
 
 .tooltip.tooltip-light {
   .tooltip-inner {
-  background-color: $filter-box-color;
+    background-color: $filter-box-color;
   }
   &.bs-tooltip-top .arrow::before {
     border-top-color: $filter-box-color;
