@@ -22,7 +22,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.PimsProperty CreateProperty(int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsLease lease = null)
+        public static Entity.PimsProperty CreateProperty(int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null, Entity.PimsLease lease = null)
         {
             type ??= EntityHelper.CreatePropertyType("Land");
             classification ??= EntityHelper.CreatePropertyClassificationType("Class");
@@ -31,7 +31,8 @@ namespace Pims.Core.Test
 
             areaUnit ??= EntityHelper.CreatePropertyAreaUnitType("Sqft");
             dataSource ??= EntityHelper.CreateDataSourceType("LIS");
-            var property = new Entity.PimsProperty(pid, type, classification, address, new Entity.PimsPropPropTenureType {PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow)
+            status ??= EntityHelper.CreatePropertyStatusType("Status");
+            var property = new Entity.PimsProperty(pid, type, classification, address, new Entity.PimsPropPropTenureType {PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
             {
                 PropertyId = pid,
                 Pin = pin,
