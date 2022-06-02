@@ -216,6 +216,7 @@ namespace Pims.Dal.Repositories
             accessRequest.Note = updateRequest.Note;
             accessRequest.AccessRequestStatusTypeCode = updateRequest.AccessRequestStatusTypeCode;
             accessRequest.RegionCode = updateRequest.RegionCode;
+            accessRequest.User.Position = position;
 
             this.Context.PimsAccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();

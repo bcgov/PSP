@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from 'interfaces';
-import { mockAccessRequest, mockApiAccessRequest } from 'mocks/filterDataMock';
+import { mockApiAccessRequest } from 'mocks/filterDataMock';
 
 import { useApiAccessRequests } from '.';
 
@@ -73,7 +73,7 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Puts an existing access request', async () => {
-    mockAxios.onPut(`/access/requests/${mockApiAccessRequest.id}`).reply(200, mockAccessRequest);
+    mockAxios.onPut(`/access/requests/${mockApiAccessRequest.id}`).reply(200, mockApiAccessRequest);
     const { postAccessRequest } = setup();
     const response = await postAccessRequest(mockApiAccessRequest);
 

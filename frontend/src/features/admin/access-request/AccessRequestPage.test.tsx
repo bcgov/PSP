@@ -5,6 +5,7 @@ import * as API from 'constants/API';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
+import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
