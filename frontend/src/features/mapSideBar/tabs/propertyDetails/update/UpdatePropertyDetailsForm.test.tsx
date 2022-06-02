@@ -178,10 +178,10 @@ const fakeProperty: Api_Property = {
 };
 
 describe('UpdatePropertyDetailsForm component', () => {
+  // render component under test
   const setup = (
     renderOptions: RenderOptions & { initialValues: UpdatePropertyDetailsFormModel },
   ) => {
-    // render component under test
     const utils = render(
       <Formik onSubmit={onSubmit} initialValues={renderOptions.initialValues}>
         {formikProps => <UpdatePropertyDetailsForm {...formikProps} onCancel={onCancel} />}

@@ -130,6 +130,8 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
             <div role="row" className="tr">
               <div role="cell" title="" className="td right">
                 <input
+                  name="area-sq-meters"
+                  aria-label="square metres"
                   type="number"
                   step=".01"
                   value={sqMeters}
@@ -147,6 +149,8 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
             <div role="row" className="tr">
               <div role="cell" title="" className="td right">
                 <input
+                  name="area-sq-feet"
+                  aria-label="square feet"
                   type="number"
                   step=".01"
                   value={sqFeet}
@@ -164,6 +168,8 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
             <div role="row" className="tr">
               <div role="cell" title="" className="td right">
                 <input
+                  name="area-hectares"
+                  aria-label="hectares"
                   type="number"
                   step=".01"
                   value={ha}
@@ -179,6 +185,8 @@ export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = 
             <div role="row" className="tr">
               <div role="cell" title="" className="td right">
                 <input
+                  name="area-acres"
+                  aria-label="acres"
                   type="number"
                   step=".01"
                   value={acres}
