@@ -1,20 +1,49 @@
-import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
+import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_Property } from 'models/api/Property';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import {
+  fillInput,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from 'utils/test-utils';
 
+import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
-import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
+import {
+  IUpdatePropertyDetailsContainerProps,
+  UpdatePropertyDetailsContainer,
+} from './UpdatePropertyDetailsContainer';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSubmit = jest.fn();
-const onCancel = jest.fn();
+// Mock API service calls
+jest.mock('../hooks');
+jest.mock('hooks/useQueryMapLayersByLocation');
+
+const mockUseGetProperty: jest.Mocked<ReturnType<typeof useGetProperty>> = {
+  retrieveProperty: jest.fn(),
+  retrievePropertyLoading: false,
+};
+(useGetProperty as jest.Mock).mockReturnValue(mockUseGetProperty);
+
+const mockUseUpdateProperty: jest.Mocked<ReturnType<typeof useUpdateProperty>> = {
+  updateProperty: jest.fn(),
+  updatePropertyLoading: false,
+};
+(useUpdateProperty as jest.Mock).mockReturnValue(mockUseUpdateProperty);
+
+const mockUseQueryMapLayers: jest.Mocked<ReturnType<typeof useQueryMapLayersByLocation>> = {
+  queryAll: jest.fn(),
+};
+(useQueryMapLayersByLocation as jest.Mock).mockReturnValue(mockUseQueryMapLayers);
 
 const fakeProperty: Api_Property = {
   id: 205,
@@ -146,7 +175,7 @@ const fakeProperty: Api_Property = {
     postal: 'V6Z 5G7',
     rowVersion: 2,
   },
-  pid: 9956727,
+  pid: 1234,
   pin: 5498101,
   areaUnit: {
     id: 'M2',
@@ -177,21 +206,14 @@ const fakeProperty: Api_Property = {
   rowVersion: 5,
 };
 
-describe('UpdatePropertyDetailsForm component', () => {
-  const setup = (
-    renderOptions: RenderOptions & { initialValues: UpdatePropertyDetailsFormModel },
-  ) => {
-    // render component under test
-    const utils = render(
-      <Formik onSubmit={onSubmit} initialValues={renderOptions.initialValues}>
-        {formikProps => <UpdatePropertyDetailsForm {...formikProps} onCancel={onCancel} />}
-      </Formik>,
-      {
-        ...renderOptions,
-        store: storeState,
-        history,
-      },
-    );
+describe('UpdatePropertyDetailsContainer component', () => {
+  // render component under test
+  const setup = (renderOptions: RenderOptions & IUpdatePropertyDetailsContainerProps = {}) => {
+    const utils = render(<UpdatePropertyDetailsContainer pid={renderOptions.pid || '1234'} />, {
+      ...renderOptions,
+      store: storeState,
+      history,
+    });
 
     return {
       ...utils,
@@ -203,42 +225,61 @@ describe('UpdatePropertyDetailsForm component', () => {
   let initialValues: UpdatePropertyDetailsFormModel;
 
   beforeEach(() => {
+    history.push('/mapview/property/1234/edit');
     initialValues = UpdatePropertyDetailsFormModel.fromApi(fakeProperty);
+    mockUseGetProperty.retrieveProperty.mockResolvedValue(fakeProperty);
+    mockUseUpdateProperty.updateProperty.mockResolvedValue(fakeProperty);
+    mockUseQueryMapLayers.queryAll.mockResolvedValue({
+      isALR: false,
+      motiRegion: {},
+      highwaysDistrict: {},
+      electoralDistrict: {},
+      firstNations: {},
+    });
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup({ initialValues });
+  it('renders as expected', async () => {
+    const { asFragment, getByTestId } = setup();
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('cancels the form when Cancel is clicked', () => {
-    const { getCancelButton } = setup({ initialValues });
+  it('cancels the form when Cancel is clicked', async () => {
+    const { getCancelButton, getByTestId } = setup();
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
     userEvent.click(getCancelButton());
-    expect(onCancel).toBeCalled();
+
+    await waitFor(() => expect(history.location.pathname).toBe('/mapview/property/1234'));
   });
 
   it('saves the form with minimal data when Save is clicked', async () => {
-    const { getSaveButton } = setup({ initialValues });
+    const expected = initialValues.toApi();
+    const { getSaveButton, getByTestId } = setup();
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
     userEvent.click(getSaveButton());
-    await waitFor(() => expect(onSubmit).toBeCalledWith(initialValues, expect.anything()));
+
+    await waitFor(() => expect(mockUseUpdateProperty.updateProperty).toBeCalledWith(expected));
   });
 
   it('saves the form with updated values when Save is clicked', async () => {
-    const expectedValues = Object.assign(new UpdatePropertyDetailsFormModel(), initialValues);
-    expectedValues.municipalZoning = 'Lorem ipsum';
-    expectedValues.notes = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    const expected = Object.assign(new UpdatePropertyDetailsFormModel(), initialValues);
+    expected.municipalZoning = 'Lorem ipsum';
+    expected.notes = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, container } = setup({ initialValues });
+    const { getSaveButton, getByTestId, container } = setup();
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
 
     // modify form values
-    await fillInput(container, 'municipalZoning', expectedValues.municipalZoning);
-    await fillInput(container, 'notes', expectedValues.notes, 'textarea');
+    await fillInput(container, 'municipalZoning', expected.municipalZoning);
+    await fillInput(container, 'notes', expected.notes, 'textarea');
     userEvent.click(getSaveButton());
 
-    await waitFor(() => expect(onSubmit).toBeCalledWith(expectedValues, expect.anything()));
+    await waitFor(() =>
+      expect(mockUseUpdateProperty.updateProperty).toBeCalledWith(expected.toApi()),
+    );
   });
 });
