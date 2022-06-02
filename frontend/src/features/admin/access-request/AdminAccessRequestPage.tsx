@@ -3,36 +3,41 @@ import React from 'react';
 import { Alert } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { AccessRequestContainer } from './AccessRequestContainer';
 
-export interface IAccessRequestPageProps {
+export interface IAdminAccessRequestPageProps {
   match?: any;
 }
 
 /**
- * The AccessRequestPage provides a way to new authenticated users to submit a request
+ * The AdminAccessRequestPage provides a way to new authenticated users to submit a request
  * that associates them with a specific organization and a role within the organization.
  * If they have an active access request already submitted, it will allow them to update it until it has been approved or disabled.
  * If their prior request was disabled they will then be able to submit a new request.
  */
-export const AccessRequestPage: React.FunctionComponent<IAccessRequestPageProps> = props => {
+export const AdminAccessRequestPage: React.FunctionComponent<IAdminAccessRequestPageProps> = props => {
+  const history = useHistory();
   return (
     <StyledContainer>
       <Row>
         <Col md={7}>
-          <H1>Request Access to PIMS</H1>
+          <H1>Edit Access Request</H1>
         </Col>
       </Row>
       <Row>
         <Col md={7}>
-          <Alert variant="info">You will receive an email when your request is reviewed</Alert>
+          <Alert variant="info">Modify this access request</Alert>
         </Col>
       </Row>
       <Row>
         <Col md={7}>
-          <AccessRequestContainer accessRequestId={props?.match?.params?.id} />
+          <AccessRequestContainer
+            accessRequestId={props?.match?.params?.id}
+            onSave={() => history.push('/admin/access/requests')}
+          />
         </Col>
       </Row>
     </StyledContainer>
@@ -51,4 +56,4 @@ const StyledContainer = styled.div`
   }
 `;
 
-export default AccessRequestPage;
+export default AdminAccessRequestPage;

@@ -2,6 +2,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Keycloak.Controllers;
+using Pims.Api.Models.Concepts;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
@@ -10,7 +11,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
 
 namespace PimsApi.Test.Keycloak.Controllers
 {
@@ -33,7 +33,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
             var accessRequest = EntityHelper.CreateAccessRequest(1);
             service.Setup(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.PimsAccessRequest>())).Returns(Task.FromResult(accessRequest));
-            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var model = mapper.Map<AccessRequestModel>(accessRequest);
 
             // Act
             var result = await controller.UpdateAccessRequestAsync(model);
@@ -41,8 +41,8 @@ namespace PimsApi.Test.Keycloak.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            var expectedResult = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
+            var expectedResult = mapper.Map<AccessRequestModel>(accessRequest);
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
         }

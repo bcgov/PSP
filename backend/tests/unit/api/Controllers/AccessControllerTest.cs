@@ -81,11 +81,11 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
-            service.Setup(m => m.AccessRequest.Get(It.IsAny<long>())).Returns(accessRequest);
+            service.Setup(m => m.AccessRequest.Get()).Returns(accessRequest);
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
             // Act
-            var result = controller.GetAccessRequest(1);
+            var result = controller.GetAccessRequest();
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -93,7 +93,7 @@ namespace PimsApi.Test.Controllers
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
             Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
-            service.Verify(m => m.AccessRequest.Get(1), Times.Once());
+            service.Verify(m => m.AccessRequest.Get(), Times.Once());
         }
         #endregion
 
@@ -120,7 +120,7 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.RegionCode, actualResult.RegionCode);
+            Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
@@ -247,7 +247,7 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.RegionCode, actualResult.RegionCode);
+            Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());

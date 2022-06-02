@@ -44,7 +44,7 @@ namespace PimsApi.Test.Admin.Controllers
             service.Setup(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
-            var result = controller.GetPage(1, 10, null, null, null, null, null);
+            var result = controller.GetPage(1, 10);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

@@ -1,12 +1,12 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
 
 namespace Pims.Api.Areas.Keycloak.Controllers
 {
@@ -47,15 +47,15 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// <returns></returns>
         [HttpPut("access/requests")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
+        [ProducesResponseType(typeof(AccessRequestModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
-        public async Task<IActionResult> UpdateAccessRequestAsync(Model.AccessRequestModel model)
+        public async Task<IActionResult> UpdateAccessRequestAsync(AccessRequestModel model)
         {
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
             var result = await _keycloakService.UpdateAccessRequestAsync(accessRequest);
-            return new JsonResult(_mapper.Map<Model.AccessRequestModel>(result));
+            return new JsonResult(_mapper.Map<AccessRequestModel>(result));
         }
         #endregion
     }

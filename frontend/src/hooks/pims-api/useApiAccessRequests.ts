@@ -1,5 +1,5 @@
 import { IPaginateAccessRequests } from 'constants/API';
-import { IAccessRequest, IPagedItems } from 'interfaces';
+import { IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -18,9 +18,9 @@ export const useApiAccessRequests = () => {
     () => ({
       getAccessRequest: () => api.get<Api_AccessRequest>(`/access/requests`),
       getAccessRequestById: (accessRequestId: number) =>
-        api.get<Api_AccessRequest>(`/access/requests/${accessRequestId}`),
+        api.get<Api_AccessRequest>(`/admin/access/requests/${accessRequestId}`),
       getAccessRequestsPaged: (params: IPaginateAccessRequests) =>
-        api.get<IPagedItems<IAccessRequest>>(
+        api.get<IPagedItems<Api_AccessRequest>>(
           `/admin/access/requests?${queryString.stringify(params)}`,
         ),
       postAccessRequest: (accessRequest: Api_AccessRequest) => {
@@ -30,10 +30,10 @@ export const useApiAccessRequests = () => {
           data: accessRequest,
         });
       },
-      putAccessRequest: (accessRequest: IAccessRequest) =>
-        api.put<IAccessRequest>(`/keycloak/access/requests`, accessRequest),
-      deleteAccessRequest: (accessRequest: IAccessRequest) =>
-        api.delete<IAccessRequest>(`/admin/access/requests/${accessRequest.id}`, {
+      putAccessRequest: (accessRequest: Api_AccessRequest) =>
+        api.put<Api_AccessRequest>(`/keycloak/access/requests`, accessRequest),
+      deleteAccessRequest: (accessRequest: Api_AccessRequest) =>
+        api.delete<Api_AccessRequest>(`/admin/access/requests/${accessRequest.id}`, {
           data: accessRequest,
         }),
     }),

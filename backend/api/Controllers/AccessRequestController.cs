@@ -59,22 +59,6 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Get the most recent access request for the current user.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("access/requests/{id}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Concepts.AccessRequestModel), 200)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 403)]
-        [SwaggerOperation(Tags = new[] { "user" })]
-        public IActionResult GetAccessRequest(long id)
-        {
-            var accessRequest = _pimsService.AccessRequest.Get(id);
-            return new JsonResult(_mapper.Map<Models.Concepts.AccessRequestModel>(accessRequest));
-        }
-
-        /// <summary>
         /// Provides a way for a user to submit an access request to the system, associating a role and organization to their user.
         /// </summary>
         /// <returns></returns>
@@ -89,19 +73,10 @@ namespace Pims.Api.Controllers
             {
                 throw new BadRequestException("Invalid access request specified");
             }
-            try
-            {
-                var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
-                accessRequest = _pimsService.AccessRequest.Add(accessRequest);
+            var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
+            accessRequest = _pimsService.AccessRequest.Add(accessRequest);
 
-                return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.AccessRequestId }, _mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
-            }
-            catch (Exception e)
-            {
-
-            }
-            return null;
-            
+            return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.AccessRequestId }, _mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
         }
 
         /// <summary>
