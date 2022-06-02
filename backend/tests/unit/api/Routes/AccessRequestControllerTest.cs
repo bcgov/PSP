@@ -33,12 +33,12 @@ namespace Pims.Api.Test.Routes
         public void GetAccessRequest_Route()
         {
             // Arrange
-            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.GetAccessRequest), typeof(long));
+            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.GetAccessRequest));
 
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("access/requests/{id}");
+            endpoint.HasGet("access/requests");
         }
 
         [Fact]

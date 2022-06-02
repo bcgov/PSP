@@ -4,7 +4,7 @@ using Pims.Core.Test;
 using Pims.Dal.Security;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Test.Routes.Keycloak
 {

@@ -10,7 +10,9 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.AccessRequest;
+using Model = Pims.Api.Models.Concepts;
+using FluentAssertions;
+using System.Linq;
 
 namespace PimsApi.Test.Admin.Controllers
 {
@@ -50,7 +52,6 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items, new DeepPropertyCompare());
             service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -76,8 +77,6 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items,
-                new DeepPropertyCompare());
             service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -102,8 +101,7 @@ namespace PimsApi.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items, new DeepPropertyCompare());
+            var actualResult = Assert.IsType<PageModel<Pims.Api.Models.Concepts.AccessRequestModel>>(actionResult.Value);
             service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
         #endregion
