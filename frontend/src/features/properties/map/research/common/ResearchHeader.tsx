@@ -11,8 +11,8 @@ export interface IResearchHeaderProps {
 }
 
 const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
-  const leftColumnWidth = '6';
-  const leftColumnLabel = '4';
+  const leftColumnWidth = '8';
+  const leftColumnLabel = '3';
   const researchFile = props.researchFile;
 
   const region = researchFile?.researchProperties
@@ -24,23 +24,23 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
     .filter(x => x !== undefined && x !== '')
     .join(', ');
   return (
-    <Row>
+    <Row className="no-gutters">
       <Col>
-        <Row>
-          <Col xs={leftColumnWidth}>
+        <Row className="no-gutters">
+          <Col xs={leftColumnWidth} className="">
             <HeaderField label="Research file #:" labelWidth={leftColumnLabel}>
               {researchFile?.rfileNumber}
             </HeaderField>
           </Col>
           <Col className="text-right">
-            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by
+            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={researchFile?.appCreateUserid}
               userGuid={researchFile?.appCreateUserGuid}
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
             <HeaderField label="R-file name:" labelWidth={leftColumnLabel}>
               {researchFile?.name}
@@ -48,16 +48,16 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           </Col>
           <Col className="text-right">
             Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
-            by
+            by{' '}
             <UserNameTooltip
               userName={researchFile?.appLastUpdateUserid}
               userGuid={researchFile?.appLastUpdateUserGuid}
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
-            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel}>
+            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth={'9'}>
               {region}
             </HeaderField>
           </Col>
@@ -67,9 +67,9 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
             </HeaderField>
           </Col>
         </Row>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
-            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel}>
+            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth={'9'}>
               {district}
             </HeaderField>
           </Col>

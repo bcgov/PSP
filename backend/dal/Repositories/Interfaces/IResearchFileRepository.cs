@@ -9,7 +9,6 @@ namespace Pims.Dal.Repositories
         PimsResearchFile Add(PimsResearchFile researchFile);
         PimsResearchFile Update(PimsResearchFile researchFile);
         Paged<PimsResearchFile> GetPage(ResearchFilter filter);
-        PimsResearchFile UpdateProperty(long researchFileId, PimsPropertyResearchFile researchFileProperty);
         long GetRowVersion(long id);
     }
 }

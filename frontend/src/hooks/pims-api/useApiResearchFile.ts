@@ -27,6 +27,8 @@ export const useApiResearchFile = () => {
         api.post<Api_ResearchFile>(`/researchFiles`, researchFile),
       putResearchFile: (researchFile: Api_ResearchFile) =>
         api.put<Api_ResearchFile>(`/researchFiles/${researchFile.id}`, researchFile),
+      putResearchFileProperties: (researchFile: Api_ResearchFile) =>
+        api.put<Api_ResearchFile>(`/researchFiles/${researchFile?.id}/properties`, researchFile),
       putPropertyResearchFile: (propertyResearchFile: Api_PropertyResearchFile) =>
         api.put<Api_ResearchFile>(
           `/researchFiles/${propertyResearchFile?.researchFile?.id}/properties/${propertyResearchFile.id}`,

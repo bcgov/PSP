@@ -24,9 +24,15 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
         if (data && isMounted()) {
           const { firstName, surname, middleName } = data;
           const nameArr: string[] = [];
-          if (firstName) nameArr.push(firstName);
-          if (middleName) nameArr.push(middleName);
-          if (surname) nameArr.push(surname);
+          if (firstName) {
+            nameArr.push(firstName);
+          }
+          if (middleName) {
+            nameArr.push(middleName);
+          }
+          if (surname) {
+            nameArr.push(surname);
+          }
           setUserNameInfo(nameArr.join(' '));
         }
       });
@@ -44,7 +50,6 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
 };
 
 const StyledUserLabel = styled.span`
-  font-style: italic;
   font-weight: bold;
-  color: black;
+  color: ${({ theme }) => theme.css.secondaryVariantColor};
 `;

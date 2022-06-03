@@ -9,9 +9,7 @@ exports[`UserNameTooltip renders as expected 1`] = `
     class="Toastify"
   />
   .c0 {
-  font-style: italic;
   font-weight: bold;
-  color: black;
 }
 
 <span
