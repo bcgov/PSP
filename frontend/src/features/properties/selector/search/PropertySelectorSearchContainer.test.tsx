@@ -1,11 +1,12 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
+import { mockGeocoderOptions } from 'hooks/pims-api/useApiGeocoder';
 import { noop } from 'lodash';
 import { mockPropertyLayerSearchResponse } from 'mocks/filterDataMock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { fillInput, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import {
   IPropertySelectorSearchContainerProps,
@@ -97,6 +98,27 @@ describe('PropertySelectorSearchContainer component', () => {
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toBe(
         "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PLAN_NUMBER ilike '%25PRP4520%25'",
+      );
+    });
+  });
+
+  it('searches by address', async () => {
+    mockAxios.onGet().reply(200, mockGeocoderOptions);
+    const {
+      component: { container },
+    } = setup({});
+
+    await fillInput(container, 'searchBy', 'address', 'select');
+    await fillInput(container, 'address', '1234 Fake');
+
+    const input = container.querySelector('input[name="address"]');
+    await waitFor(() => {
+      fireEvent.change(input!, { target: { value: '1234 Fake' } });
+    });
+
+    await waitFor(() => {
+      expect(mockAxios.history.get[0].url).toBe(
+        '/tools/geocoder/addresses?address=1234 Fake&matchPrecisionNot=OCCUPANT,INTERSECTION,BLOCK,STREET,LOCALITY,PROVINCE,OCCUPANT',
       );
     });
   });

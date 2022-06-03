@@ -1,6 +1,7 @@
 import * as Styled from 'components/common/styles';
 import { Table } from 'components/Table';
 import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
+import { IGeocoderResponse } from 'hooks/useApi';
 import * as React from 'react';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
@@ -14,6 +15,9 @@ export interface IPropertySearchSelectorFormViewProps {
   searchResults: IMapProperty[];
   search?: ILayerSearchCriteria;
   loading: boolean;
+  addressResults?: IGeocoderResponse[];
+  onAddressChange: (searchText: string) => void;
+  onAddressSelect: (selectedItem: IGeocoderResponse) => void;
 }
 
 export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySearchSelectorFormViewProps> = ({
@@ -23,12 +27,21 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
   searchResults,
   search,
   loading,
+  addressResults,
+  onAddressChange,
+  onAddressSelect,
 }) => {
   return (
     <>
       <StyledFormSection>
         <Styled.H3>Search for a property</Styled.H3>
-        <LayerFilter setFilter={onSearch} filter={search} />
+        <LayerFilter
+          setFilter={onSearch}
+          filter={search}
+          addressResults={addressResults}
+          onAddressChange={onAddressChange}
+          onAddressSelect={onAddressSelect}
+        />
       </StyledFormSection>
       <StyledFormSection>
         <Table<IMapProperty>
