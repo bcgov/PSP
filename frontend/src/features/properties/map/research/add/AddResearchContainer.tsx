@@ -73,7 +73,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
         <ResearchFooter
-          isSubmitting={formikRef.current?.isSubmitting}
+          isOkDisabled={formikRef.current?.isSubmitting}
           onSave={handleSave}
           onCancel={handleCancel}
         />

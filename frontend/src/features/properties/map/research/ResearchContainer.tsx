@@ -136,7 +136,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         footer={
           isEditing && (
             <ResearchFooter
-              isSubmitting={formikRef?.current?.isSubmitting}
+              isOkDisabled={formikRef?.current?.isSubmitting}
               onSave={handleSave}
               onCancel={handleCancel}
             />
