@@ -107,7 +107,7 @@ namespace Pims.Api.Areas.Property.Controllers
         public IActionResult GetConceptPropertyWithPid(string pid)
         {
             var property = _pimsService.PropertyService.GetByPid(pid);
-
+            var abc = _mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property);
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
         }
 
