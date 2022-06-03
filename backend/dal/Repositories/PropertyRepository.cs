@@ -163,7 +163,7 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties
+            var property = this.Context.PimsProperties.AsNoTracking()
                 .Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
@@ -253,6 +253,11 @@ namespace Pims.Dal.Repositories
             this.Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
 
             return existingProperty;
+        }
+
+        public void Delete(PimsProperty property)
+        {
+            this.Context.PimsProperties.Remove(property);
         }
 
         #endregion

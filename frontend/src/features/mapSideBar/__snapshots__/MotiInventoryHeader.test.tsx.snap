@@ -197,7 +197,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="col-auto"
+                class="pl-1 text-left col-auto"
               >
                 <strong>
                   -
@@ -219,7 +219,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="col-auto"
+                class="pl-1 text-left col-auto"
               >
                 <strong />
               </div>
@@ -243,7 +243,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="col-auto"
+                class="pl-1 text-left col-auto"
               >
                 <strong />
               </div>
@@ -263,7 +263,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="col-auto"
+                class="pl-1 text-left col-auto"
               >
                 <strong />
               </div>

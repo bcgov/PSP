@@ -24,9 +24,9 @@ export const UpdateResearchView: React.FunctionComponent<IUpdateResearchViewProp
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await updateResearchFile(researchFile);
+    formikRef.current?.setSubmitting(false);
     if (!!response?.name) {
       formikRef.current?.resetForm();
-      formikRef.current?.setSubmitting(false);
       props.onSuccess();
     }
   };
