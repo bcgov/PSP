@@ -1,6 +1,6 @@
 import { ColumnWithProps } from 'components/Table';
 import { AccessRequestStatus, AccessStatusDisplayMapper } from 'constants/accessStatus';
-import { AccessRequestForm } from 'features/admin/access-request/models';
+import { FormAccessRequest } from 'features/admin/access-request/models';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
@@ -9,12 +9,12 @@ import { RowActions } from '../components/RowActions';
 
 export const getAccessRequestColumns = (
   refresh: () => void,
-): ColumnWithProps<AccessRequestForm>[] => [
+): ColumnWithProps<FormAccessRequest>[] => [
   {
     Header: 'IDIR/BCeID',
     accessor: 'businessIdentifierValue',
     align: 'left',
-    Cell: (props: CellProps<AccessRequestForm>) => {
+    Cell: (props: CellProps<FormAccessRequest>) => {
       return (
         <Link to={`/admin/access/request/${props.row.original.id}`}>
           {props.row.original.businessIdentifierValue}
@@ -49,7 +49,7 @@ export const getAccessRequestColumns = (
     accessor: 'accessRequestStatusTypeCodeId',
     align: 'left',
     width: 100,
-    Cell: (props: CellProps<AccessRequestForm>) => {
+    Cell: (props: CellProps<FormAccessRequest>) => {
       return AccessStatusDisplayMapper[
         props.row.original.accessRequestStatusTypeCodeId as AccessRequestStatus
       ];
@@ -69,7 +69,7 @@ export const getAccessRequestColumns = (
   },
   {
     Header: 'Actions',
-    Cell: (props: CellProps<AccessRequestForm>) => {
+    Cell: (props: CellProps<FormAccessRequest>) => {
       return <RowActions {...props} refresh={refresh} />;
     },
     width: 75,

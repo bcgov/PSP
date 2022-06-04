@@ -61,6 +61,8 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A person entitiy that corresponds to this user.
         /// </summary>
         public PersonModel Person { get; set; }
+
+        public IEnumerable<RegionUserModel> UserRegions { get; set; }
         #endregion
     }
 }

@@ -89,7 +89,25 @@ exports[`AddResearchContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c19.btn {
+  .c17 {
+  padding-right: 0;
+}
+
+.c17 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c18:not(:first-child) {
+  padding-left: 0;
+}
+
+.c18:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c19.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -222,6 +240,24 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c3 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
 .c20 {
   font-size: 1.4rem;
 }
@@ -279,42 +315,6 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 .c1 {
   height: 100%;
   width: 100%;
-}
-
-.c17 {
-  padding-right: 0;
-}
-
-.c17 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c18:not(:first-child) {
-  padding-left: 0;
-}
-
-.c18:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c3 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c9 {

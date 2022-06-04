@@ -141,6 +141,24 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
   margin-right: 0;
 }
 
+.c11 {
+  padding-right: 0;
+}
+
+.c11 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c12:not(:first-child) {
+  padding-left: 0;
+}
+
+.c12:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 .c14 {
   font-size: 1.4rem;
 }
@@ -183,24 +201,6 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c11 {
-  padding-right: 0;
-}
-
-.c11 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c12:not(:first-child) {
-  padding-left: 0;
-}
-
-.c12:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .c6:hover {

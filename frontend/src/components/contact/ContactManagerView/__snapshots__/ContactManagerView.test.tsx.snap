@@ -141,6 +141,53 @@ exports[`ContactManagerView matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c3 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c10 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c9 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -197,53 +244,6 @@ exports[`ContactManagerView matches snapshot 1`] = `
 
 .c1 .form-label {
   margin-bottom: unset;
-}
-
-.c8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-left: 0.5rem;
-}
-
-.c10 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c9 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c3 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c0 {
@@ -556,7 +556,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     active.svg
                   </svg>
                   <span>
-                    Show Active contacts only
+                    Show active users only
                   </span>
                 </div>
               </div>

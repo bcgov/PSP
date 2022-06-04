@@ -4,6 +4,7 @@ import { LifecycleToasts } from 'customAxios';
 import { IPagedItems, IUser } from 'interfaces';
 import React from 'react';
 
+import { Api_User } from './../../models/api/User';
 import { useAxiosApi } from '.';
 
 /**
@@ -24,12 +25,12 @@ export const useApiUsers = () => {
   return React.useMemo(
     () => ({
       activateUser: () => api.post<IUser>('/auth/activate'),
-      getUser: (key: string) => api.get<IUser>(`/admin/users/${key}`),
-      getUserInfo: (key: string) => api.get<IUser>(`/users/info/${key}`),
+      getUser: (key: string) => api.get<Api_User>(`/admin/users/${key}`),
+      getUserInfo: (key: string) => api.get<Api_User>(`/users/info/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
-        api.post<IPagedItems<IUser>>(`/admin/users/my/organization`, params),
-      putUser: (user: IUser) =>
-        apiWithToasts.put<IUser>(`/keycloak/users/${user.keycloakUserId}`, user),
+        api.post<IPagedItems<Api_User>>(`/admin/users/filter`, params),
+      putUser: (user: Api_User) =>
+        apiWithToasts.put<Api_User>(`/keycloak/users/${user.guidIdentifierValue}`, user),
     }),
     [api, apiWithToasts],
   );

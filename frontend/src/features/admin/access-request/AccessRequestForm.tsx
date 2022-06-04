@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
-import { AccessRequestForm as AccessRequestFormModel } from './models';
+import { FormAccessRequest as AccessRequestFormModel } from './models';
 import RolesToolTip from './RolesToolTip';
 
 interface IAccessRequestFormProps {

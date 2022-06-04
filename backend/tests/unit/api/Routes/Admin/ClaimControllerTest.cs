@@ -5,7 +5,7 @@ using Pims.Dal.Security;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Model = Pims.Api.Areas.Admin.Models.Claim;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Test.Routes.Admin
 {

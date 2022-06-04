@@ -4,7 +4,7 @@ import { getPreferredContactMethodValue } from 'utils/contactMethodUtil';
 import { stringToNull, toTypeCode } from 'utils/formUtils';
 
 import { Api_AccessRequest } from './../../../models/api/AccessRequest';
-export class AccessRequestForm {
+export class FormAccessRequest {
   public id: NumberFieldValue;
   public userId: NumberFieldValue;
   public note: string;
@@ -62,6 +62,8 @@ export class AccessRequestForm {
       user: {
         guidIdentifierValue: this.keycloakUserGuid,
         position: this.position,
+        userRoles: [],
+        userRegions: [],
       },
       rowVersion: this.rowVersion,
     };

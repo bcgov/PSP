@@ -5,8 +5,8 @@ import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { IAccessRequestsFilterData } from 'features/admin/access-request/IAccessRequestsFilterData';
 import * as React from 'react';
+import { Form } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FaUndo } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -38,22 +38,22 @@ export const AccessRequestFilter = (props: IProps) => {
     setFilterState({ ...filterState, searchText: event.target.value });
 
   return (
-    <FilterBoxForm className="p-3">
+    <FilterBoxForm className="p-3" onSubmit={(e: any) => e.preventDefault()}>
       <Row className="filters">
         <Col className="d-flex" md={4}>
           <Form.Label className="mr-4 font-weight-bold">Search:</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Search IDIR/Last name"
+            placeholder="IDIR/Last Name"
             value={filterState.searchText}
             onChange={handleSearchTextChange}
           />
         </Col>
         <Col className="actions d-flex" md={1}>
-          <TooltipWrapper toolTipId="map-filter-search-tooltip" toolTip="Search">
+          <TooltipWrapper toolTipId="access-filter-search-tooltip" toolTip="Search">
             <SearchButton type="submit" onClick={search} />
           </TooltipWrapper>
-          <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
+          <TooltipWrapper toolTipId="access-filter-reset-tooltip" toolTip="Reset Filter">
             <Button variant="info" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
           </TooltipWrapper>
         </Col>

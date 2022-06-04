@@ -5,6 +5,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import AppRouter from 'AppRouter';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
+import { useUsers } from 'features/admin/users/hooks/useUsers';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import PublicLayout from 'layouts/PublicLayout';
@@ -13,23 +14,24 @@ import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
 import { useLookupCodes } from 'store/slices/lookupCodes';
 import { useSystemConstants } from 'store/slices/systemConstants';
-import { useUsers } from 'store/slices/users';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const { fetchLookupCodes } = useLookupCodes();
   const { fetchSystemConstants } = useSystemConstants();
-  const { activateUser } = useUsers();
+  const {
+    activateUser: { execute: activate },
+  } = useUsers();
   useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
-      activateUser();
+      activate();
       fetchLookupCodes();
       fetchSystemConstants();
     }
-  }, [keycloak, fetchLookupCodes, fetchSystemConstants, activateUser]);
+  }, [keycloak, fetchLookupCodes, fetchSystemConstants, activate]);
 
   return (
     <AuthStateContext.Consumer>

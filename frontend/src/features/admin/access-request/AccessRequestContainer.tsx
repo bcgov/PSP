@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
-import { AccessRequestForm } from './models';
+import { FormAccessRequest } from './models';
 
 interface IAccessRequestContainerProps {
   accessRequestId?: number;
@@ -47,7 +47,7 @@ export const AccessRequestContainer: React.FunctionComponent<IAccessRequestConta
   }, [getCurrentAccessRequest, getAccessRequestById, accessRequestId]);
   const response = addAccessRequestResponse ?? accessRequestByIdResponse ?? accessRequestResponse;
 
-  const initialValues: AccessRequestForm = new AccessRequestForm({
+  const initialValues: FormAccessRequest = new FormAccessRequest({
     ...response,
     id: response?.id,
     userId: userInfo?.id,

@@ -9,6 +9,8 @@ namespace Pims.Api.Models.Concepts.AccessRequest
         {
             config.NewConfig<Entity.PimsUserRole, UserRoleModel>()
                 .PreserveReference(true)
+                .MaxDepth(3)
+                .Map(dest => dest.Id, src => src.UserRoleId)
                 .Map(dest => dest.UserId, src => src.UserId)
                 .Map(dest => dest.RoleId, src => src.RoleId)
                 .Map(dest => dest.Role, src => src.Role)
@@ -17,6 +19,7 @@ namespace Pims.Api.Models.Concepts.AccessRequest
 
             config.NewConfig<UserRoleModel, Entity.PimsUserRole>()
                 .PreserveReference(true)
+                .Map(dest => dest.UserRoleId, src => src.Id)
                 .Map(dest => dest.UserId, src => src.UserId)
                 .Map(dest => dest.RoleId, src => src.RoleId)
                 .Map(dest => dest.Role, src => src.Role)

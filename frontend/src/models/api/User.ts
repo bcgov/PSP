@@ -1,7 +1,8 @@
 import { Api_ConcurrentVersion } from 'models/api/ConcurrentVersion';
 import { Api_Person } from 'models/api/Person';
 
-import { Api_Role } from './Role';
+import { Api_RegionUser } from './RegionUser';
+import { Api_UserRole } from './UserRole';
 export interface Api_User extends Api_ConcurrentVersion {
   id?: number;
   businessIdentifierValue?: string;
@@ -13,6 +14,7 @@ export interface Api_User extends Api_ConcurrentVersion {
   issueDate?: string;
   lastLogin?: string;
   appCreateTimestamp?: string;
-  roles?: Api_Role[];
+  userRoles: Api_UserRole[];
+  userRegions: Api_RegionUser[];
   person?: Api_Person;
 }

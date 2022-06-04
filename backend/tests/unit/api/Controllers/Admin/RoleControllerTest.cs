@@ -9,8 +9,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.Role;
-using FluentAssertions;
+using Model = Pims.Api.Models.Concepts;
 
 namespace PimsApi.Test.Admin.Controllers
 {
