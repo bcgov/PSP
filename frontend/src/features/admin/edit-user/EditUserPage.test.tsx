@@ -35,20 +35,6 @@ const lCodes = {
   ] as ILookupCode[],
 };
 
-const selectedUser = {
-  appCreateTimestamp: '2021-05-04T19:07:09.6920606',
-  displayName: 'User, Admin',
-  email: 'admin@pims.gov.bc.ca',
-  firstName: 'George',
-  id: 1,
-  key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-  surname: 'User',
-  position: '',
-  rowVersion: 1,
-  businessIdentifier: 'admin',
-  lastLogin: '2020-10-14T17:45:39.7381599',
-};
-
 const store = mockStore({
   [lookupCodesSlice.name]: lCodes,
 });

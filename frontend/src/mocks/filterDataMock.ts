@@ -8,7 +8,7 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from 'constants/index';
-import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
+import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from 'interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from 'interfaces/ltsaModels';
 import { Api_Person } from 'models/api/Person';
 import { Api_User } from 'models/api/User';

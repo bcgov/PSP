@@ -7,7 +7,6 @@ import * as API from 'constants/API';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import moment from 'moment-timezone';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
