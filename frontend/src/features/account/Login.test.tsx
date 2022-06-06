@@ -78,6 +78,16 @@ describe('login', () => {
     expect(history.location.pathname).toBe('/mapview');
   });
 
+  it('authenticated finance users are redirected to the lease list', () => {
+    process.env.REACT_APP_TENANT = 'MOTI';
+    (useKeycloak as jest.Mock).mockReturnValue({
+      keycloak: { authenticated: true, userInfo: { groups: ['Finance'] } },
+    });
+    const history = createMemoryHistory();
+    render(<TestLogin history={history} />);
+    expect(history.location.pathname).toBe('/lease/list');
+  });
+
   it('new users are sent to the guest page', () => {
     process.env.REACT_APP_TENANT = 'CITZ';
     (useKeycloak as jest.Mock).mockReturnValue({
