@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 export const useGetProperty = () => {
   const { getPropertyConceptWithPid } = useApiProperties();
 
-  const { execute } = useApiRequestWrapper({
+  const { execute, loading } = useApiRequestWrapper({
     requestFunction: useCallback(async (pid: string) => await getPropertyConceptWithPid(pid), [
       getPropertyConceptWithPid,
     ]),
@@ -25,5 +25,5 @@ export const useGetProperty = () => {
       }
     }, []),
   });
-  return { retrieveProperty: execute };
+  return { retrieveProperty: execute, retrievePropertyLoading: loading };
 };

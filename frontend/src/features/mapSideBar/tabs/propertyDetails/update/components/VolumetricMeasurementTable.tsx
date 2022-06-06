@@ -94,6 +94,8 @@ export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTablePro
             <div role="row" className="tr">
               <div role="cell" title="" className="td right">
                 <input
+                  name="volume-cubic-meters"
+                  aria-label="cubic metres"
                   type="number"
                   step=".01"
                   value={cubicMeters}
@@ -113,6 +115,8 @@ export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTablePro
             <div role="row" className="tr">
               <div role="cell" title="" className="td right">
                 <input
+                  name="volume-cubic-feet"
+                  aria-label="cubic feet"
                   type="number"
                   step=".01"
                   value={cubicFeet}

@@ -136,8 +136,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(l => l.Lease)
                     .ThenInclude(l => l.PimsLeaseTenants)
                     .ThenInclude(l => l.Organization)
-                .Where(p => p.PropertyId == id)
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
+                .FirstOrDefault(p => p.PropertyId == id) ?? throw new KeyNotFoundException();
             return property;
         }
 
