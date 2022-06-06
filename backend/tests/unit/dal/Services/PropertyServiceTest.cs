@@ -28,10 +28,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
 
-            var property = EntityHelper.CreateProperty(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
-
-            var service = helper.Create<PropertyService>();
+            var service = helper.Create<PropertyService>(user);
             var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
             repository.Setup(x => x.Get(It.IsAny<long>()));
 
