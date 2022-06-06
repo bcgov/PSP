@@ -722,6 +722,12 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                                     >
                                       Plan #
                                     </option>
+                                    <option
+                                      class="option"
+                                      value="address"
+                                    >
+                                      Address
+                                    </option>
                                   </select>
                                 </div>
                               </div>

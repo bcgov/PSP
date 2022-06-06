@@ -605,6 +605,12 @@ exports[`ResearchProperties component renders as expected when provided no prope
                               >
                                 Plan #
                               </option>
+                              <option
+                                class="option"
+                                value="address"
+                              >
+                                Address
+                              </option>
                             </select>
                           </div>
                         </div>
