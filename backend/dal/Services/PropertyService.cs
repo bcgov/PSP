@@ -4,6 +4,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Pims.Dal.Helpers;
 
 namespace Pims.Dal.Services
 {
@@ -28,7 +29,8 @@ namespace Pims.Dal.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.Get(id);
-            property.Location = _coordinateService.TransformCoordinates(3005, 4326, property.Location);
+            var newCoords = _coordinateService.TransformCoordinates(3005, 4326, property.Location.Coordinate);
+            property.Location = GeometryHelper.CreatePoint(newCoords, 4326);
             return property;
         }
 
@@ -38,7 +40,8 @@ namespace Pims.Dal.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetByPid(pid);
-            property.Location = _coordinateService.TransformCoordinates(3005, 4326, property.Location);
+            var newCoords = _coordinateService.TransformCoordinates(3005, 4326, property.Location.Coordinate);
+            property.Location = GeometryHelper.CreatePoint(newCoords, 4326);
             return property;
         }
 
@@ -48,7 +51,12 @@ namespace Pims.Dal.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            property.Location = _coordinateService.TransformCoordinates(4326, 3005, property.Location);
+            var geom = property.Location;
+            if (geom.SRID != 3005)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, 3005, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, 3005);
+            }
 
             var newProperty = _propertyRepository.Update(property);
             _propertyRepository.CommitTransaction();
