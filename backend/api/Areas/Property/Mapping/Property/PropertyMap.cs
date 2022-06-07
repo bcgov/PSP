@@ -21,6 +21,9 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.RoadType, src => src.PimsPropPropRoadTypes.Select(r => r.PropertyRoadTypeCodeNavigation))
                 .Map(dest => dest.AdjacentLand, src => src.PimsPropPropAdjacentLandTypes.Select(l => l.PropertyAdjacentLandTypeCodeNavigation))
 
+                .Map(dest => dest.DistrictType, src => src.DistrictCodeNavigation)
+                .Map(dest => dest.RegionType, src => src.RegionCodeNavigation)
+
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
                 .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
 

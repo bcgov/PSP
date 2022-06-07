@@ -113,6 +113,16 @@ namespace Pims.Api.Areas.Property.Models.Property
         public TypeModel<string> AreaUnit { get; set; }
 
         /// <summary>
+        /// get/set - District type.
+        /// </summary>
+        public TypeModel<short> DistrictType { get; set; }
+
+        /// <summary>
+        /// get/set - Region type.
+        /// </summary>
+        public TypeModel<short> RegionType { get; set; }
+
+        /// <summary>
         /// get/set - The land area of the parcel.
         /// </summary>
         public float LandArea { get; set; }
