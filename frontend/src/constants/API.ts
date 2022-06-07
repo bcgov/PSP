@@ -74,6 +74,7 @@ export const PROPERTY_ADJACENT_LAND_TYPES = 'PimsPropertyAdjacentLandType';
 export const PROPERTY_VOLUMETRIC_TYPES = 'PimsVolumetricType';
 export const PROVINCE_TYPES = 'PimsProvinceState';
 export const REGION_TYPES = 'PimsRegion';
+export const DISTRICT_TYPES = 'PimsDistrict';
 export const ROLE_TYPES = 'PimsRole';
 export const SECURITY_DEPOSIT_TYPES = 'PimsSecurityDepositType';
 export const RESEARCH_FILE_STATUS_TYPES = 'PimsResearchFileStatusType';
