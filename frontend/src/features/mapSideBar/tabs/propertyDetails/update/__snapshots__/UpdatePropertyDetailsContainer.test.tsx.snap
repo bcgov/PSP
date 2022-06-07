@@ -8,7 +8,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c13.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +38,49 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c13.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c13.btn:focus {
+.c12.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c13.btn.btn-primary {
+.c12.btn.btn-primary {
   border: none;
 }
 
-.c13.btn.btn-secondary {
+.c12.btn.btn-secondary {
   background: none;
 }
 
-.c13.btn.btn-info {
+.c12.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c13.btn.btn-info:hover,
-.c13.btn.btn-info:active,
-.c13.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
   background: none;
 }
 
-.c13.btn.btn-light {
+.c12.btn.btn-light {
   border: none;
 }
 
-.c13.btn.btn-dark {
+.c12.btn.btn-dark {
   border: none;
 }
 
-.c13.btn.btn-link {
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c13.btn.btn-link:hover,
-.c13.btn.btn-link:active,
-.c13.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c13.btn.btn-link:disabled,
-.c13.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c13.btn:disabled,
-.c13.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,24 +129,24 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c13.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c13.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c13.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6 {
+.c5 {
   margin-left: 0.5rem;
   cursor: pointer;
 }
 
-.c11 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -156,7 +156,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c10.form-group {
+.c9.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -164,7 +164,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c10.form-group .radio-group {
+.c9.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -177,7 +177,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c10.form-group .radio-group .form-check {
+.c9.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -192,15 +192,15 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c10.form-group .radio-group .form-check .form-check-input {
+.c9.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c10.form-group .radio-group .form-check-label {
+.c9.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c10 .form-label {
+.c9 .form-label {
   margin-bottom: unset;
 }
 
@@ -226,29 +226,11 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.c9 {
+.c8 {
   border-left: 1px solid #8c8c8c;
 }
 
-.c7 {
+.c6 {
   width: 100%;
   font-weight: bold;
   padding-bottom: 0.7rem;
@@ -260,14 +242,14 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c8.table .no-rows-message {
+.c7.table .no-rows-message {
   -webkit-align-items: flex-start;
   -webkit-box-align: flex-start;
   -ms-flex-align: flex-start;
   align-items: flex-start;
 }
 
-.c8.table .tbody .tr {
+.c7.table .tbody .tr {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -278,7 +260,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   min-width: 60px;
 }
 
-.c8.table .tbody .tr .td {
+.c7.table .tbody .tr .td {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -299,7 +281,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   align-items: center;
 }
 
-.c8.table .tbody .tr .td.right {
+.c7.table .tbody .tr .td.right {
   -webkit-box-pack: right;
   -webkit-justify-content: right;
   -ms-flex-pack: right;
@@ -307,7 +289,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   text-align: right;
 }
 
-.c8.table .tbody .tr .td.left {
+.c7.table .tbody .tr .td.left {
   -webkit-box-pack: left;
   -webkit-justify-content: left;
   -ms-flex-pack: left;
@@ -315,7 +297,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   text-align: left;
 }
 
-.c8.table .tbody .tr .td input {
+.c7.table .tbody .tr .td input {
   max-width: 12.5rem;
 }
 
@@ -337,7 +319,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c12 {
+.c11 {
   margin: 0;
   -webkit-box-pack: end;
   -webkit-justify-content: end;
@@ -389,9 +371,34 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             <div
               class="col"
             >
-              <span
-                class=""
-              />
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-regionTypeCode"
+                  name="regionTypeCode"
+                >
+                  <option
+                    class="option"
+                    value="1"
+                  >
+                    South Coast Region
+                  </option>
+                  <option
+                    class="option"
+                    value="2"
+                  >
+                    Southern Interior Region
+                  </option>
+                  <option
+                    class="option"
+                    value="3"
+                  >
+                    Northern Region
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
           <div
@@ -410,14 +417,12 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c5"
+                class="form-group"
               >
-                <span
-                  class=""
-                />
-                -
-                <span
-                  class=""
+                <select
+                  class="form-select form-control"
+                  id="input-districtTypeCode"
+                  name="districtTypeCode"
                 />
               </div>
             </div>
@@ -616,7 +621,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -640,7 +645,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -744,7 +749,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -768,7 +773,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -895,7 +900,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -919,7 +924,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -999,7 +1004,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c6"
+                            class="c5"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1143,12 +1148,12 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                   class="col-10 col"
                 >
                   <label
-                    class="c7"
+                    class="c6"
                   >
                     Land measurement
                   </label>
                   <div
-                    class="c8 table"
+                    class="c7 table"
                     role="table"
                   >
                     <div
@@ -1277,7 +1282,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c9 col"
+              class="c8 col"
             >
               <label
                 class="c4"
@@ -1285,13 +1290,13 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                 Is this a volumetric parcel?
               </label>
               <div
-                class="c10 form-group"
+                class="c9 form-group"
               >
                 <div
                   class="radio-group"
                 >
                   <div
-                    class="c11 pb-3"
+                    class="c10 pb-3"
                   >
                     <div
                       class="form-check"
@@ -1313,7 +1318,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c11 pb-3"
+                    class="c10 pb-3"
                   >
                     <div
                       class="form-check"
@@ -1368,12 +1373,12 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                   class="col-10 col"
                 >
                   <label
-                    class="c7"
+                    class="c6"
                   >
                     Volumetric measurement
                   </label>
                   <div
-                    class="c8 table"
+                    class="c7 table"
                     role="table"
                   >
                     <div
@@ -1495,14 +1500,14 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c12 row"
+      class="c11 row"
     >
       <div
         class="cancelSave btn-toolbar"
         role="toolbar"
       >
         <button
-          class="c13 Button mr-5 btn btn-secondary"
+          class="c12 Button mr-5 btn btn-secondary"
           type="button"
         >
           <div
@@ -1512,7 +1517,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="c13 Button mr-5 btn btn-primary"
+          class="c12 Button mr-5 btn btn-primary"
           type="submit"
         >
           <div

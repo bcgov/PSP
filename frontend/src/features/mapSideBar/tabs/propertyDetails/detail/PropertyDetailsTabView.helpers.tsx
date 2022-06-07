@@ -10,8 +10,6 @@ export interface IPropertyDetailsForm
   extends ExtendOverride<
     IPropertyApiModel,
     {
-      motiRegion?: GeoJsonProperties;
-      highwaysDistrict?: GeoJsonProperties;
       electoralDistrict?: GeoJsonProperties;
       isALR?: boolean;
       firstNations?: {
@@ -27,8 +25,6 @@ export interface IPropertyDetailsForm
 export function toFormValues(apiData?: IPropertyApiModel): IPropertyDetailsForm {
   return {
     ...apiData,
-    motiRegion: {},
-    highwaysDistrict: {},
     electoralDistrict: {},
     isALR: false,
     firstNations: {
