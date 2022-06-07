@@ -27,10 +27,14 @@ namespace Pims.Dal.Services
         {
             _logger.LogInformation("Getting property with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.Get(id);
-            var newCoords = _coordinateService.TransformCoordinates(3005, 4326, property.Location.Coordinate);
-            property.Location = GeometryHelper.CreatePoint(newCoords, 4326);
+            if (property?.Location != null)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(3005, 4326, property.Location.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, 4326);
+            }
             return property;
         }
 
@@ -38,10 +42,14 @@ namespace Pims.Dal.Services
         {
             _logger.LogInformation("Getting property with pid {pid}", pid);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetByPid(pid);
-            var newCoords = _coordinateService.TransformCoordinates(3005, 4326, property.Location.Coordinate);
-            property.Location = GeometryHelper.CreatePoint(newCoords, 4326);
+            if (property?.Location != null)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(3005, 4326, property.Location.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, 4326);
+            }
             return property;
         }
 
