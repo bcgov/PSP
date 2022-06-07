@@ -74,6 +74,10 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   font-size: 1.8rem;
 }
 
+.c4 {
+  padding: 0.6rem 1.2rem;
+}
+
 <li>
     <h3
       class="c0"
@@ -291,6 +295,52 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       <label
         class="form-label"
       >
+        Physical lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasPhysicalLicense"
+          name="hasPhysicalLicense"
+          title="No"
+          value="No"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Digital lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasDigitalLicense"
+          name="hasDigitalLicense"
+          title="Yes"
+          value="Yes"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Location of documents:
+      </label>
+      <div
+        class="c4 textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-documentationReference"
+          name="documentationReference"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
         LIS #:
       </label>
       <div
@@ -397,6 +447,10 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
 
 .c2 input.form-control {
   font-size: 1.8rem;
+}
+
+.c4 {
+  padding: 0.6rem 1.2rem;
 }
 
 <li>
@@ -611,6 +665,52 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           name="motiName"
           title=""
           value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Physical lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasPhysicalLicense"
+          name="hasPhysicalLicense"
+          title="Unknown"
+          value="Unknown"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Digital lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasDigitalLicense"
+          name="hasDigitalLicense"
+          title="Unknown"
+          value="Unknown"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Location of documents:
+      </label>
+      <div
+        class="c4 textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-documentationReference"
+          name="documentationReference"
         />
       </div>
       <label

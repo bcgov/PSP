@@ -1,9 +1,15 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
+import { mockLookups } from 'mocks/mockLookups';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
+
+// mock keycloak auth library
+jest.mock('@react-keycloak/web');
 
 const onClose = jest.fn();
 const onZoom = jest.fn();
@@ -21,10 +27,15 @@ jest.mock('react-visibility-sensor', () => {
 describe('MotiInventoryContainer component', () => {
   const mockAxios = new MockAdapter(axios);
   const history = createMemoryHistory();
+  const storeState = {
+    [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+  };
+
   const setup = (renderOptions: RenderOptions & IMotiInventoryContainerProps) => {
     // render component under test
-    const renderResult = render(
+    const utils = render(
       <MotiInventoryContainer
+        readOnly={renderOptions.readOnly}
         onClose={renderOptions.onClose}
         pid={renderOptions.pid}
         onZoom={renderOptions.onZoom}
@@ -32,13 +43,15 @@ describe('MotiInventoryContainer component', () => {
       {
         ...renderOptions,
         history,
+        store: { ...renderOptions.store, ...storeState },
+        claims: [Claims.PROPERTY_VIEW],
       },
     );
 
-    return { ...renderResult };
+    return { ...utils };
   };
 
-  beforeEach(() => {
+  afterEach(() => {
     mockAxios.reset();
     jest.restoreAllMocks();
     cleanup();
@@ -48,11 +61,14 @@ describe('MotiInventoryContainer component', () => {
   it('requests ltsa data by pid', async () => {
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet().reply(200, {});
+
     setup({
+      readOnly: true,
       pid: '9212434',
       onClose,
       onZoom,
     });
+
     await waitFor(() => {
       expect(mockAxios.history.post).toHaveLength(1);
       expect(mockAxios.history.post[0].url).toBe(`/tools/ltsa/all?pid=009-212-434`);
@@ -63,12 +79,19 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onPost().reply(200, {});
     mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { findByText, queryByTestId } = setup({ onClose, pid: '9212434', onZoom });
+
+    const { findByText, queryByTestId } = setup({
+      readOnly: true,
+      pid: '9212434',
+      onClose,
+      onZoom,
+    });
+
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
     });
-    expect(await findByText('Property Attributes')).toBeInTheDocument();
+    expect(await findByText(/property attributes/i)).toBeInTheDocument();
     await waitFor(() => {
       expect(queryByTestId('filter-backdrop-loading')).toBeNull();
     });
@@ -83,13 +106,43 @@ describe('MotiInventoryContainer component', () => {
     };
     mockAxios.onGet(new RegExp('/properties/*')).reply(404, error);
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    const { queryByText, getByText, queryByTestId } = setup({ onClose, pid: '9212434', onZoom });
+
+    const { queryByText, getByText, queryByTestId } = setup({
+      readOnly: true,
+      pid: '9212434',
+      onClose,
+      onZoom,
+    });
+
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
     });
-    expect(queryByText('Property attributes')).toBeNull();
+    expect(queryByText(/property attributes/i)).toBeNull();
     expect(getByText('Title')).toHaveClass('active');
     expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+  });
+
+  it('shows the EDIT property form when read-only prop set to FALSE', async () => {
+    mockAxios.onPost().reply(200, {});
+    mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
+    mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
+
+    const { findByText, queryByTestId } = setup({
+      readOnly: false,
+      pid: '9212434',
+      onClose,
+      onZoom,
+    });
+
+    await waitFor(() => {
+      expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
+      expect(mockAxios.history.get[0].url).toBe(`/properties/concept/9212434`);
+    });
+
+    expect(await findByText(/property attributes/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+    });
   });
 });

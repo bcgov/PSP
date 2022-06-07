@@ -1,7 +1,7 @@
 import { Input, Select, SelectOption, TextArea } from 'components/common/form';
 import * as API from 'constants/API';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { StyledFormSection, StyledSectionHeader } from 'features/mapSideBar/tabs/SectionStyles';
 import { FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
@@ -60,10 +60,9 @@ const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = pr
 
   return (
     <StyledSummarySection>
-      <StyledFormSection>
-        <StyledSectionHeader>Property of Interest</StyledSectionHeader>
+      <Section header="Property of Interest">
         <SectionField label="Descriptive name">
-          <Input field="propertyName" />
+          <Input field="propertyName" pattern={/^.{1,499}$/} />
         </SectionField>
         <SectionField label="Purpose">
           <Multiselect
@@ -104,15 +103,14 @@ const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = pr
           <Select field="isLegalOpinionObtained" options={opinionOptions} />
         </SectionField>
         <SectionField label="Document reference">
-          <Input field="documentReference" />
+          <Input field="documentReference" pattern={/^.{1,1999}$/} />
         </SectionField>
-      </StyledFormSection>
+      </Section>
 
-      <StyledFormSection>
-        <StyledSectionHeader>Research Request</StyledSectionHeader>
+      <Section header="Research Request">
         <SectionField label="Summary notes" />
         <TextArea field="researchSummary" />
-      </StyledFormSection>
+      </Section>
     </StyledSummarySection>
   );
 };

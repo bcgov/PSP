@@ -45,7 +45,10 @@ export const mapFeatureToProperty = (selectedFeature: Feature<Geometry, GeoJsonP
     planNumber: selectedFeature?.properties?.PLAN_NUMBER ?? undefined,
     address: 'placeholder', //todo: need alternate source for this
     legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer,
-    district: selectedFeature?.properties?.REGIONAL_DISTRICT ?? '', // todo: this returns a named district,
+    region: selectedFeature?.properties?.REGION_NUMBER,
+    regionName: selectedFeature?.properties?.REGION_NAME,
+    district: selectedFeature?.properties?.DISTRICT_NUMBER,
+    districtName: selectedFeature?.properties?.DISTRICT_NAME,
   } as IMapProperty;
 };
 

@@ -5,7 +5,6 @@ import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledSectionHeader } from '../SectionStyles';
 import LtsaLegalNotationsSubForm from './LtsaLegalNotationsSubForm';
 
 export interface ILtsaLandSubFormProps {
@@ -17,7 +16,6 @@ export const LtsaLandSubForm: React.FunctionComponent<ILtsaLandSubFormProps> = (
   const lands = getIn(values, withNameSpace(nameSpace, 'descriptionsOfLand')) ?? [];
   return (
     <>
-      <StyledSectionHeader>Land</StyledSectionHeader>
       {lands.length === 0 ? (
         'this title has no land'
       ) : (

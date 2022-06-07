@@ -1,4 +1,5 @@
 export interface IMapProperty {
+  id?: string;
   pid?: string;
   pin?: string;
   latitude?: number;
@@ -6,5 +7,15 @@ export interface IMapProperty {
   planNumber?: string;
   address?: string;
   legalDescription?: string;
-  district?: string;
+  region?: number;
+  regionName?: string;
+  district?: number;
+  districtName?: string;
+}
+
+export interface ILayerSearchCriteria {
+  pid?: string;
+  pin?: string;
+  planNumber?: string;
+  searchBy?: string;
 }

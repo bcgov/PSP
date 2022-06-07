@@ -56,9 +56,9 @@ export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProp
                 selectedTableHeader={SelectedTableHeader}
               >
                 <AddLeaseTenantListView
-                  setSelectedTenants={(selected: IContactSearchResult[]) =>
-                    setSelectedTenants(selected.map(s => new FormTenant(undefined, s)))
-                  }
+                  setSelectedTenants={(selected: IContactSearchResult[]) => {
+                    setSelectedTenants(selected.map(s => new FormTenant(undefined, s)));
+                  }}
                   selectedTenants={selectedTenants.map<IContactSearchResult>(selectedTenant => {
                     return selectedTenant.original ?? { id: selectedTenant?.id?.toString() ?? '' };
                   })}

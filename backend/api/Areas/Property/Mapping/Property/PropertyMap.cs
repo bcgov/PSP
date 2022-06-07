@@ -16,7 +16,6 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.Status, src => src.PropertyStatusTypeCodeNavigation)
                 .Map(dest => dest.PropertyType, src => src.PropertyTypeCodeNavigation)
 
-                // TODO: These navigation properties will be changed to many to many in next DB schema change
                 .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes.Select(a => a.PropertyAnomalyTypeCodeNavigation))
                 .Map(dest => dest.Tenure, src => src.PimsPropPropTenureTypes.Select(t => t.PropertyTenureTypeCodeNavigation))
                 .Map(dest => dest.RoadType, src => src.PimsPropPropRoadTypes.Select(r => r.PropertyRoadTypeCodeNavigation))

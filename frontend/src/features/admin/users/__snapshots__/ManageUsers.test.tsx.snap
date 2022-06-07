@@ -358,6 +358,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               class="c2 Button Button--icon-only bg-warning btn btn-primary"
               data-testid="search"
               id="search-button"
+              title="search"
               type="submit"
             >
               <div
@@ -386,6 +387,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               class="c2 Button Button--icon-only btn btn-info"
               data-testid="reset-button"
               id="reset-button"
+              title="reset-button"
               type="reset"
             >
               <div

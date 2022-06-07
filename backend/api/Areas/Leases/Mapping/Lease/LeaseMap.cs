@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
-                .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense);
+                .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense);
 
             config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)

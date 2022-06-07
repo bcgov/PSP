@@ -1,6 +1,6 @@
+import { IMapProperty } from 'features/properties/selector/models';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -17,12 +17,19 @@ const onRemove = jest.fn();
 
 describe('SelectedPropertyRow component', () => {
   const setup = async (
-    renderOptions: RenderOptions & Partial<ISelectedPropertyRowProps> & { values?: IProperty } = {},
+    renderOptions: RenderOptions &
+      Partial<ISelectedPropertyRowProps> & { values?: { properties: IMapProperty[] } } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <Formik onSubmit={noop} initialValues={renderOptions.values ?? {}}>
-        {() => <SelectedPropertyRow index={renderOptions.index ?? 0} onRemove={onRemove} />}
+        {() => (
+          <SelectedPropertyRow
+            property={renderOptions.values?.properties ? renderOptions.values?.properties[0] : {}}
+            index={renderOptions.index ?? 0}
+            onRemove={onRemove}
+          />
+        )}
       </Formik>,
       {
         ...renderOptions,
@@ -53,7 +60,11 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByText },
     } = await setup({
-      values: { pid: '111111111', pin: 1234, planNumber: 'plan', latitude: 4, longitude: 5 },
+      values: {
+        properties: [
+          { pid: '111111111', pin: 1234, planNumber: 'plan', latitude: 4, longitude: 5 },
+        ],
+      },
     } as any);
     expect(getByText('PID: 111-111-111')).toBeVisible();
   });
@@ -61,7 +72,7 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByText },
     } = await setup({
-      values: { pin: 1234, planNumber: 'plan', latitude: 4, longitude: 5 },
+      values: { properties: [{ pin: 1234, planNumber: 'plan', latitude: 4, longitude: 5 }] },
     } as any);
     expect(getByText('PIN: 1234')).toBeVisible();
   });
@@ -70,7 +81,7 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByText },
     } = await setup({
-      values: { planNumber: 'plan', latitude: 4, longitude: 5 },
+      values: { properties: [{ planNumber: 'plan', latitude: 4, longitude: 5 }] },
     } as any);
     expect(getByText('Plan #: plan')).toBeVisible();
   });
@@ -79,7 +90,7 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByText },
     } = await setup({
-      values: { latitude: 4, longitude: 5 },
+      values: { properties: [{ latitude: 4, longitude: 5 }] },
     } as any);
     expect(getByText('4.00000, 5.00000')).toBeVisible();
   });

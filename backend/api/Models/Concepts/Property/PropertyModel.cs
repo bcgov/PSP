@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -25,22 +23,22 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The property anomalies.
         /// </summary>
-        public IList<TypeModel<string>> Anomalies { get; set; }
+        public IList<PropertyAnomalyModel> Anomalies { get; set; }
 
         /// <summary>
-        /// get/set - The tenure description.
+        /// get/set - The property tenures.
         /// </summary>
-        public IList<TypeModel<string>> Tenure { get; set; }
+        public IList<PropertyTenureModel> Tenures { get; set; }
 
         /// <summary>
         /// get/set - The road type description.
         /// </summary>
-        public IList<TypeModel<string>> RoadType { get; set; }
+        public IList<PropertyRoadModel> RoadTypes { get; set; }
 
         /// <summary>
         /// get/set - The adjacent land description.
         /// </summary>
-        public IList<TypeModel<string>> AdjacentLand { get; set; }
+        public IList<PropertyAdjacentLandModel> AdjacentLands { get; set; }
 
         /// <summary>
         /// get/set - The status description.
@@ -56,6 +54,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The MOTI region that this property falls under.
         /// </summary>
         public TypeModel<short> Region { get; set; }
+
+        /// <summary>
+        /// get/set - The property's district.
+        /// </summary>
+        public TypeModel<short> District { get; set; }
 
         /// <summary>
         /// get/set - The data source effective date
@@ -161,16 +164,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The property zoning potential.
         /// </summary>
         public string ZoningPotential { get; set; }
-        
+
         /// <summary>
         /// get/set - The location of the property.
         /// </summary>
         public GeometryModel Location { get; set; }
-        
-        /// <summary>
-        /// get/set - The property's district.
-        /// </summary>
-        public CodeTypeModel District { get; set; }
 
         /// <summary>
         /// get/set - The property notes.

@@ -52,6 +52,8 @@ describe('DetailAdministration component', () => {
         motiName: 'test moti name',
         note: 'a test note',
         expiryDate: '2022-01-01',
+        hasDigitalLicense: 'Yes',
+        hasPhysicalLicense: 'No',
         startDate: '2020-01-01',
       },
     });
@@ -94,6 +96,44 @@ describe('DetailAdministration component', () => {
     expect(queryByDisplayValue('other purpose type')).toBeNull();
     expect(queryByDisplayValue('other program type')).toBeNull();
     expect(queryByDisplayValue('other type')).toBeNull();
+  });
+
+  it('renders the Physical lease/license exists field', () => {
+    const {
+      component: { getByDisplayValue },
+    } = setup({
+      lease: {
+        ...defaultFormLease,
+        hasPhysicalLicense: 'Unknown',
+        hasDigitalLicense: 'Yes',
+      },
+    });
+    expect(getByDisplayValue('Unknown')).toBeVisible();
+  });
+
+  it('renders the Digital lease/license exists field', () => {
+    const {
+      component: { getByDisplayValue },
+    } = setup({
+      lease: {
+        ...defaultFormLease,
+        hasPhysicalLicense: 'Yes',
+        hasDigitalLicense: 'Unknown',
+      },
+    });
+    expect(getByDisplayValue('Unknown')).toBeVisible();
+  });
+
+  it('renders the Location of documents field', () => {
+    const {
+      component: { getByDisplayValue },
+    } = setup({
+      lease: {
+        ...defaultFormLease,
+        documentationReference: 'documentation Reference',
+      },
+    });
+    expect(getByDisplayValue('documentation Reference')).toBeVisible();
   });
 
   it('renders the program name', () => {
