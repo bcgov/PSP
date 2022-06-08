@@ -8,11 +8,18 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
   <div
     class="Toastify"
   />
-  .c3 {
+  .c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
   font-weight: bold;
 }
 
-.c4 {
+.c5 {
   padding: 1rem 2rem;
 }
 
@@ -52,7 +59,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             <p>
               1/1
@@ -72,7 +79,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             <p>
               No
@@ -92,7 +99,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             <div
               class="input form-group"
@@ -110,7 +117,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
       </div>
     </div>
     <div
-      class="c4"
+      class="c5"
     >
       <div
         class="pb-2 row"
@@ -125,7 +132,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <p>
             MORRIS GRAVES BAYKEY 
@@ -145,7 +152,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -173,7 +180,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -226,7 +233,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
     </div>
     <hr />
     <div
-      class="c4"
+      class="c5"
     >
       <div
         class="pb-2 row"
@@ -241,7 +248,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <p>
             KATHLEEN LOIS BAYKEY 
@@ -261,7 +268,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -289,7 +296,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -361,7 +368,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
     </div>
     <hr />
     <div
-      class="c4"
+      class="c5"
     >
       <div
         class="pb-2 row"
@@ -376,7 +383,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <p>
             ROCK TYLER BAYKEY 
@@ -396,7 +403,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -424,7 +431,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -477,7 +484,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
     </div>
     <hr />
     <div
-      class="c4"
+      class="c5"
     >
       <div
         class="pb-2 row"
@@ -492,7 +499,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <p>
             PATRICIA GAIL BAYKEY 
@@ -512,7 +519,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -540,7 +547,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -612,7 +619,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
     </div>
     <hr />
     <div
-      class="c4"
+      class="c5"
     >
       <div
         class="pb-2 row"
@@ -627,7 +634,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <p>
             CLIFFORD LIETZ 
@@ -647,7 +654,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -675,7 +682,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -728,7 +735,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
     </div>
     <hr />
     <div
-      class="c4"
+      class="c5"
     >
       <div
         class="pb-2 row"
@@ -743,7 +750,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <p>
             LEILAH MARIA LIETZ 
@@ -763,7 +770,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"
@@ -791,7 +798,7 @@ exports[`LtsaOwnershipInformationForm component renders ownership information fo
           </label>
         </div>
         <div
-          class="col"
+          class="c4 col"
         >
           <div
             class="input form-group"

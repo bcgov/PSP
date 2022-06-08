@@ -8,7 +8,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   <div
     class="Toastify"
   />
-  .c6 {
+  .c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -20,7 +20,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   gap: 0.8rem;
 }
 
-.c6 .form-label {
+.c7 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -65,28 +65,35 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
   font-style: italic;
 }
 
-.c11 {
+.c12 {
   float: right;
   cursor: pointer;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
 .c5 {
   font-weight: bold;
 }
 
-.c10 {
+.c11 {
   padding: 1rem 2rem;
 }
 
-.c9 {
+.c10 {
   padding: 1.5rem 2rem 0 2rem;
 }
 
-.c8 {
+.c9 {
   background-color: #f2f2f2;
 }
 
-.c7 {
+.c8 {
   border: 2px solid #909090;
   border-radius: 5px;
   margin-bottom: 0rem;
@@ -160,7 +167,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -189,7 +196,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -217,7 +224,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="textarea input form-group"
@@ -271,7 +278,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -299,7 +306,7 @@ exports[`LtsaTabView component renders as expected when provided valid ltsa data
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <p>
               LOT 4 EXCEPT: FIRSTLY: PART ON STATUTORY RIGHT OF WAY PLAN 30557;
@@ -316,7 +323,7 @@ PLAN 24843
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -337,7 +344,7 @@ PLAN 24843
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -358,7 +365,7 @@ PLAN 24843
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -398,7 +405,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -419,7 +426,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -440,7 +447,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -479,7 +486,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -500,7 +507,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -521,7 +528,7 @@ DEPOSITED JULY 30TH, 1974.
             class="col"
           >
             <div
-              class="c6 input form-group"
+              class="c7 input form-group"
             >
               <label
                 class="form-label"
@@ -579,13 +586,13 @@ D.F. D21890
         class="collapse show"
       >
         <div
-          class="c7"
+          class="c8"
         >
           <div
-            class="c8"
+            class="c9"
           >
             <div
-              class="c9"
+              class="c10"
             >
               <div
                 class="pb-2 row"
@@ -600,7 +607,7 @@ D.F. D21890
                   </label>
                 </div>
                 <div
-                  class="col"
+                  class="c6 col"
                 >
                   <p>
                     1/1
@@ -620,7 +627,7 @@ D.F. D21890
                   </label>
                 </div>
                 <div
-                  class="col"
+                  class="c6 col"
                 >
                   <p>
                     No
@@ -640,7 +647,7 @@ D.F. D21890
                   </label>
                 </div>
                 <div
-                  class="col"
+                  class="c6 col"
                 >
                   <div
                     class="input form-group"
@@ -658,7 +665,7 @@ D.F. D21890
             </div>
           </div>
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="pb-2 row"
@@ -673,7 +680,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <p>
                   MORRIS GRAVES BAYKEY 
@@ -693,7 +700,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -721,7 +728,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -774,7 +781,7 @@ D.F. D21890
           </div>
           <hr />
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="pb-2 row"
@@ -789,7 +796,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <p>
                   KATHLEEN LOIS BAYKEY 
@@ -809,7 +816,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -837,7 +844,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -909,7 +916,7 @@ D.F. D21890
           </div>
           <hr />
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="pb-2 row"
@@ -924,7 +931,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <p>
                   ROCK TYLER BAYKEY 
@@ -944,7 +951,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -972,7 +979,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1025,7 +1032,7 @@ D.F. D21890
           </div>
           <hr />
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="pb-2 row"
@@ -1040,7 +1047,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <p>
                   PATRICIA GAIL BAYKEY 
@@ -1060,7 +1067,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1088,7 +1095,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1160,7 +1167,7 @@ D.F. D21890
           </div>
           <hr />
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="pb-2 row"
@@ -1175,7 +1182,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <p>
                   CLIFFORD LIETZ 
@@ -1195,7 +1202,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1223,7 +1230,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1276,7 +1283,7 @@ D.F. D21890
           </div>
           <hr />
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="pb-2 row"
@@ -1291,7 +1298,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <p>
                   LEILAH MARIA LIETZ 
@@ -1311,7 +1318,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1339,7 +1346,7 @@ D.F. D21890
                 </label>
               </div>
               <div
-                class="col"
+                class="c6 col"
               >
                 <div
                   class="input form-group"
@@ -1430,7 +1437,7 @@ D.F. D21890
             class="col-1"
           >
             <svg
-              class="c11"
+              class="c12"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -1467,7 +1474,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1495,7 +1502,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1523,7 +1530,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1551,7 +1558,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1580,7 +1587,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1608,7 +1615,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1636,7 +1643,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1664,7 +1671,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1693,7 +1700,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1721,7 +1728,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1749,7 +1756,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1777,7 +1784,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1806,7 +1813,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1834,7 +1841,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1862,7 +1869,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1891,7 +1898,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1919,7 +1926,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1947,7 +1954,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -1975,7 +1982,7 @@ D.F. D21890
               </label>
             </div>
             <div
-              class="col"
+              class="c6 col"
             >
               <div
                 class="input form-group"
@@ -2050,7 +2057,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2078,7 +2085,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2106,7 +2113,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2134,7 +2141,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2186,7 +2193,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2214,7 +2221,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2241,7 +2248,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2269,7 +2276,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2297,7 +2304,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
@@ -2350,7 +2357,7 @@ D.F. D21890
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <p>
               SRW PLAN 33784
@@ -2374,7 +2381,7 @@ DF L24824
             </label>
           </div>
           <div
-            class="col"
+            class="c6 col"
           >
             <div
               class="input form-group"
