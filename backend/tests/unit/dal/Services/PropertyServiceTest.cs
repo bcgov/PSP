@@ -8,6 +8,7 @@ using Pims.Dal.Helpers;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
+using Pims.Dal.Constants;
 using Xunit;
 using Pims.Core.Extensions;
 using NetTopologySuite.Geometries;
@@ -138,7 +139,7 @@ namespace Pims.Dal.Test.Services
             property.CopyValues(newValues);
             newValues.Description = "test";
             newValues.Pid = 200;
-            newValues.Location = GeometryHelper.CreatePoint(0, 0, 3005);
+            newValues.Location = GeometryHelper.CreatePoint(0, 0, SpatialReference.BC_ALBERS);
 
             // Act
             var updatedProperty = service.Update(newValues);
@@ -169,7 +170,7 @@ namespace Pims.Dal.Test.Services
             property.CopyValues(newValues);
             newValues.Description = "test";
             newValues.Pid = 200;
-            newValues.Location = GeometryHelper.CreatePoint(-119, 53, 4326);
+            newValues.Location = GeometryHelper.CreatePoint(-119, 53, SpatialReference.WGS_84);
 
             // Act
             var updatedProperty = service.Update(newValues);

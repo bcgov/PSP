@@ -1,6 +1,7 @@
 using Mapster;
 using NetTopologySuite.Geometries;
 using Pims.Dal.Helpers;
+using Pims.Dal.Constants;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -12,7 +13,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Coordinate, src => src.Coordinate);
 
             config.NewConfig<GeometryModel, Geometry>()
-                .ConstructUsing(src => GeometryHelper.CreatePoint(src.Coordinate.X, src.Coordinate.Y, 4326));
+                .ConstructUsing(src => GeometryHelper.CreatePoint(src.Coordinate.X, src.Coordinate.Y, SpatialReference.WGS_84));
 
             config.NewConfig<Coordinate, CoordinateModel>()
                 .Map(dest => dest.X, src => src.X)
