@@ -46,7 +46,7 @@ export const UsersFilterBar: React.FC<IProps> = ({ values, onChange }) => {
                   <Select field="role" placeholder="All Roles" options={roles} type="number" />
                 </Col>
                 <Col className="bar-item" md={6}>
-                  <Input field="businessIdentifierValue" placeholder="IDIR/BCeID" />
+                  <Input field="businessIdentifierValue" placeholder="IDIR/Name" />
                 </Col>
               </Row>
               <Row>
