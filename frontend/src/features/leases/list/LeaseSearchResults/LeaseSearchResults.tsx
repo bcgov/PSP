@@ -156,6 +156,7 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
 
   return (
     <Table<ILeaseSearchResult>
+      manualSortBy={true}
       name="leasesTable"
       columns={columns}
       data={results ?? []}
