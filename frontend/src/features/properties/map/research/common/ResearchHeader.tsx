@@ -1,6 +1,6 @@
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import Api_TypeCode from 'models/api/TypeCode';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
