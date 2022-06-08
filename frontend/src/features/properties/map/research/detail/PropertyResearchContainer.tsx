@@ -36,7 +36,6 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     Api_PropertyAssociations | undefined
   >(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
-  const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
 
   const pid = props.researchFileProperty?.property?.pid?.toString();
 
@@ -158,6 +157,8 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     key: InventoryTabNames.pims,
     name: 'PIMS Files',
   });
+
+  const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);
 
   return (
     <InventoryTabs
