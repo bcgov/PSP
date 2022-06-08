@@ -34,7 +34,11 @@ namespace Pims.Dal.Services
         {
             _logger.LogInformation("Getting research file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
-            return _researchFileRepository.GetById(id);
+
+            var researchFile = _researchFileRepository.GetById(id);
+            ReprojectPropertyLocationsToWgs84(researchFile);
+
+            return researchFile;
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile)
@@ -124,6 +128,24 @@ namespace Pims.Dal.Services
             if (currentRowVersion != researchFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this research file, please refresh the application and retry.");
+            }
+        }
+
+        private void ReprojectPropertyLocationsToWgs84(PimsResearchFile researchFile)
+        {
+            if (researchFile == null)
+            {
+                return;
+            }
+
+            foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
+            {
+                if (researchProperty.Property.Location != null)
+                {
+                    var oldCoords = researchProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
             }
         }
     }
