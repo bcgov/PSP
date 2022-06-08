@@ -9,6 +9,7 @@ import {
 import styled from 'styled-components';
 
 import { Section } from '../Section';
+import { StyledFormSection } from '../SectionStyles';
 import AssociationContent from './AssociationContent';
 import AssociationHeader from './AssociationHeader';
 
@@ -20,6 +21,8 @@ export interface IPropertyAssociationTabViewProps {
 const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTabViewProps> = props => {
   return (
     <StyledSummarySection>
+      <StyledFormSection>This property is associated with the following files.</StyledFormSection>
+
       <Section
         header={
           <AssociationHeader
