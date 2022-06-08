@@ -11,6 +11,7 @@ interface ISelectInputProps<SelectTypes> {
     label: string;
     placeholder: string;
   }[];
+  onSelectItemChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 /**
  * Provides a dropdown with list of search options for a given type.
@@ -20,14 +21,18 @@ export function SelectInput<SelectTypes, FormikType>({
   selectOptions,
   defaultKey,
   field,
+  onSelectItemChange,
   ...rest
 }: ISelectInputProps<SelectTypes> & React.HTMLAttributes<HTMLElement>) {
   // access the form context values, no need to pass props
   const { values, setFieldValue } = useFormikContext<FormikType>();
   const value = getIn(values, field);
 
-  const reset = () => {
+  const reset = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFieldValue(field ? value : defaultKey, '');
+    if (onSelectItemChange) {
+      onSelectItemChange(e);
+    }
   };
   const options = selectOptions?.map(o => ({ label: o.label, value: o.key } as SelectOption));
   const selectedOption = selectOptions?.find(o => o.key === value);

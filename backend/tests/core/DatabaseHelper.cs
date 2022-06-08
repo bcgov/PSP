@@ -152,6 +152,7 @@ namespace Pims.Core.Test
             context.AddRange(EntityHelper.CreateDefaultPropertyTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyClassificationTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyTenureTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyStatusTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyAreaUnitTypes());
             context.AddRange(EntityHelper.CreateDefaultDataSourceTypes());
             context.AddRange(EntityHelper.CreateDefaultContactMethodTypes());

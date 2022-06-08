@@ -72,13 +72,16 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
     <StyledReadOnlyForm>
       <Section header="Property attributes">
         <SectionField label="MOTI region">
-          <Text field="motiRegion.REGION_NAME" />
+          <Text field="regionType.description" />
         </SectionField>
         <SectionField label="Highways district">
           <InlineContainer>
-            <Text field="highwaysDistrict.DISTRICT_NUMBER" />
-            {'-'}
-            <Text field="highwaysDistrict.DISTRICT_NAME" />
+            {values.districtType?.description !== 'Cannot determine' && (
+              <>
+                <Text field="districtType.id" /> -
+              </>
+            )}
+            <Text field="districtType.description" />
           </InlineContainer>
         </SectionField>
         <SectionField label="Electoral district">

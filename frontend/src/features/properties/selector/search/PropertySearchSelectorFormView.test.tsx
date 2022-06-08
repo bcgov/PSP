@@ -15,6 +15,8 @@ const store = mockStore({});
 
 const onSelectedProperties = jest.fn();
 const onSearch = jest.fn();
+const onAddressChange = jest.fn();
+const onAddressSelect = jest.fn();
 
 describe('PropertySearchSelectorFormView component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IPropertySearchSelectorFormViewProps>) => {
@@ -26,6 +28,8 @@ describe('PropertySearchSelectorFormView component', () => {
         searchResults={renderOptions.searchResults ?? []}
         loading={renderOptions.loading ?? false}
         selectedProperties={renderOptions.selectedProperties ?? []}
+        onAddressChange={onAddressChange}
+        onAddressSelect={onAddressSelect}
       />,
       {
         ...renderOptions,
