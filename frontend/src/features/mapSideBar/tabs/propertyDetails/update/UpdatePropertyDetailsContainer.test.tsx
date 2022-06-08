@@ -3,14 +3,7 @@ import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_Property } from 'models/api/Property';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import {
-  fillInput,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-  waitForElementToBeRemoved,
-} from 'utils/test-utils';
+import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
@@ -243,14 +236,14 @@ describe('UpdatePropertyDetailsContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment, getByTestId } = setup();
-    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
+    const { asFragment, findByText } = setup();
+    expect(await findByText(/Titled/i)).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('cancels the form when Cancel is clicked', async () => {
-    const { getCancelButton, getByTestId } = setup();
-    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
+    const { getCancelButton, findByText } = setup();
+    expect(await findByText(/Titled/i)).toBeInTheDocument();
     userEvent.click(getCancelButton());
 
     await waitFor(() => expect(history.location.pathname).toBe('/mapview/property/1234'));
@@ -258,8 +251,8 @@ describe('UpdatePropertyDetailsContainer component', () => {
 
   it('saves the form with minimal data when Save is clicked', async () => {
     const expected = initialValues.toApi();
-    const { getSaveButton, getByTestId } = setup();
-    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
+    const { getSaveButton, findByText } = setup();
+    expect(await findByText(/Titled/i)).toBeInTheDocument();
     userEvent.click(getSaveButton());
 
     await waitFor(() => expect(mockUseUpdateProperty.updateProperty).toBeCalledWith(expected));
@@ -270,8 +263,8 @@ describe('UpdatePropertyDetailsContainer component', () => {
     expected.municipalZoning = 'Lorem ipsum';
     expected.notes = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, getByTestId, container } = setup();
-    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading')); // spinner
+    const { getSaveButton, findByText, container } = setup();
+    expect(await findByText(/Titled/i)).toBeInTheDocument();
 
     // modify form values
     await fillInput(container, 'municipalZoning', expected.municipalZoning);

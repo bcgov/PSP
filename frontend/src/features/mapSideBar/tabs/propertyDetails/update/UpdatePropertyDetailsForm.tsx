@@ -87,7 +87,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
   return (
     <StyledForm>
       <Content vertical>
-        <Section header="Property attributes">
+        <Section header="Property Attributes">
           <SectionField label="MOTI region">
             <Select
               field="regionTypeCode"
