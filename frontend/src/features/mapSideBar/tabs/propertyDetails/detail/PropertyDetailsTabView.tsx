@@ -70,7 +70,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
 
   return (
     <StyledReadOnlyForm>
-      <Section header="Property attributes">
+      <Section header="Property Attributes">
         <SectionField label="MOTI region">
           <Text field="regionType.description" />
         </SectionField>
@@ -87,7 +87,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
         <SectionField label="Electoral district">
           <Text field="electoralDistrict.ED_NAME" />
         </SectionField>
-        <SectionField label="Agricultural land reserve">
+        <SectionField label="Agricultural Land Reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Land parcel type">
@@ -121,7 +121,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Provincial public hwy">
+        <SectionField label="Provincial Public Hwy">
           {isProvincialHighway === true && <Text>Yes</Text>}
           {isProvincialHighway === false && <Text>No</Text>}
           {isProvincialHighway === undefined && <Text>Unknown</Text>}
