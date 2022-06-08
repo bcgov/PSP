@@ -100,7 +100,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFilePropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchFile" })]
-        public IActionResult UpdateTerm(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
+        public IActionResult UpdateResearchFileProperty(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
         {
             var researchFilePropertyEntity = _mapper.Map<Dal.Entities.PimsPropertyResearchFile>(researchFilePropertyModel);
             var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyId, researchFilePropertyModel.ResearchFile.RowVersion, researchFilePropertyEntity);
