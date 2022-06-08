@@ -110,7 +110,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     setIsEditing(false);
   };
 
-  const onSuccesss = () => {
+  const onSuccess = () => {
     setIsDirty(true);
     setIsEditing(false);
   };
@@ -124,7 +124,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       <UpdateProperties
         researchFile={researchFile}
         setIsShowingPropertySelector={setIsShowingPropertySelector}
-        onSuccesss={onSuccesss}
+        onSuccess={onSuccess}
       />
     );
   } else {
@@ -168,7 +168,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
                 researchFile={researchFile}
                 selectedIndex={selectedMenuIndex}
                 isEditMode={isEditing}
-                onSuccesss={onSuccesss}
+                onSuccess={onSuccess}
                 setEditMode={setIsEditing}
                 setFormikRef={setFormikRef}
               />

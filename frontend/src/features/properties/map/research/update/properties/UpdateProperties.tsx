@@ -14,7 +14,7 @@ import { useUpdateResearchProperties } from '../../hooks/useUpdateResearchProper
 interface IUpdatePropertiesProps {
   researchFile: Api_ResearchFile;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccesss: () => void;
+  onSuccess: () => void;
 }
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
@@ -22,9 +22,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const formResearchFile = ResearchForm.fromApi(props.researchFile);
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
-
-  console.log(props.researchFile);
-  console.log(formResearchFile);
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
 
@@ -52,7 +49,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     if (!!response?.name) {
       formikRef.current?.resetForm();
       props.setIsShowingPropertySelector(false);
-      props.onSuccesss();
+      props.onSuccess();
     }
   };
   return (

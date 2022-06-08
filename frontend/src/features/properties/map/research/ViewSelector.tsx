@@ -14,7 +14,7 @@ export interface IViewSelectorProps {
   isEditMode: boolean;
   setEditMode: (isEditing: boolean) => void;
   setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
-  onSuccesss: () => void;
+  onSuccess: () => void;
 }
 
 const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
@@ -24,7 +24,7 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
         <UpdateSummaryView
           researchFile={props.researchFile}
           setFormikRef={props.setFormikRef}
-          onSuccess={props.onSuccesss}
+          onSuccess={props.onSuccess}
         />
       );
     } else {
@@ -42,7 +42,7 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
         <UpdatePropertyView
           researchFileProperty={researchFileProperty}
           setFormikRef={props.setFormikRef}
-          onSuccess={props.onSuccesss}
+          onSuccess={props.onSuccess}
         />
       );
     } else {

@@ -16,34 +16,33 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
   const leftColumnLabel = '3';
   const researchFile = props.researchFile;
 
-  const regions = researchFile?.researchProperties
-    ?.map(x => x.property?.region)
-    .filter((x): x is Api_TypeCode<number> => !!x && x.description !== '')
-    .reduce((acc: Api_TypeCode<number>[], curr: Api_TypeCode<number>) => {
-      if (acc.find(x => curr.id === x.id) === undefined) {
-        acc.push(curr);
-      }
-      return acc;
-    }, [])
+  const regions = removeDuplicates(
+    researchFile?.researchProperties?.map(x => x.property?.region) || [],
+  )
     .map(x => x.description)
     .join(', ');
 
-  const districts = researchFile?.researchProperties
-    ?.map(x => x.property?.district)
-    .filter((x): x is Api_TypeCode<number> => !!x && x.description !== '')
-    .reduce((acc: Api_TypeCode<number>[], curr: Api_TypeCode<number>) => {
-      if (acc.find(x => curr.id === x.id) === undefined) {
-        acc.push(curr);
-      }
-      return acc;
-    }, [])
+  const districts = removeDuplicates(
+    researchFile?.researchProperties?.map(x => x.property?.district) || [],
+  )
     .map(x => x.description)
     .join(', ');
+
+  function removeDuplicates(list: (Api_TypeCode<number> | undefined)[]): Api_TypeCode<number>[] {
+    return list
+      .filter((x): x is Api_TypeCode<number> => !!x && x.description !== '')
+      .reduce((acc: Api_TypeCode<number>[], curr: Api_TypeCode<number>) => {
+        if (acc.find(x => curr.id === x.id) === undefined) {
+          acc.push(curr);
+        }
+        return acc;
+      }, []);
+  }
   return (
     <Row className="no-gutters">
       <Col>
         <Row className="no-gutters">
-          <Col xs={leftColumnWidth} className="">
+          <Col xs={leftColumnWidth}>
             <HeaderField label="Research file #:" labelWidth={leftColumnLabel}>
               {researchFile?.rfileNumber}
             </HeaderField>
@@ -73,7 +72,7 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
         </Row>
         <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
-            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth={'9'}>
+            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth="9">
               {regions}
             </HeaderField>
           </Col>
@@ -85,7 +84,7 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
         </Row>
         <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
-            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth={'9'}>
+            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
               {districts}
             </HeaderField>
           </Col>
