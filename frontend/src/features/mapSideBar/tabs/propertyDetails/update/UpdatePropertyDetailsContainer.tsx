@@ -18,7 +18,7 @@ export interface IUpdatePropertyDetailsContainerProps {
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
   const isMounted = useIsMounted();
   const history = useHistory();
-  const { retrieveProperty } = useGetProperty();
+  const { retrieveProperty, retrievePropertyLoading } = useGetProperty();
   const { updateProperty } = useUpdateProperty();
   const { queryAll } = useQueryMapLayersByLocation();
 
@@ -70,7 +70,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     }
   }, [history, initialForm?.pid]);
 
-  if (initialForm === undefined) {
+  if (retrievePropertyLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 

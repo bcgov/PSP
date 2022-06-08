@@ -346,7 +346,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
             <div
               class="col"
             >
-              Property attributes
+              Property Attributes
             </div>
             <div
               class="col-1"
@@ -1177,7 +1177,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                               name="area-sq-meters"
                               step=".01"
                               type="number"
-                              value="25000"
+                              value="0"
                             />
                           </div>
                           <div
@@ -1206,7 +1206,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                               name="area-sq-feet"
                               step=".01"
                               type="number"
-                              value="269097.76"
+                              value="0"
                             />
                           </div>
                           <div
@@ -1235,7 +1235,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                               name="area-hectares"
                               step=".01"
                               type="number"
-                              value="2.5"
+                              value="0"
                             />
                           </div>
                           <div
@@ -1264,7 +1264,7 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                               name="area-acres"
                               step=".01"
                               type="number"
-                              value="6.18"
+                              value="0"
                             />
                           </div>
                           <div
@@ -1302,7 +1302,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
                       class="form-check"
                     >
                       <input
-                        checked=""
                         class="form-check-input position-static"
                         id="input-true"
                         name="isVolumetricParcel"
