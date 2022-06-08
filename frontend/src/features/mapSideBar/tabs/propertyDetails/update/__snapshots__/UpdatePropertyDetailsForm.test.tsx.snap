@@ -346,7 +346,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             <div
               class="col"
             >
-              Property attributes
+              Property Attributes
             </div>
             <div
               class="col-1"
