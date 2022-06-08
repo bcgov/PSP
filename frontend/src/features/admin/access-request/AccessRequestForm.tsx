@@ -99,7 +99,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
           </TooltipWrapper>
         </SectionField>
         <SectionField label="Region" wideScreen required>
-          <Select field="regionCodeId" options={selectRegions} placeholder="Select MotI Region" />
+          <Select field="regionCodeId" options={selectRegions} placeholder="Select MoTI Region" />
         </SectionField>
         <SectionField label="Notes" wideScreen>
           <TextArea
@@ -126,7 +126,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
         <Row className="justify-content-md-center">
           <ButtonToolbar className="cancelSave">
             {onCancel ? (
-              <Button className="mr-2" type="button" onClick={onCancel}>
+              <Button variant="secondary" className="mr-2" type="button" onClick={onCancel}>
                 Cancel
               </Button>
             ) : null}
