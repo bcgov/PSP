@@ -7,6 +7,8 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Pims.Dal.Helpers;
+using Pims.Dal.Constants;
 
 namespace Pims.Dal.Services
 {
@@ -16,20 +18,27 @@ namespace Pims.Dal.Services
         private readonly ILogger _logger;
         private readonly IResearchFileRepository _researchFileRepository;
         private readonly IPropertyRepository _propertyRepository;
+        private readonly ICoordinateTransformService _coordinateService;
 
-        public ResearchFileService(ClaimsPrincipal user, ILogger<ResearchFileService> logger, IResearchFileRepository researchFileRepository, IPropertyRepository propertyRepository)
+
+        public ResearchFileService(ClaimsPrincipal user, ILogger<ResearchFileService> logger, IResearchFileRepository researchFileRepository, IPropertyRepository propertyRepository, ICoordinateTransformService coordinateService)
         {
             _user = user;
             _logger = logger;
             _researchFileRepository = researchFileRepository;
             _propertyRepository = propertyRepository;
+            _coordinateService = coordinateService;
         }
 
         public PimsResearchFile GetById(long id)
         {
             _logger.LogInformation("Getting research file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
-            return _researchFileRepository.GetById(id);
+
+            var researchFile = _researchFileRepository.GetById(id);
+            ReprojectPropertyLocationsToWgs84(researchFile);
+
+            return researchFile;
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile)
@@ -103,6 +112,14 @@ namespace Pims.Dal.Services
 
             property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
+
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = property.Location;
+            if (geom.SRID != SpatialReference.BC_ALBERS)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+            }
         }
 
         private void ValidateVersion(long researchFileId, long researchFileVersion)
@@ -111,6 +128,24 @@ namespace Pims.Dal.Services
             if (currentRowVersion != researchFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this research file, please refresh the application and retry.");
+            }
+        }
+
+        private void ReprojectPropertyLocationsToWgs84(PimsResearchFile researchFile)
+        {
+            if (researchFile == null)
+            {
+                return;
+            }
+
+            foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
+            {
+                if (researchProperty.Property.Location != null)
+                {
+                    var oldCoords = researchProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
             }
         }
     }
