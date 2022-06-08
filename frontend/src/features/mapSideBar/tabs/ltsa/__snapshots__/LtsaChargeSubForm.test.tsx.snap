@@ -8,7 +8,14 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
   <div
     class="Toastify"
   />
-  .c0 {
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
   font-weight: bold;
 }
 
@@ -26,7 +33,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -54,7 +61,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -82,7 +89,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -110,7 +117,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -139,7 +146,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -167,7 +174,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -195,7 +202,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -223,7 +230,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -252,7 +259,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -280,7 +287,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -308,7 +315,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -336,7 +343,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -365,7 +372,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -393,7 +400,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -421,7 +428,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -450,7 +457,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -478,7 +485,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -506,7 +513,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"
@@ -534,7 +541,7 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
         </label>
       </div>
       <div
-        class="col"
+        class="c1 col"
       >
         <div
           class="input form-group"

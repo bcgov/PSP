@@ -8,7 +8,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +38,49 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,24 +129,24 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 {
+.c6 {
   margin-left: 0.5rem;
   cursor: pointer;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -156,7 +156,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c9.form-group {
+.c10.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -164,7 +164,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c9.form-group .radio-group {
+.c10.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -177,7 +177,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c9.form-group .radio-group .form-check {
+.c10.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -192,15 +192,15 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c9.form-group .radio-group .form-check .form-check-input {
+.c10.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c9.form-group .radio-group .form-check-label {
+.c10.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c9 .form-label {
+.c10 .form-label {
   margin-bottom: unset;
 }
 
@@ -226,11 +226,11 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c8 {
+.c9 {
   border-left: 1px solid #8c8c8c;
 }
 
-.c6 {
+.c7 {
   width: 100%;
   font-weight: bold;
   padding-bottom: 0.7rem;
@@ -238,18 +238,25 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   border-bottom: 2px solid #8c8c8c;
 }
 
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
 .c4 {
   font-weight: bold;
 }
 
-.c7.table .no-rows-message {
+.c8.table .no-rows-message {
   -webkit-align-items: flex-start;
   -webkit-box-align: flex-start;
   -ms-flex-align: flex-start;
   align-items: flex-start;
 }
 
-.c7.table .tbody .tr {
+.c8.table .tbody .tr {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -260,7 +267,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   min-width: 60px;
 }
 
-.c7.table .tbody .tr .td {
+.c8.table .tbody .tr .td {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -281,7 +288,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   align-items: center;
 }
 
-.c7.table .tbody .tr .td.right {
+.c8.table .tbody .tr .td.right {
   -webkit-box-pack: right;
   -webkit-justify-content: right;
   -ms-flex-pack: right;
@@ -289,7 +296,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   text-align: right;
 }
 
-.c7.table .tbody .tr .td.left {
+.c8.table .tbody .tr .td.left {
   -webkit-box-pack: left;
   -webkit-justify-content: left;
   -ms-flex-pack: left;
@@ -297,7 +304,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   text-align: left;
 }
 
-.c7.table .tbody .tr .td input {
+.c8.table .tbody .tr .td input {
   max-width: 12.5rem;
 }
 
@@ -319,7 +326,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c11 {
+.c12 {
   margin: 0;
   -webkit-box-pack: end;
   -webkit-justify-content: end;
@@ -369,7 +376,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -414,7 +421,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -446,7 +453,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <span
                 class=""
@@ -466,7 +473,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <span
                 class=""
@@ -488,7 +495,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -575,7 +582,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="input form-group"
@@ -603,7 +610,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -627,7 +634,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -651,7 +658,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -731,7 +738,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -755,7 +762,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -779,7 +786,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -840,7 +847,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -882,7 +889,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -906,7 +913,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -930,7 +937,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -986,7 +993,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <div
                 class="form-group"
@@ -1010,7 +1017,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c5"
+                            class="c6"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1090,7 +1097,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <span
                 class=""
@@ -1110,7 +1117,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col"
+              class="c5 col"
             >
               <span
                 class=""
@@ -1154,12 +1161,12 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   class="col-10 col"
                 >
                   <label
-                    class="c6"
+                    class="c7"
                   >
                     Land measurement
                   </label>
                   <div
-                    class="c7 table"
+                    class="c8 table"
                     role="table"
                   >
                     <div
@@ -1288,7 +1295,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c8 col"
+              class="c9 col"
             >
               <label
                 class="c4"
@@ -1296,13 +1303,13 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 Is this a volumetric parcel?
               </label>
               <div
-                class="c9 form-group"
+                class="c10 form-group"
               >
                 <div
                   class="radio-group"
                 >
                   <div
-                    class="c10 pb-3"
+                    class="c11 pb-3"
                   >
                     <div
                       class="form-check"
@@ -1324,7 +1331,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c10 pb-3"
+                    class="c11 pb-3"
                   >
                     <div
                       class="form-check"
@@ -1359,7 +1366,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="col"
+                  class="c5 col"
                 >
                   <div
                     class="form-group"
@@ -1379,12 +1386,12 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   class="col-10 col"
                 >
                   <label
-                    class="c6"
+                    class="c7"
                   >
                     Volumetric measurement
                   </label>
                   <div
-                    class="c7 table"
+                    class="c8 table"
                     role="table"
                   >
                     <div
@@ -1506,14 +1513,14 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c11 row"
+      class="c12 row"
     >
       <div
         class="cancelSave btn-toolbar"
         role="toolbar"
       >
         <button
-          class="c12 Button mr-5 btn btn-secondary"
+          class="c13 Button mr-5 btn btn-secondary"
           type="button"
         >
           <div
@@ -1523,7 +1530,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="c12 Button mr-5 btn btn-primary"
+          class="c13 Button mr-5 btn btn-primary"
           type="submit"
         >
           <div
