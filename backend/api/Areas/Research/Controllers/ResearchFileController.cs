@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFilePropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchFile" })]
-        public IActionResult UpdateProperty(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
+        public IActionResult UpdateResearchFileProperty(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
         {
             if (researchFilePropertyId != researchFilePropertyModel.Id)
             {
