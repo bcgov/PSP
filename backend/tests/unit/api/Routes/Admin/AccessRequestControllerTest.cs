@@ -36,8 +36,7 @@ namespace Pims.Api.Test.Routes.Admin
         {
             // Arrange
             var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.GetPage),
-                typeof(int), typeof(int), typeof(string), typeof(string),
-                typeof(string), typeof(string), typeof(string));
+                typeof(int), typeof(int), typeof(string), typeof(string));
 
             // Act
             // Assert
@@ -49,7 +48,7 @@ namespace Pims.Api.Test.Routes.Admin
         public void Delete_Route()
         {
             // Arrange
-            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.Delete), typeof(long), typeof(Pims.Api.Areas.Admin.Models.AccessRequest.AccessRequestModel));
+            var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.Delete), typeof(long), typeof(Pims.Api.Models.Concepts.AccessRequestModel));
 
             // Act
             // Assert

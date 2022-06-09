@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Helpers.Extensions;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Model = Pims.Api.Areas.Property.Models.Search;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Helpers
 {
@@ -63,7 +63,7 @@ namespace Pims.Api.Test.Helpers
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
             Assert.Equal((int)code, jsonResult.StatusCode);
             var actualResult = Assert.IsType<Model.PropertyModel>(jsonResult.Value);
-            Assert.Equal(model, actualResult, new DeepPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult);
         }
 
         [Theory]

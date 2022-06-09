@@ -15,6 +15,13 @@ export const ScrollContainer = styled.div`
   overflow-y: auto;
 `;
 
+export const ScrollXYContainer = styled.div`
+  padding: 1.6rem 3.2rem;
+  flex-grow: 1; // because all parents are flex and have flex-grow set to 1 this takes all available space - calc no longer needed!
+  overflow-y: auto;
+  overflow-x: auto;
+`;
+
 export const WithShadow = styled(Container)`
   padding: 0;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);

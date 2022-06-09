@@ -12,6 +12,7 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
     Header: 'IDIR/BCeID',
     accessor: 'businessIdentifierValue',
     align: 'left',
+    minWidth: 150,
     Cell: (props: CellProps<IUserRecord>) => {
       return (
         <Link to={`/admin/user/${props.row.original.id}`}>

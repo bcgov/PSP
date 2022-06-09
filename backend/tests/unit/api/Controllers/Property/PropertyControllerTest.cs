@@ -2,12 +2,12 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Property.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Property
 {
@@ -42,7 +42,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.Concepts.PropertyModel>(actionResult.Value);
             var expectedResult = mapper.Map<Models.Concepts.PropertyModel>(property);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.PropertyService.GetByPid(It.IsAny<string>()), Times.Once());
         }
         #endregion
@@ -70,7 +70,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.Concepts.PropertyModel>(actionResult.Value);
             var expectedResult = mapper.Map<Models.Concepts.PropertyModel>(property);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.PropertyService.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
         }
         #endregion

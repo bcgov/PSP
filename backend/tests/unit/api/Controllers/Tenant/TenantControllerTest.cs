@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Api.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -52,7 +51,7 @@ namespace Pims.Api.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
             Assert.Null(actionResult.StatusCode);
-            Assert.Equal(mapper.Map<Model.TenantModel>(tenant), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.TenantModel>(tenant).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Tenant.GetTenant(tenant.Code), Times.Once());
         }
 
@@ -130,7 +129,7 @@ namespace Pims.Api.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
             Assert.Null(actionResult.StatusCode);
-            Assert.Equal(model, actualResult, new DeepPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Tenant.UpdateTenant(It.IsAny<Entity.PimsTenant>()), Times.Once());
         }
         #endregion

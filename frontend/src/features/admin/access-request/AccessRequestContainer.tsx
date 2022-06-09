@@ -1,16 +1,23 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { AccessRequestStatus } from 'constants/accessStatus';
+import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import { Api_AccessRequest } from 'models/api/AccessRequest';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
 import { AccessRequestForm } from './models';
 
-interface IAccessRequestContainerProps {}
+interface IAccessRequestContainerProps {
+  accessRequestId?: number;
+  onSave?: () => void;
+}
 
-export const AccessRequestContainer: React.FunctionComponent<IAccessRequestContainerProps> = props => {
+export const AccessRequestContainer: React.FunctionComponent<IAccessRequestContainerProps> = ({
+  accessRequestId,
+  onSave,
+}) => {
   const {
     fetchCurrentAccessRequest: {
       loading,
@@ -22,14 +29,23 @@ export const AccessRequestContainer: React.FunctionComponent<IAccessRequestConta
       response: addAccessRequestResponse,
       execute: addAccessRequest,
     },
+    fetchAccessRequestById: {
+      loading: byIdLoading,
+      response: accessRequestByIdResponse,
+      execute: getAccessRequestById,
+    },
   } = useAccessRequests();
   const keycloak = useKeycloakWrapper();
   const userInfo = keycloak?.obj?.userInfo;
 
   useEffect(() => {
-    getCurrentAccessRequest();
-  }, [getCurrentAccessRequest]);
-  const response = addAccessRequestResponse ?? accessRequestResponse;
+    if (!accessRequestId) {
+      getCurrentAccessRequest();
+    } else {
+      getAccessRequestById(accessRequestId);
+    }
+  }, [getCurrentAccessRequest, getAccessRequestById, accessRequestId]);
+  const response = addAccessRequestResponse ?? accessRequestByIdResponse ?? accessRequestResponse;
 
   const initialValues: AccessRequestForm = new AccessRequestForm({
     ...response,
@@ -41,18 +57,24 @@ export const AccessRequestContainer: React.FunctionComponent<IAccessRequestConta
     regionCode: { id: response?.regionCode?.id },
   });
 
-  initialValues.email = keycloak.email ?? '';
-  initialValues.firstName = keycloak.firstName ?? '';
-  initialValues.surname = keycloak.surname ?? '';
-  initialValues.businessIdentifierValue =
-    response?.user?.businessIdentifierValue ?? keycloak.businessIdentifierValue ?? '';
-  initialValues.keycloakUserGuid = userInfo.subject;
+  if (!accessRequestId) {
+    initialValues.email = keycloak.email ?? '';
+    initialValues.firstName = keycloak.firstName ?? '';
+    initialValues.surname = keycloak.surname ?? '';
+    initialValues.businessIdentifierValue = keycloak.businessIdentifierValue ?? '';
+    initialValues.keycloakUserGuid = userInfo.subject;
+  }
   return (
     <>
-      <LoadingBackdrop parentScreen show={loading || addLoading} />
+      <LoadingBackdrop parentScreen show={loading || addLoading || byIdLoading} />
       <AccessRequestFormComponent
         initialValues={initialValues}
-        addAccessRequest={addAccessRequest}
+        addAccessRequest={async (accessRequest: Api_AccessRequest) => {
+          const response = await addAccessRequest(accessRequest);
+          onSave && onSave();
+          return response;
+        }}
+        onCancel={onSave}
       />
     </>
   );

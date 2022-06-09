@@ -1,10 +1,11 @@
 import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Table';
-import { SortDirection, TableSort } from 'components/Table/TableSort';
+import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
+import { handleSortChange } from 'hooks/useSearch';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
@@ -116,26 +117,6 @@ export interface IResearchSearchResultsProps {
 export function ResearchSearchResults(props: IResearchSearchResultsProps) {
   const { results, sort = {}, setSort, setPageSize, setPageIndex, ...rest } = props;
 
-  // results sort handler
-  const handleSortChange = useCallback(
-    (column: string, nextSortDirection: SortDirection) => {
-      if (!setSort) return null;
-
-      let nextSort: TableSort<IResearchSearchResult>;
-
-      // add new column to sort criteria
-      if (nextSortDirection) {
-        nextSort = { ...sort, [column]: nextSortDirection };
-      } else {
-        // remove column from sort criteria
-        nextSort = { ...sort };
-        delete (nextSort as any)[column];
-      }
-      setSort(nextSort);
-    },
-    [setSort, sort],
-  );
-
   // This will get called when the table needs new data
   const updateCurrentPage = useCallback(
     ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
@@ -149,7 +130,9 @@ export function ResearchSearchResults(props: IResearchSearchResultsProps) {
       columns={columns}
       data={results ?? []}
       sort={sort}
-      onSortChange={handleSortChange}
+      onSortChange={(column, nextSortDirection) =>
+        handleSortChange(column, nextSortDirection, sort, setSort)
+      }
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="No matching Research Files found"

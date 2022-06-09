@@ -5,10 +5,9 @@ import * as API from 'constants/API';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
+import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { accessRequestsSlice, IAccessRequestsState } from 'store/slices/accessRequests';
-import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
@@ -29,7 +28,7 @@ jest.mock('@react-keycloak/web');
   },
 });
 
-jest.mock('store/slices/accessRequests/useAccessRequests');
+jest.mock('hooks/pims-api/useAccessRequests');
 (useAccessRequests as jest.Mock).mockReturnValue({
   fetchCurrentAccessRequest: jest.fn(),
   addAccessRequest: jest.fn(),
@@ -73,7 +72,6 @@ const successStore = mockStore({
 const store = mockStore({
   [lookupCodesSlice.name]: lCodes,
   [networkSlice.name]: {},
-  [accessRequestsSlice.name]: { accessRequest: { id: 0 } } as IAccessRequestsState,
 });
 
 // Render component under test

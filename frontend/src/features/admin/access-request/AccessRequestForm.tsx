@@ -20,11 +20,13 @@ import RolesToolTip from './RolesToolTip';
 interface IAccessRequestFormProps {
   initialValues: any;
   addAccessRequest: (accessRequest: Api_AccessRequest) => Promise<Api_AccessRequest | undefined>;
+  onCancel?: () => void;
 }
 
 export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps> = ({
   initialValues,
   addAccessRequest,
+  onCancel,
 }) => {
   const { getPublicByType, getOptionsByType } = useLookupCodeHelpers();
   const roles = getPublicByType(API.ROLE_TYPES);
@@ -97,7 +99,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
           </TooltipWrapper>
         </SectionField>
         <SectionField label="Region" wideScreen required>
-          <Select field="regionCodeId" options={selectRegions} placeholder="Select MotI Region" />
+          <Select field="regionCodeId" options={selectRegions} placeholder="Select MoTI Region" />
         </SectionField>
         <SectionField label="Notes" wideScreen>
           <TextArea
@@ -123,9 +125,12 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
         </Row>
         <Row className="justify-content-md-center">
           <ButtonToolbar className="cancelSave">
-            <Button className="mr-5" type="submit">
-              {!initialValues?.id ? 'Submit' : 'Update'}
-            </Button>
+            {onCancel ? (
+              <Button variant="secondary" className="mr-2" type="button" onClick={onCancel}>
+                Cancel
+              </Button>
+            ) : null}
+            <Button type="submit">{!initialValues?.id ? 'Submit' : 'Update'}</Button>
           </ButtonToolbar>
         </Row>
       </Form>

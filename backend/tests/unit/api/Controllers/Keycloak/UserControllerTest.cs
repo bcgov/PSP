@@ -2,7 +2,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Keycloak.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
@@ -14,6 +13,7 @@ using Xunit;
 using AdminModels = Pims.Api.Areas.Admin.Models.User;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Keycloak.Models.User;
+using FluentAssertions;
 
 namespace PimsApi.Test.Keycloak.Controllers
 {
@@ -54,7 +54,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var data = Assert.IsType<Model.UserModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel>(user), data, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel>(user).Should().BeEquivalentTo(data);
             service.Verify(m => m.SyncUserAsync(It.IsAny<Guid>()), Times.Once());
         }
         #endregion
@@ -80,7 +80,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var data = Assert.IsType<Model.UserModel[]>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel[]>(users), data, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(data);
             service.Verify(m => m.GetUsersAsync(1, 10, It.IsAny<string>()), Times.Once());
         }
         #endregion
@@ -105,7 +105,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var data = Assert.IsType<Model.UserModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel>(user), data, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel>(user).Should().BeEquivalentTo(data);
             service.Verify(m => m.GetUserAsync(It.IsAny<Guid>()), Times.Once());
         }
         #endregion
@@ -139,8 +139,8 @@ namespace PimsApi.Test.Keycloak.Controllers
             Assert.Equal(expectedResult.Surname, actualResult.Surname);
             Assert.Equal(expectedResult.Email, actualResult.Email);
             Assert.Equal(expectedResult.IsDisabled, actualResult.IsDisabled);
-            Assert.Equal(expectedResult.Organizations, actualResult.Organizations, new DeepPropertyCompare());
-            Assert.Equal(expectedResult.Roles, actualResult.Roles, new DeepPropertyCompare());
+            expectedResult.Organizations.Should().BeEquivalentTo(actualResult.Organizations);
+            expectedResult.Roles.Should().BeEquivalentTo(actualResult.Roles);
             service.Verify(m => m.UpdateUserAsync(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
         #endregion
