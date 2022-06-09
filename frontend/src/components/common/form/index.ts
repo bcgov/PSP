@@ -8,6 +8,7 @@ export * from './FastSelect';
 export * from './Form';
 export * from './Input';
 export * from './InputGroup';
+export * from './Multiselect';
 export * from './Select';
 export * from './TableSelect';
 export * from './Text';

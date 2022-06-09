@@ -1,12 +1,15 @@
+import { DistrictCodes, RegionCodes } from 'constants/index';
 import { Feature, GeoJsonObject, GeoJsonProperties } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNumber } from 'lodash';
 import { useContext, useState } from 'react';
 
 import {
+  HWY_DISTRICT_LAYER_URL,
   LayerPopupInformation,
+  MOTI_REGION_LAYER_URL,
   MUNICIPALITY_LAYER_URL,
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
@@ -40,6 +43,9 @@ const useActiveFeatureLayer = ({
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
+  const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
+  const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
+
   const { isSelecting, setSelectedFeature } = useContext(SelectedPropertyContext);
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -55,7 +61,14 @@ const useActiveFeatureLayer = ({
     let title = 'Municipality Information';
     let feature: Feature | undefined = undefined;
 
-    const parcel = await parcelsService.findOneWhereContains(latLng);
+    // call these APIs in parallel - notice there is no "await"
+    const task1 = parcelsService.findOneWhereContains(latLng);
+    const task2 = regionService.findMetadataByLocation(latLng, 'GEOMETRY');
+    const task3 = districtService.findMetadataByLocation(latLng, 'GEOMETRY');
+
+    const parcel = await task1;
+    const region = await task2;
+    const district = await task3;
 
     if (!isSelecting) {
       const municipality = await municipalitiesService.findOneWhereContains(latLng);
@@ -82,7 +95,7 @@ const useActiveFeatureLayer = ({
       feature = {
         geometry: { coordinates: [latLng.lng, latLng.lat], type: 'Point' },
         type: 'Feature',
-        properties: [],
+        properties: {},
       };
     }
 
@@ -102,6 +115,12 @@ const useActiveFeatureLayer = ({
         ...feature.properties,
         IS_SELECTED: isSelecting,
         CLICK_LAT_LNG: latLng,
+        REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
+        REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
+        DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
+          ? district.DISTRICT_NUMBER
+          : DistrictCodes.Unknown,
+        DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
       };
       activeFeatureLayer?.addData(feature);
       setSelectedFeature(feature);

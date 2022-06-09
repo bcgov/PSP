@@ -95,7 +95,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public PimsProperty Get(int id)
+        public PimsProperty Get(long id)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
@@ -106,9 +106,17 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
                 .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAnomalyTypes)
+                    .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
+                .Include(p => p.PimsPropPropRoadTypes)
+                    .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAdjacentLandTypes)
+                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(p => p.VolumetricTypeCodeNavigation)
+                .Include(p => p.VolumeUnitTypeCodeNavigation)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
@@ -159,11 +167,15 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAnomalyTypes)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAnomalyTypes)
+                    .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
+                    .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAdjacentLandTypes)
+                    .ThenInclude(t => t.PropertyAdjacentLandTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTypes)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -180,6 +192,69 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
             return property;
         }
+
+        /// <summary>
+        /// Get the property for the specified PID value.
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public PimsProperty GetAssociations(string pid)
+        {
+            int parsedPid = pid.ConvertPID();
+
+            PimsProperty property = this.Context.PimsProperties
+                .Include(p => p.PimsPropertyLeases)
+                    .ThenInclude(pl => pl.Lease)
+                    .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
+                .Include(p => p.PimsPropertyResearchFiles)
+                    .ThenInclude(pr => pr.ResearchFile)
+                    .ThenInclude(r => r.ResearchFileStatusTypeCodeNavigation)
+                .FirstOrDefault(p => p.Pid == parsedPid);
+
+            return property;
+        }
+
+
+        /// <summary>
+        /// Update the passed property in the database assuming the user has the required claims.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public PimsProperty Update(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Id;
+            var existingProperty = this.Context.PimsProperties.FirstOrDefault(p => p.PropertyId == propertyId)
+                 ?? throw new KeyNotFoundException();
+
+            // ignore a number of properties that we don't the frontend to override - for now
+            property.Boundary = existingProperty.Boundary;
+            property.Location = existingProperty.Location;
+            property.AddressId = existingProperty.AddressId;
+            property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
+            property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
+            property.PropertyClassificationTypeCode = existingProperty.PropertyClassificationTypeCode;
+            property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
+            property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
+            property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
+            property.IsOwned = existingProperty.IsOwned;
+            property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest;
+            property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
+            property.IsSensitive = existingProperty.IsSensitive;
+
+            // update main entity - PimsProperty
+            this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
+
+            // update direct relationships - anomalies, tenures, etc
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropAdjacentLandType>(p => p.PimsPropPropAdjacentLandTypes, propertyId, property.PimsPropPropAdjacentLandTypes.ToArray());
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
+            this.Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+
+            return existingProperty;
+        }
+
         #endregion
     }
 }

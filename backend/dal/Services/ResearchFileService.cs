@@ -101,11 +101,8 @@ namespace Pims.Dal.Services
 
             property.PropertyTypeCode = "UNKNOWN";
 
-            property.PropertyStatusTypeCode = "UNSURVYED"; // Todo: should be 'UNKNOWN';
+            property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
-
-            property.RegionCode = 1; // TODO: this reallly needs to come from the app
-            property.DistrictCode = 1; // TODO: this reallly needs to come from the app
         }
 
         private void ValidateVersion(long researchFileId, long researchFileVersion)

@@ -5,7 +5,6 @@ import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
 import { SectionField } from '../SectionField';
-import { StyledSectionHeader } from '../SectionStyles';
 export interface ILtsaDuplicateTitleSubForm {
   nameSpace?: string;
 }
@@ -18,7 +17,6 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<ILtsaDuplicateTi
     getIn(values, withNameSpace(nameSpace, 'duplicateCertificatesOfTitle')) ?? [];
   return (
     <>
-      <StyledSectionHeader>Duplicate Indefeasible Title</StyledSectionHeader>
       {certificates.length === 0 && 'this title has no indefeasible titles'}
       <FieldArray
         name={withNameSpace(nameSpace, 'duplicateCertificatesOfTitle')}

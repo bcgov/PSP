@@ -248,8 +248,8 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public bool IsOtherImprovement { get; set; }
         public bool HasPhysicalFile { get; set; }
         public bool HasDigitalFile { get; set; }
-        public bool HasPhysicalLicense { get; set; }
-        public bool HasDigitalLicense { get; set; }
+        public bool? HasPhysicalLicense { get; set; }
+        public bool? HasDigitalLicense { get; set; }
         public bool IsExpired { get; set; }
         #endregion
     }

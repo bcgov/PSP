@@ -51,7 +51,7 @@ export const SideNavBar = () => {
         />
         <NavIcon onClick={noop} icon={<Stops />} text="Disposition" showText={expanded} />
         <NavIcon
-          onClick={() => history.push('/contact/list')}
+          onClick={() => setTrayPage(SidebarContextType.CONTACT)}
           icon={<MdContactMail size={24} />}
           text="Contacts"
           showText={expanded}

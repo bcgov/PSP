@@ -8,11 +8,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   <div
     class="Toastify"
   />
-  .c2 {
-  font-weight: bold;
-}
-
-.c0 {
+  .c0 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -25,6 +21,10 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   margin-bottom: 2rem;
 }
 
+.c2 {
+  font-weight: bold;
+}
+
 <div
     class=""
   >
@@ -34,203 +34,218 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
       <h2
         class="c1"
       >
-        Property of Interest
-      </h2>
-      <div
-        class="pb-2 row"
-      >
         <div
-          class="col-4"
-        >
-          <label
-            class="c2"
-          >
-            Descriptive name:
-          </label>
-        </div>
-        <div
-          class="col"
+          class="row"
         >
           <div
-            class="input form-group"
+            class="col"
           >
-            <input
-              class="form-control"
-              id="input-propertyName"
-              name="propertyName"
-              title="Corner of Nakya PL "
-              value="Corner of Nakya PL "
-            />
+            Property of Interest
           </div>
+          <div
+            class="col-1"
+          />
         </div>
-      </div>
+      </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c2"
+          <div
+            class="col-4"
           >
-            Purpose:
-          </label>
+            <label
+              class="c2"
+            >
+              Descriptive name:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-propertyName"
+                name="propertyName"
+                title="Corner of Nakya PL "
+                value="Corner of Nakya PL "
+              />
+            </div>
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          <div>
-            <div
-              class="multiselect-container multiSelectContainer  "
-              id="purpose-selector"
-              style="width: auto; color: black; padding-bottom: 12px;"
+          <div
+            class="col-4"
+          >
+            <label
+              class="c2"
             >
+              Purpose:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div>
               <div
-                class="search-wrapper searchWrapper "
-                style="background: white; border: 1px solid #606060;"
+                class="multiselect-container multiSelectContainer  "
+                id="purpose-selector"
+                style="width: auto; color: black; padding-bottom: 12px;"
               >
-                <input
-                  autocomplete="off"
-                  class="searchBox "
-                  id="purpose-selector_input"
-                  name="search_name_input"
-                  placeholder="Select Property Purpose"
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                class="optionListContainer displayNone"
-              >
-                <ul
-                  class="optionContainer"
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="background: white; border: 1px solid #606060;"
                 >
-                  <span
-                    class="notFound"
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    id="purpose-selector_input"
+                    name="search_name_input"
+                    placeholder="Select Property Purpose"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
                   >
-                    No Options Available
-                  </span>
-                </ul>
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
         <div
-          class="col-4"
-        >
-          <label
-            class="c2"
-          >
-            Legal opinion req'd?:
-          </label>
-        </div>
-        <div
-          class="col"
+          class="pb-2 row"
         >
           <div
-            class="form-group"
+            class="col-4"
           >
-            <select
-              class="form-select form-control"
-              id="input-isLegalOpinionRequired"
-              name="isLegalOpinionRequired"
+            <label
+              class="c2"
             >
-              <option
-                class="option"
-                value="unknown"
+              Legal opinion req'd?:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-isLegalOpinionRequired"
+                name="isLegalOpinionRequired"
               >
-                Unknown
-              </option>
-              <option
-                class="option"
-                value="yes"
-              >
-                Yes
-              </option>
-              <option
-                class="option"
-                value="no"
-              >
-                No
-              </option>
-            </select>
+                <option
+                  class="option"
+                  value="unknown"
+                >
+                  Unknown
+                </option>
+                <option
+                  class="option"
+                  value="yes"
+                >
+                  Yes
+                </option>
+                <option
+                  class="option"
+                  value="no"
+                >
+                  No
+                </option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
         <div
-          class="col-4"
-        >
-          <label
-            class="c2"
-          >
-            Legal opinion obtained?:
-          </label>
-        </div>
-        <div
-          class="col"
+          class="pb-2 row"
         >
           <div
-            class="form-group"
+            class="col-4"
           >
-            <select
-              class="form-select form-control"
-              id="input-isLegalOpinionObtained"
-              name="isLegalOpinionObtained"
+            <label
+              class="c2"
             >
-              <option
-                class="option"
-                value="unknown"
+              Legal opinion obtained?:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-isLegalOpinionObtained"
+                name="isLegalOpinionObtained"
               >
-                Unknown
-              </option>
-              <option
-                class="option"
-                value="yes"
-              >
-                Yes
-              </option>
-              <option
-                class="option"
-                value="no"
-              >
-                No
-              </option>
-            </select>
+                <option
+                  class="option"
+                  value="unknown"
+                >
+                  Unknown
+                </option>
+                <option
+                  class="option"
+                  value="yes"
+                >
+                  Yes
+                </option>
+                <option
+                  class="option"
+                  value="no"
+                >
+                  No
+                </option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
         <div
-          class="col-4"
-        >
-          <label
-            class="c2"
-          >
-            Document reference:
-          </label>
-        </div>
-        <div
-          class="col"
+          class="pb-2 row"
         >
           <div
-            class="input form-group"
+            class="col-4"
           >
-            <input
-              class="form-control"
-              id="input-documentReference"
-              name="documentReference"
-              title=""
-              value=""
-            />
+            <label
+              class="c2"
+            >
+              Document reference:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-documentReference"
+                name="documentReference"
+                title=""
+                value=""
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -241,32 +256,47 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
       <h2
         class="c1"
       >
-        Research Request
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Research Request
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c2"
+          <div
+            class="col-4"
           >
-            Summary notes:
-          </label>
+            <label
+              class="c2"
+            >
+              Summary notes:
+            </label>
+          </div>
+          <div
+            class="col"
+          />
         </div>
         <div
-          class="col"
-        />
-      </div>
-      <div
-        class="textarea input form-group"
-      >
-        <textarea
-          class="form-control"
-          id="input-researchSummary"
-          name="researchSummary"
-        />
+          class="textarea input form-group"
+        >
+          <textarea
+            class="form-control"
+            id="input-researchSummary"
+            name="researchSummary"
+          />
+        </div>
       </div>
     </div>
   </div>

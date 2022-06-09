@@ -12,8 +12,10 @@ namespace Pims.Dal.Repositories
         int Count();
         IEnumerable<PimsProperty> Get(PropertyFilter filter);
         Paged<PimsProperty> GetPage(PropertyFilter filter);
-        PimsProperty Get(int id);
+        PimsProperty Get(long id);
         PimsProperty GetByPid(string pid);
         PimsProperty GetByPid(int pid);
+        PimsProperty GetAssociations(string pid);
+        PimsProperty Update(PimsProperty property);
     }
 }
