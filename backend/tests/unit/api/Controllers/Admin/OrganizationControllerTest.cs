@@ -2,7 +2,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Admin.Models.Organization;
+using FluentAssertions;
 
 namespace PimsApi.Test.Admin.Controllers
 {
@@ -48,7 +48,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel[]>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.OrganizationModel[]>(organizations), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.OrganizationModel[]>(organizations).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.UserOrganization.GetAll(), Times.Once());
         }
 
@@ -73,7 +73,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.OrganizationModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.OrganizationModel[]>(organizations), actualResult.Items, new DeepPropertyCompare());
+            mapper.Map<Model.OrganizationModel[]>(organizations).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.UserOrganization.Get(filter), Times.Once());
         }
         #endregion
@@ -98,7 +98,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.OrganizationModel>(organization).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.UserOrganization.Get(organization.Id), Times.Once());
         }
         #endregion
@@ -124,7 +124,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.OrganizationModel>(organization).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.UserOrganization.Add(It.IsAny<Entity.PimsOrganization>()), Times.Once());
         }
         #endregion
@@ -150,7 +150,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.OrganizationModel>(organization).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.UserOrganization.Update(It.IsAny<Entity.PimsOrganization>()), Times.Once());
         }
         #endregion
@@ -176,7 +176,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.OrganizationModel>(organization).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.UserOrganization.Delete(It.IsAny<Entity.PimsOrganization>()), Times.Once());
         }
         #endregion

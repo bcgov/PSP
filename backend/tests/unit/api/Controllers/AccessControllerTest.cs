@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Controllers;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
+using FluentAssertions;
 
 namespace PimsApi.Test.Controllers
 {
@@ -42,8 +42,8 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
+            Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(), Times.Once());
         }
@@ -90,8 +90,8 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
+            Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(), Times.Once());
         }
@@ -119,7 +119,7 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
@@ -246,7 +246,7 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);

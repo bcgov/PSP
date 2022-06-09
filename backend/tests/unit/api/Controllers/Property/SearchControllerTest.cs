@@ -5,7 +5,6 @@ using Moq;
 using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
@@ -16,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Property.Models.Search;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Property
 {
@@ -69,7 +69,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
-            Assert.Equal(expectedResult, actualResult.Items, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.Property.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 
@@ -99,7 +99,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
-            Assert.Equal(expectedResult, actualResult.Items, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.Property.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 

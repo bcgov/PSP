@@ -2,7 +2,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Organizations.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Model = Pims.Api.Areas.Organizations.Models.Organization;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Lease
 {
@@ -45,7 +45,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.OrganizationModel>(organization);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.OrganizationService.GetOrganization(It.IsAny<long>()), Times.Once());
         }
         #endregion
@@ -74,7 +74,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.OrganizationModel>(organization);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             repository.Verify(m => m.OrganizationService.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>()), Times.Once());
         }
         #endregion

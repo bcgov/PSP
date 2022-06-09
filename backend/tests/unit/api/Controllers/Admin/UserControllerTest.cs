@@ -3,7 +3,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -51,7 +50,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel[]>(users), actualResult.Items, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
@@ -76,7 +75,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel[]>(users), actualResult.Items, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
@@ -103,7 +102,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.UserModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel[]>(users), actualResult.Items, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
@@ -128,7 +127,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel>(user), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.UserModel>(user).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.User.Get(user.GuidIdentifierValue.Value), Times.Once());
         }
         #endregion
@@ -218,7 +217,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            Assert.Equal(model, actualResult, new DeepPropertyCompare());
+            model.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.User.Delete(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
         #endregion

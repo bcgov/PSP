@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
@@ -15,6 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Lease.Models.Search;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Lease
 {
@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Lease.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
 
@@ -96,7 +96,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Lease.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
 

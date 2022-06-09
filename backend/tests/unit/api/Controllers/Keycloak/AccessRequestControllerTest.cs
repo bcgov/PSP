@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Keycloak.Controllers;
 using Pims.Api.Models.Concepts;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
@@ -11,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using FluentAssertions;
 
 namespace PimsApi.Test.Keycloak.Controllers
 {
@@ -43,7 +43,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
             var expectedResult = mapper.Map<AccessRequestModel>(accessRequest);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
             service.Verify(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
         }
         #endregion
