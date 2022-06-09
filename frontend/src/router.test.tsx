@@ -12,7 +12,7 @@ import Login from 'features/account/Login';
 import ManageAccessRequestsPage from 'features/admin/access/ManageAccessRequestsPage';
 import AccessRequestPage from 'features/admin/access-request/AccessRequestPage';
 import EditUserPage from 'features/admin/edit-user/EditUserPage';
-import ManageUsers from 'features/admin/users/ManageUsers';
+import ManageUsers from 'features/admin/users/ManageUsersPage';
 import { PropertyListView } from 'features/properties/list';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';

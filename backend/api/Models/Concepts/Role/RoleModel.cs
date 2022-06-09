@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -46,6 +47,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The item's sort order.
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// get/set - The claims associated to this role.
+        /// </summary>
+        public IEnumerable<RoleClaimModel> RoleClaims { get; set; }
         #endregion
     }
 }

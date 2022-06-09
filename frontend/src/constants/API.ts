@@ -84,13 +84,5 @@ export const PROPERTY_RESEARCH_PURPOSE_TYPES = 'PimsPropResearchPurposeType';
 export const PROPERTY_LAND_PARCEL_TYPES = 'PimsPropertyType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
-// Organizations
-export const POST_ORGANIZATIONS = () => `/admin/organizations/filter`; // get paged list of organizations
-
-// TODO: This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
 export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties or all if not specified.
-
-// TODO: This should all be removed from this and moved to the useApi* hooks.
-// User Service
-export const POST_USERS = () => `/admin/users/my/organization`; // get paged list of users

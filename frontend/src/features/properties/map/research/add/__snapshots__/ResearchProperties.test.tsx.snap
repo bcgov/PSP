@@ -190,6 +190,42 @@ exports[`ResearchProperties component renders as expected when provided no prope
   line-height: 2rem;
 }
 
+.c11 {
+  padding-right: 0;
+}
+
+.c11 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c12:not(:first-child) {
+  padding-left: 0;
+}
+
+.c12:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c18 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
 .c14 {
   font-size: 1.4rem;
 }
@@ -248,42 +284,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';
-}
-
-.c11 {
-  padding-right: 0;
-}
-
-.c11 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c12:not(:first-child) {
-  padding-left: 0;
-}
-
-.c12:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c18 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c18 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c17 {

@@ -141,7 +141,7 @@ namespace Pims.Api.Test.Controllers
             mapper.Map<Model.LookupModel>(organizationTypes).Should().BeEquivalentTo(actualResult.Next(4));
             mapper.Map<Model.LookupModel>(propertyTypes).Should().BeEquivalentTo(actualResult.Next(5));
             mapper.Map<Model.LookupModel>(provinces).Should().BeEquivalentTo(actualResult.Next(6));
-            mapper.Map<Model.LookupModel>(regions).Should().BeEquivalentTo(actualResult.Next(7));
+            mapper.Map<Model.LookupModel<short>>(regions).Should().BeEquivalentTo(actualResult.Next(7));
             mapper.Map<Model.RoleModel>(roleCodes).Should().BeEquivalentTo(actualResult.Next(8));
             mapper.Map<Model.LookupModel>(tenureTypes).Should().BeEquivalentTo(actualResult.Next(9));
         }

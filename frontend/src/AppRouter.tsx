@@ -34,7 +34,7 @@ const EditUserPage = lazy(() =>
 const ManageAccessRequests = lazy(() =>
   componentLoader(import('features/admin/access/ManageAccessRequestsPage'), 2),
 );
-const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsers'), 2));
+const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsersPage'), 2));
 const PropertyListView = lazy(() =>
   componentLoader(import('features/properties/list/PropertyListView'), 2),
 );

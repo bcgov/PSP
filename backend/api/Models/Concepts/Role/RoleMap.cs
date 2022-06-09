@@ -15,6 +15,7 @@ namespace Pims.Api.Models.Concepts.AccessRequest
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.RoleClaims, src => src.PimsRoleClaims)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<RoleModel, Entity.PimsRole>()
@@ -25,6 +26,7 @@ namespace Pims.Api.Models.Concepts.AccessRequest
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.PimsRoleClaims, src => src.RoleClaims)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

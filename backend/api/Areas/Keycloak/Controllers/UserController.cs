@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Model = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Models.Concepts;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Api.Areas.Keycloak.Models.User;
 

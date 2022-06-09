@@ -151,6 +151,9 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
+                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                .Include(u => u.PimsRegionUsers)
+                .ThenInclude(ru => ru.RegionCodeNavigation)
                 .AsNoTracking();
 
             if (User.HasPermission(Permissions.OrganizationAdmin) && !User.HasPermission(Permissions.SystemAdmin))
@@ -183,22 +186,14 @@ namespace Pims.Dal.Repositories
 
                 if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifierValue))
                 {
-                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifierValue}%"));
+                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifierValue}%")
+                    || EF.Functions.Like(u.Person.FirstName, $"%{filter.BusinessIdentifierValue}%")
+                    || EF.Functions.Like(u.Person.Surname, $"%{filter.BusinessIdentifierValue}%"));
                 }
 
-                if (!string.IsNullOrWhiteSpace(filter.FirstName))
+                if (filter.Region != null)
                 {
-                    query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
-                }
-
-                if (!string.IsNullOrWhiteSpace(filter.Surname))
-                {
-                    query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.Surname}%"));
-                }
-
-                if (!string.IsNullOrWhiteSpace(filter.Position))
-                {
-                    query = query.Where(u => EF.Functions.Like(u.Position, $"%{filter.Position}%"));
+                    query = query.Where(u => u.PimsRegionUsers.Any(ru => ru.RegionCode == filter.Region));
                 }
 
                 if (!string.IsNullOrWhiteSpace(filter.Email))
@@ -206,28 +201,20 @@ namespace Pims.Dal.Repositories
                     query = query.Where(u => u.Person.PimsContactMethods.Any(cm => EF.Functions.Like(cm.ContactMethodValue, $"%{filter.Email}%")));
                 }
 
-                if (filter.IsDisabled != null)
+                if (filter.ActiveOnly == true)
                 {
-                    query = query.Where(u => u.IsDisabled == filter.IsDisabled);
+                    query = query.Where(u => u.IsDisabled == false);
                 }
 
-                if (!string.IsNullOrWhiteSpace(filter.Role))
-                    query = query.Where(u => u.PimsUserRoles.Any(r =>
-                        EF.Functions.Like(r.Role.Name, $"%{filter.Role}")));
-                if (!string.IsNullOrWhiteSpace(filter.Organization))
-                    query = query.Where(u => u.PimsUserOrganizations.Any(a =>
-                        EF.Functions.Like(a.Organization.OrganizationName, $"%{filter.Organization}")));
+                if (filter.Role != null)
+                {
+                    query = query.Where(u => u.PimsUserRoles.Any(r => r.RoleId == filter.Role));
+                }
 
                 if (filter.Sort.Any())
                 {
                     var direction = filter.Sort[0].Split(" ").FirstOrDefault();
-                    if (filter.Sort[0].StartsWith("Organization"))
-                    {
-                        query = direction == "asc" ?
-                            query.OrderBy(u => u.PimsUserOrganizations.Any() ? u.PimsUserOrganizations.FirstOrDefault(o => o.Organization != null).Organization.OrganizationName : null)
-                            : query.OrderByDescending(u => u.PimsUserOrganizations.Any() ? u.PimsUserOrganizations.FirstOrDefault(o => o.Organization != null).Organization.OrganizationName : null);
-                    }
-                    else if (filter.Sort[0].StartsWith("Email"))
+                    if (filter.Sort[0].StartsWith("Email"))
                     {
                         query = direction == "asc" ?
                             query.OrderBy(u => u.Person.PimsContactMethods.Any() ? u.Person.PimsContactMethods.FirstOrDefault().ContactMethodValue : null)
@@ -273,6 +260,9 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
+                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                .Include(u => u.PimsRegionUsers)
+                .ThenInclude(ru => ru.RegionCodeNavigation)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.UserId == id) ?? throw new KeyNotFoundException();
         }
@@ -295,29 +285,9 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
+                .Include(u => u.PimsRegionUsers)
+                .ThenInclude(ru => ru.RegionCodeNavigation)
                 .SingleOrDefault(u => u.UserId == id) ?? throw new KeyNotFoundException();
-        }
-
-        /// <summary>
-        /// Load the specified 'user' organizations into context.
-        /// </summary>
-        /// <param name="user"></param>
-        public void LoadOrganizations(PimsUser user)
-        {
-            this.Context.Entry(user)
-                .Collection(u => u.PimsUserOrganizations)
-                .Load();
-        }
-
-        /// <summary>
-        /// Load the specified 'user' roles into context.
-        /// </summary>
-        /// <param name="user"></param>
-        public void LoadRoles(PimsUser user)
-        {
-            this.Context.Entry(user)
-                .Collection(u => u.PimsUserRoles)
-                .Load();
         }
 
         /// <summary>
@@ -395,6 +365,14 @@ namespace Pims.Dal.Repositories
             var userRole = user.PimsUserRoles.FirstOrDefault(r => r.RoleId == roleId);
             user.PimsUserRoles.Remove(userRole);
             this.Context.PimsUserRoles.Remove(userRole);
+            return user;
+        }
+
+        public PimsUser RemoveRegion(PimsUser user, short regionCode)
+        {
+            var regionUser = user.PimsRegionUsers.FirstOrDefault(r => r.RegionCode == regionCode);
+            user.PimsRegionUsers.Remove(regionUser);
+            this.Context.PimsRegionUsers.Remove(regionUser);
             return user;
         }
 

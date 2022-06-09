@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { IAccessRequestsFilterData } from '../access-request/IAccessRequestsFilterData';
-import { AccessRequestForm } from '../access-request/models';
+import { FormAccessRequest } from '../access-request/models';
 import { ScrollXYContainer } from '../users/styles';
 import { AccessRequestFilter } from './components/Filter';
 import { getAccessRequestColumns } from './constants/constants';
@@ -47,11 +47,11 @@ const ManageAccessRequestsPage = () => {
         initialValues={filter}
         applyFilter={accessRequestfilter => setFilter(accessRequestfilter)}
       />
-      <Table<AccessRequestForm>
+      <Table<FormAccessRequest>
         manualSortBy
         name="accessRequestsTable"
         columns={columnDefinitions}
-        data={results.map(result => new AccessRequestForm(result))}
+        data={results.map(result => new FormAccessRequest(result))}
         defaultCanSort={true}
         pageCount={totalPages}
         onPageSizeChange={setPageSize}

@@ -8,9 +8,10 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from 'constants/index';
-import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
+import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from 'interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from 'interfaces/ltsaModels';
 import { Api_Person } from 'models/api/Person';
+import { Api_User } from 'models/api/User';
 import { ILookupCode } from 'store/slices/lookupCodes';
 
 // TODO: This needs to be removed as Administrative Areas no longer exist.
@@ -91,21 +92,15 @@ export const mockOrganization: IOrganization = {
   mobile: '5556667777',
 };
 
-export const mockUser: IUser = {
+export const mockUser: Api_User = {
   id: 1,
-  keycloakUserId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  guidIdentifierValue: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   businessIdentifierValue: 'admin',
-  email: 'admin@pims.gov.bc.ca',
-  displayName: 'User, Admin',
-  firstName: 'Admin',
-  surname: 'User',
   position: '',
-  organizations: [],
-  roles: [],
+  userRegions: [],
+  userRoles: [],
   appCreateTimestamp: '2021-05-04T19:07:09.6920606',
   rowVersion: 1,
-  landline: '2223334444',
-  mobile: '5556667777',
 };
 
 export const mockPerson: IPerson = {
@@ -693,6 +688,7 @@ export const mockApiAccessRequest = {
     lastLogin: '2022-05-30T18:09:53.87',
     issueDate: '2022-05-27T22:25:29.807',
     userRoles: [],
+    userRegions: [],
     appCreateTimestamp: '2022-05-27T22:25:29.91',
     appLastUpdateTimestamp: '2022-05-30T18:09:53.873',
     appLastUpdateUserid: 'admin',

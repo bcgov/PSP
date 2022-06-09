@@ -119,7 +119,7 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
+            model.Should().BeEquivalentTo(actualResult);
             Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
@@ -246,7 +246,7 @@ namespace PimsApi.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
-            model.Should().BeEquivalentTo(actualResult, options => options.Excluding(c => c.User));
+            model.Should().BeEquivalentTo(actualResult);
             Assert.Equal(model.RegionCode.Id, actualResult.RegionCode.Id);
             Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);

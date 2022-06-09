@@ -1,11 +1,11 @@
 import { Menu } from 'components/menu/Menu';
 import { AccessRequestStatus } from 'constants/accessStatus';
-import { AccessRequestForm } from 'features/admin/access-request/models';
+import { FormAccessRequest } from 'features/admin/access-request/models';
 import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { CellProps } from 'react-table';
 
-export const RowActions = (props: CellProps<AccessRequestForm> & { refresh: () => void }) => {
+export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () => void }) => {
   const accessRequest = props.row.original;
   const {
     updateAccessRequest: { execute: update },

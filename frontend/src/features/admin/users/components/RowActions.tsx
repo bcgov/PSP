@@ -1,34 +1,34 @@
 import { Menu } from 'components/menu/Menu';
-import { IUser } from 'interfaces';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import { useAppSelector } from 'store/hooks';
-import { useUsers } from 'store/slices/users';
 
-import { IUserRecord } from '../interfaces/IUserRecord';
+import { useUsers } from '../hooks/useUsers';
+import { FormUser } from '../models';
 
-export const RowActions = (props: CellProps<IUserRecord>) => {
+export const RowActions = (props: CellProps<FormUser> & { refresh: () => void }) => {
   const history = useHistory();
-  const { updateUser } = useUsers();
 
-  const users = useAppSelector(state => state.users.pagedUsers.items);
-  const getUser = (): IUser | undefined =>
-    users.find((user: IUser) => user.id === props.row.original.id);
+  const {
+    updateUser: { execute: updateUser },
+  } = useUsers();
 
   const changeAccountStatus = async (disabled: boolean) => {
-    const user = getUser();
+    const user = props.row.original;
     if (user) {
-      const tempUser = { ...user, isDisabled: disabled };
+      const tempUser = { ...user.toApi(), isDisabled: disabled };
       await updateUser(tempUser);
+      props.refresh();
     }
   };
   const enableUser = async () => {
     await changeAccountStatus(false);
+    props.refresh();
   };
 
   const disableUser = async () => {
     await changeAccountStatus(true);
+    props.refresh();
   };
 
   const openUserDetails = () => {

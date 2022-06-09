@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using EModel = Pims.Dal.Entities.Models;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Admin.Controllers
 {
@@ -76,21 +76,6 @@ namespace Pims.Api.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// GET - Returns a paged array of users from the datasource that belong to the same organization (or sub-organization) as the current user.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns>Paged object with an array of users.</returns>
-        [HttpPost("my/organization")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Api.Models.PageModel<Model.UserModel>), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "admin-user" })]
-        public IActionResult GetMyUsers(EModel.UserFilter filter)
-        {
-            return GetUsers(filter);
-        }
-
-        /// <summary>
         /// GET - Returns a user for the specified 'id' from the datasource.
         /// </summary>
         /// <param name="id">The unique 'id' for the user to return.</param>
@@ -141,7 +126,7 @@ namespace Pims.Api.Areas.Admin.Controllers
 
             var user = _mapper.Map<Model.UserModel>(entity);
 
-            return CreatedAtAction(nameof(GetUser), new { key = user.KeycloakUserId }, user);
+            return CreatedAtAction(nameof(GetUser), new { key = user.GuidIdentifierValue }, user);
         }
 
         /// <summary>
