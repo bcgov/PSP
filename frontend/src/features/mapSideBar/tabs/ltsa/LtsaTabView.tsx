@@ -9,13 +9,9 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
+import { Section } from '../Section';
 import { SectionField } from '../SectionField';
-import {
-  InlineMessage,
-  StyledFormSection,
-  StyledInlineMessageSection,
-  StyledSectionHeader,
-} from '../SectionStyles';
+import { InlineMessage, StyledInlineMessageSection } from '../SectionStyles';
 import LtsaChargeSubForm from './LtsaChargeSubForm';
 import LtsaDuplicateTitleSubForm from './LtsaDuplicateTitleSubForm';
 import LtsaLandSubForm from './LtsaLandSubForm';
@@ -60,8 +56,7 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
                 </InlineMessage>
               </StyledInlineMessageSection>
             )}
-            <StyledFormSection>
-              <StyledSectionHeader>Title Details</StyledSectionHeader>
+            <Section header="Title Details">
               <SectionField label="Title number">
                 <Input
                   disabled
@@ -81,31 +76,30 @@ export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
                   mapFunction={(taxAuthority: TaxAuthority) => taxAuthority.authorityName}
                 />
               </SectionField>
-            </StyledFormSection>
-            <StyledFormSection>
+            </Section>
+            <Section header="Land">
               <LtsaLandSubForm nameSpace={titleNameSpace} />
-            </StyledFormSection>
-            <StyledFormSection>
+            </Section>
+            <Section header="Ownership Information">
               <LtsaOwnershipInformationForm nameSpace={titleNameSpace} />
-            </StyledFormSection>
-            <StyledFormSection>
+            </Section>
+            <Section header="Charges, Liens and Interests" isCollapsable initiallyExpanded>
               <LtsaChargeSubForm nameSpace={titleNameSpace} />
-            </StyledFormSection>
-            <StyledFormSection>
+            </Section>
+            <Section header="Duplicate Indefeasible Title">
               <LtsaDuplicateTitleSubForm nameSpace={titleNameSpace} />
-            </StyledFormSection>
-            <StyledFormSection>
+            </Section>
+            <Section header="Transfers">
               <LtsaTransferSubForm nameSpace={titleNameSpace} />
-            </StyledFormSection>
-            <StyledFormSection>
-              <StyledSectionHeader>Notes</StyledSectionHeader>
+            </Section>
+            <Section header="Notes">
               <SectionField label="Miscellaneous notes">
                 <p>{getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes')}</p>
               </SectionField>
               <SectionField label="Parcel status">
                 <Input disabled field="parcelInfo.orderedProduct.fieldedData.status" />
               </SectionField>
-            </StyledFormSection>
+            </Section>
           </StyledForm>
         </Formik>
       )}

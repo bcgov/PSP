@@ -64,6 +64,7 @@ namespace Pims.Dal
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IResearchFileService, ResearchFileService>();
+            services.AddScoped<IPropertyService, PropertyService>();
             return services; // TODO: Use reflection to find all Repositories.
         }
 

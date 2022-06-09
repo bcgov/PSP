@@ -14,6 +14,8 @@ export const LeaseSchema = Yup.object().shape({
     otherwise: Yup.string().nullable(),
   }),
   type: Yup.string().required('Lease Type is required'),
+  hasPhysicalLicense: Yup.string(),
+  hasDigitalLicense: Yup.string(),
   otherType: Yup.string().when('type', {
     is: (type: string) => type && type === 'OTHER',
     then: Yup.string().required('Other Description required'),

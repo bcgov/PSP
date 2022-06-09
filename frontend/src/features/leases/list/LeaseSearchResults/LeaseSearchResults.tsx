@@ -22,6 +22,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     accessor: 'lFileNo',
     align: 'right',
     clickable: true,
+    sortable: true,
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<ILeaseSearchResult>) => (
@@ -32,6 +33,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     Header: 'Expiry Date',
     accessor: 'expiryDate',
     align: 'left',
+    sortable: true,
     width: 40,
     Cell: (props: CellProps<ILeaseSearchResult>) => {
       const expiryDate = props.row.original.expiryDate;
@@ -66,6 +68,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     Header: 'Program Name',
     accessor: 'programName',
     align: 'left',
+    sortable: true,
     width: 40,
     maxWidth: 80,
   },
@@ -102,6 +105,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     Header: 'Status',
     accessor: 'statusType',
     align: 'left',
+    sortable: true,
     width: 20,
     maxWidth: 20,
     Cell: renderTypeCode,

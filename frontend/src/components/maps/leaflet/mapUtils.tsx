@@ -157,11 +157,11 @@ export const asProperty = (point: PointFeature): IProperty => {
  * AND all object keys together within the generated cql filter string.
  * @param object an object to convert to a cql filter string.
  */
-export const toCqlFilter = (object: any) => {
+export const toCqlFilter = (object: any, pidOverride?: boolean) => {
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
-      if (key === 'PID' && object[key]) {
+      if (key === 'PID' && object[key] && !pidOverride) {
         cql.push(`PIN ilike '%25${object[key]}%25' OR PID ilike '%25${object[key]}%25'`);
       } else {
         cql.push(`${key} ilike '%25${object[key]}%25'`);

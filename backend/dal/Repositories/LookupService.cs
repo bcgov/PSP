@@ -106,6 +106,14 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get all property volume unit types sorted by DisplayOrder and Id
+        /// </summary>
+        public IEnumerable<PimsVolumeUnitType> GetPropertyVolumeUnitTypes()
+        {
+            return this.Context.PimsVolumeUnitTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.VolumeUnitTypeCode).ToArray();
+        }
+
+        /// <summary>
         /// Get all roles sorted by Name
         /// </summary>
         public IEnumerable<PimsRole> GetRoles()
@@ -213,6 +221,25 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropResearchPurposeTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsPropertyAnomalyType> GetPropertyAnomalyTypes()
+        {
+            return this.Context.PimsPropertyAnomalyTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyRoadType> GetPropertyRoadTypes()
+        {
+            return this.Context.PimsPropertyRoadTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes()
+        {
+            return this.Context.PimsPropertyAdjacentLandTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsVolumetricType> GetPropertyVolumetricTypes()
+        {
+            return this.Context.PimsVolumetricTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }

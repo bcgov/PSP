@@ -9,6 +9,35 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
     class="Toastify"
   />
   .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c2 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c1 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c3 {
   border-radius: 0.4rem;
 }
 
@@ -35,6 +64,39 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             class="sortable-column"
           >
             L-File Number
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
         <div
@@ -47,6 +109,39 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             class="sortable-column"
           >
             Expiry Date
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
         <div
@@ -59,6 +154,39 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             class="sortable-column"
           >
             Program Name
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
         <div
@@ -95,6 +223,39 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             class="sortable-column"
           >
             Status
+            <div
+              class="c0"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -171,7 +332,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
               class="w-100"
             >
               <div
-                class="c0 mx-0 my-2 border border-secondary row"
+                class="c3 mx-0 my-2 border border-secondary row"
               >
                 <div
                   class="col-md-12"
@@ -274,7 +435,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
               class="w-100"
             >
               <div
-                class="c0 mx-0 my-2 border border-secondary row"
+                class="c3 mx-0 my-2 border border-secondary row"
               >
                 <div
                   class="col-md-12"
@@ -320,7 +481,11 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
   >
     <div
       class="align-self-center col-auto"
-    />
+    >
+      <span>
+        1 - 2 of  2
+      </span>
+    </div>
     <div
       class="ml-auto align-self-center col-auto"
     />

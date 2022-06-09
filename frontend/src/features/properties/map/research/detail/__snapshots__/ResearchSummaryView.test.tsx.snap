@@ -8,11 +8,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
   <div
     class="Toastify"
   />
-  .c3 {
-  font-weight: bold;
-}
-
-.c1 {
+  .c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -23,6 +19,10 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+}
+
+.c3 {
+  font-weight: bold;
 }
 
 .c0 {
@@ -60,42 +60,57 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       <h2
         class="c2"
       >
-        Roads
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Roads
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Road name:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          Test road name
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Road name:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Road alias:
-          </label>
+            Test road name
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          Test road alias
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Road alias:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            Test road alias
+          </div>
         </div>
       </div>
     </div>
@@ -105,95 +120,110 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       <h2
         class="c2"
       >
-        Research Request
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Research Request
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Research purpose:
-          </label>
+            <label
+              class="c3"
+            >
+              Research purpose:
+            </label>
+          </div>
+          <div
+            class="col"
+          />
         </div>
         <div
-          class="col"
-        />
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Request date:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-           Apr 14, 2022
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Request date:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Source of request:
-          </label>
+             Apr 14, 2022
+          </div>
         </div>
         <div
-          class="col"
+          class="pb-2 row"
         >
-          Headquarters (HQ)
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Requester:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          Dairy Queen Forever! Property Management
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Source of request:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Description of request:
-          </label>
+            Headquarters (HQ)
+          </div>
         </div>
         <div
-          class="col"
-        />
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Requester:
+            </label>
+          </div>
+          <div
+            class="col"
+          >
+            Dairy Queen Forever! Property Management
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Description of request:
+            </label>
+          </div>
+          <div
+            class="col"
+          />
+        </div>
+        a request description
       </div>
-      a request description
     </div>
     <div
       class="c1"
@@ -201,43 +231,58 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       <h2
         class="c2"
       >
-        Result
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Result
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Research completed on:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          Mar 30, 2022
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Research completed on:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Result of request:
-          </label>
+            Mar 30, 2022
+          </div>
         </div>
         <div
-          class="col"
-        />
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Result of request:
+            </label>
+          </div>
+          <div
+            class="col"
+          />
+        </div>
+        A research result
       </div>
-      A research result
     </div>
     <div
       class="c1"
@@ -245,43 +290,58 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       <h2
         class="c2"
       >
-        Expropriation
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Expropriation
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
       </h2>
       <div
-        class="pb-2 row"
+        class="collapse show"
       >
         <div
-          class="col-4"
+          class="pb-2 row"
         >
-          <label
-            class="c3"
+          <div
+            class="col-4"
           >
-            Expropriation?:
-          </label>
-        </div>
-        <div
-          class="col"
-        >
-          No
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="col-4"
-        >
-          <label
-            class="c3"
+            <label
+              class="c3"
+            >
+              Expropriation?:
+            </label>
+          </div>
+          <div
+            class="col"
           >
-            Expropriation notes:
-          </label>
+            No
+          </div>
         </div>
         <div
-          class="col"
-        />
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c3"
+            >
+              Expropriation notes:
+            </label>
+          </div>
+          <div
+            class="col"
+          />
+        </div>
+        An expropriation note
       </div>
-      An expropriation note
     </div>
   </div>
 </DocumentFragment>

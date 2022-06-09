@@ -18,6 +18,7 @@ import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
 import { useLtsa } from 'hooks/useLtsa';
+import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
@@ -35,6 +36,7 @@ const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');
 jest.mock('hooks/useProperties');
+jest.mock('hooks/usePropertyAssociations');
 jest.mock('hooks/pims-api');
 jest.mock('hooks/useLtsa');
 
@@ -55,6 +57,10 @@ const ltsaMock = {
   fetchParcelsDetail: jest.fn(),
   fetchParcels: jest.fn(),
   getPropertyWithPid: jest.fn(),
+}));
+
+(usePropertyAssociations as any).mockImplementation(() => ({
+  getPropertyAssociations: jest.fn(),
 }));
 
 const largeMockParcels = [
@@ -84,11 +90,11 @@ const mockParcels = [
   { id: 3, latitude: 53.917065, longitude: -122.749772 },
 ] as IProperty[];
 
-let findOneWhereContains = jest.fn();
-
-(useLayerQuery as jest.Mock).mockReturnValue({
-  findOneWhereContains: findOneWhereContains,
-});
+const useLayerQueryMock = {
+  findOneWhereContains: jest.fn(),
+  findMetadataByLocation: jest.fn(),
+};
+(useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
@@ -142,6 +148,7 @@ describe('MapView', () => {
   const onMarkerClick = jest.fn();
 
   beforeEach(() => {
+    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
@@ -311,7 +318,7 @@ describe('MapView', () => {
   });
 
   it('the map can be clicked', async () => {
-    findOneWhereContains.mockResolvedValue({
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({
       features: [
         {
           type: 'Feature',
@@ -326,14 +333,14 @@ describe('MapView', () => {
       expect(map).toBeVisible();
       fireEvent.click(map!);
     });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });
   });
 
   xit('When the map is clicked, the resulting popup can be closed', async () => {
-    findOneWhereContains.mockResolvedValue({
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({
       features: [
         {
           type: 'Feature',
@@ -348,7 +355,7 @@ describe('MapView', () => {
       expect(map).toBeVisible();
       userEvent.click(map!);
     });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });

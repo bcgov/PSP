@@ -107,6 +107,10 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Sort?.Any() == true)
             {
+                MapSortField("ExpiryDate", "OrigExpiryDate", filter.Sort);
+                MapSortField("StatusType", "LeaseStatusTypeCodeNavigation", filter.Sort);
+                MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", filter.Sort);
+
                 query = query.OrderByProperty(filter.Sort);
             }
             else
@@ -138,6 +142,25 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(l => l.PimsLeasePayments);
             }
             return query;
+        }
+
+        /// <summary>
+        /// Checks for given source field name and if found replaces it with target field name for sorting the data in given sort array
+        /// </summary>
+        /// <param name="sourceField">Sort field name from model</param>
+        /// <param name="targetField">Sort field name from entity</param>
+        /// <param name="sortDef">Find and replaces the soft field in this array</param>
+        private static void MapSortField(string sourceField, string targetField, string[] sortDef)
+        {
+            var sortField = sortDef.FirstOrDefault(x => x.Contains(sourceField));
+            if (sortField != null)
+            {
+                var sortFieldIndex = sortDef.ToList().IndexOf(sortField);
+                if (sortFieldIndex > -1)
+                {
+                    sortDef[sortFieldIndex] = sortField.Replace(sourceField, targetField);
+                }
+            }
         }
 
         /// <summary>

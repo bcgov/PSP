@@ -24,6 +24,7 @@ export enum MapViewState {
   RESEARCH_ADD = 'research_add',
   RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
+  PROPERTY_INFORMATION_EDIT = 'property_information_edit',
 }
 
 /** control the state of the side bar via the route. */
@@ -67,7 +68,11 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         }
       } else if (parts.length > 3 && parts[2] === 'property') {
         propertyId = parts[3];
-        currentState = MapViewState.PROPERTY_INFORMATION;
+        if (parts.length === 5 && parts[4] === 'edit') {
+          currentState = MapViewState.PROPERTY_INFORMATION_EDIT;
+        } else {
+          currentState = MapViewState.PROPERTY_INFORMATION;
+        }
       } else {
         currentState = MapViewState.MAP_ONLY;
       }
@@ -91,6 +96,17 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         setShowSideBar(true);
         break;
       case MapViewState.PROPERTY_INFORMATION:
+        setSidebarComponent(
+          <MotiInventoryContainer
+            readOnly
+            onClose={handleClose}
+            pid={propertyId}
+            onZoom={onZoom}
+          />,
+        );
+        setShowSideBar(true);
+        break;
+      case MapViewState.PROPERTY_INFORMATION_EDIT:
         setSidebarComponent(
           <MotiInventoryContainer onClose={handleClose} pid={propertyId} onZoom={onZoom} />,
         );

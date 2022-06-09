@@ -1291,6 +1291,90 @@ exports[`Update lease container component renders as expected 1`] = `
         class="col"
       >
         <div
+          class="c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-hasPhysicalLicense"
+          >
+            Physical lease/license exists: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-hasPhysicalLicense"
+            name="hasPhysicalLicense"
+          >
+            <option
+              class="option"
+              value=""
+            >
+              Unknown
+            </option>
+            <option
+              class="option"
+              value="Yes"
+            >
+              Yes
+            </option>
+            <option
+              class="option"
+              value="No"
+            >
+              No
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c6 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-hasDigitalLicense"
+          >
+            Digital lease/license exists: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-hasDigitalLicense"
+            name="hasDigitalLicense"
+          >
+            <option
+              class="option"
+              value=""
+            >
+              Unknown
+            </option>
+            <option
+              class="option"
+              value="Yes"
+            >
+              Yes
+            </option>
+            <option
+              class="option"
+              value="No"
+            >
+              No
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
           class="c10 textarea input form-group"
         >
           <label
