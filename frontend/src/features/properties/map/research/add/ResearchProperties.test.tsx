@@ -17,8 +17,8 @@ const mockStore = configureMockStore([thunk]);
 const testForm = new ResearchForm();
 testForm.name = 'Test name';
 testForm.properties = [
-  new PropertyForm({ pid: '123-456-789' }),
-  new PropertyForm({ pin: '1111222' }),
+  PropertyForm.fromMapProperty({ pid: '123-456-789' }),
+  PropertyForm.fromMapProperty({ pin: '1111222' }),
 ];
 
 const store = mockStore({});
