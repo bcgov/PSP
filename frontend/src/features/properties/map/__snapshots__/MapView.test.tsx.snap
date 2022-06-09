@@ -5,7 +5,25 @@ exports[`MapView Renders the map 1`] = `
   <div
     class="Toastify"
   />
-  .c7.btn {
+  .c5 {
+  padding-right: 0;
+}
+
+.c5 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c6:not(:first-child) {
+  padding-left: 0;
+}
+
+.c6:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -136,24 +154,6 @@ exports[`MapView Renders the map 1`] = `
 
 .c7.Button--icon-only .Button__icon {
   margin-right: 0;
-}
-
-.c5 {
-  padding-right: 0;
-}
-
-.c5 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c6:not(:first-child) {
-  padding-left: 0;
-}
-
-.c6:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .c3 {

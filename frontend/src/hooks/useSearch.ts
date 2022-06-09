@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { TableSort } from 'components/Table/TableSort';
+import { SortDirection, TableSort } from 'components/Table/TableSort';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
 import { IPagedItems } from 'interfaces';
@@ -135,3 +135,25 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
     execute: useCallback(execute, []),
   };
 }
+
+// results sort handler
+export const handleSortChange = <Result extends Object>(
+  column: string,
+  nextSortDirection: SortDirection,
+  sort: TableSort<Result>,
+  setSort?: (result: TableSort<Result>) => void,
+) => {
+  if (!setSort) return null;
+
+  let nextSort: TableSort<Result>;
+
+  // add new column to sort criteria
+  if (nextSortDirection) {
+    nextSort = { ...sort, [column]: nextSortDirection };
+  } else {
+    // remove column from sort criteria
+    nextSort = { ...sort };
+    delete (nextSort as any)[column];
+  }
+  setSort(nextSort);
+};

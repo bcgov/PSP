@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Contact.Controllers;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
@@ -15,6 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Contact.Models.Search;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Contact
 {
@@ -75,7 +75,7 @@ namespace Pims.Api.Test.Controllers.Contact
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
 
@@ -104,7 +104,7 @@ namespace Pims.Api.Test.Controllers.Contact
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            expectedResult.Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
 

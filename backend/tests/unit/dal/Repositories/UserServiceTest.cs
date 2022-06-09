@@ -23,10 +23,9 @@ namespace Pims.Dal.Test.Services
         public static IEnumerable<object[]> UserFilterData =>
             new List<object[]>
             {
-                new object[] { new UserFilter(1, 1, null, "ttester", "McTest", "Test", "test@test.com", false, null, null, "position"), 1 },
+                new object[] { new UserFilter(1, 1, null, null, false, null, null, new string[] { "Position" }), 1 },
                 new object[] { new UserFilter() { BusinessIdentifierValue = "ttester" }, 1 },
-                new object[] { new UserFilter() { IsDisabled = true }, 0 },
-                new object[] { new UserFilter() { Organization = "Test" }, 0 },
+                new object[] { new UserFilter() { ActiveOnly = true }, 1 }
             };
         #endregion
 

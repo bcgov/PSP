@@ -9,7 +9,6 @@ import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 import { Redirect } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
-import { NEW_PIMS_USER } from 'store/slices/users';
 import { Logo, useTenant } from 'tenants';
 
 import { LoginStyled } from './LoginStyled';
@@ -30,7 +29,7 @@ const Login = () => {
     return <Spinner animation="border"></Spinner>;
   }
   if (keycloak?.authenticated) {
-    if (activated?.status === NEW_PIMS_USER || !keyCloakWrapper?.roles?.length) {
+    if (activated?.status === 201 || !keyCloakWrapper?.roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
     } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
       return <Redirect to="/lease/list" />;

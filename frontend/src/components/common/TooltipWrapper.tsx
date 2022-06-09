@@ -14,7 +14,7 @@ interface ITooltipWrapperProps extends Partial<OverlayTriggerProps> {
    * @type {string}
    * @memberof ITooltipWrapperProps
    */
-  toolTip?: string; // TODO: Rename 'toolTip' with 'tooltip'
+  toolTip?: string | React.ReactElement; // TODO: Rename 'toolTip' with 'tooltip'
   /**
    * The tooltip element 'id'.
    *
@@ -22,6 +22,7 @@ interface ITooltipWrapperProps extends Partial<OverlayTriggerProps> {
    * @memberof ITooltipWrapperProps
    */
   toolTipId: string; // TODO: Rename 'toolTipId' with 'tooltipId'
+  className?: string;
 }
 
 /**
@@ -35,8 +36,9 @@ export const TooltipWrapper: React.FunctionComponent<ITooltipWrapperProps> = pro
         {...props}
         overlay={
           <Tooltip
-            style={{ visibility: !props.toolTip?.length ? 'hidden' : 'visible' }}
+            style={{ visibility: !props.toolTip ? 'hidden' : 'visible' }}
             id={props.toolTipId}
+            className={props.className}
           >
             {props.toolTip}
           </Tooltip>

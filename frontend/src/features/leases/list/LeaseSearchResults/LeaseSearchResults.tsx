@@ -1,6 +1,7 @@
 import TooltipIcon from 'components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from 'components/Table';
-import { SortDirection, TableSort } from 'components/Table/TableSort';
+import { TableSort } from 'components/Table/TableSort';
+import { handleSortChange } from 'hooks/useSearch';
 import { ILeaseSearchResult } from 'interfaces';
 import moment from 'moment';
 import { useCallback } from 'react';
@@ -128,26 +129,6 @@ export interface ILeaseSearchResultsProps {
 export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
   const { results, sort = {}, setSort, setPageSize, setPageIndex, ...rest } = props;
 
-  // results sort handler
-  const handleSortChange = useCallback(
-    (column: string, nextSortDirection: SortDirection) => {
-      if (!setSort) return null;
-
-      let nextSort: TableSort<ILeaseSearchResult>;
-
-      // add new column to sort criteria
-      if (nextSortDirection) {
-        nextSort = { ...sort, [column]: nextSortDirection };
-      } else {
-        // remove column from sort criteria
-        nextSort = { ...sort };
-        delete (nextSort as any)[column];
-      }
-      setSort(nextSort);
-    },
-    [setSort, sort],
-  );
-
   // This will get called when the table needs new data
   const updateCurrentPage = useCallback(
     ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
@@ -161,7 +142,9 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       columns={columns}
       data={results ?? []}
       sort={sort}
-      onSortChange={handleSortChange}
+      onSortChange={(column, nextSortDirection) =>
+        handleSortChange(column, nextSortDirection, sort, setSort)
+      }
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="Lease / License details do not exist in PIMS inventory"

@@ -1,6 +1,6 @@
+import Api_TypeCode from 'models/api/TypeCode';
 import { Moment } from 'moment';
 
-import { IOrganization } from './IOrganization';
 import { IRole } from './IRole';
 
 export interface IUser {
@@ -16,7 +16,7 @@ export interface IUser {
   middleName?: string;
   surname?: string;
   roles?: IRole[];
-  organizations?: IOrganization[];
+  regions?: Api_TypeCode<string>[];
   isDisabled?: boolean;
   lastLogin?: Date | string | Moment;
   appCreateTimestamp?: Date | string | Moment;

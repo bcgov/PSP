@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
 using Pims.Tools.Core.Keycloak;
 using Pims.Tools.Keycloak.Sync.Configuration;
-using PModel = Pims.Tools.Keycloak.Sync.Models.Pims;
+using PModel = Pims.Api.Models.Concepts;
 using KModel = Pims.Tools.Core.Keycloak.Models;
 
 namespace Pims.Tools.Keycloak.Sync
@@ -79,7 +79,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task SyncClaimsAsync(StringBuilder log)
         {
-            var claims = await _client.HandleRequestAsync<PModel.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/claims?page=1&quantity=50"); // TODO: Handle paging.
+            var claims = await _client.HandleRequestAsync<Api.Models.PageModel<PModel.ClaimModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/claims?page=1&quantity=100"); // TODO: Handle paging.
             foreach (var claim in claims?.Items)
             {
                 var krole = await GetKeycloakRoleAsync(claim);
@@ -145,16 +145,16 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task SyncRolesAsync(StringBuilder log)
         {
-            var roles = await _client.HandleRequestAsync<PModel.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/roles?page=1&quantity=50"); // TODO: Handle paging.
+            var roles = await _client.HandleRequestAsync<Api.Models.PageModel<PModel.RoleModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/roles?page=1&quantity=50"); // TODO: Handle paging.
             foreach (var role in roles?.Items)
             {
-                var prole = await _client.HandleRequestAsync<PModel.RoleModel>(HttpMethod.Get, $"{_options.Api.Uri}/admin/roles/{role.Key}");
+                var prole = await _client.HandleRequestAsync<PModel.RoleModel>(HttpMethod.Get, $"{_options.Api.Uri}/admin/roles/{role.RoleUid}");
                 var krole = await GetKeycloakGroupAsync(prole, true);
-                role.Key = krole.Id.Value;
+                role.RoleUid = krole.Id.Value;
                 role.KeycloakGroupId = krole.Id;
 
                 _logger.LogInformation($"Updating Role '{role.Name}'.");
-                await _client.HandleRequestAsync<PModel.RoleModel, PModel.RoleModel>(HttpMethod.Put, $"{_options.Api.Uri}/admin/roles/{role.Key}", role);
+                await _client.HandleRequestAsync<PModel.RoleModel, PModel.RoleModel>(HttpMethod.Put, $"{_options.Api.Uri}/admin/roles/{role.RoleUid}", role);
                 log.Append($"Keycloak - Role updated '{role.Name}'{Environment.NewLine}");
             }
         }
@@ -173,7 +173,7 @@ namespace Pims.Tools.Keycloak.Sync
                 // Make a request to keycloak to find a matching group.
                 // If one is found, sync both keycloak and PIMS.
                 // If one is not found, add it to keycloak and sync with PIMS.
-                var group = await _client.HandleRequestAsync<KModel.GroupModel>(HttpMethod.Get, $"{_options.Auth.Keycloak.Admin.Authority}/groups/{role.KeycloakGroupId ?? role.Key}");
+                var group = await _client.HandleRequestAsync<KModel.GroupModel>(HttpMethod.Get, $"{_options.Auth.Keycloak.Admin.Authority}/groups/{role.KeycloakGroupId ?? role.RoleUid}");
 
                 // If the roles match the claims, return it.
                 if (update)
@@ -191,7 +191,7 @@ namespace Pims.Tools.Keycloak.Sync
 
                     if (existingGroup != null)
                     {
-                        role.Key = existingGroup.Id.Value;
+                        role.RoleUid = existingGroup.Id.Value;
                         role.KeycloakGroupId = existingGroup.Id;
                         if (update)
                         {
@@ -220,7 +220,7 @@ namespace Pims.Tools.Keycloak.Sync
             {
                 Name = role.Name,
                 Path = $"/{role.Name}",
-                RealmRoles = role.Claims.Select(c => c.Name).ToArray()
+                RealmRoles = role.RoleClaims.Select(c => c.Claim.Name).ToArray()
             };
 
             // Add the group to keycloak and sync with PIMS.
@@ -230,7 +230,7 @@ namespace Pims.Tools.Keycloak.Sync
                 // Get the Group Id
                 var groups = await _client.HandleRequestAsync<IEnumerable<KModel.GroupModel>>(HttpMethod.Get, $"{_options.Auth.Keycloak.Admin.Authority}/groups?search={role.Name}");
                 role.KeycloakGroupId = groups.FirstOrDefault().Id;
-                role.Key = role.KeycloakGroupId.Value;
+                role.RoleUid = role.KeycloakGroupId.Value;
                 return await GetKeycloakGroupAsync(role, false);
             }
             else
@@ -271,14 +271,14 @@ namespace Pims.Tools.Keycloak.Sync
         {
             // Get the matching role from keycloak.
             //var krole = await HandleRequestAsync<KModel.RoleModel>(HttpMethod.Get, $"{_options.Auth.Keycloak.Admin.Authority}/roles/{claim.Name}");
-            var roles = role.Claims.Select(c => new KModel.RoleModel()
+            var roles = role.RoleClaims.Select(c => new KModel.RoleModel()
             {
-                Id = c.KeycloakRoleId.Value,
-                Name = c.Name,
+                Id = c.Claim.KeycloakRoleId.Value,
+                Name = c.Claim.Name,
                 Composite = false,
                 ClientRole = false,
                 ContainerId = _options.Auth.Keycloak.Realm,
-                Description = c.Description
+                Description = c.Claim.Description
             }).ToArray();
 
             // Update the group in keycloak.
@@ -297,7 +297,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task RemoveRolesFromGroupInKeycloak(KModel.GroupModel group, PModel.RoleModel role)
         {
-            var removeRoles = group.RealmRoles?.Where(r => !role.Claims.Select(c => c.Name).Contains(r)) ?? new string[0];
+            var removeRoles = group.RealmRoles?.Where(r => !role.RoleClaims.Select(c => c.Claim.Name).Contains(r)) ?? new string[0];
 
             foreach (var rname in removeRoles)
             {
@@ -340,13 +340,13 @@ namespace Pims.Tools.Keycloak.Sync
             var page = 1;
             var quantity = 50;
             var users = new List<PModel.UserModel>();
-            var pageOfUsers = await _client.HandleRequestAsync<PModel.PageModel<PModel.UserModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/users?page={page}&quantity={quantity}"); // TODO: Replace paging with specific requests for a user.
+            var pageOfUsers = await _client.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/users?page={page}&quantity={quantity}"); // TODO: Replace paging with specific requests for a user.
             users.AddRange(pageOfUsers.Items);
 
             // Keep asking for pages of users until we have them all.
             while (pageOfUsers.Items.Count() == quantity)
             {
-                pageOfUsers = await _client.HandleRequestAsync<PModel.PageModel<PModel.UserModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/users?page={++page}&quantity={quantity}");
+                pageOfUsers = await _client.HandleRequestAsync<Api.Models.PageModel<PModel.UserModel>>(HttpMethod.Get, $"{_options.Api.Uri}/admin/users?page={++page}&quantity={quantity}");
                 users.AddRange(pageOfUsers.Items);
             }
 
@@ -360,61 +360,62 @@ namespace Pims.Tools.Keycloak.Sync
                 // Sync user organizations.
                 if (kuser.Attributes == null) kuser.Attributes = new Dictionary<string, string[]>();
                 kuser.Enabled = !user.IsDisabled;
-                kuser.FirstName = user.FirstName;
-                kuser.LastName = user.Surname;
+                if(user.BusinessIdentifierValue == "service-account") {
+                    kuser.Enabled = true;
+                }
+                kuser.FirstName = user.Person?.FirstName ?? string.Empty;
+                kuser.LastName = user.Person?.Surname ?? string.Empty;
                 kuser.EmailVerified = false;
-                kuser.Attributes["organizations"] = user.Organizations.Select(a => a.Id.ToString()).ToArray();
 
-                _logger.LogInformation($"Updating User in Keycloak '{user.BusinessIdentifier}'.");
-                log.Append($"Keycloak - User updated '{user.BusinessIdentifier}'{Environment.NewLine}");
+                _logger.LogInformation($"Updating User in Keycloak '{user.BusinessIdentifierValue}'.");
+                log.Append($"Keycloak - User updated '{user.BusinessIdentifierValue}'{Environment.NewLine}");
                 var userResponse = await _client.SendJsonAsync($"{_options.Auth.Keycloak.Admin.Authority}/users/{kuser.Id}", HttpMethod.Put, kuser);
                 if (!userResponse.IsSuccessStatusCode)
-                    throw new HttpClientRequestException(userResponse, $"Failed to update the user '{user.BusinessIdentifier}' in keycloak");
+                    throw new HttpClientRequestException(userResponse, $"Failed to update the user '{user.BusinessIdentifierValue}' in keycloak");
 
                 // Sync user roles.
-                foreach (var role in user.Roles)
+                foreach (var userRole in user.UserRoles)
                 {
-                    var groupResponse = await _client.SendAsync($"{_options.Auth.Keycloak.Admin.Authority}/users/{kuser.Id}/groups/{role.KeycloakGroupId}", HttpMethod.Put);
+                    var groupResponse = await _client.SendAsync($"{_options.Auth.Keycloak.Admin.Authority}/users/{kuser.Id}/groups/{userRole.Role.KeycloakGroupId}", HttpMethod.Put);
                     if (!groupResponse.IsSuccessStatusCode)
-                        throw new HttpClientRequestException(groupResponse, $"Failed to add the group '{role.Name}' to the user '{user.BusinessIdentifier}' keycloak");
+                        throw new HttpClientRequestException(groupResponse, $"Failed to add the group '{userRole.Role.Name}' to the user '{user.BusinessIdentifierValue}' keycloak");
                 }
             }
 
             // Add keycloak users to PIMS.
             // Only add users who don't exist.
-            foreach (var kuser in kusers.Where(u => !users.Any(pu => pu.KeycloakUserId == u.Id)))
+            foreach (var kuser in kusers.Where(u => !users.Any(pu => pu.GuidIdentifierValue == u.Id)))
             {
                 try
                 {
-                    if (String.IsNullOrWhiteSpace(kuser.Email) || String.IsNullOrWhiteSpace(kuser.FirstName) || String.IsNullOrWhiteSpace(kuser.LastName))
+                    if (string.IsNullOrWhiteSpace(kuser.Email) || string.IsNullOrWhiteSpace(kuser.FirstName) || string.IsNullOrWhiteSpace(kuser.LastName))
                     {
                         _logger.LogInformation($"Unable to add user to PIMS '{kuser.Username}'.");
                         continue;
                     }
 
                     _logger.LogInformation($"Adding User to PIMS '{kuser.Username}'.");
-                    var user = new PModel.UserModel(kuser);
-                    var uRoles = user.Roles as List<PModel.RoleModel>;
-
-                    // Check if the organizations listed in Keycloak exist in PIMS.  If they don't report the issue in the summary.
-                    var removeOrganizations = new List<PModel.OrganizationModel>();
-                    if (user.Organizations?.Any() == true)
+                    var user = new PModel.UserModel()
                     {
-                        var organizations = user.Organizations.ToArray();
-                        foreach (var organization in organizations)
+                        BusinessIdentifierValue = kuser.Username,
+                        GuidIdentifierValue = kuser.Id,
+                        Position = kuser.Attributes?.ContainsKey("position") ?? false ? kuser.Attributes["position"].FirstOrDefault() : null,
+                        IsDisabled = !kuser.Enabled,
+                        Person = new PModel.PersonModel()
                         {
-                            var aexists = await _client.HandleRequestAsync<PModel.OrganizationModel>(HttpMethod.Get, $"{_options.Api.Uri}/admin/organizations/{organization.Id}", r =>
-                            {
-                                _logger.LogError($"Organization '{organization.Id}' does not exist in PIMS.", user);
-                                log.Append($"PIMS - Organization missing '{organization.Id}'{Environment.NewLine}");
-                                removeOrganizations.Add(organization);
-                                return true;
-                            });
-                        }
-                    }
-
-                    // Remove any organizations.
-                    removeOrganizations.ForEach(a => ((List<PModel.OrganizationModel>)user.Organizations).Remove(a));
+                            FirstName = kuser.FirstName,
+                            MiddleNames = kuser.Attributes?.ContainsKey("middleName") ?? false ? kuser.Attributes["middleName"].FirstOrDefault() : null,
+                            Surname = kuser.LastName,
+                            ContactMethods = new List<PModel.ContactMethodModel>() {
+                                new PModel.ContactMethodModel()
+                                {
+                                    ContactMethodType = new Pims.Api.Models.TypeModel<string>() { Id = "WORKEMAIL" },
+                                    Value = kuser.Email,
+                                },
+                            },
+                        },
+                    };
+                    var uRoles = user.UserRoles;
 
                     // Fetch the users groups from keycloak.
                     var kgroups = await _client.HandleGetAsync<KModel.GroupModel[]>(_client.AdminRoute($"users/{kuser.Id}/groups"));
@@ -425,15 +426,15 @@ namespace Pims.Tools.Keycloak.Sync
                         var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/name/{kgroup.Name}", r => true);
                         if (role != null)
                         {
-                            uRoles.Add(role);
+                            uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
                         }
                     }
 
-                    user.Roles = uRoles;
+                    user.UserRoles = uRoles;
 
                     // Add the user to PIMS.
                     user = await _client.HandleRequestAsync<PModel.UserModel, PModel.UserModel>(HttpMethod.Post, $"{_options.Api.Uri}/admin/users", user);
-                    log.Append($"Keycloak User added to PIMS '{user.BusinessIdentifier}'{Environment.NewLine}");
+                    log.Append($"Keycloak User added to PIMS '{user.BusinessIdentifierValue}'{Environment.NewLine}");
                 }
                 catch (HttpClientRequestException ex)
                 {
@@ -453,7 +454,7 @@ namespace Pims.Tools.Keycloak.Sync
             try
             {
                 // Make a request to keycloak to find a matching user.
-                return await _client.HandleRequestAsync<KModel.UserModel>(HttpMethod.Get, $"{_options.Auth.Keycloak.Admin.Authority}/users/{user.KeycloakUserId}");
+                return await _client.HandleRequestAsync<KModel.UserModel>(HttpMethod.Get, $"{_options.Auth.Keycloak.Admin.Authority}/users/{user.GuidIdentifierValue}");
             }
             catch (HttpClientRequestException ex)
             {

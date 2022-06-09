@@ -14,7 +14,7 @@ const fakeOptions: Option[] = [
   { id: 3, text: 'Baz' },
 ];
 
-const BASIC_PROPS: IMultiselectProps = {
+const BASIC_PROPS: IMultiselectProps<Option, Option> = {
   field: 'selectedOptions',
   options: fakeOptions,
   displayValue: 'text',
@@ -23,7 +23,7 @@ const BASIC_PROPS: IMultiselectProps = {
 describe('Multiselect component', () => {
   // render component under test
   const setup = (
-    props: IMultiselectProps = BASIC_PROPS,
+    props: IMultiselectProps<Option, Option> = BASIC_PROPS,
     initialValues: { selectedOptions?: Option[] } = {},
     renderOptions: RenderOptions = {},
   ) => {

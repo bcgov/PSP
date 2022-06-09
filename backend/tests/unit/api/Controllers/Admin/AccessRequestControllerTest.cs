@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Api.Models;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.AccessRequest;
+using Model = Pims.Api.Models.Concepts;
+using FluentAssertions;
+using System.Linq;
 
 namespace PimsApi.Test.Admin.Controllers
 {
@@ -44,13 +45,12 @@ namespace PimsApi.Test.Admin.Controllers
             service.Setup(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
-            var result = controller.GetPage(1, 10, null, null, null, null, null);
+            var result = controller.GetPage(1, 10);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items, new DeepPropertyCompare());
             service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -76,8 +76,6 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items,
-                new DeepPropertyCompare());
             service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
@@ -102,8 +100,7 @@ namespace PimsApi.Test.Admin.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
-            var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items, new DeepPropertyCompare());
+            var actualResult = Assert.IsType<PageModel<Pims.Api.Models.Concepts.AccessRequestModel>>(actionResult.Value);
             service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
         #endregion

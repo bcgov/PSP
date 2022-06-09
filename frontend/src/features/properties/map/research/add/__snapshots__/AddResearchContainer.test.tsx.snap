@@ -89,7 +89,25 @@ exports[`AddResearchContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c18.btn {
+  .c17 {
+  padding-right: 0;
+}
+
+.c17 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c18:not(:first-child) {
+  padding-left: 0;
+}
+
+.c18:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c19.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -119,49 +137,49 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c18.btn:hover {
+.c19.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c18.btn:focus {
+.c19.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c18.btn.btn-primary {
+.c19.btn.btn-primary {
   border: none;
 }
 
-.c18.btn.btn-secondary {
+.c19.btn.btn-secondary {
   background: none;
 }
 
-.c18.btn.btn-info {
+.c19.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c18.btn.btn-info:hover,
-.c18.btn.btn-info:active,
-.c18.btn.btn-info:focus {
+.c19.btn.btn-info:hover,
+.c19.btn.btn-info:active,
+.c19.btn.btn-info:focus {
   background: none;
 }
 
-.c18.btn.btn-light {
+.c19.btn.btn-light {
   border: none;
 }
 
-.c18.btn.btn-dark {
+.c19.btn.btn-dark {
   border: none;
 }
 
-.c18.btn.btn-link {
+.c19.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -181,9 +199,9 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c18.btn.btn-link:hover,
-.c18.btn.btn-link:active,
-.c18.btn.btn-link:focus {
+.c19.btn.btn-link:hover,
+.c19.btn.btn-link:active,
+.c19.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -192,14 +210,14 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c18.btn.btn-link:disabled,
-.c18.btn.btn-link.disabled {
+.c19.btn.btn-link:disabled,
+.c19.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c18.btn:disabled,
-.c18.btn:disabled:hover {
+.c19.btn:disabled,
+.c19.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -210,19 +228,37 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c18.Button .Button__icon {
+.c19.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c18.Button--icon-only:focus {
+.c19.Button--icon-only:focus {
   outline: none;
 }
 
-.c18.Button--icon-only .Button__icon {
+.c19.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c19 {
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c3 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c20 {
   font-size: 1.4rem;
 }
 
@@ -250,11 +286,11 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   border-color: transparent;
 }
 
-.c20 {
+.c21 {
   margin: 0;
 }
 
-.c20 [class^='col-'] {
+.c21 [class^='col-'] {
   padding: 0;
 }
 
@@ -281,42 +317,6 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c16 {
-  padding-right: 0;
-}
-
-.c16 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c17:not(:first-child) {
-  padding-left: 0;
-}
-
-.c17:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c3 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
 .c9 {
   margin: 1.5rem;
   padding: 1.5rem;
@@ -324,7 +324,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   text-align: left;
 }
 
-.c21 {
+.c22 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -334,6 +334,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 
 .c12:hover {
   cursor: pointer;
+}
+
+.c15.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
 .c14 {
@@ -388,15 +395,15 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   height: auto;
 }
 
-.c15 {
+.c16 {
   border-radius: 0.5rem;
 }
 
-.c15 .idir-input-group .input-group-prepend select {
+.c16 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c15 .idir-input-group input {
+.c16 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
@@ -578,7 +585,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="col"
+                            class="c15 col"
                           />
                         </div>
                         <div
@@ -594,7 +601,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="col"
+                            class="c15 col"
                           />
                         </div>
                         <div
@@ -610,7 +617,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="col"
+                            class="c15 col"
                           />
                         </div>
                         <div
@@ -626,7 +633,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="col"
+                            class="c15 col"
                           />
                         </div>
                         <div
@@ -642,7 +649,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             </label>
                           </div>
                           <div
-                            class="col"
+                            class="c15 col"
                           />
                         </div>
                         <div
@@ -679,7 +686,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                       Search for a property
                     </h3>
                     <form
-                      class="c15 p-3"
+                      class="c16 p-3"
                       novalidate=""
                     >
                       <div
@@ -692,7 +699,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                             class="flex-nowrap row"
                           >
                             <div
-                              class="c16 col-auto"
+                              class="c17 col-auto"
                             >
                               <div
                                 class="input-group-prepend"
@@ -734,7 +741,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               </div>
                             </div>
                             <div
-                              class="c17 col"
+                              class="c18 col"
                             >
                               <div
                                 class="input form-group"
@@ -761,7 +768,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pr-0 col"
                             >
                               <button
-                                class="c18 Button Button--icon-only primary btn btn-primary"
+                                class="c19 Button Button--icon-only primary btn btn-primary"
                                 data-testid="search"
                                 id="search-button"
                                 title="search"
@@ -790,7 +797,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                               class="pl-0 col"
                             >
                               <button
-                                class="c18 Button Button--icon-only btn btn-info"
+                                class="c19 Button Button--icon-only btn btn-info"
                                 data-testid="reset-button"
                                 id="reset-button"
                                 title="reset-button"
@@ -910,7 +917,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                         class="ml-auto align-self-center col-auto"
                       >
                         <p
-                          class="c19"
+                          class="c20"
                         >
                           0 selected
                         </p>
@@ -932,7 +939,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                 Selected properties
               </h3>
               <div
-                class="c20 c21 row"
+                class="c21 c22 row"
               >
                 <div
                   class="col-md-3"
