@@ -7,7 +7,7 @@ on:
     branches: [master, dev, test]
 
 jobs:
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
     env:
       CI: true
