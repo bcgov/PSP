@@ -41,10 +41,10 @@ export const AccessRequestFilter = (props: IProps) => {
     <FilterBoxForm className="p-3">
       <Row className="filters">
         <Col className="d-flex" md={4}>
-          <Form.Label className="mr-4 font-weight-bold">Search IDIR/Last name:</Form.Label>
+          <Form.Label className="mr-4 font-weight-bold">Search:</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Search"
+            placeholder="Search IDIR/Last name"
             value={filterState.searchText}
             onChange={handleSearchTextChange}
           />
