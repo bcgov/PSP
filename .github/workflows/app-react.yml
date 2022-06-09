@@ -7,16 +7,12 @@ on:
     branches: [master, dev, test]
 
 jobs:
-  build:
+  build-frontend:
     runs-on: ubuntu-latest
     env:
       CI: true
       working-directory: ./frontend
       GIT_BRANCH: "${{github.ref}}"
-
-    strategy:
-      matrix:
-        node-version: [16.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -26,10 +22,10 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "16.15.0"
       - run: npm ci
         working-directory: ${{env.working-directory}}
 
