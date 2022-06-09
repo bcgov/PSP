@@ -4098,7 +4098,7 @@ CREATE TABLE "dbo"."PIMS_ACCESS_REQUEST_HIST"  (
 	"USER_ID"                        	bigint NOT NULL,
 	"ROLE_ID"                        	bigint NULL,
 	"ACCESS_REQUEST_STATUS_TYPE_CODE"	nvarchar(20) NOT NULL,
-	"REGION_CODE"                    	smallint NOT NULL,
+	"REGION_CODE"                    	smallint NOT NULL CONSTRAINT [ACRQSTH_REGION_CODE_DEF] DEFAULT (4),
 	"CONCURRENCY_CONTROL_NUMBER"     	bigint NOT NULL,
 	"APP_CREATE_TIMESTAMP"           	datetime NOT NULL,
 	"APP_CREATE_USERID"              	nvarchar(30) NOT NULL,
