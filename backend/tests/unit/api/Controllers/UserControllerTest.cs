@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Xunit;
 using KModel = Pims.Keycloak.Models;
 using Model = Pims.Api.Models.Concepts;
+using FluentAssertions;
 
 namespace PimsApi.Test.Controllers
 {

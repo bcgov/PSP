@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
+using FluentAssertions;
 
 namespace PimsApi.Test.Keycloak.Controllers
 {

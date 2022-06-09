@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Controllers

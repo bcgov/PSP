@@ -134,16 +134,16 @@ namespace Pims.Api.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsAssignableFrom<IEnumerable<object>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.LookupModel>(areaUnitTypes), actualResult.Next(0), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(classificationTypes), actualResult.Next(1), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(countries), actualResult.Next(2), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(districts), actualResult.Next(3), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(organizationTypes), actualResult.Next(4), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(propertyTypes), actualResult.Next(5), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(provinces), actualResult.Next(6), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel<short>>(regions), actualResult.Next(7), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.RoleModel>(roleCodes), actualResult.Next(8), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Model.LookupModel>(tenureTypes), actualResult.Next(9), new ShallowPropertyCompare());
+            mapper.Map<Model.LookupModel>(areaUnitTypes).Should().BeEquivalentTo(actualResult.Next(0));
+            mapper.Map<Model.LookupModel>(classificationTypes).Should().BeEquivalentTo(actualResult.Next(1));
+            mapper.Map<Model.LookupModel>(countries).Should().BeEquivalentTo(actualResult.Next(2));
+            mapper.Map<Model.LookupModel>(districts).Should().BeEquivalentTo(actualResult.Next(3));
+            mapper.Map<Model.LookupModel>(organizationTypes).Should().BeEquivalentTo(actualResult.Next(4));
+            mapper.Map<Model.LookupModel>(propertyTypes).Should().BeEquivalentTo(actualResult.Next(5));
+            mapper.Map<Model.LookupModel>(provinces).Should().BeEquivalentTo(actualResult.Next(6));
+            mapper.Map<Model.LookupModel<short>>(regions).Should().BeEquivalentTo(actualResult.Next(7));
+            mapper.Map<Model.RoleModel>(roleCodes).Should().BeEquivalentTo(actualResult.Next(8));
+            mapper.Map<Model.LookupModel>(tenureTypes).Should().BeEquivalentTo(actualResult.Next(9));
         }
         #endregion
     }
