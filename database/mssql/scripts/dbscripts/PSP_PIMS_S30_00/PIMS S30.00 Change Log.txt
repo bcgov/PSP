@@ -2,7 +2,7 @@ PSP_PIMS S30.00 Sprint 29 2022-Jun-06
 - Altered tables:
   - PIMS_PROPERTY
     - Added column PPH_STATUS_UPDATE_USER_GUID 
-- Addded script:
+- Added script:
   - 00_PSP_PIMS_PMBC_Build.sql added to Alter Up and Build
   - PMBC schema and table was added to support ParcelMapBC property data integration into PIMS.
 - Requires additional metadata to meet standards
