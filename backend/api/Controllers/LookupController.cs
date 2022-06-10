@@ -99,7 +99,7 @@ namespace Pims.Api.Controllers
             var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyImprovementTypes());
             var propertyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTypes());
             var provinces = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetProvinces());
-            var regions = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetRegions());
+            var regions = _mapper.Map<Model.LookupModel<short>[]>(_pimsService.Lookup.GetRegions());
             var roleCodes = _mapper.Map<Model.RoleModel[]>(_pimsService.Lookup.GetRoles());
             var securityDepositTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetSecurityDepositTypes());
             var tenureTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTenureTypes());

@@ -241,6 +241,12 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
                     >
                       Plan #
                     </option>
+                    <option
+                      class="option"
+                      value="address"
+                    >
+                      Address
+                    </option>
                   </select>
                 </div>
               </div>

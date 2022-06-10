@@ -1,6 +1,7 @@
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
+import Api_TypeCode from 'models/api/TypeCode';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -11,36 +12,50 @@ export interface IResearchHeaderProps {
 }
 
 const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
-  const leftColumnWidth = '6';
-  const leftColumnLabel = '4';
+  const leftColumnWidth = '8';
+  const leftColumnLabel = '3';
   const researchFile = props.researchFile;
 
-  const region = researchFile?.researchProperties
-    ?.map(x => x.property?.region?.description)
-    .filter(x => x !== undefined && x !== '')
+  const regions = removeDuplicates(
+    researchFile?.researchProperties?.map(x => x.property?.region) || [],
+  )
+    .map(x => x.description)
     .join(', ');
-  const district = researchFile?.researchProperties
-    ?.map(x => x.property?.district?.description)
-    .filter(x => x !== undefined && x !== '')
+
+  const districts = removeDuplicates(
+    researchFile?.researchProperties?.map(x => x.property?.district) || [],
+  )
+    .map(x => x.description)
     .join(', ');
+
+  function removeDuplicates(list: (Api_TypeCode<number> | undefined)[]): Api_TypeCode<number>[] {
+    return list
+      .filter((x): x is Api_TypeCode<number> => !!x && x.description !== '')
+      .reduce((acc: Api_TypeCode<number>[], curr: Api_TypeCode<number>) => {
+        if (acc.find(x => curr.id === x.id) === undefined) {
+          acc.push(curr);
+        }
+        return acc;
+      }, []);
+  }
   return (
-    <Row>
+    <Row className="no-gutters">
       <Col>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
             <HeaderField label="Research file #:" labelWidth={leftColumnLabel}>
               {researchFile?.rfileNumber}
             </HeaderField>
           </Col>
           <Col className="text-right">
-            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by
+            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={researchFile?.appCreateUserid}
               userGuid={researchFile?.appCreateUserGuid}
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
             <HeaderField label="R-file name:" labelWidth={leftColumnLabel}>
               {researchFile?.name}
@@ -48,17 +63,17 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
           </Col>
           <Col className="text-right">
             Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
-            by
+            by{' '}
             <UserNameTooltip
               userName={researchFile?.appLastUpdateUserid}
               userGuid={researchFile?.appLastUpdateUserGuid}
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
-            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel}>
-              {region}
+            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth="9">
+              {regions}
             </HeaderField>
           </Col>
           <Col>
@@ -67,10 +82,10 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
             </HeaderField>
           </Col>
         </Row>
-        <Row>
+        <Row className="no-gutters">
           <Col xs={leftColumnWidth}>
-            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel}>
-              {district}
+            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
+              {districts}
             </HeaderField>
           </Col>
         </Row>

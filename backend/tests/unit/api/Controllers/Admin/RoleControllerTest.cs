@@ -2,7 +2,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Admin.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -10,7 +9,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.Role;
+using Model = Pims.Api.Models.Concepts;
+using FluentAssertions;
 
 namespace PimsApi.Test.Admin.Controllers
 {
@@ -49,7 +49,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel[]>(roles), actualResult.Items, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.Role.Get(1, 10, null), Times.Once());
         }
 
@@ -73,7 +73,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel[]>(roles), actualResult.Items, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.Role.Get(1, 10, "test"), Times.Once());
         }
         #endregion
@@ -98,7 +98,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Role.Get(role.RoleUid), Times.Once());
         }
         #endregion
@@ -124,7 +124,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Role.Add(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
@@ -150,7 +150,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Role.Update(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
@@ -176,7 +176,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Role.Delete(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion

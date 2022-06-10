@@ -24,7 +24,7 @@ const ResearchProperties: React.FunctionComponent = () => {
               <Col>
                 <MapSelectorContainer
                   onSelectedProperty={(newProperty: IMapProperty) => {
-                    const formProperty = new PropertyForm(newProperty);
+                    const formProperty = PropertyForm.fromMapProperty(newProperty);
                     push(formProperty);
                   }}
                   existingProperties={values.properties}

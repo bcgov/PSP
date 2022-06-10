@@ -44,7 +44,11 @@ namespace Pims.Dal.Repositories
             var key = this.User.GetUserKey();
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
+                .ThenInclude(u => u.Person)
+                .ThenInclude(p => p.PimsContactMethods)
+                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
+                .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .AsNoTracking()
@@ -62,7 +66,11 @@ namespace Pims.Dal.Repositories
         {
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
+                .ThenInclude(u => u.Person)
+                .ThenInclude(p => p.PimsContactMethods)
+                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
+                .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .AsNoTracking()
@@ -80,9 +88,10 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all the access requests that users have match the specified filter
+        /// Get all the access requests that users have match the specified filter.
         /// </summary>
         /// <param name="filter"></param>
+        /// <returns>Paged access requests matching the filter criteria.</returns>
         public Paged<PimsAccessRequest> Get(AccessRequestFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
@@ -91,10 +100,12 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.User)
                 .ThenInclude(u => u.Person)
                 .ThenInclude(p => p.PimsContactMethods)
+                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .Include(a => a.AccessRequestStatusTypeCodeNavigation)
+                .Include(a => a.RegionCodeNavigation)
                 .AsNoTracking();
 
             var userOrganizations = this.User.GetOrganizations();
@@ -103,24 +114,15 @@ namespace Pims.Dal.Repositories
                 query = query.Where(accessRequest => accessRequest.PimsAccessRequestOrganizations.Any(a => a.OrganizationId.HasValue && userOrganizations.Contains(a.OrganizationId.Value)));
             }
 
-            if (!String.IsNullOrWhiteSpace(filter.Status))
+            if (!string.IsNullOrWhiteSpace(filter.SearchText))
             {
-                query = query.Where(request => request.AccessRequestStatusTypeCode == filter.Status);
+                query = query.Where(request => request.User != null
+                && (request.User.BusinessIdentifierValue.Contains(filter.SearchText)
+                || (request.User.Person != null && request.User.Person.Surname.Contains(filter.SearchText))));
             }
-
-            if (!string.IsNullOrWhiteSpace(filter.Role))
+            if (filter.StatusType != null)
             {
-                query = query.Where(ar => EF.Functions.Like(ar.Role.Name, $"%{filter.Role}%"));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.Organization))
-            {
-                query = query.Where(ar => ar.PimsAccessRequestOrganizations.Any(a => EF.Functions.Like(a.Organization.OrganizationName, $"%{filter.Organization}%")));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.Username))
-            {
-                query = query.Where(ar => EF.Functions.Like(ar.User.BusinessIdentifierValue, $"%{filter.Username}%"));
+                query = query.Where(request => request.AccessRequestStatusTypeCode == filter.StatusType.Id);
             }
 
             var accessRequests = query
@@ -173,7 +175,7 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsAccessRequests.Add(addRequest);
             this.Context.CommitTransaction();
-            return addRequest;
+            return Get(addRequest.AccessRequestId);
         }
 
         /// <summary>
@@ -191,8 +193,6 @@ namespace Pims.Dal.Repositories
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
             var position = updateRequest.User.Position;
-            updateRequest.User = this.Context.PimsUsers.FirstOrDefault(u => u.GuidIdentifierValue == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
-            updateRequest.User.Position = position;
             if (!isAdmin && updateRequest.User.GuidIdentifierValue != key)
             {
                 throw new NotAuthorizedException(); // Not allowed to update someone elses request.
@@ -201,7 +201,11 @@ namespace Pims.Dal.Repositories
             // fetch the existing request from the datasource.
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
+                .ThenInclude(u => u.Person)
+                .ThenInclude(p => p.PimsContactMethods)
+                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
+                .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .FirstOrDefault(a => a.AccessRequestId == updateRequest.AccessRequestId) ?? throw new KeyNotFoundException();
@@ -211,6 +215,8 @@ namespace Pims.Dal.Repositories
             accessRequest.ConcurrencyControlNumber = updateRequest.ConcurrencyControlNumber;
             accessRequest.Note = updateRequest.Note;
             accessRequest.AccessRequestStatusTypeCode = updateRequest.AccessRequestStatusTypeCode;
+            accessRequest.RegionCode = updateRequest.RegionCode;
+            accessRequest.User.Position = position;
 
             this.Context.PimsAccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();

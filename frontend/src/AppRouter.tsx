@@ -2,6 +2,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
+import { AdminAccessRequestPage } from 'features/admin/access-request/AdminAccessRequestPage';
 import { ContactListPage } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
@@ -31,9 +32,9 @@ const EditUserPage = lazy(() =>
   componentLoader(import('./features/admin/edit-user/EditUserPage'), 2),
 );
 const ManageAccessRequests = lazy(() =>
-  componentLoader(import('features/admin/access/ManageAccessRequests'), 2),
+  componentLoader(import('features/admin/access/ManageAccessRequestsPage'), 2),
 );
-const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsers'), 2));
+const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsersPage'), 2));
 const PropertyListView = lazy(() =>
   componentLoader(import('features/properties/list/PropertyListView'), 2),
 );
@@ -127,6 +128,14 @@ const AppRouter: React.FC = () => {
         ></AppRoute>
         <AppRoute
           protected
+          path="/admin/access/request/:id"
+          component={AdminAccessRequestPage}
+          layout={AuthLayout}
+          claim={Claims.ADMIN_USERS}
+          title={getTitle('Request Access')}
+        ></AppRoute>
+        <AppRoute
+          protected
           path="/mapView/:id?"
           component={MapView}
           layout={AuthLayout}
@@ -147,7 +156,7 @@ const AppRouter: React.FC = () => {
           path="/lease/list"
           component={LeaseAndLicenseListView}
           layout={AuthLayout}
-          claim={Claims.PROPERTY_VIEW}
+          claim={Claims.LEASE_VIEW}
           title={getTitle('View Lease & Licenses')}
         />
         <AppRoute

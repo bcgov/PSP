@@ -9,10 +9,10 @@ import { AuthStateContextProvider } from 'contexts/authStateContext';
 import { mount } from 'enzyme';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import Login from 'features/account/Login';
-import ManageAccessRequests from 'features/admin/access/ManageAccessRequests';
+import ManageAccessRequestsPage from 'features/admin/access/ManageAccessRequestsPage';
 import AccessRequestPage from 'features/admin/access-request/AccessRequestPage';
 import EditUserPage from 'features/admin/edit-user/EditUserPage';
-import ManageUsers from 'features/admin/users/ManageUsers';
+import ManageUsers from 'features/admin/users/ManageUsersPage';
 import { PropertyListView } from 'features/properties/list';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
@@ -170,7 +170,7 @@ describe('PSP routing', () => {
       const wrapper = mount(getRouter('/admin/access/requests'));
       await waitFor(async () => {
         wrapper.update();
-        expect(wrapper.find(ManageAccessRequests)).toHaveLength(1);
+        expect(wrapper.find(ManageAccessRequestsPage)).toHaveLength(1);
       });
     });
 

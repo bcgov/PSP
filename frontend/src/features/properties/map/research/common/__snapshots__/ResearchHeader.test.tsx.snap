@@ -9,9 +9,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
     class="Toastify"
   />
   .c0 {
-  font-style: italic;
   font-weight: bold;
-  color: black;
 }
 
 .c1 {
@@ -23,29 +21,29 @@ exports[`ResearchHeader component renders as expected when provided no research 
 }
 
 <div
-    class="row"
+    class="no-gutters row"
   >
     <div
       class="col"
     >
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
-          class="col-6"
+          class="col-8"
         >
           <div
             class="row"
           >
             <div
-              class="pr-0 text-left col-4"
+              class="pr-0 text-left col-3"
             >
               <label>
                 Research file #:
               </label>
             </div>
             <div
-              class="col-auto"
+              class="pl-1 text-left col-auto"
             >
               <strong />
             </div>
@@ -56,7 +54,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
         >
           Created: 
           <strong />
-           by
+           by 
           <span
             class="tooltip-icon"
             data-testid="tooltip-icon"
@@ -70,23 +68,23 @@ exports[`ResearchHeader component renders as expected when provided no research 
         </div>
       </div>
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
-          class="col-6"
+          class="col-8"
         >
           <div
             class="row"
           >
             <div
-              class="pr-0 text-left col-4"
+              class="pr-0 text-left col-3"
             >
               <label>
                 R-file name:
               </label>
             </div>
             <div
-              class="col-auto"
+              class="pl-1 text-left col-auto"
             >
               <strong />
             </div>
@@ -97,7 +95,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
         >
           Last updated: 
           <strong />
-           by
+           by 
           <span
             class="tooltip-icon"
             data-testid="tooltip-icon"
@@ -111,23 +109,23 @@ exports[`ResearchHeader component renders as expected when provided no research 
         </div>
       </div>
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
-          class="col-6"
+          class="col-8"
         >
           <div
             class="row"
           >
             <div
-              class="pr-0 text-left col-4"
+              class="pr-0 text-left col-3"
             >
               <label>
                 MoTI region:
               </label>
             </div>
             <div
-              class="col-auto"
+              class="pl-1 text-left col-9"
             >
               <strong />
             </div>
@@ -147,7 +145,7 @@ exports[`ResearchHeader component renders as expected when provided no research 
               </label>
             </div>
             <div
-              class="col-auto"
+              class="pl-1 text-left col-auto"
             >
               <strong />
             </div>
@@ -155,23 +153,23 @@ exports[`ResearchHeader component renders as expected when provided no research 
         </div>
       </div>
       <div
-        class="row"
+        class="no-gutters row"
       >
         <div
-          class="col-6"
+          class="col-8"
         >
           <div
             class="row"
           >
             <div
-              class="pr-0 text-left col-4"
+              class="pr-0 text-left col-3"
             >
               <label>
                 Ministry district:
               </label>
             </div>
             <div
-              class="col-auto"
+              class="pl-1 text-left col-9"
             >
               <strong />
             </div>

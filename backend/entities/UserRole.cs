@@ -1,12 +1,19 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// UserRole class, provides an entity for the datamodel to manage user organizations.
     /// </summary>
-    public partial class PimsUserRole : IBaseAppEntity
+    public partial class PimsUserRole : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
+        /// <summary>
+        /// get/set - The primary key IDENTITY.
+        /// </summary>
+        [NotMapped]
+        public override long Id { get => UserRoleId; set => UserRoleId = value; }
+
         #region Constructors
         public PimsUserRole() { }
 

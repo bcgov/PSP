@@ -36,7 +36,7 @@ namespace Pims.Dal.Entities
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <param name="dataSourceEffectiveDate"></param>
-        public PimsProperty(int pid, PimsPropertyType type, PimsPropertyClassificationType classification, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate) : this()
+        public PimsProperty(int pid, PimsPropertyType type, PimsPropertyClassificationType classification, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status) : this()
         {
             this.Pid = pid;
             this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
@@ -60,6 +60,8 @@ namespace Pims.Dal.Entities
             this.PropertyDataSourceTypeCodeNavigation = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
             this.PropertyDataSourceTypeCode = dataSource.Id;
             this.PropertyDataSourceEffectiveDate = dataSourceEffectiveDate;
+            this.PropertyStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
+            this.PropertyStatusTypeCode = status.Id;
         }
         #endregion
     }

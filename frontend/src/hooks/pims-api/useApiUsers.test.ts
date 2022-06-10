@@ -24,7 +24,7 @@ describe('useApiUsers api hook', () => {
   };
 
   it('Gets paged users', async () => {
-    mockAxios.onPost(`/admin/users/my/organization`).reply(200, {
+    mockAxios.onPost(`/admin/users/filter`).reply(200, {
       items: [mockAccessRequest],
       pageIndex: 1,
       page: 1,
@@ -48,7 +48,7 @@ describe('useApiUsers api hook', () => {
     mockAxios.onGet(`/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f`).reply(200, mockUser);
 
     const { getUser } = setup();
-    const response = await getUser(mockUser.keycloakUserId!);
+    const response = await getUser(mockUser.guidIdentifierValue!);
 
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual(mockUser);

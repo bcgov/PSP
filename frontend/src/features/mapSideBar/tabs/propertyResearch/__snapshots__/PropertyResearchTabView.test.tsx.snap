@@ -8,7 +8,14 @@ exports[`PropertyResearchTabView component renders as expected when provided val
   <div
     class="Toastify"
   />
-  .c3 {
+  .c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
   font-weight: bold;
 }
 
@@ -89,7 +96,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             The Research Property name
           </div>
@@ -107,7 +114,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Type A, Type B
           </div>
@@ -125,7 +132,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Yes
           </div>
@@ -143,7 +150,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Yes
           </div>
@@ -161,7 +168,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             A document reference
           </div>
@@ -203,7 +210,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           />
         </div>
         Research summary notes

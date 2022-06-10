@@ -6,7 +6,7 @@ using Pims.Dal.Security;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Model = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Test.Routes.Admin
 {
@@ -67,18 +67,6 @@ namespace Pims.Api.Test.Routes.Admin
             // Assert
             Assert.NotNull(endpoint);
             endpoint.HasPost("filter");
-        }
-
-        [Fact]
-        public void GetMyUsers_Route()
-        {
-            // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.GetMyUsers), typeof(UserFilter));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost("my/organization");
         }
 
         [Fact]

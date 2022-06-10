@@ -1,3 +1,4 @@
+import { Button } from 'components/common/buttons/Button';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
@@ -5,7 +6,7 @@ import { FormikProps } from 'formik';
 import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { MdTopic } from 'react-icons/md';
+import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
@@ -13,6 +14,7 @@ import ResearchFooter from './common/ResearchFooter';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
 import { useGetResearch } from './hooks/useGetResearch';
+import { UpdateProperties } from './update/properties/UpdateProperties';
 import ViewSelector from './ViewSelector';
 
 export interface IResearchContainerProps {
@@ -28,6 +30,8 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDirty, setIsDirty] = useState<boolean>(false);
+
+  const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
   const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
     undefined,
@@ -106,51 +110,74 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     setIsEditing(false);
   };
 
-  const onSuccesss = () => {
+  const onSuccess = () => {
     setIsDirty(true);
     setIsEditing(false);
   };
 
-  return (
-    <MapSideBarLayout
-      title={isEditing ? 'Update Research File' : 'Research File'}
-      icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
-      header={<ResearchHeader researchFile={researchFile} />}
-      footer={
-        isEditing && (
-          <ResearchFooter
-            isSubmitting={formikRef?.current?.isSubmitting}
-            onSave={handleSave}
-            onCancel={handleCancel}
-          />
-        )
-      }
-      onClose={props.onClose}
-      showCloseButton
-    >
-      <ResearchFileLayout
-        leftComponent={
-          <ResearchMenu
-            items={menuItems}
-            selectedIndex={selectedMenuIndex}
-            onChange={onMenuChange}
-          />
-        }
-        bodyComponent={
-          <StyledFormWrapper>
-            <ViewSelector
-              researchFile={researchFile}
-              selectedIndex={selectedMenuIndex}
-              isEditMode={isEditing}
-              onSuccesss={onSuccesss}
-              setEditMode={setIsEditing}
-              setFormikRef={setFormikRef}
+  const showPropertiesSelector = () => {
+    setIsShowingPropertySelector(true);
+  };
+
+  if (isShowingPropertySelector) {
+    return (
+      <UpdateProperties
+        researchFile={researchFile}
+        setIsShowingPropertySelector={setIsShowingPropertySelector}
+        onSuccess={onSuccess}
+      />
+    );
+  } else {
+    return (
+      <MapSideBarLayout
+        title={isEditing ? 'Update Research File' : 'Research File'}
+        icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
+        header={<ResearchHeader researchFile={researchFile} />}
+        footer={
+          isEditing && (
+            <ResearchFooter
+              isOkDisabled={formikRef?.current?.isSubmitting}
+              onSave={handleSave}
+              onCancel={handleCancel}
             />
-          </StyledFormWrapper>
+          )
         }
-      ></ResearchFileLayout>
-    </MapSideBarLayout>
-  );
+        onClose={props.onClose}
+        showCloseButton
+      >
+        <ResearchFileLayout
+          leftComponent={
+            <>
+              {selectedMenuIndex === 0 && (
+                <Button variant="success" onClick={showPropertiesSelector}>
+                  <MdLocationPin size={'2.5rem'} />
+                  Edit properties
+                </Button>
+              )}
+
+              <ResearchMenu
+                items={menuItems}
+                selectedIndex={selectedMenuIndex}
+                onChange={onMenuChange}
+              />
+            </>
+          }
+          bodyComponent={
+            <StyledFormWrapper>
+              <ViewSelector
+                researchFile={researchFile}
+                selectedIndex={selectedMenuIndex}
+                isEditMode={isEditing}
+                onSuccess={onSuccess}
+                setEditMode={setIsEditing}
+                setFormikRef={setFormikRef}
+              />
+            </StyledFormWrapper>
+          }
+        ></ResearchFileLayout>
+      </MapSideBarLayout>
+    );
+  }
 };
 
 export default ResearchContainer;

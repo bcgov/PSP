@@ -3,6 +3,22 @@ namespace Pims.Api.Models.Lookup
     /// <summary>
     /// LookupModel class, provides a model that represents a code lookup item.
     /// </summary>
+    public class LookupModel<T> : LookupModel
+    {
+        #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify record.
+        /// </summary>
+        public new T Id { get; set; }
+
+        /// <summary>
+        /// get/set - Optional parent of this lookup.
+        /// Allows to model parent/child relationships in lookup codes (ex Country -> Province)
+        /// </summary>
+        public new T ParentId { get; set; }
+        #endregion
+    }
+
     public class LookupModel : BaseModel
     {
         #region Properties

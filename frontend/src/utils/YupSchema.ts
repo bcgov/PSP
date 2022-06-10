@@ -15,6 +15,9 @@ export const AccessRequestSchema = Yup.object().shape({
   roleId: Yup.number()
     .min(0, 'Invalid Role')
     .required('Required'),
+  regionCodeId: Yup.number()
+    .min(0, 'Invalid Region')
+    .required('Required'),
   note: Yup.string().max(1000, 'Note must be less than 1000 characters'),
   user: Yup.object().shape({
     position: Yup.string().max(100, 'Note must be less than 100 characters'),

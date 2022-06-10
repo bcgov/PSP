@@ -70,21 +70,24 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
 
   return (
     <StyledReadOnlyForm>
-      <Section header="Property attributes">
+      <Section header="Property Attributes">
         <SectionField label="MOTI region">
-          <Text field="motiRegion.REGION_NAME" />
+          <Text field="regionType.description" />
         </SectionField>
         <SectionField label="Highways district">
           <InlineContainer>
-            <Text field="highwaysDistrict.DISTRICT_NUMBER" />
-            {'-'}
-            <Text field="highwaysDistrict.DISTRICT_NAME" />
+            {values.districtType?.description !== 'Cannot determine' && (
+              <>
+                <Text field="districtType.id" /> -
+              </>
+            )}
+            <Text field="districtType.description" />
           </InlineContainer>
         </SectionField>
         <SectionField label="Electoral district">
           <Text field="electoralDistrict.ED_NAME" />
         </SectionField>
-        <SectionField label="Agricultural land reserve">
+        <SectionField label="Agricultural Land Reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Land parcel type">
@@ -118,7 +121,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Provincial public hwy">
+        <SectionField label="Provincial Public Hwy">
           {isProvincialHighway === true && <Text>Yes</Text>}
           {isProvincialHighway === false && <Text>No</Text>}
           {isProvincialHighway === undefined && <Text>Unknown</Text>}
