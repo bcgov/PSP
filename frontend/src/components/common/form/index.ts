@@ -1,3 +1,4 @@
+export * from './ActiveFilterCheck';
 export * from './AsyncTypeahead';
 export * from './Check';
 export * from './DisplayError';

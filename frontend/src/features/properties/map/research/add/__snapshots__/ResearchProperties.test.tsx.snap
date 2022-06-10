@@ -23,7 +23,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   >
     Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria
   </div>
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -53,49 +53,49 @@ exports[`ResearchProperties component renders as expected when provided no prope
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -115,9 +115,9 @@ exports[`ResearchProperties component renders as expected when provided no prope
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -126,14 +126,14 @@ exports[`ResearchProperties component renders as expected when provided no prope
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -144,32 +144,32 @@ exports[`ResearchProperties component renders as expected when provided no prope
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c18.c18.btn {
+.c19.c19.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c18.c18.btn .text {
+.c19.c19.btn .text {
   display: none;
 }
 
-.c18.c18.btn:hover,
-.c18.c18.btn:active,
-.c18.c18.btn:focus {
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -183,14 +183,50 @@ exports[`ResearchProperties component renders as expected when provided no prope
   flex-direction: row;
 }
 
-.c18.c18.btn:hover .text,
-.c18.c18.btn:active .text,
-.c18.c18.btn:focus .text {
+.c19.c19.btn:hover .text,
+.c19.c19.btn:active .text,
+.c19.c19.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c13 {
+.c11 {
+  padding-right: 0;
+}
+
+.c11 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c12:not(:first-child) {
+  padding-left: 0;
+}
+
+.c12:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c18 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c14 {
   font-size: 1.4rem;
 }
 
@@ -218,11 +254,11 @@ exports[`ResearchProperties component renders as expected when provided no prope
   border-color: transparent;
 }
 
-.c14 {
+.c15 {
   margin: 0;
 }
 
-.c14 [class^='col-'] {
+.c15 [class^='col-'] {
   padding: 0;
 }
 
@@ -242,7 +278,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   text-align: left;
 }
 
-.c15 {
+.c16 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -250,48 +286,19 @@ exports[`ResearchProperties component renders as expected when provided no prope
   font-family: 'BcSans-Bold';
 }
 
-.c10 {
-  padding-right: 0;
-}
-
-.c10 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c11:not(:first-child) {
-  padding-left: 0;
-}
-
-.c11:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
 .c17 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c17 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c16 {
   font-size: 1.2rem;
 }
 
 .c6:hover {
   cursor: pointer;
+}
+
+.c9.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
 .c8 {
@@ -335,6 +342,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
 
 .c0 .tab-content .tab-pane {
   position: relative;
+  height: 100%;
 }
 
 .c1 {
@@ -345,15 +353,15 @@ exports[`ResearchProperties component renders as expected when provided no prope
   height: auto;
 }
 
-.c9 {
+.c10 {
   border-radius: 0.5rem;
 }
 
-.c9 .idir-input-group .input-group-prepend select {
+.c10 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c9 .idir-input-group input {
+.c10 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
@@ -460,7 +468,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       </label>
                     </div>
                     <div
-                      class="col"
+                      class="c9 col"
                     />
                   </div>
                   <div
@@ -476,7 +484,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       </label>
                     </div>
                     <div
-                      class="col"
+                      class="c9 col"
                     />
                   </div>
                   <div
@@ -492,7 +500,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       </label>
                     </div>
                     <div
-                      class="col"
+                      class="c9 col"
                     />
                   </div>
                   <div
@@ -508,7 +516,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       </label>
                     </div>
                     <div
-                      class="col"
+                      class="c9 col"
                     />
                   </div>
                   <div
@@ -524,7 +532,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       </label>
                     </div>
                     <div
-                      class="col"
+                      class="c9 col"
                     />
                   </div>
                   <div
@@ -561,7 +569,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                 Search for a property
               </h3>
               <form
-                class="c9 p-3"
+                class="c10 p-3"
                 novalidate=""
               >
                 <div
@@ -574,7 +582,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                       class="flex-nowrap row"
                     >
                       <div
-                        class="c10 col-auto"
+                        class="c11 col-auto"
                       >
                         <div
                           class="input-group-prepend"
@@ -605,12 +613,18 @@ exports[`ResearchProperties component renders as expected when provided no prope
                               >
                                 Plan #
                               </option>
+                              <option
+                                class="option"
+                                value="address"
+                              >
+                                Address
+                              </option>
                             </select>
                           </div>
                         </div>
                       </div>
                       <div
-                        class="c11 col"
+                        class="c12 col"
                       >
                         <div
                           class="input form-group"
@@ -637,7 +651,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                         class="pr-0 col"
                       >
                         <button
-                          class="c12 Button Button--icon-only primary btn btn-primary"
+                          class="c13 Button Button--icon-only primary btn btn-primary"
                           data-testid="search"
                           id="search-button"
                           title="search"
@@ -666,7 +680,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                         class="pl-0 col"
                       >
                         <button
-                          class="c12 Button Button--icon-only btn btn-info"
+                          class="c13 Button Button--icon-only btn btn-info"
                           data-testid="reset-button"
                           id="reset-button"
                           title="reset-button"
@@ -786,7 +800,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                   class="ml-auto align-self-center col-auto"
                 >
                   <p
-                    class="c13"
+                    class="c14"
                   >
                     0 selected
                   </p>
@@ -808,7 +822,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
           Selected properties
         </h3>
         <div
-          class="c14 c15 row"
+          class="c15 c16 row"
         >
           <div
             class="col-md-3"
@@ -841,7 +855,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
           </div>
         </div>
         <div
-          class="c14 align-items-center mb-3 row"
+          class="c15 align-items-center mb-3 row"
         >
           <div
             class="col-md-3"
@@ -906,7 +920,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     </g>
                   </g>
                   <text
-                    class="c16"
+                    class="c17"
                     textLength="1.25rem"
                     x="7"
                     y="15"
@@ -929,7 +943,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             class="col-md-7"
           >
             <div
-              class="c17 mb-0 w-100 input form-group"
+              class="c18 mb-0 w-100 input form-group"
             >
               <input
                 class="form-control"
@@ -943,7 +957,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             class="col-md-2"
           >
             <button
-              class="c12 Button c18 btn btn-link"
+              class="c13 Button c19 btn btn-link"
               type="button"
             >
               <div
@@ -980,7 +994,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
           </div>
         </div>
         <div
-          class="c14 align-items-center mb-3 row"
+          class="c15 align-items-center mb-3 row"
         >
           <div
             class="col-md-3"
@@ -1045,7 +1059,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     </g>
                   </g>
                   <text
-                    class="c16"
+                    class="c17"
                     textLength="1.25rem"
                     x="7"
                     y="15"
@@ -1068,7 +1082,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             class="col-md-7"
           >
             <div
-              class="c17 mb-0 w-100 input form-group"
+              class="c18 mb-0 w-100 input form-group"
             >
               <input
                 class="form-control"
@@ -1082,7 +1096,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             class="col-md-2"
           >
             <button
-              class="c12 Button c18 btn btn-link"
+              class="c13 Button c19 btn btn-link"
               type="button"
             >
               <div

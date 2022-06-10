@@ -36,6 +36,9 @@ export interface IPropertyApiModel extends Api_ConcurrentVersion {
   propertyType?: Api_TypeCode<string>;
   status?: Api_TypeCode<string>;
 
+  regionType?: Api_TypeCode<number>;
+  districtType?: Api_TypeCode<number>;
+
   // multi-selects
 
   leases?: ILease[];

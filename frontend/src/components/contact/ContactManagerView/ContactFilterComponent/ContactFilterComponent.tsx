@@ -9,7 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import ActiveFilterCheck from './ActiveFilterCheck';
+import ActiveFilterCheck from '../../../common/form/ActiveFilterCheck';
 
 export const defaultFilter: IContactFilter = {
   summary: '',
@@ -120,9 +120,12 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
                 <Col className="pl-0">
                   {showActiveSelector && (
                     <>
-                      <ActiveFilterCheck setFilter={setFilter} />
+                      <ActiveFilterCheck<IContactFilter>
+                        fieldName="activeContactsOnly"
+                        setFilter={setFilter}
+                      />
                       <Active />
-                      <span>Show Active contacts only</span>
+                      <span>Show active users only</span>
                     </>
                   )}
                 </Col>

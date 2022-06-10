@@ -149,16 +149,18 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     defaultTab = InventoryTabNames.property;
   }
 
-  tabViews.push({
-    content: (
-      <PropertyAssociationTabView
-        isLoading={propertyAssociationsLoading}
-        associations={propertyAssociations}
-      />
-    ),
-    key: InventoryTabNames.pims,
-    name: 'PIMS Files',
-  });
+  if (propertyAssociations?.id !== undefined) {
+    tabViews.push({
+      content: (
+        <PropertyAssociationTabView
+          isLoading={propertyAssociationsLoading}
+          associations={propertyAssociations}
+        />
+      ),
+      key: InventoryTabNames.pims,
+      name: 'PIMS Files',
+    });
+  }
 
   const onEditPropertyInformation = useCallback(
     () => history.push(`/mapview/property/${props.pid}/edit`),

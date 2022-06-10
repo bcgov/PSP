@@ -127,57 +127,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Update the properties on the research file.
-        /// </summary>
-        /// <param name="researchFileId"></param>
-        /// <param name="researchFileProperty"></param>
-        /// <returns></returns>
-        public PimsResearchFile UpdateProperty(long researchFileId, PimsPropertyResearchFile researchFileProperty)
-        {
-            var currentTypes = Context.PimsPropertyResearchFiles
-                .SelectMany(x => x.PimsPrfPropResearchPurposeTypes)
-                .Where(x => x.PropertyResearchFileId == researchFileProperty.Id)
-                .AsNoTracking()
-                .ToList();
-
-            List<PimsPrfPropResearchPurposeType> propertyTypes = new List<PimsPrfPropResearchPurposeType>();
-
-            foreach (var selectedType in researchFileProperty.PimsPrfPropResearchPurposeTypes)
-            {
-                var currentType = currentTypes.FirstOrDefault(x => x.PropResearchPurposeTypeCode == selectedType.PropResearchPurposeTypeCode);
-
-                // If the code is already on the list, add the existing one, otherwise add the incomming one
-                if (currentType != null)
-                {
-                    propertyTypes.Add(currentType);
-                    Context.Entry(currentType).State = EntityState.Unchanged;
-                }
-                else
-                {
-                    propertyTypes.Add(selectedType);
-                    Context.Entry(selectedType).State = EntityState.Added;
-                }
-            }
-
-            // The ones not on the new set should be deleted
-            List<PimsPrfPropResearchPurposeType> differenceSet = currentTypes.Where(x => !propertyTypes.Any(y => y.PropResearchPurposeTypeCode == x.PropResearchPurposeTypeCode)).ToList();
-            foreach (var deletedType in differenceSet)
-            {
-                propertyTypes.Add(deletedType);
-                Context.Entry(deletedType).State = EntityState.Deleted;
-            }
-
-            // Mark the property not to be changed.
-            Context.Entry(researchFileProperty.Property).State = EntityState.Unchanged;
-
-            researchFileProperty.PimsPrfPropResearchPurposeTypes = propertyTypes;
-            this.Context.PimsPropertyResearchFiles.Update(researchFileProperty);
-            this.Context.CommitTransaction();
-
-            return GetById(researchFileId);
-        }
-
-        /// <summary>
         /// Retrieves the version of the research file with the specified id.
         /// </summary>
         /// <param name="id"></param>

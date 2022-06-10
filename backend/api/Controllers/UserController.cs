@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
 using KModel = Pims.Keycloak.Models;
-using Model = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Controllers
 {

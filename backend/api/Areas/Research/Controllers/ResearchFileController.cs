@@ -2,6 +2,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal.Security;
@@ -92,6 +93,23 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         }
 
         /// <summary>
+        /// Update the research file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}/properties")]
+        [HasPermission(Permissions.ResearchFileEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResearchFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult UpdateResearchFileProperties([FromBody] ResearchFileModel researchFileModel)
+        {
+            var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
+            var researchFile = _pimsService.ResearchFileService.UpdateProperties(researchFileEntity);
+
+            return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
+        /// <summary>
         /// Update the specified property on the passed research file.
         /// </summary>
         /// <returns></returns>
@@ -100,10 +118,15 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFilePropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchFile" })]
-        public IActionResult UpdateTerm(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
+        public IActionResult UpdateResearchFileProperty(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
         {
+            if (researchFilePropertyId != researchFilePropertyModel.Id)
+            {
+                throw new BadRequestException($"Bad payload id.");
+            }
+
             var researchFilePropertyEntity = _mapper.Map<Dal.Entities.PimsPropertyResearchFile>(researchFilePropertyModel);
-            var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyId, researchFilePropertyModel.ResearchFile.RowVersion, researchFilePropertyEntity);
+            var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyModel.ResearchFile.RowVersion, researchFilePropertyEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }

@@ -334,11 +334,8 @@ exports[`Empty Header CITZ Login Loading 1`] = `
           </div>
         </button>
         <p>
-          Sign into PIMS with your government issued IDIR or with your Business BCeID.
+          Sign into PIMS with your government issued IDIR
         </p>
-        <div
-          class="row"
-        />
       </div>
       <div
         class="col-md-3 col-1"
@@ -682,11 +679,8 @@ exports[`Empty Header MOTI Login Loading 1`] = `
           </div>
         </button>
         <p>
-          Sign into PIMS with your government issued IDIR or with your Business BCeID.
+          Sign into PIMS with your government issued IDIR
         </p>
-        <div
-          class="row"
-        />
       </div>
       <div
         class="col-md-3 col-1"

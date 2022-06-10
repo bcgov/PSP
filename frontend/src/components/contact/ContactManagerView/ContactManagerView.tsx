@@ -93,7 +93,7 @@ const ContactManagerView = ({
   return (
     <div className={className}>
       <Row>
-        <Col className="">
+        <Col>
           <ContactFilterComponent
             filter={filter}
             setFilter={changeFilter}
