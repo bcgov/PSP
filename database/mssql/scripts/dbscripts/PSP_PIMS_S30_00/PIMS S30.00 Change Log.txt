@@ -1,3 +1,8 @@
+PSP_PIMS S30.01 Sprint 30 2022-Jun-10
+- Addded script:
+  - 00_PSP_PIMS_PMBC_Build.sql added to Alter Up
+- Requires additional metadata to meet standards
+
 PSP_PIMS S30.00 Sprint 29 2022-Jun-06
 - Altered tables:
   - PIMS_PROPERTY
