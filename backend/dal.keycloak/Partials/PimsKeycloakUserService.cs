@@ -134,8 +134,6 @@ namespace Pims.Dal.Keycloak
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsRepository.User.GetTracking(update.Id);
 
-            IEnumerable<long> addRoleIds = update.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-
             var roleIds = update.PimsUserRoles.Select(r => r.RoleId);
             foreach (var roleId in roleIds)
             {
