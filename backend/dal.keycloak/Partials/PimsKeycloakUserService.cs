@@ -133,6 +133,8 @@ namespace Pims.Dal.Keycloak
         {
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsRepository.User.GetTracking(update.Id);
+            euser.PimsUserRoles.ForEach(role => _pimsRepository.User.RemoveRole(euser, role.RoleId));
+            euser.PimsRegionUsers.ForEach(region => _pimsRepository.User.RemoveRegion(euser, region.RegionCode));
 
             IEnumerable<long> addRoleIds = update.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
 
@@ -182,8 +184,6 @@ namespace Pims.Dal.Keycloak
             euser.Note = update.Note;
             euser.IsDisabled = update.IsDisabled;
             euser.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
-            euser.PimsUserRoles.ForEach(role => _pimsRepository.User.RemoveRole(euser, role.RoleId));
-            euser.PimsRegionUsers.ForEach(region => _pimsRepository.User.RemoveRegion(euser, region.RegionCode));
             euser.PimsUserRoles = update.PimsUserRoles;
             euser.PimsRegionUsers = update.PimsRegionUsers;
 
