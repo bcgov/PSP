@@ -368,14 +368,6 @@ namespace Pims.Dal.Repositories
             return user;
         }
 
-        public PimsUser RemoveRegion(PimsUser user, short regionCode)
-        {
-            var regionUser = user.PimsRegionUsers.FirstOrDefault(r => r.RegionCode == regionCode);
-            user.PimsRegionUsers.Remove(regionUser);
-            this.Context.PimsRegionUsers.Remove(regionUser);
-            return user;
-        }
-
         /// <summary>
         /// Updates the specified user in the datasource.
         /// </summary>

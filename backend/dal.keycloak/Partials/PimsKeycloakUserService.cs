@@ -133,8 +133,6 @@ namespace Pims.Dal.Keycloak
         {
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsRepository.User.GetTracking(update.Id);
-            euser.PimsUserRoles.ForEach(role => _pimsRepository.User.RemoveRole(euser, role.RoleId));
-            euser.PimsRegionUsers.ForEach(region => _pimsRepository.User.RemoveRegion(euser, region.RegionCode));
 
             IEnumerable<long> addRoleIds = update.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
 
@@ -151,18 +149,7 @@ namespace Pims.Dal.Keycloak
                 await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
             }
 
-            addRoleIds.ForEach(r =>
-            {
-                var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null)
-                {
-                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                }
-
-                euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
-            });
-
-            return await SaveUserChanges(update, euser, kuser);
+            return await SaveUserChanges(update, euser, kuser, true);
         }
 
         /// <summary>
@@ -174,6 +161,10 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         private async Task<Entity.PimsUser> SaveUserChanges(Entity.PimsUser update, Entity.PimsUser euser, KModel.UserModel kuser, bool resetRoles = false)
         {
+            if (resetRoles)
+            {
+                euser.PimsUserRoles.ForEach(role => _pimsRepository.User.RemoveRole(euser, role.RoleId));
+            }
 
             // Update PIMS
             euser.BusinessIdentifierValue = kuser.Username; // PIMS must use whatever username is set in keycloak.
