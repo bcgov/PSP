@@ -7,46 +7,35 @@ import { wfsAxios } from './wfsAxios';
 
 export interface IUseWfsLayerOptions {
   name: string;
+  service?: string;
   version?: string;
   outputFormat?: string;
   outputSrsName?: string;
-  geometryFieldName?: string;
 }
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints.
  * @returns Object containing functions to make requests to the WFS layer.
  */
-export const useWfsLayer = (url: string, options: IUseWfsLayerOptions) => {
-  const _layerOptions = useMemo(
-    () =>
-      Object.assign<Partial<IUseWfsLayerOptions>, IUseWfsLayerOptions>(
-        {
-          version: '1.3.0',
-          outputFormat: 'json',
-          outputSrsName: 'EPSG:4326',
-          geometryFieldName: 'SHAPE',
-        },
-        options,
-      ),
-    [options],
-  );
-
+export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = useApiRequestWrapper({
     requestFunction: useCallback(
       async (
         filter: Record<string, any>,
         options: { maxCount?: number; timeout?: number; pidOverride?: boolean },
       ) => {
-        const urlObj = buildUrl(url, _layerOptions);
+        const urlObj = buildUrl(url, getUrlParams(layerOptions));
+        // add extra WFS params
+        urlObj.searchParams.set('request', 'GetFeature');
         const cqlFilter = toCqlFilterValue(filter, options?.pidOverride);
         if (cqlFilter) {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }
+        // call WFS service
         const data = await wfsAxios(options?.timeout).get<FeatureCollection>(urlObj.href);
         return data;
       },
-      [_layerOptions, url],
+      [layerOptions, url],
     ),
     requestName: 'getAllFeatures',
   });
@@ -54,17 +43,29 @@ export const useWfsLayer = (url: string, options: IUseWfsLayerOptions) => {
   return { getAllFeatures, getAllFeaturesLoading };
 };
 
-function buildUrl(inputUrl: string, options: IUseWfsLayerOptions): URL {
+function getUrlParams(options: IUseWfsLayerOptions): Record<string, any> {
+  const mergedParams = Object.assign<Partial<IUseWfsLayerOptions>, IUseWfsLayerOptions>(
+    {
+      service: 'WFS',
+      version: '1.3.0',
+      outputFormat: 'json',
+      outputSrsName: 'EPSG:4326',
+    },
+    options,
+  );
+
+  return {
+    service: mergedParams.service,
+    version: mergedParams.version,
+    outputFormat: mergedParams.outputFormat,
+    typeNames: mergedParams.name,
+    srsName: mergedParams.outputSrsName,
+  };
+}
+
+// creates URL and appends query parameters
+function buildUrl(inputUrl: string, queryParams: Record<string, any> = {}): URL {
   var urlObj = new URL(inputUrl);
-  urlObj.searchParams.set('typeName', options.name);
-  if (options.outputFormat) {
-    urlObj.searchParams.set('outputformat', options.outputFormat);
-  }
-  if (options.outputSrsName) {
-    urlObj.searchParams.set('srsName', options.outputSrsName);
-  }
-  if (options.version) {
-    urlObj.searchParams.set('version', options.version);
-  }
+  Object.keys(queryParams).forEach(k => urlObj.searchParams.set(k, queryParams[k]));
   return urlObj;
 }
