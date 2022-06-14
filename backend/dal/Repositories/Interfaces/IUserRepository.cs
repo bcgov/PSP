@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// IUserService interface, provides functions to interact with users within the datasource.
+    /// IUserRepository interface, provides functions to interact with users within the datasource.
     /// </summary>
-    public interface IUserService : IRepository<PimsUser>
+    public interface IUserRepository : IRepository<PimsUser>
     {
         int Count();
         bool UserExists(Guid keycloakUserId);
@@ -20,8 +19,6 @@ namespace Pims.Dal.Repositories
 
         PimsUser GetTracking(long id);
         public PimsUser RemoveRole(PimsUser user, long roleId);
-        IEnumerable<long> GetOrganizations(Guid keycloakUserId);
-        IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds);
         PimsUser Add(PimsUser add);
         void AddWithoutSave(PimsUser add);
         PimsUser Update(PimsUser update);

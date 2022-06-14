@@ -14,8 +14,9 @@ using Xunit;
 using Entity = Pims.Dal.Entities;
 using Moq;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
+using Pims.Dal.Repositories;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Dal.Test.Repositories
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
@@ -25,7 +26,7 @@ namespace Pims.Dal.Test.Services
     public class LeaseReportsServiceTest : IDisposable
     {
         public TestHelper helper;
-        public Mock<Repositories.ILeaseRepository> leaseRepository;
+        public Mock<ILeaseRepository> leaseRepository;
         public ILeaseReportsService leaseReportsService;
 
         public LeaseReportsServiceTest()
@@ -41,7 +42,7 @@ namespace Pims.Dal.Test.Services
         private void MockCommonServices()
         {
             leaseReportsService = helper.Create<LeaseReportsService>();
-            leaseRepository = helper.GetService<Mock<Repositories.ILeaseRepository>>();
+            leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
         }
 
         #region Tests

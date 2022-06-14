@@ -1,13 +1,13 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using EModel = Pims.Dal.Entities.Models;
 using Entity = Pims.Dal.Entities;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Admin.Controllers
 {
@@ -28,6 +28,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an AccessRequestController object, initializes with specified parameters.
         /// </summary>
@@ -48,9 +49,6 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <param name="page"></param>
         /// <param name="quantity"></param>
         /// <param name="searchText"></param>
-        /// <param name="role"></param>
-        /// <param name="organization"></param>
-        /// <param name="status"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
         [HttpGet]
@@ -87,6 +85,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Get the most recent access request for the current user.
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
@@ -105,6 +104,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AccessRequestModel), 200)]
@@ -120,4 +120,3 @@ namespace Pims.Api.Areas.Admin.Controllers
 
     }
 }
-

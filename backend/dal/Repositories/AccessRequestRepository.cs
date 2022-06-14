@@ -17,12 +17,13 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// AccessRequestService class, provides a service layer to interact with accessRequests within the datasource.
     /// </summary>
-    public class AccessRequestService : BaseRepository<PimsAccessRequest>, IAccessRequestService
+    public class AccessRequestRepository : BaseRepository<PimsAccessRequest>, IAccessRequestRepository
     {
         #region Variables
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AccessRequestService, and initializes it with the specified arguments.
         /// </summary>
@@ -31,7 +32,7 @@ namespace Pims.Dal.Repositories
         /// <param name="service"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public AccessRequestService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, IPimsRepository service, ILogger<AccessRequestService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, IPimsRepository service, ILogger<AccessRequestRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -108,12 +109,6 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.RegionCodeNavigation)
                 .AsNoTracking();
 
-            var userOrganizations = this.User.GetOrganizations();
-            if (userOrganizations != null && User.HasPermission(Permissions.OrganizationAdmin) && !User.HasPermission(Permissions.SystemAdmin))
-            {
-                query = query.Where(accessRequest => accessRequest.PimsAccessRequestOrganizations.Any(a => a.OrganizationId.HasValue && userOrganizations.Contains(a.OrganizationId.Value)));
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.SearchText))
             {
                 query = query.Where(request => request.User != null
@@ -146,6 +141,7 @@ namespace Pims.Dal.Repositories
             {
                 throw new NotAuthorizedException();
             }
+            accessRequest.PimsAccessRequestOrganizations.ForEach(ao => Context.Remove(ao));
 
             accessRequest.ConcurrencyControlNumber = deleteRequest.ConcurrencyControlNumber;
             Context.PimsAccessRequests.Remove(accessRequest);
