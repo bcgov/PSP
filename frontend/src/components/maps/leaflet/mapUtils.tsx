@@ -158,6 +158,11 @@ export const asProperty = (point: PointFeature): IProperty => {
  * @param object an object to convert to a cql filter string.
  */
 export const toCqlFilter = (object: any, pidOverride?: boolean) => {
+  const cqlValue: string = toCqlFilterValue(object, pidOverride);
+  return cqlValue.length ? `cql_filter=${cqlValue}` : '';
+};
+
+export const toCqlFilterValue = (object: any, pidOverride?: boolean) => {
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
@@ -168,5 +173,5 @@ export const toCqlFilter = (object: any, pidOverride?: boolean) => {
       }
     }
   });
-  return cql.length ? `cql_filter=${cql.join(' AND ')}` : '';
+  return cql.length ? cql.join(' AND ') : '';
 };
