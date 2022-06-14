@@ -3855,6 +3855,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.PphStatusUpdateTimestamp).HasComment("Date / time that the Provincial Public Highway status was updated.");
 
+                entity.Property(e => e.PphStatusUpdateUserGuid).HasComment("GUID of the user that updated the PPH status.");
+
                 entity.Property(e => e.PphStatusUpdateUserid).HasComment("Userid that updated the Provincial Public Highway status.");
 
                 entity.Property(e => e.PropertyDataSourceEffectiveDate).HasComment("Date the property was officially registered");
