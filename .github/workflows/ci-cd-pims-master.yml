@@ -8,10 +8,10 @@ env:
 
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
-  DESTINATION: "master"
+  DESTINATION: "uat"
   OC_JOB_NAME: "master"
   GIT_URL: "${{github.server_url}}/${{github.repository}}"
-  GIT_BRANCH: "${{github.ref}}"
+  GIT_BRANCH: "master"
   APP_NAME: "pims"
   PROJ_PREFIX: "3cd915"
   PROJ_TOOLS: "3cd915-tools"
@@ -21,7 +21,7 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
-  INSTANCE: "-master"
+  INSTANCE: "-uat"
   NAMESPACE_OVERRIDE: "3cd915-test"
 
 on: workflow_dispatch
