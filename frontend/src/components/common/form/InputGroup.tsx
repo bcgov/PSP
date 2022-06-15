@@ -18,6 +18,8 @@ type OptionalAttributes = {
   label?: string;
   /** The underlying HTML element to use when rendering the FormControl */
   as?: React.ElementType;
+  /** optional help text to display below the FormControl */
+  helpText?: string;
   /** Short hint that describes the expected value of an <input> element */
   placeholder?: string;
   /** Adds a custom class to the input element of the <Input> component */

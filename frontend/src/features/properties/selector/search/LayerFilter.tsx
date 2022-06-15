@@ -93,6 +93,11 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                 field="searchBy"
                 defaultKey="pid"
                 as={isSearchByLegalDescription ? 'textarea' : 'input'}
+                helpText={
+                  isSearchByLegalDescription
+                    ? 'Searching by Legal Description may result in a slower search.'
+                    : ''
+                }
                 onSelectItemChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   setFilter({ ...defaultLayerFilter, searchBy: e.target.value });
                 }}
@@ -130,9 +135,6 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                 ]}
               />
               {isSearchByAddress && renderAddressSuggestions()}
-              {isSearchByLegalDescription && (
-                <p>Searching by Legal Description may result in a slower search.</p>
-              )}
             </Col>
             <Col xl={2} className="pr-0">
               <Row>

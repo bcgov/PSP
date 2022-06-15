@@ -11,6 +11,8 @@ interface ISelectInputProps<SelectTypes> {
   field: string;
   /** The underlying HTML element to use when rendering the FormControl */
   as?: React.ElementType;
+  /** optional help text to display below the FormControl */
+  helpText?: string;
   /** The drop-down options to render  */
   selectOptions?: {
     key: keyof SelectTypes;
