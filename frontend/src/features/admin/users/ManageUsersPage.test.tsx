@@ -1,23 +1,17 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
-import React from 'react';
+import { getMockPagedUsers } from 'mocks/userMock';
 import { act } from 'react-dom/test-utils';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { ThemeProvider } from 'styled-components';
-import { prettyFormatDateTime } from 'utils';
-import { fillInput } from 'utils/test-utils';
+import { fillInput, render, userEvent } from 'utils/test-utils';
 
 import { ManageUsersPage } from './ManageUsersPage';
 
@@ -58,56 +52,51 @@ const getStore = (includeDate?: boolean) =>
     },
   });
 
-xdescribe('Manage Users Component', () => {
-  beforeEach(() => {
-    mockAxios.resetHistory();
-  });
-
+describe('Manage Users Component', () => {
   afterEach(() => {
-    cleanup();
+    jest.restoreAllMocks();
+    mockAxios.reset();
   });
-  const testRender = (store: any) =>
-    render(
-      <Formik initialValues={{}} onSubmit={noop}>
-        <Provider store={store}>
-          <Router history={history}>
-            <ThemeProvider theme={{ tenant: {}, css: {} }}>
-              <ManageUsersPage />
-            </ThemeProvider>
-          </Router>
-        </Provider>
-      </Formik>,
-    );
+  const testRender = (store: any) => {
+    mockAxios.onPost().reply(200, getMockPagedUsers());
+    const component = render(<ManageUsersPage />, { store: store });
+    return { ...component };
+  };
 
-  it('Snapshot matches', () => {
-    const { container } = testRender(getStore());
+  it('Snapshot matches', async () => {
+    const { container, getByTitle } = testRender(getStore());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('Table row count is 2', () => {
-    const { container } = testRender(getStore());
+  it('Table row count is 5', async () => {
+    const { container, getByTitle } = testRender(getStore());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     const rows = container.querySelectorAll('.tbody .tr');
-    expect(rows.length).toBe(2);
+    expect(rows.length).toBe(5);
   });
 
-  it('displays enabled roles', () => {
-    const { queryByText } = testRender(getStore());
+  it('displays enabled roles', async () => {
+    const { queryByText, getByTitle } = testRender(getStore());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(queryByText('roleVal')).toBeVisible();
   });
 
-  it('Does not display disabled roles', () => {
-    const { queryByText } = testRender(getStore());
+  it('Does not display disabled roles', async () => {
+    const { queryByText, getByTitle } = testRender(getStore());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(queryByText('disabledRole')).toBeNull();
   });
 
-  it('Displays the correct last login time', () => {
-    const dateTime = prettyFormatDateTime('2020-10-14T17:45:39.7381599');
-    const { getByText } = testRender(getStore(true));
-    expect(getByText(dateTime)).toBeVisible();
+  it('Displays the correct last login time', async () => {
+    const { getByText, getByTitle } = testRender(getStore(true));
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
+    expect(getByText('Jun 8, 2022 12:59 pm')).toBeVisible();
   });
 
   it('downloads data when excel icon clicked', async () => {
-    const { getByTestId } = testRender(getStore());
+    const { getByTestId, getByTitle } = testRender(getStore());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     const excelIcon = getByTestId('excel-icon');
     mockAxios.onGet().reply(200);
 
@@ -120,7 +109,8 @@ xdescribe('Manage Users Component', () => {
   });
 
   it('can search for users', async () => {
-    const { container } = testRender(getStore());
+    const { container, getByTitle } = testRender(getStore());
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
     await fillInput(container, 'firstName', 'testUserFirst1');
     const searchButton = container.querySelector('#search-button');
     mockAxios.onPost().reply(200);
@@ -129,6 +119,74 @@ xdescribe('Manage Users Component', () => {
     });
     await waitFor(() => {
       expect(mockAxios.history.post.length).toBe(1);
+    });
+  });
+
+  it('search reset works as expected', async () => {
+    const { getByTitle, getAllByPlaceholderText, container } = testRender(getStore());
+
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+    await fillInput(container, 'email', 'email');
+    const resetButton = getByTitle('reset-button');
+    userEvent.click(resetButton);
+
+    const email = getAllByPlaceholderText('Email')[0];
+
+    expect(email).toHaveValue('');
+  });
+
+  it('each row contains a link to the access request details page', async () => {
+    const { getByText, getByTitle } = testRender(getStore());
+
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+    const link = getByText('desmith@idir');
+    expect(link).toHaveAttribute('href', '/admin/user/30');
+  });
+
+  describe('access request actions', () => {
+    it('Enable menu button is disabled', async () => {
+      const { getAllByText, getByTitle } = testRender(getStore());
+
+      await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+      const enableButton = getAllByText('Enable')[0];
+      expect(enableButton).toHaveClass('disabled');
+    });
+
+    it('Disable menu button is enabled', async () => {
+      const { getAllByText, getByTitle } = testRender(getStore());
+
+      await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+      const disableButton = getAllByText('Disable')[0];
+      expect(disableButton).not.toHaveClass('disabled');
+    });
+
+    it('Disable action submits a request', async () => {
+      mockAxios.onPut().reply(200, {});
+      const { getAllByText, getByTitle } = testRender(getStore());
+
+      await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+      const disableButton = getAllByText('Disable')[0];
+      userEvent.click(disableButton);
+
+      await waitFor(() => {
+        expect(mockAxios.history.put[0].url).toEqual(
+          '/keycloak/users/e81274eb-a007-4f2e-ada3-2817efcdb0a6',
+        );
+      });
+    });
+
+    it('Open menu button is enabled', async () => {
+      const { getAllByText, getByTitle } = testRender(getStore());
+
+      await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+      const declineButton = getAllByText('Open')[0];
+      expect(declineButton).not.toHaveClass('disabled');
     });
   });
 });

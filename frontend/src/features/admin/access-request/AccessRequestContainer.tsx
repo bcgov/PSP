@@ -10,7 +10,7 @@ import { Alert } from 'react-bootstrap';
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
 import { FormAccessRequest } from './models';
 
-interface IAccessRequestContainerProps {
+export interface IAccessRequestContainerProps {
   accessRequestId?: number;
   onSave?: () => void;
 }
