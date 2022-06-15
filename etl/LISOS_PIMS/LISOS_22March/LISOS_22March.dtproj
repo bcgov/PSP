@@ -12,7 +12,7 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{086499e9-2000-4f37-aa59-5c5551153c4f}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">LISOS_PIMS</SSIS:Property>
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">XERCES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAySUVPlKe6ECrATd6o6AMSQAAAAACAAAAAAAQZgAAAAEAACAAAAC9u2GFHcWJEOWWtFa55wV9kzVGTmszDF75AAMRi+WBvAAAAAAOgAAAAAIAACAAAAA10yf3o35AjcwhP3vfT0Rt5CEpTVIurwgCUlM1lJAJu5AAAADy5AFb7mRlBfiHmHsEu/K7zluVfKlEEfKTE+sjpg9RoerYDGec7hMG2C6ZnYkulk7YQIOqmoRkO0ueZvc6s/YN0kNi/W5JHa28AwPZS5wlsnIgSRHCSWgkviG4ZHgeNoNEnfC8N5dkGbXQW1cYEXtn0Urvh5YQsjNQOfpSYAEd/0pQjH5EbXI/tHODqCN9ZCVAAAAAEbGMx14vrKzWrjOaMibhfdX3UhB56GefIk3fH/95oS2IBj8lEHUCF6F+j+U+OGu9/GYLvNqbbSzdAjNuf4g61Q==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -49,7 +48,7 @@
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectByProxy">
