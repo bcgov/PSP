@@ -16,6 +16,7 @@ export const defaultLayerFilter: ILayerSearchCriteria = {
   pid: '',
   pin: '',
   planNumber: '',
+  legalDescription: '',
   searchBy: 'pid',
 };
 
@@ -67,6 +68,8 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
   };
 
   const isSearchByAddress = filter?.searchBy === 'address';
+  const isSearchByLegalDescription = filter?.searchBy === 'legalDescription';
+
   return (
     <Formik
       enableReinitialize
@@ -82,12 +85,14 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                   pid: number;
                   pin: number;
                   planNumber: string;
+                  legalDescription: string;
                   address: string;
                 },
                 IResearchFilterProps
               >
                 field="searchBy"
                 defaultKey="pid"
+                as={isSearchByLegalDescription ? 'textarea' : 'input'}
                 onSelectItemChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   setFilter({ ...defaultLayerFilter, searchBy: e.target.value });
                 }}
@@ -111,6 +116,11 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                     key: 'planNumber',
                     placeholder: `Enter a Plan #`,
                     label: 'Plan #',
+                  },
+                  {
+                    key: 'legalDescription',
+                    placeholder: '',
+                    label: 'Legal Description',
                   },
                   {
                     key: 'address',
