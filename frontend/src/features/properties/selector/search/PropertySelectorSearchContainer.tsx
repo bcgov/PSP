@@ -72,8 +72,9 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       ) {
         result = await findByPin(layerSearch.pin, true);
       } else if (layerSearch?.searchBy === 'planNumber' && layerSearch.planNumber) {
-        // result = await findByPlanNumber(layerSearch.planNumber, true);
-        result = await findByLegalDescription(layerSearch.planNumber);
+        result = await findByPlanNumber(layerSearch.planNumber, true);
+      } else if (layerSearch?.searchBy === 'legalDescription' && layerSearch.legalDescription) {
+        result = await findByLegalDescription(layerSearch.legalDescription);
       }
 
       // match the region and district for all found properties

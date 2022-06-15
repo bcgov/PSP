@@ -52,7 +52,7 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
     onAddressSelect(val);
   };
 
-  const renderSuggestions = () => {
+  const renderAddressSuggestions = () => {
     if (!addressResults || addressResults.length === 0) {
       return null;
     }
@@ -79,7 +79,7 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl={6}>
+            <Col xl={isSearchByLegalDescription ? 10 : 6}>
               <SelectInput<
                 {
                   pid: number;
@@ -113,6 +113,11 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                     label: 'PIN',
                   },
                   {
+                    key: 'address',
+                    placeholder: `Enter a Address`,
+                    label: 'Address',
+                  },
+                  {
                     key: 'planNumber',
                     placeholder: `Enter a Plan #`,
                     label: 'Plan #',
@@ -122,14 +127,12 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                     placeholder: '',
                     label: 'Legal Description',
                   },
-                  {
-                    key: 'address',
-                    placeholder: `Enter a Address`,
-                    label: 'Address',
-                  },
                 ]}
               />
-              {isSearchByAddress && renderSuggestions()}
+              {isSearchByAddress && renderAddressSuggestions()}
+              {isSearchByLegalDescription && (
+                <p>Searching by Legal Description may result in a slower search.</p>
+              )}
             </Col>
             <Col xl={2} className="pr-0">
               <Row>
