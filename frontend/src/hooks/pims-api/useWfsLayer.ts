@@ -2,6 +2,7 @@ import { toCqlFilterValue } from 'components/maps/leaflet/mapUtils';
 import { FeatureCollection } from 'geojson';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
+import isAbsoluteUrl from 'is-absolute-url';
 
 import { wfsAxios } from './wfsAxios';
 
@@ -68,7 +69,8 @@ function getUrlParams(options: IUseWfsLayerOptions): Record<string, any> {
 
 // creates URL and appends query parameters
 function buildUrl(inputUrl: string, queryParams: Record<string, any> = {}): URL {
-  var urlObj = new URL(inputUrl);
+  const baseUrl = window.location.origin;
+  const urlObj = isAbsoluteUrl(inputUrl) ? new URL(inputUrl) : new URL(inputUrl, baseUrl);
   Object.keys(queryParams).forEach(k => urlObj.searchParams.set(k, queryParams[k]));
   return urlObj;
 }

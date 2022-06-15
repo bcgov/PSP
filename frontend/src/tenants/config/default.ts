@@ -21,6 +21,10 @@ export const defaultTenant: ITenantConfig = {
   layers: [],
   propertiesUrl:
     'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
+  parcelMapFullyAttributed: {
+    url: 'ogs-internal/ows',
+    name: 'PMBC_PARCEL_POLYGON_FABRIC',
+  },
 };
 
 export default defaultTenant;
