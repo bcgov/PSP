@@ -94,6 +94,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           content
         ) : (
           <Input
+            as={is}
             disabled={disabled}
             field={field}
             className={innerClassName}

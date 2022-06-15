@@ -3,14 +3,21 @@ import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 
 interface ISelectInputProps<SelectTypes> {
+  /** Specifies that the HTML element should be disabled */
   disabled?: boolean;
+  /** The option to show on the drop-down by default */
   defaultKey?: keyof SelectTypes;
+  /** The field name */
   field: string;
+  /** The underlying HTML element to use when rendering the FormControl */
+  as?: React.ElementType;
+  /** The drop-down options to render  */
   selectOptions?: {
     key: keyof SelectTypes;
     label: string;
     placeholder: string;
   }[];
+  /** Callback to notify when the selected option in the drop-down changes */
   onSelectItemChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 /**
@@ -21,6 +28,7 @@ export function SelectInput<SelectTypes, FormikType>({
   selectOptions,
   defaultKey,
   field,
+  as: is, // `as` is reserved in typescript
   onSelectItemChange,
   ...rest
 }: ISelectInputProps<SelectTypes> & React.HTMLAttributes<HTMLElement>) {
@@ -42,6 +50,7 @@ export function SelectInput<SelectTypes, FormikType>({
       prepend={
         <Select field={field} options={options ?? []} onChange={reset} disabled={disabled} />
       }
+      as={is}
       field={value}
       placeholder={selectedOption?.placeholder}
       disabled={disabled}
