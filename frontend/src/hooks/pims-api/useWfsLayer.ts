@@ -1,7 +1,7 @@
 import { toCqlFilterValue } from 'components/maps/leaflet/mapUtils';
 import { FeatureCollection } from 'geojson';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { useCallback, useMemo } from 'react';
+import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 
 import { wfsAxios } from './wfsAxios';
 
@@ -11,6 +11,7 @@ export interface IUseWfsLayerOptions {
   version?: string;
   outputFormat?: string;
   outputSrsName?: string;
+  withCredentials?: boolean;
 }
 
 /**
@@ -19,7 +20,7 @@ export interface IUseWfsLayerOptions {
  */
 export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = useApiRequestWrapper({
-    requestFunction: useCallback(
+    requestFunction: useDeepCompareCallback(
       async (
         filter: Record<string, any>,
         options: { maxCount?: number; timeout?: number; pidOverride?: boolean },
@@ -32,7 +33,9 @@ export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }
         // call WFS service
-        const data = await wfsAxios(options?.timeout).get<FeatureCollection>(urlObj.href);
+        const data = await wfsAxios(options?.timeout).get<FeatureCollection>(urlObj.href, {
+          withCredentials: layerOptions.withCredentials,
+        });
         return data;
       },
       [layerOptions, url],
