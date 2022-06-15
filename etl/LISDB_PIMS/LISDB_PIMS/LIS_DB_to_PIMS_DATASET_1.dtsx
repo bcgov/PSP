@@ -7,13 +7,13 @@
   DTS:CreatorName="MSI\fiera"
   DTS:DTSID="{4B2E793E-3853-46F6-8F50-5A21D250C1A9}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
   DTS:LocaleID="4105"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="268"
-  DTS:VersionGUID="{8E635B3C-EF5D-4EA8-9A9A-4952A52BB303}">
+  DTS:VersionBuild="378"
+  DTS:VersionGUID="{22F6DDB9-5D32-43CC-AAE8-5A922302C2E5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,7 +26,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqltst2012.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{A0A05C25-9FB9-4C46-960C-C299B79C75CA}sqltst2012.th.gov.bc.ca.LIS_Tst;" />
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{A0A05C25-9FB9-4C46-960C-C299B79C75CA}sqltst2012.th.gov.bc.ca.LIS_Tst;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -38,7 +38,11 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -126,6 +130,34 @@
             </DTS:Executable>
           </DTS:Executables>
         </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Establish Preconditions\Sequence Container 2"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{819F5506-C2A2-49A9-B24F-A7D5DB9745EB}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Sequence Container 2">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\Establish Preconditions\Sequence Container 2\Clear PIMS Insurance"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{4EFC0A41-3D7B-4FA1-9E27-A1DA19F27195}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Clear PIMS Insurance"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}"
+                  SQLTask:SqlStatementSource="DELETE&#xA;FROM PIMS_INSURANCE &#xA;WHERE APP_LAST_UPDATE_USERID='APP_PIMS_PROXY_ETL_EDIT'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
         <DTS:PrecedenceConstraint
@@ -139,10 +171,18 @@
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Establish Preconditions.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
-          DTS:DTSID="{A525422D-D212-45DC-9F8C-0FE7897865FE}"
+          DTS:DTSID="{F82D8739-FFFE-4B3C-BC23-125B0A5E57F5}"
           DTS:From="Package\Establish Preconditions\Sequence Container 1"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Establish Preconditions\Sequence Container 2" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Establish Preconditions.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{4F0399EA-CF23-4BE9-BBCC-60AA72F78E13}"
+          DTS:From="Package\Establish Preconditions\Sequence Container 2"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
           DTS:To="Package\Establish Preconditions\Sequence Container" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
@@ -10120,9 +10160,9 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null.Outputs[Derived Column Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
@@ -10130,14 +10170,14 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
                   endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
@@ -10145,14 +10185,14 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup No Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Inputs[Derived Column Input]"
@@ -10195,19 +10235,19 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\t_leasing + PID.Outputs[OLE DB Source Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Union All Output 1"
+                  startId="Package\Main Flow 1\LOAD LEASES\Union All 1.Outputs[Union All Output 1]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
                   endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
-                  name="Union All Output 1"
-                  startId="Package\Main Flow 1\LOAD LEASES\Union All 1.Outputs[Union All Output 1]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
                   endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
@@ -12734,6 +12774,1214 @@ where [refTable].[PID] = ?</property>
       </DTS:Executables>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\PIMS Insurance Data"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{E070F8A0-8DB5-4E61-B15E-A3F8F9AFAFEB}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS Insurance Data">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\PIMS Insurance Data\Load PIMS Insurance"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{3DBC6A06-6B65-46DC-A3F3-2EE037F21994}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load PIMS Insurance"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Derived Column"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Inputs[Derived Column Input].Columns[Start_Date]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="Start_Date"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Start_Date]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Inputs[Derived Column Input].Columns[Expiry_Date]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="Expiry_Date"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">Expiry_Date</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[INSURANCE_TYPE_CODE]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="5"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[INSURANCE_TYPE_CODE]"
+                          name="INSURANCE_TYPE_CODE"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"OTHER"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"OTHER"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[OTHER_INSURANCE_TYPE]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="11"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[OTHER_INSURANCE_TYPE]"
+                          name="OTHER_INSURANCE_TYPE"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"FROM LIS DB"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"FROM LIS DB"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[IS_INSURANCE_IN_PLACE]"
+                          dataType="i1"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[IS_INSURANCE_IN_PLACE]"
+                          name="IS_INSURANCE_IN_PLACE"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_I1)(#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]} &lt; [GETDATE]() &amp;&amp; [ISNULL](#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]}) ==  FALSE  ? (DT_I1)0 : (([ISNULL](#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Start_Date]}) ==  TRUE  &amp;&amp; [ISNULL](#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]}) ==  TRUE ) ? NULL(DT_I1) : (DT_I1)1))</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_I1)(Expiry_Date &lt; GETDATE() &amp;&amp; ISNULL(Expiry_Date) ==  FALSE  ? (DT_I1)0 : ((ISNULL(Start_Date) ==  TRUE  &amp;&amp; ISNULL(Expiry_Date) ==  TRUE ) ? NULL(DT_I1) : (DT_I1)1))</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[COVERAGE_DESCRIPTION]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="2000"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[COVERAGE_DESCRIPTION]"
+                          name="COVERAGE_DESCRIPTION"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_WSTR,1949)"InsurStDt: [" + (DT_WSTR,50)((DT_DATE)#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Start_Date]}) + "]"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_WSTR,1949)"InsurStDt: [" + (DT_WSTR,50)((DT_DATE)Start_Date) + "]"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USER_ID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="23"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USER_ID]"
+                          name="APP_CREATE_USER_ID"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"APP_PIMS_PROXY_ETL_EDIT"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"APP_PIMS_PROXY_ETL_EDIT"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[LAST_UPDATE_USER_ID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="23"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[LAST_UPDATE_USER_ID]"
+                          name="LAST_UPDATE_USER_ID"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"APP_PIMS_PROXY_ETL_EDIT"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"APP_PIMS_PROXY_ETL_EDIT"</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Error Columns"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Inputs[Derived Column Input].Columns[PID]"
+                          cachedDataType="i4"
+                          cachedName="PID"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[PID]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                          name="ERROR_TIME"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[GETDATE]()</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">GETDATE()</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="19"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                          name="ERROR_OPERATION_NAME"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"LOAD_PIMS_INSURANCE"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"LOAD_PIMS_INSURANCE"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="19"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                          name="ERROR_TASK_NAME"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"LOAD_PIMS_INSURANCE"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"LOAD_PIMS_INSURANCE"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="24"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                          name="ERROR_ETL_NAME"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"LIS_DB_to_PIMS_DATASET_1"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"LIS_DB_to_PIMS_DATASET_1"</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="31"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                          name="ERROR_ROW"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"PID NOT FOUND: " + (DT_WSTR,16)#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[PID]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"PID NOT FOUND: " + (DT_WSTR,16)PID</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Lookup PID"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select cast(APP_CREATE_USER_DIRECTORY as integer) as PID,lease_id 
+from (
+select APP_CREATE_USER_DIRECTORY,lease_id from [dbo].[PIMS_lease] where APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT') a</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select cast(APP_CREATE_USER_DIRECTORY as integer) as PID,lease_id 
+from (
+select APP_CREATE_USER_DIRECTORY,lease_id from [dbo].[PIMS_lease] where APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT') a) [refTable]
+where [refTable].[PID] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="PID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="lease_id" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[PID]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input].Columns[PID]"
+                          cachedDataType="i4"
+                          cachedName="PID"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[PID]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">PID</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input].Columns[lease_id]"
+                          cachedDataType="i8"
+                          cachedName="LeaseID"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[LeaseID]"
+                          name="lease_id"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn" />
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">lease_id</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Match Output].Columns[PID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Match Output].Columns[PID]"
+                          name="PID"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">PID</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="PIMS ERROR LOG"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[etl].[ETL_ERROR_LOG]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="ERROR_TIME"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_TIME]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_OPERATION_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="19"
+                          cachedName="ERROR_OPERATION_NAME"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_TASK_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="19"
+                          cachedName="ERROR_TASK_NAME"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_ETL_NAME]"
+                          cachedDataType="wstr"
+                          cachedLength="24"
+                          cachedName="ERROR_ETL_NAME"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_ROW]"
+                          cachedDataType="wstr"
+                          cachedLength="31"
+                          cachedName="ERROR_ROW"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output].Columns[ERROR_ROW]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
+                          dataType="dbTimeStamp"
+                          name="ERROR_TIME" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
+                          dataType="wstr"
+                          length="100"
+                          name="ERROR_OPERATION_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
+                          dataType="wstr"
+                          length="100"
+                          name="ERROR_TASK_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
+                          dataType="wstr"
+                          length="100"
+                          name="ERROR_ETL_NAME" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
+                          dataType="nText"
+                          name="ERROR_ROW" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                          dataType="i4"
+                          name="ERROR_CODE" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                          dataType="i4"
+                          name="ERROR_COLUMN" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="PIMS Insurance"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[PIMS_INSURANCE]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[INSURANCE_TYPE_CODE]"
+                          cachedDataType="wstr"
+                          cachedLength="5"
+                          cachedName="INSURANCE_TYPE_CODE"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[INSURANCE_TYPE_CODE]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[INSURANCE_TYPE_CODE]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[OTHER_INSURANCE_TYPE]"
+                          cachedDataType="wstr"
+                          cachedLength="11"
+                          cachedName="OTHER_INSURANCE_TYPE"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[OTHER_INSURANCE_TYPE]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[OTHER_INSURANCE_TYPE]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[IS_INSURANCE_IN_PLACE]"
+                          cachedDataType="i1"
+                          cachedName="IS_INSURANCE_IN_PLACE"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[IS_INSURANCE_IN_PLACE]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[IS_INSURANCE_IN_PLACE]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[COVERAGE_DESCRIPTION]"
+                          cachedDataType="wstr"
+                          cachedLength="2000"
+                          cachedName="COVERAGE_DESCRIPTION"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[COVERAGE_DESCRIPTION]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[COVERAGE_DESCRIPTION]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[Expiry_Date]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="Expiry_Date"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[EXPIRY_DATE]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[LeaseID]"
+                          cachedDataType="i8"
+                          cachedName="LeaseID"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_ID]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[LeaseID]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USER_ID]"
+                          cachedDataType="wstr"
+                          cachedLength="23"
+                          cachedName="APP_CREATE_USER_ID"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USER_ID]" />
+                        <inputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].Columns[LAST_UPDATE_USER_ID]"
+                          cachedDataType="wstr"
+                          cachedLength="23"
+                          cachedName="LAST_UPDATE_USER_ID"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output].Columns[LAST_UPDATE_USER_ID]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[INSURANCE_ID]"
+                          dataType="i8"
+                          name="INSURANCE_ID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_ID]"
+                          dataType="i8"
+                          name="LEASE_ID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[INSURANCE_TYPE_CODE]"
+                          dataType="wstr"
+                          length="20"
+                          name="INSURANCE_TYPE_CODE" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[OTHER_INSURANCE_TYPE]"
+                          dataType="wstr"
+                          length="200"
+                          name="OTHER_INSURANCE_TYPE" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[COVERAGE_DESCRIPTION]"
+                          dataType="wstr"
+                          length="2000"
+                          name="COVERAGE_DESCRIPTION" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[COVERAGE_LIMIT]"
+                          dataType="cy"
+                          name="COVERAGE_LIMIT" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[IS_INSURANCE_IN_PLACE]"
+                          dataType="bool"
+                          name="IS_INSURANCE_IN_PLACE" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[EXPIRY_DATE]"
+                          dataType="dbDate"
+                          name="EXPIRY_DATE" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[CONCURRENCY_CONTROL_NUMBER]"
+                          dataType="i8"
+                          name="CONCURRENCY_CONTROL_NUMBER" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                          dataType="dbTimeStamp"
+                          name="APP_CREATE_TIMESTAMP" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                          dataType="wstr"
+                          length="30"
+                          name="APP_CREATE_USERID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_GUID]"
+                          dataType="guid"
+                          name="APP_CREATE_USER_GUID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
+                          dataType="wstr"
+                          length="30"
+                          name="APP_CREATE_USER_DIRECTORY" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                          dataType="dbTimeStamp"
+                          name="APP_LAST_UPDATE_TIMESTAMP" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                          dataType="wstr"
+                          length="30"
+                          name="APP_LAST_UPDATE_USERID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_GUID]"
+                          dataType="guid"
+                          name="APP_LAST_UPDATE_USER_GUID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                          dataType="wstr"
+                          length="30"
+                          name="APP_LAST_UPDATE_USER_DIRECTORY" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
+                          dataType="dbTimeStamp"
+                          name="DB_CREATE_TIMESTAMP" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
+                          dataType="wstr"
+                          length="30"
+                          name="DB_CREATE_USERID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
+                          dataType="dbTimeStamp"
+                          name="DB_LAST_UPDATE_TIMESTAMP" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
+                          dataType="wstr"
+                          length="30"
+                          name="DB_LAST_UPDATE_USERID" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="t_leasing + PID"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT l.Start_Date,l.Expiry_Date,cast(l.lease_id as bigint) LeaseID, fs.PID
+FROM LIS_DEV.dbo.t_leasing l 
+JOIN LIS_DEV.dbo.t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLookup_Id
+JOIN LIS_DEV.dbo.t_fileSub fs ON fsl.FileSubLookup_Id = fs.FileSubLookup_Id</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LISDB]"
+                      connectionManagerRefId="Package.ConnectionManagers[LISDB]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Start_Date]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[Start_Date]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Start_Date]"
+                          name="Start_Date"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[Expiry_Date]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[Expiry_Date]"
+                          name="Expiry_Date"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[PID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[PID]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[PID]"
+                          name="PID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[LeaseID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[LeaseID]"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].Columns[LeaseID]"
+                          name="LeaseID"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[Start_Date]"
+                          dataType="dbTimeStamp"
+                          name="Start_Date" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[Expiry_Date]"
+                          dataType="dbTimeStamp"
+                          name="Expiry_Date" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[PID]"
+                          dataType="i4"
+                          name="PID" />
+                        <externalMetadataColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output].ExternalColumns[LeaseID]"
+                          dataType="i8"
+                          name="LeaseID" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[Start_Date]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[Start_Date]"
+                          name="Start_Date" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[Expiry_Date]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[Expiry_Date]"
+                          name="Expiry_Date" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[LeaseID]"
+                          dataType="i8"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[LeaseID]"
+                          name="LeaseID" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[PID]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[PID]"
+                          name="PID" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Derived Column Output]"
+                  endId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Derived Column Output1]"
+                  endId="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Lookup Match Output]"
+                  endId="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column.Inputs[Derived Column Input]"
+                  name="Lookup Match Output"
+                  startId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Lookup No Match Output]"
+                  endId="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns.Inputs[Derived Column Input]"
+                  name="Lookup No Match Output"
+                  startId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Outputs[Lookup No Match Output]" />
+                <path
+                  refId="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[OLE DB Source Output]"
+                  endId="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID.Inputs[Lookup Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Sequence Container"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
@@ -12787,6 +14035,14 @@ where [refTable].[PID] = ?</property>
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Sequence Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{4B92A96E-84AE-4B06-A3F5-87AC659D3D9E}"
+      DTS:From="Package\Main Flow 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\PIMS Insurance Data" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -12811,47 +14067,46 @@ where [refTable].[PID] = ?</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="257,83"
-          Size="257,126"
+          PanelSize="256.8,83.2"
+          Size="256.8,126"
           Id="Package\Establish Preconditions\Sequence Container"
-          TopLeft="22,264" />
+          TopLeft="15.8461536204323,399.87096565199" />
         <NodeLayout
-          Size="215,46"
+          Size="215.2,46"
           Id="Package\Establish Preconditions\Sequence Container 1\Clear Property Lease"
           TopLeft="22,15" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="271,79"
-          Size="271,122"
+          PanelSize="271.2,79.2"
+          Size="271.2,122"
           Id="Package\Establish Preconditions\Sequence Container 1"
-          TopLeft="22,117" />
+          TopLeft="8.92307644341827,89.7419359031502" />
+        <NodeLayout
+          Size="184,41.6"
+          Id="Package\Establish Preconditions\Sequence Container 2\Clear PIMS Insurance"
+          TopLeft="31.2923145768209,15.8387046654193" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="264.8,78.4"
+          Size="264.8,121.6"
+          Id="Package\Establish Preconditions\Sequence Container 2"
+          TopLeft="14.0307750713193,239.02580211046" />
         <EdgeLayout
           Id="Package\Establish Preconditions.PrecedenceConstraints[Constraint]"
-          TopLeft="137,56">
+          TopLeft="140.761538221709,56">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="20.5,61"
+              EndConnector="0,33.7419359031502"
               Start="0,0"
-              End="20.5,53.5">
+              End="0,26.2419359031502">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,26.5"
-                    Point2="0,30.5"
-                    Point3="4,30.5" />
-                  <mssgle:LineSegment
-                    End="16.5,30.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="16.5,30.5"
-                    Point2="20.5,30.5"
-                    Point3="20.5,34.5" />
-                  <mssgle:LineSegment
-                    End="20.5,53.5" />
+                    End="0,26.2419359031502" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12862,18 +14117,40 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Establish Preconditions.PrecedenceConstraints[Constraint 1]"
-          TopLeft="154,239">
+          TopLeft="145.476925757369,211.74193590315">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,25"
+              EndConnector="0,27.2838662073094"
               Start="0,0"
-              End="0,17.5">
+              End="0,19.7838662073094">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,17.5" />
+                    End="0,19.7838662073094" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Establish Preconditions.PrecedenceConstraints[Constraint 2]"
+          TopLeft="145.338464345876,360.62580211046">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.2451635415301"
+              Start="0,0"
+              End="0,31.7451635415301">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.7451635415301" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12885,21 +14162,21 @@ where [refTable].[PID] = ?</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="316,537"
-          Size="316,580"
+          PanelSize="305.6,580.8"
+          Size="305.6,624"
           Id="Package\Establish Preconditions"
-          TopLeft="135,18" />
+          TopLeft="157.692308524657,44.7677414129974" />
         <NodeLayout
-          Size="155,42"
+          Size="152.8,41.6"
           Id="Package\Main Flow 1\LOAD LEASES"
           TopLeft="35.5,15" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="222,112"
-          Size="222,155"
+          Size="222,155.2"
           Id="Package\Main Flow 1"
-          TopLeft="176,659" />
+          TopLeft="194.076923739981,708.064515374329" />
         <NodeLayout
           Size="214,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE"
@@ -12907,35 +14184,46 @@ where [refTable].[PID] = ?</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="226,125"
+          PanelSize="226,124.8"
           Size="226,168"
           Id="Package\Main Flow 2"
-          TopLeft="170,852" />
+          TopLeft="191.538462328487,914.670967651628" />
         <NodeLayout
-          Size="149,42"
+          Size="182.4,41.6"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance"
+          TopLeft="25.038478467592,11.8935405239977" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="250,104"
+          Size="250,147.2"
+          Id="Package\PIMS Insurance Data"
+          TopLeft="509.615403307967,885.606444678668" />
+        <NodeLayout
+          Size="148.8,42"
           Id="Package\Sequence Container\SET LFILENO"
           TopLeft="88,48" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="263,145"
-          Size="263,188"
+          PanelSize="263.2,144.8"
+          Size="263.2,188"
           Id="Package\Sequence Container"
-          TopLeft="599,665" />
+          TopLeft="511.307689091158,668.509675716436" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="290,598">
+          TopLeft="307.784616132319,668.767741412997">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,61"
+              EndConnector="0,39.2967739613321"
               Start="0,0"
-              End="0,53.5">
+              End="0,31.7967739613321">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,53.5" />
+                    End="0,31.7967739613321" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12946,18 +14234,18 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="285,814">
+          TopLeft="304.807693034234,863.264515374329">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,38"
+              EndConnector="0,51.4064522772985"
               Start="0,0"
-              End="0,30.5">
+              End="0,43.9064522772985">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,30.5" />
+                    End="0,43.9064522772985" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12968,30 +14256,52 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="398,736.5">
+          TopLeft="416.076923739981,761.820428878716">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="201,22.5"
+              EndConnector="95.2307653511769,0"
               Start="0,0"
-              End="193.5,22.5">
+              End="87.7307653511769,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="96.5,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="96.5,0"
-                    Point2="100.5,0"
-                    Point3="100.5,4" />
+                    End="87.7307653511769,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="416.076923739981,810.197848707663">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="93.5384795679858,149.008595971005"
+              Start="0,0"
+              End="86.0384795679858,149.008595971005">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="100.5,18.5" />
+                    End="33.9880763959779,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="100.5,18.5"
-                    Point2="100.5,22.5"
-                    Point3="104.5,22.5" />
+                    Point1="33.9880763959779,0"
+                    Point2="37.9880763959779,0"
+                    Point3="37.9880763959779,4" />
                   <mssgle:LineSegment
-                    End="193.5,22.5" />
+                    End="37.9880763959779,145.008595971005" />
+                  <mssgle:CubicBezierSegment
+                    Point1="37.9880763959779,145.008595971005"
+                    Point2="37.9880763959779,149.008595971005"
+                    Point3="41.9880763959779,149.008595971005" />
+                  <mssgle:LineSegment
+                    End="86.0384795679858,149.008595971005" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -13009,7 +14319,7 @@ where [refTable].[PID] = ?</property>
       <GraphLayout
         Capacity="128" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="291,42"
+          Size="291.2,42"
           Id="Package\Main Flow 1\LOAD LEASES\Force Size of Caterogy and Purpose Codes"
           TopLeft="890.333333333333,1595.5" />
         <NodeLayout
@@ -13021,7 +14331,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null"
           TopLeft="752,363" />
         <NodeLayout
-          Size="177,42"
+          Size="176.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\OLE DB Destination"
           TopLeft="2065,1535" />
         <NodeLayout
@@ -13029,7 +14339,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Union All 1"
           TopLeft="629,706" />
         <NodeLayout
-          Size="169,42"
+          Size="168.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\TFA_File_Number"
           TopLeft="401,370" />
         <NodeLayout
@@ -13045,7 +14355,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\MOTI NAME LOOKUP TAG"
           TopLeft="896.428571428571,1793.57142857143" />
         <NodeLayout
-          Size="149,42"
+          Size="148.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\Set expired bit"
           TopLeft="655,1652" />
         <NodeLayout
@@ -13053,7 +14363,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Derived Column"
           TopLeft="2072,1660" />
         <NodeLayout
-          Size="123,42"
+          Size="123.2,42"
           Id="Package\Main Flow 1\LOAD LEASES\Union All"
           TopLeft="418,481" />
         <NodeLayout
@@ -13065,15 +14375,15 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Union All 2"
           TopLeft="1465,1107" />
         <NodeLayout
-          Size="161,42"
+          Size="160.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\Data Conversion"
           TopLeft="416,805" />
         <NodeLayout
-          Size="217,42"
+          Size="216.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE"
           TopLeft="662,805" />
         <NodeLayout
-          Size="147,42"
+          Size="147.2,42"
           Id="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE"
           TopLeft="2075.27777777778,1790.5" />
         <NodeLayout
@@ -13081,23 +14391,23 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE"
           TopLeft="721,1222" />
         <NodeLayout
-          Size="259,42"
+          Size="259.2,42"
           Id="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON"
           TopLeft="1205.42857142857,1789.57142857143" />
         <NodeLayout
-          Size="147,42"
+          Size="147.2,42"
           Id="Package\Main Flow 1\LOAD LEASES\Replace Nulls"
           TopLeft="659,1598" />
         <NodeLayout
-          Size="217,42"
+          Size="216.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode"
           TopLeft="723.444444444444,1355.63888888889" />
         <NodeLayout
-          Size="225,42"
+          Size="224.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE"
           TopLeft="935.111111111111,1509.66666666667" />
         <NodeLayout
-          Size="157,42"
+          Size="156.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\PSFile_No_Null"
           TopLeft="742,613" />
         <NodeLayout
@@ -13105,7 +14415,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\t_leasing + PID"
           TopLeft="397.5,176.5" />
         <NodeLayout
-          Size="212,43"
+          Size="212,43.2"
           Id="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null"
           TopLeft="1610.28571428572,1787.14285714286" />
         <NodeLayout
@@ -13113,11 +14423,11 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\OTHER for no match 2"
           TopLeft="1278,1220" />
         <NodeLayout
-          Size="159,42"
+          Size="159.2,42"
           Id="Package\Main Flow 1\LOAD LEASES\Conditional Split"
           TopLeft="691.285714285714,940.142857142857" />
         <NodeLayout
-          Size="165,42"
+          Size="164.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\Handle &quot;Nominal&quot;"
           TopLeft="1235,941" />
         <NodeLayout
@@ -13133,15 +14443,15 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Get PID"
           TopLeft="1898,1792" />
         <NodeLayout
-          Size="129,42"
+          Size="128.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\Audit Trail"
           TopLeft="1294,1595" />
         <NodeLayout
-          Size="181,42"
+          Size="180.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\OTHER for no match"
           TopLeft="1386.14285714286,807" />
         <NodeLayout
-          Size="177,42"
+          Size="176.8,42"
           Id="Package\Main Flow 1\LOAD LEASES\Amount to Currency"
           TopLeft="647.428571428571,1791.57142857143" />
         <EdgeLayout
@@ -13175,11 +14485,37 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+          TopLeft="482.25,523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,89"
+              Start="0,0"
+              End="0,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,81.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
           TopLeft="1356.25,1554">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13197,11 +14533,13 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
           TopLeft="695,748">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13231,29 +14569,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
-          TopLeft="482.25,523">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,89"
-              Start="0,0"
-              End="0,81.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,81.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13275,7 +14593,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13447,62 +14767,62 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-          TopLeft="1111.5,1401.25">
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+          TopLeft="485,654">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="242.5,110.75"
+              EndConnector="189.333333333333,52"
               Start="0,0"
-              End="242.5,103.25">
+              End="189.333333333333,44.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.8607594936709" />
+                    End="0,26.8263473053892" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,40.8607594936709"
-                    Point2="0,44.8607594936709"
-                    Point3="4,44.8607594936709" />
+                    Point1="0,26.8263473053892"
+                    Point2="0,30.8263473053892"
+                    Point3="4,30.8263473053892" />
                   <mssgle:LineSegment
-                    End="238.5,44.8607594936709" />
+                    End="185.333333333333,30.8263473053892" />
                   <mssgle:CubicBezierSegment
-                    Point1="238.5,44.8607594936709"
-                    Point2="242.5,44.8607594936709"
-                    Point3="242.5,48.8607594936709" />
+                    Point1="185.333333333333,30.8263473053892"
+                    Point2="189.333333333333,30.8263473053892"
+                    Point3="189.333333333333,34.8263473053892" />
                   <mssgle:LineSegment
-                    End="242.5,103.25" />
+                    End="189.333333333333,44.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="73.05861328125,49.8607594936709,96.3827734375,11.609375"
+              BoundingBox="46.4752799479165,35.8263473053892,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
-          TopLeft="770.642857142857,847">
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+          TopLeft="482.5,412">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,93.1428571428571"
+              EndConnector="0,69"
               Start="0,0"
-              End="0,85.6428571428571">
+              End="0,61.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,85.6428571428571" />
+                    End="0,61.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,37.0167410714285,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,24.9453125,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -13543,31 +14863,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-          TopLeft="482.5,412">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,69"
-              Start="0,0"
-              End="0,61.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,61.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,24.9453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
           TopLeft="842,1264">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13603,6 +14899,42 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+          TopLeft="1111.5,1401.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="242.5,110.75"
+              Start="0,0"
+              End="242.5,103.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.8607594936709" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40.8607594936709"
+                    Point2="0,44.8607594936709"
+                    Point3="4,44.8607594936709" />
+                  <mssgle:LineSegment
+                    End="238.5,44.8607594936709" />
+                  <mssgle:CubicBezierSegment
+                    Point1="238.5,44.8607594936709"
+                    Point2="242.5,44.8607594936709"
+                    Point3="242.5,48.8607594936709" />
+                  <mssgle:LineSegment
+                    End="242.5,103.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="73.05861328125,49.8607594936709,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
           TopLeft="1464.42857142857,1809.60714285714">
           <EdgeLayout.Curve>
@@ -13627,38 +14959,26 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
-          TopLeft="485,654">
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+          TopLeft="770.642857142857,847">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="189.333333333333,52"
+              EndConnector="0,93.1428571428571"
               Start="0,0"
-              End="189.333333333333,44.5">
+              End="0,85.6428571428571">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.8263473053892" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,26.8263473053892"
-                    Point2="0,30.8263473053892"
-                    Point3="4,30.8263473053892" />
-                  <mssgle:LineSegment
-                    End="185.333333333333,30.8263473053892" />
-                  <mssgle:CubicBezierSegment
-                    Point1="185.333333333333,30.8263473053892"
-                    Point2="189.333333333333,30.8263473053892"
-                    Point3="189.333333333333,34.8263473053892" />
-                  <mssgle:LineSegment
-                    End="189.333333333333,44.5" />
+                    End="0,85.6428571428571" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="46.4752799479165,35.8263473053892,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,37.0167410714285,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -13681,7 +15001,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13703,7 +15025,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13725,7 +15049,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13747,7 +15073,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13769,7 +15097,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13791,7 +15121,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13813,7 +15145,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13847,7 +15181,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13881,7 +15217,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13915,7 +15253,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13949,7 +15289,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -13983,7 +15325,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14005,7 +15349,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14027,7 +15373,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14049,7 +15397,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14071,7 +15421,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14093,7 +15445,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14115,7 +15469,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14137,7 +15493,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14372,7 +15730,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Convert PID back to int"
           TopLeft="283,340" />
         <NodeLayout
-          Size="167,42"
+          Size="167.2,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Derived Column 1"
           TopLeft="607,337" />
         <NodeLayout
@@ -14380,7 +15738,7 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS_PROPERTY_LEASE"
           TopLeft="274,530" />
         <NodeLayout
-          Size="175,42"
+          Size="175.2,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG"
           TopLeft="868,421" />
         <NodeLayout
@@ -14392,15 +15750,15 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Lookup PROPERTY_ID in PIMS_PROPERTY"
           TopLeft="224,429" />
         <NodeLayout
-          Size="199,42"
+          Size="199.2,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG 1"
           TopLeft="866,335" />
         <NodeLayout
-          Size="159,42"
+          Size="159.2,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Conditional Split"
           TopLeft="295,116" />
         <NodeLayout
-          Size="129,42"
+          Size="128.8,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Audit Trail"
           TopLeft="314,223" />
         <NodeLayout
@@ -14698,6 +16056,188 @@ where [refTable].[PID] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\PIMS Insurance Data\Load PIMS Insurance">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance\Error Columns"
+          TopLeft="311.999983494097,152.491128193699" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS ERROR LOG"
+          TopLeft="505.999983494102,150.491128193699" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance\t_leasing + PID"
+          TopLeft="80.538460494498,60" />
+        <NodeLayout
+          Size="155.2,41.6"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance"
+          TopLeft="61.3333333333333,331.428759112609" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance\Derived Column"
+          TopLeft="65.884613197936,247.520159342287" />
+        <NodeLayout
+          Size="135.2,41.6"
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID"
+          TopLeft="80.499999449803,146.649192690477" />
+        <EdgeLayout
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[OLE DB Source Output]"
+          TopLeft="146.819229972151,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.6491926904775"
+              Start="0,0"
+              End="0,37.1491926904775">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.1491926904775" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Lookup No Match Output]"
+          TopLeft="215.699999449803,170.370160442089">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="96.2999840442944,0"
+              Start="0,0"
+              End="88.7999840442944,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="88.7999840442944,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-11.4063946966028,5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Lookup Match Output]"
+          TopLeft="145.99230632387,188.249192690478">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.2709666518092"
+              Start="0,0"
+              End="0,51.7709666518092">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.7709666518092" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.0807958259046,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Derived Column Output1]"
+          TopLeft="459.999983494097,172.2911281937">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46.0000000000045,0"
+              Start="0,0"
+              End="38.5000000000045,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5000000000045,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\PIMS Insurance Data\Load PIMS Insurance.Paths[Derived Column Output]"
+          TopLeft="141.408973265635,289.120159342287">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.3085997703216"
+              Start="0,0"
+              End="0,34.8085997703216">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.8085997703216" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS Insurance Data\Load PIMS Insurance\PIMS Insurance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS Insurance Data\Load PIMS Insurance\Lookup PID">
+    <Properties>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q2:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q3:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q4:string">false</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
