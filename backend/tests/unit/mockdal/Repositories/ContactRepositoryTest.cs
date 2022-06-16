@@ -90,7 +90,7 @@ namespace Pims.Dal.Test.Services
 
         [Theory]
         [MemberData(nameof(ContactFilterData))]
-        public void Get_Contacts_Paged(ContactFilter filter, int expectedCount)
+        public void Get_Contacts_Paged(ContactFilter filter, string expectedFirstId, int expectedCount)
         {
             // Arrange
             var helper = new TestHelper();
@@ -120,6 +120,10 @@ namespace Pims.Dal.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedCount, result.Items.Count());
+            if (expectedCount > 1)
+            {
+                result.FirstOrDefault().Id.Should().Be(expectedFirstId);
+            }
         }
         #endregion
     }
