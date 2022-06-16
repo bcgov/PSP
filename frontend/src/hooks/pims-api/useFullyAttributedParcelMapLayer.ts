@@ -7,7 +7,10 @@ import { useWfsLayer } from './useWfsLayer';
  * @returns Object containing functions to make requests to the WFS layer.
  */
 export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
-  const { getAllFeatures, getAllFeaturesLoading } = useWfsLayer(url, { name });
+  const { getAllFeatures, getAllFeaturesLoading } = useWfsLayer(url, {
+    name,
+    withCredentials: true,
+  });
 
   const findByLegalDescription = useCallback(
     async (legalDesc: string) => {
