@@ -445,7 +445,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c12 .row .col:first-of-type .form-label {
-  min-width: 13.5rem;
+  min-width: 21.5rem;
 }
 
 .c12 .form-control {
