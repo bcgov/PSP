@@ -14,7 +14,7 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
 
   const findByLegalDescription = useCallback(
     async (legalDesc: string) => {
-      const data = await getAllFeatures({ LEGAL_DESCRIPTION: legalDesc }, { timeout: 20000 });
+      const data = await getAllFeatures({ LEGAL_DESCRIPTION: legalDesc }, { timeout: 40000 });
       return data;
     },
     [getAllFeatures],
