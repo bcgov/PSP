@@ -108,7 +108,7 @@ export interface IResearchSearchResultsProps {
   pageSize?: number;
   pageIndex?: number;
   sort?: TableSort<IResearchSearchResult>;
-  setSort?: (value: TableSort<IResearchSearchResult>) => void;
+  setSort: (value: TableSort<IResearchSearchResult>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
@@ -125,14 +125,10 @@ export function ResearchSearchResults(props: IResearchSearchResultsProps) {
 
   return (
     <Table<IResearchSearchResult>
-      manualSortBy={true}
       name="researchFilesTable"
       columns={columns}
       data={results ?? []}
-      sort={sort}
-      onSortChange={(column, nextSortDirection) =>
-        handleSortChange(column, nextSortDirection, sort, setSort)
-      }
+      externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="No matching Research Files found"

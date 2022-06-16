@@ -14,7 +14,7 @@ export interface IContactResultComponentProps {
   pageIndex?: number;
   totalItems?: number;
   sort?: TableSort<IContactSearchResult>;
-  setSort?: (value: TableSort<IContactSearchResult>) => void;
+  setSort: (value: TableSort<IContactSearchResult>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
@@ -46,11 +46,7 @@ export function ContactResultComponent(props: IContactResultComponentProps) {
       name="contactsTable"
       columns={listColumns}
       data={results ?? []}
-      sort={sort}
-      manualSortBy={true}
-      onSortChange={(column, nextSortDirection) =>
-        handleSortChange(column, nextSortDirection, sort, setSort)
-      }
+      externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="No Contacts match the search criteria"

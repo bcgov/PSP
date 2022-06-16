@@ -112,13 +112,9 @@ export const ManageUsersPage = () => {
           pageSize={pageSize}
           totalItems={totalItems}
           onRequestData={req => setCurrentPage(req.pageIndex)}
-          onSortChange={(column, nextSortDirection) =>
-            handleSortChange(column, nextSortDirection, sort, setSort)
-          }
-          sort={sort}
+          externalSort={{ sort: sort, setSort: setSort }}
           onPageSizeChange={setPageSize}
           clickableTooltip="Click IDIR/BCeID link to view User Information page"
-          manualSortBy
         />
       </StyledScrollContainer>
     </StyledPage>

@@ -174,7 +174,28 @@ namespace Pims.Dal.Repositories
 
             if (filter.Sort?.Any() == true)
             {
-                query = query.OrderByProperty(filter.Sort);
+                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
+                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
+                if (field == "Surname")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.Surname) : query.OrderByDescending(c => c.Contact.Surname);
+                }
+                else if (field == "FirstName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.FirstName) : query.OrderByDescending(c => c.Contact.FirstName);
+                }
+                else if (field == "OrganizationName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.OrganizationName) : query.OrderByDescending(c => c.Contact.OrganizationName);
+                }
+                else if (field == "MunicipalityName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.MunicipalityName) : query.OrderByDescending(c => c.Contact.MunicipalityName);
+                }
+                else
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.Summary) : query.OrderByDescending(c => c.Contact.Summary);
+                }
             }
             else
             {

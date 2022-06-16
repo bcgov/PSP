@@ -120,7 +120,7 @@ export interface ILeaseSearchResultsProps {
   pageSize?: number;
   pageIndex?: number;
   sort?: TableSort<ILeaseSearchResult>;
-  setSort?: (value: TableSort<ILeaseSearchResult>) => void;
+  setSort: (value: TableSort<ILeaseSearchResult>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
@@ -137,14 +137,10 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
 
   return (
     <Table<ILeaseSearchResult>
-      manualSortBy={true}
       name="leasesTable"
       columns={columns}
       data={results ?? []}
-      sort={sort}
-      onSortChange={(column, nextSortDirection) =>
-        handleSortChange(column, nextSortDirection, sort, setSort)
-      }
+      externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="Lease / License details do not exist in PIMS inventory"

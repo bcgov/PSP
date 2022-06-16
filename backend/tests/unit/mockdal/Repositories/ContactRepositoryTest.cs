@@ -11,6 +11,7 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using FluentAssertions;
 
 namespace Pims.Dal.Test.Services
 {
@@ -25,15 +26,25 @@ namespace Pims.Dal.Test.Services
         public static IEnumerable<object[]> ContactFilterData =>
             new List<object[]>
             {
-                new object[] { new ContactFilter() { Municipality = "victoria" }, 2 },
-                new object[] { new ContactFilter() { Municipality = "fake city" }, 0 },
-                new object[] { new ContactFilter() { Summary = "person name" }, 1 },
-                new object[] { new ContactFilter() { Summary = "organization" }, 1 },
-                new object[] { new ContactFilter() { ActiveContactsOnly = true, SearchBy = "all" }, 2 },
-                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all" }, 3 },
-                new object[] { new ContactFilter() { SearchBy = "organizations" }, 1 },
-                new object[] { new ContactFilter() { SearchBy = "persons" }, 1 },
-                new object[] { new ContactFilter() { SearchBy = "all" }, 2 },
+                new object[] { new ContactFilter() { Municipality = "victoria" }, "P1", 2 },
+                new object[] { new ContactFilter() { Municipality = "fake city" }, "", 0 },
+                new object[] { new ContactFilter() { Summary = "person name" }, "", 1 },
+                new object[] { new ContactFilter() { Summary = "organization" }, "", 1 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = true, SearchBy = "all" }, "P1", 2 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all" }, "P2", 3 },
+                new object[] { new ContactFilter() { SearchBy = "organizations" }, "", 1 },
+                new object[] { new ContactFilter() { SearchBy = "persons" }, "", 1 },
+                new object[] { new ContactFilter() { SearchBy = "all" }, "P1", 2 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "FirstName asc" } }, "O1", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "FirstName desc" } }, "P1", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "Surname asc" } }, "P1", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "Surname desc" } }, "P2", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "OrganizationName asc" } }, "P1", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "OrganizationName desc" } }, "O1", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "MunicipalityName asc" } }, "P2", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "MunicipalityName desc" } }, "O1", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "Summary asc" } }, "P2", 3 },
+                new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "Summary desc" } }, "O1", 3 },
             };
         #endregion
 
@@ -41,7 +52,7 @@ namespace Pims.Dal.Test.Services
 
         [Theory]
         [MemberData(nameof(ContactFilterData))]
-        public void Get_Contacts(ContactFilter filter, int expectedCount)
+        public void Get_Contacts(ContactFilter filter, string expectedFirstId, int expectedCount)
         {
             // Arrange
             var helper = new TestHelper();
@@ -71,6 +82,10 @@ namespace Pims.Dal.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedCount, result.Count());
+            if (expectedCount > 1)
+            {
+                result.FirstOrDefault().Id.Should().Be(expectedFirstId);
+            }
         }
 
         [Theory]

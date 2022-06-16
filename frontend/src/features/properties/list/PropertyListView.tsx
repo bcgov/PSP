@@ -11,6 +11,7 @@ import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useRouterFilter } from 'hooks/useRouterFilter';
+import { handleSortChange } from 'hooks/useSearch';
 import { IProperty } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
@@ -179,21 +180,12 @@ const PropertyListView: React.FC = () => {
           columns={columns}
           data={data || []}
           loading={data === undefined}
-          sort={sort}
+          externalSort={{ sort: sort, setSort: setSort }}
           totalItems={totalItems}
           pageIndex={pageIndex}
           pageSize={pageSize}
           onRequestData={onRequestData}
           pageCount={pageCount}
-          onSortChange={(column: string, direction: SortDirection) => {
-            if (!!direction) {
-              setSort({ ...sort, [column]: direction });
-            } else {
-              const data: any = { ...sort };
-              delete data[column];
-              setSort(data);
-            }
-          }}
           filter={appliedFilter}
           onFilterChange={values => {
             setFilter({ ...filter, ...values });
