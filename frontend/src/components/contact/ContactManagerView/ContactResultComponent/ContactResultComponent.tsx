@@ -1,6 +1,5 @@
 import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { handleSortChange } from 'hooks/useSearch';
 import { IContactSearchResult } from 'interfaces';
 import { useCallback } from 'react';
 

@@ -1,7 +1,6 @@
 import TooltipIcon from 'components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { handleSortChange } from 'hooks/useSearch';
 import { ILeaseSearchResult } from 'interfaces';
 import moment from 'moment';
 import { useCallback } from 'react';

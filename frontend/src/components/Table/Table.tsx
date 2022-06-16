@@ -30,7 +30,6 @@ import { FaAngleDown, FaAngleRight, FaUndo } from 'react-icons/fa';
 import {
   Cell,
   HeaderGroup,
-  IdType,
   Row,
   TableOptions,
   useFlexLayout,

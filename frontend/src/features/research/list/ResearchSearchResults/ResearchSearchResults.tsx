@@ -2,7 +2,6 @@ import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Tab
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { handleSortChange } from 'hooks/useSearch';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
 import { useCallback } from 'react';
