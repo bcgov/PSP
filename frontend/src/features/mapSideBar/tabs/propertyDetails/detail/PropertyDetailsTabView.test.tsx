@@ -1,12 +1,17 @@
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { mockLookups } from 'mocks/mockLookups';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { PropertyDetailsTabView } from './PropertyDetailsTabView';
 import { toFormValues } from './PropertyDetailsTabView.helpers';
 
 const history = createMemoryHistory();
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
 
 describe('PropertyDetailsTabView component', () => {
   // render component under test
@@ -15,6 +20,7 @@ describe('PropertyDetailsTabView component', () => {
     const formValues = toFormValues(property);
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
+      store: storeState,
       history,
     });
 
@@ -83,6 +89,16 @@ describe('PropertyDetailsTabView component', () => {
 
     const { getByText } = setup({ property });
     expect(getByText(/Volumetric measurement/i)).toBeVisible();
+  });
+
+  it('shows Provincial public hwy field', () => {
+    const property: IPropertyApiModel = {
+      ...mockPropertyInfo,
+      pphStatusTypeCode: 'Non-PPH',
+    };
+
+    const { getByText } = setup({ property });
+    expect(getByText(/Non- Provincial Public Highway/i)).toBeVisible();
   });
 
   it('does not show shows additional volume measurements for non-volumetric parcels', () => {

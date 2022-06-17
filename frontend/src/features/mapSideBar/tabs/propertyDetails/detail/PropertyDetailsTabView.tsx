@@ -1,14 +1,16 @@
 import { Text } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Formik, FormikProps, getIn } from 'formik';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import noop from 'lodash/noop';
 import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { stringToBoolean } from 'utils/formUtils';
+import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../../Section';
 import { SectionField, StyledFieldLabel } from '../../SectionField';
@@ -51,8 +53,8 @@ export const PropertyDetailsTabView: React.FC<IPropertyDetailsTabView> = ({
 };
 
 const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) => {
-  // yes/no/unknown (true/false/undefined)
-  const isProvincialHighway = getIn(values, 'isProvincialPublicHwy');
+  const { getOptionsByType } = useLookupCodeHelpers();
+  const pphTypeOptions = getOptionsByType(API.PPH_STATUS_TYPES);
   // multi-selects
   const anomalies = getIn(values, 'anomalies') as Api_TypeCode<string>[];
   const tenureStatus = getIn(values, 'tenure') as Api_TypeCode<string>[];
@@ -67,6 +69,11 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
   const isIndianReserve =
     isAdjacentLand && adjacentLand?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
+  const isRwyBeltDomPatent = getIn(values, 'isRwyBeltDomPatent');
+
+  const pphStatusTypeCodeDesc = pphTypeOptions.find(
+    pph => pph.value === getIn(values, 'pphStatusTypeCode'),
+  )?.label;
 
   return (
     <StyledReadOnlyForm>
@@ -89,6 +96,9 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
         </SectionField>
         <SectionField label="Agricultural Land Reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
+        </SectionField>
+        <SectionField label="Railway belt / Dominion patent">
+          <Text>{booleanToYesNoUnknownString(isRwyBeltDomPatent)}</Text>
         </SectionField>
         <SectionField label="Land parcel type">
           <Text field="propertyType.description" />
@@ -122,9 +132,7 @@ const FormComponent: React.FC<FormikProps<IPropertyDetailsForm>> = ({ values }) 
           />
         </SectionField>
         <SectionField label="Provincial Public Hwy">
-          {isProvincialHighway === true && <Text>Yes</Text>}
-          {isProvincialHighway === false && <Text>No</Text>}
-          {isProvincialHighway === undefined && <Text>Unknown</Text>}
+          <Text>{pphStatusTypeCodeDesc ?? 'Unknown'}</Text>
         </SectionField>
         {isHighwayRoad && (
           <SectionField label="Highway / Road">

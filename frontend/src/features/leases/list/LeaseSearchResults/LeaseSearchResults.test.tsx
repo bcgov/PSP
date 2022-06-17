@@ -6,9 +6,13 @@ import { ILeaseSearchResultsProps, LeaseSearchResults } from './LeaseSearchResul
 const setSort = jest.fn();
 
 // render component under test
-const setup = (renderOptions: RenderOptions & ILeaseSearchResultsProps = { results: [] }) => {
+const setup = (
+  renderOptions: RenderOptions & Partial<ILeaseSearchResultsProps> = { results: [] },
+) => {
   const { results, ...rest } = renderOptions;
-  const utils = render(<LeaseSearchResults results={results} setSort={setSort} />, { ...rest });
+  const utils = render(<LeaseSearchResults results={results ?? []} setSort={setSort} />, {
+    ...rest,
+  });
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');
   // long css selector to: get the FIRST header or table, then get the SVG up/down sort buttons
   const sortButtons = utils.container.querySelector(

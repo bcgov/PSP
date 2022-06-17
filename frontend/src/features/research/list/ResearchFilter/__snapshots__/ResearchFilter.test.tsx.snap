@@ -334,6 +334,11 @@ exports[`Research Filter matches snapshot 1`] = `
                     name="researchFileStatusTypeCode"
                   >
                     <option
+                      value=""
+                    >
+                      Select a status
+                    </option>
+                    <option
                       class="option"
                       value="ACTIVE"
                     >

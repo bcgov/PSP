@@ -6,9 +6,13 @@ import { IResearchSearchResultsProps, ResearchSearchResults } from './ResearchSe
 const setSort = jest.fn();
 
 // render component under test
-const setup = (renderOptions: RenderOptions & IResearchSearchResultsProps = { results: [] }) => {
+const setup = (
+  renderOptions: RenderOptions & Partial<IResearchSearchResultsProps> = { results: [] },
+) => {
   const { results, ...rest } = renderOptions;
-  const utils = render(<ResearchSearchResults results={results} setSort={setSort} />, { ...rest });
+  const utils = render(<ResearchSearchResults results={results ?? []} setSort={setSort} />, {
+    ...rest,
+  });
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');
   return {
     ...utils,
