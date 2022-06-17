@@ -5,7 +5,7 @@ import { Table } from 'components/Table';
 import { IPaginateParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { handleSortChange, useSearch } from 'hooks/useSearch';
+import { useSearch } from 'hooks/useSearch';
 import { IUsersFilter } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import { Api_User } from 'models/api/User';
@@ -112,13 +112,9 @@ export const ManageUsersPage = () => {
           pageSize={pageSize}
           totalItems={totalItems}
           onRequestData={req => setCurrentPage(req.pageIndex)}
-          onSortChange={(column, nextSortDirection) =>
-            handleSortChange(column, nextSortDirection, sort, setSort)
-          }
-          sort={sort}
+          externalSort={{ sort: sort, setSort: setSort }}
           onPageSizeChange={setPageSize}
           clickableTooltip="Click IDIR/BCeID link to view User Information page"
-          manualSortBy
         />
       </StyledScrollContainer>
     </StyledPage>
