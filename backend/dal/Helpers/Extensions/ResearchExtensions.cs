@@ -77,11 +77,17 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Sort?.Any() == true)
             {
+                // If its sorting by rFileNumber, change it to sort by id given that the R-File is the id with a "R-" prefix .
+                int sortRFileNumberIndex = filter.Sort.ToList().FindIndex(x => x.Contains("RfileNumber"));
+                if (sortRFileNumberIndex >= 0)
+                {
+                    filter.Sort[sortRFileNumberIndex] = filter.Sort[sortRFileNumberIndex].Replace("RfileNumber", "ResearchFileId");
+                }
                 query = query.OrderByProperty(filter.Sort);
             }
             else
             {
-                query = query.OrderBy(l => l.RfileNumber);
+                query = query.OrderBy(l => l.ResearchFileId);
             }
 
             return query.Include(r => r.ResearchFileStatusTypeCodeNavigation)

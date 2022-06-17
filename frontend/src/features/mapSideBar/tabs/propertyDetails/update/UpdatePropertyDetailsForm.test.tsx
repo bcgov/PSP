@@ -1,3 +1,5 @@
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
@@ -16,6 +18,7 @@ const storeState = {
 const onSubmit = jest.fn();
 const onCancel = jest.fn();
 
+const mockAxios = new MockAdapter(axios);
 const fakeProperty: Api_Property = {
   id: 205,
   propertyType: {
@@ -125,6 +128,12 @@ const fakeProperty: Api_Property = {
   latitude: 925866.6022023489,
   longitude: 1406876.1727310908,
   isSensitive: false,
+  pphStatusUpdateTimestamp: new Date('10-May-2020'),
+  pphStatusUpdateUserGuid: 'A85F259B-FEBF-4508-87A6-1C2419036EFA',
+  pphStatusUpdateUserid: 'USER',
+  isRwyBeltDomPatent: false,
+  pphStatusTypeCode: 'Non-PPH',
+
   address: {
     id: 1,
     streetAddress1: '45 - 904 Hollywood Crescent',
@@ -203,6 +212,7 @@ describe('UpdatePropertyDetailsForm component', () => {
   let initialValues: UpdatePropertyDetailsFormModel;
 
   beforeEach(() => {
+    mockAxios.onGet('/users/info/A85F259B-FEBF-4508-87A6-1C2419036EFA').reply(200);
     initialValues = UpdatePropertyDetailsFormModel.fromApi(fakeProperty);
   });
 
@@ -222,7 +232,9 @@ describe('UpdatePropertyDetailsForm component', () => {
   });
 
   it('saves the form with minimal data when Save is clicked', async () => {
-    const { getSaveButton } = setup({ initialValues });
+    const { getSaveButton } = setup({
+      initialValues,
+    });
     userEvent.click(getSaveButton());
     await waitFor(() => expect(onSubmit).toBeCalledWith(initialValues, expect.anything()));
   });

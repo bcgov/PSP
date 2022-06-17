@@ -5,6 +5,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AccessRequest } from 'models/api/AccessRequest';
 import * as React from 'react';
 import { useEffect } from 'react';
+import { Alert } from 'react-bootstrap';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
 import { FormAccessRequest } from './models';
@@ -67,6 +68,7 @@ export const AccessRequestContainer: React.FunctionComponent<IAccessRequestConta
   return (
     <>
       <LoadingBackdrop parentScreen show={loading || addLoading || byIdLoading} />
+      {response?.id && <Alert variant="success">Your access request has been submitted</Alert>}
       <AccessRequestFormComponent
         initialValues={initialValues}
         addAccessRequest={async (accessRequest: Api_AccessRequest) => {
