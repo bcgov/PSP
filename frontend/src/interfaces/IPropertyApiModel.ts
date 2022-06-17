@@ -20,6 +20,8 @@ export interface IPropertyApiModel extends Api_ConcurrentVersion {
   description?: string;
   isSensitive?: boolean;
   isProvincialPublicHwy?: boolean;
+  pphStatusTypeCode?: string;
+  isRwyBeltDomPatent?: boolean;
 
   latitude?: number;
   longitude?: number;

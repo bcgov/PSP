@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            IEnumerable<PimsContactMgrVw> contacts = GetFilteredContacts(filter);
+            IEnumerable<PimsContactMgrVw> contacts = GetFilteredContacts(filter, out _);
 
             return contacts;
         }
@@ -86,9 +86,9 @@ namespace Pims.Dal.Repositories
             {
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
-            IEnumerable<PimsContactMgrVw> results = GetFilteredContacts(filter);
+            IEnumerable<PimsContactMgrVw> results = GetFilteredContacts(filter, out int totalItems);
 
-            return new Paged<PimsContactMgrVw>(results, filter.Page, filter.Quantity, Count());
+            return new Paged<PimsContactMgrVw>(results, filter.Page, filter.Quantity, totalItems);
         }
 
         /// <summary>
@@ -105,8 +105,9 @@ namespace Pims.Dal.Repositories
         /// Generate an SQL statement for the specified 'filter'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="totalItems">To hold and return total actual items</param>
         /// <returns></returns>
-        private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter)
+        private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter, out int totalItems)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -173,7 +174,28 @@ namespace Pims.Dal.Repositories
 
             if (filter.Sort?.Any() == true)
             {
-                query = query.OrderByProperty(filter.Sort);
+                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
+                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
+                if (field == "Surname")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.Surname) : query.OrderByDescending(c => c.Contact.Surname);
+                }
+                else if (field == "FirstName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.FirstName) : query.OrderByDescending(c => c.Contact.FirstName);
+                }
+                else if (field == "OrganizationName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.OrganizationName) : query.OrderByDescending(c => c.Contact.OrganizationName);
+                }
+                else if (field == "MunicipalityName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.MunicipalityName) : query.OrderByDescending(c => c.Contact.MunicipalityName);
+                }
+                else
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.Contact.Summary) : query.OrderByDescending(c => c.Contact.Summary);
+                }
             }
             else
             {
@@ -181,6 +203,8 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
+
+            totalItems = query.Count();
 
             var contactsWithOrganizations = query
                 .Skip(skip)

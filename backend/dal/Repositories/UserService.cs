@@ -213,7 +213,7 @@ namespace Pims.Dal.Repositories
 
                 if (filter.Sort.Any())
                 {
-                    var direction = filter.Sort[0].Split(" ").FirstOrDefault();
+                    var direction = filter.Sort[0].Split(" ").LastOrDefault();
                     if (filter.Sort[0].StartsWith("Email"))
                     {
                         query = direction == "asc" ?
@@ -365,14 +365,6 @@ namespace Pims.Dal.Repositories
             var userRole = user.PimsUserRoles.FirstOrDefault(r => r.RoleId == roleId);
             user.PimsUserRoles.Remove(userRole);
             this.Context.PimsUserRoles.Remove(userRole);
-            return user;
-        }
-
-        public PimsUser RemoveRegion(PimsUser user, short regionCode)
-        {
-            var regionUser = user.PimsRegionUsers.FirstOrDefault(r => r.RegionCode == regionCode);
-            user.PimsRegionUsers.Remove(regionUser);
-            this.Context.PimsRegionUsers.Remove(regionUser);
             return user;
         }
 

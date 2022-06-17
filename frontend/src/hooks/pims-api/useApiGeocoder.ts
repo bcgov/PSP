@@ -25,31 +25,3 @@ export const useApiGeocoder = () => {
 };
 
 export type IPaginateResearch = IPaginateRequest<IResearchFilter>;
-
-export const mockGeocoderPidsResponse: IGeocoderPidsResponse = {
-  pids: ['9025ea39-da19-4655-85e6-e34c00e765f8'],
-  siteId: '312312',
-};
-
-export const mockGeocoderOptions: IGeocoderResponse[] = [
-  {
-    fullAddress: '1234 Fake St',
-    siteId: '1',
-    address1: '1234 Fake St',
-    administrativeArea: 'Test Town',
-    provinceCode: 'BC',
-    latitude: 1,
-    longitude: 1,
-    score: 60,
-  },
-  {
-    fullAddress: '5521 Test St',
-    siteId: '1',
-    address1: '5521 Test St',
-    administrativeArea: 'Test Town',
-    provinceCode: 'BC',
-    latitude: 2,
-    longitude: 2,
-    score: 70,
-  },
-];
