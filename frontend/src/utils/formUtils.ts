@@ -78,7 +78,7 @@ export function nullableBooleanToString(value?: boolean | null): string {
   return value.toString();
 }
 
-export function yesNoUnknownToBoolean(value: string): boolean | null {
+export function yesNoUnknownToBoolean(value?: string): boolean | null {
   if (value?.toLowerCase() === 'yes') return true;
   else if (value?.toLowerCase() === 'no') return false;
   return null;

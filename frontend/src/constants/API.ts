@@ -86,3 +86,6 @@ export const PROPERTY_LAND_PARCEL_TYPES = 'PimsPropertyType';
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
 export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties or all if not specified.
+
+export const MAX_SQL_INT_SIZE = 2147483647;
+export const MAX_SQL_MONEY_SIZE = 922337203685477.58;
