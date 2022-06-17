@@ -39,8 +39,6 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const menuItems = researchFile?.researchProperties?.map(x => getPropertyName(x)) || [];
   menuItems.unshift('RFile Summary');
 
-  console.log(menuItems);
-
   useEffect(() => {
     async function fetchResearchFile() {
       var retrieved = await retrieveResearchFile(props.researchFileId);
