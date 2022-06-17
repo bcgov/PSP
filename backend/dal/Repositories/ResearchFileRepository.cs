@@ -69,6 +69,15 @@ namespace Pims.Dal.Repositories
         {
             researchFile.ThrowIfNull(nameof(researchFile));
 
+            // Existing properties should not be added.
+            foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
+            {
+                if (researchProperty.Property.Id != 0)
+                {
+                    Context.Entry(researchProperty.Property).State = EntityState.Unchanged;
+                }
+            }
+
             long nextResearchFileId = this.GetNextResearchSequenceValue();
 
             researchFile.RfileNumber = GenerateRFileNumber(nextResearchFileId);
