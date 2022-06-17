@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            IEnumerable<PimsContactMgrVw> contacts = GetFilteredContacts(filter);
+            IEnumerable<PimsContactMgrVw> contacts = GetFilteredContacts(filter, out _);
 
             return contacts;
         }
@@ -86,9 +86,9 @@ namespace Pims.Dal.Repositories
             {
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
-            IEnumerable<PimsContactMgrVw> results = GetFilteredContacts(filter);
+            IEnumerable<PimsContactMgrVw> results = GetFilteredContacts(filter, out int totalItems);
 
-            return new Paged<PimsContactMgrVw>(results, filter.Page, filter.Quantity, Count());
+            return new Paged<PimsContactMgrVw>(results, filter.Page, filter.Quantity, totalItems);
         }
 
         /// <summary>
@@ -105,8 +105,9 @@ namespace Pims.Dal.Repositories
         /// Generate an SQL statement for the specified 'filter'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="totalItems">To hold and return total actual items</param>
         /// <returns></returns>
-        private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter)
+        private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter, out int totalItems)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -181,6 +182,8 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
+
+            totalItems = query.Count();
 
             var contactsWithOrganizations = query
                 .Skip(skip)

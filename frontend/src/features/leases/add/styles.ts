@@ -104,7 +104,7 @@ export const LeaseForm = styled(Form)`
     color: ${props => props.theme.css.textColor};
   }
   .row .col:first-of-type .form-label {
-    min-width: 13.5rem;
+    min-width: 21.5rem;
   }
   .form-control {
     min-width: 25rem;
