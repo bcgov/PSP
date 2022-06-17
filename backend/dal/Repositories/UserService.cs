@@ -213,7 +213,7 @@ namespace Pims.Dal.Repositories
 
                 if (filter.Sort.Any())
                 {
-                    var direction = filter.Sort[0].Split(" ").FirstOrDefault();
+                    var direction = filter.Sort[0].Split(" ").LastOrDefault();
                     if (filter.Sort[0].StartsWith("Email"))
                     {
                         query = direction == "asc" ?

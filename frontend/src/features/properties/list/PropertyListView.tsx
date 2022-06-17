@@ -3,7 +3,7 @@ import './PropertyListView.scss';
 import { IconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
-import { SortDirection, TableSort } from 'components/Table/TableSort';
+import { TableSort } from 'components/Table/TableSort';
 import * as API from 'constants/API';
 import { Form, Formik, FormikProps } from 'formik';
 import { useProperties } from 'hooks';
@@ -179,21 +179,12 @@ const PropertyListView: React.FC = () => {
           columns={columns}
           data={data || []}
           loading={data === undefined}
-          sort={sort}
+          externalSort={{ sort: sort, setSort: setSort }}
           totalItems={totalItems}
           pageIndex={pageIndex}
           pageSize={pageSize}
           onRequestData={onRequestData}
           pageCount={pageCount}
-          onSortChange={(column: string, direction: SortDirection) => {
-            if (!!direction) {
-              setSort({ ...sort, [column]: direction });
-            } else {
-              const data: any = { ...sort };
-              delete data[column];
-              setSort(data);
-            }
-          }}
           filter={appliedFilter}
           onFilterChange={values => {
             setFilter({ ...filter, ...values });

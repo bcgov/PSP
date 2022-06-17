@@ -61,7 +61,7 @@ describe('PropertySelectorSearchContainer component', () => {
     userEvent.click(searchButton);
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toBe(
-        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PID ilike '%25123456789%25'",
+        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PIN ilike '%25123456789%25' OR PID ilike '%25123456789%25'",
       );
     });
   });

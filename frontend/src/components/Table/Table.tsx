@@ -10,6 +10,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
+import { handleSortChange } from 'hooks/useSearch';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import remove from 'lodash/remove';
@@ -29,7 +30,6 @@ import { FaAngleDown, FaAngleRight, FaUndo } from 'react-icons/fa';
 import {
   Cell,
   HeaderGroup,
-  IdType,
   Row,
   TableOptions,
   useFlexLayout,
@@ -114,6 +114,11 @@ interface DetailsOptions<T extends object> {
   getRowId: (row: T) => any;
 }
 
+interface ExternalSort<T extends object> {
+  sort: TableSort<T>;
+  setSort: (sort: TableSort<T>) => void;
+}
+
 export interface TableProps<T extends object = {}, TFilter extends object = {}>
   extends TableOptions<T> {
   name: string;
@@ -128,9 +133,8 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   pageIndex?: number;
   onRowClick?: (data: T) => void;
   clickableTooltip?: string;
-  onSortChange?: (field: IdType<T>, directions: SortDirection) => void;
   onPageSizeChange?: (size: number) => void;
-  sort?: TableSort<T>;
+  externalSort?: ExternalSort<T>;
   noRowsMessage?: string;
   selectedRows?: T[];
   setSelectedRows?: Function;
@@ -272,12 +276,12 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     pageSize: pageSizeProp,
     pageIndex: pageIndexProp,
     manualPagination,
-    sort,
     filterable,
     renderBodyComponent,
-    manualSortBy,
+    externalSort,
     isSingleSelect,
   } = props;
+  const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
   const pageCount =
     pageSizeProp !== undefined
@@ -297,8 +301,13 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   }, [filterFormRef, props.filter]);
 
   const sortBy = useMemo(() => {
-    return !!sort ? keys(sort).map(key => ({ id: key, desc: (sort as any)[key] === 'desc' })) : [];
-  }, [sort]);
+    return !!externalSort?.sort
+      ? keys(externalSort.sort).map(key => ({
+          id: key,
+          desc: (externalSort.sort as any)[key] === 'desc',
+        }))
+      : [];
+  }, [externalSort?.sort]);
 
   // Use the useTable hook to create your table configuration
   const instance = useTable<T>(
@@ -425,9 +434,9 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   }, [page, externalSelectedRows]);
 
   const getNextSortDirection = (column: ColumnInstanceWithProps<T>): SortDirection => {
-    if (!(props.sort as any)[column.id]) return 'asc';
+    if (!(props.externalSort?.sort as any)[column.id]) return 'asc';
 
-    if ((props.sort as any)[column.id] === 'desc') {
+    if ((props.externalSort?.sort as any)[column.id] === 'desc') {
       return undefined;
     }
 
@@ -451,10 +460,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ) : (
           column.render('Header')
         )}
-        <ColumnSort
+        <ColumnSort<T>
           onSort={() => {
             const next = getNextSortDirection(column);
-            props.onSortChange!(column.id, next);
+            !!externalSort &&
+              handleSortChange(column.id, next, externalSort.sort, externalSort.setSort);
             if (!!next) {
               toggleSortBy(column.id, next === 'desc', true);
             } else {
@@ -462,6 +472,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             }
           }}
           column={column}
+          sort={externalSort?.sort}
         />
       </div>
     );

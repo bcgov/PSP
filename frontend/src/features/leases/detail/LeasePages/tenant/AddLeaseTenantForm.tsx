@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import AddLeaseTenantListView from './AddLeastTenantListView';
 import columns from './columns';
 import SelectedTableHeader from './SelectedTableHeader';
@@ -36,6 +37,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProp
         {<Link to="/contact/list">Contacts</Link>}) before you can find them here.
       </p>
       <Formik
+        validationSchema={AddLeaseTenantYupSchema}
         onSubmit={values => onSubmit(values)}
         innerRef={formikRef}
         enableReinitialize
