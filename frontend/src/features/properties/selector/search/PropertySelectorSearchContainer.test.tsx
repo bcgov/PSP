@@ -178,7 +178,7 @@ describe('PropertySelectorSearchContainer component', () => {
       expect(mockAxios.history.get[1].url).toBe('/tools/geocoder/parcels/pids/1');
       // calls parcel layer - search by PID
       expect(mockAxios.history.get[2].url).toBe(
-        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PID ilike '%25312312%25'",
+        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PIN ilike '%25312312%25' OR PID ilike '%25312312%25'",
       );
       // calls the region and district layers
       expect(mockAxios.history.get[3].url).toBe(
