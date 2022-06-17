@@ -3,7 +3,11 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { mockPropertyLayerSearchResponse } from 'mocks/filterDataMock';
+import {
+  mockDistrictLayerResponse,
+  mockMotiRegionLayerResponse,
+  mockPropertyLayerSearchResponse,
+} from 'mocks';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
@@ -31,7 +35,7 @@ const testProperty: IMapProperty = {
 describe('MapSelectorContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IMapSelectorContainerProps>) => {
     // render component under test
-    const component = render(
+    const utils = render(
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <MapSelectorContainer
           onRemoveProperty={onRemoveProperty}
@@ -47,61 +51,70 @@ describe('MapSelectorContainer component', () => {
 
     return {
       store,
-      component,
+      ...utils,
     };
   };
+
+  beforeEach(() => {
+    mockAxios
+      .onGet(
+        new RegExp(
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs',
+        ),
+      )
+      .reply(200, mockPropertyLayerSearchResponse)
+      .onGet(
+        new RegExp(
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY/wfs',
+        ),
+      )
+      .reply(200, mockMotiRegionLayerResponse)
+      .onGet(
+        new RegExp(
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/wfs',
+        ),
+      )
+      .reply(200, mockDistrictLayerResponse);
+  });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   it('renders as expected when provided no properties', () => {
-    const { component } = setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({});
+    expect(asFragment()).toMatchSnapshot();
   });
   it('displays two tabs', () => {
-    const {
-      component: { getByText },
-    } = setup({});
+    const { getByText } = setup({});
     expect(getByText('Locate on Map')).toBeVisible();
   });
   it('displays locate on Map by default', () => {
-    const {
-      component: { getByText },
-    } = setup({});
+    const { getByText } = setup({});
     expect(getByText('Locate on Map')).toHaveClass('active');
   });
 
   it('allows the search tab to be selected', () => {
-    const {
-      component: { getByText },
-    } = setup({});
+    const { getByText } = setup({});
     const searchTab = getByText('Search');
     userEvent.click(searchTab);
     expect(searchTab).toHaveClass('active');
   });
 
   it('lists selected properties', () => {
-    const {
-      component: { getByText },
-    } = setup({ existingProperties: [testProperty] });
+    const { getByText } = setup({ existingProperties: [testProperty] });
     expect(getByText('PID: 123-456-789')).toBeVisible();
   });
 
   it('selected properties can be removed', () => {
-    const {
-      component: { getByText },
-    } = setup({ existingProperties: [testProperty] });
+    const { getByText } = setup({ existingProperties: [testProperty] });
     const removeButton = getByText('Remove');
     userEvent.click(removeButton);
     expect(onRemoveProperty).toHaveBeenCalled();
   });
 
   it('selected properties display a warning if added', async () => {
-    mockAxios.onGet().reply(200, mockPropertyLayerSearchResponse);
-    const {
-      component: { getByText, getByTitle, findByTestId, container },
-    } = setup({
+    const { getByText, getByTitle, findByTestId, container } = setup({
       existingProperties: [],
     });
 
@@ -117,20 +130,21 @@ describe('MapSelectorContainer component', () => {
     userEvent.click(addButton);
 
     expect(onSelectedProperty).toHaveBeenCalledWith({
+      district: 2,
+      districtName: 'Vancouver Island',
       id: 'PID: 017-723-311',
       latitude: 49.104223239999996,
       longitude: -122.6414763,
       pid: '017723311',
       pin: '',
       planNumber: 'LMS312',
+      region: 1,
+      regionName: 'South Coast',
     });
   });
 
   it('selected properties display a warning if added multiple times', async () => {
-    mockAxios.onGet().reply(200, mockPropertyLayerSearchResponse);
-    const {
-      component: { getByText, getByTitle, findByTestId, container },
-    } = setup({
+    const { getByText, getByTitle, findByTestId, container } = setup({
       existingProperties: featuresToIdentifiedMapProperty(mockPropertyLayerSearchResponse as any),
     });
 

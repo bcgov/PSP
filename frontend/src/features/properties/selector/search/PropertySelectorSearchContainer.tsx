@@ -95,18 +95,23 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       pidResults.data.pids.forEach(async (pid: string) => {
         findByPidCalls.push(findByPid(pid, true));
       });
-      Promise.all(findByPidCalls).then(
-        (response: (FeatureCollection<Geometry, GeoJsonProperties> | undefined)[]) => {
-          let propertyResults: IMapProperty[] = [];
-          response?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
-            if (item) {
-              propertyResults = propertyResults.concat(featuresToIdentifiedMapProperty(item) ?? []);
-            }
-          });
-          setSearchResults([...propertyResults]);
-          setAddressResults([]);
-        },
+
+      const responses = await Promise.all(findByPidCalls);
+
+      let propertyResults: IMapProperty[] = [];
+      responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
+        if (item) {
+          propertyResults = propertyResults.concat(featuresToIdentifiedMapProperty(item) ?? []);
+        }
+      });
+
+      // match the region and district for all found properties
+      await Promise.all(
+        propertyResults.map(p => matchRegionAndDistrict(p, regionService, districtService)),
       );
+
+      setSearchResults([...propertyResults]);
+      setAddressResults([]);
     }
   };
 
