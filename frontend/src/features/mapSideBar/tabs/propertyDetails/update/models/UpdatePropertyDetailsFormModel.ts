@@ -7,7 +7,7 @@ import {
   PropertyAnomalyFormModel,
   PropertyRoadFormModel,
   PropertyTenureFormModel,
-} from '.';
+} from './';
 
 export class UpdatePropertyDetailsFormModel {
   id?: number;
@@ -23,7 +23,11 @@ export class UpdatePropertyDetailsFormModel {
   name?: string;
   description?: string;
   isSensitive?: boolean;
-  isProvincialPublicHwy?: boolean;
+  pphStatusTypeCode?: string;
+  pphStatusUpdateUserid?: string;
+  pphStatusUpdateUserGuid?: string;
+  pphStatusUpdateTimestamp?: Date;
+  isRwyBeltDomPatent?: boolean;
 
   latitude?: number;
   longitude?: number;
@@ -74,7 +78,11 @@ export class UpdatePropertyDetailsFormModel {
     model.name = base.name;
     model.description = base.description;
     model.isSensitive = base.isSensitive;
-    model.isProvincialPublicHwy = base.isProvincialPublicHwy;
+    model.pphStatusTypeCode = base.pphStatusTypeCode;
+    model.isRwyBeltDomPatent = base.isRwyBeltDomPatent;
+    model.pphStatusUpdateUserid = base.pphStatusUpdateUserid;
+    model.pphStatusUpdateUserGuid = base.pphStatusUpdateUserGuid;
+    model.pphStatusUpdateTimestamp = base.pphStatusUpdateTimestamp;
 
     model.latitude = base.latitude;
     model.longitude = base.longitude;
@@ -120,7 +128,8 @@ export class UpdatePropertyDetailsFormModel {
       name: this.name,
       description: this.description,
       isSensitive: this.isSensitive,
-      isProvincialPublicHwy: this.isProvincialPublicHwy,
+      pphStatusTypeCode: this.pphStatusTypeCode,
+      isRwyBeltDomPatent: this.isRwyBeltDomPatent,
       latitude: this.latitude,
       longitude: this.longitude,
       location: { coordinate: { x: this.longitude, y: this.latitude } },

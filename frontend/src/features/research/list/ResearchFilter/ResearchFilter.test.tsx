@@ -37,6 +37,13 @@ describe('Research Filter', () => {
     expect(fragment).toMatchSnapshot();
   });
 
+  it('searches for active research files by default', async () => {
+    const { resetButton } = setup();
+    await act(async () => userEvent.click(resetButton));
+
+    expect(setFilter).toHaveBeenCalledWith(defaultResearchFilter);
+  });
+
   it('searches by region', async () => {
     const { container, searchButton } = setup();
 

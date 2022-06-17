@@ -1,4 +1,4 @@
-import { mockGeocoderOptions } from 'hooks/pims-api/useApiGeocoder';
+import { mockGeocoderOptions } from 'mocks';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions } from 'utils/test-utils';

@@ -149,11 +149,10 @@ export const handleSortChange = <Result extends Object>(
 
   // add new column to sort criteria
   if (nextSortDirection) {
-    nextSort = { ...sort, [column]: nextSortDirection };
+    nextSort = { [column]: nextSortDirection } as any;
   } else {
     // remove column from sort criteria
-    nextSort = { ...sort };
-    delete (nextSort as any)[column];
+    nextSort = {};
   }
   setSort(nextSort);
 };

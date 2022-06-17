@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { AddImprovementsYupSchema } from './AddImprovementsYupSchema';
 import { Improvements } from './Improvements';
 export interface IAddImprovementsFormProps {
   onCancel: () => void;
@@ -22,6 +23,7 @@ export const AddImprovementsForm: React.FunctionComponent<IAddImprovementsFormPr
   return (
     <>
       <Formik
+        validationSchema={AddImprovementsYupSchema}
         onSubmit={values => onSubmit(values)}
         innerRef={formikRef}
         enableReinitialize
