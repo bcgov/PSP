@@ -63,7 +63,7 @@ namespace Pims.Dal.Repositories
             // Mark the property not to be changed if it did not exist already.
             if (propertyResearchFile.Property != null)
             {
-                Context.Entry(propertyResearchFile.Property).State = EntityState.Detached;
+                Context.Entry(propertyResearchFile.Property).State = EntityState.Unchanged;
             }
 
             Context.PimsPropertyResearchFiles.Remove(propertyResearchFile);
@@ -74,7 +74,7 @@ namespace Pims.Dal.Repositories
             // Mark the property not to be changed it was being tracked.
             if (propertyResearchFile.Property != null)
             {
-                Context.Entry(propertyResearchFile.Property).State = EntityState.Detached;
+                Context.Entry(propertyResearchFile.Property).State = EntityState.Unchanged;
             }
 
             // Retrieve the existing property research purpose types for the property

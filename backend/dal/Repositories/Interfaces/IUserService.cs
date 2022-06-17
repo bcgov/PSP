@@ -20,7 +20,6 @@ namespace Pims.Dal.Repositories
 
         PimsUser GetTracking(long id);
         public PimsUser RemoveRole(PimsUser user, long roleId);
-        public PimsUser RemoveRegion(PimsUser user, short regionCode);
         IEnumerable<long> GetOrganizations(Guid keycloakUserId);
         IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds);
         PimsUser Add(PimsUser add);
