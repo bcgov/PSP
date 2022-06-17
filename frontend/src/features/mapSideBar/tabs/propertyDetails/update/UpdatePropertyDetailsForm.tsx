@@ -1,6 +1,7 @@
 import { Button } from 'components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
@@ -89,6 +90,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
 
   return (
     <StyledForm>
+      <UnsavedChangesPrompt />
       <Content vertical>
         <Section header="Property Attributes">
           <SectionField label="MOTI region">
