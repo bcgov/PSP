@@ -25,7 +25,6 @@ export interface IPropertyDetailsForm
 export function toFormValues(apiData?: IPropertyApiModel): IPropertyDetailsForm {
   return {
     ...apiData,
-    electoralDistrict: {},
     isALR: false,
     firstNations: {
       bandName: '',
