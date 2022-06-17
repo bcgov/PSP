@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -103,7 +103,7 @@ namespace Pims.Dal.Entities
         [Column("IS_PROVINCIAL_PUBLIC_HWY")]
         public bool? IsProvincialPublicHwy { get; set; }
         [Column("PPH_STATUS_UPDATE_USERID")]
-        [StringLength(30)]
+        [StringLength(60)]
         public string PphStatusUpdateUserid { get; set; }
         [Column("PPH_STATUS_UPDATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime? PphStatusUpdateTimestamp { get; set; }
