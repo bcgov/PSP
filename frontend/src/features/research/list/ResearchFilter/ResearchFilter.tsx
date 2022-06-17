@@ -21,7 +21,7 @@ export interface IResearchFilterProps {
 
 export const defaultResearchFilter: IResearchFilter = {
   regionCode: '',
-  researchFileStatusTypeCode: '',
+  researchFileStatusTypeCode: 'ACTIVE',
   name: '',
   roadOrAlias: '',
   appCreateUserid: '',
@@ -101,7 +101,11 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
                 <Col xl="12">
                   <Row>
                     <Col xl="4">
-                      <Select options={researchStatusOptions} field="researchFileStatusTypeCode" />
+                      <Select
+                        placeholder="Select a status"
+                        options={researchStatusOptions}
+                        field="researchFileStatusTypeCode"
+                      />
                     </Col>
                     <Col xl="8">
                       <Input field="roadOrAlias" placeholder="Road name or alias" />
