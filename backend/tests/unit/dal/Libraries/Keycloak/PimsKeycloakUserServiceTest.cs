@@ -353,7 +353,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             // Assert
             pimsServiceMock.Verify(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>()), Times.Once);
             values.First().Person.PimsContactMethods.Should().Contain(cm => cm.ContactMethodValue == updatedContactMethod.ContactMethodValue);
-            pimsServiceMock.Verify(m => m.User.RemoveRole(It.IsAny<Entity.PimsUser>(), It.IsAny<long>()), Times.Never);
             keycloakServiceMock.Verify(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()), Times.Once);
         }
 
@@ -380,6 +379,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var pimsServiceMock = helper.GetMock<IPimsRepository>();
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.PimsUserRoles.First();
@@ -399,6 +399,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var service = helper.Create<PimsKeycloakService>();
 
             var euser = EntityHelper.CreateUser("test");
+            euser.GuidIdentifierValue = Guid.NewGuid();
             var existingRole = euser.PimsUserRoles.First().Role;
             existingRole.RoleId = 1;
             existingRole.KeycloakGroupId = Guid.NewGuid();
@@ -414,6 +415,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var pimsServiceMock = helper.GetMock<IPimsRepository>();
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.PimsUserRoles.First();
