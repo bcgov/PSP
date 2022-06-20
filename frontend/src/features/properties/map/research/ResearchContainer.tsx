@@ -65,7 +65,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       return '';
     }
 
-    if (researchProperty.propertyName !== undefined) {
+    if (researchProperty.propertyName !== undefined && researchProperty.propertyName !== '') {
       return researchProperty.propertyName;
     } else if (researchProperty.property !== undefined) {
       const property = researchProperty.property;

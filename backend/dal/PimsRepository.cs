@@ -27,11 +27,6 @@ namespace Pims.Dal
         public IOrganizationRepository Organization { get { return _serviceProvider.GetService<IOrganizationRepository>(); } }
 
         /// <summary>
-        /// get - The user organization service (legacy).
-        /// </summary>
-        public IUserOrganizationService UserOrganization { get { return _serviceProvider.GetService<IUserOrganizationService>(); } }
-
-        /// <summary>
         /// get - The user calling the repository.
         /// </summary>
         public ClaimsPrincipal Principal { get; }
@@ -54,7 +49,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The user repository.
         /// </summary>
-        public IUserService User { get { return _serviceProvider.GetService<IUserService>(); } }
+        public IUserRepository User { get { return _serviceProvider.GetService<IUserRepository>(); } }
 
         /// <summary>
         /// get - The role repository.
@@ -69,7 +64,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The access request repository.
         /// </summary>
-        public IAccessRequestService AccessRequest { get { return _serviceProvider.GetService<IAccessRequestService>(); } }
+        public IAccessRequestRepository AccessRequest { get { return _serviceProvider.GetService<IAccessRequestRepository>(); } }
 
         /// <summary>
         /// get - The tenant repository.

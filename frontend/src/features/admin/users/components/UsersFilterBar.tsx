@@ -24,7 +24,6 @@ export const UsersFilterBar: React.FC<IProps> = ({ values, onChange }) => {
   return (
     <Formik<IUsersFilter>
       onSubmit={values => {
-        console.log(values);
         onChange({
           ...values,
           region: values.region ? values.region : undefined,

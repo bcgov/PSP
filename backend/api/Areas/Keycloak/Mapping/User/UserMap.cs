@@ -1,9 +1,9 @@
+using System.Linq;
 using Mapster;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
 using Model = Pims.Api.Areas.Keycloak.Models.User;
-using System.Linq;
 
 namespace Pims.Api.Areas.Keycloak.Mapping.User
 {

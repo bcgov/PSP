@@ -12,7 +12,7 @@ using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
 using FluentAssertions;
 
-namespace PimsApi.Test.Admin.Controllers
+namespace Pims.Api.Test.Admin.Controllers
 {
     [Trait("category", "unit")]
     [Trait("category", "api")]
@@ -51,6 +51,78 @@ namespace PimsApi.Test.Admin.Controllers
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
             mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
             service.Verify(m => m.Role.Get(1, 10, null), Times.Once());
+        }
+
+        [Fact]
+        public void GetRoles_Success_MinPage()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
+
+            var mapper = helper.GetService<IMapper>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
+            var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
+            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+
+            // Act
+            var result = controller.GetRoles(0, 10);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            Assert.Null(actionResult.StatusCode);
+            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
+            mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
+            service.Verify(m => m.Role.Get(1, 10, null), Times.Once());
+        }
+
+        [Fact]
+        public void GetRoles_Success_MinQuantity()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
+
+            var mapper = helper.GetService<IMapper>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
+            var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
+            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+
+            // Act
+            var result = controller.GetRoles(1, 0);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            Assert.Null(actionResult.StatusCode);
+            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
+            mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
+            service.Verify(m => m.Role.Get(1, 1, null), Times.Once());
+        }
+
+        [Fact]
+        public void GetRoles_Success_MaxQuantity()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
+
+            var mapper = helper.GetService<IMapper>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
+            var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
+            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+
+            // Act
+            var result = controller.GetRoles(1, 51);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            Assert.Null(actionResult.StatusCode);
+            var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
+            mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
+            service.Verify(m => m.Role.Get(1, 50, null), Times.Once());
         }
 
         [Fact]
