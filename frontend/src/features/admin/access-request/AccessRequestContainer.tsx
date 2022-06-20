@@ -58,7 +58,7 @@ export const AccessRequestContainer: React.FunctionComponent<IAccessRequestConta
     regionCode: { id: response?.regionCode?.id },
   });
 
-  if (!accessRequestId) {
+  if (!accessRequestId && !response) {
     initialValues.email = keycloak.email ?? '';
     initialValues.firstName = keycloak.firstName ?? '';
     initialValues.surname = keycloak.surname ?? '';

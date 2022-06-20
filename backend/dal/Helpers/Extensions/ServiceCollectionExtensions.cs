@@ -28,16 +28,15 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.ILookupService, Repositories.LookupService>();
             repositories.AddScoped<Repositories.ISystemConstantService, Repositories.SystemConstantService>();
             repositories.AddScoped<Repositories.IPersonRepository, Repositories.PersonRepository>();
-            repositories.AddScoped<Repositories.IUserService, Repositories.UserService>();
+            repositories.AddScoped<Repositories.IUserRepository, Repositories.UserRepository>();
             repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
             repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();
-            repositories.AddScoped<Repositories.IAccessRequestService, Repositories.AccessRequestService>();
+            repositories.AddScoped<Repositories.IAccessRequestRepository, Repositories.AccessRequestRepository>();
             repositories.AddScoped<Repositories.ITenantRepository, Repositories.TenantRepository>();
             repositories.AddScoped<Repositories.ILeaseRepository, Repositories.LeaseRepository>();
             repositories.AddScoped<Repositories.IContactRepository, Repositories.ContactRepository>();
             repositories.AddScoped<Repositories.IInsuranceRepository, Repositories.InsuranceRepository>();
             repositories.AddScoped<Repositories.IAutocompleteService, Repositories.AutocompleteService>();
-            repositories.AddScoped<Repositories.IUserOrganizationService, Repositories.UserOrganizationService>();
             repositories.AddScoped<Repositories.IOrganizationRepository, Repositories.OrganizationRepository>();
             repositories.AddScoped<Repositories.ILeaseTermRepository, Repositories.LeaseTermRepository>();
             repositories.AddScoped<Repositories.ISecurityDepositRepository, Repositories.SecurityDepositRepository>();

@@ -26,23 +26,24 @@ namespace Pims.Api.Controllers
         #region Variables
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
         private readonly IProxyRequestClient _requestClient;
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
         /// <param name="optionsKeycloak"></param>
         /// <param name="requestClient"></param>
-        /// <param name="userService"></param>
+        /// <param name="userRepository"></param>
         /// <param name="mapper"></param>
-        public UserController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IProxyRequestClient requestClient, IUserService userService, IMapper mapper)
+        public UserController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IProxyRequestClient requestClient, IUserRepository userRepository, IMapper mapper)
         {
             _optionsKeycloak = optionsKeycloak.CurrentValue;
             _requestClient = requestClient;
-            _userService = userService;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
         #endregion
@@ -81,7 +82,7 @@ namespace Pims.Api.Controllers
             {
                 return new JsonResult(new Models.ErrorResponseModel("Invalid keycloakUserId", "keycloakUserId should be a valid non empty guid"));
             }
-            var entity = _userService.GetUserInfo(keycloakUserId);
+            var entity = _userRepository.GetUserInfo(keycloakUserId);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }

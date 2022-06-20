@@ -13,7 +13,7 @@ using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
 
-namespace PimsApi.Test.Admin.Controllers
+namespace Pims.Api.Test.Admin.Controllers
 {
     [Trait("category", "unit")]
     [Trait("category", "api")]
@@ -30,7 +30,7 @@ namespace PimsApi.Test.Admin.Controllers
 
         #region Tests
         #region GetUsers
-        [Fact(Skip = "skip")]
+        [Fact]
         public void GetUsers_Success()
         {
             // Arrange
@@ -54,7 +54,7 @@ namespace PimsApi.Test.Admin.Controllers
             service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
-        [Fact(Skip = "skip")]
+        [Fact]
         public void GetUsers_Filtered_Success()
         {
             // Arrange
@@ -81,7 +81,7 @@ namespace PimsApi.Test.Admin.Controllers
         #endregion
 
         #region GetMyUsers
-        [Fact(Skip ="skip")]
+        [Fact]
         public void GetMyUsers_Success()
         {
             // Arrange
@@ -108,7 +108,7 @@ namespace PimsApi.Test.Admin.Controllers
         #endregion
 
         #region GetUser
-        [Fact(Skip = "skip")]
+        [Fact]
         public void GetUser()
         {
             // Arrange
@@ -180,9 +180,35 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            // actualResult.Email.Should().Be(user.Email);
             actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
             service.Verify(m => m.User.Update(It.IsAny<Entity.PimsUser>()), Times.Once());
+        }
+        #endregion
+
+        #region GetUserById
+        [Fact]
+        public void GetUserById()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
+
+            var mapper = helper.GetService<IMapper>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var user = EntityHelper.CreateUser("user1");
+            service.Setup(m => m.User.Get(It.IsAny<long>())).Returns(user);
+            var model = mapper.Map<Model.UserModel>(user);
+
+            // Act
+            var result = controller.GetUser(user.Id);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            Assert.Null(actionResult.StatusCode);
+            var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
+            actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
+            actualResult.BusinessIdentifierValue.Should().Be(user.BusinessIdentifierValue);
+            service.Verify(m => m.User.Get(It.IsAny<long>()), Times.Once());
         }
         #endregion
 

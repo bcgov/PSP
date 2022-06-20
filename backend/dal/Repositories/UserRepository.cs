@@ -19,7 +19,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// UserService class, provides a service layer to interact with users within the datasource.
     /// </summary>
-    public class UserService : BaseRepository<PimsUser>, IUserService
+    public class UserRepository : BaseRepository<PimsUser>, IUserRepository
     {
         #region Variables
         private readonly PimsOptions _options;
@@ -35,13 +35,14 @@ namespace Pims.Dal.Repositories
         /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public UserService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, IOptionsMonitor<PimsOptions> options, ILogger<UserService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper)
+        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper)
         {
             _options = options.CurrentValue;
         }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Determine if the user for the specified 'keycloakUserId' exists in the datasource.
         /// </summary>
@@ -155,12 +156,6 @@ namespace Pims.Dal.Repositories
                 .Include(u => u.PimsRegionUsers)
                 .ThenInclude(ru => ru.RegionCodeNavigation)
                 .AsNoTracking();
-
-            if (User.HasPermission(Permissions.OrganizationAdmin) && !User.HasPermission(Permissions.SystemAdmin))
-            {
-                var userOrganizations = this.User.GetOrganizations();
-                query = query.Where(user => user.PimsUserOrganizations.Any(o => userOrganizations.Contains(o.Organization.OrganizationId)));
-            }
 
             if (filter != null)
             {
@@ -401,7 +396,7 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(p => p.PimsContactMethods)
                 .FirstOrDefault(u => u.UserId == update.UserId) ?? throw new KeyNotFoundException();
 
-            //If the user has no organizations we assume this update is an approval.
+            // If the user has no organizations we assume this update is an approval.
             if (!user.PimsUserOrganizations.Any())
             {
                 var key = this.User.GetUserKey();
@@ -464,56 +459,13 @@ namespace Pims.Dal.Repositories
             user.ConcurrencyControlNumber = delete.ConcurrencyControlNumber;
             this.Context.SetOriginalConcurrencyControlNumber(user);
 
+            user.PimsUserRoles.ForEach(ur => this.Context.Remove(ur));
             user.PimsUserRoles.Clear();
+            user.PimsUserOrganizations.ForEach(uo => this.Context.Remove(uo));
             user.PimsUserOrganizations.Clear();
 
             this.Context.PimsUsers.Remove(user);
             this.Context.CommitTransaction();
-        }
-
-        /// <summary>
-        /// Get an array of organization IDs for the specified 'keycloakUserId'.
-        /// This only returns the first two layers (direct parents, their immediate children).
-        /// </summary>
-        /// <param name="keycloakUserId"></param>
-        /// <returns></returns>
-        public IEnumerable<long> GetOrganizations(Guid keycloakUserId)
-        {
-            var user = this.Context.PimsUsers
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .ThenInclude(a => a.InversePrntOrganization)
-                .Single(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
-            var organizations = user.PimsUserOrganizations.Select(a => a.OrganizationId).ToList();
-            organizations.AddRange(user.PimsUserOrganizations.SelectMany(a => a.Organization.InversePrntOrganization.Where(ac => !(ac.IsDisabled.HasValue && ac.IsDisabled.Value))).Select(a => a.OrganizationId));
-
-            return organizations.ToArray();
-        }
-
-        /// <summary>
-        /// Get all the system administrators, and organization administrators for the specified 'organizationId'.
-        /// </summary>
-        /// <param name="organizationIds"></param>
-        /// <returns></returns>
-        public IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds)
-        {
-            if (organizationIds == null)
-            {
-                throw new ArgumentNullException(nameof(organizationIds));
-            }
-
-            return this.Context.PimsUsers
-                .Include(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
-                .Include(u => u.PimsUserRoles)
-                .ThenInclude(r => r.Role)
-                .Include(u => u.PimsUserOrganizations)
-                .ThenInclude(o => o.Organization)
-                .AsNoTracking()
-                .Where(u => u.PimsUserRoles.Any(r => r.Role.PimsRoleClaims.Any(c => c.Claim.Name == Permissions.SystemAdmin.GetName()))
-                    || (u.PimsUserOrganizations.Any(a => organizationIds.Contains(a.Organization.OrganizationId))
-                        && u.PimsUserRoles.Any(r => r.Role.PimsRoleClaims.Any(c => c.Claim.Name == Permissions.OrganizationAdmin.GetName()))
-                ));
         }
 
         /// <summary>
@@ -529,6 +481,6 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }
-        #endregion
-    }
+    #endregion
+}
 }
