@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
+import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
   pid?: string;
@@ -77,6 +78,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
+      validationSchema={UpdatePropertyDetailsYupSchema}
       initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
       onSubmit={savePropertyInformation}
     >
