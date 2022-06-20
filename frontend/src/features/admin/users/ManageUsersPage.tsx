@@ -85,7 +85,6 @@ export const ManageUsersPage = () => {
     );
   };
 
-  console.log(userList);
   return (
     <StyledPage fluid className="users-management-page">
       <H1>User Management</H1>
