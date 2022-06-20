@@ -1,16 +1,18 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { fireEvent, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, prettyDOM, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import { getMockPagedUsers } from 'mocks/userMock';
+import moment from 'moment';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+import { prettyFormatDateTime } from 'utils';
 import { fillInput, render, userEvent } from 'utils/test-utils';
 
 import { ManageUsersPage } from './ManageUsersPage';
@@ -91,7 +93,7 @@ describe('Manage Users Component', () => {
   it('Displays the correct last login time', async () => {
     const { getByText, getByTitle } = testRender(getStore(true));
     await waitForElementToBeRemoved(getByTitle('table-loading'));
-    expect(getByText('Jun 8, 2022 12:59 pm')).toBeVisible();
+    expect(getByText(prettyFormatDateTime('2022-06-08T23:24:56.163'))).toBeVisible();
   });
 
   it('downloads data when excel icon clicked', async () => {
