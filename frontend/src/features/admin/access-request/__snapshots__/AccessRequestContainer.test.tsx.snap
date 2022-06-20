@@ -8,6 +8,12 @@ exports[`AccessRequestContainer component makes a request based on the access re
   <div
     class="Toastify"
   />
+  <div
+    class="fade alert alert-success show"
+    role="alert"
+  >
+    Your access request has been submitted
+  </div>
   .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -519,6 +525,12 @@ exports[`AccessRequestContainer component makes a request when no id is provided
   <div
     class="Toastify"
   />
+  <div
+    class="fade alert alert-success show"
+    role="alert"
+  >
+    Your access request has been submitted
+  </div>
   .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -696,9 +708,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             id="input-businessIdentifierValue"
             name="businessIdentifierValue"
             readonly=""
-            title=""
+            title="desmith@idir"
             type="text"
-            value=""
+            value="desmith@idir"
           />
         </div>
       </div>
@@ -726,9 +738,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             id="input-firstName"
             name="firstName"
             readonly=""
-            title=""
+            title="Devin"
             type="text"
-            value=""
+            value="Devin"
           />
         </div>
       </div>
@@ -756,9 +768,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             id="input-surname"
             name="surname"
             readonly=""
-            title=""
+            title="Smith"
             type="text"
-            value=""
+            value="Smith"
           />
         </div>
       </div>
@@ -786,9 +798,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             id="input-email"
             name="email"
             readonly=""
-            title="test@test.com"
+            title="devin.smith@gov.bc.ca"
             type="email"
-            value="test@test.com"
+            value="devin.smith@gov.bc.ca"
           />
         </div>
       </div>
