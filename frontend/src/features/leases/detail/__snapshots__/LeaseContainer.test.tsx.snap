@@ -2,7 +2,7 @@
 
 exports[`LeaseContainer component renders as expected 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:1150px) {
+  @media only screen and (max-width:1250px) {
 
 }
 
@@ -10,14 +10,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 }
 
-@media only screen and (max-width:1150px) {
+@media only screen and (max-width:1250px) {
 
 }
 
 <div
     class="Toastify"
   />
-  @media only screen and (max-width:1150px) {
+  @media only screen and (max-width:1250px) {
 
 }
 
@@ -25,7 +25,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 }
 
-@media only screen and (max-width:1150px) {
+@media only screen and (max-width:1250px) {
 
 }
 
@@ -319,7 +319,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   text-align: left;
 }
 
-@media only screen and (max-width:1150px) {
+@media only screen and (max-width:1250px) {
   .c7 {
     -webkit-align-items: center;
     -webkit-box-align: center;
@@ -338,7 +338,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   }
 }
 
-@media only screen and (max-width:1150px) {
+@media only screen and (max-width:1250px) {
   .c8 {
     -webkit-box-pack: center;
     -webkit-justify-content: center;

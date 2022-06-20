@@ -2,14 +2,14 @@
 
 exports[`StackedPidTenantFields component renders as expected when provided data 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:1150px) {
+  @media only screen and (max-width:1250px) {
 
 }
 
 <div
     class="Toastify"
   />
-  @media only screen and (max-width:1150px) {
+  @media only screen and (max-width:1250px) {
 
 }
 
@@ -44,7 +44,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
   font-family: 'BCSans-Bold';
 }
 
-@media only screen and (max-width:1150px) {
+@media only screen and (max-width:1250px) {
   .c1 {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
@@ -70,14 +70,14 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 
 exports[`StackedPidTenantFields component renders as expected when provided no data 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:1150px) {
+  @media only screen and (max-width:1250px) {
 
 }
 
 <div
     class="Toastify"
   />
-  @media only screen and (max-width:1150px) {
+  @media only screen and (max-width:1250px) {
 
 }
 
@@ -112,7 +112,7 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
   font-family: 'BCSans-Bold';
 }
 
-@media only screen and (max-width:1150px) {
+@media only screen and (max-width:1250px) {
   .c1 {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
