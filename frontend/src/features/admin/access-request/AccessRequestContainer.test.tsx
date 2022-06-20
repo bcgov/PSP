@@ -2,13 +2,11 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { getMockAccessRequest } from 'mocks/accessRequestMock';
 import { mockLookups } from 'mocks/mockLookups';
-import { getUserMock } from 'mocks/userMock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   fillInput,
-  prettyDOM,
   render,
   RenderOptions,
   userEvent,
@@ -16,7 +14,6 @@ import {
   waitForElementToBeRemoved,
 } from 'utils/test-utils';
 
-import { FormUser } from '../users/models';
 import AccessRequestContainer, { IAccessRequestContainerProps } from './AccessRequestContainer';
 import { FormAccessRequest } from './models';
 

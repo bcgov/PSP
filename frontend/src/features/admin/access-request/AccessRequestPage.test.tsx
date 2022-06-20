@@ -2,17 +2,13 @@ import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
-import { mount } from 'enzyme';
-import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { cleanup, getByTestId, render, waitForElementToBeRemoved } from 'utils/test-utils';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+import { cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
 
 import * as actionTypes from '../../../constants/actionTypes';
 import AccessRequestPage from './AccessRequestPage';

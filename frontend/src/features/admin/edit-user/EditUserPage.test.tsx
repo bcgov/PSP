@@ -4,7 +4,6 @@ import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import { getUserMock } from 'mocks/userMock';
-import moment from 'moment-timezone';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';

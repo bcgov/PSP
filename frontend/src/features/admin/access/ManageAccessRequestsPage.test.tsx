@@ -9,15 +9,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import {
-  fillInput,
-  getAllByText,
-  getByTitle,
-  render,
-  userEvent,
-  waitFor,
-  waitForElementToBeRemoved,
-} from 'utils/test-utils';
+import { render, userEvent, waitFor, waitForElementToBeRemoved } from 'utils/test-utils';
 
 import ManageAccessRequestsPage from './ManageAccessRequestsPage';
 
