@@ -4,6 +4,7 @@ import * as React from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { prettyFormatDate } from 'utils';
 
+import LeaseHeaderAddresses from './LeaseHeaderAddresses';
 import LeaseStatusSummary from './LeaseStatusSummary';
 import StackedPidTenantFields from './StackedPidTenantFields';
 import * as Styled from './styles';
@@ -35,7 +36,9 @@ export const LeaseHeader: React.FunctionComponent<ILeaseHeaderProps> = ({ lease 
       <Styled.LeaseHeaderText>
         <b>{lease?.paymentReceivableType?.description}</b>
       </Styled.LeaseHeaderText>
+
       <Styled.LeaseHeaderRight>
+        <LeaseHeaderAddresses lease={lease} />
         <StackedPidTenantFields lease={lease} />
       </Styled.LeaseHeaderRight>
     </Styled.LeaseHeader>

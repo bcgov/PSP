@@ -39,18 +39,6 @@ describe('StackedPidTenantFields component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('renders pids appropriately', () => {
-    const {
-      component: { getByText },
-    } = setup({
-      lease: {
-        ...defaultLease,
-        properties: [{ pid: '111-111-111' } as any, { pid: '222-222-222' }, { pid: '333-333-333' }],
-      },
-    });
-    expect(getByText('111-111-111, 222-222-222, 333-333-333')).toBeVisible();
-  });
-
   it('renders tenant appropriately', () => {
     const {
       component: { getByText },

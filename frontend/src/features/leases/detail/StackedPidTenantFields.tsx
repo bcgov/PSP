@@ -18,13 +18,8 @@ export const StackedPidTenantFields: React.FunctionComponent<IStackedPidTenantFi
   lease,
 }) => {
   const properties = lease?.properties ?? [];
-  const pids = properties.map(property => pidFormatter(property.pid));
   return (
     <>
-      <StyledStackedDivs>
-        <label>PID:</label>
-        <OverflowTip title="pids" fullText={pids.join(', ')} />
-      </StyledStackedDivs>
       <StyledStackedDivs>
         <label>Tenant:</label>
         <OverflowTip title="tenant" fullText={getAllNames(lease)} />
@@ -36,8 +31,12 @@ export const StackedPidTenantFields: React.FunctionComponent<IStackedPidTenantFi
 const StyledStackedDivs = styled(InlineFlexDiv)`
   width: 100%;
   text-align: left;
+
   div {
     font-family: 'BCSans-Bold';
+  }
+  @media only screen and (max-width: 1150px) {
+    justify-content: center;
   }
 `;
 
