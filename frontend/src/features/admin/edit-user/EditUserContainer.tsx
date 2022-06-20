@@ -42,7 +42,7 @@ const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ u
     firstName: '',
     surname: '',
     email: '',
-    isDisabled: true,
+    isDisabled: false,
     rowVersion: 0,
     roles: [],
     regions: [],

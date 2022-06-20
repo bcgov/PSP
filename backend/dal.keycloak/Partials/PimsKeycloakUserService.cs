@@ -162,6 +162,7 @@ namespace Pims.Dal.Keycloak
             if (resetRoles)
             {
                 euser.PimsUserRoles.ForEach(role => _pimsRepository.User.RemoveRole(euser, role.RoleId));
+                euser.PimsRegionUsers.ForEach(region => _pimsRepository.User.RemoveRegion(euser, region.Id));
             }
 
             // Update PIMS
