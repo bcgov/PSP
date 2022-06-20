@@ -52,13 +52,11 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
   const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
-  const {
-    parcelMapFullyAttributed: { url, name },
-  } = useTenant();
+  const { parcelMapFullyAttributed } = useTenant();
   const {
     findByLegalDescription,
     findByLegalDescriptionLoading,
-  } = useFullyAttributedParcelMapLayer(url, name);
+  } = useFullyAttributedParcelMapLayer(parcelMapFullyAttributed.url, parcelMapFullyAttributed.name);
 
   React.useEffect(() => {
     const searchFunc = async () => {
@@ -86,7 +84,15 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       setSearchResults(foundProperties);
     };
     searchFunc();
-  }, [findByLegalDescription, findByPid, findByPin, findByPlanNumber, layerSearch, districtService, regionService]);
+  }, [
+    findByLegalDescription,
+    findByPid,
+    findByPin,
+    findByPlanNumber,
+    layerSearch,
+    districtService,
+    regionService,
+  ]);
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
     if (!selectedItem.siteId) {
