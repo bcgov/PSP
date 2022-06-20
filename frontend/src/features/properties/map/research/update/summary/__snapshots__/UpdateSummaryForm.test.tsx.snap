@@ -8,15 +8,15 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   <div
     class="Toastify"
   />
-  .c5.c5.form-control.is-valid {
+  .c10.c10.form-control.is-valid {
   background-image: none;
 }
 
-.c5.c5.form-control.is-invalid {
+.c10.c10.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c7.btn {
+.c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -46,49 +46,49 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   cursor: pointer;
 }
 
-.c7.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c12.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c12.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c12.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c12.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c12.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c12.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -108,9 +108,9 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -119,14 +119,14 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -137,19 +137,19 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c4 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -160,13 +160,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   align-items: baseline;
 }
 
-.c4 .form-label {
+.c9 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c9 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -176,7 +176,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   flex-wrap: nowrap;
 }
 
-.c6 {
+.c11 {
   border-radius: 0.3rem;
   padding: 12px 6px 6px 12px;
   min-height: 2.5em;
@@ -184,11 +184,11 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   border: #606060 solid 0.1rem;
 }
 
-.c6.is-invalid {
+.c11.is-invalid {
   border: solid 0.1rem;
 }
 
-.c8.form-group {
+.c13.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -196,7 +196,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   margin-bottom: 0;
 }
 
-.c8.form-group .radio-group {
+.c13.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -209,7 +209,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   column-gap: unset;
 }
 
-.c8.form-group .radio-group .form-check {
+.c13.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -224,15 +224,15 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   justify-content: center;
 }
 
-.c8.form-group .radio-group .form-check .form-check-input {
+.c13.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c8.form-group .radio-group .form-check-label {
+.c13.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c8 .form-label {
+.c13 .form-label {
   margin-bottom: unset;
 }
 
@@ -260,6 +260,45 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   font-weight: bold;
 }
 
+.c4 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c8 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 16px;
+  color: #313132;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c7 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c6 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c5 {
+  cursor: pointer;
+}
+
 <div
     class=""
   >
@@ -285,34 +324,6 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
       <div
         class="collapse show"
       >
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="col-4"
-          >
-            <label
-              class="c2"
-            >
-              R-file name:
-            </label>
-          </div>
-          <div
-            class="c3 col"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-name"
-                name="name"
-                title="New research file"
-                value="New research file"
-              />
-            </div>
-          </div>
-        </div>
         <div
           class="pb-2 row"
         >
@@ -365,6 +376,120 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
               </select>
             </div>
           </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="col-4"
+          >
+            <label
+              class="c2"
+            >
+              R-file name:
+            </label>
+          </div>
+          <div
+            class="c3 col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-name"
+                name="name"
+                title="New research file"
+                value="New research file"
+              />
+            </div>
+          </div>
+        </div>
+        <h2
+          class="c4"
+        >
+          <div
+            class="c5 row"
+          >
+            <div
+              class="col"
+            >
+              <svg
+                class="c6"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+              Help with choosing a name
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c7"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="c8 collapse"
+        >
+          <p
+            class="mb-4"
+          >
+            Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+          </p>
+          <ul>
+            <li>
+              Ministry project name
+            </li>
+            <li>
+              Name of the area
+            </li>
+            <li>
+              Name of the MoTI highway district
+            </li>
+            <li>
+              Name of the enquirer
+            </li>
+            <li>
+              Legal description
+            </li>
+          </ul>
+          <p
+            class="mb-4 mt-3"
+          >
+            If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+          </p>
+          <p>
+            <b>
+              Note:
+            </b>
+             This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+          </p>
         </div>
       </div>
     </div>
@@ -558,7 +683,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c3 col"
           >
             <div
-              class="c4 form-group"
+              class="c9 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -568,7 +693,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 >
                   <input
                     autocomplete="off"
-                    class="c5 form-control date-picker"
+                    class="c10 form-control date-picker"
                     id="datepicker-requestDate"
                     name="requestDate"
                     placeholder="--/--/----"
@@ -694,7 +819,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="col"
                 >
                   <div
-                    class="c6"
+                    class="c11"
                   >
                     Dairy Queen Forever! Property Management
                   </div>
@@ -714,7 +839,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="pl-0 align-self-center col-auto"
                 >
                   <button
-                    class="c7 Button Button--icon-only px-2 btn btn-secondary"
+                    class="c12 Button Button--icon-only px-2 btn btn-secondary"
                     type="button"
                   >
                     <div
@@ -744,7 +869,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c7 Button Button--icon-only px-2 btn btn-primary"
+                    class="c12 Button Button--icon-only px-2 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -838,7 +963,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c3 col"
           >
             <div
-              class="c4 form-group"
+              class="c9 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -848,7 +973,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 >
                   <input
                     autocomplete="off"
-                    class="c5 form-control date-picker"
+                    class="c10 form-control date-picker"
                     id="datepicker-researchCompletionDate"
                     name="researchCompletionDate"
                     placeholder="--/--/----"
@@ -928,13 +1053,13 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             class="c3 col"
           >
             <div
-              class="c8 form-group"
+              class="c13 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c9"
+                  class="c14"
                 >
                   <div
                     class="form-check"
@@ -956,7 +1081,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                   </label>
                 </div>
                 <div
-                  class="c9"
+                  class="c14"
                 >
                   <div
                     class="form-check"

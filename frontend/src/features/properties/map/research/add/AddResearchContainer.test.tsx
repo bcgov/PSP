@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/react';
 import {
   ISelectedPropertyContext,
   SelectedPropertyContextProvider,
@@ -118,6 +119,15 @@ describe('AddResearchContainer component', () => {
     await waitFor(async () => {
       expect(setSelectedResearchFeature).toHaveBeenCalledWith(null);
     });
+  });
+
+  it('should have the Help with choosing a name text in the component', async () => {
+    setup({
+      onClose: noop,
+      selectedFeature: null,
+      setSelectedResearchFeature: noop,
+    });
+    expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 });
 

@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResearchFileNameGuide renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c3 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c2 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c1 {
+  cursor: pointer;
+}
+
+<h2
+    class="c0"
+  >
+    <div
+      class="c1 row"
+    >
+      <div
+        class="col"
+      >
+        <svg
+          class="c2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+          />
+        </svg>
+        Help with choosing a name
+      </div>
+      <div
+        class="col-1"
+      >
+        <svg
+          class="c3"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+      </div>
+    </div>
+  </h2>
+  .c0 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 16px;
+  color: #313132;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+<div
+    class="c0 collapse"
+  >
+    <p
+      class="mb-4"
+    >
+      Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+    </p>
+    <ul>
+      <li>
+        Ministry project name
+      </li>
+      <li>
+        Name of the area
+      </li>
+      <li>
+        Name of the MoTI highway district
+      </li>
+      <li>
+        Name of the enquirer
+      </li>
+      <li>
+        Legal description
+      </li>
+    </ul>
+    <p
+      class="mb-4 mt-3"
+    >
+      If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+    </p>
+    <p>
+      <b>
+        Note:
+      </b>
+       This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+    </p>
+  </div>
+</DocumentFragment>
+`;
