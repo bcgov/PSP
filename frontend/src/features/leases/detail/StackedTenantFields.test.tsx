@@ -2,14 +2,14 @@ import { createMemoryHistory } from 'history';
 import { defaultLease } from 'interfaces';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import StackedPidTenantFields, { IStackedPidTenantFieldsProps } from './StackedPidTenantFields';
+import StackedPidTenantFields, { IStackedTenantFieldsProps } from './StackedTenantFields';
 
 const history = createMemoryHistory();
 const onClickManagement = jest.fn();
 
 describe('StackedPidTenantFields component', () => {
   const setup = (
-    renderOptions: RenderOptions & IStackedPidTenantFieldsProps = { lease: { ...defaultLease } },
+    renderOptions: RenderOptions & IStackedTenantFieldsProps = { lease: { ...defaultLease } },
   ) => {
     // render component under test
     const component = render(<StackedPidTenantFields lease={renderOptions.lease} />, {

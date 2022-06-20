@@ -3,21 +3,19 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ILease } from 'interfaces/ILease';
 import * as React from 'react';
 import styled from 'styled-components';
-import { pidFormatter } from 'utils';
 
 import { getAllNames } from '../leaseUtils';
-export interface IStackedPidTenantFieldsProps {
+export interface IStackedTenantFieldsProps {
   lease?: ILease;
 }
 
 /**
- * Layout component that displays vertically stacked lease pids and tenant names
- * @param {IStackedPidTenantFieldsProps} param0
+ * Layout component that displays vertically stacked tenant names
+ * @param {IStackedTenantFieldsProps} param0
  */
-export const StackedPidTenantFields: React.FunctionComponent<IStackedPidTenantFieldsProps> = ({
+export const StackedTenantFields: React.FunctionComponent<IStackedTenantFieldsProps> = ({
   lease,
 }) => {
-  const properties = lease?.properties ?? [];
   return (
     <>
       <StyledStackedDivs>
@@ -35,9 +33,9 @@ const StyledStackedDivs = styled(InlineFlexDiv)`
   div {
     font-family: 'BCSans-Bold';
   }
-  @media only screen and (max-width: 1150px) {
+  @media only screen and (max-width: 1250px) {
     justify-content: center;
   }
 `;
 
-export default StackedPidTenantFields;
+export default StackedTenantFields;

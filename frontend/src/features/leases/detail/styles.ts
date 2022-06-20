@@ -58,7 +58,7 @@ export const LeaseHeaderRight = styled.div`
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  @media only screen and (max-width: 1150px) {
+  @media only screen and (max-width: 1250px) {
     align-items: center;
     text-align: center;
   }

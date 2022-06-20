@@ -6,7 +6,7 @@ import { prettyFormatDate } from 'utils';
 
 import LeaseHeaderAddresses from './LeaseHeaderAddresses';
 import LeaseStatusSummary from './LeaseStatusSummary';
-import StackedPidTenantFields from './StackedPidTenantFields';
+import StackedPidTenantFields from './StackedTenantFields';
 import * as Styled from './styles';
 
 interface ILeaseHeaderProps {
