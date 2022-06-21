@@ -132,7 +132,7 @@ export const Input: React.FC<InputProps> = ({
           value={pattern ? restricted : rest.value ?? value}
           title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
-          aria-describedby={`${field}-help-text}`}
+          aria-describedby={`${field}-help-text`}
           onBlur={(e: any) => {
             if (onBlurFormatter) {
               pattern && setRestricted(onBlurFormatter(value));
@@ -144,7 +144,7 @@ export const Input: React.FC<InputProps> = ({
         />
       </TooltipWrapper>
       {helpText && (
-        <Form.Text id={`${field}-help-text}`} muted>
+        <Form.Text id={`${field}-help-text`} muted>
           {helpText}
         </Form.Text>
       )}
