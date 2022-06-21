@@ -6,6 +6,7 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useUpdateResearch } from '../../hooks/useUpdateResearch';
+import { UpdateResearchFileYupSchema } from '../UpdateResearchFileYupSchema';
 import { UpdateResearchSummaryFormModel } from './models';
 import UpdateResearchForm from './UpdateSummaryForm';
 
@@ -35,6 +36,7 @@ export const UpdateResearchView: React.FunctionComponent<IUpdateResearchViewProp
     <Formik<UpdateResearchSummaryFormModel>
       enableReinitialize
       innerRef={formikRef}
+      validationSchema={UpdateResearchFileYupSchema}
       initialValues={UpdateResearchSummaryFormModel.fromApi(props.researchFile)}
       onSubmit={async (values: UpdateResearchSummaryFormModel) => {
         const researchFile: Api_ResearchFile = values.toApi();
