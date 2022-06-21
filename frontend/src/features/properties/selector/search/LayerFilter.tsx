@@ -67,15 +67,12 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
     );
   };
 
-  const isSearchByAddress = filter?.searchBy === 'address';
-  const isSearchByLegalDescription = filter?.searchBy === 'legalDescription';
+  const internalFilter = filter ?? { ...defaultLayerFilter };
+  const isSearchByAddress = internalFilter?.searchBy === 'address';
+  const isSearchByLegalDescription = internalFilter?.searchBy === 'legalDescription';
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={filter ?? defaultLayerFilter}
-      onSubmit={onSearchSubmit}
-    >
+    <Formik enableReinitialize initialValues={internalFilter} onSubmit={onSearchSubmit}>
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
@@ -99,7 +96,7 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                     : ''
                 }
                 onSelectItemChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                  setFilter({ ...defaultLayerFilter, searchBy: e.target.value });
+                  setFilter({ ...internalFilter, searchBy: e.target.value });
                 }}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   if (isSearchByAddress && onAddressChange) {
