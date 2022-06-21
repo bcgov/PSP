@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
 
         PimsUser GetTracking(long id);
         public PimsUser RemoveRole(PimsUser user, long roleId);
+        public PimsUser RemoveRegion(PimsUser user, long regionId);
         PimsUser Add(PimsUser add);
         void AddWithoutSave(PimsUser add);
         PimsUser Update(PimsUser update);

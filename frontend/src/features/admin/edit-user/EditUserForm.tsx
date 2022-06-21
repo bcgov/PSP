@@ -1,5 +1,5 @@
 import { Button } from 'components/common/buttons';
-import { Form, Input, Multiselect } from 'components/common/form';
+import { Check, Form, Input, Multiselect } from 'components/common/form';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -8,7 +8,7 @@ import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import Api_TypeCode from 'models/api/TypeCode';
 import { Api_User } from 'models/api/User';
 import * as React from 'react';
-import { ButtonToolbar, FormCheck, Row } from 'react-bootstrap';
+import { ButtonToolbar, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
@@ -30,7 +30,9 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
 }) => {
   const { getPublicByType, getByType } = useLookupCodeHelpers();
   const roles = getByType(API.ROLE_TYPES);
-  const regions = getPublicByType(API.REGION_TYPES);
+  const regions = getPublicByType(API.REGION_TYPES).filter(
+    region => region.name !== 'Cannot determine',
+  );
   return (
     <Formik<FormUser>
       enableReinitialize
@@ -128,7 +130,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
               toolTipId="is-disabled-tooltip"
               toolTip={'Click to change account status then click Save.'}
             >
-              <FormCheck data-testid="isDisabled" name="isDisabled" />
+              <Check data-testid="isDisabled" field="isDisabled" />
             </TooltipWrapper>
           </SectionField>
 
