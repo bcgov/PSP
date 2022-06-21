@@ -143,7 +143,6 @@ const defaultStyle = {
   multiselectContainer: {
     width: 'auto',
     color: 'black',
-    paddingBottom: '12px',
   },
   searchBox: {
     background: 'white',

@@ -665,7 +665,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-anomalies"
-                    style="width: auto; color: black; padding-bottom: 12px;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "
@@ -793,7 +793,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-tenures"
-                    style="width: auto; color: black; padding-bottom: 12px;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "
@@ -969,7 +969,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-roadTypes"
-                    style="width: auto; color: black; padding-bottom: 12px;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "
@@ -1073,7 +1073,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-adjacentLands"
-                    style="width: auto; color: black; padding-bottom: 12px;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "

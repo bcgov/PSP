@@ -158,7 +158,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The volumetric measurement of the parcel. Only applies if IsVolumetricParcel is true.
         /// </summary>
-        public float VolumetricMeasurement { get; set; }
+        public float? VolumetricMeasurement { get; set; }
 
         /// <summary>
         /// get/set - Volumetric Unit name.
