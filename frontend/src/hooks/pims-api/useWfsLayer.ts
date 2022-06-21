@@ -15,6 +15,12 @@ export interface IUseWfsLayerOptions {
   withCredentials?: boolean;
 }
 
+export interface IWfsGetAllFeaturesOptions {
+  maxCount?: number;
+  timeout?: number;
+  pidOverride?: boolean;
+}
+
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints.
  * @returns Object containing functions to make requests to the WFS layer.
@@ -22,21 +28,24 @@ export interface IUseWfsLayerOptions {
 export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = useApiRequestWrapper({
     requestFunction: useDeepCompareCallback(
-      async (
-        filter: Record<string, any>,
-        options: { maxCount?: number; timeout?: number; pidOverride?: boolean },
-      ) => {
+      async (filter: Record<string, any> = {}, options?: IWfsGetAllFeaturesOptions) => {
         const urlObj = buildUrl(url, getUrlParams(layerOptions));
+
         // add extra WFS params
         urlObj.searchParams.set('request', 'GetFeature');
+        if (options?.maxCount !== undefined) {
+          urlObj.searchParams.set('count', options.maxCount.toString());
+        }
         const cqlFilter = toCqlFilterValue(filter, options?.pidOverride);
         if (cqlFilter) {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }
+
         // call WFS service
         const data = await wfsAxios(options?.timeout).get<FeatureCollection>(urlObj.href, {
           withCredentials: layerOptions.withCredentials,
         });
+
         return data;
       },
       [layerOptions, url],
@@ -51,7 +60,7 @@ function getUrlParams(options: IUseWfsLayerOptions): Record<string, any> {
   const mergedParams = Object.assign<Partial<IUseWfsLayerOptions>, IUseWfsLayerOptions>(
     {
       service: 'WFS',
-      version: '1.3.0',
+      version: '2.0.0',
       outputFormat: 'json',
       outputSrsName: 'EPSG:4326',
     },
