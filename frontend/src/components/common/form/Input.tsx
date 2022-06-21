@@ -132,7 +132,7 @@ export const Input: React.FC<InputProps> = ({
           value={pattern ? restricted : rest.value ?? value}
           title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
-          aria-describedby={`${field}-help-text`}
+          aria-describedby={helpText ? `${field}-help-text` : undefined}
           onBlur={(e: any) => {
             if (onBlurFormatter) {
               pattern && setRestricted(onBlurFormatter(value));
