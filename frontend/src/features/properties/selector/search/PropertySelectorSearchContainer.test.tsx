@@ -179,7 +179,7 @@ describe('PropertySelectorSearchContainer component', () => {
       expect(mockAxios.history.get).toHaveLength(3);
       // calls the fully-attributed parcel map layer - to search by legal description
       expect(mockAxios.history.get[0].url).toBe(
-        'http://localhost/ogs-internal/ows?service=WFS&version=1.3.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25SECTION+13%2C+RANGE+1%2C+SOUTH+SALT+SPRING+ISLAND%25%27',
+        'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25SECTION+13%2C+RANGE+1%2C+SOUTH+SALT+SPRING+ISLAND%25%27',
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
