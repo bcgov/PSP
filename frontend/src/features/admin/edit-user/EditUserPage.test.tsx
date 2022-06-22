@@ -91,7 +91,7 @@ describe('Edit user page', () => {
     const { getAllByText, getByTestId } = renderEditUserPage();
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
     expect(getAllByText(/roleVal/i));
-    expect(getByTestId('isDisabled').getAttribute('value')).toEqual(null);
+    expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
   });
 
   it('Does not display disabled roles', () => {

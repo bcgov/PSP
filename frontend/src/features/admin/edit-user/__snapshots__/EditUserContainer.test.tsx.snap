@@ -344,7 +344,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
             <div
               class="multiselect-container multiSelectContainer  "
               id="multiselect-roles"
-              style="width: auto; color: black; padding-bottom: 12px;"
+              style="width: auto; color: black;"
             >
               <div
                 class="search-wrapper searchWrapper "
@@ -417,12 +417,22 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
                   <li
                     class="option  highlightOption highlight  "
                   >
+                    Organization Administrator
+                  </li>
+                  <li
+                    class="option    "
+                  >
                     Real Estate Analyst
                   </li>
                   <li
                     class="option    "
                   >
                     Real Estate Manager
+                  </li>
+                  <li
+                    class="option    "
+                  >
+                    Undetermined
                   </li>
                 </ul>
               </div>
@@ -467,7 +477,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
             <div
               class="multiselect-container multiSelectContainer  "
               id="multiselect-regions"
-              style="width: auto; color: black; padding-bottom: 12px;"
+              style="width: auto; color: black;"
             >
               <div
                 class="search-wrapper searchWrapper "
@@ -557,14 +567,24 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         class="c1 col"
       >
         <div
-          class="form-check"
+          class="form-group"
         >
-          <input
-            class="form-check-input position-static"
-            data-testid="isDisabled"
-            name="isDisabled"
-            type="checkbox"
-          />
+          <div
+            class="check-field"
+          >
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input position-static"
+                data-testid="isDisabled"
+                id="input-isDisabled"
+                name="isDisabled"
+                type="checkbox"
+                value="false"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
