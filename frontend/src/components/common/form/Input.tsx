@@ -118,7 +118,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper toolTipId={`${field}-error-tooltip`} toolTip={errorTooltip}>
         <Form.Control
           className={innerClassName}
           as={asElement}
