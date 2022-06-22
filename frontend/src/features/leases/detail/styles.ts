@@ -53,6 +53,7 @@ export const LeaseH6 = styled.h6`
 `;
 
 export const LeaseHeaderRight = styled.div`
+  max-width: 60%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
