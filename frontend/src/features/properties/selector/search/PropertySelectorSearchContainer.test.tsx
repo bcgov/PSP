@@ -98,7 +98,7 @@ describe('PropertySelectorSearchContainer component', () => {
       expect(mockAxios.history.get).toHaveLength(15);
       // call parcel map layer
       expect(mockAxios.history.get[0].url).toBe(
-        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PIN%20ilike%20'%25123456789%25'%20OR%20PID%20ilike%20'%25123456789%25'  OR PID_PADDED ilike '%25123456789%25'",
+        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PIN%20ilike%20'%25123456789%25'%20OR%20PID%20ilike%20'%25123456789%25'%20%20OR%20PID_PADDED%20ilike%20'%25123456789%25'",
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
@@ -216,7 +216,7 @@ describe('PropertySelectorSearchContainer component', () => {
       expect(mockAxios.history.get[1].url).toBe('/tools/geocoder/parcels/pids/1');
       // calls parcel layer - search by PID
       expect(mockAxios.history.get[2].url).toBe(
-        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PIN%20ilike%20'%25312312%25'%20OR%20PID%20ilike%20'%25312312%25' OR PID_PADDED ilike '%25312312%25'",
+        "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=PIN%20ilike%20'%25312312%25'%20OR%20PID%20ilike%20'%25312312%25'%20%20OR%20PID_PADDED%20ilike%20'%25312312%25'",
       );
       // calls the region and district layers
       expect(mockAxios.history.get[3].url).toBe(
