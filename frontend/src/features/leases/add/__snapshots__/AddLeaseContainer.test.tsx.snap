@@ -292,6 +292,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c7 {
+  max-width: 60%;
   margin: 0 auto;
   display: -webkit-box;
   display: -webkit-flex;
