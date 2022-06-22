@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
+import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
   pid?: string;
@@ -18,7 +19,7 @@ export interface IUpdatePropertyDetailsContainerProps {
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
   const isMounted = useIsMounted();
   const history = useHistory();
-  const { retrieveProperty } = useGetProperty();
+  const { retrieveProperty, retrievePropertyLoading } = useGetProperty();
   const { updateProperty } = useUpdateProperty();
   const { queryAll } = useQueryMapLayersByLocation();
 
@@ -70,13 +71,14 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     }
   }, [history, initialForm?.pid]);
 
-  if (initialForm === undefined) {
+  if (retrievePropertyLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
+      validationSchema={UpdatePropertyDetailsYupSchema}
       initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
       onSubmit={savePropertyInformation}
     >

@@ -54,9 +54,9 @@ namespace Pims.Api.Areas.Reports.Models.User
         public DateTime? IssueOn { get; set; }
 
         /// <summary>
-        /// get/set - A comma-separated list of organizations the user belongs to.
+        /// get/set - A comma-separated list of regions the user belongs to.
         /// </summary>
-        public string Organizations { get; set; }
+        public string Regions { get; set; }
 
         /// <summary>
         /// get/set - A comma-separated list of roles the user is a member of.

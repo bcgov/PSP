@@ -1,10 +1,22 @@
-import { PARCELS_LAYER_URL, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import {
+  HWY_DISTRICT_LAYER_URL,
+  IUserLayerQuery,
+  MOTI_REGION_LAYER_URL,
+  PARCELS_LAYER_URL,
+  useLayerQuery,
+} from 'components/maps/leaflet/LayerPopup';
+import { DistrictCodes, RegionCodes } from 'constants/index';
 import { FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
+import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
+import { IGeocoderResponse } from 'hooks/useApi';
+import { LatLngLiteral } from 'leaflet';
+import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
 import noop from 'lodash/noop';
 import polylabel from 'polylabel';
 import * as React from 'react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { MapClickMonitor } from '../components/MapClickMonitor';
 import { ILayerSearchCriteria, IMapProperty } from '../models';
@@ -22,6 +34,9 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
 }) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
+  const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
+
+  const { getSitePids, searchAddress } = useApiGeocoder();
 
   const {
     findByPid,
@@ -31,6 +46,9 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     findByPinLoading,
     findByPlanNumberLoading,
   } = useLayerQuery(PARCELS_LAYER_URL);
+
+  const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
+  const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
   React.useEffect(() => {
     const searchFunc = async () => {
@@ -46,10 +64,81 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       } else if (layerSearch?.searchBy === 'planNumber' && layerSearch.planNumber) {
         result = await findByPlanNumber(layerSearch.planNumber, true);
       }
-      setSearchResults(featuresToIdentifiedMapProperty(result) ?? []);
+
+      // match the region and district for all found properties
+      const foundProperties = featuresToIdentifiedMapProperty(result) ?? [];
+      await Promise.all(
+        foundProperties.map(p => matchRegionAndDistrict(p, regionService, districtService)),
+      );
+
+      setSearchResults(foundProperties);
     };
     searchFunc();
-  }, [findByPid, findByPin, findByPlanNumber, layerSearch]);
+  }, [findByPid, findByPin, findByPlanNumber, layerSearch, districtService, regionService]);
+
+  const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
+    if (!selectedItem.siteId) {
+      toast.info('No site id found for selected address');
+      return;
+    }
+    const pidResults = await getSitePids(selectedItem.siteId);
+
+    if (pidResults && pidResults.data?.pids) {
+      if (pidResults.data.pids.length > 50) {
+        toast.error('Maximum PID search size exceeded for selected address');
+        return;
+      }
+
+      const findByPidCalls: Promise<
+        FeatureCollection<Geometry, GeoJsonProperties> | undefined
+      >[] = [];
+      pidResults.data.pids.forEach(async (pid: string) => {
+        findByPidCalls.push(findByPid(pid, true));
+      });
+
+      const responses = await Promise.all(findByPidCalls);
+
+      let propertyResults: IMapProperty[] = [];
+      responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
+        if (item) {
+          propertyResults = propertyResults.concat(featuresToIdentifiedMapProperty(item) ?? []);
+        }
+      });
+
+      // match the region and district for all found properties
+      await Promise.all(
+        propertyResults.map(p => matchRegionAndDistrict(p, regionService, districtService)),
+      );
+
+      setSearchResults([...propertyResults]);
+      setAddressResults([]);
+    }
+  };
+
+  const debouncedSearch = React.useRef(
+    debounce(
+      async (val: string, abort: boolean) => {
+        if (!abort) {
+          const addresses = await searchAddress(
+            val,
+            `matchPrecisionNot=OCCUPANT,INTERSECTION,BLOCK,STREET,LOCALITY,PROVINCE,OCCUPANT`,
+          );
+          setAddressResults(addresses.data);
+        }
+      },
+      500,
+      { trailing: true },
+    ),
+  ).current;
+
+  const handleOnAddressChange = async (val?: string) => {
+    if (val && val.length >= 5) {
+      debouncedSearch(val, false);
+    } else {
+      setAddressResults([]);
+    }
+  };
+
   return (
     <>
       <PropertySearchSelectorFormView
@@ -59,12 +148,16 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         searchResults={searchResults}
         loading={findByPidLoading || findByPinLoading || findByPlanNumberLoading}
         onSelectedProperties={setSelectedProperties}
+        addressResults={addressResults}
+        onAddressChange={handleOnAddressChange}
+        onAddressSelect={handleOnAddressSelect}
       />
 
       <MapClickMonitor addProperty={noop} />
     </>
   );
 };
+
 export const featuresToIdentifiedMapProperty = (
   values: FeatureCollection<Geometry, GeoJsonProperties> | undefined,
 ) =>
@@ -84,5 +177,34 @@ export const featuresToIdentifiedMapProperty = (
         return property;
       },
     );
+
+async function matchRegionAndDistrict(
+  property: IMapProperty,
+  regionService: IUserLayerQuery,
+  districtService: IUserLayerQuery,
+) {
+  if (property?.latitude === undefined || property?.longitude === undefined) {
+    return;
+  }
+
+  const latLng: LatLngLiteral = {
+    lat: property.latitude,
+    lng: property.longitude,
+  };
+
+  // call these APIs in parallel - notice there is no "await"
+  const regionTask = regionService.findMetadataByLocation(latLng, 'GEOMETRY');
+  const districtTask = districtService.findMetadataByLocation(latLng, 'GEOMETRY');
+
+  const region = await regionTask;
+  const district = await districtTask;
+
+  property.region = isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown;
+  property.regionName = region.REGION_NAME ?? 'Cannot determine';
+  property.district = isNumber(district.DISTRICT_NUMBER)
+    ? district.DISTRICT_NUMBER
+    : DistrictCodes.Unknown;
+  property.districtName = district.DISTRICT_NAME ?? 'Cannot determine';
+}
 
 export default PropertySelectorSearchContainer;

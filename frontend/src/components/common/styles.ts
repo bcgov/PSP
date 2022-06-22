@@ -3,6 +3,7 @@ import { Breadcrumb as BsBreadcrumb, Row } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
+import { Form } from './form';
 import GenericModal from './GenericModal';
 
 export const LeftAlignDiv = styled.div`
@@ -135,4 +136,9 @@ export const H3 = styled.h3`
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
+`;
+
+export const FilterBoxForm = styled(Form)`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  border-radius: 0.5rem;
 `;

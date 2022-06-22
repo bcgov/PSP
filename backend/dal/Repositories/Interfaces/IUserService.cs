@@ -1,7 +1,7 @@
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -19,9 +19,8 @@ namespace Pims.Dal.Repositories
         PimsUser Get(long id);
 
         PimsUser GetTracking(long id);
-        void LoadOrganizations(PimsUser user);
-        void LoadRoles(PimsUser user);
         public PimsUser RemoveRole(PimsUser user, long roleId);
+        public PimsUser RemoveRegion(PimsUser user, long regionId);
         IEnumerable<long> GetOrganizations(Guid keycloakUserId);
         IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds);
         PimsUser Add(PimsUser add);

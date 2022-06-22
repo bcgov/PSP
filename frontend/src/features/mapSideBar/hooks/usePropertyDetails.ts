@@ -51,12 +51,6 @@ export function usePropertyDetails(property?: IPropertyApiModel): IPropertyDetai
     async function fn() {
       // Query BC Geographic Warehouse layers - ONLY if lat, long have been provided!
       if (location !== undefined) {
-        const motiRegion = await findByLocation(motiRegionService, location, 'GEOMETRY');
-        const highwaysDistrict = await findByLocation(
-          highwaysDistrictService,
-          location,
-          'GEOMETRY',
-        );
         const electoralDistrict = await findByLocation(electoralService, location);
         const alr = await alrService.findOneWhereContains(location, 'GEOMETRY');
         const firstNations = await findByLocation(firstNationsService, location, 'GEOMETRY');
@@ -64,8 +58,6 @@ export function usePropertyDetails(property?: IPropertyApiModel): IPropertyDetai
         if (isMounted()) {
           const newState: IPropertyDetailsForm = {
             ...toFormValues(property),
-            motiRegion,
-            highwaysDistrict,
             electoralDistrict,
             isALR: alr?.features?.length > 0,
             firstNations: {

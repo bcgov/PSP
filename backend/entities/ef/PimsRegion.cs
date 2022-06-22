@@ -13,11 +13,13 @@ namespace Pims.Dal.Entities
     {
         public PimsRegion()
         {
+            PimsAccessRequests = new HashSet<PimsAccessRequest>();
             PimsAddresses = new HashSet<PimsAddress>();
             PimsDistricts = new HashSet<PimsDistrict>();
             PimsLeases = new HashSet<PimsLease>();
             PimsOrganizations = new HashSet<PimsOrganization>();
             PimsProperties = new HashSet<PimsProperty>();
+            PimsRegionUsers = new HashSet<PimsRegionUser>();
         }
 
         [Key]
@@ -47,6 +49,8 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [InverseProperty(nameof(PimsAccessRequest.RegionCodeNavigation))]
+        public virtual ICollection<PimsAccessRequest> PimsAccessRequests { get; set; }
         [InverseProperty(nameof(PimsAddress.RegionCodeNavigation))]
         public virtual ICollection<PimsAddress> PimsAddresses { get; set; }
         [InverseProperty(nameof(PimsDistrict.RegionCodeNavigation))]
@@ -57,5 +61,7 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsOrganization> PimsOrganizations { get; set; }
         [InverseProperty(nameof(PimsProperty.RegionCodeNavigation))]
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        [InverseProperty(nameof(PimsRegionUser.RegionCodeNavigation))]
+        public virtual ICollection<PimsRegionUser> PimsRegionUsers { get; set; }
     }
 }

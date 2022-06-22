@@ -27,8 +27,7 @@ const LoginLoading = () => {
             <Button variant="primary" disabled={true}>
               Sign In
             </Button>
-            <p>Sign into PIMS with your government issued IDIR or with your Business BCeID.</p>
-            <Row></Row>
+            <p>Sign into PIMS with your government issued IDIR</p>
           </Col>
           <Col xs={1} md={3} />
         </Row>

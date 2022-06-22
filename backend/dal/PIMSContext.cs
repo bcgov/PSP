@@ -175,6 +175,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropertyType> PimsPropertyTypes { get; set; }
         public virtual DbSet<PimsProvinceState> PimsProvinceStates { get; set; }
         public virtual DbSet<PimsRegion> PimsRegions { get; set; }
+        public virtual DbSet<PimsRegionUser> PimsRegionUsers { get; set; }
+        public virtual DbSet<PimsRegionUserHist> PimsRegionUserHists { get; set; }
         public virtual DbSet<PimsRequestSourceType> PimsRequestSourceTypes { get; set; }
         public virtual DbSet<PimsResearchFile> PimsResearchFiles { get; set; }
         public virtual DbSet<PimsResearchFileHist> PimsResearchFileHists { get; set; }
@@ -1737,11 +1739,21 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.Note).HasComment("Note associated with this access request.");
+
+                entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
+
                 entity.HasOne(d => d.AccessRequestStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsAccessRequests)
                     .HasForeignKey(d => d.AccessRequestStatusTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ARQSTT_PIM_ACRQST_FK");
+
+                entity.HasOne(d => d.RegionCodeNavigation)
+                    .WithMany(p => p.PimsAccessRequests)
+                    .HasForeignKey(d => d.RegionCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_REGION_PIM_ACRQST_FK");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.PimsAccessRequests)
@@ -1763,6 +1775,8 @@ namespace Pims.Dal
                 entity.Property(e => e.AccessRequestHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
             });
 
             modelBuilder.Entity<PimsAccessRequestOrganization>(entity =>
@@ -2281,6 +2295,8 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseId)
                     .HasName("LEASE_PK");
 
+                entity.HasComment("Details of a lease that is inventoried in PIMS system.");
+
                 entity.Property(e => e.LeaseId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -2514,6 +2530,8 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentId)
                     .HasName("LSPYMT_PK");
 
+                entity.HasComment("Describes a payment associated with a lease term.");
+
                 entity.Property(e => e.LeasePaymentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -2583,6 +2601,8 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentMethodTypeCode)
                     .HasName("LSPMMT_PK");
 
+                entity.HasComment("Describes the type of payment method for a lease.");
+
                 entity.Property(e => e.LeasePaymentMethodTypeCode).HasComment("Payment method type code");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
@@ -2637,6 +2657,10 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePmtFreqTypeCode)
                     .HasName("LSPMTF_PK");
 
+                entity.HasComment("Describes the frequency of payments for a lease.");
+
+                entity.Property(e => e.LeasePmtFreqTypeCode).HasComment("Payment frequency type code");
+
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -2647,6 +2671,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.Description).HasComment("Payment frequency type code description");
+
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
@@ -2654,6 +2680,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.LeaseProgramTypeCode)
                     .HasName("LSPRGT_PK");
+
+                entity.HasComment("Describes the program type associated with a lease.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -2672,6 +2700,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.LeasePurposeTypeCode)
                     .HasName("LPRPTY_PK");
+
+                entity.HasComment("Describes the purpose type associated with a lease.");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -2738,6 +2768,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.LeaseTenantId)
                     .HasName("TENANT_PK");
+
+                entity.HasComment("Associates a tenant with a lease");
 
                 entity.Property(e => e.LeaseTenantId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TENANT_ID_SEQ])");
 
@@ -2807,6 +2839,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.LeaseTermId)
                     .HasName("LSTERM_PK");
+
+                entity.HasComment("Describes a term for the associated lease.");
 
                 entity.Property(e => e.LeaseTermId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ])");
 
@@ -4674,6 +4708,62 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
+            modelBuilder.Entity<PimsRegionUser>(entity =>
+            {
+                entity.HasKey(e => e.RegionUserId)
+                    .HasName("RGNUSR_PK");
+
+                entity.Property(e => e.RegionUserId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_REGION_USER_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+
+                entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
+
+                entity.HasOne(d => d.RegionCodeNavigation)
+                    .WithMany(p => p.PimsRegionUsers)
+                    .HasForeignKey(d => d.RegionCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_REGION_PIM_RGNUSR_FK");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PimsRegionUsers)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_USER_PIM_RGNUSR_FK");
+            });
+
+            modelBuilder.Entity<PimsRegionUserHist>(entity =>
+            {
+                entity.HasKey(e => e.RegionUserHistId)
+                    .HasName("PIMS_RGNUSR_H_PK");
+
+                entity.Property(e => e.RegionUserHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_REGION_USER_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsRequestSourceType>(entity =>
             {
                 entity.HasKey(e => e.RequestSourceTypeCode)
@@ -4990,7 +5080,11 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecurityDepositId)
                     .HasName("SECDEP_PK");
 
+                entity.HasComment("Description of a security deposit associated with a lease.");
+
                 entity.Property(e => e.SecurityDepositId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_ID_SEQ])");
+
+                entity.Property(e => e.AmountPaid).HasComment("Amount paid of this security deposit");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -5013,6 +5107,12 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DepositDate).HasComment("Date of this security deposit");
+
+                entity.Property(e => e.Description).HasComment("Descirption of this security deposit");
+
+                entity.Property(e => e.OtherDepositTypeDesc).HasComment("Description of the deposit type If the SECURITY_DEPOSIT_TYPE_CODE has been chosen for this scurity deposit.");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsSecurityDeposits)
@@ -5097,6 +5197,8 @@ namespace Pims.Dal
             {
                 entity.HasKey(e => e.SecurityDepositReturnId)
                     .HasName("SDRTRN_PK");
+
+                entity.HasComment("Describes the details of the return of a security deposit.");
 
                 entity.Property(e => e.SecurityDepositReturnId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ])");
 
@@ -5477,11 +5579,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserId)
                     .HasName("USER_PK");
 
+                entity.HasComment("Information associated with an identified PIMS system user.");
+
                 entity.Property(e => e.UserId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.ApprovedById).HasComment("Identifier of the person that approved the creation of this PIMS user.");
+
+                entity.Property(e => e.BusinessIdentifierValue).HasComment("Accepted identifier of a user (e.g. IDIR)");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -5493,7 +5601,21 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.ExpiryDate).HasComment("Expiry date/time of this user account.");
+
+                entity.Property(e => e.GuidIdentifierValue).HasComment("Unique GUID associated with the user.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if this user account is disabled.");
+
+                entity.Property(e => e.IssueDate).HasComment("Date/time that this user was identified as a PIMS user,");
+
+                entity.Property(e => e.LastLogin).HasComment("Last date/time the user was logged into PIMS.");
+
+                entity.Property(e => e.Note).HasComment("Notes associated with this user.");
+
+                entity.Property(e => e.Position).HasComment("Role/position assigned to the user.");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PimsUsers)
@@ -5517,6 +5639,8 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserOrganizationId)
                     .HasName("USRORG_PK");
 
+                entity.HasComment("Associates a user with an organization.");
+
                 entity.Property(e => e.UserOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -5533,7 +5657,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if this association is disabled.");
 
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsUserOrganizations)
@@ -5569,6 +5695,8 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserRoleId)
                     .HasName("USERRL_PK");
 
+                entity.HasComment("Associates a user with an role.");
+
                 entity.Property(e => e.UserRoleId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -5585,7 +5713,9 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if this association is disabled.");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.PimsUserRoles)
@@ -6081,6 +6211,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_PROPERTY_TAX_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_REGION_USER_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_REGION_USER_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

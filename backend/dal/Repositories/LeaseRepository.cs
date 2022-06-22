@@ -201,7 +201,6 @@ namespace Pims.Dal.Repositories
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateLeaseQuery(filter);
             var items = query
-                .OrderBy(l => l.LeaseId)
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();

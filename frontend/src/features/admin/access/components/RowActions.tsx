@@ -1,47 +1,56 @@
 import { Menu } from 'components/menu/Menu';
 import { AccessRequestStatus } from 'constants/accessStatus';
-import React from 'react';
+import { FormAccessRequest } from 'features/admin/access-request/models';
+import { useAccessRequests } from 'hooks/pims-api/useAccessRequests';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { CellProps } from 'react-table';
-import { useAppSelector } from 'store/hooks';
-import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
 
-import { IAccessRequestModel } from '../interfaces';
-
-export const RowActions = (props: CellProps<IAccessRequestModel>) => {
+export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () => void }) => {
   const accessRequest = props.row.original;
-  const { updateAccessRequest, removeAccessRequest } = useAccessRequests();
+  const {
+    updateAccessRequest: { execute: update },
+    removeAccessRequest: { execute: remove },
+  } = useAccessRequests();
 
-  const isStatusMatch = (value: AccessRequestStatus) => accessRequest.status === value;
+  const isStatusMatch = (value: AccessRequestStatus) =>
+    accessRequest.accessRequestStatusTypeCodeId === value;
 
-  const accessRequests = useAppSelector(state => state.accessRequests.pagedAccessRequests.items);
-  const storedAccessRequest = accessRequests.find(ar => ar.id === accessRequest.id);
-  const originalAccessRequest = storedAccessRequest ? { ...storedAccessRequest } : undefined;
-
-  const approve = () => {
-    if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.Approved;
-      updateAccessRequest(originalAccessRequest);
+  const approve = async () => {
+    if (accessRequest) {
+      await update({
+        ...accessRequest.toApi(),
+        accessRequestStatusTypeCode: { id: AccessRequestStatus.Approved },
+      });
+      props.refresh();
     }
   };
-  const decline = () => {
-    if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.Denied;
-      updateAccessRequest(originalAccessRequest);
+  const decline = async () => {
+    if (accessRequest) {
+      await update({
+        ...accessRequest.toApi(),
+        accessRequestStatusTypeCode: { id: AccessRequestStatus.Denied },
+      });
+      props.refresh();
     }
   };
 
-  const hold = () => {
-    if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.Received;
-      updateAccessRequest(originalAccessRequest);
+  const hold = async () => {
+    if (accessRequest) {
+      await update({
+        ...accessRequest.toApi(),
+        accessRequestStatusTypeCode: { id: AccessRequestStatus.Received },
+      });
+      props.refresh();
     }
   };
 
-  const deleteRequest = () => {
-    if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.Denied;
-      removeAccessRequest(originalAccessRequest.id ?? 0, originalAccessRequest);
+  const deleteRequest = async () => {
+    if (accessRequest) {
+      await remove({
+        ...accessRequest.toApi(),
+        accessRequestStatusTypeCode: { id: AccessRequestStatus.Denied },
+      });
+      props.refresh();
     }
   };
 

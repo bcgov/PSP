@@ -11,7 +11,6 @@ namespace Pims.Dal.Entities
     [Table("PIMS_INSURANCE")]
     [Index(nameof(InsuranceTypeCode), Name = "INSRNC_INSURANCE_TYPE_CODE_IDX")]
     [Index(nameof(LeaseId), Name = "INSRNC_LEASE_ID_IDX")]
-    [Index(nameof(InsuranceTypeCode), nameof(LeaseId), Name = "INSRNC_LEASE_INSURANCE_TYPE_TUC", IsUnique = true)]
     public partial class PimsInsurance
     {
         [Key]

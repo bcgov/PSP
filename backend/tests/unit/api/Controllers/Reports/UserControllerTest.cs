@@ -28,22 +28,14 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             new object [] { new UserFilter(1, 100) },
             new object [] { new UserFilter(1, 100) { BusinessIdentifierValue = "businessIdentifier" } },
-            new object [] { new UserFilter(1, 100) { FirstName = "firstname" } },
-            new object [] { new UserFilter(1, 100) { Surname = "surname" } },
             new object [] { new UserFilter(1, 100) { Email = "email" } },
-            new object [] { new UserFilter(1, 100) { IsDisabled = false } },
-            new object [] { new UserFilter(1, 100) { Role = "role" } },
         };
 
         public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/users?Username=test") },
-            new object [] { new Uri("http://host/api/users?FirstName=test") },
-            new object [] { new Uri("http://host/api/users?LastName=test") },
-            new object [] { new Uri("http://host/api/users?LastName=test") },
             new object [] { new Uri("http://host/api/users?Email=test") },
             new object [] { new Uri("http://host/api/users?IsDisabled=false") },
-            new object [] { new Uri("http://host/api/users?Role=test") },
         };
         #endregion
 

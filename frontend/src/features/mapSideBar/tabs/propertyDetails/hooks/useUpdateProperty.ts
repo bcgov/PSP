@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 export const useUpdateProperty = () => {
   const { putPropertyConcept } = useApiProperties();
 
-  const { execute } = useApiRequestWrapper({
+  const { execute, loading } = useApiRequestWrapper({
     requestFunction: useCallback(
       async (property: Api_Property) => await putPropertyConcept(property),
       [putPropertyConcept],
@@ -27,5 +27,5 @@ export const useUpdateProperty = () => {
       }
     }, []),
   });
-  return { updateProperty: execute };
+  return { updateProperty: execute, updatePropertyLoading: loading };
 };

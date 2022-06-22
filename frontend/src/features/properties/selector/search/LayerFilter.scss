@@ -1,0 +1,33 @@
+@import '~assets/scss/styles.scss';
+
+.suggestionList {
+  background-color: white;
+  border-style: solid;
+  border-color: lightslategray;
+  border-width: thin;
+  font-size: 1.4rem;
+  text-align: left;
+  max-height: 60rem;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  overflow-y: auto;
+  z-index: 999;
+
+  top: 40px;
+  left: 12.2rem;
+}
+
+.suggestionList option {
+  padding: 1rem 0.5rem;
+  word-wrap: break-word;
+  width: 25rem;
+  overflow: hidden;
+  cursor: pointer;
+  color: $text-color;
+
+  &:hover {
+    background-color: $active-color;
+    color: #fff;
+  }
+}

@@ -11,10 +11,10 @@ import TooltipWrapper from '../TooltipWrapper';
 import { DisplayError } from './DisplayError';
 
 // multiselect-react-dropdown doesn't export this interface so it is inlined here
-interface IMultiselectBaseProps {
-  options: Array<any>;
+interface IMultiselectBaseProps<T, U> {
+  options: Array<T>;
   disablePreSelectedValues?: boolean;
-  selectedValues?: any;
+  selectedValues?: Array<U>;
   isObject?: boolean;
   displayValue?: string;
   showCheckbox?: boolean;
@@ -47,7 +47,8 @@ interface IMultiselectBaseProps {
  * Public interface for a Formik connected Multiselect component
  * NOTE: It hides two internal multiselect properties - "id", "selectedValues" as they are set internally here.
  */
-export interface IMultiselectProps extends Omit<IMultiselectBaseProps, 'id' | 'selectedValues'> {
+export interface IMultiselectProps<T, U>
+  extends Omit<IMultiselectBaseProps<T, U>, 'id' | 'selectedValues'> {
   /** The field name */
   field: string;
   /** (Optional) The label used above the input element */
@@ -60,12 +61,14 @@ export interface IMultiselectProps extends Omit<IMultiselectBaseProps, 'id' | 's
   displayErrorTooltips?: boolean;
   /** (Optional) Class name of the outer form group wrapper */
   formGroupClassName?: string;
+  /** (Optional) a function that returns a list of options that match the passed selected items */
+  selectFunction?: (allOptions: T[], selected: U[]) => T[];
 }
 
-/**
- * Formik-connected <Multiselect> form control
- */
-export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>((props, ref) => {
+export function MultiselectInner<T, U>(
+  props: IMultiselectProps<T, U>,
+  ref: React.ForwardedRef<MultiselectBase>,
+) {
   const {
     field,
     label,
@@ -76,11 +79,13 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
     style,
     onSelect,
     onRemove,
+    selectFunction,
     ...rest
   } = props;
 
   const { values, setFieldValue, setFieldTouched, errors, touched } = useFormikContext();
-  const formikValue = getIn(values, field) as Array<any>;
+  const formikValues = getIn(values, field) as Array<U>;
+  const selectedValues = selectFunction ? selectFunction(rest.options, formikValues) : undefined;
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
@@ -89,7 +94,7 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
   const mergedStyle = { ...defaultStyle, ...style };
 
   // Allow external consumers to handle onSelect, onRemove events via callbacks
-  const onChange = (selectedList: any[], func?: Function) => {
+  const onChange = (selectedList: T[], func?: Function) => {
     setFieldValue(field, selectedList);
     setFieldTouched(field, true);
     if (typeof func === 'function') {
@@ -107,7 +112,7 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
           {...rest}
           ref={ref as any}
           id={`multiselect-${field}`}
-          selectedValues={formikValue}
+          selectedValues={selectedValues ?? formikValues}
           style={mergedStyle}
           customCloseIcon={<CloseIcon size={16} />}
           onSelect={selectedList => onChange(selectedList, onSelect)}
@@ -118,7 +123,14 @@ export const Multiselect = forwardRef<typeof MultiselectBase, IMultiselectProps>
       {!displayErrorTooltips && <DisplayError field={field} />}
     </Form.Group>
   );
-});
+}
+
+/**
+ * Formik-connected <Multiselect> form control
+ */
+export const Multiselect = forwardRef(MultiselectInner) as <T, U>(
+  props: IMultiselectProps<T, U> & { ref?: React.ForwardedRef<MultiselectBase> },
+) => ReturnType<typeof MultiselectInner>;
 
 const defaultStyle = {
   chips: {
@@ -131,7 +143,6 @@ const defaultStyle = {
   multiselectContainer: {
     width: 'auto',
     color: 'black',
-    paddingBottom: '12px',
   },
   searchBox: {
     background: 'white',

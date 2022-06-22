@@ -108,7 +108,7 @@ namespace Pims.Dal.Helpers.Extensions
             if (filter.Sort?.Any() == true)
             {
                 MapSortField("ExpiryDate", "OrigExpiryDate", filter.Sort);
-                MapSortField("StatusType", "LeaseStatusTypeCodeNavigation", filter.Sort);
+                MapSortField("StatusType", "LeaseStatusTypeCodeNavigation.Description", filter.Sort);
                 MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", filter.Sort);
 
                 query = query.OrderByProperty(filter.Sort);

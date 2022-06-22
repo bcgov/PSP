@@ -14,7 +14,7 @@ import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../../Section';
 import { SectionField, StyledFieldLabel } from '../../SectionField';
-import { InlineContainer, LeftBorderCol } from '../../SectionStyles';
+import { LeftBorderCol } from '../../SectionStyles';
 import { LandMeasurementTable } from './components/LandMeasurementTable';
 import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
 import {
@@ -51,6 +51,8 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
   const adjacentLandOptions = getByType(API.PROPERTY_ADJACENT_LAND_TYPES).map(x =>
     PropertyAdjacentLandFormModel.fromLookup(x),
   );
+  const regionOptions = getOptionsByType(API.REGION_TYPES);
+  const districtOptions = getOptionsByType(API.DISTRICT_TYPES);
 
   // multi-selects
   const tenureStatus = getIn(values, 'tenures') as PropertyTenureFormModel[];
@@ -71,6 +73,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
 
+  // clear related fields when volumetric parcel radio changes
   useEffect(() => {
     if (!isVolumetricParcel) {
       setFieldValue('volumetricMeasurement', 0);
@@ -79,19 +82,44 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
     }
   }, [isVolumetricParcel, setFieldValue]);
 
+  // clear related fields when tenure status changes
+  useEffect(() => {
+    if (!isHighwayRoad) {
+      setFieldValue('roadTypes', []);
+    }
+    if (!isAdjacentLand) {
+      setFieldValue('adjacentLands', []);
+    }
+  }, [isAdjacentLand, isHighwayRoad, setFieldValue]);
+
+  const cannotDetermineInfoText =
+    'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';
+
   return (
     <StyledForm>
       <Content vertical>
-        <Section header="Property attributes">
+        <Section header="Property Attributes">
           <SectionField label="MOTI region">
-            <Text field="motiRegion.REGION_NAME" />
+            <Select
+              field="regionTypeCode"
+              options={regionOptions}
+              placeholder={values.regionTypeCode ? undefined : 'Please Select'}
+            />
+            {regionOptions.find(x => x.code?.toString() === values.regionTypeCode?.toString())
+              ?.label === 'Cannot determine' && (
+              <StyledInfoSection>{cannotDetermineInfoText}</StyledInfoSection>
+            )}
           </SectionField>
           <SectionField label="Highways district">
-            <InlineContainer>
-              <Text field="highwaysDistrict.DISTRICT_NUMBER" />
-              {'-'}
-              <Text field="highwaysDistrict.DISTRICT_NAME" />
-            </InlineContainer>
+            <Select
+              field="districtTypeCode"
+              options={districtOptions}
+              placeholder={values.highwaysDistrict ? undefined : 'Please Select'}
+            />
+            {districtOptions.find(x => x.code?.toString() === values.districtTypeCode?.toString())
+              ?.label === 'Cannot determine' && (
+              <StyledInfoSection>{cannotDetermineInfoText}</StyledInfoSection>
+            )}
           </SectionField>
           <SectionField label="Electoral district">
             <Text field="electoralDistrict.ED_NAME" />
@@ -264,4 +292,10 @@ const Content = styled(Scrollable)`
 const Footer = styled(Row)`
   margin: 0;
   justify-content: end;
+`;
+
+const StyledInfoSection = styled.div`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
 `;

@@ -112,7 +112,7 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
-        /// Update the specified contact, and attached properties.
+        /// Update the specified property, and attached properties.
         /// </summary>
         /// <returns></returns>
         [HttpPut("concept/{pid}")]
@@ -120,7 +120,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult UpdatePerson([FromBody] Pims.Api.Models.Concepts.PropertyModel propertyModel)
+        public IActionResult UpdateConceptProperty([FromBody] Pims.Api.Models.Concepts.PropertyModel propertyModel)
         {
             var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);
             var updatedProperty = _pimsService.PropertyService.Update(propertyEntity);

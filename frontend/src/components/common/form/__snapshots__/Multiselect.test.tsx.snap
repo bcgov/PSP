@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Multiselect component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="form-group"
+  >
+    <label
+      class="form-label"
+      for="multiselect-selectedOptions_input"
+    >
+      Test Label
+    </label>
+    <div>
+      <div
+        class="multiselect-container multiSelectContainer  "
+        id="multiselect-selectedOptions"
+        style="width: auto; color: black;"
+      >
+        <div
+          class="search-wrapper searchWrapper "
+          style="background: white; border: 1px solid #606060;"
+        >
+          <input
+            autocomplete="off"
+            class="searchBox "
+            id="multiselect-selectedOptions_input"
+            name="search_name_input"
+            placeholder="Select"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="optionListContainer displayNone"
+        >
+          <ul
+            class="optionContainer"
+          >
+            <li
+              class="option  highlightOption highlight  "
+            >
+              Foo
+            </li>
+            <li
+              class="option    "
+            >
+              Bar
+            </li>
+            <li
+              class="option    "
+            >
+              Baz
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -64,6 +64,7 @@ export const Input: React.FC<InputProps> = ({
   onBlurFormatter,
   tooltip,
   displayErrorTooltips,
+  onChange,
   ...rest
 }) => {
   const { handleChange, handleBlur, errors, touched, values, setFieldValue } = useFormikContext<
@@ -79,6 +80,15 @@ export const Input: React.FC<InputProps> = ({
     let val = event.target.value;
     pattern?.test(val) && setRestricted(val);
     handleChange(event);
+    if (onChange) {
+      onChange(event);
+    }
+  };
+  const handleOnChange = (event: any) => {
+    handleChange(event);
+    if (onChange) {
+      onChange(event);
+    }
   };
   // run the formatter logic when the input field is updated programmatically via formik values
   useEffect(() => {
@@ -126,7 +136,7 @@ export const Input: React.FC<InputProps> = ({
             }
             handleBlur(e);
           }}
-          onChange={pattern ? handleRestrictedChange : handleChange}
+          onChange={pattern ? handleRestrictedChange : handleOnChange}
         />
       </TooltipWrapper>
       {!displayErrorTooltips && <DisplayError field={field} />}

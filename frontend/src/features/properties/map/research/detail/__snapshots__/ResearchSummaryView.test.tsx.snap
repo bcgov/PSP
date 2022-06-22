@@ -21,6 +21,13 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
   margin-bottom: 2rem;
 }
 
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
 .c3 {
   font-weight: bold;
 }
@@ -89,7 +96,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Test road name
           </div>
@@ -107,7 +114,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Test road alias
           </div>
@@ -149,7 +156,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           />
         </div>
         <div
@@ -165,7 +172,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
              Apr 14, 2022
           </div>
@@ -183,7 +190,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Headquarters (HQ)
           </div>
@@ -201,7 +208,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Dairy Queen Forever! Property Management
           </div>
@@ -219,7 +226,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           />
         </div>
         a request description
@@ -260,7 +267,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             Mar 30, 2022
           </div>
@@ -278,7 +285,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           />
         </div>
         A research result
@@ -319,7 +326,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           >
             No
           </div>
@@ -337,7 +344,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="col"
+            class="c4 col"
           />
         </div>
         An expropriation note

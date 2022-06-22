@@ -1,6 +1,7 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
-import { FastDatePicker, Form, Input, Select } from 'components/common/form';
+import { FastDatePicker, Input, Select } from 'components/common/form';
 import { SelectInput } from 'components/common/List/SelectInput';
+import { FilterBoxForm } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES, REGION_TYPES } from 'constants/API';
 import { Formik } from 'formik';
@@ -276,11 +277,6 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
 };
 
 export default LeaseFilter;
-
-const FilterBoxForm = styled(Form)`
-  background-color: ${({ theme }) => theme.css.filterBoxColor};
-  border-radius: 0.5rem;
-`;
 
 const ColButtons = styled(Col)`
   border-left: 2px solid white;

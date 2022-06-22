@@ -29,6 +29,8 @@ namespace Pims.Dal.Entities
         [Column("ACCESS_REQUEST_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string AccessRequestStatusTypeCode { get; set; }
+        [Column("REGION_CODE")]
+        public short RegionCode { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

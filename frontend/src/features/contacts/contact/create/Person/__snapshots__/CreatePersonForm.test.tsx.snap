@@ -144,6 +144,16 @@ exports[`CreatePersonForm renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c6 button.close {
+  font-size: 2.4rem;
+}
+
+.c4 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -219,16 +229,6 @@ exports[`CreatePersonForm renders as expected 1`] = `
 .c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
-}
-
-.c6 button.close {
-  font-size: 2.4rem;
-}
-
-.c4 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
 }
 
 .c9 {

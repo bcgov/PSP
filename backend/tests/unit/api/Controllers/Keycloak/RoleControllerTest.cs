@@ -2,7 +2,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Keycloak.Controllers;
-using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
 using System;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Keycloak.Models.Role;
+using FluentAssertions;
 
 namespace PimsApi.Test.Keycloak.Controllers
 {
@@ -53,7 +53,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var data = Assert.IsType<Model.RoleModel[]>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel[]>(eroles), data, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel[]>(eroles).Should().BeEquivalentTo(data);
             service.Verify(m => m.SyncRolesAsync(), Times.Once());
         }
         #endregion
@@ -79,7 +79,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var data = Assert.IsType<Model.RoleModel[]>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel[]>(eroles), data, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel[]>(eroles).Should().BeEquivalentTo(data);
             service.Verify(m => m.GetRolesAsync(1, 10, It.IsAny<string>()), Times.Once());
         }
         #endregion
@@ -104,7 +104,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel>(erole), actualResult, new DeepPropertyCompare());
+            mapper.Map<Model.RoleModel>(erole).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.GetRoleAsync(It.IsAny<Guid>()), Times.Once());
         }
         #endregion

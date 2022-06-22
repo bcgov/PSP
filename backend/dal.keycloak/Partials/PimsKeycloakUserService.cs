@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Keycloak
 {
@@ -119,33 +120,6 @@ namespace Pims.Dal.Keycloak
             var kuser = await _keycloakService.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsRepository.User.GetTracking(user.Id);
 
-            IEnumerable<long> addRoleIds;
-            IEnumerable<long> removeRoleIds;
-            addRoleIds = user.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-            removeRoleIds = euser.PimsUserRoles.Except(user.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-
-            // Update Roles.
-            removeRoleIds.ForEach(r =>
-            {
-                var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot remove a role from a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null)
-                {
-                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                }
-
-                euser = _pimsRepository.User.RemoveRole(euser, role.RoleId);
-            });
-            addRoleIds.ForEach(r =>
-            {
-                var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null)
-                {
-                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                }
-
-                euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
-            });
-
             return await SaveUserChanges(user, euser, kuser, true);
         }
 
@@ -160,8 +134,6 @@ namespace Pims.Dal.Keycloak
             var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsRepository.User.GetTracking(update.Id);
 
-            IEnumerable<long> addRoleIds = update.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-
             var roleIds = update.PimsUserRoles.Select(r => r.RoleId);
             foreach (var roleId in roleIds)
             {
@@ -175,18 +147,7 @@ namespace Pims.Dal.Keycloak
                 await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
             }
 
-            addRoleIds.ForEach(r =>
-            {
-                var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null)
-                {
-                    throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                }
-
-                euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
-            });
-
-            return await SaveUserChanges(update, euser, kuser);
+            return await SaveUserChanges(update, euser, kuser, true);
         }
 
         /// <summary>
@@ -198,6 +159,11 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         private async Task<Entity.PimsUser> SaveUserChanges(Entity.PimsUser update, Entity.PimsUser euser, KModel.UserModel kuser, bool resetRoles = false)
         {
+            if (resetRoles)
+            {
+                euser.PimsUserRoles.ForEach(role => _pimsRepository.User.RemoveRole(euser, role.RoleId));
+                euser.PimsRegionUsers.ForEach(region => _pimsRepository.User.RemoveRegion(euser, region.Id));
+            }
 
             // Update PIMS
             euser.BusinessIdentifierValue = kuser.Username; // PIMS must use whatever username is set in keycloak.
@@ -208,12 +174,13 @@ namespace Pims.Dal.Keycloak
             euser.Note = update.Note;
             euser.IsDisabled = update.IsDisabled;
             euser.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
+            euser.PimsUserRoles = update.PimsUserRoles;
+            euser.PimsRegionUsers = update.PimsRegionUsers;
 
-            //TODO: currently the PIMS contact method screen does not support the concept of multiple contact methods, so for now simply overwrite any work email addresses.
             euser.Person.PimsContactMethods.RemoveAll(c => c.ContactMethodTypeCode == ContactMethodTypes.WorkEmail);
             update.Person.PimsContactMethods.ForEach(c =>
             {
-                euser.Person.PimsContactMethods.Add(new PimsContactMethod(c.Person, c.Organization, c.ContactMethodTypeCode, c.ContactMethodValue));
+                euser.Person.PimsContactMethods.Add(new PimsContactMethod(update.Person, c.Organization, c.ContactMethodTypeCode, c.ContactMethodValue));
             });
 
             euser = _pimsRepository.User.UpdateOnly(euser);

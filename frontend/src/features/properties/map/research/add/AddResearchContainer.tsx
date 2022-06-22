@@ -29,7 +29,9 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (!!selectedResearchFeature) {
-      researchForm.properties = [new PropertyForm(mapFeatureToProperty(selectedResearchFeature))];
+      researchForm.properties = [
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+      ];
     }
     return researchForm;
   }, [selectedResearchFeature]);
@@ -39,7 +41,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     if (!!selectedResearchFeature && !!formikRef.current) {
       formikRef.current.resetForm();
       formikRef.current?.setFieldValue('properties', [
-        new PropertyForm(mapFeatureToProperty(selectedResearchFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
       ]);
     }
     return () => {
@@ -49,8 +51,8 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
+    formikRef.current?.setSubmitting(false);
     if (!!response?.name) {
-      formikRef.current?.setSubmitting(false);
       formikRef.current?.resetForm();
       history.replace(`/mapview/research/${response.id}/edit`);
     }
@@ -71,7 +73,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
         <ResearchFooter
-          isSubmitting={formikRef.current?.isSubmitting}
+          isOkDisabled={formikRef.current?.isSubmitting}
           onSave={handleSave}
           onCancel={handleCancel}
         />

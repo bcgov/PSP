@@ -7,7 +7,7 @@ using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.Claim;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Admin.Controllers
 {

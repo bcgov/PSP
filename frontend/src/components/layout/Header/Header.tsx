@@ -7,7 +7,6 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaBomb } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { useTenant } from 'tenants';
@@ -22,11 +21,7 @@ import { UserProfile } from './UserProfile';
  * @returns Header component.
  */
 export const Header = () => {
-  const history = useHistory();
   const keycloak = useKeycloakWrapper();
-  if (history.location.pathname === '/') {
-    history.replace('/mapview');
-  }
   const [show, setShow] = React.useState(false);
   const handleShow = () => setShow(true);
   const tenant = useTenant();

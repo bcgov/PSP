@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACCESS_REQUEST")]
     [Index(nameof(AccessRequestStatusTypeCode), Name = "ACRQST_ACCESS_REQUEST_STATUS_TYPE_CODE_IDX")]
+    [Index(nameof(RegionCode), Name = "ACRQST_REGION_CODE_IDX")]
     [Index(nameof(RoleId), Name = "ACRQST_ROLE_ID_IDX")]
     [Index(nameof(UserId), Name = "ACRQST_USER_ID_IDX")]
     public partial class PimsAccessRequest
@@ -30,6 +31,8 @@ namespace Pims.Dal.Entities
         [Column("ACCESS_REQUEST_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string AccessRequestStatusTypeCode { get; set; }
+        [Column("REGION_CODE")]
+        public short RegionCode { get; set; }
         [Column("NOTE")]
         public string Note { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -74,6 +77,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AccessRequestStatusTypeCode))]
         [InverseProperty(nameof(PimsAccessRequestStatusType.PimsAccessRequests))]
         public virtual PimsAccessRequestStatusType AccessRequestStatusTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(RegionCode))]
+        [InverseProperty(nameof(PimsRegion.PimsAccessRequests))]
+        public virtual PimsRegion RegionCodeNavigation { get; set; }
         [ForeignKey(nameof(RoleId))]
         [InverseProperty(nameof(PimsRole.PimsAccessRequests))]
         public virtual PimsRole Role { get; set; }

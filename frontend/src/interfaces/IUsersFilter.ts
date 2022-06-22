@@ -1,9 +1,8 @@
+import { NumberFieldValue } from 'typings/NumberFieldValue';
 export interface IUsersFilter {
   businessIdentifierValue?: string;
-  firstName?: string;
-  surname?: string;
   email?: string;
-  position?: string;
-  organization?: string;
-  role?: string;
+  region?: NumberFieldValue;
+  role?: NumberFieldValue;
+  activeOnly?: boolean;
 }
