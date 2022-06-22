@@ -241,4 +241,47 @@ echo \
 </dataStore>" >> ./geoserver/geoserver_data/psp/mssql/datastore.xml
 fi
 
+if test -f "./geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml"; then
+    echo "./geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml already exists"
+else
+echo \
+"<dataStore>
+  <id>DataStoreInfoImpl-416a62db:1814e6b4f8d:-7f33</id>
+  <name>mssql-pmbc</name>
+  <description>Local connection to Parcel Map BC fully attributed table</description>
+  <type>Microsoft SQL Server</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl-7e0faa3c:17c208de014:-7ff6</id>
+  </workspace>
+  <connectionParameters>
+    <entry key=\"schema\">pmbc</entry>
+    <entry key=\"Evictor run periodicity\">300</entry>
+    <entry key=\"Use native geometry serialization\">false</entry>
+    <entry key=\"Batch insert size\">1</entry>
+    <entry key=\"database\">pims</entry>
+    <entry key=\"host\">database</entry>
+    <entry key=\"Use Native Paging\">true</entry>
+    <entry key=\"Force spatial index usage via hints\">false</entry>
+    <entry key=\"fetch size\">1000</entry>
+    <entry key=\"Expose primary keys\">false</entry>
+    <entry key=\"validate connections\">true</entry>
+    <entry key=\"Connection timeout\">20</entry>
+    <entry key=\"Integrated Security\">false</entry>
+    <entry key=\"port\">1433</entry>
+    <entry key=\"passwd\">plain:$passvar</entry>
+    <entry key=\"min connections\">1</entry>
+    <entry key=\"dbtype\">sqlserver</entry>
+    <entry key=\"namespace\">psp</entry>
+    <entry key=\"max connections\">10</entry>
+    <entry key=\"Evictor tests per run\">3</entry>
+    <entry key=\"Test while idle\">true</entry>
+    <entry key=\"user\">admin</entry>
+    <entry key=\"Max connection idle time\">300</entry>
+  </connectionParameters>
+  <__default>false</__default>
+  <dateCreated>2022-06-10 20:06:07.789 UTC</dateCreated>
+</dataStore>" >> ./geoserver/geoserver_data/psp/mssql-pmbc/datastore.xml
+fi
+
 echo 'Before running all the docker containers, update the .env files with the Keycloak Client Secret (pims-service-account).'

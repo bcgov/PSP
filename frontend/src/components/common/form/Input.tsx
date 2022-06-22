@@ -35,6 +35,8 @@ type OptionalAttributes = {
   innerClassName?: string;
   /** formatter to apply during input onblur */
   onBlurFormatter?: Function;
+  /** optional help text to display below the FormControl */
+  helpText?: string;
   /** optional tooltip text to display after the label */
   tooltip?: string;
   /** Display errors in a tooltip instead of in a div */
@@ -62,6 +64,7 @@ export const Input: React.FC<InputProps> = ({
   disabled,
   custom,
   onBlurFormatter,
+  helpText,
   tooltip,
   displayErrorTooltips,
   onChange,
@@ -115,7 +118,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper toolTipId={`${field}-error-tooltip`} toolTip={errorTooltip}>
         <Form.Control
           className={innerClassName}
           as={asElement}
@@ -129,6 +132,7 @@ export const Input: React.FC<InputProps> = ({
           value={pattern ? restricted : rest.value ?? value}
           title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
+          aria-describedby={helpText ? `${field}-help-text` : undefined}
           onBlur={(e: any) => {
             if (onBlurFormatter) {
               pattern && setRestricted(onBlurFormatter(value));
@@ -139,6 +143,11 @@ export const Input: React.FC<InputProps> = ({
           onChange={pattern ? handleRestrictedChange : handleOnChange}
         />
       </TooltipWrapper>
+      {helpText && (
+        <Form.Text id={`${field}-help-text`} muted>
+          {helpText}
+        </Form.Text>
+      )}
       {!displayErrorTooltips && <DisplayError field={field} />}
     </Form.Group>
   );

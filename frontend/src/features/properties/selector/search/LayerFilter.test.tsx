@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions } from 'utils/test-utils';
 
-import LayerFilter, { defaultLayerFilter, ILayerFilterProps } from './LayerFilter';
+import LayerFilter, { defaultLayerFilter } from './LayerFilter';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -14,13 +14,14 @@ const onAddressChange = jest.fn();
 const onAddressSelect = jest.fn();
 
 describe('LayerFilter component', () => {
-  const setup = (renderOptions: RenderOptions & Partial<ILayerFilterProps>) => {
-    // render component under test
-    const component = render(
+  // render component under test
+  const setup = (renderOptions: RenderOptions & { searchBy?: string } = {}) => {
+    const searchBy = renderOptions.searchBy || 'address';
+    const utils = render(
       <LayerFilter
         setFilter={setFilter}
         addressResults={mockGeocoderOptions}
-        filter={{ ...defaultLayerFilter, searchBy: 'address' }}
+        filter={{ ...defaultLayerFilter, searchBy }}
         onAddressChange={onAddressChange}
         onAddressSelect={onAddressSelect}
       />,
@@ -32,7 +33,7 @@ describe('LayerFilter component', () => {
 
     return {
       store,
-      component,
+      ...utils,
     };
   };
 
@@ -41,40 +42,35 @@ describe('LayerFilter component', () => {
   });
 
   it('renders as expected', () => {
-    const { component } = setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({});
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders as expected - search by legal description', () => {
+    const { asFragment } = setup({ searchBy: 'legalDescription' });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('shall have an searchBy field', async () => {
-    const {
-      component: { container },
-    } = setup({
-      addressResults: mockGeocoderOptions,
-    });
+    const { container } = setup({});
 
     await fillInput(container, 'searchBy', 'address', 'select');
 
     const searchByInput = container.querySelector('select[name="searchBy"]');
     expect(searchByInput).toBeInTheDocument();
   });
+
   it('shall have an address field', async () => {
-    const {
-      component: { container },
-    } = setup({
-      addressResults: mockGeocoderOptions,
-    });
+    const { container } = setup({});
 
     await fillInput(container, 'searchBy', 'address', 'select');
 
     const addressInput = container.querySelector('input[name="address"]');
     expect(addressInput).toBeInTheDocument();
   });
+
   it('shall have an address suggestions', async () => {
-    const {
-      component: { container },
-    } = setup({
-      addressResults: mockGeocoderOptions,
-    });
+    const { container } = setup({});
 
     await fillInput(container, 'searchBy', 'address', 'select');
     await fillInput(container, 'address', '1234 Fake');
@@ -82,17 +78,27 @@ describe('LayerFilter component', () => {
     const addressInput = container.querySelector('.suggestionList');
     expect(addressInput).toBeInTheDocument();
   });
+
   it('shall have an address suggestion option', async () => {
-    const {
-      component: { getByText, container },
-    } = setup({
-      addressResults: mockGeocoderOptions,
-    });
+    const { getByText, container } = setup({});
 
     await fillInput(container, 'searchBy', 'address', 'select');
     await fillInput(container, 'address', '1234 Fake');
 
     const option = getByText('1234 Fake St');
     expect(option).toBeInTheDocument();
+  });
+
+  it('shall have a legal description TEXTAREA field', async () => {
+    const { container, findByText } = setup({ searchBy: 'legalDescription' });
+
+    await fillInput(container, 'searchBy', 'legalDescription', 'select');
+
+    expect(
+      await findByText(/Searching by Legal Description may result in a slower search/i),
+    ).toBeInTheDocument();
+
+    const textarea = container.querySelector('textarea[name="legalDescription"]');
+    expect(textarea).toBeInTheDocument();
   });
 });

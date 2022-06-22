@@ -8,6 +8,7 @@ import {
 import { DistrictCodes, RegionCodes } from 'constants/index';
 import { FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
 import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
+import { useFullyAttributedParcelMapLayer } from 'hooks/pims-api/useFullyAttributedParcelMapLayer';
 import { IGeocoderResponse } from 'hooks/useApi';
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
@@ -17,6 +18,7 @@ import polylabel from 'polylabel';
 import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useTenant } from 'tenants';
 
 import { MapClickMonitor } from '../components/MapClickMonitor';
 import { ILayerSearchCriteria, IMapProperty } from '../models';
@@ -50,6 +52,12 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
   const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
+  const { parcelMapFullyAttributed } = useTenant();
+  const {
+    findByLegalDescription,
+    findByLegalDescriptionLoading,
+  } = useFullyAttributedParcelMapLayer(parcelMapFullyAttributed.url, parcelMapFullyAttributed.name);
+
   React.useEffect(() => {
     const searchFunc = async () => {
       let result: FeatureCollection<Geometry, GeoJsonProperties> | undefined = undefined;
@@ -63,6 +71,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         result = await findByPin(layerSearch.pin, true);
       } else if (layerSearch?.searchBy === 'planNumber' && layerSearch.planNumber) {
         result = await findByPlanNumber(layerSearch.planNumber, true);
+      } else if (layerSearch?.searchBy === 'legalDescription' && layerSearch.legalDescription) {
+        result = await findByLegalDescription(layerSearch.legalDescription);
       }
 
       // match the region and district for all found properties
@@ -74,7 +84,15 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       setSearchResults(foundProperties);
     };
     searchFunc();
-  }, [findByPid, findByPin, findByPlanNumber, layerSearch, districtService, regionService]);
+  }, [
+    findByLegalDescription,
+    findByPid,
+    findByPin,
+    findByPlanNumber,
+    layerSearch,
+    districtService,
+    regionService,
+  ]);
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
     if (!selectedItem.siteId) {
@@ -146,7 +164,12 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         selectedProperties={selectedProperties}
         search={layerSearch}
         searchResults={searchResults}
-        loading={findByPidLoading || findByPinLoading || findByPlanNumberLoading}
+        loading={
+          findByPidLoading ||
+          findByPinLoading ||
+          findByPlanNumberLoading ||
+          findByLegalDescriptionLoading
+        }
         onSelectedProperties={setSelectedProperties}
         addressResults={addressResults}
         onAddressChange={handleOnAddressChange}
