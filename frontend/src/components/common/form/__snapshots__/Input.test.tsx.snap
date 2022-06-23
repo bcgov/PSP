@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="input form-group"
+  >
+    <label
+      class="form-label"
+      for="input-foo"
+    >
+      Test Label 
+    </label>
+    <input
+      class="form-control"
+      id="input-foo"
+      name="foo"
+      title=""
+      value=""
+    />
+  </div>
+</DocumentFragment>
+`;

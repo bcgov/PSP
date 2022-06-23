@@ -28,7 +28,7 @@ export const LeaseStatusSummary: React.FunctionComponent<ILeaseStatusSummaryProp
 
 const StyledLeaseStatusSummary = styled.div`
   max-width: fit-content;
-  max-height: 100%;
+  max-height: 8rem;
   min-width: 11rem;
   white-space: nowrap;
   border-radius: 1rem;

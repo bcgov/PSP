@@ -39,6 +39,8 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
     renewalDate: stringToNull(formLease.renewalDate),
     responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
     terms: formLease.terms.map<ILeaseTerm>(term => formLeaseTermToApiLeaseTerm(term)),
+    hasDigitalLicense: yesNoUnknownToBoolean(formLease.hasDigitalLicense),
+    hasPhysicalLicense: yesNoUnknownToBoolean(formLease.hasPhysicalLicense),
     tenants: formLease.tenants.map<Api_LeaseTenant>(tenant => ({
       id: tenant.leaseTenantId,
       leaseId: formLease.id ?? 0,

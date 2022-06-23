@@ -1,4 +1,5 @@
 import { Button } from 'components/common/buttons/Button';
+import GenericModal from 'components/common/GenericModal';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
@@ -36,6 +37,9 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
     undefined,
   );
+
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+
   const menuItems = researchFile?.researchProperties?.map(x => getPropertyName(x)) || [];
   menuItems.unshift('RFile Summary');
 
@@ -61,7 +65,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       return '';
     }
 
-    if (researchProperty.propertyName !== undefined) {
+    if (researchProperty.propertyName !== undefined && researchProperty.propertyName !== '') {
       return researchProperty.propertyName;
     } else if (researchProperty.property !== undefined) {
       const property = researchProperty.property;
@@ -84,11 +88,11 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         if (
           window.confirm('You have made changes on this form. Do you wish to leave without saving?')
         ) {
-          handleCancel();
+          handleCancelClick();
           setSelectedMenuIndex(selectedIndex);
         }
       } else {
-        handleCancel();
+        handleCancelClick();
         setSelectedMenuIndex(selectedIndex);
       }
     } else {
@@ -96,17 +100,30 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     }
   };
 
-  const handleSave = async () => {
+  const handleSaveClick = async () => {
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
     }
   };
 
-  const handleCancel = () => {
+  const handleCancelClick = () => {
+    if (formikRef !== undefined) {
+      if (formikRef.current?.dirty) {
+        setShowConfirmModal(true);
+      } else {
+        handleCancelConfirm();
+      }
+    } else {
+      handleCancelConfirm();
+    }
+  };
+
+  const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    setShowConfirmModal(false);
     setIsEditing(false);
   };
 
@@ -137,8 +154,8 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           isEditing && (
             <ResearchFooter
               isOkDisabled={formikRef?.current?.isSubmitting}
-              onSave={handleSave}
-              onCancel={handleCancel}
+              onSave={handleSaveClick}
+              onCancel={handleCancelClick}
             />
           )
         }
@@ -164,14 +181,32 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           }
           bodyComponent={
             <StyledFormWrapper>
-              <ViewSelector
-                researchFile={researchFile}
-                selectedIndex={selectedMenuIndex}
-                isEditMode={isEditing}
-                onSuccess={onSuccess}
-                setEditMode={setIsEditing}
-                setFormikRef={setFormikRef}
-              />
+              <>
+                <GenericModal
+                  display={showConfirmModal}
+                  title={'Confirm changes'}
+                  message={
+                    <>
+                      <div>If you cancel now, this research file will not be saved.</div>
+                      <br />
+                      <strong>Are you sure you want to Cancel?</strong>
+                    </>
+                  }
+                  handleOk={handleCancelConfirm}
+                  handleCancel={() => setShowConfirmModal(false)}
+                  okButtonText="Ok"
+                  cancelButtonText="Resume editing"
+                  show
+                />
+                <ViewSelector
+                  researchFile={researchFile}
+                  selectedIndex={selectedMenuIndex}
+                  isEditMode={isEditing}
+                  onSuccess={onSuccess}
+                  setEditMode={setIsEditing}
+                  setFormikRef={setFormikRef}
+                />
+              </>
             </StyledFormWrapper>
           }
         ></ResearchFileLayout>

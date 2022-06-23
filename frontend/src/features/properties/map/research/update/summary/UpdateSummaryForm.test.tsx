@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/react';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -101,5 +102,10 @@ describe('UpdateResearchForm component', () => {
     const fileName = container.querySelector(`#input-name`);
 
     expect(fileName).toBeInTheDocument();
+  });
+  it('should have the Help with choosing a name text in the component', async () => {
+    const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
+    setup({ initialValues });
+    expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 });

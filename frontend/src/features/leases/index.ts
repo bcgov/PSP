@@ -19,7 +19,7 @@ export * from './detail/LeasePages/details/PropertyInformation';
 export * from './detail/LeasePages/LeasePageForm';
 export * from './detail/LeaseRouter';
 export * from './detail/LeaseStatusSummary';
-export * from './detail/StackedPidTenantFields';
+export * from './detail/StackedTenantFields';
 export * from './hooks/useLeaseDetail';
 export * from './interfaces';
 export * from './list/LeaseListView';

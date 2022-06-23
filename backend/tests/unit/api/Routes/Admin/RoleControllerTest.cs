@@ -69,18 +69,6 @@ namespace Pims.Api.Test.Routes.Admin
         }
 
         [Fact]
-        public void GetRoleByName_Route()
-        {
-            // Arrange
-            var endpoint = typeof(RoleController).FindMethod(nameof(RoleController.GetRoleByName), typeof(string));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasGet("name/{name}");
-        }
-
-        [Fact]
         public void AddRole_Route()
         {
             // Arrange

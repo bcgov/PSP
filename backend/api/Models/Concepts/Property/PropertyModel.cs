@@ -94,6 +94,31 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Whether the property is a provincial highway.
         /// </summary>
         public bool? IsProvincialPublicHwy { get; set; }
+
+        /// <summary>
+        /// get/set - Updated by user id.
+        /// </summary>
+        public string PphStatusUpdateUserid { get; set; }
+
+        /// <summary>
+        /// get/set - Updated on date time stamp.
+        /// </summary>
+        public DateTime? PphStatusUpdateTimestamp { get; set; }
+
+        /// <summary>
+        /// get/set - Updated by user guid.
+        /// </summary>
+        public Guid? PphStatusUpdateUserGuid { get; set; }
+
+        /// <summary>
+        /// get/set - Whether the property is a Rwy Belt Dom Patent.
+        /// </summary>
+        public bool? IsRwyBeltDomPatent { get; set; }
+
+        /// <summary>
+        /// get/set - Provincial Public Hwy Status.
+        /// </summary>
+        public string PphStatusTypeCode { get; set; }
         #endregion
 
         #region Address

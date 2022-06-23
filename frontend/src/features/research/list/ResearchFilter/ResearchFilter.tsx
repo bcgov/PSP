@@ -5,7 +5,6 @@ import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from 'constants/API';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
-import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
@@ -60,13 +59,6 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
   const researchStatusOptions = lookupCodes
     .getByType(RESEARCH_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
-
-  useEffect(() => {
-    if (researchStatusOptions.length > 0) {
-      defaultResearchFilter.researchFileStatusTypeCode =
-        researchStatusOptions.find(s => s.code === 'ACTIVE')?.value.toString() ?? '';
-    }
-  }, [researchStatusOptions]);
 
   return (
     <Formik

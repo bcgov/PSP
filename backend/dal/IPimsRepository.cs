@@ -15,12 +15,11 @@ namespace Pims.Dal
         #region Accounts
         IPersonRepository Person { get; }
         IOrganizationRepository Organization { get; }
-        IUserOrganizationService UserOrganization { get; }
         ClaimsPrincipal Principal { get; }
-        IUserService User { get; }
+        IUserRepository User { get; }
         IRoleService Role { get; }
         IClaimService Claim { get; }
-        IAccessRequestService AccessRequest { get; }
+        IAccessRequestRepository AccessRequest { get; }
         #endregion
 
         #region Properties

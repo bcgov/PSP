@@ -16,6 +16,7 @@ export const defaultLayerFilter: ILayerSearchCriteria = {
   pid: '',
   pin: '',
   planNumber: '',
+  legalDescription: '',
   searchBy: 'pid',
 };
 
@@ -51,7 +52,7 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
     onAddressSelect(val);
   };
 
-  const renderSuggestions = () => {
+  const renderAddressSuggestions = () => {
     if (!addressResults || addressResults.length === 0) {
       return null;
     }
@@ -66,30 +67,36 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
     );
   };
 
-  const isSearchByAddress = filter?.searchBy === 'address';
+  const internalFilter = filter ?? { ...defaultLayerFilter };
+  const isSearchByAddress = internalFilter?.searchBy === 'address';
+  const isSearchByLegalDescription = internalFilter?.searchBy === 'legalDescription';
+
   return (
-    <Formik
-      enableReinitialize
-      initialValues={filter ?? defaultLayerFilter}
-      onSubmit={onSearchSubmit}
-    >
+    <Formik enableReinitialize initialValues={internalFilter} onSubmit={onSearchSubmit}>
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl={6}>
+            <Col xl={isSearchByLegalDescription ? 10 : 6}>
               <SelectInput<
                 {
                   pid: number;
                   pin: number;
                   planNumber: string;
+                  legalDescription: string;
                   address: string;
                 },
                 IResearchFilterProps
               >
                 field="searchBy"
                 defaultKey="pid"
+                as={isSearchByLegalDescription ? 'textarea' : 'input'}
+                helpText={
+                  isSearchByLegalDescription
+                    ? 'Searching by Legal Description may result in a slower search.'
+                    : ''
+                }
                 onSelectItemChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                  setFilter({ ...defaultLayerFilter, searchBy: e.target.value });
+                  setFilter({ ...internalFilter, searchBy: e.target.value });
                 }}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   if (isSearchByAddress && onAddressChange) {
@@ -108,18 +115,23 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
                     label: 'PIN',
                   },
                   {
+                    key: 'address',
+                    placeholder: `Enter a Address`,
+                    label: 'Address',
+                  },
+                  {
                     key: 'planNumber',
                     placeholder: `Enter a Plan #`,
                     label: 'Plan #',
                   },
                   {
-                    key: 'address',
-                    placeholder: `Enter a Address`,
-                    label: 'Address',
+                    key: 'legalDescription',
+                    placeholder: '',
+                    label: 'Legal Description',
                   },
                 ]}
               />
-              {isSearchByAddress && renderSuggestions()}
+              {isSearchByAddress && renderAddressSuggestions()}
             </Col>
             <Col xl={2} className="pr-0">
               <Row>

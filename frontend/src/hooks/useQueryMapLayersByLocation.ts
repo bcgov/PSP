@@ -50,7 +50,7 @@ export function useQueryMapLayersByLocation() {
         const alr = await alrService.findOneWhereContains(location, 'GEOMETRY', 3005);
         const motiRegion = await findByLocation(motiRegionService, location, 'GEOMETRY', 3005);
         const highwaysDistrict = await findByLocation(highwaysService, location, 'GEOMETRY', 3005);
-        const electoralDistrict = await findByLocation(electoralService, location, 'SHAPE', 3005);
+        const electoralDistrict = await findByLocation(electoralService, location);
         const firstNations = await findByLocation(firstNationsService, location, 'GEOMETRY', 3005);
 
         return {

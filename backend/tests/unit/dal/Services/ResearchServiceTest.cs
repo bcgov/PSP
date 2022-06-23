@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Services
             helper.CreatePimsContext(user, true).AddAndSaveChanges(researchFile);
 
             var service = helper.Create<ResearchFileService>();
-            var researchRepository = helper.GetService<Mock<Repositories.IResearchFileRepository>>();
+            var researchRepository = helper.GetService<Mock<IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
 
             // Act
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Services
             helper.CreatePimsContext(user, true).AddAndSaveChanges(researchFile);
 
             var service = helper.Create<ResearchFileService>();
-            var researchRepository = helper.GetService<Mock<Repositories.IResearchFileRepository>>();
+            var researchRepository = helper.GetService<Mock<IResearchFileRepository>>();
             researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
 
             // Assert

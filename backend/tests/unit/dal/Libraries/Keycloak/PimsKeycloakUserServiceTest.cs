@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
+using Pims.Dal.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             addUserRole.Role.RoleId = 2;
             addUserRole.Role.KeycloakGroupId = Guid.NewGuid();
             pimsServiceMock.Setup(m => m.Role.Find(addUserRole.Role.RoleId)).Returns(addUserRole.Role);
-            pimsServiceMock.Setup(m => m.UserOrganization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.PimsOrganization>());
 
             // Act
             var result = await service.UpdateUserAsync(user);
@@ -152,8 +152,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             addRole.RoleId = 2;
             addRole.KeycloakGroupId = Guid.NewGuid();
             pimsServiceMock.Setup(m => m.Role.Find(addRole.RoleId)).Returns(addRole);
-            pimsServiceMock.Setup(m => m.UserOrganization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.PimsOrganization>());
-            pimsServiceMock.Setup(m => m.User.GetOrganizations(It.IsAny<Guid>())).Returns(euser.GetOrganizations().Select(a => a.Id));
 
             // Act
             var result = await service.UpdateUserAsync(user);
@@ -195,8 +193,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
-            pimsServiceMock.Setup(m => m.UserOrganization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.PimsOrganization>());
-            pimsServiceMock.Setup(m => m.UserOrganization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.PimsOrganization>());
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.GetRoles().First();
@@ -243,7 +239,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
             pimsServiceMock.Setup(m => m.Role.Find(removeRole.RoleId)).Returns<Entity.PimsRole>(null);
-            pimsServiceMock.Setup(m => m.UserOrganization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.PimsOrganization>());
 
             var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
             var addRole = user.GetRoles().First();
@@ -255,6 +250,182 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             // Assert
             await Assert.ThrowsAsync<KeyNotFoundException>(async () => await service.UpdateUserAsync(euser));
         }
+        #endregion
+
+        #region AppendToUserAsync
+
+        [Fact]
+        public async Task AppendToUserAsync_Success_AddRole()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<PimsKeycloakService>();
+
+            var euser = EntityHelper.CreateUser("test");
+            var existingRole = euser.PimsUserRoles.First().Role;
+            existingRole.RoleId = 1;
+            existingRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Id = euser.GuidIdentifierValue.Value,
+                Username = euser.BusinessIdentifierValue,
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
+                .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
+                {
+                    Id = new Guid(g)
+                }).ToArray());
+            keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
+
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
+            pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.RemoveRole(It.IsAny<Pims.Dal.Entities.PimsUser>(), existingRole.RoleId)).Returns((Pims.Dal.Entities.PimsUser eUser, long roleId) =>
+            {
+                var userRole = eUser.PimsUserRoles.FirstOrDefault(r => r.RoleId == roleId);
+                eUser.PimsUserRoles.Remove(userRole);
+                return eUser;
+            });
+            pimsServiceMock.Setup(m => m.Role.Find(existingRole.RoleId)).Returns(existingRole);
+
+            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var addUserRole = user.PimsUserRoles.First();
+            addUserRole.RoleId = 2;
+            addUserRole.Role.RoleId = 2;
+            addUserRole.Role.KeycloakGroupId = Guid.NewGuid();
+            pimsServiceMock.Setup(m => m.Role.Find(addUserRole.Role.RoleId)).Returns(addUserRole.Role);
+
+            // Act
+            await service.AppendToUserAsync(user);
+
+            // Assert
+            keycloakServiceMock.Verify(m => m.AddGroupToUserAsync(euser.GuidIdentifierValue.Value, addUserRole.Role.KeycloakGroupId.Value), Times.Once);
+            pimsServiceMock.Verify(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>()), Times.Once);
+            pimsServiceMock.Verify(m => m.User.RemoveRole(It.IsAny<Entity.PimsUser>(), existingRole.RoleId), Times.Once);
+            keycloakServiceMock.Verify(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task AppendToUserAsync_Success_AddContactMethod()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<PimsKeycloakService>();
+
+            var euser = EntityHelper.CreateUser("test");
+            var existingRole = euser.PimsUserRoles.First().Role;
+            existingRole.RoleId = 1;
+            existingRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Id = euser.GuidIdentifierValue.Value,
+                Username = euser.BusinessIdentifierValue,
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
+                .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
+                {
+                    Id = new Guid(g)
+                }).ToArray());
+            keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
+
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
+            pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            var values = new List<Entity.PimsUser>();
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(Capture.In(values))).Returns(euser);
+            pimsServiceMock.Setup(m => m.Role.Find(existingRole.RoleId)).Returns(existingRole);
+
+            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            user.Person.PimsContactMethods.Clear();
+            var updatedContactMethod = new Entity.PimsContactMethod() { ContactMethodValue = "update contact method", ContactMethodTypeCode = "email" };
+            user.Person.PimsContactMethods.Add(updatedContactMethod);
+
+            // Act
+            await service.AppendToUserAsync(user);
+
+            // Assert
+            pimsServiceMock.Verify(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>()), Times.Once);
+            values.First().Person.PimsContactMethods.Should().Contain(cm => cm.ContactMethodValue == updatedContactMethod.ContactMethodValue);
+            keycloakServiceMock.Verify(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task AppendToUserAsync_AddRole_KeycloakGroupIdNotFound()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<PimsKeycloakService>();
+
+            var euser = EntityHelper.CreateUser("test");
+            var existingRole = euser.PimsUserRoles.First().Role;
+            existingRole.RoleId = 1;
+            existingRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Id = euser.GuidIdentifierValue.Value,
+                Username = euser.BusinessIdentifierValue,
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
+            pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
+
+            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var addRole = user.PimsUserRoles.First();
+            addRole.RoleId = 2;
+            addRole.Role.KeycloakGroupId = null;
+            pimsServiceMock.Setup(m => m.Role.Find(addRole.RoleId)).Returns(addRole.Role);
+
+            // Act
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => service.AppendToUserAsync(user));
+        }
+
+        [Fact]
+        public async Task AppendToUserAsync_AddRole_KeyNotFound()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<PimsKeycloakService>();
+
+            var euser = EntityHelper.CreateUser("test");
+            var existingRole = euser.PimsUserRoles.First().Role;
+            existingRole.RoleId = 1;
+            existingRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Id = euser.GuidIdentifierValue.Value,
+                Username = euser.BusinessIdentifierValue,
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
+            pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
+
+            var user = EntityHelper.CreateUser(euser.Id, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+            var addRole = user.PimsUserRoles.First();
+            addRole.RoleId = 2;
+            addRole.Role.KeycloakGroupId = Guid.NewGuid();
+            pimsServiceMock.Setup(m => m.Role.Find(addRole.RoleId)).Returns((Entity.PimsRole)null);
+
+            // Act
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => service.AppendToUserAsync(user));
+        }
+
         #endregion
     }
 }

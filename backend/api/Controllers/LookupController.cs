@@ -112,6 +112,7 @@ namespace Pims.Api.Controllers
             var propertyAdjacentLandTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAdjacentLandTypes());
             var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumeUnitTypes());
             var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumetricTypes());
+            var pphStatusType = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPPHStatusType());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -149,7 +150,8 @@ namespace Pims.Api.Controllers
             codes.AddRange(propertyAdjacentLandTypes);
             codes.AddRange(volumeUnitTypes);
             codes.AddRange(propertyVolumetricTypes);
-
+            codes.AddRange(pphStatusType);
+            
             return new JsonResult(codes);
         }
         #endregion

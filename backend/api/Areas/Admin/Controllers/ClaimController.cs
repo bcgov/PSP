@@ -1,3 +1,4 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
@@ -5,7 +6,6 @@ using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
 

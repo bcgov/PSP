@@ -12,6 +12,7 @@ using Pims.Dal.Constants;
 using Xunit;
 using Pims.Core.Extensions;
 using NetTopologySuite.Geometries;
+using Pims.Dal.Repositories;
 
 namespace Pims.Dal.Test.Services
 {
@@ -33,7 +34,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Get(It.IsAny<long>())).Returns(property);
 
             var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
@@ -57,7 +58,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Get(It.IsAny<long>())).Returns(property);
 
             var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
@@ -81,7 +82,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(property);
 
             var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
@@ -105,7 +106,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(property);
 
             var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
@@ -129,7 +130,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>())).Returns(property);
 
             var coordinateService = helper.GetService<Mock<ICoordinateTransformService>>();
@@ -159,7 +160,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>(user);
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>())).Returns(property);
 
             var projected = new Coordinate(14000, 9200);
@@ -191,7 +192,7 @@ namespace Pims.Dal.Test.Services
             // Try to update a non-existent property
             var property = EntityHelper.CreateProperty(1);
 
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(property)).Throws<KeyNotFoundException>();
 
             // Assert
@@ -208,7 +209,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var service = helper.Create<PropertyService>();
-            var repository = helper.GetService<Mock<Repositories.IPropertyRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsProperty>())).Returns(property);
 
             // Assert

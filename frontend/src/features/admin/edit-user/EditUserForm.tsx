@@ -28,8 +28,8 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
   formUser,
   onCancel,
 }) => {
-  const { getPublicByType } = useLookupCodeHelpers();
-  const roles = getPublicByType(API.ROLE_TYPES);
+  const { getPublicByType, getByType } = useLookupCodeHelpers();
+  const roles = getByType(API.ROLE_TYPES);
   const regions = getPublicByType(API.REGION_TYPES).filter(
     region => region.name !== 'Cannot determine',
   );

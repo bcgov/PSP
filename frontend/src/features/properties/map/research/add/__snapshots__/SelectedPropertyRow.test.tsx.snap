@@ -8,7 +8,11 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c3.btn {
+  .c1 {
+  font-size: 1.2rem;
+}
+
+.c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -199,10 +203,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-}
-
-.c1 {
-  font-size: 1.2rem;
 }
 
 <div

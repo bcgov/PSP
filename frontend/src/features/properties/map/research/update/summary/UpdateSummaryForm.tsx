@@ -11,10 +11,10 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces';
 import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
-import { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import { ResearchFileNameGuide } from '../../common/ResearchFileNameGuide';
 import { ResearchFilePurposeFormModel, UpdateResearchSummaryFormModel } from './models';
 
 interface MultiSelectOption {
@@ -44,16 +44,20 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
     values.researchFilePurposes?.map(x => x.researchPurposeTypeCode).includes(x.id),
   );
 
-  const [showContactManager, setShowContactManager] = useState(false);
+  const [showContactManager, setShowContactManager] = React.useState(false);
 
   const initialContacts: IContactSearchResult[] = [];
   if (values.requestor !== undefined) {
     initialContacts.push(values.requestor);
   }
 
-  const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);
+  const [selectedContacts, setSelectedContacts] = React.useState<IContactSearchResult[]>(
+    initialContacts,
+  );
 
-  const [selectedPurposes, setSelectedPurposes] = useState<MultiSelectOption[]>(initialPurposeList);
+  const [selectedPurposes, setSelectedPurposes] = React.useState<MultiSelectOption[]>(
+    initialPurposeList,
+  );
 
   const multiselectProgramRef = React.createRef<Multiselect>();
 
@@ -77,9 +81,6 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
   return (
     <StyledSummarySection>
       <Section header="Research File Information">
-        <SectionField label="R-file name">
-          <Input field="name" />
-        </SectionField>
         <SectionField label="Status">
           <Select
             field="statusTypeCode"
@@ -89,6 +90,10 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
             placeholder={values.statusTypeCode ? undefined : 'Please Select'}
           />
         </SectionField>
+        <SectionField label="R-file name">
+          <Input field="name" />
+        </SectionField>
+        <ResearchFileNameGuide />
       </Section>
       <Section header="Roads">
         <SectionField label="Road name">

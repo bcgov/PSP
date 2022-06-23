@@ -242,6 +242,13 @@ namespace Pims.Dal.Repositories
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
 
+            if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode)
+            {
+                property.PphStatusUpdateTimestamp = DateTime.UtcNow;
+                property.PphStatusUpdateUserid = User.GetUsername();
+                property.PphStatusUpdateUserGuid = User.GetUserKey();
+            }
+
             // update main entity - PimsProperty
             this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
 

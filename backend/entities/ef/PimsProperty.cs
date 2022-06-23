@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -143,6 +143,8 @@ namespace Pims.Dal.Entities
         public string PphStatusUpdateUserid { get; set; }
         [Column("PPH_STATUS_UPDATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime? PphStatusUpdateTimestamp { get; set; }
+        [Column("PPH_STATUS_UPDATE_USER_GUID")]
+        public Guid? PphStatusUpdateUserGuid { get; set; }
         [Column("IS_RWY_BELT_DOM_PATENT")]
         public bool? IsRwyBeltDomPatent { get; set; }
         [Column("ZONING")]

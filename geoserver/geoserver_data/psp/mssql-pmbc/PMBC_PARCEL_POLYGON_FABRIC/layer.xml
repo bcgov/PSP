@@ -1,0 +1,16 @@
+<layer>
+  <name>PMBC_PARCEL_POLYGON_FABRIC</name>
+  <id>LayerInfoImpl-416a62db:1814e6b4f8d:-7f31</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-1e57a616:180b4654fb1:-7ffc</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-416a62db:1814e6b4f8d:-7f32</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2022-06-10 20:11:31.22 UTC</dateCreated>
+</layer>
