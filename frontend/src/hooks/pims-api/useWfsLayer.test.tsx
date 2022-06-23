@@ -63,7 +63,7 @@ describe('useWfsLayer hook', () => {
     expect(getAllFeaturesLoading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
-      'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%25000111222%25%27+OR+PID+ilike+%27%25000111222%25%27',
+      'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%25000111222%25%27+OR+PID+ilike+%27%25000111222%25%27++OR+PID_PADDED+ilike+%27%25000111222%25%27',
     );
   });
 
@@ -81,7 +81,7 @@ describe('useWfsLayer hook', () => {
     expect(getAllFeaturesLoading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
-      'http://localhost/geoserver/psp/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%25000111222%25%27+OR+PID+ilike+%27%25000111222%25%27',
+      'http://localhost/geoserver/psp/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%25000111222%25%27+OR+PID+ilike+%27%25000111222%25%27++OR+PID_PADDED+ilike+%27%25000111222%25%27',
     );
   });
 

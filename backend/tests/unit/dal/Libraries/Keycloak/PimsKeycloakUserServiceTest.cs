@@ -399,7 +399,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var service = helper.Create<PimsKeycloakService>();
 
             var euser = EntityHelper.CreateUser("test");
-            euser.GuidIdentifierValue = Guid.NewGuid();
             var existingRole = euser.PimsUserRoles.First().Role;
             existingRole.RoleId = 1;
             existingRole.KeycloakGroupId = Guid.NewGuid();

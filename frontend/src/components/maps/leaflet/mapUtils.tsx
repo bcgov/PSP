@@ -174,7 +174,9 @@ export const toCqlFilterValue = (object: any, pidOverride?: boolean) => {
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
       if (key === 'PID' || (key === 'PID_PADDED' && object[key] && !pidOverride)) {
-        cql.push(`PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'`);
+        cql.push(
+          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'  OR PID_PADDED ilike '%${object[key]}%'`,
+        );
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }
