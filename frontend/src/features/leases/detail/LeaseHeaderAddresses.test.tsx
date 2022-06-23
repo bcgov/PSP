@@ -2,8 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { IProperty } from 'interfaces';
-import { mockProperties } from 'mocks/filterDataMock';
 import { mockLookups } from 'mocks/mockLookups';
+import { getMockProperties } from 'mocks/mockProperties';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
@@ -14,7 +14,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('ExpandableTextList component', () => {
+describe('LeaseHeaderAddresses component', () => {
   const mockAxios = new MockAdapter(axios);
   const setup = (renderOptions?: RenderOptions & ILeaseHeaderAddressesProps) => {
     // render component under test
@@ -35,7 +35,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders 2 addresses by default', async () => {
     const { getAllByText, getByText } = setup({
-      lease: { properties: mockProperties } as any,
+      lease: { properties: getMockProperties() } as any,
     });
 
     const text = getAllByText('1234 Mock street, Victoria', { exact: false });
