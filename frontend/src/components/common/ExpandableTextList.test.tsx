@@ -3,8 +3,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { IProperty } from 'interfaces';
 import noop from 'lodash/noop';
-import { mockProperties } from 'mocks/filterDataMock';
 import { mockLookups } from 'mocks/mockLookups';
+import { getMockProperties } from 'mocks/mockProperties';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
@@ -45,7 +45,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders all items if no maxCollapsedLength specified', async () => {
     const { getByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
@@ -57,7 +57,7 @@ describe('ExpandableTextList component', () => {
 
   it('only renders delimiters between items', async () => {
     const { getAllByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: 'delimiter',
@@ -67,7 +67,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders the maxCollapsedLength items if specified', async () => {
     const { getByText, queryByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
@@ -80,7 +80,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders the more button if maxCollapsedLength less then items length', async () => {
     const { getByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
@@ -91,7 +91,7 @@ describe('ExpandableTextList component', () => {
 
   it('does not render the more button if maxCollapsedLength greater than or equal to items length', async () => {
     const { queryByTestId } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
@@ -102,7 +102,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders all items if less then maxCollapsedLength', async () => {
     const { getByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
@@ -115,7 +115,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders all items if more button clicked', async () => {
     const { getByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
@@ -132,7 +132,7 @@ describe('ExpandableTextList component', () => {
 
   it('renders maxCollapsedLength items if collapsed', async () => {
     const { getByTestId, queryByText, getByText } = setup({
-      items: mockProperties,
+      items: getMockProperties(),
       renderFunction: (item: IProperty) => <span>{item.pid}</span>,
       keyFunction: (item: IProperty, index: number) => item.id?.toString() ?? index.toString(),
       delimiter: '|',
