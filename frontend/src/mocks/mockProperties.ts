@@ -1,9 +1,7 @@
-import {
-  PropertyClassificationTypes,
-  PropertyDataSourceTypes,
-  PropertyStatusTypes,
-  PropertyTenureTypes,
-} from 'constants';
+import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
+import { PropertyDataSourceTypes } from 'constants/propertyDataSourceTypes';
+import { PropertyStatusTypes } from 'constants/propertyStatusTypes';
+import { PropertyTenureTypes } from 'constants/propertyTenureTypes';
 import { IProperty } from 'interfaces';
 import { mockAddress } from 'mocks';
 
