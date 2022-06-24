@@ -27,7 +27,7 @@ export const LayerPopupLinks: React.FC<ILayerPopupLinksProps> = ({
   return (
     <StyledContainer>
       <LinkButton onClick={onZoomToBounds}>Zoom map</LinkButton>
-      <LinkButton onClick={onEllipsisClick ?? noop}>
+      <LinkButton onClick={onEllipsisClick ?? noop} data-testid="fly-out-ellipsis">
         <FaEllipsisH />
       </LinkButton>
     </StyledContainer>
