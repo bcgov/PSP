@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Mayan.Metadata;
 
 namespace Pims.Api.Repositories.EDMS
 {
@@ -19,5 +20,6 @@ namespace Pims.Api.Repositories.EDMS
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file);
 
+        Task<ExternalResult<QueryResult<MetadataType>>> GetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
     }
 }

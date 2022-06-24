@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Mayan.Sync;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
@@ -11,7 +12,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentController class, provides endpoints to handle document requests.
     /// </summary>
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]
@@ -86,6 +87,19 @@ namespace Pims.Api.Controllers
         {
             var ast = _documentService.UploadDocument(documentType, file);
             return new JsonResult(ast);
+        }
+
+        /// <summary>
+        /// Uploads the passed document.
+        /// </summary>
+        [HttpPatch("sync/documenttype")]
+        //[HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(string), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public IActionResult SyncDocumentTypes([FromBody] SyncModel model)
+        {
+            var ast = _documentService.SyncDocumentTypes(model);
+            return new JsonResult(model);
         }
 
         #endregion

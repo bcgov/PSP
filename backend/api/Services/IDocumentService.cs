@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Mayan.Sync;
 
 namespace Pims.Api.Services
 {
@@ -17,5 +18,7 @@ namespace Pims.Api.Services
         ExternalResult<FileDownload> DownloadFile(int documentId, int fileId);
 
         ExternalResult<DocumentDetail> UploadDocument(int documentType, IFormFile fileRaw);
+
+        bool SyncDocumentTypes(SyncModel model);
     }
 }
