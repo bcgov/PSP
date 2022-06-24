@@ -41,7 +41,7 @@ const StyledOverflowDiv = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  width: fit-content;
 `;
 
 export default OverflowTip;

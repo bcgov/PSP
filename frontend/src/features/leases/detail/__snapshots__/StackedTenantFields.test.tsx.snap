@@ -2,55 +2,27 @@
 
 exports[`StackedPidTenantFields component renders as expected when provided data 1`] = `
 <DocumentFragment>
-  <div
-    class="Toastify"
-  />
-  <div
-    class="Toastify"
-  />
-  .c2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
+  @media only screen and (max-width:1250px) {
 
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
-  width: 100%;
-  text-align: left;
-}
-
-.c1 div {
-  font-family: 'BCSans-Bold';
 }
 
 <div
-    class="c0 c1"
-  >
-    <label>
-      PID:
-    </label>
-    <div
-      class="c2"
-    >
-      111-111-111
-    </div>
-  </div>
+    class="Toastify"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="Toastify"
+  />
   .c2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .c0 {
@@ -70,6 +42,15 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 
 .c1 div {
   font-family: 'BCSans-Bold';
+}
+
+@media only screen and (max-width:1250px) {
+  .c1 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
 }
 
 <div
@@ -89,53 +70,27 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 
 exports[`StackedPidTenantFields component renders as expected when provided no data 1`] = `
 <DocumentFragment>
-  <div
-    class="Toastify"
-  />
-  <div
-    class="Toastify"
-  />
-  .c2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
+  @media only screen and (max-width:1250px) {
 
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
-  width: 100%;
-  text-align: left;
-}
-
-.c1 div {
-  font-family: 'BCSans-Bold';
 }
 
 <div
-    class="c0 c1"
-  >
-    <label>
-      PID:
-    </label>
-    <div
-      class="c2"
-    />
-  </div>
+    class="Toastify"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="Toastify"
+  />
   .c2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .c0 {
@@ -155,6 +110,15 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
 
 .c1 div {
   font-family: 'BCSans-Bold';
+}
+
+@media only screen and (max-width:1250px) {
+  .c1 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
 }
 
 <div

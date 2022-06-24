@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.1.0-30.28",
+  "version": "1.1.0-31.1",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -22,7 +22,7 @@
     "moment": "2.29.2",
     "moment-timezone": "0.5.33",
     "multiselect-react-dropdown": "2.0.21",
-    "npm": "8.1.0",
+    "npm": "8.5.5",
     "polylabel": "1.1.0",
     "query-string": "6.12.1",
     "react": "17.0.2",
@@ -133,7 +133,8 @@
     "nanoid": "3.3.2",
     "minimist": "1.2.6",
     "ansi-regex": "5.0.1",
-    "async": "2.6.4"
+    "async": "2.6.4",
+    "eventsource": "1.1.2"
   },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
