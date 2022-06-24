@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Mayan.Sync;
 using Pims.Api.Repositories.EDMS;
 
 namespace Pims.Api.Services
@@ -46,5 +48,14 @@ namespace Pims.Api.Services
             task.Wait();
             return task.Result;
         }
+
+        public bool SyncDocumentTypes(SyncModel model)
+        {
+            Task<ExternalResult<QueryResult<MetadataType>>> task = documentRepository.GetMetadataTypesAsync();
+            task.Wait();
+            return true;
+        }
+
+
     }
 }
