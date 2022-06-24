@@ -8,5 +8,5 @@ import { Button, ButtonProps } from './Button';
 export const LinkButton = forwardRef<typeof Button, ButtonProps>((props, ref) => {
   // discard "variant" property - as will always be "link"
   const { variant, ...rest } = props;
-  return <Button {...rest} variant="link" ref={ref as any} />;
+  return <Button {...rest} className={rest.className} variant="link" ref={ref as any} />;
 });

@@ -2,14 +2,14 @@ import { createMemoryHistory } from 'history';
 import { defaultLease } from 'interfaces';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import StackedPidTenantFields, { IStackedPidTenantFieldsProps } from './StackedPidTenantFields';
+import StackedPidTenantFields, { IStackedTenantFieldsProps } from './StackedTenantFields';
 
 const history = createMemoryHistory();
 const onClickManagement = jest.fn();
 
 describe('StackedPidTenantFields component', () => {
   const setup = (
-    renderOptions: RenderOptions & IStackedPidTenantFieldsProps = { lease: { ...defaultLease } },
+    renderOptions: RenderOptions & IStackedTenantFieldsProps = { lease: { ...defaultLease } },
   ) => {
     // render component under test
     const component = render(<StackedPidTenantFields lease={renderOptions.lease} />, {
@@ -37,18 +37,6 @@ describe('StackedPidTenantFields component', () => {
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('renders pids appropriately', () => {
-    const {
-      component: { getByText },
-    } = setup({
-      lease: {
-        ...defaultLease,
-        properties: [{ pid: '111-111-111' } as any, { pid: '222-222-222' }, { pid: '333-333-333' }],
-      },
-    });
-    expect(getByText('111-111-111, 222-222-222, 333-333-333')).toBeVisible();
   });
 
   it('renders tenant appropriately', () => {

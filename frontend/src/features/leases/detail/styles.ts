@@ -53,15 +53,15 @@ export const LeaseH6 = styled.h6`
 `;
 
 export const LeaseHeaderRight = styled.div`
-  white-space: nowrap;
+  max-width: 60%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-width: 2rem;
-  flex-wrap: nowrap;
-  @media only screen and (max-width: 715px) {
-    display: none;
+  text-align: left;
+  @media only screen and (max-width: 1250px) {
+    align-items: center;
+    text-align: center;
   }
 `;
 
@@ -94,6 +94,13 @@ export const LeaseHeader = styled(InlineFlexDiv)`
   label {
     padding-right: 1rem;
     margin: 0;
+  }
+  h1 {
+    min-width: 23rem;
+  }
+  @media only screen and (max-width: 1250px) {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 `;
 

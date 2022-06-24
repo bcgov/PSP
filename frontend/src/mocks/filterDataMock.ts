@@ -616,7 +616,7 @@ export const mockProperties = [
   },
   {
     id: 100,
-    pid: '000-000-000',
+    pid: '000-000-002',
     pin: '',
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,
