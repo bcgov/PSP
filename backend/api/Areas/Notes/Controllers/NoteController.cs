@@ -59,6 +59,61 @@ namespace Pims.Api.Areas.Notes.Controllers
             var createdNote = _noteService.Add(type, noteModel);
             return new JsonResult(createdNote);
         }
+
+        /// <summary>
+        /// Get the notes for the specified type.
+        /// </summary>
+        /// <param name="type">Used to identify note type.</param>
+        /// <returns></returns>
+        [HttpGet("{type}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Models.NoteModel>), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(Tags = new[] { "note" })]
+        public IActionResult GetNotes(Models.NoteType type)
+        {
+            switch (type)
+            {
+                case Models.NoteType.Activity:
+                    var notes = _pimsService.Note.GetActivityNotes();
+                    var mappedNotes = _mapper.Map<List<Models.NoteModel>>(notes);
+
+                    return new JsonResult(mappedNotes);
+
+                case Models.NoteType.File:
+                    return new JsonResult(new List<Models.NoteModel>());
+
+                default:
+                    return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the note for the specified type.
+        /// </summary>
+        /// <param name="type">Used to identify note type.</param>
+        /// <param name="noteId">Used to identify the note and delete it.</param>
+        /// <returns></returns>
+        [HttpDelete("{type}/{noteId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(Tags = new[] { "note" })]
+        public IActionResult DeleteNote(Models.NoteType type, int noteId)
+        {
+            switch (type)
+            {
+                case Models.NoteType.Activity:
+                    _pimsService.Note.DeleteActivityNotes(noteId);
+
+                    return new JsonResult(true);
+                case Models.NoteType.File:
+                    return new JsonResult(true);
+
+                default:
+                    return NotFound();
+            }
+        }
         #endregion
     }
 }

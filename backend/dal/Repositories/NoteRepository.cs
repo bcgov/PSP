@@ -51,6 +51,40 @@ namespace Pims.Dal.Repositories
                 .Select(n => n.ConcurrencyControlNumber)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
+
+public int Count()
+        {
+            return this.Context.PimsNotes.Count();
+        }
+
+        public PimsNote Find(params object[] keyValues)
+        {
+            return this.Context.Find<PimsNote>(keyValues);
+        }
+
+        public IEnumerable<PimsNote> GetActivityNotes()
+        {
+            return (from note in this.Context.PimsNotes
+                    join activityNotes in this.Context.PimsActivityInstanceNotes on note.NoteId equals activityNotes.NoteId
+                    where activityNotes.IsDisabled == false
+                    select note).ToList();
+        }
+
+        public void DeleteActivityNotes(int noteId)
+        {
+            var pimsActivityInstances = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
+            if (pimsActivityInstances.Any())
+            {
+                foreach (var item in pimsActivityInstances)
+                {
+                    item.IsDisabled = true;
+                    item.AppLastUpdateTimestamp = DateTime.UtcNow;
+                    item.AppLastUpdateUserid = User.GetUsername();
+                    item.AppLastUpdateUserGuid = User.GetUserKey();
+                }
+                this.Context.SaveChanges();
+            }
+        }
         #endregion
     }
 }
