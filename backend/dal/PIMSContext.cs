@@ -85,6 +85,11 @@ namespace Pims.Dal
         public virtual DbSet<PimsCountry> PimsCountries { get; set; }
         public virtual DbSet<PimsDataSourceType> PimsDataSourceTypes { get; set; }
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
+        public virtual DbSet<PimsDocument> PimsDocuments { get; set; }
+        public virtual DbSet<PimsDocumentHist> PimsDocumentHists { get; set; }
+        public virtual DbSet<PimsDocumentStatusType> PimsDocumentStatusTypes { get; set; }
+        public virtual DbSet<PimsDocumentTyp> PimsDocumentTyps { get; set; }
+        public virtual DbSet<PimsDocumentTypHist> PimsDocumentTypHists { get; set; }
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
@@ -109,6 +114,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsLeaseTermHist> PimsLeaseTermHists { get; set; }
         public virtual DbSet<PimsLeaseTermStatusType> PimsLeaseTermStatusTypes { get; set; }
         public virtual DbSet<PimsLessorType> PimsLessorTypes { get; set; }
+        public virtual DbSet<PimsNote> PimsNotes { get; set; }
+        public virtual DbSet<PimsNoteHist> PimsNoteHists { get; set; }
         public virtual DbSet<PimsOrgIdentifierType> PimsOrgIdentifierTypes { get; set; }
         public virtual DbSet<PimsOrganization> PimsOrganizations { get; set; }
         public virtual DbSet<PimsOrganizationAddress> PimsOrganizationAddresses { get; set; }
@@ -1775,8 +1782,6 @@ namespace Pims.Dal
                 entity.Property(e => e.AccessRequestHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.RegionCode).HasDefaultValueSql("((4))");
             });
 
             modelBuilder.Entity<PimsAccessRequestOrganization>(entity =>
@@ -2204,6 +2209,148 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.RegionCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_REGION_PIM_DSTRCT_FK");
+            });
+
+            modelBuilder.Entity<PimsDocument>(entity =>
+            {
+                entity.HasKey(e => e.DocumentId)
+                    .HasName("DOCMNT_PK");
+
+                entity.HasComment("Table describing the available document types.");
+
+                entity.Property(e => e.DocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.FileName)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Name of the file stored on Mayan EDMS.");
+
+                entity.Property(e => e.MayanId)
+                    .HasDefaultValueSql("((-1))")
+                    .HasComment("Mayan-generated document number used for retrieval from Mayan EDMS.");
+
+                entity.HasOne(d => d.DocumentStatusTypeCodeNavigation)
+                    .WithMany(p => p.PimsDocuments)
+                    .HasForeignKey(d => d.DocumentStatusTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCSTY_PIM_DOCMNT_FK");
+
+                entity.HasOne(d => d.DocumentType)
+                    .WithMany(p => p.PimsDocuments)
+                    .HasForeignKey(d => d.DocumentTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCTYP_PIM_DOCMNT_FK");
+            });
+
+            modelBuilder.Entity<PimsDocumentHist>(entity =>
+            {
+                entity.HasKey(e => e.DocumentHistId)
+                    .HasName("PIMS_DOCMNT_H_PK");
+
+                entity.Property(e => e.DocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsDocumentStatusType>(entity =>
+            {
+                entity.HasKey(e => e.DocumentStatusTypeCode)
+                    .HasName("DOCSTY_PK");
+
+                entity.HasComment("Table describing the available document types.");
+
+                entity.Property(e => e.DocumentStatusTypeCode)
+                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_DOCUMENT_ID_SEQ]')")
+                    .HasComment("Code value of the document status type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive translation of the document status type code.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Determines the default display order of the code descriptions.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is still in use.");
+            });
+
+            modelBuilder.Entity<PimsDocumentTyp>(entity =>
+            {
+                entity.HasKey(e => e.DocumentTypeId)
+                    .HasName("DOCTYP_PK");
+
+                entity.HasComment("Table describing the available document types.");
+
+                entity.Property(e => e.DocumentTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_TYPE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DocumentType)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Description of the available document types.");
+
+                entity.Property(e => e.MayanId)
+                    .HasDefaultValueSql("((-1))")
+                    .HasComment("Mayan-generated document type number used for retrieval from Mayan EDMS.");
+            });
+
+            modelBuilder.Entity<PimsDocumentTypHist>(entity =>
+            {
+                entity.HasKey(e => e.DocumentTypHistId)
+                    .HasName("PIMS_DOCTYP_H_PK");
+
+                entity.Property(e => e.DocumentTypHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_TYP_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsInsurance>(entity =>
@@ -2953,6 +3100,52 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+            });
+
+            modelBuilder.Entity<PimsNote>(entity =>
+            {
+                entity.HasKey(e => e.NoteId)
+                    .HasName("NOTE_PK");
+
+                entity.HasComment("Table to contain all applicable notes for the PIMS PSP system.");
+
+                entity.Property(e => e.NoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.NoteTxt)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Contents of the note.");
+            });
+
+            modelBuilder.Entity<PimsNoteHist>(entity =>
+            {
+                entity.HasKey(e => e.NoteHistId)
+                    .HasName("PIMS_NOTE_H_PK");
+
+                entity.Property(e => e.NoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsOrgIdentifierType>(entity =>
@@ -3811,6 +4004,12 @@ namespace Pims.Dal
 
                 entity.Property(e => e.EncumbranceReason).HasComment("reason for property encumbreance");
 
+                entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
+
+                entity.Property(e => e.FileNumberSuffix)
+                    .IsUnicode(false)
+                    .HasComment("A suffix to distinguish between Property Files with the same number.");
+
                 entity.Property(e => e.IsOwned)
                     .HasDefaultValueSql("(CONVERT([bit],(1)))")
                     .HasComment("Is the property currently owned?");
@@ -4120,6 +4319,8 @@ namespace Pims.Dal
                 entity.Property(e => e.PropertyHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.FileNumberSuffix).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsPropertyImprovement>(entity =>
@@ -5964,6 +6165,22 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_DOCUMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_DOCUMENT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_DOCUMENT_TYP_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_DOCUMENT_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_INSURANCE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -6029,6 +6246,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_LEASE_TERM_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_NOTE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_NOTE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
