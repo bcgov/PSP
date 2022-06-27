@@ -8,7 +8,7 @@ import { useUsers } from '../users/hooks/useUsers';
 import { FormUser } from '../users/models';
 import EditUserForm from './EditUserForm';
 
-interface IEditUserContainerProps {
+export interface IEditUserContainerProps {
   userId?: string;
 }
 
