@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -191,6 +191,11 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("FILE_NUMBER")]
+        public int? FileNumber { get; set; }
+        [Column("FILE_NUMBER_SUFFIX")]
+        [StringLength(2)]
+        public string FileNumberSuffix { get; set; }
 
         [ForeignKey(nameof(AddressId))]
         [InverseProperty(nameof(PimsAddress.PimsProperties))]
