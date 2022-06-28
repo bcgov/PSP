@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
+import { NoteTypes } from 'constants/index';
+import { useApiNotes } from 'hooks/pims-api/useApiNotes';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
-import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
+import { Api_Note } from 'models/api/Note';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { useCallback } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
@@ -9,14 +11,14 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
  * hook that adds a note.
  */
 export const useAddNote = () => {
-  const { postResearchFile } = useApiResearchFile();
+  const { postNote } = useApiNotes();
 
   const { execute } = useApiRequestWrapper<
     (...args: any[]) => Promise<AxiosResponse<Api_ResearchFile, any>>
   >({
     requestFunction: useCallback(
-      async (researchFile: Api_ResearchFile) => await postResearchFile(researchFile),
-      [postResearchFile],
+      async (type: NoteTypes, note: Api_Note) => await postNote(type, note),
+      [postNote],
     ),
     requestName: 'AddNote',
     onSuccess: useAxiosSuccessHandler('Note saved'),
