@@ -8,25 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_WORKFLOW_MODEL_HIST")]
-    [Index(nameof(WorkflowModelHistId), nameof(EndDateHist), Name = "PIMS_WFLMDL_H_UK", IsUnique = true)]
-    public partial class PimsWorkflowModelHist
+    [Table("PIMS_ACTIVITY_INSTANCE_NOTE_HIST")]
+    [Index(nameof(ActivityInstanceNoteHistId), nameof(EndDateHist), Name = "PIMS_ACTINN_H_UK", IsUnique = true)]
+    public partial class PimsActivityInstanceNoteHist
     {
         [Key]
-        [Column("_WORKFLOW_MODEL_HIST_ID")]
-        public long WorkflowModelHistId { get; set; }
+        [Column("_ACTIVITY_INSTANCE_NOTE_HIST_ID")]
+        public long ActivityInstanceNoteHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("WORKFLOW_MODEL_ID")]
-        public long WorkflowModelId { get; set; }
-        [Required]
-        [Column("WORKFLOW_MODEL_TYPE_CODE")]
-        [StringLength(20)]
-        public string WorkflowModelTypeCode { get; set; }
+        [Column("PIMS_ACTIVITY_INSTANCE_NOTE_ID")]
+        public long PimsActivityInstanceNoteId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
         [Column("IS_DISABLED")]
-        public bool IsDisabled { get; set; }
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
