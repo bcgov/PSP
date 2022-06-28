@@ -27,7 +27,7 @@ namespace Pims.Dal
         /// <param name="httpContextAccessor"></param>
         /// <param name="serializerOptions"></param>
         /// <returns></returns>
-        public PimsContext(DbContextOptions<PimsBaseContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null) : base(options)
+        public PimsContext(DbContextOptions<PimsContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null) : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
             _serializerOptions = serializerOptions.Value;
