@@ -61,11 +61,5 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(ActivityInstanceId))]
-        [InverseProperty(nameof(PimsActivityInstance.PimsActivityInstanceNotes))]
-        public virtual PimsActivityInstance ActivityInstance { get; set; }
-        [ForeignKey(nameof(NoteId))]
-        [InverseProperty(nameof(PimsNote.PimsActivityInstanceNotes))]
-        public virtual PimsNote Note { get; set; }
     }
 }

@@ -8,26 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_DOCUMENT")]
-    [Index(nameof(DocumentId), Name = "DOCMNT_DOCUMENT_ID_IDX")]
-    [Index(nameof(DocumentStatusTypeCode), Name = "DOCMNT_DOCUMENT_STATUS_TYPE_CODE_IDX")]
-    public partial class PimsDocument
+    [Table("PIMS_TASK_TEMPLATE_HIST")]
+    [Index(nameof(TaskTemplateHistId), nameof(EndDateHist), Name = "PIMS_TSKTMP_H_UK", IsUnique = true)]
+    public partial class PimsTaskTemplateHist
     {
         [Key]
-        [Column("DOCUMENT_ID")]
-        public long DocumentId { get; set; }
-        [Column("DOCUMENT_TYPE_ID")]
-        public long DocumentTypeId { get; set; }
+        [Column("_TASK_TEMPLATE_HIST_ID")]
+        public long TaskTemplateHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("TASK_TEMPLATE_ID")]
+        public long TaskTemplateId { get; set; }
         [Required]
-        [Column("DOCUMENT_STATUS_TYPE_CODE")]
+        [Column("TASK_TEMPLATE_TYPE_CODE")]
         [StringLength(20)]
-        public string DocumentStatusTypeCode { get; set; }
-        [Required]
-        [Column("FILE_NAME")]
-        [StringLength(500)]
-        public string FileName { get; set; }
-        [Column("MAYAN_ID")]
-        public long MayanId { get; set; }
+        public string TaskTemplateTypeCode { get; set; }
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -66,12 +65,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(DocumentStatusTypeCode))]
-        [InverseProperty(nameof(PimsDocumentStatusType.PimsDocuments))]
-        public virtual PimsDocumentStatusType DocumentStatusTypeCodeNavigation { get; set; }
-        [ForeignKey(nameof(DocumentTypeId))]
-        [InverseProperty(nameof(PimsDocumentTyp.PimsDocuments))]
-        public virtual PimsDocumentTyp DocumentType { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace Pims.Dal.Entities
         public PimsActivityInstance()
         {
             PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
-            PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
         }
 
         [Key]
@@ -61,7 +60,6 @@ namespace Pims.Dal.Entities
 
         [InverseProperty(nameof(PimsActivityInstanceDocument.ActivityInstance))]
         public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
-        [InverseProperty(nameof(PimsActivityInstanceNote.ActivityInstance))]
-        public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
+
     }
 }

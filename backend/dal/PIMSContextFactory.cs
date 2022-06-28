@@ -79,7 +79,7 @@ namespace Pims.Dal
                 Password = config["DB_PASSWORD"]
             };
 
-            var optionsBuilder = new DbContextOptionsBuilder<PimsContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<PimsBaseContext>();
             optionsBuilder.UseSqlServer(sqlBuilder.ConnectionString, options =>
             {
                 options.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds);

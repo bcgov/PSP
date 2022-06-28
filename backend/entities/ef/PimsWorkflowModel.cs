@@ -8,26 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_DOCUMENT")]
-    [Index(nameof(DocumentId), Name = "DOCMNT_DOCUMENT_ID_IDX")]
-    [Index(nameof(DocumentStatusTypeCode), Name = "DOCMNT_DOCUMENT_STATUS_TYPE_CODE_IDX")]
-    public partial class PimsDocument
+    [Table("PIMS_WORKFLOW_MODEL")]
+    [Index(nameof(WorkflowModelTypeCode), Name = "WFLMDL_WORKFLOW_MODEL_TYPE_CODE_IDX")]
+    public partial class PimsWorkflowModel
     {
+        public PimsWorkflowModel()
+        {
+            PimsProjectWorkflowModels = new HashSet<PimsProjectWorkflowModel>();
+        }
+
         [Key]
-        [Column("DOCUMENT_ID")]
-        public long DocumentId { get; set; }
-        [Column("DOCUMENT_TYPE_ID")]
-        public long DocumentTypeId { get; set; }
+        [Column("WORKFLOW_MODEL_ID")]
+        public long WorkflowModelId { get; set; }
         [Required]
-        [Column("DOCUMENT_STATUS_TYPE_CODE")]
+        [Column("WORKFLOW_MODEL_TYPE_CODE")]
         [StringLength(20)]
-        public string DocumentStatusTypeCode { get; set; }
+        public string WorkflowModelTypeCode { get; set; }
         [Required]
-        [Column("FILE_NAME")]
-        [StringLength(500)]
-        public string FileName { get; set; }
-        [Column("MAYAN_ID")]
-        public long MayanId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -67,11 +66,10 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(DocumentStatusTypeCode))]
-        [InverseProperty(nameof(PimsDocumentStatusType.PimsDocuments))]
-        public virtual PimsDocumentStatusType DocumentStatusTypeCodeNavigation { get; set; }
-        [ForeignKey(nameof(DocumentTypeId))]
-        [InverseProperty(nameof(PimsDocumentTyp.PimsDocuments))]
-        public virtual PimsDocumentTyp DocumentType { get; set; }
+        [ForeignKey(nameof(WorkflowModelTypeCode))]
+        [InverseProperty(nameof(PimsWorkflowModelType.PimsWorkflowModels))]
+        public virtual PimsWorkflowModelType WorkflowModelTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsProjectWorkflowModel.WorkflowModel))]
+        public virtual ICollection<PimsProjectWorkflowModel> PimsProjectWorkflowModels { get; set; }
     }
 }
