@@ -8,29 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_HIST")]
-    [Index(nameof(TaskTemplateActivityModelHistId), nameof(EndDateHist), Name = "PIMS_TSKTAM_H_UK", IsUnique = true)]
-    public partial class PimsTaskTemplateActivityModelHist
+    [Table("PIMS_DOCUMENT_TYP_HIST")]
+    [Index(nameof(DocumentTypHistId), nameof(EndDateHist), Name = "PIMS_DOCTYP_H_UK", IsUnique = true)]
+    public partial class PimsDocumentTypHist
     {
         [Key]
-        [Column("_TASK_TEMPLATE_ACTIVITY_MODEL_HIST_ID")]
-        public long TaskTemplateActivityModelHistId { get; set; }
+        [Column("_DOCUMENT_TYP_HIST_ID")]
+        public long DocumentTypHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("TASK_TEMPLATE_ACTIVITY_MODEL_ID")]
-        public long TaskTemplateActivityModelId { get; set; }
-        [Column("TASK_TEMPLATE_ID")]
-        public long TaskTemplateId { get; set; }
-        [Column("ACTIVITY_MODEL_ID")]
-        public long ActivityModelId { get; set; }
-        [Column("IS_MANDATORY")]
-        public bool IsMandatory { get; set; }
-        [Column("IMPLEMENTATION_ORDER")]
-        public short ImplementationOrder { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        [Column("DOCUMENT_TYPE_ID")]
+        public long DocumentTypeId { get; set; }
+        [Column("MAYAN_ID")]
+        public long MayanId { get; set; }
+        [Required]
+        [Column("DOCUMENT_TYPE")]
+        [StringLength(200)]
+        public string DocumentType { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

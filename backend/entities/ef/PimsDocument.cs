@@ -8,26 +8,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_TASK_TEMPLATE")]
-    [Index(nameof(TaskTemplateTypeCode), Name = "TSKTMP_TASK_TEMPLATE_TYPE_CODE_IDX")]
-    public partial class PimsTaskTemplate
+    [Table("PIMS_DOCUMENT")]
+    [Index(nameof(DocumentId), Name = "DOCMNT_DOCUMENT_ID_IDX")]
+    [Index(nameof(DocumentStatusTypeCode), Name = "DOCMNT_DOCUMENT_STATUS_TYPE_CODE_IDX")]
+    public partial class PimsDocument
     {
-        public PimsTaskTemplate()
+        public PimsDocument()
         {
-            PimsTaskTemplateActivityModels = new HashSet<PimsTaskTemplateActivityModel>();
-            PimsTasks = new HashSet<PimsTask>();
+            PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
         }
 
         [Key]
-        [Column("TASK_TEMPLATE_ID")]
-        public long TaskTemplateId { get; set; }
+        [Column("DOCUMENT_ID")]
+        public long DocumentId { get; set; }
+        [Column("DOCUMENT_TYPE_ID")]
+        public long DocumentTypeId { get; set; }
         [Required]
-        [Column("TASK_TEMPLATE_TYPE_CODE")]
+        [Column("DOCUMENT_STATUS_TYPE_CODE")]
         [StringLength(20)]
-        public string TaskTemplateTypeCode { get; set; }
+        public string DocumentStatusTypeCode { get; set; }
         [Required]
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        [Column("FILE_NAME")]
+        [StringLength(500)]
+        public string FileName { get; set; }
+        [Column("MAYAN_ID")]
+        public long MayanId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -67,12 +72,13 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(TaskTemplateTypeCode))]
-        [InverseProperty(nameof(PimsTaskTemplateType.PimsTaskTemplates))]
-        public virtual PimsTaskTemplateType TaskTemplateTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsTaskTemplateActivityModel.TaskTemplate))]
-        public virtual ICollection<PimsTaskTemplateActivityModel> PimsTaskTemplateActivityModels { get; set; }
-        [InverseProperty(nameof(PimsTask.TaskTemplate))]
-        public virtual ICollection<PimsTask> PimsTasks { get; set; }
+        [ForeignKey(nameof(DocumentStatusTypeCode))]
+        [InverseProperty(nameof(PimsDocumentStatusType.PimsDocuments))]
+        public virtual PimsDocumentStatusType DocumentStatusTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(DocumentTypeId))]
+        [InverseProperty(nameof(PimsDocumentTyp.PimsDocuments))]
+        public virtual PimsDocumentTyp DocumentType { get; set; }
+        [InverseProperty(nameof(PimsActivityInstanceDocument.Document))]
+        public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
     }
 }

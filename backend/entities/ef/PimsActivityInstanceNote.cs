@@ -8,24 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL")]
-    [Index(nameof(ActivityModelId), Name = "TSKTAM_ACTIVITY_MODEL_ID_IDX")]
-    [Index(nameof(TaskTemplateId), nameof(ActivityModelId), Name = "TSKTAM_TASK_TEMPLATE_ACTIVITY_MODEL_TUC", IsUnique = true)]
-    [Index(nameof(TaskTemplateId), Name = "TSKTAM_TASK_TEMPLATE_ID_IDX")]
-    public partial class PimsTaskTemplateActivityModel
+    [Table("PIMS_ACTIVITY_INSTANCE_NOTE")]
+    [Index(nameof(ActivityInstanceId), Name = "ACTINN_ACTIVITY_INSTANCE_ID_IDX")]
+    [Index(nameof(NoteId), Name = "ACTINN_NOTE_ID_IDX")]
+    public partial class PimsActivityInstanceNote
     {
         [Key]
-        [Column("TASK_TEMPLATE_ACTIVITY_MODEL_ID")]
-        public long TaskTemplateActivityModelId { get; set; }
-        [Column("TASK_TEMPLATE_ID")]
-        public long TaskTemplateId { get; set; }
-        [Column("ACTIVITY_MODEL_ID")]
-        public long ActivityModelId { get; set; }
-        [Required]
-        [Column("IS_MANDATORY")]
-        public bool? IsMandatory { get; set; }
-        [Column("IMPLEMENTATION_ORDER")]
-        public short ImplementationOrder { get; set; }
+        [Column("PIMS_ACTIVITY_INSTANCE_NOTE_ID")]
+        public long PimsActivityInstanceNoteId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -67,11 +61,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(ActivityModelId))]
-        [InverseProperty(nameof(PimsActivityModel.PimsTaskTemplateActivityModels))]
-        public virtual PimsActivityModel ActivityModel { get; set; }
-        [ForeignKey(nameof(TaskTemplateId))]
-        [InverseProperty(nameof(PimsTaskTemplate.PimsTaskTemplateActivityModels))]
-        public virtual PimsTaskTemplate TaskTemplate { get; set; }
+        [ForeignKey(nameof(ActivityInstanceId))]
+        [InverseProperty(nameof(PimsActivityInstance.PimsActivityInstanceNotes))]
+        public virtual PimsActivityInstance ActivityInstance { get; set; }
+        [ForeignKey(nameof(NoteId))]
+        [InverseProperty(nameof(PimsNote.PimsActivityInstanceNotes))]
+        public virtual PimsNote Note { get; set; }
     }
 }

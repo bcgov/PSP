@@ -8,25 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_MODEL")]
-    public partial class PimsActivityModel
+    [Table("PIMS_ACTIVITY_INSTANCE")]
+    public partial class PimsActivityInstance
     {
-        public PimsActivityModel()
+        public PimsActivityInstance()
         {
-            PimsActivities = new HashSet<PimsActivity>();
-            PimsTaskTemplateActivityModels = new HashSet<PimsTaskTemplateActivityModel>();
+            PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
+            PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
         }
 
         [Key]
-        [Column("ACTIVITY_MODEL_ID")]
-        public long ActivityModelId { get; set; }
-        [Required]
-        [Column("DESCRIPTION")]
-        [StringLength(200)]
-        public string Description { get; set; }
-        [Required]
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -66,9 +59,9 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsActivity.ActivityModel))]
-        public virtual ICollection<PimsActivity> PimsActivities { get; set; }
-        [InverseProperty(nameof(PimsTaskTemplateActivityModel.ActivityModel))]
-        public virtual ICollection<PimsTaskTemplateActivityModel> PimsTaskTemplateActivityModels { get; set; }
+        [InverseProperty(nameof(PimsActivityInstanceDocument.ActivityInstance))]
+        public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
+        [InverseProperty(nameof(PimsActivityInstanceNote.ActivityInstance))]
+        public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
     }
 }

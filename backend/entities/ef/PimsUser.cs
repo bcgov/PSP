@@ -18,7 +18,6 @@ namespace Pims.Dal.Entities
         {
             PimsAccessRequests = new HashSet<PimsAccessRequest>();
             PimsRegionUsers = new HashSet<PimsRegionUser>();
-            PimsTasks = new HashSet<PimsTask>();
             PimsUserOrganizations = new HashSet<PimsUserOrganization>();
             PimsUserRoles = new HashSet<PimsUserRole>();
         }
@@ -97,8 +96,6 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAccessRequest> PimsAccessRequests { get; set; }
         [InverseProperty(nameof(PimsRegionUser.User))]
         public virtual ICollection<PimsRegionUser> PimsRegionUsers { get; set; }
-        [InverseProperty(nameof(PimsTask.User))]
-        public virtual ICollection<PimsTask> PimsTasks { get; set; }
         [InverseProperty(nameof(PimsUserOrganization.User))]
         public virtual ICollection<PimsUserOrganization> PimsUserOrganizations { get; set; }
         [InverseProperty(nameof(PimsUserRole.User))]

@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROJECT_RISK_TYPE")]
-    public partial class PimsProjectRiskType
+    [Table("PIMS_DOCUMENT_STATUS_TYPE")]
+    public partial class PimsDocumentStatusType
     {
-        public PimsProjectRiskType()
+        public PimsDocumentStatusType()
         {
-            PimsProjects = new HashSet<PimsProject>();
+            PimsDocuments = new HashSet<PimsDocument>();
         }
 
         [Key]
-        [Column("PROJECT_RISK_TYPE_CODE")]
+        [Column("DOCUMENT_STATUS_TYPE_CODE")]
         [StringLength(20)]
-        public string ProjectRiskTypeCode { get; set; }
+        public string DocumentStatusTypeCode { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(200)]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsProject.ProjectRiskTypeCodeNavigation))]
-        public virtual ICollection<PimsProject> PimsProjects { get; set; }
+        [InverseProperty(nameof(PimsDocument.DocumentStatusTypeCodeNavigation))]
+        public virtual ICollection<PimsDocument> PimsDocuments { get; set; }
     }
 }

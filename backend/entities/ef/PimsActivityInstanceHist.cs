@@ -8,25 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_HIST")]
-    [Index(nameof(ActivityHistId), nameof(EndDateHist), Name = "PIMS_ACTVTY_H_UK", IsUnique = true)]
-    public partial class PimsActivityHist
+    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
+    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
+    public partial class PimsActivityInstanceHist
     {
         [Key]
-        [Column("_ACTIVITY_HIST_ID")]
-        public long ActivityHistId { get; set; }
+        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
+        public long ActivityInstanceHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_ID")]
-        public long ActivityId { get; set; }
-        [Column("PROJECT_ID")]
-        public long? ProjectId { get; set; }
-        [Column("WORKFLOW_ID")]
-        public long? WorkflowId { get; set; }
-        [Column("ACTIVITY_MODEL_ID")]
-        public long ActivityModelId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

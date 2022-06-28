@@ -8,22 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_TASK")]
-    [Index(nameof(ActivityId), Name = "TASK_ACTIVITY_ID_IDX")]
-    [Index(nameof(TaskTemplateId), Name = "TASK_TASK_TEMPLATE_ID_IDX")]
-    [Index(nameof(UserId), nameof(ActivityId), nameof(TaskTemplateId), Name = "TASK_TEMPLATE_ACTIVITY_USER_TUC", IsUnique = true)]
-    [Index(nameof(UserId), Name = "TASK_USER_ID_IDX")]
-    public partial class PimsTask
+    [Table("PIMS_DOCUMENT_TYP")]
+    public partial class PimsDocumentTyp
     {
+        public PimsDocumentTyp()
+        {
+            PimsDocuments = new HashSet<PimsDocument>();
+        }
+
         [Key]
-        [Column("TASK_ID")]
-        public long TaskId { get; set; }
-        [Column("TASK_TEMPLATE_ID")]
-        public long TaskTemplateId { get; set; }
-        [Column("ACTIVITY_ID")]
-        public long? ActivityId { get; set; }
-        [Column("USER_ID")]
-        public long UserId { get; set; }
+        [Column("DOCUMENT_TYPE_ID")]
+        public long DocumentTypeId { get; set; }
+        [Column("MAYAN_ID")]
+        public long MayanId { get; set; }
+        [Required]
+        [Column("DOCUMENT_TYPE")]
+        [StringLength(200)]
+        public string DocumentType { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -63,14 +64,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(ActivityId))]
-        [InverseProperty(nameof(PimsActivity.PimsTasks))]
-        public virtual PimsActivity Activity { get; set; }
-        [ForeignKey(nameof(TaskTemplateId))]
-        [InverseProperty(nameof(PimsTaskTemplate.PimsTasks))]
-        public virtual PimsTaskTemplate TaskTemplate { get; set; }
-        [ForeignKey(nameof(UserId))]
-        [InverseProperty(nameof(PimsUser.PimsTasks))]
-        public virtual PimsUser User { get; set; }
+        [InverseProperty(nameof(PimsDocument.DocumentType))]
+        public virtual ICollection<PimsDocument> PimsDocuments { get; set; }
     }
 }

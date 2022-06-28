@@ -8,25 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_ACTIVITY_HIST")]
-    [Index(nameof(PropertyActivityHistId), nameof(EndDateHist), Name = "PIMS_PRPACT_H_UK", IsUnique = true)]
-    public partial class PimsPropertyActivityHist
+    [Table("PIMS_NOTE")]
+    public partial class PimsNote
     {
+        public PimsNote()
+        {
+            PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
+        }
+
         [Key]
-        [Column("_PROPERTY_ACTIVITY_HIST_ID")]
-        public long PropertyActivityHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("PROPERTY_ACTIVITY_ID")]
-        public long PropertyActivityId { get; set; }
-        [Column("ACTIVITY_ID")]
-        public long? ActivityId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long? PropertyId { get; set; }
-        [Column("IS_DISABLED")]
-        public bool? IsDisabled { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
+        [Required]
+        [Column("NOTE_TXT")]
+        [StringLength(4000)]
+        public string NoteTxt { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -65,5 +61,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
+        public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
     }
 }

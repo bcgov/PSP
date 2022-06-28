@@ -8,51 +8,51 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROJECT_PROPERTY_HIST")]
-    [Index(nameof(ProjectPropertyHistId), nameof(EndDateHist), Name = "PIMS_PRJPRP_H_UK", IsUnique = true)]
-    public partial class PimsProjectPropertyHist
+    [Table("PIMS_ACTIVITY_INSTANCE_NOTE_HIST")]
+    [Index(nameof(ActivityInstanceNoteHistId), nameof(EndDateHist), Name = "PIMS_ACTINN_H_UK", IsUnique = true)]
+    public partial class PimsActivityInstanceNoteHist
     {
         [Key]
-        [Column("_PROJECT_PROPERTY_HIST_ID")]
-        public long ProjectPropertyHistId { get; set; }
+        [Column("_ACTIVITY_INSTANCE_NOTE_HIST_ID")]
+        public long ActivityInstanceNoteHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("PROJECT_PROPERTY_ID")]
-        public long ProjectPropertyId { get; set; }
-        [Column("PROJECT_ID")]
-        public long ProjectId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long PropertyId { get; set; }
+        [Column("PIMS_ACTIVITY_INSTANCE_NOTE_ID")]
+        public long PimsActivityInstanceNoteId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
+        [Column("NOTE_ID")]
+        public long NoteId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
+        [Column("CONCURRENCY_CONTROL_NUMBER")]
+        public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppCreateTimestamp { get; set; }
-        [Required]
-        [Column("APP_CREATE_USER_DIRECTORY")]
-        [StringLength(30)]
-        public string AppCreateUserDirectory { get; set; }
-        [Column("APP_CREATE_USER_GUID")]
-        public Guid? AppCreateUserGuid { get; set; }
         [Required]
         [Column("APP_CREATE_USERID")]
         [StringLength(30)]
         public string AppCreateUserid { get; set; }
+        [Column("APP_CREATE_USER_GUID")]
+        public Guid? AppCreateUserGuid { get; set; }
+        [Required]
+        [Column("APP_CREATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppCreateUserDirectory { get; set; }
         [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime AppLastUpdateTimestamp { get; set; }
-        [Required]
-        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
-        [StringLength(30)]
-        public string AppLastUpdateUserDirectory { get; set; }
-        [Column("APP_LAST_UPDATE_USER_GUID")]
-        public Guid? AppLastUpdateUserGuid { get; set; }
         [Required]
         [Column("APP_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string AppLastUpdateUserid { get; set; }
-        [Column("CONCURRENCY_CONTROL_NUMBER")]
-        public long ConcurrencyControlNumber { get; set; }
+        [Column("APP_LAST_UPDATE_USER_GUID")]
+        public Guid? AppLastUpdateUserGuid { get; set; }
+        [Required]
+        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppLastUpdateUserDirectory { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime DbCreateTimestamp { get; set; }
         [Required]

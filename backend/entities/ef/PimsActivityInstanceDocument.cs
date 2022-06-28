@@ -8,35 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROJECT_HIST")]
-    [Index(nameof(ProjectHistId), nameof(EndDateHist), Name = "PIMS_PROJCT_H_UK", IsUnique = true)]
-    public partial class PimsProjectHist
+    [Table("PIMS_ACTIVITY_INSTANCE_DOCUMENT")]
+    [Index(nameof(ActivityInstanceId), Name = "ACTDOC_ACTIVITY_INSTANCE_ID_IDX")]
+    [Index(nameof(DocumentId), Name = "ACTDOC_DOCUMENT_ID_IDX")]
+    public partial class PimsActivityInstanceDocument
     {
         [Key]
-        [Column("_PROJECT_HIST_ID")]
-        public long ProjectHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("PROJECT_ID")]
-        public long ProjectId { get; set; }
-        [Required]
-        [Column("PROJECT_TYPE_CODE")]
-        [StringLength(20)]
-        public string ProjectTypeCode { get; set; }
-        [Required]
-        [Column("PROJECT_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string ProjectStatusTypeCode { get; set; }
-        [Required]
-        [Column("PROJECT_RISK_TYPE_CODE")]
-        [StringLength(20)]
-        public string ProjectRiskTypeCode { get; set; }
-        [Required]
-        [Column("PROJECT_TIER_TYPE_CODE")]
-        [StringLength(20)]
-        public string ProjectTierTypeCode { get; set; }
+        [Column("ACTIVITY_INSTANCE_DOCUMENT_ID")]
+        public long ActivityInstanceDocumentId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
+        [Column("DOCUMENT_ID")]
+        public long DocumentId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -75,5 +60,12 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(ActivityInstanceId))]
+        [InverseProperty(nameof(PimsActivityInstance.PimsActivityInstanceDocuments))]
+        public virtual PimsActivityInstance ActivityInstance { get; set; }
+        [ForeignKey(nameof(DocumentId))]
+        [InverseProperty(nameof(PimsDocument.PimsActivityInstanceDocuments))]
+        public virtual PimsDocument Document { get; set; }
     }
 }

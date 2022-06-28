@@ -8,25 +8,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_WORKFLOW_MODEL_HIST")]
-    [Index(nameof(WorkflowModelHistId), nameof(EndDateHist), Name = "PIMS_WFLMDL_H_UK", IsUnique = true)]
-    public partial class PimsWorkflowModelHist
+    [Table("PIMS_DOCUMENT_HIST")]
+    [Index(nameof(DocumentHistId), nameof(EndDateHist), Name = "PIMS_DOCMNT_H_UK", IsUnique = true)]
+    public partial class PimsDocumentHist
     {
         [Key]
-        [Column("_WORKFLOW_MODEL_HIST_ID")]
-        public long WorkflowModelHistId { get; set; }
+        [Column("_DOCUMENT_HIST_ID")]
+        public long DocumentHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("WORKFLOW_MODEL_ID")]
-        public long WorkflowModelId { get; set; }
+        [Column("DOCUMENT_ID")]
+        public long DocumentId { get; set; }
+        [Column("DOCUMENT_TYPE_ID")]
+        public long DocumentTypeId { get; set; }
         [Required]
-        [Column("WORKFLOW_MODEL_TYPE_CODE")]
+        [Column("DOCUMENT_STATUS_TYPE_CODE")]
         [StringLength(20)]
-        public string WorkflowModelTypeCode { get; set; }
-        [Column("IS_DISABLED")]
-        public bool IsDisabled { get; set; }
+        public string DocumentStatusTypeCode { get; set; }
+        [Required]
+        [Column("FILE_NAME")]
+        [StringLength(500)]
+        public string FileName { get; set; }
+        [Column("MAYAN_ID")]
+        public long MayanId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
