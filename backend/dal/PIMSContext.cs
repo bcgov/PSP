@@ -20,6 +20,9 @@ namespace Pims.Dal
 
         #region Constructors
 
+        /// <summary>
+        /// Creates a new instance of a PimsContext class.
+        /// </summary>
         public PimsContext()
             : base()
         {
