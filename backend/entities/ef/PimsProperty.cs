@@ -99,6 +99,11 @@ namespace Pims.Dal.Entities
         public int? Pid { get; set; }
         [Column("PIN")]
         public int? Pin { get; set; }
+        [Column("FILE_NUMBER")]
+        public int? FileNumber { get; set; }
+        [Column("FILE_NUMBER_SUFFIX")]
+        [StringLength(2)]
+        public string FileNumberSuffix { get; set; }
         [Column("LAND_AREA")]
         public float? LandArea { get; set; }
         [Column("LAND_LEGAL_DESCRIPTION")]
@@ -191,11 +196,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("FILE_NUMBER")]
-        public int? FileNumber { get; set; }
-        [Column("FILE_NUMBER_SUFFIX")]
-        [StringLength(2)]
-        public string FileNumberSuffix { get; set; }
 
         [ForeignKey(nameof(AddressId))]
         [InverseProperty(nameof(PimsAddress.PimsProperties))]
