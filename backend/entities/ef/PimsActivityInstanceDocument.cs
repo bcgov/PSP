@@ -8,24 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_TASK_TEMPLATE")]
-    [Index(nameof(TaskTemplateTypeCode), Name = "TSKTMP_TASK_TEMPLATE_TYPE_CODE_IDX")]
-    public partial class PimsTaskTemplate
+    [Table("PIMS_ACTIVITY_INSTANCE_DOCUMENT")]
+    [Index(nameof(ActivityInstanceId), Name = "ACTDOC_ACTIVITY_INSTANCE_ID_IDX")]
+    [Index(nameof(DocumentId), Name = "ACTDOC_DOCUMENT_ID_IDX")]
+    public partial class PimsActivityInstanceDocument
     {
-        public PimsTaskTemplate()
-        {
-            PimsTaskTemplateActivityModels = new HashSet<PimsTaskTemplateActivityModel>();
-            PimsTasks = new HashSet<PimsTask>();
-        }
-
         [Key]
-        [Column("TASK_TEMPLATE_ID")]
-        public long TaskTemplateId { get; set; }
-        [Required]
-        [Column("TASK_TEMPLATE_TYPE_CODE")]
-        [StringLength(20)]
-        public string TaskTemplateTypeCode { get; set; }
-        [Required]
+        [Column("ACTIVITY_INSTANCE_DOCUMENT_ID")]
+        public long ActivityInstanceDocumentId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
+        [Column("DOCUMENT_ID")]
+        public long DocumentId { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -67,12 +61,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [ForeignKey(nameof(TaskTemplateTypeCode))]
-        [InverseProperty(nameof(PimsTaskTemplateType.PimsTaskTemplates))]
-        public virtual PimsTaskTemplateType TaskTemplateTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsTaskTemplateActivityModel.TaskTemplate))]
-        public virtual ICollection<PimsTaskTemplateActivityModel> PimsTaskTemplateActivityModels { get; set; }
-        [InverseProperty(nameof(PimsTask.TaskTemplate))]
-        public virtual ICollection<PimsTask> PimsTasks { get; set; }
+        [ForeignKey(nameof(ActivityInstanceId))]
+        [InverseProperty(nameof(PimsActivityInstance.PimsActivityInstanceDocuments))]
+        public virtual PimsActivityInstance ActivityInstance { get; set; }
+        [ForeignKey(nameof(DocumentId))]
+        [InverseProperty(nameof(PimsDocument.PimsActivityInstanceDocuments))]
+        public virtual PimsDocument Document { get; set; }
     }
 }

@@ -13,6 +13,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(DocumentStatusTypeCode), Name = "DOCMNT_DOCUMENT_STATUS_TYPE_CODE_IDX")]
     public partial class PimsDocument
     {
+        public PimsDocument()
+        {
+            PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
+        }
+
         [Key]
         [Column("DOCUMENT_ID")]
         public long DocumentId { get; set; }
@@ -73,5 +78,7 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(DocumentTypeId))]
         [InverseProperty(nameof(PimsDocumentTyp.PimsDocuments))]
         public virtual PimsDocumentTyp DocumentType { get; set; }
+        [InverseProperty(nameof(PimsActivityInstanceDocument.Document))]
+        public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
     }
 }
