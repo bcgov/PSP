@@ -1,7 +1,14 @@
 import { useKeycloak } from '@react-keycloak/web';
+import Claims from 'constants/claims';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { formatMoney, prettyFormatDate } from 'utils';
-import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
+import {
+  getAllByRole as getAllByRoleBase,
+  getAllByTitle,
+  prettyDOM,
+  render,
+  RenderOptions,
+} from 'utils/test-utils';
 
 import DepositsReceivedContainer, {
   IDepositsReceivedContainerProps,
@@ -43,15 +50,6 @@ const mockDeposits: Api_SecurityDeposit[] = [
 ];
 
 jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
 
 // render component under test
 const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) => {
@@ -65,6 +63,8 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) =
     />,
     {
       ...renderOptions,
+      organizations: [1],
+      useMockAuthentication: true,
     },
   );
 
@@ -128,6 +128,45 @@ describe('DepositsReceivedContainer component', () => {
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(deposit.amountPaid));
     expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDate));
     expect(findCell(dataRow, 4)?.textContent).toBe(deposit.contactHolder?.organization?.name);
+  });
+
+  it('renders a delete icon when deposit has no returns', () => {
+    const deposit = mockDeposits[0];
+    deposit.depositReturns = [];
+    const { findFirstRow, getAllByTitle, queryByTestId } = setup({
+      securityDeposits: [deposit],
+      onAdd: mockVoidCallback,
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      onReturn: mockCallback,
+      claims: [Claims.LEASE_DELETE, Claims.LEASE_VIEW],
+    });
+    const dataRow = findFirstRow() as HTMLElement;
+
+    const tooltip = queryByTestId('tooltip-icon');
+    expect(dataRow).not.toBeNull();
+    expect(getAllByTitle('delete deposit')[0]).toBeVisible();
+    expect(tooltip).toBeNull();
+  });
+
+  it('renders a tooltip instead of a delete icon if a deposit has a return', () => {
+    const deposit = mockDeposits[0];
+    deposit.depositReturns = [{} as any];
+    const { findFirstRow, queryByTitle, getByTestId } = setup({
+      securityDeposits: [deposit],
+      onAdd: mockVoidCallback,
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      onReturn: mockCallback,
+      claims: [Claims.LEASE_DELETE, Claims.LEASE_VIEW],
+    });
+    const dataRow = findFirstRow() as HTMLElement;
+
+    const tooltip = getByTestId('tooltip-icon');
+    expect(dataRow).not.toBeNull();
+    expect(queryByTitle('delete deposit')).toBeNull();
+    expect(tooltip).toBeVisible();
+    expect(tooltip.id).toBe('no-delete-tooltip-1');
   });
 
   it('renders security deposit return holders as links', () => {
