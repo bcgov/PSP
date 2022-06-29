@@ -2,9 +2,9 @@
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
-    /// NoteModel class, provides a model to represent notes.
+    /// GenericNoteModel class, provides a model to represent notes.
     /// </summary>
-    public class NoteModel : BaseModel
+    public class GenericNoteModel : BaseModel
     {
         #region Properties
 

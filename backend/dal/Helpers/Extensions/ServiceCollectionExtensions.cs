@@ -45,6 +45,8 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IResearchFileRepository, Repositories.ResearchFileRepository>();
             repositories.AddScoped<Repositories.IResearchFilePropertyRepository, Repositories.ResearchFilePropertyRepository>();
             repositories.AddScoped<Repositories.IDocumentTypeRepository, Repositories.DocumentTypeRepository>();
+            repositories.AddScoped<Repositories.INoteRepository, Repositories.NoteRepository>();
+            repositories.AddScoped<Repositories.IEntityNoteRepository, Repositories.EntityNoteRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 
@@ -67,6 +69,7 @@ namespace Pims.Dal
             services.AddScoped<IResearchFileService, ResearchFileService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
+            services.AddScoped<INoteService, NoteService>();
             return services; // TODO: Use reflection to find all Repositories.
         }
 

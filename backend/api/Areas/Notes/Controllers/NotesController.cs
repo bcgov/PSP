@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
+using Pims.Dal.Constants;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -52,9 +53,9 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HttpPost("{type}")]
         [HasPermission(Permissions.NoteAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(NoteModel), 200)]
+        [ProducesResponseType(typeof(GenericNoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult AddNote(string type, [FromBody] NoteModel noteModel)
+        public IActionResult AddNote(NoteType type, [FromBody] GenericNoteModel noteModel)
         {
             // TODO: Implement
             noteModel.Id = 1;

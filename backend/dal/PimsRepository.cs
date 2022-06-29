@@ -100,14 +100,26 @@ namespace Pims.Dal
         /// get - The autocomplete repository.
         /// </summary>
         public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
+
         /// <summary>
         /// get - The research file repository.
         /// </summary>
         public IResearchFileRepository ResearchFile { get { return _serviceProvider.GetService<IResearchFileRepository>(); } }
+
         /// <summary>
         /// get - The research file repository.
         /// </summary>
         public IResearchFilePropertyRepository ResearchFileProperty { get { return _serviceProvider.GetService<IResearchFilePropertyRepository>(); } }
+
+        /// <summary>
+        /// get - The note repository.
+        /// </summary>
+        public INoteRepository Note { get { return _serviceProvider.GetService<INoteRepository>(); } }
+
+        /// <summary>
+        /// get - The entity-note repository.
+        /// </summary>
+        public IEntityNoteRepository EntityNote { get { return _serviceProvider.GetService<IEntityNoteRepository>(); } }
         #endregion
 
         #region Constructors
