@@ -173,7 +173,7 @@ const AppRouter: React.FC = () => {
           path="/lease/:leaseId"
           component={LeaseContainerWrapper}
           layout={AuthLayout}
-          claim={Claims.PROPERTY_VIEW}
+          claim={Claims.LEASE_VIEW}
           title={getTitle('Create/Edit Lease & Licenses')}
         />
         <AppRoute

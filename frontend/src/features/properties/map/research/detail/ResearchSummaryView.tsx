@@ -1,5 +1,7 @@
+import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -34,6 +36,7 @@ export interface IResearchSummaryViewProps {
 }
 
 const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
+  const keycloak = useKeycloakWrapper();
   const detail: DetailResearchFile = {
     id: props.researchFile.id,
     name: props.researchFile.name,
@@ -77,14 +80,17 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        <Button
-          variant="link"
-          onClick={() => {
-            props.setEditMode(true);
-          }}
-        >
-          <FaEdit size={'2rem'} />
-        </Button>
+        {keycloak.hasClaim(Claims.RESEARCH_EDIT) ? (
+          <Button
+            variant="link"
+            title="Edit research file"
+            onClick={() => {
+              props.setEditMode(true);
+            }}
+          >
+            <FaEdit size={'2rem'} />
+          </Button>
+        ) : null}
       </StyledEditWrapper>
       <Section header="Roads">
         <SectionField label="Road name">{detail.roadName}</SectionField>
