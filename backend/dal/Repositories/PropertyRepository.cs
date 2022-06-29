@@ -248,6 +248,12 @@ namespace Pims.Dal.Repositories
                 property.PphStatusUpdateUserid = User.GetUsername();
                 property.PphStatusUpdateUserGuid = User.GetUserKey();
             }
+            else
+            {
+                property.PphStatusUpdateTimestamp = existingProperty.PphStatusUpdateTimestamp;
+                property.PphStatusUpdateUserid = existingProperty.PphStatusUpdateUserid;
+                property.PphStatusUpdateUserGuid = existingProperty.PphStatusUpdateUserGuid;
+            }
 
             // update main entity - PimsProperty
             this.Context.Entry(existingProperty).CurrentValues.SetValues(property);
