@@ -1,10 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Pims.Core.Extensions;
 
 namespace Pims.Core.Test
 {
