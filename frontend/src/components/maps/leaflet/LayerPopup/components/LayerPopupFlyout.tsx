@@ -8,7 +8,7 @@ import { ListGroup } from 'react-bootstrap';
 export interface ILayerPopupFlyoutProps {
   onViewPropertyInfo: () => void;
   onCreateResearchFile?: () => void;
-  onCreateAcquisitionFile: () => void;
+  onCreateAcquisitionFile?: () => void;
 }
 
 export const LayerPopupFlyout: React.FC<ILayerPopupFlyoutProps> = ({
@@ -17,7 +17,6 @@ export const LayerPopupFlyout: React.FC<ILayerPopupFlyoutProps> = ({
   onCreateAcquisitionFile,
 }) => {
   const keycloak = useKeycloakWrapper();
-  console.log(keycloak.obj);
   return (
     <ListGroup variant="flush">
       <ListGroup.Item>
