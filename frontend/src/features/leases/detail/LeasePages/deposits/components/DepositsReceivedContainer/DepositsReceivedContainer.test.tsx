@@ -1,14 +1,7 @@
-import { useKeycloak } from '@react-keycloak/web';
 import Claims from 'constants/claims';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { formatMoney, prettyFormatDate } from 'utils';
-import {
-  getAllByRole as getAllByRoleBase,
-  getAllByTitle,
-  prettyDOM,
-  render,
-  RenderOptions,
-} from 'utils/test-utils';
+import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
 
 import DepositsReceivedContainer, {
   IDepositsReceivedContainerProps,
