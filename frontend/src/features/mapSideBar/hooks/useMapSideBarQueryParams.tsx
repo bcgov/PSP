@@ -1,4 +1,5 @@
 import { MAP_MAX_ZOOM } from 'constants/strings';
+import AddAcquisitionContainer from 'features/properties/map/acquisition/add/AddAcquisitionContainer';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
 import ResearchContainer from 'features/properties/map/research/ResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
@@ -25,6 +26,7 @@ export enum MapViewState {
   RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
   PROPERTY_INFORMATION_EDIT = 'property_information_edit',
+  ACQUISITION_ADD = 'acquisition_add',
 }
 
 /** control the state of the side bar via the route. */
@@ -73,6 +75,10 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         } else {
           currentState = MapViewState.PROPERTY_INFORMATION;
         }
+      } else if (parts[2] === 'acquisition') {
+        if (parts.length === 4 && parts[3] === 'new') {
+          currentState = MapViewState.ACQUISITION_ADD;
+        }
       } else {
         currentState = MapViewState.MAP_ONLY;
       }
@@ -110,6 +116,10 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         setSidebarComponent(
           <MotiInventoryContainer onClose={handleClose} pid={propertyId} onZoom={onZoom} />,
         );
+        setShowSideBar(true);
+        break;
+      case MapViewState.ACQUISITION_ADD:
+        setSidebarComponent(<AddAcquisitionContainer />);
         setShowSideBar(true);
         break;
       default:

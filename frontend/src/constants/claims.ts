@@ -21,9 +21,10 @@ export enum Claims {
   RESEARCH_ADD = 'researchfile-add',
   RESEARCH_EDIT = 'researchfile-edit',
   RESEARCH_DELETE = 'researchfile-delete',
-  ACQUISITION_EDIT = 'acquisition-edit',
-  ACQUISITION_VIEW = 'acquisition-view',
-  ACQUISITION_ADD = 'acquisition-add',
+  ACQUISITION_EDIT = 'acquisitionfile-edit',
+  ACQUISITION_VIEW = 'acquisitionfile-view',
+  ACQUISITION_ADD = 'acquisitionfile-add',
+  ACQUISITION_DELETE = 'acquisitionfile-delete',
 }
 
 export default Claims;
