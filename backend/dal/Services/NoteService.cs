@@ -1,8 +1,12 @@
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Constants;
+using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Services
 {
@@ -25,10 +29,25 @@ namespace Pims.Dal.Services
             _entityNoteRepository = entityNoteRepository;
         }
 
-        public GenericNote Add(NoteType type, GenericNote noteModel)
+        public GenericNoteModel Add(NoteType type, GenericNoteModel model)
         {
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            model.ThrowIfNull(nameof(model));
+            this.User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            GenericNoteModel result;
+
+            switch (type)
+            {
+                case NoteType.Activity:
+                default:
+                    var pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
+                    var createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
+
+                    result =  _mapper.Map<GenericNoteModel>(createdEntity);
+                    break;
+            }
+
+            return result;
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
-        public T Add<T>(T model) where T : class
+        public T Add<T>(T entity) where T : class
         {
-            model.ThrowIfNull(nameof(model));
+            entity.ThrowIfNull(nameof(entity));
 
             // TODO: implement
             throw new System.NotImplementedException();

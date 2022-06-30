@@ -2,10 +2,10 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal.Constants;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -47,21 +47,18 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <summary>
         /// Add the specified note.
         /// </summary>
-        /// <param name="type">The parent entity type</param>
-        /// <param name="noteModel">The note to add</param>
+        /// <param name="type">The parent entity type.</param>
+        /// <param name="noteModel">The note to add.</param>
         /// <returns></returns>
         [HttpPost("{type}")]
         [HasPermission(Permissions.NoteAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(GenericNoteModel), 200)]
+        [ProducesResponseType(typeof(GenericNote), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult AddNote(NoteType type, [FromBody] GenericNoteModel noteModel)
+        public IActionResult AddNote(NoteType type, [FromBody] GenericNote noteModel)
         {
-            // TODO: Implement
-            noteModel.Id = 1;
-            noteModel.RowVersion = 1;
-
-            return new JsonResult(noteModel);
+            var createdNote =_pimsService.NoteService.Add(type, noteModel);
+            return new JsonResult(createdNote);
         }
         #endregion
     }

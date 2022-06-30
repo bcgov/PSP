@@ -5,6 +5,6 @@ namespace Pims.Dal.Services
 {
     public interface INoteService
     {
-        GenericNote Add(NoteType type, GenericNote noteModel);
+        GenericNoteModel Add(NoteType type, GenericNoteModel noteModel);
     }
 }

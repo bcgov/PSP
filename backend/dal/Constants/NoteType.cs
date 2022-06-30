@@ -7,6 +7,6 @@ namespace Pims.Dal.Constants
     public enum NoteType
     {
         [EnumMember(Value = "activity")]
-        ACTIVITY,
+        Activity,
     }
 }
