@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Models.Mayan.Metadata;
 
-namespace Pims.Api.Repositories.EDMS
+namespace Pims.Api.Repositories.Mayan
 {
     /// <summary>
-    /// IDocumentRepository interface, defines the functionality for a document repository.
+    /// IEdmsDocumentRepository interface, defines the functionality for a document repository.
     /// </summary>
-    public interface IDocumentRepository
+    public interface IEdmsDocumentRepository
     {
+        Task<ExternalResult<DocumentType>> CreateDocumentTypeAsync(DocumentType documentType);
+
         Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+
+        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
 
         Task<ExternalResult<QueryResult<DocumentDetail>>> GetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
 
@@ -20,6 +23,6 @@ namespace Pims.Api.Repositories.EDMS
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file);
 
-        Task<ExternalResult<QueryResult<MetadataType>>> GetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<DocumentTypeMetadataType>> LinkDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
     }
 }

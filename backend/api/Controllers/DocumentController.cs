@@ -102,6 +102,19 @@ namespace Pims.Api.Controllers
             return new JsonResult(model);
         }
 
+         /// <summary>
+        /// Uploads the passed document.
+        /// </summary>
+        [HttpPatch("sync/metadatatype")]
+        //[HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(string), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public IActionResult SyncMetadataTypes([FromBody] SyncModel model)
+        {
+            var ast = _documentService.SyncMetadataTypes(model);
+            return new JsonResult(model);
+        }
+
         #endregion
     }
 }

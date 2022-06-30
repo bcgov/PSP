@@ -10,5 +10,11 @@ namespace Pims.Api.Models.Mayan.Sync
 
         [JsonPropertyName("metadata_types")]
         public IList<string> MetadataTypes { get; set; }
+
+        [JsonPropertyName("remove_lingering_metadata_types")]
+        public bool RemoveLingeringMetadataTypes { get; set; }
+
+        [JsonPropertyName("remove_lingering_document_types")]
+        public bool RemoveLingeringDocumentTypes { get; set; }
     }
 }
