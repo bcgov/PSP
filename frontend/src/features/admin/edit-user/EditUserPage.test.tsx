@@ -10,13 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import {
-  act,
-  cleanup,
-  findByDisplayValue,
-  render,
-  waitForElementToBeRemoved,
-} from 'utils/test-utils';
+import { act, cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
 
 import EditUserPage from './EditUserPage';
 
