@@ -115,7 +115,7 @@ namespace Pims.Dal.Test.Repositories
             result.Person.FirstName.Should().Be("first");
             result.Person.Surname.Should().Be("last");
             result.BusinessIdentifierValue.Should().Be("username");
-            result.IsDisabled.Should().BeTrue();
+            result.IsDisabled.Should().BeFalse();
             result.GuidIdentifierValue.Value.Should().Be(updatedUser.FindFirstValue(ClaimTypes.NameIdentifier));
             result.Person.PimsContactMethods.First().ContactMethodValue.Should().Be("test@test.com");
         }
@@ -150,7 +150,7 @@ namespace Pims.Dal.Test.Repositories
             result.Person.FirstName.Should().Be("first");
             result.Person.Surname.Should().Be("last");
             result.BusinessIdentifierValue.Should().Be("username");
-            result.IsDisabled.Should().BeTrue();
+            result.IsDisabled.Should().BeFalse();
             result.GuidIdentifierValue.Value.Should().Be(user.FindFirstValue(ClaimTypes.NameIdentifier));
             result.Person.PimsContactMethods.First().ContactMethodValue.Should().Be("test@test.com");
         }
