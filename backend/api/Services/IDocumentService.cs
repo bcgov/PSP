@@ -20,5 +20,7 @@ namespace Pims.Api.Services
         ExternalResult<DocumentDetail> UploadDocument(int documentType, IFormFile fileRaw);
 
         bool SyncDocumentTypes(SyncModel model);
+
+        bool SyncMetadataTypes(SyncModel model);
     }
 }
