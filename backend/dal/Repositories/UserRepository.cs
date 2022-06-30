@@ -91,7 +91,6 @@ namespace Pims.Dal.Repositories
                     BusinessIdentifierValue = username,
                     Person = person,
                     IssueDate = DateTime.UtcNow,
-                    IsDisabled = true,
                 };
                 this.Context.PimsUsers.Add(user);
                 this.Context.CommitTransaction();

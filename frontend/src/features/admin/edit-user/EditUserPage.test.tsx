@@ -10,7 +10,13 @@ import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
+import {
+  act,
+  cleanup,
+  findByDisplayValue,
+  render,
+  waitForElementToBeRemoved,
+} from 'utils/test-utils';
 
 import EditUserPage from './EditUserPage';
 
@@ -64,6 +70,7 @@ describe('Edit user page', () => {
     jest.clearAllMocks();
   });
   beforeEach(() => {
+    mockAxios.reset();
     mockAxios.onAny().reply(200, getUserMock());
   });
 
@@ -106,29 +113,38 @@ describe('Edit user page', () => {
 
   describe('when the user edit form is submitted', () => {
     it('displays a loading toast', async () => {
-      const { getByText, findByText, getByTestId } = renderEditUserPage();
-      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+      const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
-      saveButton.click();
-      expect(await findByText('Updating User...')).toBeVisible();
+      mockAxios.onGet().reply(200, getUserMock());
+      await findByDisplayValue('pos');
+      act(() => {
+        saveButton.click();
+      });
+      await findByText('Updating User...');
     });
 
     it('displays a success toast if the request passes', async () => {
-      const { getByText, findByText, getByTestId } = renderEditUserPage();
-      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+      const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
-      saveButton.click();
-      expect(await findByText('User updated')).toBeVisible();
+      mockAxios.onGet().reply(200, getUserMock());
+      mockAxios.onPut().reply(200, {});
+      await findByDisplayValue('pos');
+      act(() => {
+        saveButton.click();
+      });
+      await findByText('User updated');
     });
 
     it('displays an error toast if the request fails', async () => {
-      const { getByText, findByText, getByTestId } = renderEditUserPage();
-      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+      const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
-      mockAxios.reset();
-      mockAxios.onAny().reply(500, {});
-      saveButton.click();
-      expect(await findByText('Failed to update User')).toBeVisible();
+      mockAxios.onGet().replyOnce(200, getUserMock());
+      mockAxios.onPut().reply(500, {});
+      await findByDisplayValue('pos');
+      act(() => {
+        saveButton.click();
+      });
+      await findByText('Failed to update User');
     });
   });
 });
