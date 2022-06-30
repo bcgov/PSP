@@ -173,6 +173,7 @@ exports[`Layer Popup links Renders correctly 1`] = `
     </button>
     <button
       class="c1 Button btn btn-link"
+      data-testid="fly-out-ellipsis"
       type="button"
     >
       <div
