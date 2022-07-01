@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -36,10 +37,10 @@ namespace Pims.Api.Repositories.Mayan
             _logger = logger;
             _httpClientFactory = httpClientFactory;
             _config = new MayanConfig();
-            configuration.Bind(MayanConfigSectionKey, this._config);
+            configuration.Bind(MayanConfigSectionKey, _config);
         }
 
-        public async Task<ExternalResult<T>> Get<T>(Uri endpoint, string authenticationToken)
+        protected async Task<ExternalResult<T>> GetAsync<T>(Uri endpoint, string authenticationToken)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -48,27 +49,24 @@ namespace Pims.Api.Repositories.Mayan
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
             }
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-
-            ExternalResult<T> result = new ExternalResult<T>()
-            {
-                Status = ExternalResultStatus.Error,
-            };
-
             try
             {
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
-                result = await ProcessResponse<T>(response);
+                var result = await ProcessResponse<T>(response);
+                return result;
             }
             catch (Exception e)
             {
-                result.Status = ExternalResultStatus.Error;
-                result.Message = "Exception during Get";
-                this._logger.LogError("Unexpected exception during Get {e}", e);
+                _logger.LogError("Unexpected exception during Get {e}", e);
+                return new ExternalResult<T>()
+                {
+                    Status = ExternalResultStatus.Error,
+                    Message = "Exception during Get",
+                };
             }
-            return result;
         }
 
-        public async Task<ExternalResult<T>> Post<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
+        protected async Task<ExternalResult<T>> PostAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -77,24 +75,131 @@ namespace Pims.Api.Repositories.Mayan
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
             }
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-
-            ExternalResult<T> result = new ExternalResult<T>()
-            {
-                Status = ExternalResultStatus.Error,
-            };
 
             try
             {
                 HttpResponseMessage response = await client.PostAsync(endpoint, content).ConfigureAwait(true);
-                result = await ProcessResponse<T>(response);
+                var result = await ProcessResponse<T>(response);
+                return result;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Unexpected exception during post {e}", e);
+                return new ExternalResult<T>()
+                {
+                    Status = ExternalResultStatus.Error,
+                    Message = "Exception during Post",
+                };
+            }
+        }
+
+        protected async Task<ExternalResult<T>> PutAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            if (!string.IsNullOrEmpty(authenticationToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
+            }
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+            try
+            {
+                HttpResponseMessage response = await client.PutAsync(endpoint, content).ConfigureAwait(true);
+                var result = await ProcessResponse<T>(response);
+                return result;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Unexpected exception during put {e}", e);
+                return new ExternalResult<T>()
+                {
+                    Status = ExternalResultStatus.Error,
+                    Message = "Exception during Put",
+                };
+
+            }
+        }
+
+        protected async Task<ExternalResult<bool>> DeleteAsync(Uri endpoint, string authenticationToken = null)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            if (!string.IsNullOrEmpty(authenticationToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
+            }
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+            ExternalResult<bool> result = new ExternalResult<bool>()
+            {
+                Status = ExternalResultStatus.Error,
+            };
+
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(endpoint).ConfigureAwait(true);
+
+                _logger.LogTrace("Response: {response}", response);
+
+                string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        _logger.LogTrace("Response payload: {payload}", payload);
+                        result.Status = ExternalResultStatus.Success;
+                        result.Payload = true;
+                        break;
+                    case HttpStatusCode.NoContent:
+                        result.Status = ExternalResultStatus.Success;
+                        result.Message = "No content was returned from the call";
+                        result.Payload = true;
+                        break;
+                    case HttpStatusCode.Forbidden:
+                        result.Status = ExternalResultStatus.Error;
+                        result.Message = "Request was forbidden";
+                        result.Payload = false;
+                        break;
+                    case HttpStatusCode.BadRequest:
+                        result.Status = ExternalResultStatus.Error;
+                        result.Message = payload;
+                        result.Payload = false;
+                        break;
+                    default:
+                        result.Status = ExternalResultStatus.Error;
+                        result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                        result.Payload = false;
+                        break;
+                }
+                return result;
             }
             catch (Exception e)
             {
                 result.Status = ExternalResultStatus.Error;
-                result.Message = "Exception during Post";
-                this._logger.LogError("Unexpected exception during post {e}", e);
+                result.Message = "Exception during Delete";
+                _logger.LogError("Unexpected exception during delete {e}", e);
             }
             return result;
+        }
+
+        protected Dictionary<string, string> GenerateQueryParams(string ordering = "", int? page = null, int? pageSize = null)
+        {
+            Dictionary<string, string> queryParams = new();
+
+            if (!string.IsNullOrEmpty(ordering))
+            {
+                queryParams["ordering"] = ordering;
+            }
+            if (page.HasValue)
+            {
+                queryParams["page"] = page.ToString();
+            }
+            if (pageSize.HasValue)
+            {
+                queryParams["page_size"] = pageSize.ToString();
+            }
+
+            return queryParams;
         }
 
         private async Task<ExternalResult<T>> ProcessResponse<T>(HttpResponseMessage response)

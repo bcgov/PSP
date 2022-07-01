@@ -9,10 +9,10 @@ namespace Pims.Api.Models.Mayan.Document
     public class DocumentTypeMetadataType
     {
         /// <summary>
-        /// get/set - The document type id.
+        /// get/set - The document type metadata type relationship id.
         /// </summary>
         [JsonPropertyName("id")]
-        public long DocumentTypeId { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The document type definition.

@@ -60,7 +60,7 @@ namespace Pims.Api.Repositories.Mayan
                 Password = _config.ConnectionPassword,
             }), Encoding.UTF8, MediaTypeNames.Application.Json);
 
-            ExternalResult<TokenResult> result = await Post<TokenResult>(endpoint, credentials);
+            ExternalResult<TokenResult> result = await PostAsync<TokenResult>(endpoint, credentials);
             _logger.LogDebug("Finished getting authentication token");
 
             return result;
