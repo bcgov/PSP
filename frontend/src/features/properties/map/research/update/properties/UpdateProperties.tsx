@@ -10,6 +10,7 @@ import { Col, Row } from 'react-bootstrap';
 import { PropertyForm, ResearchForm } from '../../add/models';
 import ResearchFooter from '../../common/ResearchFooter';
 import { useUpdateResearchProperties } from '../../hooks/useUpdateResearchProperties';
+import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 interface IUpdatePropertiesProps {
   researchFile: Api_ResearchFile;
@@ -82,6 +83,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         <Formik<ResearchForm>
           innerRef={formikRef}
           initialValues={formResearchFile}
+          validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: ResearchForm) => {
             const researchFile: Api_ResearchFile = values.toApi();
             await saveResearchFile(researchFile);
