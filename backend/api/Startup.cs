@@ -296,8 +296,8 @@ namespace Pims.Api
         private static void AddPimsApiRepositories(IServiceCollection services)
         {
             services.AddSingleton<IEdmsAuthRepository, MayanAuthRepository>();
-            services.AddSingleton<IEdmsDocumentRepository, MayanDocumentRepository>();
-            services.AddSingleton<IEdmsMetadataRepository, MayanMetadataRepository>();
+            services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
+            services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
         }
 
         /// <summary>
