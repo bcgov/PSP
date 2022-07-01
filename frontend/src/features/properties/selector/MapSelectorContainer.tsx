@@ -6,6 +6,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { PropertyForm } from '../map/research/add/models';
 import SelectedPropertyHeaderRow from '../map/research/add/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '../map/research/add/SelectedPropertyRow';
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
@@ -16,7 +17,7 @@ import { getPropertyIdentifier } from './utils';
 export interface IMapSelectorContainerProps {
   onSelectedProperty: (property: IMapProperty) => void;
   onRemoveProperty: (index: number) => void;
-  existingProperties: IMapProperty[];
+  existingProperties: PropertyForm[];
 }
 
 export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
@@ -42,7 +43,17 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
       <PropertySelectorTabsView
         activeTab={activeSelectorTab}
         setActiveTab={setActiveSelectorTab}
-        MapSelectorView={<PropertyMapSelectorFormView onSelectedProperty={onSelectedProperty} />}
+        MapSelectorView={
+          <PropertyMapSelectorFormView
+            onSelectedProperty={(property: IMapProperty) =>
+              addProperties(
+                [{ ...property, id: getPropertyIdentifier(property) }],
+                existingPropertiesWithIds,
+                onSelectedProperty,
+              )
+            }
+          />
+        }
         ListSelectorView={
           <PropertySelectorSearchContainer
             selectedProperties={selectedProperties}
@@ -65,7 +76,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
         <SelectedPropertyHeaderRow />
         {existingProperties.map((property, index) => (
           <SelectedPropertyRow
-            key={`property.${property.latitude}-${property.longitude}-${property.pid}`}
+            key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
             onRemove={() => onRemoveProperty(index)}
             nameSpace={`properties.${index}`}
             index={index}

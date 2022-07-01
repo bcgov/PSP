@@ -28,12 +28,13 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
+import { useMapProperties } from './hooks/useMapProperties';
 import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
-jest.mock('hooks/useApi');
+jest.mock('./hooks/useMapProperties');
 jest.mock('components/maps/leaflet/LayerPopup');
 jest.mock('hooks/useProperties');
 jest.mock('hooks/usePropertyAssociations');
@@ -157,14 +158,14 @@ describe('MapView', () => {
         },
       },
     });
-    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return {
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
           features: createPoints(mockParcels),
           type: 'FeatureCollection',
           bbox: undefined,
-        };
-      }),
+        }),
+      },
     });
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getProperty: async () => {
@@ -244,14 +245,14 @@ describe('MapView', () => {
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
-    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return {
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
           features: createPoints(smallMockParcels),
           type: 'FeatureCollection',
           bbox: undefined,
-        };
-      }),
+        }),
+      },
     });
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getParcel: async () => {
@@ -270,14 +271,14 @@ describe('MapView', () => {
   });
 
   it('the map can handle features with invalid geometry', async () => {
-    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return {
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
           features: createPoints(smallMockParcels).map(feature => ({ ...feature, geometry: null })),
           type: 'FeatureCollection',
           bbox: undefined,
-        };
-      }),
+        }),
+      },
     });
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getParcel: async () => {
@@ -371,14 +372,14 @@ describe('MapView', () => {
         return {} as IProperty;
       },
     });
-    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return {
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
           features: createPoints(largeMockParcels),
           type: 'FeatureCollection',
           bbox: undefined,
-        };
-      }),
+        }),
+      },
     });
     const { container } = render(getMap());
     await waitFor(() => {
@@ -397,7 +398,7 @@ describe('MapView', () => {
     });
   });
 
-  it('Rendered markers can be clicked', async () => {
+  it('Rendered markers can be clicked normally', async () => {
     await waitFor(() => render(getMap()));
     const cluster = document.querySelector('.leaflet-marker-icon');
     fireEvent.click(cluster!);
