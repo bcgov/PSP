@@ -6,7 +6,7 @@ export const AddResearchFileYupSchema = Yup.object().shape({
     .max(250, 'Research File name must be less than 250 characters'),
   properties: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string().max(250, 'Property name must be less than 250 characters'),
+      name: Yup.string().max(500, 'Property name must be less than 500 characters'),
     }),
   ),
 });
