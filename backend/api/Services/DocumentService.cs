@@ -60,14 +60,17 @@ namespace Pims.Api.Services
             var metadata = retrieveTask.Result;
 
             // Get metadata types not in mayan
-            IList<MetadataType> metadataTypesToAdd = new List<MetadataType>();
+            IList<Task<ExternalResult<MetadataType>>> createTasks = new List<Task<ExternalResult<MetadataType>>>();
             foreach (var metadataTypeLabel in model.MetadataTypes)
             {
                 if (metadata.Payload.Results.FirstOrDefault(x => x.Label == metadataTypeLabel) == null)
                 {
-                    metadataTypesToAdd.Add(new MetadataType() { Label = metadataTypeLabel, Name = metadataTypeLabel.Replace(' ', '_') });
+                    var newMetadataType = new MetadataType() { Label = metadataTypeLabel, Name = metadataTypeLabel.Replace(' ', '_') };
+                    createTasks.Add(metadataRepository.CreateMetadataTypeAsync(newMetadataType));
                 }
             }
+
+            Task.WaitAll(createTasks.ToArray());
 
             // Get the metadata types on mayan but not on the model
             IList<MetadataType> metadataTypesToDelete = new List<MetadataType>();
@@ -81,16 +84,18 @@ namespace Pims.Api.Services
 
             if (model.RemoveLingeringMetadataTypes)
             {
-                //remove the ones that do not exist on the metadata
-            }
+                // Delete the metadata types that are not on the sync model
+                IList<Task<ExternalResult<bool>>> deleteTasks = new List<Task<ExternalResult<bool>>>();
+                foreach (var metadataType in metadata.Payload.Results)
+                {
+                    if (model.MetadataTypes.IndexOf(metadataType.Label) < 0)
+                    {
+                        deleteTasks.Add(metadataRepository.DeleteMetadataTypeAsync(metadataType.Id));
+                    }
+                }
 
-            IList<Task<ExternalResult<MetadataType>>> createTasks = new List<Task<ExternalResult<MetadataType>>>();
-            foreach (var metadataType in metadataTypesToAdd)
-            {
-                createTasks.Add(metadataRepository.CreateMetadataTypeAsync(metadataType));
+                Task.WaitAll(deleteTasks.ToArray());
             }
-
-            Task.WaitAll(createTasks.ToArray());
 
             return true;
         }
@@ -103,92 +108,41 @@ namespace Pims.Api.Services
             ExternalResult<QueryResult<DocumentType>> documentTypesRetrieved = documentTypeTask.Result;
 
             // Get document types not in mayan
-            IList<DocumentType> documentTypesToAdd = new List<DocumentType>();
+            IList<Task<ExternalResult<DocumentType>>> createTasks = new List<Task<ExternalResult<DocumentType>>>();
             foreach (var documentTypeModel in model.DocumentTypes)
             {
                 if (documentTypesRetrieved.Payload.Results.FirstOrDefault(x => x.Label == documentTypeModel.Label) == null)
                 {
-                    documentTypesToAdd.Add(new DocumentType() { Label = documentTypeModel.Label });
+                    createTasks.Add(documentRepository.CreateDocumentTypeAsync(new DocumentType() { Label = documentTypeModel.Label }));
                 }
             }
-
-            // Get the document types on mayan but not on the model
-            IList<DocumentType> documentTypesToDelete = new List<DocumentType>();
-            foreach (var documentType in documentTypesRetrieved.Payload.Results)
-            {
-                if (model.DocumentTypes.FirstOrDefault(x => x.Label == documentType.Label) == null)
-                {
-                    documentTypesToDelete.Add(documentType);
-                }
-            }
+            Task.WaitAll(createTasks.ToArray());
 
             if (model.RemoveLingeringDocumentTypes)
             {
-                //remove the ones that do not exist on the metadata
-            }
+                // Delete the document types that are not on the sync model
+                IList<Task<ExternalResult<bool>>> deleteTasks = new List<Task<ExternalResult<bool>>>();
+                foreach (var documentType in documentTypesRetrieved.Payload.Results)
+                {
+                    if (model.DocumentTypes.FirstOrDefault(x => x.Label == documentType.Label) == null)
+                    {
+                        deleteTasks.Add(documentRepository.DeleteDocumentTypeAsync(documentType.Id));
+                    }
+                }
 
-            IList<Task<ExternalResult<DocumentType>>> createTasks = new List<Task<ExternalResult<DocumentType>>>();
-            foreach (var documentType in documentTypesToAdd)
-            {
-                createTasks.Add(documentRepository.CreateDocumentTypeAsync(documentType));
+                Task.WaitAll(deleteTasks.ToArray());
             }
-
-            Task.WaitAll(createTasks.ToArray());
 
             SyncDocumentTypeMetadataTypes(model);
 
             return true;
         }
 
-        /*private void SyncDocumentTypeMetadataTypes(SyncModel model)
-        {
-            Task<ExternalResult<QueryResult<DocumentType>>> documentTypeTask = documentRepository.GetDocumentTypesAsync(pageSize: 5000);
-            Task<ExternalResult<QueryResult<MetadataType>>> metadataTypesTask = metadataRepository.GetMetadataTypesAsync(pageSize: 5000);
-            documentTypeTask.Wait();
-            metadataTypesTask.Wait();
-
-            var retrievedMetadataTypes = metadataTypesTask.Result;
-
-            // Check that the metadata types on the documents are the same as the ones in the specified in the model
-            IList<DocumentTypeMetadataType> typesToBeLinked = new List<DocumentTypeMetadataType>();
-            foreach (var documentTypeModel in model.DocumentTypes)
-            {
-                var documentType = documentTypeTask.Result.Payload.Results.FirstOrDefault(x => x.Label == documentTypeModel.Label);
-                SyncSingleDocumentTypeMetadataTypes(documentTypeModel, retrievedMetadataTypes.Payload.Results, )
-                Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> documentTypeMetadataTypesTask = documentRepository.GetDocumentTypeMetadataTypesAsync(documentType.Id, pageSize: 5000);
-                documentTypeMetadataTypesTask.Wait();
-
-                // Get the metadata types not on the document
-                var retrivedstuff = documentTypeMetadataTypesTask.Result.Payload.Results;
-                foreach (var metadataTypeModel in documentTypeModel.MetadataTypes)
-                {
-                    if (retrivedstuff.FirstOrDefault(x => x.MetadataType.Label == metadataTypeModel.Label) == null)
-                    {
-                        MetadataType metadataType = retrievedMetadataTypes.Payload.Results.FirstOrDefault(x => x.Label == metadataTypeModel.Label);
-                        typesToBeLinked.Add(new DocumentTypeMetadataType()
-                        {
-                            DocumentTypeId = documentType.Id,
-                            MetadataType = metadataType,
-                            Required = metadataTypeModel.Required,
-                        });
-                    }
-                }
-            }
-
-            IList<Task<ExternalResult<DocumentTypeMetadataType>>> linkTasks = new List<Task<ExternalResult<DocumentTypeMetadataType>>>();
-            foreach (var docmetaType in typesToBeLinked)
-            {
-                linkTasks.Add(documentRepository.LinkDocumentTypeMetadataTypeAsync(docmetaType.DocumentTypeId, docmetaType.MetadataType.Id, docmetaType.Required));
-            }
-            Task.WaitAll(linkTasks.ToArray());
-        }*/
-
         private void SyncDocumentTypeMetadataTypes(SyncModel model)
         {
             Task<ExternalResult<QueryResult<DocumentType>>> documentTypeTask = documentRepository.GetDocumentTypesAsync(pageSize: 5000);
             Task<ExternalResult<QueryResult<MetadataType>>> metadataTypesTask = metadataRepository.GetMetadataTypesAsync(pageSize: 5000);
-            documentTypeTask.Wait();
-            metadataTypesTask.Wait();
+            Task.WaitAll(documentTypeTask, metadataTypesTask);
 
             var retrievedMetadataTypes = metadataTypesTask.Result;
 
@@ -196,29 +150,49 @@ namespace Pims.Api.Services
             IList<Task<bool>> linkTasks = new List<Task<bool>>();
             foreach (var documentTypeModel in model.DocumentTypes)
             {
-                linkTasks.Add(AsyncLinkSingleDocument(documentTypeModel, documentTypeTask.Result.Payload.Results, retrievedMetadataTypes.Payload.Results));
+                linkTasks.Add(AsyncLinkDocumentMetadata(documentTypeModel, documentTypeTask.Result.Payload.Results, retrievedMetadataTypes.Payload.Results));
             }
 
             Task.WaitAll(linkTasks.ToArray());
         }
 
-        private async Task<bool> AsyncLinkSingleDocument(DocumentTypeModel documentTypeModel, IList<DocumentType> retrievedDocumentTypes, IList<MetadataType> retrievedMetadataTypes)
+        private async Task<bool> AsyncLinkDocumentMetadata(DocumentTypeModel documentTypeModel, IList<DocumentType> retrievedDocumentTypes, IList<MetadataType> retrievedMetadataTypes)
         {
             var documentType = retrievedDocumentTypes.FirstOrDefault(x => x.Label == documentTypeModel.Label);
             ExternalResult<QueryResult<DocumentTypeMetadataType>> documentTypeMetadataTypes = await documentRepository.GetDocumentTypeMetadataTypesAsync(documentType.Id, pageSize: 5000);
 
-            // Get the metadata types not on the document
-            IList<Task<ExternalResult<DocumentTypeMetadataType>>> linkTasks = new List<Task<ExternalResult<DocumentTypeMetadataType>>>();
+            // Update the document type's metadata types
+            IList<Task<ExternalResult<DocumentTypeMetadataType>>> documentTypeMetadataTypeTasks = new List<Task<ExternalResult<DocumentTypeMetadataType>>>();
             var retrievedLinks = documentTypeMetadataTypes.Payload.Results;
             foreach (var metadataTypeModel in documentTypeModel.MetadataTypes)
             {
-                if (retrievedLinks.FirstOrDefault(x => x.MetadataType.Label == metadataTypeModel.Label) == null)
+                DocumentTypeMetadataType existingDocumentTypeMetadaType = retrievedLinks.FirstOrDefault(x => x.MetadataType.Label == metadataTypeModel.Label);
+                if (existingDocumentTypeMetadaType == null)
                 {
                     MetadataType metadataType = retrievedMetadataTypes.FirstOrDefault(x => x.Label == metadataTypeModel.Label);
-                    linkTasks.Add(documentRepository.LinkDocumentTypeMetadataTypeAsync(documentType.Id, metadataType.Id, metadataTypeModel.Required));
+                    documentTypeMetadataTypeTasks.Add(documentRepository.CreateDocumentTypeMetadataTypeAsync(documentType.Id, metadataType.Id, metadataTypeModel.Required));
+                }
+                else
+                {
+                    if (existingDocumentTypeMetadaType.Required != metadataTypeModel.Required)
+                    {
+                        documentTypeMetadataTypeTasks.Add(documentRepository.UpdateDocumentTypeMetadataTypeAsync(documentType.Id, existingDocumentTypeMetadaType.Id, metadataTypeModel.Required));
+                    }
                 }
             }
-            Task.WaitAll(linkTasks.ToArray());
+            Task.WaitAll(documentTypeMetadataTypeTasks.ToArray());
+
+            // Get metadata types not on sync model
+            IList<Task> deleteTasks = new List<Task>();
+            foreach (var documentTypeMetadataType in documentTypeMetadataTypes.Payload.Results)
+            {
+                if (documentTypeModel.MetadataTypes.FirstOrDefault(x => x.Label == documentTypeMetadataType.MetadataType.Label) == null)
+                {
+                    deleteTasks.Add(documentRepository.DeleteDocumentTypeMetadataTypeAsync(documentType.Id, documentTypeMetadataType.Id));
+                }
+            }
+
+            Task.WaitAll(deleteTasks.ToArray());
 
             return true;
         }

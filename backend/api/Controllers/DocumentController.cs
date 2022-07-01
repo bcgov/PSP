@@ -12,7 +12,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentController class, provides endpoints to handle document requests.
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]

@@ -13,6 +13,8 @@ namespace Pims.Api.Repositories.Mayan
     {
         Task<ExternalResult<DocumentType>> CreateDocumentTypeAsync(DocumentType documentType);
 
+        Task<ExternalResult<bool>> DeleteDocumentTypeAsync(long documentTypeId);
+
         Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
 
         Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
@@ -23,6 +25,11 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file);
 
-        Task<ExternalResult<DocumentTypeMetadataType>> LinkDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
+        Task<ExternalResult<DocumentTypeMetadataType>> CreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
+
+        Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
+
+        Task<ExternalResult<bool>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
+
     }
 }
