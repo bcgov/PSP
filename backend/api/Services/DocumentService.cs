@@ -59,7 +59,7 @@ namespace Pims.Api.Services
             retrieveTask.Wait();
             var metadata = retrieveTask.Result;
 
-            // Get metadata types not in mayan
+            // Add the metadata types not in mayan
             IList<Task<ExternalResult<MetadataType>>> createTasks = new List<Task<ExternalResult<MetadataType>>>();
             foreach (var metadataTypeLabel in model.MetadataTypes)
             {
@@ -71,16 +71,6 @@ namespace Pims.Api.Services
             }
 
             Task.WaitAll(createTasks.ToArray());
-
-            // Get the metadata types on mayan but not on the model
-            IList<MetadataType> metadataTypesToDelete = new List<MetadataType>();
-            foreach (var metadataType in metadata.Payload.Results)
-            {
-                if (model.MetadataTypes.IndexOf(metadataType.Label) < 0)
-                {
-                    metadataTypesToDelete.Add(metadataType);
-                }
-            }
 
             if (model.RemoveLingeringMetadataTypes)
             {
@@ -107,7 +97,7 @@ namespace Pims.Api.Services
 
             ExternalResult<QueryResult<DocumentType>> documentTypesRetrieved = documentTypeTask.Result;
 
-            // Get document types not in mayan
+            // Add the document types not in mayan
             IList<Task<ExternalResult<DocumentType>>> createTasks = new List<Task<ExternalResult<DocumentType>>>();
             foreach (var documentTypeModel in model.DocumentTypes)
             {
