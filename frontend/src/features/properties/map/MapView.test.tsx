@@ -16,7 +16,6 @@ import {
 import { createMemoryHistory } from 'history';
 import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
-import { useApi } from 'hooks/useApi';
 import { useLtsa } from 'hooks/useLtsa';
 import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IProperty } from 'interfaces';

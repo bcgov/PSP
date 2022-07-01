@@ -1,10 +1,7 @@
 import DraftSvg from 'assets/images/pins/icon-draft.svg';
 import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import {
-  PropertyContext,
-  PropertyContextProvider,
-} from 'components/maps/providers/PropertyContext';
+import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
   SelectedPropertyContext,
   SelectedPropertyContextProvider,

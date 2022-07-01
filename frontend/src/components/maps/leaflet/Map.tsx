@@ -4,7 +4,6 @@ import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from 'constants/strings';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
-import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import { LatLngBounds, Map as LeafletMap, TileLayer as LeafletTileLayer } from 'leaflet';
