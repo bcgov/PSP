@@ -4,7 +4,7 @@ import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { fakeText, fillInput, render, RenderOptions } from 'utils/test-utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import ReceivedDepositForm from './ReceivedDepositForm';
