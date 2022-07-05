@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
+import { cleanup, render, waitForElementToBeRemoved } from 'utils/test-utils';
 
 import EditUserPage from './EditUserPage';
 
@@ -41,15 +41,6 @@ const store = mockStore({
 
 const mockAxios = new MockAdapter(axios);
 
-const testRender = () =>
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <EditUserPage userKey="TEST-ID" />,
-      </Router>
-    </Provider>,
-  );
-
 const renderEditUserPage = () =>
   render(
     <Provider store={store}>
@@ -75,8 +66,9 @@ describe('Edit user page', () => {
   beforeEach(() => {
     mockAxios.onAny().reply(200, getUserMock());
   });
+
   it('EditUserPage renders', async () => {
-    const { container, getByTestId } = render(
+    const { asFragment, getByTestId } = render(
       <Provider store={store}>
         <Router history={history}>
           <EditUserPage userKey="TEST-ID" />,
@@ -84,7 +76,7 @@ describe('Edit user page', () => {
       </Provider>,
     );
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(container.firstChild).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('contains role options from lookup code + please select disabled option', async () => {
@@ -94,8 +86,9 @@ describe('Edit user page', () => {
     expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
   });
 
-  it('Does not display disabled roles', () => {
-    const { queryByText } = testRender();
+  it('Does not display disabled roles', async () => {
+    const { queryByText, getByTestId } = renderEditUserPage();
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
     expect(queryByText('disabledRole')).toBeNull();
   });
 
@@ -113,32 +106,29 @@ describe('Edit user page', () => {
 
   describe('when the user edit form is submitted', () => {
     it('displays a loading toast', async () => {
-      const { getByText, findByText } = renderEditUserPage();
+      const { getByText, findByText, getByTestId } = renderEditUserPage();
+      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
       const saveButton = getByText('Save');
-      act(() => {
-        saveButton.click();
-      });
-      await findByText('Updating User...');
+      saveButton.click();
+      expect(await findByText('Updating User...')).toBeVisible();
     });
 
     it('displays a success toast if the request passes', async () => {
-      const { getByText, findByText } = renderEditUserPage();
+      const { getByText, findByText, getByTestId } = renderEditUserPage();
+      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
       const saveButton = getByText('Save');
-      act(() => {
-        saveButton.click();
-      });
-      await findByText('User updated');
+      saveButton.click();
+      expect(await findByText('User updated')).toBeVisible();
     });
 
     it('displays an error toast if the request fails', async () => {
-      const { getByText, findByText } = renderEditUserPage();
+      const { getByText, findByText, getByTestId } = renderEditUserPage();
+      await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
       const saveButton = getByText('Save');
       mockAxios.reset();
       mockAxios.onAny().reply(500, {});
-      act(() => {
-        saveButton.click();
-      });
-      await findByText('Failed to update User');
+      saveButton.click();
+      expect(await findByText('Failed to update User')).toBeVisible();
     });
   });
 });
