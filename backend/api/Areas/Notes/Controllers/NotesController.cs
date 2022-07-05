@@ -2,7 +2,6 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities.Models;
@@ -53,11 +52,11 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HttpPost("{type}")]
         [HasPermission(Permissions.NoteAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(GenericNote), 200)]
+        [ProducesResponseType(typeof(EntityNoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult AddNote(NoteType type, [FromBody] GenericNote noteModel)
+        public IActionResult AddNote(NoteType type, [FromBody] EntityNoteModel noteModel)
         {
-            var createdNote =_pimsService.NoteService.Add(type, noteModel);
+            var createdNote = _pimsService.NoteService.Add(type, noteModel);
             return new JsonResult(createdNote);
         }
         #endregion

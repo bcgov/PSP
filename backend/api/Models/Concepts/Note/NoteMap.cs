@@ -11,12 +11,12 @@ namespace Pims.Api.Models.Concepts
             config.NewConfig<Entity.PimsNote, NoteModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.NoteText, src => src.NoteTxt)
+                .Map(dest => dest.Note, src => src.NoteTxt)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<NoteModel, Entity.PimsNote>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.NoteTxt, src => src.NoteText)
+                .Map(dest => dest.NoteTxt, src => src.Note)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

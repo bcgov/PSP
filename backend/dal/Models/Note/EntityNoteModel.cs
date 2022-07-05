@@ -1,9 +1,9 @@
 namespace Pims.Dal.Entities.Models
 {
     /// <summary>
-    /// GenericNoteModel class, provides a model to represent notes associated to entities.
+    /// EntityNoteModel class, provides a model to represent notes associated to entities.
     /// </summary>
-    public class GenericNoteModel
+    public class EntityNoteModel
     {
         #region Properties
 
@@ -15,7 +15,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The parent entity that owns this note. Notes are associated to parent entities.
         /// </summary>
-        public NoteParentModel Parent { get; set; }
+        public ParentModel Parent { get; set; }
 
         /// <summary>
         /// get/set - The note model.

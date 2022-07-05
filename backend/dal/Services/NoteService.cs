@@ -29,12 +29,12 @@ namespace Pims.Dal.Services
             _entityNoteRepository = entityNoteRepository;
         }
 
-        public GenericNoteModel Add(NoteType type, GenericNoteModel model)
+        public EntityNoteModel Add(NoteType type, EntityNoteModel model)
         {
             model.ThrowIfNull(nameof(model));
             this.User.ThrowIfNotAuthorized(Permissions.NoteAdd);
 
-            GenericNoteModel result;
+            EntityNoteModel result;
 
             switch (type)
             {
@@ -43,7 +43,7 @@ namespace Pims.Dal.Services
                     var pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
                     var createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
 
-                    result =  _mapper.Map<GenericNoteModel>(createdEntity);
+                    result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
             }
 

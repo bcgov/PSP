@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -22,16 +26,30 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Adds the specified note to the datasource
+        /// </summary>
+        /// <param name="note">The note to add.</param>
+        /// <returns></returns>
         public PimsNote Add(PimsNote note)
         {
-            // TODO: implement
-            throw new System.NotImplementedException();
+            note.ThrowIfNull(nameof(note));
+            this.Context.PimsNotes.Add(note);
+            return note;
         }
 
+        /// <summary>
+        /// Retrieves the row version of the note with the specified id.
+        /// </summary>
+        /// <param name="id">The note id</param>
+        /// <returns>The row version</returns>
         public long GetRowVersion(long id)
         {
-            // TODO: implement
-            throw new System.NotImplementedException();
+            return this.Context.PimsNotes.AsNoTracking()
+                .Where(n => n.NoteId == id)?
+                .Select(n => n.ConcurrencyControlNumber)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
         #endregion
     }

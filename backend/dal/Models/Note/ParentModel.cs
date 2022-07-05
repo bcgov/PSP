@@ -2,9 +2,9 @@
 namespace Pims.Dal.Entities.Models
 {
     /// <summary>
-    /// NoteParentModel class, provides a model to represent notes associated to entities.
+    /// ParentModel class, provides a model to represent an entity that owns notes.
     /// </summary>
-    public class NoteParentModel
+    public class ParentModel
     {
         #region Properties
 

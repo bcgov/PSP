@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The note text contents.
         /// </summary>
-        public string NoteText { get; set; }
+        public string Note { get; set; }
 
         /// <summary>
         /// get/set - The concurrency number.
