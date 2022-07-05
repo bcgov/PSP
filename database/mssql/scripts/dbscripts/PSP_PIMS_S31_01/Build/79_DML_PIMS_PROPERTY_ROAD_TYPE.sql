@@ -17,7 +17,7 @@ VALUES
   (N'CRWNDEL',    N'Crown grant deletion'),
   (N'SUBDIV',     N'Subdivision'),
   (N'107REF',     N'107 Reference Plan'),
-  (N'107EXP',     N'107 Evplanatory Plan'),
+  (N'107EXP',     N'107 Explanatory Plan'),
   (N'S42',        N'S.42 (Court declared)'),
   (N'S56',        N'S.56 (2) Highway'),
   (N'SRWPLAN',    N'SRW plan (with no gazette)'),
