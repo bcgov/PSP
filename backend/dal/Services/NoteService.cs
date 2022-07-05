@@ -41,7 +41,9 @@ namespace Pims.Dal.Services
                 case NoteType.Activity:
                 default:
                     var pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
+
                     var createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
+                    _entityNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
