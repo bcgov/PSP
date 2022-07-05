@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 
@@ -23,13 +27,32 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Associates a note to an existing parent entity via intermediate table (e.g. PimsActivityInstanceNote)
+        /// </summary>
+        /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
+        /// <param name="entity">The entity to add to the datastore.</param>
+        /// <returns>The created association.</returns>
         public T Add<T>(T entity) where T : class
         {
             entity.ThrowIfNull(nameof(entity));
-
-            // TODO: implement
-            throw new System.NotImplementedException();
+            this.Context.Add<T>(entity);
+            return entity;
         }
+
+        /// <summary>
+        /// Retrieves all notes associated with a parent entity
+        /// </summary>
+        /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
+        /// <param name="predicate">The predicate to filter all notes - e.g. where parentId == parent.Id</param>
+        /// <returns>The entity-notes associations</returns>
+        public IEnumerable<T> GetAll<T>(Func<T, bool> predicate) where T : class
+        {
+            predicate.ThrowIfNull(nameof(predicate));
+            return this.Context.Set<T>().AsNoTracking().Where(predicate).ToArray();
+        }
+
         #endregion
     }
 }
