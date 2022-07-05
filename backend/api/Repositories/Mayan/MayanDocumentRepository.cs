@@ -63,7 +63,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<bool>> DeleteDocumentTypeAsync(long documentTypeId)
+        public async Task<ExternalResult<string>> DeleteDocumentTypeAsync(long documentTypeId)
         {
             _logger.LogDebug("Deleting document type...");
 
@@ -262,7 +262,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<bool>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId)
+        public async Task<ExternalResult<string>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId)
         {
             _logger.LogDebug("Deleting document type's metadata type...");
 

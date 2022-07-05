@@ -11,7 +11,7 @@ namespace Pims.Api.Repositories.Mayan
     public interface IEdmsMetadataRepository
     {
         Task<ExternalResult<MetadataType>> CreateMetadataTypeAsync(MetadataType metadataType);
-        Task<ExternalResult<bool>> DeleteMetadataTypeAsync(long metadataTypeId);
+        Task<ExternalResult<string>> DeleteMetadataTypeAsync(long metadataTypeId);
         Task<ExternalResult<QueryResult<MetadataType>>> GetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
     }
 }

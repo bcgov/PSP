@@ -74,7 +74,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<bool>> DeleteMetadataTypeAsync(long metadataTypeId)
+        public async Task<ExternalResult<string>> DeleteMetadataTypeAsync(long metadataTypeId)
         {
             _logger.LogDebug("Deleting metadata type...");
 

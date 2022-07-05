@@ -13,7 +13,7 @@ namespace Pims.Api.Repositories.Mayan
     {
         Task<ExternalResult<DocumentType>> CreateDocumentTypeAsync(DocumentType documentType);
 
-        Task<ExternalResult<bool>> DeleteDocumentTypeAsync(long documentTypeId);
+        Task<ExternalResult<string>> DeleteDocumentTypeAsync(long documentTypeId);
 
         Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
 
@@ -29,7 +29,7 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
 
-        Task<ExternalResult<bool>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
+        Task<ExternalResult<string>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
 
     }
 }

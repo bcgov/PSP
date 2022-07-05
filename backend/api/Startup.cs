@@ -308,6 +308,7 @@ namespace Pims.Api
         private static void AddPimsApiServices(IServiceCollection services)
         {
             services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IDocumentSyncService, DocumentSyncService>();
         }
 
         /// <summary>

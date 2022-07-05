@@ -121,7 +121,7 @@ namespace Pims.Api.Repositories.Mayan
             }
         }
 
-        protected async Task<ExternalResult<bool>> DeleteAsync(Uri endpoint, string authenticationToken = null)
+        protected async Task<ExternalResult<string>> DeleteAsync(Uri endpoint, string authenticationToken = null)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -131,9 +131,10 @@ namespace Pims.Api.Repositories.Mayan
             }
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
-            ExternalResult<bool> result = new ExternalResult<bool>()
+            ExternalResult<string> result = new ExternalResult<string>()
             {
                 Status = ExternalResultStatus.Error,
+                Payload = endpoint.AbsolutePath,
             };
 
             try
@@ -143,32 +144,28 @@ namespace Pims.Api.Repositories.Mayan
                 _logger.LogTrace("Response: {response}", response);
 
                 string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                result.HttpStatusCode = response.StatusCode;
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
                         _logger.LogTrace("Response payload: {payload}", payload);
                         result.Status = ExternalResultStatus.Success;
-                        result.Payload = true;
                         break;
                     case HttpStatusCode.NoContent:
                         result.Status = ExternalResultStatus.Success;
                         result.Message = "No content was returned from the call";
-                        result.Payload = true;
                         break;
                     case HttpStatusCode.Forbidden:
                         result.Status = ExternalResultStatus.Error;
                         result.Message = "Request was forbidden";
-                        result.Payload = false;
                         break;
                     case HttpStatusCode.BadRequest:
                         result.Status = ExternalResultStatus.Error;
                         result.Message = payload;
-                        result.Payload = false;
                         break;
                     default:
                         result.Status = ExternalResultStatus.Error;
                         result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
-                        result.Payload = false;
                         break;
                 }
                 return result;
@@ -211,9 +208,11 @@ namespace Pims.Api.Repositories.Mayan
 
             _logger.LogTrace("Response: {response}", response);
             string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+            result.HttpStatusCode = response.StatusCode;
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
+                case HttpStatusCode.Created:
                     _logger.LogTrace("Response payload: {payload}", payload);
                     T requestTokenResult = JsonSerializer.Deserialize<T>(payload);
                     result.Status = ExternalResultStatus.Success;
