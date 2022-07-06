@@ -209,6 +209,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="expectedPaymentTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -252,6 +253,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="gstAmountTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -283,6 +285,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="expectedTotalTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -314,6 +317,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="expectedTermTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -345,6 +349,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="actualTotalTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -698,6 +703,13 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
   font-family: BcSans-Bold;
 }
 
+.c5 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 .c5 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
@@ -786,6 +798,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="expectedPaymentTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -829,6 +842,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="gstAmountTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -860,6 +874,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="expectedTotalTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -891,6 +906,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="expectedTermTooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -922,6 +938,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
+                id="actualTotalTooltip"
               >
                 <svg
                   class="tooltip-icon"
