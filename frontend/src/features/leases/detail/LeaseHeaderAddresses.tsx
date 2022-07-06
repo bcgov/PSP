@@ -30,7 +30,9 @@ const getFormattedAddress = (property: IProperty) => {
       ? `${address.streetAddress1}, ${address.municipality}`
       : address.streetAddress1;
   } else {
-    return !!address.municipality ? address.municipality : pidFormatter(property.pid);
+    return !!address.municipality
+      ? address.municipality
+      : `${pidFormatter(property.pid)} - Address not available in PIMS`;
   }
 };
 
