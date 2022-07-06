@@ -20,10 +20,10 @@ using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Notes;
 using FluentAssertions;
 using Pims.Api.Areas.Notes.Controllers;
-using Pims.Api.Areas.Notes.Models;
 using Pims.Dal.Entities;
+using Pims.Dal.Models;
 
-namespace Pims.Api.Test.Controllers.Research
+namespace Pims.Api.Test.Controllers.Note
 {
     [Trait("category", "unit")]
     [Trait("category", "api")]
@@ -58,20 +58,20 @@ namespace Pims.Api.Test.Controllers.Research
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin" } };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var service = helper.GetService<Mock<INoteService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Note.GetActivityNotes()).Returns(notes);
+            service.Setup(m => m.GetNotes(It.IsAny<NoteType>())).Returns(notes);
 
             // Act
-            var result = controller.GetNotes(Areas.Notes.Models.NoteType.Activity);
+            var result = controller.GetNotes(NoteType.Activity);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<List<NoteModel>>(actionResult.Value);
             var expectedResult = mapper.Map<List<NoteModel>>(notes);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Note.GetActivityNotes(), Times.Once());
+            service.Verify(m => m.GetNotes(It.IsAny<NoteType>()), Times.Once());
         }
 
         [Fact]
@@ -81,18 +81,18 @@ namespace Pims.Api.Test.Controllers.Research
             var helper = new TestHelper();
             var controller = helper.CreateController<NoteController>(Permissions.ContactView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var service = helper.GetService<Mock<INoteService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Note.DeleteActivityNotes(It.IsAny<int>()));
+            service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<int>()));
 
             // Act
-            var result = controller.DeleteNote(Areas.Notes.Models.NoteType.Activity, 1);
+            var result = controller.DeleteNote(NoteType.Activity, 1);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Equal(true, actionResult.Value);
-            service.Verify(m => m.Note.DeleteActivityNotes(It.IsAny<int>()), Times.Once());
+            service.Verify(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<int>()), Times.Once());
         }
         #endregion
         #endregion

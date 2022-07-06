@@ -1,4 +1,4 @@
-namespace Pims.Api.Areas.Notes.Models
+namespace Pims.Dal.Models
 {
     public enum NoteType
     {

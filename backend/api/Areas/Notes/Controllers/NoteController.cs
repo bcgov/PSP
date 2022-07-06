@@ -59,24 +59,26 @@ namespace Pims.Api.Areas.Notes.Controllers
             var createdNote = _noteService.Add(type, noteModel);
             return new JsonResult(createdNote);
         }
-
-        /// <summary>
-        /// Get the notes for the specified type.
+/// Get the notes for the specified type.
         /// </summary>
         /// <param name="type">Used to identify note type.</param>
         /// <returns></returns>
         [HttpGet("{type}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.NoteModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Tags = new[] { "note" })]
         public IActionResult GetNotes(Models.NoteType type)
+        public IActionResult GetNotes(NoteType type)
         {
             switch (type)
             {
                 case Models.NoteType.Activity:
                     var notes = _pimsService.Note.GetActivityNotes();
                     var mappedNotes = _mapper.Map<List<Models.NoteModel>>(notes);
+            var notes = _pimsService.GetNotes(type);
+            var mappedNotes = _mapper.Map<List<NoteModel>>(notes);
 
                     return new JsonResult(mappedNotes);
 
@@ -86,6 +88,7 @@ namespace Pims.Api.Areas.Notes.Controllers
                 default:
                     return NotFound();
             }
+            return new JsonResult(mappedNotes);
         }
 
         /// <summary>
@@ -100,6 +103,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Tags = new[] { "note" })]
         public IActionResult DeleteNote(Models.NoteType type, int noteId)
+        public IActionResult DeleteNote(NoteType type, int noteId)
         {
             switch (type)
             {
@@ -113,6 +117,8 @@ namespace Pims.Api.Areas.Notes.Controllers
                 default:
                     return NotFound();
             }
+            _pimsService.DeleteNote(type, noteId);
+            return new JsonResult(true);
         }
         #endregion
     }

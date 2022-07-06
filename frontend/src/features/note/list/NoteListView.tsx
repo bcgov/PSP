@@ -11,14 +11,14 @@ import { toast } from 'react-toastify';
 import { NoteResults } from './NoteResults/NoteResults';
 import * as Styled from './styles';
 
-export interface INoteResultProps {
+export interface INoteListViewProps {
   type: NoteType;
 }
 /**
  * Page that displays notes information.
  */
-export const NoteListView: React.FunctionComponent<INoteResultProps> = (
-  props: INoteResultProps,
+export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
+  props: INoteListViewProps,
 ) => {
   const { type } = props;
   const isMounted = useIsMounted();

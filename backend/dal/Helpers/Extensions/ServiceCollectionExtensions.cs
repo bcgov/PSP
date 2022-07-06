@@ -69,6 +69,7 @@ namespace Pims.Dal
             services.AddScoped<IResearchFileService, ResearchFileService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
+            services.AddScoped<INoteService, NoteService>();
             return services; // TODO: Use reflection to find all Repositories.
         }
 

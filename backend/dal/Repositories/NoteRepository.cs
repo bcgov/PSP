@@ -72,15 +72,15 @@ public int Count()
 
         public void DeleteActivityNotes(int noteId)
         {
-            var pimsActivityInstances = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
-            if (pimsActivityInstances.Any())
+            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
+            if (activityNotes.Any())
             {
-                foreach (var item in pimsActivityInstances)
+                foreach (var note in activityNotes)
                 {
-                    item.IsDisabled = true;
-                    item.AppLastUpdateTimestamp = DateTime.UtcNow;
-                    item.AppLastUpdateUserid = User.GetUsername();
-                    item.AppLastUpdateUserGuid = User.GetUserKey();
+                    note.IsDisabled = true;
+                    note.AppLastUpdateTimestamp = DateTime.UtcNow;
+                    note.AppLastUpdateUserid = User.GetUsername();
+                    note.AppLastUpdateUserGuid = User.GetUserKey();
                 }
                 this.Context.SaveChanges();
             }

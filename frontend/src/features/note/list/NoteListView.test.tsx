@@ -4,11 +4,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { NoteType } from 'models/api/Note';
 import { render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import { INoteResultProps, NoteListView } from './NoteListView';
+import { INoteListViewProps, NoteListView } from './NoteListView';
 
 describe('Note List View', () => {
   const mockAxios = new MockAdapter(axios);
-  const setup = (renderOptions?: RenderOptions & INoteResultProps) => {
+  const setup = (renderOptions?: RenderOptions & INoteListViewProps) => {
     // render component under test
     const component = render(<NoteListView type={NoteType.File} />, {
       ...renderOptions,
