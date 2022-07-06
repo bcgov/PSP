@@ -36,6 +36,9 @@ export const UserUpdateSchema = Yup.object().shape({
     .max(50, 'Last Name must be less than 50 characters'),
   note: Yup.string().max(1000, 'Note must be less than 1000 characters'),
   position: Yup.string().max(100, 'Position must be less than 100 characters'),
+  middleName: Yup.string().max(400, 'Middle Name must be less than 400 characters'),
+  regions: Yup.array().min(1, 'A user must have at least one region'),
+  roles: Yup.array().min(1, 'A user must have at least one role'),
 });
 
 export const FilterBarSchema = Yup.object().shape({
