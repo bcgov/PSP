@@ -1,5 +1,5 @@
 import { NoteTypes } from 'constants/index';
-import { Api_Note } from 'models/api/Note';
+import { Api_EntityNote } from 'models/api/Note';
 import React from 'react';
 
 import { useAxiosApi } from '.';
@@ -13,7 +13,8 @@ export const useApiNotes = () => {
 
   return React.useMemo(
     () => ({
-      postNote: (type: NoteTypes, note: Api_Note) => api.post<Api_Note>(`/notes/${type}`, note),
+      postNote: (type: NoteTypes, note: Api_EntityNote) =>
+        api.post<Api_EntityNote>(`/notes/${type}`, note),
     }),
     [api],
   );

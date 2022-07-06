@@ -1,9 +1,15 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
+import { useHistory } from 'react-router-dom';
 
+import { useAddNote } from '../hooks/useAddNote';
 import { AddNotesForm } from './AddNotesForm';
-import { NoteForm } from './models';
+import { EntityNoteForm } from './models';
 
 export interface IAddNotesContainerProps {
+  /** The parent entity type for adding notes - e.g. 'activity' */
+  parentType: string;
+  /** The parent's ID */
+  parentId: number;
   /** Whether to show the notes modal. Default: false */
   showNotes: boolean;
   /** set the value of the externally tracked 'showNotes' prop above. */
@@ -11,28 +17,36 @@ export interface IAddNotesContainerProps {
 }
 
 export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
+  const history = useHistory();
+  const { addNote } = useAddNote();
+
   // save handler
-  const saveNote = async (values: NoteForm, formikHelpers: FormikHelpers<NoteForm>) => {
-    // TODO: implement
+  const saveNote = async (values: EntityNoteForm, formikHelpers: FormikHelpers<EntityNoteForm>) => {
     const apiNote = values.toApi();
-
-    console.log(apiNote);
-
+    const response = await addNote(props.parentType, apiNote);
     formikHelpers?.setSubmitting(false);
-    formikHelpers?.resetForm();
+
+    if (!!response?.id) {
+      formikHelpers?.resetForm();
+      // TODO: navigate to Notes LIST VIEW
+      history.replace(`/mapview`);
+    }
   };
 
-  const onSaveClick = (noteForm: NoteForm, formikProps: FormikProps<NoteForm>) => {
+  const onSaveClick = (noteForm: EntityNoteForm, formikProps: FormikProps<EntityNoteForm>) => {
     formikProps?.setSubmitting(true);
     formikProps?.submitForm();
   };
 
-  const onCancelClick = (formikProps: FormikProps<NoteForm>) => {
+  const onCancelClick = (formikProps: FormikProps<EntityNoteForm>) => {
     formikProps?.resetForm();
   };
 
+  const noteForm = new EntityNoteForm();
+  noteForm.parentId = props.parentId;
+
   return (
-    <Formik<NoteForm> enableReinitialize initialValues={new NoteForm()} onSubmit={saveNote}>
+    <Formik<EntityNoteForm> enableReinitialize initialValues={noteForm} onSubmit={saveNote}>
       {() => (
         <AddNotesForm
           showNotes={props.showNotes}

@@ -15,7 +15,12 @@ export const TestNotes: React.FC = () => {
       </Row>
       <Row className="py-5">
         <Button onClick={() => setShow(true)}>Add a Note</Button>
-        <AddNotesContainer showNotes={show} setShowNotes={setShow} />
+        <AddNotesContainer
+          parentType="activity"
+          parentId={1}
+          showNotes={show}
+          setShowNotes={setShow}
+        />
       </Row>
     </Container>
   );

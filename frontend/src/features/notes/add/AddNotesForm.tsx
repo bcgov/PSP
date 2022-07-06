@@ -3,7 +3,7 @@ import { GenericModal } from 'components/common/GenericModal';
 import { FormikProps, useFormikContext } from 'formik';
 import styled from 'styled-components';
 
-import { NoteForm } from './models';
+import { EntityNoteForm } from './models';
 
 export interface IAddNotesFormProps {
   /** Whether to show the notes modal. Default: false */
@@ -11,14 +11,14 @@ export interface IAddNotesFormProps {
   /** set the value of the externally tracked 'showNotes' prop above. */
   setShowNotes: (show: boolean) => void;
   /** Optional - callback to notify when save button is pressed. */
-  onSave?: (noteForm: NoteForm, formikProps: FormikProps<NoteForm>) => void;
+  onSave?: (noteForm: EntityNoteForm, formikProps: FormikProps<EntityNoteForm>) => void;
   /** Optional - callback to notify when cancel button is pressed. */
-  onCancel?: (formikProps: FormikProps<NoteForm>) => void;
+  onCancel?: (formikProps: FormikProps<EntityNoteForm>) => void;
 }
 
 export const AddNotesForm: React.FC<IAddNotesFormProps> = props => {
   const { showNotes, setShowNotes, onSave, onCancel } = props;
-  const formikProps = useFormikContext<NoteForm>();
+  const formikProps = useFormikContext<EntityNoteForm>();
 
   return (
     <StyledModal
@@ -26,7 +26,12 @@ export const AddNotesForm: React.FC<IAddNotesFormProps> = props => {
       setDisplay={setShowNotes}
       title="Notes"
       message={
-        <TextArea rows={15} field="note" label="Type a note:" data-testid="note-field"></TextArea>
+        <TextArea
+          rows={15}
+          field="note.note"
+          label="Type a note:"
+          data-testid="note-field"
+        ></TextArea>
       }
       closeButton
       okButtonText="Save"
