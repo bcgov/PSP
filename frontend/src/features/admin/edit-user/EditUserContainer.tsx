@@ -52,7 +52,6 @@ const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ u
     toApi: () => ({} as Api_User),
   };
   const formUser = user !== undefined ? new FormUser(user) : initialValues;
-  console.log(formUser);
   return (
     <>
       <LoadingBackdrop parentScreen show={loading} />
