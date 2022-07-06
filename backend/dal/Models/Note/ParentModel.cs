@@ -14,6 +14,5 @@ namespace Pims.Dal.Entities.Models
         public long Id { get; set; }
 
         #endregion
-
     }
 }

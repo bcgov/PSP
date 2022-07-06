@@ -12,12 +12,12 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Note, src => src.NoteTxt)
-                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber);
 
             config.NewConfig<NoteModel, Entity.PimsNote>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.NoteTxt, src => src.Note)
-                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
+                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion);
         }
     }
 }
