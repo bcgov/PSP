@@ -31,7 +31,7 @@ describe('useApi hook', () => {
       mockAxios.onGet().reply(200, {});
 
       const api = getUseApiHook({ store });
-      await api.current.isPidAvailable(undefined, '123-456-789');
+      await api.current.searchAddress('1234 Fake st.');
       expect(mockAxios.history.get[0]).toMatchObject({
         headers: {
           Accept: 'application/json, text/plain, */*',
@@ -45,7 +45,7 @@ describe('useApi hook', () => {
       mockAxios.onGet().reply(200, {});
 
       const api = getUseApiHook({ store });
-      await api.current.isPidAvailable(undefined, '123-456-789');
+      await api.current.searchAddress('1234 Fake st.');
       expect(realStore.getState().loadingBar).toStrictEqual({});
     });
     it('dispatches hide loading bar action on error response', async () => {
@@ -54,7 +54,7 @@ describe('useApi hook', () => {
 
       const api = getUseApiHook({ store });
       try {
-        await api.current.isPidAvailable(undefined, '123-456-789');
+        await api.current.searchAddress('1234 Fake st.');
       } catch (e) {}
       expect(realStore.getState().loadingBar).toStrictEqual({});
     });
@@ -63,24 +63,6 @@ describe('useApi hook', () => {
     afterEach(() => {
       jest.clearAllMocks();
       mockAxios.resetHistory();
-    });
-
-    it('calls isPidAvailable with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.isPidAvailable(undefined, '123-456-789');
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/parcels/check/pid-available?pid=123456789',
-      });
-    });
-
-    it('calls isPinAvailable with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.isPinAvailable(undefined, 123456789);
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/parcels/check/pin-available?pin=123456789',
-      });
     });
 
     it('calls searchAddress with expected parameters', async () => {

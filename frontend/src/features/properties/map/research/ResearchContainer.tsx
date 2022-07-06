@@ -1,12 +1,13 @@
 import { Button } from 'components/common/buttons/Button';
 import GenericModal from 'components/common/GenericModal';
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
 import { FormikProps } from 'formik';
 import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
@@ -30,7 +31,6 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isDirty, setIsDirty] = useState<boolean>(false);
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
@@ -39,18 +39,19 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   );
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+  const { search } = useMapSearch();
 
   const menuItems = researchFile?.researchProperties?.map(x => getPropertyName(x)) || [];
   menuItems.unshift('RFile Summary');
 
-  useEffect(() => {
-    async function fetchResearchFile() {
-      var retrieved = await retrieveResearchFile(props.researchFileId);
-      setResearchFile(retrieved);
-      setIsDirty(false);
-    }
+  const fetchResearchFile = React.useCallback(async () => {
+    var retrieved = await retrieveResearchFile(props.researchFileId);
+    setResearchFile(retrieved);
+  }, [retrieveResearchFile, setResearchFile, props.researchFileId]);
+
+  React.useEffect(() => {
     fetchResearchFile();
-  }, [props.researchFileId, retrieveResearchFile, isDirty]);
+  }, [fetchResearchFile]);
 
   if (researchFile === undefined) {
     return (
@@ -128,8 +129,9 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   };
 
   const onSuccess = () => {
-    setIsDirty(true);
+    fetchResearchFile();
     setIsEditing(false);
+    search();
   };
 
   const showPropertiesSelector = () => {
