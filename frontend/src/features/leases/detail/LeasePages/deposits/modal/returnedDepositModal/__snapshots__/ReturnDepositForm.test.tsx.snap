@@ -356,6 +356,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="interestPaid-tooltip"
             >
               <svg
                 class="tooltip-icon"
@@ -913,6 +914,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="interestPaid-tooltip"
             >
               <svg
                 class="tooltip-icon"
