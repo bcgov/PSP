@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -15,6 +16,7 @@ namespace Pims.Dal.Repositories
     public class NoteRepository : BaseRepository<PimsNote>, INoteRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a NoteRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -50,6 +52,33 @@ namespace Pims.Dal.Repositories
                 .Where(n => n.NoteId == id)?
                 .Select(n => n.ConcurrencyControlNumber)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        public int Count()
+        {
+            return this.Context.PimsNotes.Count();
+        }
+
+        public IEnumerable<PimsNote> GetActivityNotes()
+        {
+            return this.Context.PimsNotes
+                .Include(n => n.PimsActivityInstanceNotes.Where(x => x.IsDisabled == false)).ToArray();
+        }
+
+        public void DeleteActivityNotes(int noteId)
+        {
+            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
+            if (activityNotes.Any())
+            {
+                foreach (var note in activityNotes)
+                {
+                    note.IsDisabled = true;
+                    note.AppLastUpdateTimestamp = DateTime.UtcNow;
+                    note.AppLastUpdateUserid = User.GetUsername();
+                    note.AppLastUpdateUserGuid = User.GetUserKey();
+                }
+                this.Context.SaveChanges();
+            }
         }
         #endregion
     }

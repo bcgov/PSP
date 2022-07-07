@@ -11,6 +11,7 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Note, src => src.NoteTxt)
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<NoteModel, Entity.PimsNote>()

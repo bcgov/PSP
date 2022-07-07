@@ -18,6 +18,11 @@ namespace Pims.Api.Models.Concepts
         /// </summary>
         public string Note { get; set; }
 
+        /// <summary>
+        /// get/set - The concurrency row version.
+        /// </summary>
+        /// <value></value>
+        public long RowVersion { get; set; }
         #endregion
 
     }

@@ -1,6 +1,7 @@
 
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
@@ -8,6 +9,7 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Notes.Controllers
 {
@@ -58,6 +60,41 @@ namespace Pims.Api.Areas.Notes.Controllers
         {
             var createdNote = _noteService.Add(type, noteModel);
             return new JsonResult(createdNote);
+        }
+
+        /// <summary>
+        /// Get the notes for the specified type.
+        /// </summary>
+        /// <param name="type">Used to identify note type.</param>
+        /// <returns></returns>
+        [HttpGet("{type}")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.NoteView)]
+        [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "note" })]
+        public IActionResult GetNotes(NoteType type)
+        {
+            var notes = _noteService.GetNotes(type);
+            var mappedNotes = _mapper.Map<List<NoteModel>>(notes);
+            return new JsonResult(mappedNotes);
+        }
+
+        /// <summary>
+        /// Deletes the note for the specified type.
+        /// </summary>
+        /// <param name="type">Used to identify note type.</param>
+        /// <param name="noteId">Used to identify the note and delete it.</param>
+        /// <returns></returns>
+        [HttpDelete("{type}/{noteId}")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.NoteDelete)]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(Tags = new[] { "note" })]
+        public IActionResult DeleteNote(NoteType type, int noteId)
+        {
+            _noteService.DeleteNote(type, noteId);
+            return new JsonResult(true);
         }
         #endregion
     }

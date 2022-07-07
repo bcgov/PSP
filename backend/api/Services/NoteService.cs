@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
@@ -53,6 +54,44 @@ namespace Pims.Api.Services
             }
 
             return result;
+        }
+
+
+        /// <summary>
+        /// Find and delete the note
+        /// </summary>
+        /// <param name="type">Note type to determine the type of note to delete.</param>
+        /// <param name="noteId">Note id to identify the note to delete</param>
+        public void DeleteNote(NoteType type, int noteId)
+        {
+            switch (type)
+            {
+                case NoteType.Activity:
+                    _noteRepository.DeleteActivityNotes(noteId);
+                    break;
+                case NoteType.File:
+                    // Write code to delete the note from FileNotes table
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Get notes by note type.
+        /// </summary>
+        /// <param name="type">Note type to determine the type of notes to return.</param>
+        /// <returns></returns>
+        public IEnumerable<PimsNote> GetNotes(NoteType type)
+        {
+            switch (type)
+            {
+                case NoteType.Activity:
+                    return _noteRepository.GetActivityNotes();
+                case NoteType.File:
+                default:
+                    return new List<PimsNote>();
+            }
         }
     }
 }
