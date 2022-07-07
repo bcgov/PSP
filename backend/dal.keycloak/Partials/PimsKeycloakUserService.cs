@@ -127,7 +127,7 @@ namespace Pims.Dal.Keycloak
         public async Task<Entity.PimsAccessRequest> UpdateAccessRequestAsync(Entity.PimsAccessRequest update)
         {
             update.ThrowIfNull(nameof(update));
-            _user.ThrowIfNotAuthorized(Permissions.AdminUsers, Permissions.OrganizationAdmin);
+            _user.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
             var accessRequest = _pimsRepository.AccessRequest.Get(update.AccessRequestId);
             var user = _pimsRepository.User.Get(accessRequest.UserId);
@@ -135,9 +135,9 @@ namespace Pims.Dal.Keycloak
             if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED) {
 
                 user.PimsUserRoles.Clear();
+                user.IsDisabled = false;
                 user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value});
                 await AppendToUserAsync(user);
-
             }
             update.User = user;
             update.Role = _pimsRepository.Role.Find(update.RoleId);

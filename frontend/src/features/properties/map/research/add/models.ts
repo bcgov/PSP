@@ -100,15 +100,4 @@ export class PropertyForm {
       district: toTypeCode(this.districtId),
     };
   }
-
-  public toMapModel(): IMapProperty {
-    return {
-      id: this.mapId,
-      pid: this.pid,
-      pin: this.pin,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      planNumber: this.planNumber,
-    };
-  }
 }
