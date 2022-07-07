@@ -37,7 +37,7 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
-using Pims.Api.Repositories.EDMS;
+using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Core.Converters;
 using Pims.Core.Http;
@@ -295,7 +295,9 @@ namespace Pims.Api
 
         private static void AddPimsApiRepositories(IServiceCollection services)
         {
-            services.AddSingleton<IDocumentRepository, MayanDocumentRepository>();
+            services.AddSingleton<IEdmsAuthRepository, MayanAuthRepository>();
+            services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
+            services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
         }
 
         /// <summary>
@@ -306,6 +308,7 @@ namespace Pims.Api
         private static void AddPimsApiServices(IServiceCollection services)
         {
             services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IDocumentSyncService, DocumentSyncService>();
         }
 
         /// <summary>

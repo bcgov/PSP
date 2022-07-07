@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace Pims.Api.Models
 {
     /// <summary>
@@ -19,5 +21,10 @@ namespace Pims.Api.Models
         /// get/set - A description of the type.
         /// </summary>
         public T Payload { get; set; }
+
+        /// <summary>
+        /// get/set - The http status code returned.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode { get; set; }
     }
 }

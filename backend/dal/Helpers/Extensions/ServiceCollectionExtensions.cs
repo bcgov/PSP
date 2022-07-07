@@ -44,6 +44,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.ISecurityDepositReturnRepository, Repositories.SecurityDepositReturnRepository>();
             repositories.AddScoped<Repositories.IResearchFileRepository, Repositories.ResearchFileRepository>();
             repositories.AddScoped<Repositories.IResearchFilePropertyRepository, Repositories.ResearchFilePropertyRepository>();
+            repositories.AddScoped<Repositories.IDocumentTypeRepository, Repositories.DocumentTypeRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 
