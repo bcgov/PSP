@@ -47,6 +47,15 @@ export const mockKeycloak = (
   });
 };
 
+/**
+ * Generates fake text data to aid testing input form validation.
+ * @param length The length of the text to generate.
+ * @returns A string with as many 'x' as the supplied length
+ */
+export function fakeText(length = 50): string {
+  return 'x'.repeat(length);
+}
+
 export const fillInput = async (
   container: HTMLElement,
   name: string,

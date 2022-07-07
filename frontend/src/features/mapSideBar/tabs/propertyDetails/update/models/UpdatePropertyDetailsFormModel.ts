@@ -78,7 +78,7 @@ export class UpdatePropertyDetailsFormModel {
     model.name = base.name;
     model.description = base.description;
     model.isSensitive = base.isSensitive;
-    model.pphStatusTypeCode = base.pphStatusTypeCode;
+    model.pphStatusTypeCode = base.pphStatusTypeCode ?? 'UNKNOWN';
     model.isRwyBeltDomPatent = base.isRwyBeltDomPatent;
     model.pphStatusUpdateUserid = base.pphStatusUpdateUserid;
     model.pphStatusUpdateUserGuid = base.pphStatusUpdateUserGuid;

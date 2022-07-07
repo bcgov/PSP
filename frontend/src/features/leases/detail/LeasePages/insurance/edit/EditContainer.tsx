@@ -11,6 +11,7 @@ import { withNameSpace } from 'utils/formUtils';
 
 import { useUpdateInsurance } from './hooks/useUpdateInsurance';
 import InsuranceForm from './InsuranceForm';
+import { InsuranceYupSchema } from './InsuranceYupSchema';
 import { FormInsurance, IUpdateFormInsurance } from './models';
 
 export interface InsuranceEditContainerProps {
@@ -77,6 +78,7 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
   return (
     <Formik<IUpdateFormInsurance>
       initialValues={initialValues}
+      validationSchema={InsuranceYupSchema}
       onSubmit={(values: IUpdateFormInsurance, formikHelpers) => {
         const updatedVals = values.insurances.reduce(
           (accumulator: IEntryModification<IInsurance>[], entry: FormInsurance) => {
