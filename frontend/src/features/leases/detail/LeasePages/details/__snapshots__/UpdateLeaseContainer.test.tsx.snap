@@ -1129,6 +1129,7 @@ exports[`Update lease container component renders as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="initiatorType-tooltip"
             >
               <svg
                 class="tooltip-icon"
@@ -1195,6 +1196,7 @@ exports[`Update lease container component renders as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="responsibilityType-tooltip"
             >
               <svg
                 class="tooltip-icon"
@@ -1385,6 +1387,7 @@ exports[`Update lease container component renders as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="documentationReference-tooltip"
             >
               <svg
                 class="tooltip-icon"

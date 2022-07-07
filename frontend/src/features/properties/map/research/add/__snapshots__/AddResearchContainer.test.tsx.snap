@@ -1085,6 +1085,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon"
+                    id="property-selector-tooltip"
                   >
                     <svg
                       class="tooltip-icon"

@@ -1,5 +1,5 @@
-using Pims.Api.Helpers.Exceptions;
 using System;
+using Pims.Api.Helpers.Exceptions;
 
 namespace Pims.Api.Helpers.Extensions
 {

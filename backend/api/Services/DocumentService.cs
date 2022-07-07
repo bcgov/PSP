@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Repositories.EDMS;
+using Pims.Api.Repositories.Mayan;
 
 namespace Pims.Api.Services
 {
@@ -12,9 +12,9 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentService : IDocumentService
     {
-        private readonly IDocumentRepository documentRepository;
+        private readonly IEdmsDocumentRepository documentRepository;
 
-        public DocumentService(IDocumentRepository documentRepository)
+        public DocumentService(IEdmsDocumentRepository documentRepository)
         {
             this.documentRepository = documentRepository;
         }

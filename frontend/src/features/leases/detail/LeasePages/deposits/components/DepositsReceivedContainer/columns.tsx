@@ -1,5 +1,6 @@
 import { Button } from 'components/common/buttons/Button';
 import { InlineFlexDiv } from 'components/common/styles';
+import TooltipIcon from 'components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -69,6 +70,12 @@ function depositActions(
             icon={<FaTrash size={24} id={`delete-deposit-${index}`} title="delete deposit" />}
             onClick={() => original.id && onDelete(original.id)}
           ></Button>
+        )}
+        {hasClaim(Claims.LEASE_DELETE) && original.depositReturnCount > 0 && (
+          <TooltipIcon
+            toolTipId={`no-delete-tooltip-${original.id}`}
+            toolTip="A deposit with associated return(s) cannot be deleted. To delete this deposit first delete any associated return(s)."
+          />
         )}
         {hasClaim(Claims.LEASE_EDIT) && (
           <Button
@@ -141,6 +148,7 @@ export const getColumns = ({
 };
 
 const StyledIcons = styled(InlineFlexDiv)`
+  align-items: center;
   [id^='edit-deposit'] {
     color: ${props => props.theme.css.slideOutBlue};
   }
