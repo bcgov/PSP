@@ -1,3 +1,4 @@
+import Claims from 'constants/claims';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { render, RenderOptions } from 'utils/test-utils';
 
@@ -43,6 +44,8 @@ const testResearchFile: Api_ResearchFile = {
   rowVersion: 9,
 };
 
+jest.mock('@react-keycloak/web');
+
 const setEditMode = jest.fn();
 
 describe('ResearchSummaryView component', () => {
@@ -55,6 +58,7 @@ describe('ResearchSummaryView component', () => {
       />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
       },
     );
 
@@ -70,5 +74,29 @@ describe('ResearchSummaryView component', () => {
   it('renders as expected when provided no research file', () => {
     const { component } = setup({ researchFile: testResearchFile, setEditMode });
     expect(component.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders the edit button if the user has research edit permissions', () => {
+    const {
+      component: { getByTitle },
+    } = setup({
+      researchFile: testResearchFile,
+      setEditMode,
+      claims: [Claims.RESEARCH_EDIT],
+    });
+    const editResearchFile = getByTitle('Edit research file');
+    expect(editResearchFile).toBeVisible();
+  });
+
+  it('does not render the edit button if the user does not have research edit permissions', () => {
+    const {
+      component: { queryByTitle },
+    } = setup({
+      researchFile: testResearchFile,
+      setEditMode,
+      claims: [],
+    });
+    const editResearchFile = queryByTitle('Edit research file');
+    expect(editResearchFile).toBeNull();
   });
 });

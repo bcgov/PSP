@@ -1,6 +1,6 @@
-import { FastCurrencyInput, FastDatePicker, TextArea } from 'components/common/form';
+import { FastCurrencyInput, FastDatePicker, Input, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
-import { FormSection, InlineInput } from 'components/common/form/styles';
+import { FormSection } from 'components/common/form/styles';
 import { getIn, useFormikContext } from 'formik';
 import ITypeCode from 'interfaces/ITypeCode';
 import { Col, Row } from 'react-bootstrap';
@@ -29,7 +29,7 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
             <div>
               <strong>Insurance Type:</strong>
             </div>
-            <InlineInput field={withNameSpace(nameSpace, 'otherInsuranceType')} />
+            <Input field={withNameSpace(nameSpace, 'otherInsuranceType')} />
           </Col>
         </Row>
       )}

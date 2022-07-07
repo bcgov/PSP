@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { useUpdatePropertyResearch } from '../../hooks/useUpdatePropertyResearch';
 import { UpdatePropertyFormModel } from './models';
 import UpdatePropertyForm from './UpdatePropertyForm';
+import { UpdatePropertyYupSchema } from './UpdatePropertyYupSchema';
 
 export interface IUpdatePropertyViewProps {
   researchFileProperty: Api_ResearchFileProperty;
@@ -36,6 +37,7 @@ export const UpdatePropertyView: React.FunctionComponent<IUpdatePropertyViewProp
       enableReinitialize
       innerRef={formikRef}
       initialValues={UpdatePropertyFormModel.fromApi(props.researchFileProperty)}
+      validationSchema={UpdatePropertyYupSchema}
       onSubmit={async (values: UpdatePropertyFormModel) => {
         const researchFile: Api_ResearchFileProperty = values.toApi();
         await savePropertyFile(researchFile);

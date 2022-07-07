@@ -249,7 +249,6 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
                 class="form-control"
                 id="input-documentReference"
                 name="documentReference"
-                title=""
                 value=""
               />
             </div>

@@ -5,8 +5,9 @@ import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { fakeText, fillInput, render, RenderOptions } from 'utils/test-utils';
 
+import { UpdateResearchFileYupSchema } from '../UpdateResearchFileYupSchema';
 import { UpdateResearchSummaryFormModel } from './models';
 import UpdateSummaryForm from './UpdateSummaryForm';
 
@@ -61,7 +62,11 @@ describe('UpdateResearchForm component', () => {
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.initialValues}>
+      <Formik
+        onSubmit={noop}
+        initialValues={renderOptions.initialValues}
+        validationSchema={UpdateResearchFileYupSchema}
+      >
         {formikProps => <UpdateSummaryForm formikProps={formikProps} />}
       </Formik>,
       {
@@ -71,41 +76,49 @@ describe('UpdateResearchForm component', () => {
       },
     );
 
-    return {
-      component,
-    };
+    return { ...component };
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it('renders as expected when provided no research file', () => {
     var initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
-    const { component } = setup({ initialValues });
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({ initialValues });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the status field', () => {
     const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
-    const {
-      component: { getByTestId },
-    } = setup({ initialValues });
+    const { getByTestId } = setup({ initialValues });
     expect(getByTestId('researchFileStatus')).toBeInTheDocument();
   });
 
   it('renders the file name field', () => {
     const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
-    const {
-      component: { container },
-    } = setup({ initialValues });
+    const { container } = setup({ initialValues });
     const fileName = container.querySelector(`#input-name`);
 
     expect(fileName).toBeInTheDocument();
   });
+
   it('should have the Help with choosing a name text in the component', async () => {
     const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
     setup({ initialValues });
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
+  });
+
+  it('should validate R-File name', async () => {
+    const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
+    const { container, findByText } = setup({ initialValues });
+
+    // name is required
+    await fillInput(container, 'name', '');
+    expect(await findByText(/Research File name is required/i)).toBeVisible();
+
+    // name cannot exceed 250 characters
+    await fillInput(container, 'name', fakeText(300));
+    expect(await findByText(/Research File name must be less than 250 characters/i)).toBeVisible();
   });
 });

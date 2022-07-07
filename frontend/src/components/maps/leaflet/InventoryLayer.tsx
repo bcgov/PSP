@@ -1,17 +1,15 @@
 import { IGeoSearchParams } from 'constants/API';
-import { BBox, Feature } from 'geojson';
-import { useApi } from 'hooks/useApi';
+import { BBox } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { IProperty } from 'interfaces';
-import { geoJSON, LatLngBounds } from 'leaflet';
-import { uniqBy } from 'lodash';
-import React, { useEffect, useMemo, useState } from 'react';
+import { LatLngBounds } from 'leaflet';
+import React, { useEffect, useMemo } from 'react';
 import { useContext } from 'react';
 import { useMap } from 'react-leaflet';
-import { toast } from 'react-toastify';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
+import { useMapSearch } from '../hooks/useMapSearch';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { PointFeature } from '../types';
@@ -28,8 +26,6 @@ export type InventoryLayerProps = {
   maxZoom?: number;
   /** Search filter to apply to properties. */
   filter?: IGeoSearchParams;
-  /** Callback function to display/hide backdrop*/
-  onRequestData: (showBackdrop: boolean) => void;
   /** What to do when the marker is clicked. */
   onMarkerClick: (property: IProperty) => void;
 };
@@ -132,12 +128,9 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   zoom,
   filter,
   onMarkerClick,
-  onRequestData,
 }) => {
   const mapInstance = useMap();
-  const [features, setFeatures] = useState<PointFeature[]>([]);
-  const [loadingTiles, setLoadingTiles] = useState(false);
-  const { loadProperties } = useApi();
+  const { search, properties, loading } = useMapSearch();
   const { changed: filterChanged } = useFilterContext();
   const { draftProperties } = useContext(SelectedPropertyContext);
 
@@ -166,75 +159,23 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       BBOX: tile.bbox,
     }));
   }, [filter]);
-
-  const loadTile = async (mapFilter: IGeoSearchParams) => {
-    return loadProperties(mapFilter);
-  };
-
-  /**
-   * TODO: convert polygon features into lat/lng coordinates, remove this when new Point Geoserver layer available.
-   * @param feature the feature to obtain lat/lng coordinates for.
-   * @returns [lat, lng]
-   */
-  const getLatLng = (feature: any) => {
-    if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-      const latLng = geoJSON(feature.geometry)
-        .getBounds()
-        .getCenter();
-      return [latLng.lng, latLng.lat];
-    }
-    return feature.geometry.coordinates;
-  };
-
-  const search = async (filters: IGeoSearchParams[]) => {
-    //TODO: currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
-    try {
-      onRequestData(true);
-      const tileData = await loadTile(filters[0]);
-      const validFeatures = tileData.features.filter(feature => !!feature?.geometry);
-      const data = validFeatures.map((feature: Feature) => {
-        //TODO: this converts all polygons to points, this should be changed to a View that returns the POINT instead of the POLYGON (psp-1859)
-        return {
-          ...feature,
-          geometry: { type: 'Point', coordinates: getLatLng(feature) },
-          properties: {
-            ...feature.properties,
-          },
-        } as Feature;
-      });
-
-      const results = uniqBy(data, (point: Feature) => `${point?.properties?.PROPERTY_ID}`);
-
-      setFeatures(results as any);
-      setLoadingTiles(false);
-      if (results.length === 0) {
-        toast.info('No search results found');
-      } else {
-        toast.info(`${results.length} properties found`);
-      }
-    } catch (error) {
-      toast.error((error as Error).message, { autoClose: 7000 });
-    } finally {
-      onRequestData(false);
-    }
-  };
-
   useMapRefreshEvent(() => search(params));
   useDeepCompareEffect(() => {
-    setLoadingTiles(true);
-    search(params);
-  }, [params]);
+    if (filterChanged || !properties?.length) {
+      search(params);
+    }
+  }, [params, filterChanged]);
 
   return (
     <PointClusterer
       draftPoints={draftProperties}
-      points={features}
+      points={properties}
       zoom={zoom}
       bounds={bbox}
       onMarkerClick={onMarkerClick}
       zoomToBoundsOnClick={true}
       spiderfyOnMaxZoom={true}
-      tilesLoaded={!loadingTiles}
+      tilesLoaded={!loading}
     />
   );
 };
