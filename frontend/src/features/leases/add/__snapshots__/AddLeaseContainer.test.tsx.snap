@@ -2,22 +2,38 @@
 
 exports[`AddLeaseContainer component renders as expected 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:715px) {
+  @media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
 
 }
 
 @media (max-width:560px) {
+
+}
+
+@media only screen and (max-width:1250px) {
 
 }
 
 <div
     class="Toastify"
   />
-  @media only screen and (max-width:715px) {
+  @media only screen and (max-width:1250px) {
+
+}
+
+@media only screen and (max-width:1250px) {
 
 }
 
 @media (max-width:560px) {
+
+}
+
+@media only screen and (max-width:1250px) {
 
 }
 
@@ -276,7 +292,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c7 {
-  white-space: nowrap;
+  max-width: 60%;
   margin: 0 auto;
   display: -webkit-box;
   display: -webkit-flex;
@@ -289,10 +305,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   -webkit-box-align: flex-start;
   -ms-flex-align: flex-start;
   align-items: flex-start;
-  min-width: 2rem;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+  text-align: left;
 }
 
 .c6 {
@@ -325,6 +338,10 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 .c3 label {
   padding-right: 1rem;
   margin: 0;
+}
+
+.c3 h1 {
+  min-width: 23rem;
 }
 
 .c0 {
@@ -445,7 +462,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c12 .row .col:first-of-type .form-label {
-  min-width: 13.5rem;
+  min-width: 21.5rem;
 }
 
 .c12 .form-control {
@@ -479,7 +496,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
   max-width: fit-content;
-  max-height: 100%;
+  max-height: 8rem;
   min-width: 11rem;
   white-space: nowrap;
   border-radius: 1rem;
@@ -521,7 +538,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .c8 {
@@ -577,9 +596,22 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   row-gap: 0.5rem;
 }
 
-@media only screen and (max-width:715px) {
+@media only screen and (max-width:1250px) {
   .c7 {
-    display: none;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width:1250px) {
+  .c3 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
@@ -594,6 +626,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     max-height: unset;
+  }
+}
+
+@media only screen and (max-width:1250px) {
+  .c8 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
   }
 }
 
@@ -657,16 +698,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
       <div
         class="c7"
       >
-        <div
-          class="c2 c8"
-        >
-          <label>
-            PID:
-          </label>
-          <div
-            class="c9"
-          />
-        </div>
+        <div />
         <div
           class="c2 c8"
         >

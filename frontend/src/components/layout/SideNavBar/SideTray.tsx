@@ -1,9 +1,9 @@
 import clsx from 'classnames';
 import { AdminTools, LeaseAndLicenses, ResearchTray } from 'components/layout';
-import { useEffect, useState } from 'react';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
+import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
 import * as Styled from './styles';
 
@@ -12,6 +12,7 @@ export enum SidebarContextType {
   LEASE = 'lease',
   RESEARCH = 'research',
   CONTACT = 'contact',
+  ACQUISITION = 'acquisition',
 }
 
 interface ISideTrayProps {
@@ -34,6 +35,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [SidebarContextType.LEASE, <LeaseAndLicenses onLinkClick={() => setShow(false)} />],
     [SidebarContextType.RESEARCH, <ResearchTray onLinkClick={() => setShow(false)} />],
     [SidebarContextType.CONTACT, <ContactTray onLinkClick={() => setShow(false)} />],
+    [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={() => setShow(false)} />],
   ]);
 
   useEffect(() => {

@@ -43,6 +43,7 @@ export const AccessRequestFilter = (props: IProps) => {
         <Col className="d-flex" md={4}>
           <Form.Label className="mr-4 font-weight-bold">Search:</Form.Label>
           <Form.Control
+            title="Search by IDIR/Last Name"
             type="text"
             placeholder="IDIR/Last Name"
             value={filterState.searchText}
@@ -54,7 +55,13 @@ export const AccessRequestFilter = (props: IProps) => {
             <SearchButton type="submit" onClick={search} />
           </TooltipWrapper>
           <TooltipWrapper toolTipId="access-filter-reset-tooltip" toolTip="Reset Filter">
-            <Button variant="info" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
+            <Button
+              title="reset"
+              variant="info"
+              size="sm"
+              onClick={reset}
+              icon={<FaUndo size={20} />}
+            />
           </TooltipWrapper>
         </Col>
       </Row>

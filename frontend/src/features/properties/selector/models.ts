@@ -17,5 +17,6 @@ export interface ILayerSearchCriteria {
   pid?: string;
   pin?: string;
   planNumber?: string;
+  legalDescription?: string;
   searchBy?: string;
 }

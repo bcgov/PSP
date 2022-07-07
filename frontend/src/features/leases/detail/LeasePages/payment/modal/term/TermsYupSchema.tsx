@@ -1,9 +1,13 @@
+import { MAX_SQL_MONEY_SIZE } from 'constants/API';
 import { LeaseTermStatusTypes } from 'constants/index';
 import * as Yup from 'yup';
 
 export const LeaseTermSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
+  paymentAmount: Yup.number().max(MAX_SQL_MONEY_SIZE),
+  paymentDueDate: Yup.string().max(200),
+  paymentNote: Yup.string().max(2000),
   statusTypeCode: Yup.object()
     .test({
       name: 'statusTypeTest',

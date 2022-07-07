@@ -10,6 +10,7 @@ import { Col, Row } from 'react-bootstrap';
 import { PropertyForm, ResearchForm } from '../../add/models';
 import ResearchFooter from '../../common/ResearchFooter';
 import { useUpdateResearchProperties } from '../../hooks/useUpdateResearchProperties';
+import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 interface IUpdatePropertiesProps {
   researchFile: Api_ResearchFile;
@@ -21,12 +22,25 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const formResearchFile = ResearchForm.fromApi(props.researchFile);
 
-  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+  const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
+  const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
 
-  const handleSave = async () => {
-    setShowConfirmModal(true);
+  const handleSaveClick = async () => {
+    setShowSaveConfirmModal(true);
+  };
+
+  const handleCancelClick = () => {
+    if (formikRef !== undefined) {
+      if (formikRef.current?.dirty) {
+        setShowCancelConfirmModal(true);
+      } else {
+        handleCancelConfirm();
+      }
+    } else {
+      handleCancelConfirm();
+    }
   };
 
   const handleSaveConfirm = async () => {
@@ -36,10 +50,11 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     }
   };
 
-  const handleCancel = () => {
+  const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    setShowCancelConfirmModal(false);
     props.setIsShowingPropertySelector(false);
   };
 
@@ -60,14 +75,15 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         footer={
           <ResearchFooter
             isOkDisabled={formikRef.current?.isSubmitting}
-            onSave={handleSave}
-            onCancel={handleCancel}
+            onSave={handleSaveClick}
+            onCancel={handleCancelClick}
           />
         }
       >
         <Formik<ResearchForm>
           innerRef={formikRef}
           initialValues={formResearchFile}
+          validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: ResearchForm) => {
             const researchFile: Api_ResearchFile = values.toApi();
             await saveResearchFile(researchFile);
@@ -94,7 +110,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         </Formik>
       </MapSideBarLayout>
       <GenericModal
-        display={showConfirmModal}
+        display={showSaveConfirmModal}
         title={'Confirm changes'}
         message={
           <>
@@ -104,9 +120,26 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           </>
         }
         handleOk={handleSaveConfirm}
-        handleCancel={() => setShowConfirmModal(false)}
+        handleCancel={() => setShowSaveConfirmModal(false)}
         okButtonText="Save"
         cancelButtonText="Cancel"
+        show
+      />
+
+      <GenericModal
+        display={showCancelConfirmModal}
+        title={'Confirm changes'}
+        message={
+          <>
+            <div>If you cancel now, this research file will not be saved.</div>
+            <br />
+            <strong>Are you sure you want to Cancel?</strong>
+          </>
+        }
+        handleOk={handleCancelConfirm}
+        handleCancel={() => setShowCancelConfirmModal(false)}
+        okButtonText="Ok"
+        cancelButtonText="Resume editing"
         show
       />
     </>

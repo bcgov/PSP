@@ -1,5 +1,6 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ResetButton, SearchButton } from 'components/common/buttons';
+import ActiveFilterCheck from 'components/common/form/ActiveFilterCheck';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { InlineInput } from 'components/common/form/styles';
 import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
@@ -8,8 +9,6 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import styled from 'styled-components';
-
-import ActiveFilterCheck from '../../../common/form/ActiveFilterCheck';
 
 export const defaultFilter: IContactFilter = {
   summary: '',

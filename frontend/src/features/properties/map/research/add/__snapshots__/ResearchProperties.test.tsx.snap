@@ -609,15 +609,21 @@ exports[`ResearchProperties component renders as expected when provided no prope
                               </option>
                               <option
                                 class="option"
+                                value="address"
+                              >
+                                Address
+                              </option>
+                              <option
+                                class="option"
                                 value="planNumber"
                               >
                                 Plan #
                               </option>
                               <option
                                 class="option"
-                                value="address"
+                                value="legalDescription"
                               >
-                                Address
+                                Legal Description
                               </option>
                             </select>
                           </div>

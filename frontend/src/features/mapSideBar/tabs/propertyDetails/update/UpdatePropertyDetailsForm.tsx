@@ -1,8 +1,10 @@
 import { Button } from 'components/common/buttons';
 import { Input, Multiselect, Select, Text, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
+import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
+import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { Form, FormikProps, getIn } from 'formik';
@@ -10,6 +12,7 @@ import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import React, { useEffect } from 'react';
 import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../../Section';
@@ -39,6 +42,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
   const propertyTypeOptions = getOptionsByType(API.PROPERTY_LAND_PARCEL_TYPES);
+  const pphTypeOptions = getOptionsByType(API.PPH_STATUS_TYPES);
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map(x =>
     PropertyAnomalyFormModel.fromLookup(x),
   );
@@ -97,6 +101,7 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
 
   return (
     <StyledForm>
+      <UnsavedChangesPrompt />
       <Content vertical>
         <Section header="Property Attributes">
           <SectionField label="MOTI region">
@@ -126,6 +131,9 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
           </SectionField>
           <SectionField label="Agricultural Land Reserve">
             <Text>{values.isALR ? 'Yes' : 'No'}</Text>
+          </SectionField>
+          <SectionField label="Railway belt / Dominion patent">
+            <YesNoSelect field="isRwyBeltDomPatent"></YesNoSelect>
           </SectionField>
           <SectionField label="Land parcel type">
             <Select
@@ -159,7 +167,17 @@ export const UpdatePropertyDetailsForm: React.FC<IUpdatePropertyDetailsFormProps
             />
           </SectionField>
           <SectionField label="Provincial Public Hwy">
-            <YesNoSelect field="isProvincialPublicHwy"></YesNoSelect>
+            <Select field="pphStatusTypeCode" options={pphTypeOptions} />
+            {values?.pphStatusUpdateTimestamp && (
+              <p className="text-right font-italic">
+                PPH status last updated by{' '}
+                <UserNameTooltip
+                  userName={values?.pphStatusUpdateUserid}
+                  userGuid={values?.pphStatusUpdateUserGuid}
+                />{' '}
+                on {prettyFormatDate(values?.pphStatusUpdateTimestamp)}
+              </p>
+            )}
           </SectionField>
           {isHighwayRoad && (
             <SectionField label="Highway / Road">

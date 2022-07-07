@@ -94,6 +94,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
     cancelButtonVariant,
     cancelButtonText,
     closeButton,
+    ...rest
   } = props;
   const [show, setShow] = useState(true);
 
@@ -125,7 +126,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
   };
 
   return (
-    <ModalContainer {...props} show={showState}>
+    <ModalContainer {...rest} show={showState}>
       <Modal.Header closeButton={closeButton}>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

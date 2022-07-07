@@ -1,8 +1,9 @@
-import { InlineInput } from 'components/common/form/styles';
-import * as React from 'react';
+import { Input } from 'components/common/form/';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import ResearchProperties from './ResearchProperties';
 
 const AddResearchForm: React.FunctionComponent = () => {
@@ -13,10 +14,11 @@ const AddResearchForm: React.FunctionComponent = () => {
           <strong>Name this research file:</strong>
         </Col>
         <Col xs="auto">
-          <LargeInlineInput field="name" />A unique file number will be generated for this research
-          file on save.
+          <LargeInput field="name" placeholder="Road name - Descriptive text" />A unique file number
+          will be generated for this research file on save.
         </Col>
       </Row>
+      <ResearchFileNameGuide />
       <ResearchProperties />
     </>
   );
@@ -24,7 +26,7 @@ const AddResearchForm: React.FunctionComponent = () => {
 
 export default AddResearchForm;
 
-const LargeInlineInput = styled(InlineInput)`
+const LargeInput = styled(Input)`
   input.form-control {
     min-width: 50rem;
     max-width: 50rem;

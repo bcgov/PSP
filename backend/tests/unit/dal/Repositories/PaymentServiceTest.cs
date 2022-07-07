@@ -14,6 +14,7 @@ using Xunit;
 using Entity = Pims.Dal.Entities;
 using Moq;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
+using Pims.Dal.Repositories;
 
 namespace Pims.Dal.Test.Services
 {
@@ -27,8 +28,8 @@ namespace Pims.Dal.Test.Services
         public TestHelper helper;
         public ILeasePaymentService paymentService;
         public Mock<ILeaseService> leaseService;
-        public Mock<Repositories.ILeaseTermRepository> leaseTermRepository;
-        public Mock<Repositories.ILeasePaymentRepository> leasePaymentRepository;
+        public Mock<ILeaseTermRepository> leaseTermRepository;
+        public Mock<ILeasePaymentRepository> leasePaymentRepository;
 
         public LeaseServicePaymentTest() {
             helper = new TestHelper();
@@ -45,8 +46,8 @@ namespace Pims.Dal.Test.Services
         {
             paymentService = helper.Create<LeasePaymentService>();
             leaseService = helper.GetService<Mock<ILeaseService>>();
-            leaseTermRepository = helper.GetService<Mock<Repositories.ILeaseTermRepository>>();
-            leasePaymentRepository = helper.GetService<Mock<Repositories.ILeasePaymentRepository>>();
+            leaseTermRepository = helper.GetService<Mock<ILeaseTermRepository>>();
+            leasePaymentRepository = helper.GetService<Mock<ILeasePaymentRepository>>();
         }
 
         #region Tests

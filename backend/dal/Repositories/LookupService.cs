@@ -240,6 +240,11 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsVolumetricTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+
+        public IEnumerable<PimsPphStatusType> GetPPHStatusType()
+        {
+            return this.Context.PimsPphStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }

@@ -5,25 +5,25 @@ exports[`MapView Renders the map 1`] = `
   <div
     class="Toastify"
   />
-  .c5 {
+  .c4 {
   padding-right: 0;
 }
 
-.c5 .form-control {
+.c4 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c6:not(:first-child) {
+.c5:not(:first-child) {
   padding-left: 0;
 }
 
-.c6:not(:first-child) .form-control {
+.c5:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c7.btn {
+.c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -53,49 +53,49 @@ exports[`MapView Renders the map 1`] = `
   cursor: pointer;
 }
 
-.c7.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -115,9 +115,9 @@ exports[`MapView Renders the map 1`] = `
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -126,14 +126,14 @@ exports[`MapView Renders the map 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -144,75 +144,49 @@ exports[`MapView Renders the map 1`] = `
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3 {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c8 div:nth-child(1) div:nth-child(1) {
+.c7 div:nth-child(1) div:nth-child(1) {
   cursor: auto;
 }
 
-.c8 div:nth-child(1) div:nth-child(1) svg {
+.c7 div:nth-child(1) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c8 div:nth-child(2) div:nth-child(1) {
+.c7 div:nth-child(2) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c8 div:nth-child(2) div:nth-child(1) svg {
+.c7 div:nth-child(2) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c9 {
+.c8 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -229,50 +203,50 @@ exports[`MapView Renders the map 1`] = `
   align-items: center;
 }
 
-.c10 svg {
+.c9 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
 }
 
-.c11 {
+.c10 {
   grid-area: map;
 }
 
-.c11 .leaflet-div-icon {
+.c10 .leaflet-div-icon {
   background: none;
   border: none;
 }
 
-.c11 .leaflet-div-icon img {
+.c10 .leaflet-div-icon img {
   width: inherit;
   height: inherit;
   -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
   filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
 }
 
-.c11 .leaflet-container {
+.c10 .leaflet-container {
   height: 100%;
   margin: auto;
 }
 
-.c11 .leaflet-container .leaflet-popup-content-wrapper {
+.c10 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
 
-.c11 .leaflet-container .leaflet-popup-content {
+.c10 .leaflet-container .leaflet-popup-content {
   margin: 0rem;
 }
 
-.c11 .leaflet-container .leaflet-control-container .leaflet-top {
+.c10 .leaflet-container .leaflet-control-container .leaflet-top {
   z-index: 500;
 }
 
-.c11 .leaflet-control-layers.leaflet-control-layers-expanded {
+.c10 .leaflet-control-layers.leaflet-control-layers-expanded {
   border-radius: 0rem;
 }
 
-.c11 .leaflet-control-layers .leaflet-control-layers-overlays {
+.c10 .leaflet-control-layers .leaflet-control-layers-overlays {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -284,7 +258,7 @@ exports[`MapView Renders the map 1`] = `
   width: 15rem;
 }
 
-.c11 .leaflet-control-layers .leaflet-control-layers-overlays label {
+.c10 .leaflet-control-layers .leaflet-control-layers-overlays label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -308,7 +282,7 @@ exports[`MapView Renders the map 1`] = `
   transition: 1s;
 }
 
-.c4 {
+.c3 {
   -webkit-transition: margin 1s;
   transition: margin 1s;
   grid-area: filter;
@@ -317,7 +291,7 @@ exports[`MapView Renders the map 1`] = `
   z-index: 500;
 }
 
-.c4 .map-filter-bar {
+.c3 .map-filter-bar {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -329,7 +303,7 @@ exports[`MapView Renders the map 1`] = `
   padding: 0.5rem 0;
 }
 
-.c4 .map-filter-bar .vl {
+.c3 .map-filter-bar .vl {
   border-left: 6px solid rgba(96,96,96,0.2);
   height: 4rem;
   margin-left: 1%;
@@ -337,7 +311,7 @@ exports[`MapView Renders the map 1`] = `
   border-width: 0.2rem;
 }
 
-.c4 .map-filter-bar .btn-primary {
+.c3 .map-filter-bar .btn-primary {
   color: white;
   font-weight: bold;
   height: 3.5rem;
@@ -346,11 +320,11 @@ exports[`MapView Renders the map 1`] = `
   padding: 0;
 }
 
-.c4 .map-filter-bar .form-control {
+.c3 .map-filter-bar .form-control {
   font-size: 1.4rem;
 }
 
-.c4 .form-group {
+.c3 .form-group {
   margin-bottom: 0;
 }
 
@@ -403,15 +377,7 @@ exports[`MapView Renders the map 1`] = `
       class="c2 px-0 map"
     >
       <div
-        class="c3"
-      >
-        <div
-          class="spinner-border text-warning"
-          data-testid="filter-backdrop-loading"
-        />
-      </div>
-      <div
-        class="c4 px-0 container-fluid"
+        class="c3 px-0 container-fluid"
       >
         <form
           class=""
@@ -434,7 +400,7 @@ exports[`MapView Renders the map 1`] = `
                 class="idir-input-group flex-nowrap row"
               >
                 <div
-                  class="c5 col-auto"
+                  class="c4 col-auto"
                 >
                   <div
                     class="input-group-prepend"
@@ -464,7 +430,7 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c6 col"
+                  class="c5 col"
                 >
                   <div
                     class="input form-group"
@@ -485,7 +451,7 @@ exports[`MapView Renders the map 1`] = `
               class="col-auto"
             >
               <button
-                class="c7 Button Button--icon-only primary btn btn-primary"
+                class="c6 Button Button--icon-only primary btn btn-primary"
                 data-testid="search"
                 id="search-button"
                 title="search"
@@ -514,7 +480,7 @@ exports[`MapView Renders the map 1`] = `
               class="col-auto"
             >
               <button
-                class="c7 Button Button--icon-only btn btn-info"
+                class="c6 Button Button--icon-only btn btn-info"
                 data-testid="reset-button"
                 id="reset-button"
                 title="reset-button"
@@ -543,13 +509,13 @@ exports[`MapView Renders the map 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c8"
+                class="c7"
               >
                 <div
-                  class="c9"
+                  class="c8"
                 >
                   <div
-                    class="c10"
+                    class="c9"
                   >
                     <svg>
                       icon-map.svg
@@ -557,10 +523,10 @@ exports[`MapView Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c9"
+                  class="c8"
                 >
                   <div
-                    class="c10"
+                    class="c9"
                   >
                     <svg>
                       icon-table.svg
@@ -573,7 +539,7 @@ exports[`MapView Renders the map 1`] = `
         </form>
       </div>
       <div
-        class="c11"
+        class="c10"
       >
         <div />
       </div>
