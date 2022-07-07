@@ -6,6 +6,7 @@ export * from './countryCodes';
 export * from './districtCodes';
 export * from './environment';
 export * from './leaseStatusTypes';
+export * from './noteTypes';
 export * from './organizationIdentifierTypes';
 export * from './organizationTypes';
 export * from './projectRiskTypes';
