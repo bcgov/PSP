@@ -81,6 +81,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         foundProperties.map(p => matchRegionAndDistrict(p, regionService, districtService)),
       );
 
+      debugger;
       setSearchResults(foundProperties);
     };
     searchFunc();
