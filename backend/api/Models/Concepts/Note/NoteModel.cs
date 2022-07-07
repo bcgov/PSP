@@ -1,10 +1,10 @@
 
-namespace Pims.Dal.Entities.Models
+namespace Pims.Api.Models.Concepts
 {
     /// <summary>
     /// NoteModel class, provides a model to represent notes associated to entities.
     /// </summary>
-    public class NoteModel
+    public class NoteModel : BaseAppModel
     {
         #region Properties
 
@@ -17,11 +17,6 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The note text contents.
         /// </summary>
         public string Note { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency number.
-        /// </summary>
-        public long RowVersion { get; set; }
 
         #endregion
 

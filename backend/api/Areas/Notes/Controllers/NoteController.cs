@@ -2,17 +2,17 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Constants;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
-using Pims.Dal.Constants;
-using Pims.Dal.Entities.Models;
+using Pims.Api.Services;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Notes.Controllers
 {
     /// <summary>
-    /// NotesController class, provides endpoints for interacting with notes.
+    /// NoteController class, provides endpoints for interacting with notes.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -20,23 +20,23 @@ namespace Pims.Api.Areas.Notes.Controllers
     [Area("notes")]
     [Route("v{version:apiVersion}/[area]")]
     [Route("[area]")]
-    public class NotesController : ControllerBase
+    public class NoteController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly INoteService _noteService;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a NotesController class, initializes it with the specified arguments.
+        /// Creates a new instance of a NoteController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="noteService"></param>
         /// <param name="mapper"></param>
         ///
-        public NotesController(IPimsService pimsService, IMapper mapper)
+        public NoteController(INoteService noteService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _noteService = noteService;
             _mapper = mapper;
         }
         #endregion
@@ -56,7 +56,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [SwaggerOperation(Tags = new[] { "note" })]
         public IActionResult AddNote(NoteType type, [FromBody] EntityNoteModel noteModel)
         {
-            var createdNote = _pimsService.NoteService.Add(type, noteModel);
+            var createdNote = _noteService.Add(type, noteModel);
             return new JsonResult(createdNote);
         }
         #endregion

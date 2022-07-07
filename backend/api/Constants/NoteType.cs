@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Pims.Dal.Constants
+namespace Pims.Api.Constants
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum NoteType

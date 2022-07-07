@@ -1,5 +1,4 @@
 using Mapster;
-using Pims.Dal.Entities.Models;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts
@@ -12,12 +11,12 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Note, src => src.NoteTxt)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber);
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<NoteModel, Entity.PimsNote>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.NoteTxt, src => src.Note)
-                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion);
+                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
 }

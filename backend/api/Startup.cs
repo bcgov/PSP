@@ -309,6 +309,7 @@ namespace Pims.Api
         {
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IDocumentSyncService, DocumentSyncService>();
+            services.AddScoped<INoteService, NoteService>();
         }
 
         /// <summary>

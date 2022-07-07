@@ -1,19 +1,20 @@
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
+using Pims.Api.Models.Concepts;
 using Pims.Core.Extensions;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class NoteService : BaseService, INoteService
     {
-        private readonly Repositories.INoteRepository _noteRepository;
-        private readonly Repositories.IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRepository _noteRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -21,8 +22,10 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="user"></param>
         /// <param name="logger"></param>
+        /// <param name="mapper"></param>
         /// <param name="noteRepository"></param>
-        public NoteService(ClaimsPrincipal user, ILogger<BaseService> logger, IMapper mapper, Repositories.INoteRepository noteRepository, Repositories.IEntityNoteRepository entityNoteRepository) : base(user, logger)
+        /// <param name="entityNoteRepository"></param>
+        public NoteService(ClaimsPrincipal user, ILogger<NoteService> logger, IMapper mapper, INoteRepository noteRepository, IEntityNoteRepository entityNoteRepository) : base(user, logger)
         {
             _mapper = mapper;
             _noteRepository = noteRepository;

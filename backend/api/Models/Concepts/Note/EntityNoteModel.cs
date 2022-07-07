@@ -1,9 +1,9 @@
-namespace Pims.Dal.Entities.Models
+namespace Pims.Api.Models.Concepts
 {
     /// <summary>
     /// EntityNoteModel class, provides a model to represent notes associated to entities.
     /// </summary>
-    public class EntityNoteModel
+    public class EntityNoteModel : BaseAppModel
     {
         #region Properties
 
@@ -15,14 +15,12 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The parent entity that owns this note. Notes are associated to parent entities.
         /// </summary>
-        public ParentModel Parent { get; set; }
+        public NoteParentModel Parent { get; set; }
 
         /// <summary>
         /// get/set - The note model.
         /// </summary>
         public NoteModel Note { get; set; }
-
-        public long RowVersion { get; set; }
 
         #endregion
     }

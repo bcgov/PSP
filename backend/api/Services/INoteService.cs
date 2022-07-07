@@ -1,7 +1,7 @@
-using Pims.Dal.Constants;
-using Pims.Dal.Entities.Models;
+using Pims.Api.Constants;
+using Pims.Api.Models.Concepts;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public interface INoteService
     {

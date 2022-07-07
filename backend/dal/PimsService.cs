@@ -59,10 +59,6 @@ namespace Pims.Dal
         /// get - The property service.
         /// </summary>
         public IPropertyService PropertyService { get { return _serviceProvider.GetService<IPropertyService>(); } }
-        /// <summary>
-        /// get - The note service.
-        /// </summary>
-        public INoteService NoteService { get { return _serviceProvider.GetService<INoteService>(); } }
         #endregion
 
         #region Constructors
