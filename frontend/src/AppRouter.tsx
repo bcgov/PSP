@@ -15,7 +15,6 @@ import PublicLayout from 'layouts/PublicLayout';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
 import Test from 'pages/Test.ignore';
 import { TestFileManagement } from 'pages/TestFileManagement';
-import { TestNotes } from 'pages/TestNotesResultView';
 import { TestNotes } from 'pages/TestNotes';
 import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -234,13 +233,6 @@ const AppRouter: React.FC = () => {
           component={TestFileManagement}
           layout={AuthLayout}
         />
-        <AppRoute
-          path="/testNoteHey"
-          title={getTitle('Test')}
-          component={TestNotes}
-          layout={AuthLayout}
-        />
-
         <AppRoute
           exact
           path="/test/notes"

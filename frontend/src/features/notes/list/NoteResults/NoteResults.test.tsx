@@ -1,5 +1,5 @@
-import { INoteResult } from 'interfaces/INoteResult';
 import { noop } from 'lodash';
+import { Api_Note } from 'models/api/Note';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { INoteResultProps, NoteResults } from './NoteResults';
@@ -27,7 +27,7 @@ const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { resu
   };
 };
 
-const mockResults: INoteResult[] = [
+const mockResults: Api_Note[] = [
   { note: 'Note 1', appCreateTimestamp: '10-Jan-2022', appLastUpdateUserid: 'test user1', id: 1 },
   { note: 'Note 2', appCreateTimestamp: '10-Jan-2022', appLastUpdateUserid: 'test user2', id: 2 },
 ];

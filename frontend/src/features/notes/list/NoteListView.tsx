@@ -1,10 +1,10 @@
 import GenericModal from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
+import { NoteTypes } from 'constants/noteTypes';
 import { useApiNotes } from 'hooks/pims-api/useApiNotes';
 import useIsMounted from 'hooks/useIsMounted';
-import { INoteResult } from 'interfaces/INoteResult';
 import { orderBy } from 'lodash';
-import { NoteType } from 'models/api/Note';
+import { Api_Note } from 'models/api/Note';
 import React from 'react';
 import { toast } from 'react-toastify';
 
@@ -12,7 +12,7 @@ import { NoteResults } from './NoteResults/NoteResults';
 import * as Styled from './styles';
 
 export interface INoteListViewProps {
-  type: NoteType;
+  type: NoteTypes;
 }
 /**
  * Page that displays notes information.
@@ -25,10 +25,10 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
   const { getNotes, deleteNote } = useApiNotes();
 
   const [showDeleteConfirm, setShowDeleteConfirm] = React.useState<boolean>(false);
-  const [currentNote, setCurrentNote] = React.useState<INoteResult>();
+  const [currentNote, setCurrentNote] = React.useState<Api_Note>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [sort, setSort] = React.useState<TableSort<INoteResult>>({});
-  const [noteResult, setNoteResult] = React.useState<INoteResult[]>([]);
+  const [sort, setSort] = React.useState<TableSort<Api_Note>>({});
+  const [noteResult, setNoteResult] = React.useState<Api_Note[]>([]);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -46,7 +46,7 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
       const sortFields = Object.keys(sort);
       if (sortFields?.length > 0) {
         const keyName = (sort as any)[sortFields[0]];
-        return orderBy(noteResult, sortFields[0], keyName) as INoteResult[];
+        return orderBy(noteResult, sortFields[0], keyName) as Api_Note[];
       }
       return noteResult;
     }
@@ -81,7 +81,7 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
           loading={isLoading}
           sort={sort}
           setSort={setSort}
-          onDelete={(note: INoteResult) => {
+          onDelete={(note: Api_Note) => {
             setCurrentNote(note);
             setShowDeleteConfirm(true);
           }}

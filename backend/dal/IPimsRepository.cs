@@ -39,10 +39,6 @@ namespace Pims.Dal
         IContactRepository Contact { get; }
         #endregion
 
-        #region Notes
-        INoteRepository Note { get; }
-        #endregion
-
         #region Insurance
         IInsuranceRepository Insurance { get; }
         #endregion

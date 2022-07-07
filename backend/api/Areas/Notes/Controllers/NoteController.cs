@@ -1,6 +1,7 @@
 
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
@@ -8,6 +9,7 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Notes.Controllers
 {
@@ -59,35 +61,21 @@ namespace Pims.Api.Areas.Notes.Controllers
             var createdNote = _noteService.Add(type, noteModel);
             return new JsonResult(createdNote);
         }
-/// Get the notes for the specified type.
+
+        /// <summary>
+        /// Get the notes for the specified type.
         /// </summary>
         /// <param name="type">Used to identify note type.</param>
         /// <returns></returns>
         [HttpGet("{type}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.NoteModel>), 200)]
+        [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult GetNotes(Models.NoteType type)
         public IActionResult GetNotes(NoteType type)
         {
-            switch (type)
-            {
-                case Models.NoteType.Activity:
-                    var notes = _pimsService.Note.GetActivityNotes();
-                    var mappedNotes = _mapper.Map<List<Models.NoteModel>>(notes);
-            var notes = _pimsService.GetNotes(type);
+            var notes = _noteService.GetNotes(type);
             var mappedNotes = _mapper.Map<List<NoteModel>>(notes);
-
-                    return new JsonResult(mappedNotes);
-
-                case Models.NoteType.File:
-                    return new JsonResult(new List<Models.NoteModel>());
-
-                default:
-                    return NotFound();
-            }
             return new JsonResult(mappedNotes);
         }
 
@@ -99,25 +87,13 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <returns></returns>
         [HttpDelete("{type}/{noteId}")]
         [Produces("application/json")]
+        [HasPermission(Permissions.NoteDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult DeleteNote(Models.NoteType type, int noteId)
         public IActionResult DeleteNote(NoteType type, int noteId)
         {
-            switch (type)
-            {
-                case Models.NoteType.Activity:
-                    _pimsService.Note.DeleteActivityNotes(noteId);
-
-                    return new JsonResult(true);
-                case Models.NoteType.File:
-                    return new JsonResult(true);
-
-                default:
-                    return NotFound();
-            }
-            _pimsService.DeleteNote(type, noteId);
+            _noteService.DeleteNote(type, noteId);
             return new JsonResult(true);
         }
         #endregion

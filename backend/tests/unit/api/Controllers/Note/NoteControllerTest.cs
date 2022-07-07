@@ -2,8 +2,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-
-
+using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Core.Test;
@@ -21,7 +20,7 @@ using SModel = Pims.Api.Areas.Notes;
 using FluentAssertions;
 using Pims.Api.Areas.Notes.Controllers;
 using Pims.Dal.Entities;
-using Pims.Dal.Models;
+using Pims.Api.Services;
 
 namespace Pims.Api.Test.Controllers.Note
 {
@@ -64,7 +63,7 @@ namespace Pims.Api.Test.Controllers.Note
             service.Setup(m => m.GetNotes(It.IsAny<NoteType>())).Returns(notes);
 
             // Act
-            var result = controller.GetNotes(NoteType.Activity);
+            var result = controller.GetNotes(Constants.NoteType.Activity);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -87,7 +86,7 @@ namespace Pims.Api.Test.Controllers.Note
             service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<int>()));
 
             // Act
-            var result = controller.DeleteNote(NoteType.Activity, 1);
+            var result = controller.DeleteNote(Constants.NoteType.Activity, 1);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

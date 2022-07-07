@@ -1,23 +1,23 @@
 import { IconButton } from 'components/common/buttons';
 import { ColumnWithProps, DateCell, Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { INoteResult } from 'interfaces/INoteResult';
+import { Api_Note } from 'models/api/Note';
 import { MdDelete } from 'react-icons/md';
 import { CellProps } from 'react-table';
 
 export interface INoteResultProps {
-  results: INoteResult[];
+  results: Api_Note[];
   loading?: boolean;
 
-  onDelete: (note: INoteResult) => void;
-  sort: TableSort<INoteResult>;
-  setSort: (value: TableSort<INoteResult>) => void;
+  onDelete: (note: Api_Note) => void;
+  sort: TableSort<Api_Note>;
+  setSort: (value: TableSort<Api_Note>) => void;
 }
 
 export function NoteResults(props: INoteResultProps) {
   const { results, setSort, sort, ...rest } = props;
 
-  const columns: ColumnWithProps<INoteResult>[] = [
+  const columns: ColumnWithProps<Api_Note>[] = [
     {
       Header: 'Note',
       accessor: 'note',
@@ -51,7 +51,7 @@ export function NoteResults(props: INoteResultProps) {
       sortable: false,
       width: 10,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<INoteResult>) => {
+      Cell: (cellProps: CellProps<Api_Note>) => {
         return (
           <IconButton
             title="Delete Note"
@@ -67,7 +67,7 @@ export function NoteResults(props: INoteResultProps) {
     },
   ];
   return (
-    <Table<INoteResult>
+    <Table<Api_Note>
       name="notesTable"
       manualSortBy={false}
       pageSize={-1}

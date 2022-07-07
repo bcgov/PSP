@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -15,6 +16,7 @@ namespace Pims.Dal.Repositories
     public class NoteRepository : BaseRepository<PimsNote>, INoteRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a NoteRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -52,22 +54,15 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
-public int Count()
+        public int Count()
         {
             return this.Context.PimsNotes.Count();
         }
 
-        public PimsNote Find(params object[] keyValues)
-        {
-            return this.Context.Find<PimsNote>(keyValues);
-        }
-
         public IEnumerable<PimsNote> GetActivityNotes()
         {
-            return (from note in this.Context.PimsNotes
-                    join activityNotes in this.Context.PimsActivityInstanceNotes on note.NoteId equals activityNotes.NoteId
-                    where activityNotes.IsDisabled == false
-                    select note).ToList();
+            return this.Context.PimsNotes
+                .Include(n => n.PimsActivityInstanceNotes.Where(x => x.IsDisabled == false)).ToArray();
         }
 
         public void DeleteActivityNotes(int noteId)

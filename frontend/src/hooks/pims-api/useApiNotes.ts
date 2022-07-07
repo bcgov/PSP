@@ -1,7 +1,8 @@
-import { Api_Note, NoteType } from 'models/api/Note';
+import { NoteTypes } from 'constants/noteTypes';
+import { Api_EntityNote, Api_Note } from 'models/api/Note';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { useAxiosApi } from './';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the note endpoints.
@@ -13,11 +14,10 @@ export const useApiNotes = () => {
 
   return React.useMemo(
     () => ({
-
       postNote: (type: NoteTypes, note: Api_EntityNote) =>
         api.post<Api_EntityNote>(`/notes/${type}`, note),
-      getNotes: (type: NoteType) => api.get<Api_Note[]>(`/notes/${type}`),
-      deleteNote: (type: NoteType, noteId: number) =>
+      getNotes: (type: NoteTypes) => api.get<Api_Note[]>(`/notes/${type}`),
+      deleteNote: (type: NoteTypes, noteId: number) =>
         api.delete<boolean>(`/notes/${type}/${noteId}`),
     }),
     [api],

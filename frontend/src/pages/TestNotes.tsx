@@ -1,5 +1,7 @@
 import { Button } from 'components/common/buttons';
+import { NoteTypes } from 'constants/noteTypes';
 import { AddNotesContainer } from 'features/notes/add/AddNotesContainer';
+import NoteListView from 'features/notes/list/NoteListView';
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
@@ -21,6 +23,8 @@ export const TestNotes: React.FC = () => {
           showNotes={show}
           setShowNotes={setShow}
         />
+
+        <NoteListView type={NoteTypes.Activity} />
       </Row>
     </Container>
   );
