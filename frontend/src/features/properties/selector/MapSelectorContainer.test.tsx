@@ -12,6 +12,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
+import { PropertyForm } from '../map/research/add/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 import { featuresToIdentifiedMapProperty } from './search/PropertySelectorSearchContainer';
@@ -102,12 +103,16 @@ describe('MapSelectorContainer component', () => {
   });
 
   it('lists selected properties', () => {
-    const { getByText } = setup({ existingProperties: [testProperty] });
+    const { getByText } = setup({
+      existingProperties: [PropertyForm.fromMapProperty(testProperty)],
+    });
     expect(getByText('PID: 123-456-789')).toBeVisible();
   });
 
   it('selected properties can be removed', () => {
-    const { getByText } = setup({ existingProperties: [testProperty] });
+    const { getByText } = setup({
+      existingProperties: [PropertyForm.fromMapProperty(testProperty)],
+    });
     const removeButton = getByText('Remove');
     userEvent.click(removeButton);
     expect(onRemoveProperty).toHaveBeenCalled();
@@ -145,7 +150,9 @@ describe('MapSelectorContainer component', () => {
 
   it('selected properties display a warning if added multiple times', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
-      existingProperties: featuresToIdentifiedMapProperty(mockPropertyLayerSearchResponse as any),
+      existingProperties: featuresToIdentifiedMapProperty(
+        mockPropertyLayerSearchResponse as any,
+      )?.map(p => PropertyForm.fromMapProperty(p)),
     });
 
     const searchTab = getByText('Search');

@@ -23,6 +23,7 @@ import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
+import { PropertyContext } from '../providers/PropertyContext';
 import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { InventoryLayer } from './InventoryLayer';
 import { LayerPopup, LayerPopupInformation } from './LayerPopup';
@@ -43,7 +44,6 @@ export type MapProps = {
   lng: number;
   zoom?: number;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
-  disableMapFilterBar?: boolean;
   showSideBar: boolean;
   showParcelBoundaries?: boolean;
   whenCreated?: (map: LeafletMap) => void;
@@ -91,7 +91,6 @@ const Map: React.FC<MapProps> = ({
   showSideBar,
   whenReady,
   whenCreated,
-  disableMapFilterBar,
   onPropertyMarkerClick,
   onViewPropertyClick,
 }) => {
@@ -116,6 +115,7 @@ const Map: React.FC<MapProps> = ({
   const tileRef = useRef<LeafletTileLayer>(null);
 
   const { setPropertyInfo, propertyInfo, selectedFeature } = useContext(SelectedPropertyContext);
+  const { propertiesLoading } = useContext(PropertyContext);
 
   if (mapRef.current && !propertyInfo) {
     const center = mapRef.current.getCenter();
@@ -131,7 +131,6 @@ const Map: React.FC<MapProps> = ({
     parcelLayerFeature,
     setLayerPopup,
   });
-  const [showLoadingBackdrop, setShowLoadingBackdrop] = useState(true);
 
   const lastZoom = useAppSelector(state => state.mapViewZoom) ?? zoomProp;
   const [zoom, setZoom] = useState(lastZoom);
@@ -212,8 +211,8 @@ const Map: React.FC<MapProps> = ({
 
   return (
     <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map', { sidebar: showSideBar })}>
-      <LoadingBackdrop show={showLoadingBackdrop} />
-      {!showSideBar && !disableMapFilterBar ? (
+      <LoadingBackdrop show={propertiesLoading} />
+      {!showSideBar ? (
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             defaultFilter={{
@@ -278,7 +277,6 @@ const Map: React.FC<MapProps> = ({
               onPropertyMarkerClick(property);
             }}
             filter={geoFilter}
-            onRequestData={setShowLoadingBackdrop}
           ></InventoryLayer>
         </ReactLeafletMap>
       </Styled.MapContainer>

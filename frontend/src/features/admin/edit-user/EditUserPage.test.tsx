@@ -41,15 +41,6 @@ const store = mockStore({
 
 const mockAxios = new MockAdapter(axios);
 
-const testRender = () =>
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <EditUserPage userKey="TEST-ID" />,
-      </Router>
-    </Provider>,
-  );
-
 const renderEditUserPage = () =>
   render(
     <Provider store={store}>
@@ -73,10 +64,12 @@ describe('Edit user page', () => {
     jest.clearAllMocks();
   });
   beforeEach(() => {
+    mockAxios.reset();
     mockAxios.onAny().reply(200, getUserMock());
   });
+
   it('EditUserPage renders', async () => {
-    const { container, getByTestId } = render(
+    const { asFragment, getByTestId } = render(
       <Provider store={store}>
         <Router history={history}>
           <EditUserPage userKey="TEST-ID" />,
@@ -84,7 +77,7 @@ describe('Edit user page', () => {
       </Provider>,
     );
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(container.firstChild).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('contains role options from lookup code + please select disabled option', async () => {
@@ -94,8 +87,9 @@ describe('Edit user page', () => {
     expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
   });
 
-  it('Does not display disabled roles', () => {
-    const { queryByText } = testRender();
+  it('Does not display disabled roles', async () => {
+    const { queryByText, getByTestId } = renderEditUserPage();
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
     expect(queryByText('disabledRole')).toBeNull();
   });
 
@@ -113,8 +107,10 @@ describe('Edit user page', () => {
 
   describe('when the user edit form is submitted', () => {
     it('displays a loading toast', async () => {
-      const { getByText, findByText } = renderEditUserPage();
+      const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
+      mockAxios.onGet().reply(200, getUserMock());
+      await findByDisplayValue('pos');
       act(() => {
         saveButton.click();
       });
@@ -122,8 +118,11 @@ describe('Edit user page', () => {
     });
 
     it('displays a success toast if the request passes', async () => {
-      const { getByText, findByText } = renderEditUserPage();
+      const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
+      mockAxios.onGet().reply(200, getUserMock());
+      mockAxios.onPut().reply(200, {});
+      await findByDisplayValue('pos');
       act(() => {
         saveButton.click();
       });
@@ -131,10 +130,11 @@ describe('Edit user page', () => {
     });
 
     it('displays an error toast if the request fails', async () => {
-      const { getByText, findByText } = renderEditUserPage();
+      const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
-      mockAxios.reset();
-      mockAxios.onAny().reply(500, {});
+      mockAxios.onGet().replyOnce(200, getUserMock());
+      mockAxios.onPut().reply(500, {});
+      await findByDisplayValue('pos');
       act(() => {
         saveButton.click();
       });
