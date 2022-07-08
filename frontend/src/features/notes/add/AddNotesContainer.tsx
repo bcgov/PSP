@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useAddNote } from '../hooks/useAddNote';
 import { AddNotesForm } from './AddNotesForm';
+import { AddNotesYupSchema } from './AddNotesYupSchema';
 import { EntityNoteForm } from './models';
 
 export interface IAddNotesContainerProps {
@@ -46,7 +47,12 @@ export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
   noteForm.parentId = props.parentId;
 
   return (
-    <Formik<EntityNoteForm> enableReinitialize initialValues={noteForm} onSubmit={saveNote}>
+    <Formik<EntityNoteForm>
+      enableReinitialize
+      validationSchema={AddNotesYupSchema}
+      initialValues={noteForm}
+      onSubmit={saveNote}
+    >
       {() => (
         <AddNotesForm
           showNotes={props.showNotes}
