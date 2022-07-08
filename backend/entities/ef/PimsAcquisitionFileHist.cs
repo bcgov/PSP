@@ -8,21 +8,58 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_ACQUISITION_FILE_HIST")]
+    [Index(nameof(AcquisitionFileHistId), nameof(EndDateHist), Name = "PIMS_ACQNFL_H_UK", IsUnique = true)]
+    public partial class PimsAcquisitionFileHist
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
+        [Column("_ACQUISITION_FILE_HIST_ID")]
+        public long AcquisitionFileHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Required]
+        [Column("ACQUISITION_FILE_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcquisitionFileStatusTypeCode { get; set; }
+        [Required]
+        [Column("ACQUISITION_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcquisitionTypeCode { get; set; }
+        [Column("ACQUISITION_FUNDING_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcquisitionFundingTypeCode { get; set; }
+        [Column("ACQ_PHYS_FILE_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcqPhysFileStatusTypeCode { get; set; }
+        [Column("MINISTRY_PROJECT_NUMBER")]
+        [StringLength(20)]
+        public string MinistryProjectNumber { get; set; }
+        [Column("MINISTRY_PROJECT_NAME")]
+        [StringLength(100)]
+        public string MinistryProjectName { get; set; }
+        [Column("CPS_PRODUCT_CODE")]
+        [StringLength(12)]
+        public string CpsProductCode { get; set; }
+        [Required]
+        [Column("FILE_NAME")]
+        [StringLength(500)]
+        public string FileName { get; set; }
+        [Column("FILE_NUMBER")]
+        [StringLength(18)]
+        public string FileNumber { get; set; }
+        [Column("REGION_CODE")]
+        public short RegionCode { get; set; }
+        [Column("FUNDING_OTHER")]
+        [StringLength(200)]
+        public string FundingOther { get; set; }
+        [Column("ASSIGNED_DATE", TypeName = "datetime")]
+        public DateTime? AssignedDate { get; set; }
+        [Column("DELIVERY_DATE", TypeName = "datetime")]
+        public DateTime? DeliveryDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

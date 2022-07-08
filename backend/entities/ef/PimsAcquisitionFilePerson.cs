@@ -8,21 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_ACQUISITION_FILE_PERSON")]
+    [Index(nameof(AcquisitionFileId), Name = "ACQPER_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AcqFlPersonProfileTypeCode), Name = "ACQPER_ACQ_FL_PERSON_PROFILE_TYPE_CODE_IDX")]
+    [Index(nameof(PersonId), Name = "ACQPER_PERSON_ID_IDX")]
+    [Index(nameof(AcqFlPersonProfileTypeCode), nameof(PersonId), nameof(AcquisitionFileId), Name = "ACQPER_PERSON_PROFILE_TUC", IsUnique = true)]
+    public partial class PimsAcquisitionFilePerson
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
+        [Column("ACQUISITION_FILE_PERSON_ID")]
+        public long AcquisitionFilePersonId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Column("PERSON_ID")]
+        public long PersonId { get; set; }
+        [Column("ACQ_FL_PERSON_PROFILE_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcqFlPersonProfileTypeCode { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -61,5 +65,15 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(AcqFlPersonProfileTypeCode))]
+        [InverseProperty(nameof(PimsAcqFlPersonProfileType.PimsAcquisitionFilePeople))]
+        public virtual PimsAcqFlPersonProfileType AcqFlPersonProfileTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(AcquisitionFileId))]
+        [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionFilePeople))]
+        public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(PersonId))]
+        [InverseProperty(nameof(PimsPerson.PimsAcquisitionFilePeople))]
+        public virtual PimsPerson Person { get; set; }
     }
 }
