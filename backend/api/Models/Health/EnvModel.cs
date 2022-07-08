@@ -13,25 +13,21 @@ namespace Pims.Api.Models.Health
         /// <summary>
         /// get/set - The environment name.
         /// </summary>
-        /// <value></value>
         public string Environment { get; set; }
 
         /// <summary>
         /// get/set - The version.
         /// </summary>
-        /// <value></value>
         public string Version { get; set; }
 
         /// <summary>
         /// get/set - The file version.
         /// </summary>
-        /// <value></value>
         public string FileVersion { get; set; }
 
         /// <summary>
         /// get/set - The information version.
         /// </summary>
-        /// <value></value>
         public string InformationalVersion { get; set; }
         #endregion
 

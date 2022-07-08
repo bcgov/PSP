@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Areas.Organizations.Models.Organization
 {
     /// <summary>

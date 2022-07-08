@@ -54,7 +54,7 @@ namespace Pims.Api.Repositories.Mayan
         {
             _logger.LogDebug("Getting authentication token...");
             Uri endpoint = new Uri($"{_config.BaseUri}/auth/token/obtain/");
-            using StringContent credentials = new(JsonSerializer.Serialize(new TokenRequest
+            using StringContent credentials = new (JsonSerializer.Serialize(new TokenRequest
             {
                 Username = _config.ConnectionUser,
                 Password = _config.ConnectionPassword,

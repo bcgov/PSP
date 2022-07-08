@@ -46,8 +46,7 @@ namespace Pims.Dal.Helpers.Extensions
                     (EF.Functions.Like(pl.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
                     EF.Functions.Like(pl.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
                     EF.Functions.Like(pl.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
-                    EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%")
-                    )));
+                    EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
             }
 
             if (filter.IsReceivable == true)

@@ -1,5 +1,3 @@
-
-
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>

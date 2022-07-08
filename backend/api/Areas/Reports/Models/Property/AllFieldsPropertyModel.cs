@@ -9,7 +9,6 @@ namespace Pims.Api.Areas.Reports.Models.AllPropertyFields
         /// <summary>
         /// get/set - The type of property.
         /// </summary>
-        /// <value></value>
         public string PropertyTypeId { get; set; }
 
         /// <summary>

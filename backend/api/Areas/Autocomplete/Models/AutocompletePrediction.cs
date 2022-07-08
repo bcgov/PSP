@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Areas.Autocomplete.Models
 {
     public class AutocompletePrediction

@@ -15,25 +15,21 @@ namespace Pims.Api.Models
         /// <summary>
         /// get/set - The error message.
         /// </summary>
-        /// <value></value>
         public string Error { get; set; }
 
         /// <summary>
         /// get/set - The exception type that threw thew exception.
         /// </summary>
-        /// <value></value>
         public string Type { get; set; }
 
         /// <summary>
         /// get/set - The details of the error (all the inner exceptions.)
         /// </summary>
-        /// <value></value>
         public string Details { get; set; }
 
         /// <summary>
         /// get/set - The stack trace.
         /// </summary>
-        /// <value></value>
         public string StackTrace { get; set; }
         #endregion
 

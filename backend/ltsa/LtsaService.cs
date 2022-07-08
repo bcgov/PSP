@@ -61,7 +61,6 @@ namespace Pims.Ltsa
                     this.Client.Client?.DefaultRequestHeaders?.Clear();
                     this.Client.Client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {_token.AccessToken}");
                 });
-
         }
         #endregion
 

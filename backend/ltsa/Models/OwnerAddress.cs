@@ -85,6 +85,5 @@ namespace Pims.Ltsa.Models
         /// <value>Postal Code.</value>
         [DataMember(Name = "postalCode", EmitDefaultValue = false)]
         public string PostalCode { get; set; }
-
     }
 }

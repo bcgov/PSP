@@ -14,6 +14,5 @@ namespace Pims.Dal.Repositories
         PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile);
 
         void Delete(PimsPropertyResearchFile propertyResearchFile);
-
     }
 }

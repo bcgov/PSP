@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
@@ -21,7 +20,6 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
         public long RowVersion { get; set; }
         #endregion
 
