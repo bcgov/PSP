@@ -16,26 +16,31 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The page number.
         /// </summary>
-        /// <value></value>
+        /// <value>
+        /// <placeholder>get/set - The page number.</placeholder>
+        /// </value>
         public int Page { get; set; } = 1;
 
         /// <summary>
         /// get/set - The quantity that was requested in the query.  This is not the number of items in this page.
         /// </summary>
-        /// <value></value>
+        /// <value>
+        /// <placeholder>get/set - The quantity that was requested in the query.  This is not the number of items in this page.</placeholder>
+        /// </value>
         public int Quantity { get; set; } = 10;
 
         /// <summary>
         /// get/set - The total number of items in the datasource that match the query.  This is not the number of items in this page.
         /// </summary>
-        /// <value></value>
+        /// <value>
+        /// <placeholder>get/set - The total number of items in the datasource that match the query.  This is not the number of items in this page.</placeholder>
+        /// </value>
         public int Total { get; set; }
 
         /// <summary>
         /// get/set - A collection of items in this page as the result of the query.
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
-        /// <returns></returns>
         public List<TModel> Items { get; set; } = new List<TModel>();
 
         /// <summary>
@@ -130,7 +135,6 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="converter"></param>
-        /// <returns></returns>
         public Paged<T> To<T>(Func<IEnumerable<TModel>, IEnumerable<T>> converter)
         {
             if (converter == null)
@@ -144,7 +148,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Get the enumerator for the items.
         /// </summary>
-        /// <returns></returns>
         public IEnumerator<TModel> GetEnumerator()
         {
             return ((IEnumerable<TModel>)Items).GetEnumerator();
@@ -153,7 +156,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Get the enumerator for the items.
         /// </summary>
-        /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<TModel>)Items).GetEnumerator();
@@ -180,7 +182,6 @@ namespace Pims.Dal.Entities.Models
         /// Check if the page contains the specified 'item'.
         /// </summary>
         /// <param name="item"></param>
-        /// <returns></returns>
         public bool Contains(TModel item)
         {
             return this.Items.Contains(item);
@@ -200,7 +201,6 @@ namespace Pims.Dal.Entities.Models
         /// Remove the specified 'item' from the page.
         /// </summary>
         /// <param name="item"></param>
-        /// <returns></returns>
         public bool Remove(TModel item)
         {
             return this.Items.Remove(item);

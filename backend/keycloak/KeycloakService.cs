@@ -18,7 +18,6 @@ namespace Pims.Keycloak
         /// <summary>
         /// get - The configuration options for keycloak.
         /// </summary>
-        /// <value></value>
         public Configuration.KeycloakOptions Options { get; }
         #endregion
 

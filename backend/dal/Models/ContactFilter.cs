@@ -19,19 +19,16 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - Either the person or organization name.
         /// </summary>
-        /// <value></value>
         public string Summary { get; set; }
 
         /// <summary>
         /// get/set - The Municipality of one of a Contact's addresses.
         /// </summary>
-        /// <value></value>
         public string Municipality { get; set; }
 
         /// <summary>
         /// get/set - Whether inactive contacts should be displayed.
         /// </summary>
-        /// <value></value>
         public bool ActiveContactsOnly { get; set; }
         #endregion
 
@@ -40,7 +37,8 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a ContactFilter class.
         /// </summary>
-        public ContactFilter() {
+        public ContactFilter()
+        {
             this.ActiveContactsOnly = true;
         }
 

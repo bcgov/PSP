@@ -32,7 +32,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         private static string GetAddress1(GModel.PropertyModel properties)
         {
             var address = new StringBuilder();
-            if (!string.IsNullOrWhiteSpace($"{ properties.CivicNumber}"))
+            if (!string.IsNullOrWhiteSpace($"{properties.CivicNumber}"))
             {
                 address.Append($"{properties.CivicNumber} ");
             }

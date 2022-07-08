@@ -18,7 +18,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
         public long RowVersion { get; set; }
 
         /// <summary>

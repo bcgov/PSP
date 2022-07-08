@@ -12,7 +12,6 @@ namespace Pims.Api.Helpers.Authorization
         /// <summary>
         /// get - The role to validate.
         /// </summary>
-        /// <value></value>
         public string Role { get; }
         #endregion
 

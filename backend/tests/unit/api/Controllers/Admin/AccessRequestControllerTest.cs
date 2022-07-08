@@ -115,7 +115,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsRepository>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
-            service.Setup(m => m.AccessRequest.Get(It.IsAny <long>())).Returns(accessRequest1);
+            service.Setup(m => m.AccessRequest.Get(It.IsAny<long>())).Returns(accessRequest1);
 
             // Act
             var result = controller.GetAccessRequest(accessRequest1.AccessRequestId);

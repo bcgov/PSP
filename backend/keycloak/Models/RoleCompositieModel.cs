@@ -12,13 +12,11 @@ namespace Pims.Keycloak.Models
         /// <summary>
         /// get/set - A dictionary of clients.
         /// </summary>
-        /// <value></value>
         public Dictionary<string, string[]> Client { get; set; }
 
         /// <summary>
         /// get/set - An array of realms.
         /// </summary>
-        /// <value></value>
         public IEnumerable<string> Realm { get; set; }
         #endregion
     }

@@ -16,7 +16,6 @@ namespace Pims.Api.Helpers.Exceptions
         /// <summary>
         /// get - The HTTP response message.
         /// </summary>
-        /// <value></value>
         public HttpResponseMessage Response { get; }
         #endregion
 

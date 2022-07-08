@@ -31,7 +31,7 @@ namespace Pims.Dal.Entities
             this.RoleUid = key;
             this.Name = name;
             this.IsDisabled = false;
-    }
+        }
         #endregion
     }
 }

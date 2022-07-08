@@ -491,6 +491,6 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }
-    #endregion
-}
+        #endregion
+    }
 }

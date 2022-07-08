@@ -19,7 +19,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The property address.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
         #endregion
 

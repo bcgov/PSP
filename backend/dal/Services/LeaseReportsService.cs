@@ -26,7 +26,8 @@ namespace Pims.Dal.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             DateTime fiscalYearStartDate = fiscalYearStart.ToFiscalYearDate();
             //fiscal defined as April 01 to March 31 of following year
-            return _leaseRepository.Get(new Entities.Models.LeaseFilter() {
+            return _leaseRepository.Get(new Entities.Models.LeaseFilter()
+            {
                 ExpiryAfterDate = fiscalYearStartDate,
                 StartBeforeDate = fiscalYearStartDate.AddYears(1).AddDays(-1),
                 NotInStatus = new List<string>() { PimsLeaseStatusTypes.DRAFT, PimsLeaseStatusTypes.DISCARD },

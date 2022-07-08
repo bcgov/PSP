@@ -15,7 +15,6 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The property address.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
 
         /// <summary>

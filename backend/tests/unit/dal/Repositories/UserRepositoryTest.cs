@@ -128,8 +128,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
             helper.CreatePimsContext(user, true);
             var monitor = new Mock<IOptionsMonitor<PimsOptions>>();
-            monitor.Setup(m => m.CurrentValue).Returns(new PimsOptions() {
-                ServiceAccount = new ServiceAccountOptions() {
+            monitor.Setup(m => m.CurrentValue).Returns(new PimsOptions()
+            {
+                ServiceAccount = new ServiceAccountOptions()
+                {
                     Email = "test@test.com",
                     Username = "username",
                     FirstName = "first",
@@ -289,7 +291,7 @@ namespace Pims.Dal.Test.Repositories
             var organization = EntityHelper.CreateOrganization(1, "test org");
             var role = EntityHelper.CreateRole("test role");
 
-            var euser = EntityHelper.CreateUser(1, Guid.NewGuid(), "Tester",  organization: organization, role: role);
+            var euser = EntityHelper.CreateUser(1, Guid.NewGuid(), "Tester", organization: organization, role: role);
             euser.Person.FirstName = "Test";
             euser.Person.Surname = "McTest";
             euser.BusinessIdentifierValue = "ttester";
@@ -297,7 +299,7 @@ namespace Pims.Dal.Test.Repositories
             euser.Person.PimsContactMethods.Add(EntityHelper.CreateContactMethod(1, "test@test.com", euser.Person, euser.GetOrganizations().First(), contactMethodType));
             euser.IsDisabled = false;
 
-            var disabledEUser = EntityHelper.CreateUser(2, Guid.NewGuid(), "Tester2",  organization: organization, role: role);
+            var disabledEUser = EntityHelper.CreateUser(2, Guid.NewGuid(), "Tester2", organization: organization, role: role);
             disabledEUser.Id = 2;
             disabledEUser.Person.FirstName = "disabled";
             disabledEUser.Person.Surname = "Other";

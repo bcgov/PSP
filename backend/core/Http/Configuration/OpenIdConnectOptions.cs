@@ -13,37 +13,31 @@ namespace Pims.Core.Http.Configuration
         /// <summary>
         /// get/set - The login endpoint path.
         /// </summary>
-        /// <value></value>
         public string Login { get; set; }
 
         /// <summary>
         /// get/set - The logout endpoint path.
         /// </summary>
-        /// <value></value>
         public string Logout { get; set; }
 
         /// <summary>
         /// get/set - The register endpoint path.
         /// </summary>
-        /// <value></value>
         public string Register { get; set; }
 
         /// <summary>
         /// get/set - The token endpoint path.
         /// </summary>
-        /// <value></value>
         public string Token { get; set; }
 
         /// <summary>
         /// get/set - The token introspect path.
         /// </summary>
-        /// <value></value>
         public string TokenIntrospect { get; set; }
 
         /// <summary>
         /// get/set - the user info path.
         /// </summary>
-        /// <value></value>
         public string UserInfo { get; set; }
         #endregion
 

@@ -131,11 +131,12 @@ namespace Pims.Dal.Keycloak
             var accessRequest = _pimsRepository.AccessRequest.Get(update.AccessRequestId);
             var user = _pimsRepository.User.Get(accessRequest.UserId);
 
-            if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED) {
+            if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED)
+            {
 
                 user.PimsUserRoles.Clear();
                 user.IsDisabled = false;
-                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value});
+                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value });
                 await AppendToUserAsync(user);
             }
             update.User = user;

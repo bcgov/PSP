@@ -1,4 +1,4 @@
-﻿namespace Pims.Dal.Entities
+namespace Pims.Dal.Entities
 {
     public partial class PimsSecurityDepositHolder : IBaseAppEntity
     {
