@@ -12,11 +12,10 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// LegalNotationsOnStrataCommonProperty
+    /// LegalNotationsOnStrataCommonProperty.
     /// </summary>
     [DataContract]
     public partial class LegalNotationsOnStrataCommonProperty
@@ -30,23 +29,27 @@ namespace Pims.Ltsa.Models
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum ACTIVE for value: ACTIVE
             /// </summary>
             [EnumMember(Value = "ACTIVE")]
             ACTIVE = 1,
+
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
             [EnumMember(Value = "CANCELLED")]
-            CANCELLED = 2
+            CANCELLED = 2,
         }
+
         /// <summary>
         /// State of the Legal Notation on Title.  Only active Legal Notation are presented on Current View of Title. 
         /// </summary>
         /// <value>State of the Legal Notation on Title.  Only active Legal Notation are presented on Current View of Title. </value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum Status { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LegalNotationsOnStrataCommonProperty" /> class.
         /// </summary>
@@ -79,22 +82,21 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Legal Notation Number
+        /// Legal Notation Number.
         /// </summary>
-        /// <value>Legal Notation Number</value>
+        /// <value>Legal Notation Number.</value>
         [DataMember(Name = "legalNotationNumber", EmitDefaultValue = false)]
         public string LegalNotationNumber { get; set; }
 
-
         /// <summary>
-        /// Legal Notation Cancellation Date
+        /// Legal Notation Cancellation Date.
         /// </summary>
-        /// <value>Legal Notation Cancellation Date</value>
+        /// <value>Legal Notation Cancellation Date.</value>
         [DataMember(Name = "cancellationDate", EmitDefaultValue = false)]
         public DateTime? CancellationDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets LegalNotation
+        /// Gets or Sets LegalNotation.
         /// </summary>
         [DataMember(Name = "legalNotation", EmitDefaultValue = false)]
         public LegalNotation LegalNotation { get; set; }

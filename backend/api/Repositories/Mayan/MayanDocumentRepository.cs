@@ -48,7 +48,7 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
             JsonSerializerOptions serializerOptions = new()
             {
-                IgnoreNullValues = true
+                IgnoreNullValues = true,
             };
             string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
             using HttpContent content = new StringContent(serializedDocumentType);
@@ -123,7 +123,6 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Finished retrieving document list");
             return response;
         }
-
 
         public async Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId)
         {

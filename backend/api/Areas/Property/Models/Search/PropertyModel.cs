@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Property.Models.Search
     {
         #region Properties
         #region Identification
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>
@@ -50,7 +51,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         public string DataSource { get; set; }
 
         /// <summary>
-        /// get/set - The data source effective date
+        /// get/set - The data source effective date.
         /// </summary>
         public DateTime DataSourceEffectiveDate { get; set; }
 
@@ -101,6 +102,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         #endregion
 
         #region Address
+
         /// <summary>
         /// get/set - The foreign key to the address.
         /// </summary>
@@ -133,6 +135,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         #endregion
 
         #region Parcel Properties
+
         /// <summary>
         /// get/set - A unique identifier for the titled parcel.
         /// </summary>
@@ -156,7 +159,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The land area of the parcel.
         /// </summary>
-        public Single LandArea { get; set; }
+        public float LandArea { get; set; }
 
         /// <summary>
         /// get/set - The land legal description of the parcel.

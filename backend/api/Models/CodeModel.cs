@@ -6,6 +6,7 @@ namespace Pims.Api.Models
     public class CodeModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The item's unique code.
         /// </summary>

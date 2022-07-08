@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleIdentifier
+    /// TitleIdentifier.
     /// </summary>
     [DataContract]
     public partial class TitleIdentifier
@@ -46,7 +45,7 @@ namespace Pims.Ltsa.Models
         public string TitleNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets landTitleDistrict
+        /// Gets or Sets landTitleDistrict.
         /// </summary>
         [DataMember(Name = "landTitleDistrict", EmitDefaultValue = false)]
         public string LandTitleDistrict { get; set; }

@@ -1,6 +1,6 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities.Models
     public class UserFilter : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The username.
         /// </summary>
@@ -35,13 +36,14 @@ namespace Pims.Dal.Entities.Models
         public short? Region { get; set; }
 
         /// <summary>
-        /// get/set - account status
+        /// get/set - account status.
         /// </summary>
         /// <value></value>
         public bool? ActiveOnly { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserFilter class.
         /// </summary>
@@ -52,7 +54,8 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <param name="page"></param>
         /// <param name="quantity"></param>
-        public UserFilter(int page, int quantity) : base(page, quantity)
+        public UserFilter(int page, int quantity)
+            : base(page, quantity)
         {
         }
 
@@ -71,7 +74,8 @@ namespace Pims.Dal.Entities.Models
         /// <param name="sort"></param>
         /// <returns></returns>
         public UserFilter(int page, int quantity, string businessIdentifierValue,
-            string email, bool? activeOnly, long? role, short? region, string[] sort) : base(page, quantity, sort)
+            string email, bool? activeOnly, long? role, short? region, string[] sort)
+            : base(page, quantity, sort)
         {
             this.BusinessIdentifierValue = businessIdentifierValue;
             this.Email = email;

@@ -13,42 +13,47 @@ using System.Text.Json.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Indicate the billing information for the order Read-only for third party software
+    /// Indicate the billing information for the order Read-only for third party software.
     /// </summary>
     [DataContract]
     public partial class BillingInfo
     {
         /// <summary>
-        /// Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account 
+        /// Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account. 
         /// </summary>
-        /// <value>Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account </value>
+        /// <value>Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account. </value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum BillingModelEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum REG for value: REG
             /// </summary>
             [EnumMember(Value = "REG")]
             REG = 1,
+
             /// <summary>
             /// Enum TAX for value: TAX
             /// </summary>
             [EnumMember(Value = "TAX")]
             TAX = 2,
+
             /// <summary>
             /// Enum PROV for value: PROV
             /// </summary>
             [EnumMember(Value = "PROV")]
-            PROV = 3
+            PROV = 3,
         }
+
         /// <summary>
-        /// Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account 
+        /// Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account. 
         /// </summary>
-        /// <value>Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account </value>
+        /// <value>Billing model as per myLTSA deposit account setting # One of: * REG – Regular account * TAX – Local government tax-purpose account * PROV – Provincial government account. </value>
         [DataMember(Name = "billingModel", EmitDefaultValue = false)]
         public BillingModelEnum? BillingModel { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BillingInfo" /> class.
         /// </summary>
@@ -78,74 +83,73 @@ namespace Pims.Ltsa.Models
             this.TotalFee = totalFee;
         }
 
-
         /// <summary>
-        /// Product name
+        /// Product name.
         /// </summary>
-        /// <value>Product name</value>
+        /// <value>Product name.</value>
         [DataMember(Name = "productName", EmitDefaultValue = false)]
         public string ProductName { get; set; }
 
         /// <summary>
-        /// Product code
+        /// Product code.
         /// </summary>
-        /// <value>Product code</value>
+        /// <value>Product code.</value>
         [DataMember(Name = "productCode", EmitDefaultValue = false)]
         public string ProductCode { get; set; }
 
         /// <summary>
-        /// Indicate if the billing transaction is fee exempted or not
+        /// Indicate if the billing transaction is fee exempted or not.
         /// </summary>
-        /// <value>Indicate if the billing transaction is fee exempted or not</value>
+        /// <value>Indicate if the billing transaction is fee exempted or not.</value>
         [DataMember(Name = "feeExempted", EmitDefaultValue = false)]
         public bool? FeeExempted { get; set; }
 
         /// <summary>
-        /// Product fee
+        /// Product fee.
         /// </summary>
-        /// <value>Product fee</value>
+        /// <value>Product fee.</value>
         [DataMember(Name = "productFee", EmitDefaultValue = false)]
         public double? ProductFee { get; set; }
 
         /// <summary>
-        /// Tax on service charge
+        /// Tax on service charge.
         /// </summary>
-        /// <value>Tax on service charge</value>
+        /// <value>Tax on service charge.</value>
         [DataMember(Name = "serviceCharge", EmitDefaultValue = false)]
         public double? ServiceCharge { get; set; }
 
         /// <summary>
-        /// Product fee + service charge
+        /// Product fee + service charge.
         /// </summary>
-        /// <value>Product fee + service charge</value>
+        /// <value>Product fee + service charge.</value>
         [DataMember(Name = "subtotalFee", EmitDefaultValue = false)]
         public double? SubtotalFee { get; set; }
 
         /// <summary>
-        /// Tax on product fee
+        /// Tax on product fee.
         /// </summary>
-        /// <value>Tax on product fee</value>
+        /// <value>Tax on product fee.</value>
         [DataMember(Name = "productFeeTax", EmitDefaultValue = false)]
         public double? ProductFeeTax { get; set; }
 
         /// <summary>
-        /// Tax on service charge
+        /// Tax on service charge.
         /// </summary>
-        /// <value>Tax on service charge</value>
+        /// <value>Tax on service charge.</value>
         [DataMember(Name = "serviceChargeTax", EmitDefaultValue = false)]
         public double? ServiceChargeTax { get; set; }
 
         /// <summary>
-        /// Tax on product fee + tax on service charge
+        /// Tax on product fee + tax on service charge.
         /// </summary>
-        /// <value>Tax on product fee + tax on service charge</value>
+        /// <value>Tax on product fee + tax on service charge.</value>
         [DataMember(Name = "totalTax", EmitDefaultValue = false)]
         public double? TotalTax { get; set; }
 
         /// <summary>
-        /// Subtotal fee + total tax
+        /// Subtotal fee + total tax.
         /// </summary>
-        /// <value>Subtotal fee + total tax</value>
+        /// <value>Subtotal fee + total tax.</value>
         [DataMember(Name = "totalFee", EmitDefaultValue = false)]
         public double? TotalFee { get; set; }
     }

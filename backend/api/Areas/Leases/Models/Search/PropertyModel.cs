@@ -3,6 +3,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
     public class PropertyModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>

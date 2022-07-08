@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// LegalNotationOnTitle
+    /// LegalNotationOnTitle.
     /// </summary>
     [DataContract]
     public partial class LegalNotationOnTitle
@@ -59,9 +58,9 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Legal Notation Number
+        /// Legal Notation Number.
         /// </summary>
-        /// <value>Legal Notation Number</value>
+        /// <value>Legal Notation Number.</value>
         [DataMember(Name = "legalNotationNumber", EmitDefaultValue = false)]
         public string LegalNotationNumber { get; set; }
 
@@ -80,7 +79,7 @@ namespace Pims.Ltsa.Models
         public string CancellationDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets LegalNotation
+        /// Gets or Sets LegalNotation.
         /// </summary>
         [DataMember(Name = "legalNotation", EmitDefaultValue = false)]
         public LegalNotation LegalNotation { get; set; }

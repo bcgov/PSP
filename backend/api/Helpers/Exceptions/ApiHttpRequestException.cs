@@ -12,6 +12,7 @@ namespace Pims.Api.Helpers.Exceptions
     public class ApiHttpRequestException : HttpRequestException
     {
         #region Properties
+
         /// <summary>
         /// get - The HTTP response message.
         /// </summary>
@@ -20,6 +21,7 @@ namespace Pims.Api.Helpers.Exceptions
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an ApiHttpRequestException class.
         /// </summary>
@@ -32,7 +34,8 @@ namespace Pims.Api.Helpers.Exceptions
         /// <param name="message"></param>
         /// <param name="statusCode"></param>
         /// <returns></returns>
-        public ApiHttpRequestException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message, null, statusCode) { }
+        public ApiHttpRequestException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+            : base(message, null, statusCode) { }
 
         /// <summary>
         /// Creates a new instance of an ApiHttpRequestException class, initializes it with the specified arguments.
@@ -41,14 +44,16 @@ namespace Pims.Api.Helpers.Exceptions
         /// <param name="innerException"></param>
         /// <param name="statusCode"></param>
         /// <returns></returns>
-        public ApiHttpRequestException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message, innerException, statusCode) { }
+        public ApiHttpRequestException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+            : base(message, innerException, statusCode) { }
 
         /// <summary>
         /// Creates a new instance of an ApiHttpRequestException class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public ApiHttpRequestException(HttpResponseMessage response) : base($"HTTP Request '{response.RequestMessage.RequestUri}' failed", null, response?.StatusCode)
+        public ApiHttpRequestException(HttpResponseMessage response)
+            : base($"HTTP Request '{response.RequestMessage.RequestUri}' failed", null, response?.StatusCode)
         {
             this.Response = response ?? throw new ArgumentNullException(nameof(response)); // NOSONAR
         }

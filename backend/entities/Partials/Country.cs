@@ -17,13 +17,15 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a Country class.
         /// </summary>
         /// <param name="code"></param>
-        public PimsCountry(string code) : this()
+        public PimsCountry(string code)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(code))
+            if (string.IsNullOrWhiteSpace(code))
             {
                 throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
             }

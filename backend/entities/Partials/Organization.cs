@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     public partial class PimsOrganization : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify organization.
         /// </summary>
@@ -34,7 +35,8 @@ namespace Pims.Dal.Entities
         /// <param name="type"></param>
         /// <param name="identifierType"></param>
         /// <param name="address"></param>
-        public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address) : this()
+        public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address)
+            : this()
         {
             if (string.IsNullOrWhiteSpace(name))
             {

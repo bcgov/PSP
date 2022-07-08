@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsAccessRequestStatusType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify access request status type.
         /// </summary>

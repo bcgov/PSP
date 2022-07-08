@@ -20,6 +20,7 @@ namespace Pims.Dal.Repositories
     public class PersonRepository : BaseRepository<PimsPerson>, IPersonRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PersonService, and initializes it with the specified arguments.
         /// </summary>
@@ -27,10 +28,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PersonRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PersonRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get a page of persons from the datasource.
         /// </summary>
@@ -127,7 +130,6 @@ namespace Pims.Dal.Repositories
             var personId = person.Id;
             var existingPerson = this.Context.PimsPeople.FirstOrDefault(p => p.PersonId == personId)
                  ?? throw new KeyNotFoundException();
-
 
             // update main entity - PimsPerson
             this.Context.Entry(existingPerson).CurrentValues.SetValues(person);

@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// An Order
+    /// An Order.
     /// </summary>
     [DataContract]
     public partial class OrderWrapper<T>

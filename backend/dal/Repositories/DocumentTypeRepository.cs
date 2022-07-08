@@ -14,6 +14,7 @@ namespace Pims.Dal.Repositories
     public class DocumentTypeRepository : BaseRepository<PimsDocumentTyp>, IDocumentTypeRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a DocumentTypeRepository, and initializes it with the specified arguments.
         /// </summary>

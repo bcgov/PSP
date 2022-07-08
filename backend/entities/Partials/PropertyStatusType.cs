@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyStatusType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify property type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PropertyStatusType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyStatusType(string id) : this()
+        public PimsPropertyStatusType(string id)
+            : this()
         {
             Id = id;
         }

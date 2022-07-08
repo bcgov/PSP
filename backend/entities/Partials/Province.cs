@@ -8,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsProvinceState : ICodeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify entity.
         /// </summary>
@@ -19,14 +20,16 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a Province class.
         /// </summary>
         /// <param name="code"></param>
         /// <param name="country"></param>
-        public PimsProvinceState(string code, PimsCountry country) : this()
+        public PimsProvinceState(string code, PimsCountry country)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(code))
+            if (string.IsNullOrWhiteSpace(code))
             {
                 throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
             }

@@ -1,7 +1,7 @@
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pims.Core.Http;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Pims.Ltsa
 {
@@ -18,7 +18,6 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public static IServiceCollection AddLtsaService(this IServiceCollection services, IConfigurationSection section)
         {
-
 
             return services
                 .Configure<Configuration.LtsaOptions>(section)

@@ -7,6 +7,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
     public class LeaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the lease.
         /// </summary>
@@ -18,7 +19,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string LFileNo { get; set; }
 
         /// <summary>
-        /// get/set - The expiry date time
+        /// get/set - The expiry date time.
         /// </summary>
         public DateTime? ExpiryDate { get; set; }
 
@@ -28,7 +29,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string ProgramName { get; set; }
 
         /// <summary>
-        /// get/set - The list of tenants for this lease
+        /// get/set - The list of tenants for this lease.
         /// </summary>
         public IList<string> TenantNames { get; set; } = new List<string>();
 

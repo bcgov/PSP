@@ -8,6 +8,7 @@ namespace Pims.Api.Helpers.Authorization
     public class RealmAccessRoleRequirement : IAuthorizationRequirement
     {
         #region Properties
+
         /// <summary>
         /// get - The role to validate.
         /// </summary>
@@ -16,6 +17,7 @@ namespace Pims.Api.Helpers.Authorization
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a RealmAccessRoleRequirment class.
         /// </summary>

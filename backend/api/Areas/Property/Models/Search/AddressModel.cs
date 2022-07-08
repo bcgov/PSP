@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Property.Models.Search
     public class AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>

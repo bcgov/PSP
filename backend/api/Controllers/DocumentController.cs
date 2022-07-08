@@ -30,6 +30,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ErrorController class.
         /// </summary>

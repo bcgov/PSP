@@ -1,7 +1,7 @@
-using Pims.Dal.Entities;
 using System.Collections.Generic;
-using Pims.Core.Extensions;
 using System.Linq;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 
 namespace Pims.Api.Areas.Reports.Models.Lease
 {

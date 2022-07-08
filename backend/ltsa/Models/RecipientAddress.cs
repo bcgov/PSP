@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Address of the recipient to be printed on the STC
+    /// Address of the recipient to be printed on the STC.
     /// </summary>
     [DataContract]
     public partial class RecipientAddress
@@ -38,44 +37,44 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Address line 1 of the recipient address
+        /// Address line 1 of the recipient address.
         /// </summary>
-        /// <value>Address line 1 of the recipient address</value>
+        /// <value>Address line 1 of the recipient address.</value>
         [DataMember(Name = "addressLine1", EmitDefaultValue = false)]
         public string AddressLine1 { get; set; }
 
         /// <summary>
-        /// Address line 2 (optional) of the recipient address
+        /// Address line 2 (optional) of the recipient address.
         /// </summary>
-        /// <value>Address line 2 (optional) of the recipient address</value>
+        /// <value>Address line 2 (optional) of the recipient address.</value>
         [DataMember(Name = "addressLine2", EmitDefaultValue = false)]
         public string AddressLine2 { get; set; }
 
         /// <summary>
-        /// City of the recipient address
+        /// City of the recipient address.
         /// </summary>
-        /// <value>City of the recipient address</value>
+        /// <value>City of the recipient address.</value>
         [DataMember(Name = "city", EmitDefaultValue = false)]
         public string City { get; set; }
 
         /// <summary>
-        /// Province of the recipient address
+        /// Province of the recipient address.
         /// </summary>
-        /// <value>Province of the recipient address</value>
+        /// <value>Province of the recipient address.</value>
         [DataMember(Name = "province", EmitDefaultValue = false)]
         public string Province { get; set; }
 
         /// <summary>
-        /// Postal code of the recipient address
+        /// Postal code of the recipient address.
         /// </summary>
-        /// <value>Postal code of the recipient address</value>
+        /// <value>Postal code of the recipient address.</value>
         [DataMember(Name = "postalCode", EmitDefaultValue = false)]
         public string PostalCode { get; set; }
 
         /// <summary>
-        /// Country of the recipient address
+        /// Country of the recipient address.
         /// </summary>
-        /// <value>Country of the recipient address</value>
+        /// <value>Country of the recipient address.</value>
         [DataMember(Name = "country", EmitDefaultValue = false)]
         public string Country { get; set; }
     }

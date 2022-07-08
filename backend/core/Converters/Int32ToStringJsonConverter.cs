@@ -12,7 +12,7 @@ namespace Pims.Core.Converters
             return reader.TokenType switch
             {
                 (JsonTokenType.String) => reader.GetString(),
-                (JsonTokenType.Number) => reader.TryGetInt32(out int result) ? $"{result}" : "",
+                (JsonTokenType.Number) => reader.TryGetInt32(out int result) ? $"{result}" : string.Empty,
                 _ => null,
             };
         }

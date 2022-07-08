@@ -1,8 +1,8 @@
-using Pims.Core.Json;
 using System;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Pims.Core.Json;
 
 namespace Pims.Core.Converters
 {
@@ -16,6 +16,7 @@ namespace Pims.Core.Converters
         where ET : struct, IConvertible
     {
         #region Methods
+
         /// <summary>
         /// Ignore case when parsing, otherwise return default.
         /// </summary>
@@ -40,7 +41,7 @@ namespace Pims.Core.Converters
                 {
                     var mi = typeof(ET).GetMember(field.ToString());
                     var attr = mi[0].GetCustomAttribute<EnumValueAttribute>();
-                    if (attr != null && String.CompareOrdinal(value, attr.Value) == 0)
+                    if (attr != null && string.CompareOrdinal(value, attr.Value) == 0)
                     {
                         return (ET)field;
                     }

@@ -15,6 +15,7 @@ namespace Pims.Dal.Repositories
     public class ResearchFilePropertyRepository : BaseRepository<PimsPropertyResearchFile>, IResearchFilePropertyRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFilePropertyRepository, and initializes it with the specified arguments.
         /// </summary>

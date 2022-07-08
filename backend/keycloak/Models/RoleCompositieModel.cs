@@ -8,6 +8,7 @@ namespace Pims.Keycloak.Models
     public class RoleCompositeModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - A dictionary of clients.
         /// </summary>

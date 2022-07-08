@@ -8,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsDistrict : ICodeEntity<short>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify district.
         /// </summary>
@@ -20,12 +21,14 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a District class.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="region"></param>
-        public PimsDistrict(string name, PimsRegion region) : this()
+        public PimsDistrict(string name, PimsRegion region)
+            : this()
         {
             if (string.IsNullOrWhiteSpace(name))
             {

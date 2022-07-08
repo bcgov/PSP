@@ -9,6 +9,7 @@ namespace Pims.Core.Extensions
     public static class EnumExtensions
     {
         #region Methods
+
         /// <summary>
         /// Returns to name of the enum in lowercase.
         /// </summary>

@@ -10,6 +10,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     {
         #region Properties
         #region Identification
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>
@@ -52,12 +53,13 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public bool IsSensitive { get; set; }
 
         /// <summary>
-        /// get/set - A surplus declarations for the property
+        /// get/set - A surplus declarations for the property.
         /// </summary>
         public SurplusDeclarationModel SurplusDeclaration { get; set; }
         #endregion
 
         #region Parcel Properties
+
         /// <summary>
         /// get/set - A unique identifier for the titled parcel.
         /// </summary>

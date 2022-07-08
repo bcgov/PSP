@@ -6,6 +6,7 @@ namespace Pims.Dal
     public class ProjectOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The format for draft project numbers.
         /// </summary>

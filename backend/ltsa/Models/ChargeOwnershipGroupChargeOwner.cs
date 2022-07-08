@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ChargeOwnershipGroupChargeOwner
+    /// ChargeOwnershipGroupChargeOwner.
     /// </summary>
     [DataContract]
     public partial class ChargeOwnershipGroupChargeOwner
@@ -50,9 +49,9 @@ namespace Pims.Ltsa.Models
         public string LastNameOrCorpName1 { get; set; }
 
         /// <summary>
-        /// Provides additional space for storing the Owner Last Name or the Corporate Name
+        /// Provides additional space for storing the Owner Last Name or the Corporate Name.
         /// </summary>
-        /// <value>Provides additional space for storing the Owner Last Name or the Corporate Name</value>
+        /// <value>Provides additional space for storing the Owner Last Name or the Corporate Name.</value>
         [DataMember(Name = "lastNameOrCorpName2", EmitDefaultValue = false)]
         public string LastNameOrCorpName2 { get; set; }
 

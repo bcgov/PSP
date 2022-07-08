@@ -110,7 +110,7 @@ namespace Pims.Dal.Keycloak
 
             kmodel.Attributes = new Dictionary<string, string[]>
             {
-                ["displayName"] = new[] { update.BusinessIdentifierValue }
+                ["displayName"] = new[] { update.BusinessIdentifierValue },
             };
             _logger.LogInformation($"Updating keycloak user '{euser.BusinessIdentifierValue}'.");
             await _keycloakService.UpdateUserAsync(kmodel);

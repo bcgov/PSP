@@ -26,6 +26,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseController class, initializes it with the specified arguments.
         /// </summary>
@@ -40,6 +41,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the lease for the specified primary key 'id'.
         /// </summary>

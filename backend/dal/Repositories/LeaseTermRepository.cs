@@ -11,6 +11,7 @@ namespace Pims.Dal.Repositories
     public class LeaseTermRepository : BaseRepository<PimsLeaseTerm>, ILeaseTermRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseService, and initializes it with the specified arguments.
         /// </summary>
@@ -18,7 +19,8 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LeaseTermRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public LeaseTermRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         public void Delete(long leaseTermId)

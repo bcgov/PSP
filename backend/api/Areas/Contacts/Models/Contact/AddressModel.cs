@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
     public class AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>

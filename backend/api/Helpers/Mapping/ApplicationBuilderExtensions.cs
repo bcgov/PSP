@@ -1,7 +1,7 @@
-using Mapster;
-using Microsoft.AspNetCore.Builder;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using Mapster;
+using Microsoft.AspNetCore.Builder;
 
 namespace Pims.Api.Helpers.Mapping
 {

@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Order Id for cancellation
+    /// Order Id for cancellation.
     /// </summary>
     [DataContract]
     public partial class OrderCancellation
@@ -37,7 +36,7 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets OrderId
+        /// Gets or Sets OrderId.
         /// </summary>
         [DataMember(Name = "orderId", EmitDefaultValue = false)]
         public string OrderId { get; set; }

@@ -15,7 +15,7 @@ using System.Text.Json.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ChargeOnTitle
+    /// ChargeOnTitle.
     /// </summary>
     [DataContract]
     public partial class ChargeOnTitle
@@ -29,54 +29,63 @@ namespace Pims.Ltsa.Models
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
             [EnumMember(Value = "CANCELLED")]
             CANCELLED = 1,
+
             /// <summary>
             /// Enum REGISTERED for value: REGISTERED
             /// </summary>
             [EnumMember(Value = "REGISTERED")]
-            REGISTERED = 2
+            REGISTERED = 2,
         }
+
         /// <summary>
         /// The current state of the charge in relationship with the title.  Only active Charges are presented on Current View of Title. Note: Pending Release - appears that this state is used only as an examination aid, it is not publicly shown, and appears to control ALTOS behavior so that the Examiner can see which charge they are about to release.
         /// </summary>
         /// <value>The current state of the charge in relationship with the title.  Only active Charges are presented on Current View of Title. Note: Pending Release - appears that this state is used only as an examination aid, it is not publicly shown, and appears to control ALTOS behavior so that the Examiner can see which charge they are about to release.</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum Status { get; set; }
+
         /// <summary>
-        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; 
+        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. 
         /// </summary>
-        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; </value>
+        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. </value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum CancellationTypeEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum I for value: I
             /// </summary>
             [EnumMember(Value = "I")]
             I = 1,
+
             /// <summary>
             /// Enum M for value: M
             /// </summary>
             [EnumMember(Value = "M")]
             M = 2,
+
             /// <summary>
             /// Enum R for value: R
             /// </summary>
             [EnumMember(Value = "R")]
-            R = 3
+            R = 3,
         }
+
         /// <summary>
-        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; 
+        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. 
         /// </summary>
-        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; </value>
+        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. </value>
         [DataMember(Name = "cancellationType", EmitDefaultValue = false)]
         public CancellationTypeEnum? CancellationType { get; set; }
+
         /// <summary>
         /// Latin for \&quot;\&quot;Among Others\&quot;\&quot;, It is set to \&quot;\&quot;Yes\&quot;\&quot; when the specified charge impacts more than one title. However, ALTOS does not reset to \&quot;\&quot;No\&quot;\&quot; when the number of titles impacted are reduced to one # Note: The business does not want to automatically change this Charge Impact Remark on Title when number of titles impacted are reduced to one. 
         /// </summary>
@@ -89,18 +98,21 @@ namespace Pims.Ltsa.Models
             /// </summary>
             [EnumMember(Value = "YES")]
             YES = 1,
+
             /// <summary>
             /// Enum NO for value: NO
             /// </summary>
             [EnumMember(Value = "NO")]
-            NO = 2
+            NO = 2,
         }
+
         /// <summary>
         /// Latin for \&quot;\&quot;Among Others\&quot;\&quot;, It is set to \&quot;\&quot;Yes\&quot;\&quot; when the specified charge impacts more than one title. However, ALTOS does not reset to \&quot;\&quot;No\&quot;\&quot; when the number of titles impacted are reduced to one # Note: The business does not want to automatically change this Charge Impact Remark on Title when number of titles impacted are reduced to one. 
         /// </summary>
         /// <value>Latin for \&quot;\&quot;Among Others\&quot;\&quot;, It is set to \&quot;\&quot;Yes\&quot;\&quot; when the specified charge impacts more than one title. However, ALTOS does not reset to \&quot;\&quot;No\&quot;\&quot; when the number of titles impacted are reduced to one # Note: The business does not want to automatically change this Charge Impact Remark on Title when number of titles impacted are reduced to one. </value>
         [DataMember(Name = "interAlia", EmitDefaultValue = false)]
         public InterAliaEnum InterAlia { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ChargeOnTitle" /> class.
         /// </summary>
@@ -149,13 +161,11 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Charge Number
+        /// Charge Number.
         /// </summary>
-        /// <value>Charge Number</value>
+        /// <value>Charge Number.</value>
         [DataMember(Name = "chargeNumber", EmitDefaultValue = false)]
         public string ChargeNumber { get; set; }
-
-
 
         /// <summary>
         /// Date when the Charge status was changed from Pending to Registered.  This data is only for internal purposes, it does not appear on a Title View.
@@ -164,22 +174,21 @@ namespace Pims.Ltsa.Models
         [DataMember(Name = "enteredDate", EmitDefaultValue = false)]
         public DateTime? EnteredDate { get; set; }
 
-
         /// <summary>
-        /// Charge remarks
+        /// Charge remarks.
         /// </summary>
-        /// <value>Charge remarks</value>
+        /// <value>Charge remarks.</value>
         [DataMember(Name = "chargeRemarks", EmitDefaultValue = false)]
         public string ChargeRemarks { get; set; }
 
         /// <summary>
-        /// Gets or Sets ChargeRelease
+        /// Gets or Sets ChargeRelease.
         /// </summary>
         [DataMember(Name = "chargeRelease", EmitDefaultValue = false)]
         public ChargeRelease ChargeRelease { get; set; }
 
         /// <summary>
-        /// Gets or Sets Charge
+        /// Gets or Sets Charge.
         /// </summary>
         [DataMember(Name = "charge", EmitDefaultValue = false)]
         public Charge Charge { get; set; }

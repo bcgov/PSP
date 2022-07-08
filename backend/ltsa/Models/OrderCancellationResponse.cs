@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Order cancellation record
+    /// Order cancellation record.
     /// </summary>
     [DataContract]
     public partial class OrderCancellationResponse
@@ -32,19 +31,19 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets OrderId
+        /// Gets or Sets OrderId.
         /// </summary>
         [DataMember(Name = "orderId", EmitDefaultValue = false)]
         public string OrderId { get; set; }
 
         /// <summary>
-        /// Gets or Sets OrderCancellationID
+        /// Gets or Sets OrderCancellationID.
         /// </summary>
         [DataMember(Name = "orderCancellationID", EmitDefaultValue = false)]
         public string OrderCancellationID { get; set; }
 
         /// <summary>
-        /// Gets or Sets Status
+        /// Gets or Sets Status.
         /// </summary>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public string Status { get; set; }

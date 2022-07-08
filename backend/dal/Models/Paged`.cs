@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities.Models
     public class Paged<TModel> : ICollection<TModel>
     {
         #region Properties
+
         /// <summary>
         /// get/set - The page number.
         /// </summary>
@@ -49,6 +50,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a Paged class.
         /// </summary>
@@ -120,6 +122,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Convert the items in the page to another type via the specified 'converter'.
         /// </summary>

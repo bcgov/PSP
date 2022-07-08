@@ -6,6 +6,7 @@ namespace Pims.Api.Models.Concepts
     public class ResearchFileModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The model id.
         /// </summary>
@@ -34,7 +35,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A list of research property relationships.
         /// </summary>
         public IList<ResearchFilePropertyModel> ResearchProperties { get; set; }
-
 
         public DateTime? RequestDate { get; set; }
         public string RequestDescription { get; set; }

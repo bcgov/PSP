@@ -13,37 +13,41 @@ using System.Text.Json.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleSummary
+    /// TitleSummary.
     /// </summary>
     [DataContract]
     public partial class TitleSummary
     {
         /// <summary>
-        /// Status of the title
+        /// Status of the title.
         /// </summary>
-        /// <value>Status of the title</value>
+        /// <value>Status of the title.</value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum REGISTERED for value: REGISTERED
             /// </summary>
             [EnumMember(Value = "REGISTERED")]
             REGISTERED = 1,
+
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
             [EnumMember(Value = "CANCELLED")]
-            CANCELLED = 2
+            CANCELLED = 2,
         }
+
         /// <summary>
-        /// Status of the title
+        /// Status of the title.
         /// </summary>
-        /// <value>Status of the title</value>
+        /// <value>Status of the title.</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum? Status { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TitleSummary" /> class.
         /// </summary>
@@ -64,37 +68,36 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Title number of the title
+        /// Title number of the title.
         /// </summary>
-        /// <value>Title number of the title</value>
+        /// <value>Title number of the title.</value>
         [DataMember(Name = "titleNumber", EmitDefaultValue = false)]
         public string TitleNumber { get; set; }
 
         /// <summary>
-        /// Land title district (e.g. Victoria) where the title belongs
+        /// Land title district (e.g. Victoria) where the title belongs.
         /// </summary>
-        /// <value>Land title district (e.g. Victoria) where the title belongs</value>
+        /// <value>Land title district (e.g. Victoria) where the title belongs.</value>
         [DataMember(Name = "landTitleDistrict", EmitDefaultValue = false)]
         public string LandTitleDistrict { get; set; }
 
         /// <summary>
-        /// Gets or Sets LandTitleDistrictCode
+        /// Gets or Sets LandTitleDistrictCode.
         /// </summary>
         [DataMember(Name = "landTitleDistrictCode", EmitDefaultValue = false)]
         public LandTitleDistrictCode LandTitleDistrictCode { get; set; }
 
         /// <summary>
-        /// Parcel identifier in Land Title Registry, format: 123-123-123
+        /// Parcel identifier in Land Title Registry, format: 123-123-123.
         /// </summary>
-        /// <value>Parcel identifier in Land Title Registry, format: 123-123-123</value>
+        /// <value>Parcel identifier in Land Title Registry, format: 123-123-123.</value>
         [DataMember(Name = "parcelIdentifier", EmitDefaultValue = false)]
         public string ParcelIdentifier { get; set; }
 
-
         /// <summary>
-        /// First registered owner name on title
+        /// First registered owner name on title.
         /// </summary>
-        /// <value>First registered owner name on title</value>
+        /// <value>First registered owner name on title.</value>
         [DataMember(Name = "firstOwner", EmitDefaultValue = false)]
         public string FirstOwner { get; set; }
     }

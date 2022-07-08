@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// NatureOfTransfer
+    /// NatureOfTransfer.
     /// </summary>
     [DataContract]
     public partial class NatureOfTransfer

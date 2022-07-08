@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
     public class ResearchFileRepository : BaseRepository<PimsResearchFile>, IResearchFileRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFileRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -26,7 +27,8 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFileRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFileRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods

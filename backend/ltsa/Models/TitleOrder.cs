@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// A Title Order
+    /// A Title Order.
     /// </summary>
     [DataContract]
     public partial class TitleOrder : OrderParent<Title>
@@ -22,7 +22,8 @@ namespace Pims.Ltsa.Models
         /// </summary>
         /// <param name="productOrderParameters">productOrderParameters.</param>
         /// <param name="orderedProduct">orderedProduct.</param>
-        public TitleOrder(TitleOrderParameters productOrderParameters = default, OrderedProduct<Title> orderedProduct = default, ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default) : base(productType, fileReference, orderId, status, billingInfo)
+        public TitleOrder(TitleOrderParameters productOrderParameters = default, OrderedProduct<Title> orderedProduct = default, ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default)
+            : base(productType, fileReference, orderId, status, billingInfo)
         {
             this.ProductOrderParameters = productOrderParameters;
             this.OrderedProduct = orderedProduct;
@@ -31,13 +32,13 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets ProductOrderParameters
+        /// Gets or Sets ProductOrderParameters.
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public TitleOrderParameters ProductOrderParameters { get; set; }
 
         /// <summary>
-        /// Gets or Sets OrderedProduct
+        /// Gets or Sets OrderedProduct.
         /// </summary>
         [DataMember(Name = "orderedProduct", EmitDefaultValue = false)]
         public override OrderedProduct<Title> OrderedProduct { get; set; }

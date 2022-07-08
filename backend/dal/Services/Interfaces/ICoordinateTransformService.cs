@@ -8,7 +8,7 @@ namespace Pims.Dal.Services
         /// Determines whether the supplied coordinate system is supported.
         /// </summary>
         /// <param name="srid">The identifier for the spatial reference system.</param>
-        /// <returns>true if supported; false otherwise</returns>
+        /// <returns>true if supported; false otherwise.</returns>
         bool IsCoordinateSystemSupported(int srid);
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="sourceSrid">The identifier for the source spatial reference system.</param>
         /// <param name="targetSrid">The identifier for the target spatial reference system.</param>
-        /// <param name="coordinate">The coordinates to re-project</param>
+        /// <param name="coordinate">The coordinates to re-project.</param>
         /// <returns></returns>
         Coordinate TransformCoordinates(int sourceSrid, int targetSrid, Coordinate location);
     }

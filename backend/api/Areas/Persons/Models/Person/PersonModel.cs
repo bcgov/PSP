@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
     public class PersonModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The person's id.
         /// </summary>

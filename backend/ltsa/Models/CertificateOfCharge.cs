@@ -11,11 +11,10 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// CertificateOfCharge
+    /// CertificateOfCharge.
     /// </summary>
     [DataContract]
     public partial class CertificateOfCharge
@@ -60,16 +59,16 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Certificate Number
+        /// Certificate Number.
         /// </summary>
-        /// <value>Certificate Number</value>
+        /// <value>Certificate Number.</value>
         [DataMember(Name = "number", EmitDefaultValue = false)]
         public string Number { get; set; }
 
         /// <summary>
-        /// Type of certificate
+        /// Type of certificate.
         /// </summary>
-        /// <value>Type of certificate</value>
+        /// <value>Type of certificate.</value>
         [DataMember(Name = "type", EmitDefaultValue = false)]
         public string Type { get; set; }
 

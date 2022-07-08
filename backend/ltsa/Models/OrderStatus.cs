@@ -10,11 +10,10 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Order Status change for cancellation
+    /// Order Status change for cancellation.
     /// </summary>
     [DataContract]
     public partial class OrderStatus
@@ -28,18 +27,21 @@ namespace Pims.Ltsa.Models
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum Cancelled for value: Cancelled
             /// </summary>
             [EnumMember(Value = "Cancelled")]
-            Cancelled = 1
+            Cancelled = 1,
         }
+
         /// <summary>
         /// Indicate the status for the order  1. Cancelled - the order should be cancelled. 
         /// </summary>
         /// <value>Indicate the status for the order  1. Cancelled - the order should be cancelled. </value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum? Status { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OrderStatus" /> class.
         /// </summary>

@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPerson : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify person.
         /// </summary>
@@ -25,19 +26,21 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a Person class, initializes with specified arguments.
         /// </summary>
         /// <param name="surname"></param>
         /// <param name="firstname"></param>
-        public PimsPerson(string surname, string firstname, PimsAddress address) : this()
+        public PimsPerson(string surname, string firstname, PimsAddress address)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(surname))
+            if (string.IsNullOrWhiteSpace(surname))
             {
                 throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(surname));
             }
 
-            if (String.IsNullOrWhiteSpace(firstname))
+            if (string.IsNullOrWhiteSpace(firstname))
             {
                 throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(firstname));
             }

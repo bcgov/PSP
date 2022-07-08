@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace Pims.Api.Services
 {
@@ -10,6 +10,7 @@ namespace Pims.Api.Services
     public abstract class BaseService
     {
         #region Properties
+
         /// <summary>
         /// get - The current user accessing the service.
         /// </summary>
@@ -23,6 +24,7 @@ namespace Pims.Api.Services
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a BaseService class, and initializes it with the specified arguments.
         /// </summary>
@@ -36,6 +38,7 @@ namespace Pims.Api.Services
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Provides a way to fetch the user within the assembly.
         /// </summary>

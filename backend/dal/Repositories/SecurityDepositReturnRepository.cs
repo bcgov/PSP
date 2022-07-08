@@ -11,6 +11,7 @@ namespace Pims.Dal.Repositories
     public class SecurityDepositReturnRepository : BaseRepository<PimsSecurityDepositReturn>, ISecurityDepositReturnRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SecurityDepositReturnRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -22,10 +23,10 @@ namespace Pims.Dal.Repositories
             ClaimsPrincipal user,
             IPimsRepository service,
             ILogger<LeaseRepository> logger,
-            IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+            IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
 
         #endregion
-
 
         public PimsSecurityDepositReturn GetById(long id)
         {
@@ -34,7 +35,6 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsSecurityDepositReturnHolder);
             return query.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
-
 
         public IEnumerable<PimsSecurityDepositReturn> GetByDepositId(long id)
         {
@@ -47,7 +47,6 @@ namespace Pims.Dal.Repositories
             this.Context.Add(depositReturn);
             return depositReturn;
         }
-
 
         public PimsSecurityDepositReturn Update(PimsSecurityDepositReturn depositReturn)
         {

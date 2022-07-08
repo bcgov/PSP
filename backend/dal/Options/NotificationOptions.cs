@@ -6,6 +6,7 @@ namespace Pims.Dal
     public class NotificationOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - Whether to throw exceptions when they occur.
         /// </summary>

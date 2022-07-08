@@ -14,6 +14,7 @@ namespace Pims.Api.Areas.Dummy.Controllers
     {
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ModelController class, initializes it with the specified arguments.
         /// </summary>
@@ -23,6 +24,7 @@ namespace Pims.Api.Areas.Dummy.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
@@ -36,7 +38,7 @@ namespace Pims.Api.Areas.Dummy.Controllers
             return new JsonResult(id);
         }
 
-        // <summary>
+        /// <summary>
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
         /// <returns></returns>
@@ -48,7 +50,6 @@ namespace Pims.Api.Areas.Dummy.Controllers
         {
             return new JsonResult(id);
         }
-
 
         #endregion
     }

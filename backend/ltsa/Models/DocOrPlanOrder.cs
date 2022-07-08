@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// DocOrPlanOrder
+    /// DocOrPlanOrder.
     /// </summary>
     [DataContract]
     public partial class DocOrPlanOrder : OrderParent<IFieldedData>
@@ -22,13 +21,14 @@ namespace Pims.Ltsa.Models
         /// Initializes a new instance of the <see cref="DocOrPlanOrder" /> class.
         /// </summary>
         /// <param name="productOrderParameters">productOrderParameters.</param>
-        public DocOrPlanOrder(DocumentOrPlanOrderParameters productOrderParameters = default, ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default) : base(productType, fileReference, orderId, status, billingInfo)
+        public DocOrPlanOrder(DocumentOrPlanOrderParameters productOrderParameters = default, ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default)
+            : base(productType, fileReference, orderId, status, billingInfo)
         {
             this.ProductOrderParameters = productOrderParameters;
         }
 
         /// <summary>
-        /// Gets or Sets ProductOrderParameters
+        /// Gets or Sets ProductOrderParameters.
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public DocumentOrPlanOrderParameters ProductOrderParameters { get; set; }

@@ -5,6 +5,7 @@ namespace Pims.Api.Models.User
     public class OrganizationModel : CodeModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify organization.
         /// </summary>

@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SecurityDepositController class, initializes it with the specified arguments.
         /// </summary>
@@ -46,6 +47,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Adds the specified deposit to the lease.
         /// </summary>
@@ -120,7 +122,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         }
 
         /// <summary>
-        /// update the deposit note on the given lease
+        /// update the deposit note on the given lease.
         /// </summary>
         /// <returns></returns>
         [HttpPut("{leaseId:long}/deposits/note")]

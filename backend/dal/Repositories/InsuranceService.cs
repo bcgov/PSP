@@ -16,6 +16,7 @@ namespace Pims.Dal.Repositories
     public class InsuranceRepository : BaseRepository<PimsInsurance>, IInsuranceRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a InsuranceService, and initializes it with the specified arguments.
         /// </summary>
@@ -23,7 +24,8 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public InsuranceRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<InsuranceRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public InsuranceRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<InsuranceRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -33,7 +35,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsInsurances
                 .FirstOrDefault(i => i.InsuranceId == id) ?? throw new KeyNotFoundException();
         }
-
 
         /// <summary>
         /// Add the passed lease to the database assuming the user has the require claims.

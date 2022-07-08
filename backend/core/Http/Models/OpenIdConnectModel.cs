@@ -6,6 +6,7 @@ namespace Pims.Core.Http.Models
     public class OpenIdConnectModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The issuer of the token.
         /// </summary>

@@ -9,6 +9,7 @@ namespace Pims.Dal.Entities
     public partial class PimsAddressUsageType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify address usage type.
         /// </summary>
@@ -23,11 +24,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a AddressType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsAddressUsageType(string id) : this()
+        public PimsAddressUsageType(string id)
+            : this()
         {
             Id = id;
         }

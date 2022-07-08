@@ -24,13 +24,14 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public NoteRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<NoteRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public NoteRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<NoteRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Adds the specified note to the datasource
+        /// Adds the specified note to the datasource.
         /// </summary>
         /// <param name="note">The note to add.</param>
         /// <returns></returns>
@@ -44,8 +45,8 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Retrieves the row version of the note with the specified id.
         /// </summary>
-        /// <param name="id">The note id</param>
-        /// <returns>The row version</returns>
+        /// <param name="id">The note id.</param>
+        /// <returns>The row version.</returns>
         public long GetRowVersion(long id)
         {
             return this.Context.PimsNotes.AsNoTracking()

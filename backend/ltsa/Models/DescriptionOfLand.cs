@@ -11,41 +11,44 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// DescriptionOfLand
+    /// DescriptionOfLand.
     /// </summary>
     [DataContract]
     public partial class DescriptionOfLand
     {
         /// <summary>
-        /// Parcel Status
+        /// Parcel Status.
         /// </summary>
-        /// <value>Parcel Status</value>
+        /// <value>Parcel Status.</value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum ParcelStatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum AActive for value: A - Active
             /// </summary>
             [EnumMember(Value = "A")]
             AActive = 1,
+
             /// <summary>
             /// Enum IInactive for value: I - Inactive
             /// </summary>
             [EnumMember(Value = "I")]
-            IInactive = 2
+            IInactive = 2,
         }
+
         /// <summary>
-        /// Parcel Status
+        /// Parcel Status.
         /// </summary>
-        /// <value>Parcel Status</value>
+        /// <value>Parcel Status.</value>
         [DataMember(Name = "parcelStatus", EmitDefaultValue = false)]
         public ParcelStatusEnum ParcelStatus { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DescriptionOfLand" /> class.
         /// </summary>

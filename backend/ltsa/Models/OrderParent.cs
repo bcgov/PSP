@@ -13,52 +13,59 @@ using System.Text.Json.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// OrderParent
+    /// OrderParent.
     /// </summary>
     [DataContract]
     public partial class OrderParent<T> where T : IFieldedData
     {
         /// <summary>
-        /// Indicate the type of the search product requested for an order
+        /// Indicate the type of the search product requested for an order.
         /// </summary>
-        /// <value>Indicate the type of the search product requested for an order</value>
+        /// <value>Indicate the type of the search product requested for an order.</value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum ProductTypeEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum Title for value: title
             /// </summary>
             [EnumMember(Value = "title")]
             title = 1,
+
             /// <summary>
             /// Enum CommonProperty for value: commonProperty
             /// </summary>
             [EnumMember(Value = "commonProperty")]
             commonProperty = 2,
+
             /// <summary>
             /// Enum ParcelInfo for value: parcelInfo
             /// </summary>
             [EnumMember(Value = "parcelInfo")]
             parcelInfo = 3,
+
             /// <summary>
             /// Enum DocOrPlan for value: docOrPlan
             /// </summary>
             [EnumMember(Value = "docOrPlan")]
             docOrPlan = 4,
+
             /// <summary>
             /// Enum Stc for value: stc
             /// </summary>
             [EnumMember(Value = "stc")]
-            stc = 5
+            stc = 5,
         }
+
         /// <summary>
-        /// Indicate the type of the search product requested for an order
+        /// Indicate the type of the search product requested for an order.
         /// </summary>
-        /// <value>Indicate the type of the search product requested for an order</value>
+        /// <value>Indicate the type of the search product requested for an order.</value>
         [DataMember(Name = "productType", EmitDefaultValue = false)]
         public ProductTypeEnum ProductType { get; set; }
+
         /// <summary>
         /// Indicate the status for the order # One of:  1. Processing - Order has been created and is being processed.  Both the fielded data (JSON) and the PDF are not yet available. 1. Fulfilled - Order has been partially fulfilled.  Fielded data (JSON) is available, but PDF is not yet available. 1. Completed - Order has been fully completed.  PDF is available.  Fielded data (JSON) is available (as applicable for the product type). 1. Cancelled - Order has been cancelled. The ordered product is not available for a cancelled order.  Third party software may cancel an outstanding order by changing this status to “Cancelled” via the Put Order service. 
         /// </summary>
@@ -68,27 +75,32 @@ namespace Pims.Ltsa.Models
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum Processing for value: Processing
             /// </summary>
             [EnumMember(Value = "Processing")]
             Processing = 1,
+
             /// <summary>
             /// Enum Fulfilled for value: Fulfilled
             /// </summary>
             [EnumMember(Value = "Fulfilled")]
             Fulfilled = 2,
+
             /// <summary>
             /// Enum Completed for value: Completed
             /// </summary>
             [EnumMember(Value = "Completed")]
             Completed = 3,
+
             /// <summary>
             /// Enum Cancelled for value: Cancelled
             /// </summary>
             [EnumMember(Value = "Cancelled")]
-            Cancelled = 4
+            Cancelled = 4,
         }
+
         /// <summary>
         /// Indicate the status for the order # One of:  1. Processing - Order has been created and is being processed.  Both the fielded data (JSON) and the PDF are not yet available. 1. Fulfilled - Order has been partially fulfilled.  Fielded data (JSON) is available, but PDF is not yet available. 1. Completed - Order has been fully completed.  PDF is available.  Fielded data (JSON) is available (as applicable for the product type). 1. Cancelled - Order has been cancelled. The ordered product is not available for a cancelled order.  Third party software may cancel an outstanding order by changing this status to “Cancelled” via the Put Order service. 
         /// </summary>
@@ -115,24 +127,22 @@ namespace Pims.Ltsa.Models
         }
         public OrderParent() { }
 
-
         /// <summary>
-        /// This file reference will show in myLTSA account statements to identify the order transaction
+        /// This file reference will show in myLTSA account statements to identify the order transaction.
         /// </summary>
-        /// <value>This file reference will show in myLTSA account statements to identify the order transaction</value>
+        /// <value>This file reference will show in myLTSA account statements to identify the order transaction.</value>
         [DataMember(Name = "fileReference", EmitDefaultValue = false)]
         public string FileReference { get; set; }
 
         /// <summary>
-        /// System generated unique identifier assigned to the order Read-only for third party software
+        /// System generated unique identifier assigned to the order Read-only for third party software.
         /// </summary>
-        /// <value>System generated unique identifier assigned to the order Read-only for third party software</value>
+        /// <value>System generated unique identifier assigned to the order Read-only for third party software.</value>
         [DataMember(Name = "orderId", EmitDefaultValue = false)]
         public string OrderId { get; set; }
 
-
         /// <summary>
-        /// Gets or Sets BillingInfo
+        /// Gets or Sets BillingInfo.
         /// </summary>
         [DataMember(Name = "billingInfo", EmitDefaultValue = false)]
         public BillingInfo BillingInfo { get; set; }

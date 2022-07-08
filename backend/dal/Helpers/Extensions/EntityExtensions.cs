@@ -152,7 +152,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
-        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation</param>
+        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
         public static void UpdateGrandchild<T, I, C>(
             this PimsContext context,
             Expression<Func<T, object>> childNavigation,
@@ -175,7 +175,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
-        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation</param>
+        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
         /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
         public static void UpdateGrandchild<T, I, C>(
             this PimsContext context,

@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyTenureType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify property tenure type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PropertyTenureType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyTenureType(string id) : this()
+        public PimsPropertyTenureType(string id)
+            : this()
         {
             Id = id;
         }

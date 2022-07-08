@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsLessorType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify lessor type.
         /// </summary>
@@ -21,11 +22,13 @@ namespace Pims.Dal.Entities
         }
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a LessorType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLessorType(string id) : this()
+        public PimsLessorType(string id)
+            : this()
         {
             Id = id;
         }

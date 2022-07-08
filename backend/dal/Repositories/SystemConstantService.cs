@@ -14,6 +14,7 @@ namespace Pims.Dal.Repositories
     public class SystemConstantService : BaseRepository<PimsStaticVariable>, ISystemConstantService
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SystemConstantService, and initializes it with the specified arguments.
         /// </summary>
@@ -21,10 +22,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="repository"></param>
         /// <param name="logger"></param>
-        public SystemConstantService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository repository, ILogger<SystemConstantService> logger, IMapper mapper) : base(dbContext, user, repository, logger, mapper) { }
+        public SystemConstantService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository repository, ILogger<SystemConstantService> logger, IMapper mapper)
+            : base(dbContext, user, repository, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get all static variables.
         /// </summary>

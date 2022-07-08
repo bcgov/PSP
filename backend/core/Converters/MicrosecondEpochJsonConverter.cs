@@ -10,6 +10,7 @@ namespace Pims.Core.Converters
     public class MicrosecondEpochJsonConverter : JsonConverter<DateTime>
     {
         #region Methods
+
         /// <summary>
         /// Read the 'long' value from JSON and return a DateTime.
         /// </summary>
@@ -23,7 +24,7 @@ namespace Pims.Core.Converters
             value = reader.TokenType switch
             {
                 JsonTokenType.Number => reader.GetInt64(),
-                JsonTokenType.String => Int64.TryParse(reader.GetString(), out long result) ? result : 0,
+                JsonTokenType.String => long.TryParse(reader.GetString(), out long result) ? result : 0,
                 _ => 0
             };
             return DateTimeOffset.UnixEpoch.AddMilliseconds(value).UtcDateTime;

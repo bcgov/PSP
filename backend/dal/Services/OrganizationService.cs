@@ -18,7 +18,8 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <param name="organizationRepository"></param>
-        public OrganizationService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IOrganizationRepository organizationRepository) : base(user, logger)
+        public OrganizationService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IOrganizationRepository organizationRepository)
+            : base(user, logger)
         {
             _organizationRepository = organizationRepository;
         }

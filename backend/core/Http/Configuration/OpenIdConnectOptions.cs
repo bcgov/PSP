@@ -1,5 +1,5 @@
-using Pims.Core.Exceptions;
 using System;
+using Pims.Core.Exceptions;
 
 namespace Pims.Core.Http.Configuration
 {
@@ -9,6 +9,7 @@ namespace Pims.Core.Http.Configuration
     public class OpenIdConnectOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The login endpoint path.
         /// </summary>
@@ -47,18 +48,19 @@ namespace Pims.Core.Http.Configuration
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Validate the configuration.
         /// </summary>
         /// <exception type="ConfigurationException">The configuration is missing or invalid.</exception>
         public virtual void Validate()
         {
-            if (String.IsNullOrWhiteSpace(this.Token))
+            if (string.IsNullOrWhiteSpace(this.Token))
             {
                 throw new ConfigurationException("The configuration for Keycloak:OpenIdConnect:Token is invalid or missing.");
             }
 
-            if (String.IsNullOrWhiteSpace(this.UserInfo))
+            if (string.IsNullOrWhiteSpace(this.UserInfo))
             {
                 throw new ConfigurationException("The configuration for Keycloak:OpenIdConnect:UserInfo is invalid or missing.");
             }

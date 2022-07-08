@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsVolumetricType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify volumetric type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PimsVolumetricType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsVolumetricType(string id) : this()
+        public PimsVolumetricType(string id)
+            : this()
         {
             Id = id;
         }

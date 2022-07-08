@@ -33,13 +33,14 @@ namespace Pims.Dal.Entities.Models
             this.Search = filter.GetStringValue(nameof(this.Search));
             this.Top = filter.GetIntValue(nameof(this.Top), 5);
         }
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
         /// <returns></returns>
         public bool IsValid()
         {
-            return !String.IsNullOrWhiteSpace(this.Search)
+            return !string.IsNullOrWhiteSpace(this.Search)
                 && (this.Top >= 1 && this.Top <= 100);
         }
     }

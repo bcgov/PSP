@@ -8,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsInsuranceType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify insurance type.
         /// </summary>
@@ -16,11 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a InsuranceType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsInsuranceType(string id) : this()
+        public PimsInsuranceType(string id)
+            : this()
         {
             Id = id;
         }

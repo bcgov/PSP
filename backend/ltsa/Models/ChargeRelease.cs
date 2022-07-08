@@ -10,11 +10,10 @@
 using System;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ChargeRelease
+    /// ChargeRelease.
     /// </summary>
     [DataContract]
     public partial class ChargeRelease

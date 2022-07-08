@@ -12,11 +12,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleTombstone
+    /// TitleTombstone.
     /// </summary>
     [DataContract]
     public partial class TitleTombstone
@@ -90,16 +89,16 @@ namespace Pims.Ltsa.Models
         public string TitleRemarks { get; set; }
 
         /// <summary>
-        /// Describes the source of the first title. It may contain: * AFB reference number - \&quot;\&quot;AFB &lt;book, folio and page number&gt;\&quot;\&quot; * The text \&quot;\&quot;Crown Grant\&quot;\&quot; 
+        /// Describes the source of the first title. It may contain: * AFB reference number - \&quot;\&quot;AFB &lt;book, folio and page number&gt;\&quot;\&quot; * The text \&quot;\&quot;Crown Grant\&quot;\&quot;. 
         /// </summary>
-        /// <value>Describes the source of the first title. It may contain: * AFB reference number - \&quot;\&quot;AFB &lt;book, folio and page number&gt;\&quot;\&quot; * The text \&quot;\&quot;Crown Grant\&quot;\&quot; </value>
+        /// <value>Describes the source of the first title. It may contain: * AFB reference number - \&quot;\&quot;AFB &lt;book, folio and page number&gt;\&quot;\&quot; * The text \&quot;\&quot;Crown Grant\&quot;\&quot;. </value>
         [DataMember(Name = "rootOfTitle", EmitDefaultValue = false)]
         public string RootOfTitle { get; set; }
 
         /// <summary>
-        /// Title cancellation date and time. Not set for a Draft or Registered Title
+        /// Title cancellation date and time. Not set for a Draft or Registered Title.
         /// </summary>
-        /// <value>Title cancellation date and time. Not set for a Draft or Registered Title</value>
+        /// <value>Title cancellation date and time. Not set for a Draft or Registered Title.</value>
         [DataMember(Name = "cancellationDate", EmitDefaultValue = false)]
         public DateTime? CancellationDate { get; set; }
 
@@ -111,13 +110,13 @@ namespace Pims.Ltsa.Models
         public string MarketValueAmount { get; set; }
 
         /// <summary>
-        /// Gets or Sets FromTitles
+        /// Gets or Sets FromTitles.
         /// </summary>
         [DataMember(Name = "fromTitles", EmitDefaultValue = false)]
         public List<TitleIdentifier> FromTitles { get; set; }
 
         /// <summary>
-        /// Gets or Sets NatureOfTransfers
+        /// Gets or Sets NatureOfTransfers.
         /// </summary>
         [DataMember(Name = "natureOfTransfers", EmitDefaultValue = false)]
         public List<NatureOfTransfer> NatureOfTransfers { get; set; }

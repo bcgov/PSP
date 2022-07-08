@@ -16,6 +16,7 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The person repository.
         /// </summary>
@@ -123,6 +124,7 @@ namespace Pims.Dal
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PimsService class, and initializes it with the specified arguments.
         /// </summary>

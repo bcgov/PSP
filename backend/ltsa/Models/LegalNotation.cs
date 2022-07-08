@@ -12,11 +12,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// LegalNotation
+    /// LegalNotation.
     /// </summary>
     [DataContract]
     public partial class LegalNotation
@@ -70,20 +69,20 @@ namespace Pims.Ltsa.Models
         public string PlanIdentifier { get; set; }
 
         /// <summary>
-        /// Legal Notation Text
+        /// Legal Notation Text.
         /// </summary>
-        /// <value>Legal Notation Text</value>
+        /// <value>Legal Notation Text.</value>
         [DataMember(Name = "legalNotationText", EmitDefaultValue = false)]
         public string LegalNotationText { get; set; }
 
         /// <summary>
-        /// Gets or Sets CorrectionsAltos1
+        /// Gets or Sets CorrectionsAltos1.
         /// </summary>
         [DataMember(Name = "correctionsAltos1", EmitDefaultValue = false)]
         public List<Altos1LegalNotationCorrection> CorrectionsAltos1 { get; set; }
 
         /// <summary>
-        /// Gets or Sets Corrections
+        /// Gets or Sets Corrections.
         /// </summary>
         [DataMember(Name = "corrections", EmitDefaultValue = false)]
         public List<LegalNotationCorrection> Corrections { get; set; }

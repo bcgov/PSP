@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
     public class LeaseFilterModel : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The unique identifier for titled property, either pid or pin.
         /// </summary>
@@ -16,13 +17,11 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
-        /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
         /// get/set - The address to search by.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
 
         /// <summary>
@@ -33,7 +32,6 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The value of the tenant name.
         /// </summary>
-        /// <value></value>
         public string TenantName { get; set; }
 
         /// <summary>
@@ -73,7 +71,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// Creates a new instance of a LeaseFilterModel class, initializes with the specified arguments.
         /// </summary>
         /// <param name="query"></param>
-        public LeaseFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query) : base(query)
+        public LeaseFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
+            : base(query)
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
@@ -93,6 +92,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Convert to a LeaseFilter.
         /// </summary>
@@ -115,7 +115,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 RegionType = model.RegionType,
                 Details = model.Details,
 
-                Sort = model.Sort
+                Sort = model.Sort,
             };
 
             return filter;

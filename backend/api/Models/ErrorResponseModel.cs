@@ -1,7 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Pims.Core.Extensions;
-using System;
 
 namespace Pims.Api.Models
 {
@@ -11,6 +11,7 @@ namespace Pims.Api.Models
     public class ErrorResponseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The error message.
         /// </summary>
@@ -37,6 +38,7 @@ namespace Pims.Api.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an ErrorResponseModel object.
         /// </summary>

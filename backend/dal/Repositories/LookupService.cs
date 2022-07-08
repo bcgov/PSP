@@ -14,6 +14,7 @@ namespace Pims.Dal.Repositories
     public class LookupService : BaseRepository, ILookupService
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LookService, and initializes it with the specified arguments.
         /// </summary>
@@ -21,12 +22,14 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LookupService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LookupService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public LookupService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LookupService> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
-        /// Get all organizations sorted by Name
+        /// Get all organizations sorted by Name.
         /// </summary>
         public IEnumerable<PimsOrganization> GetOrganizations()
         {
@@ -34,7 +37,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all organization types sorted by DisplayOrder and Id
+        /// Get all organization types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsOrganizationType> GetOrganizationTypes()
         {
@@ -42,7 +45,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all countries sorted by DisplayOrder and Code
+        /// Get all countries sorted by DisplayOrder and Code.
         /// </summary>
         public IEnumerable<PimsCountry> GetCountries()
         {
@@ -50,7 +53,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all provinces sorted by DisplayOrder and Code
+        /// Get all provinces sorted by DisplayOrder and Code.
         /// </summary>
         public IEnumerable<PimsProvinceState> GetProvinces()
         {
@@ -58,7 +61,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all regions sorted by DisplayOrder and Name
+        /// Get all regions sorted by DisplayOrder and Name.
         /// </summary>
         public IEnumerable<PimsRegion> GetRegions()
         {
@@ -66,7 +69,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all districts sorted by DisplayOrder and Name
+        /// Get all districts sorted by DisplayOrder and Name.
         /// </summary>
         public IEnumerable<PimsDistrict> GetDistricts()
         {
@@ -74,7 +77,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property classification types sorted by DisplayOrder and Id
+        /// Get all property classification types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyClassificationType> GetPropertyClassificationTypes()
         {
@@ -82,7 +85,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property types sorted by DisplayOrder and Id
+        /// Get all property types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyType> GetPropertyTypes()
         {
@@ -90,7 +93,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property tenure types sorted by DisplayOrder and Id
+        /// Get all property tenure types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes()
         {
@@ -98,7 +101,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property area unit types sorted by DisplayOrder and Id
+        /// Get all property area unit types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsAreaUnitType> GetPropertyAreaUnitTypes()
         {
@@ -106,7 +109,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property volume unit types sorted by DisplayOrder and Id
+        /// Get all property volume unit types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsVolumeUnitType> GetPropertyVolumeUnitTypes()
         {
@@ -114,7 +117,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all roles sorted by Name
+        /// Get all roles sorted by Name.
         /// </summary>
         public IEnumerable<PimsRole> GetRoles()
         {

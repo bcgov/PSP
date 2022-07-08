@@ -15,7 +15,7 @@ using System.Text.Json.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ChargeOwnershipGroup
+    /// ChargeOwnershipGroup.
     /// </summary>
     [DataContract]
     public partial class ChargeOwnershipGroup
@@ -29,23 +29,27 @@ namespace Pims.Ltsa.Models
         public enum CreatingApplicationStatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum Draft for value: Draft
             /// </summary>
             [EnumMember(Value = "Draft")]
             Draft = 1,
+
             /// <summary>
             /// Enum Registered for value: Registered
             /// </summary>
             [EnumMember(Value = "Registered")]
-            Registered = 2
+            Registered = 2,
         }
+
         /// <summary>
         /// Indicates the state with respect to the Transfer of Charge Ownership lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to the Transfer of Charge Ownership lifecycle.</value>
         [DataMember(Name = "creatingApplicationStatus", EmitDefaultValue = false)]
         public CreatingApplicationStatusEnum? CreatingApplicationStatus { get; set; }
+
         /// <summary>
         /// Indicates the state with respect to the Transfer of Charge Ownership lifecycle.
         /// </summary>
@@ -55,23 +59,27 @@ namespace Pims.Ltsa.Models
         public enum CancellingApplicationStatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum Draft for value: Draft
             /// </summary>
             [EnumMember(Value = "Draft")]
             Draft = 1,
+
             /// <summary>
             /// Enum Registered for value: Registered
             /// </summary>
             [EnumMember(Value = "Registered")]
-            Registered = 2
+            Registered = 2,
         }
+
         /// <summary>
         /// Indicates the state with respect to the Transfer of Charge Ownership lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to the Transfer of Charge Ownership lifecycle.</value>
         [DataMember(Name = "cancellingApplicationStatus", EmitDefaultValue = false)]
         public CancellingApplicationStatusEnum? CancellingApplicationStatus { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ChargeOwnershipGroup" /> class.
         /// </summary>
@@ -114,9 +122,9 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Indicator for joint tenancy
+        /// Indicator for joint tenancy.
         /// </summary>
-        /// <value>Indicator for joint tenancy</value>
+        /// <value>Indicator for joint tenancy.</value>
         [DataMember(Name = "jointTenancyIndication", EmitDefaultValue = false)]
         public bool? JointTenancyIndication { get; set; }
 
@@ -127,14 +135,12 @@ namespace Pims.Ltsa.Models
         [DataMember(Name = "creatingApplicationNumber", EmitDefaultValue = false)]
         public string CreatingApplicationNumber { get; set; }
 
-
         /// <summary>
         /// The Transfer of Charge Ownership application that cancelled this charge ownership group.
         /// </summary>
         /// <value>The Transfer of Charge Ownership application that cancelled this charge ownership group.</value>
         [DataMember(Name = "cancellingApplicationNumber", EmitDefaultValue = false)]
         public string CancellingApplicationNumber { get; set; }
-
 
         /// <summary>
         /// Interest Fraction Numerator. It is used if not 1 (1/1), assumed to be equal division amongst ownership groups unless specified otherwise.
@@ -151,14 +157,14 @@ namespace Pims.Ltsa.Models
         public string InterestFractionDenominator { get; set; }
 
         /// <summary>
-        /// Charge Ownership Remarks
+        /// Charge Ownership Remarks.
         /// </summary>
-        /// <value>Charge Ownership Remarks</value>
+        /// <value>Charge Ownership Remarks.</value>
         [DataMember(Name = "ownershipRemarks", EmitDefaultValue = false)]
         public string OwnershipRemarks { get; set; }
 
         /// <summary>
-        /// Gets or Sets ChargeOwners
+        /// Gets or Sets ChargeOwners.
         /// </summary>
         [DataMember(Name = "chargeOwners", EmitDefaultValue = false)]
         public List<ChargeOwnershipGroupChargeOwner> ChargeOwners { get; set; }

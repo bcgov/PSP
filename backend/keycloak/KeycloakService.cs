@@ -5,7 +5,7 @@ namespace Pims.Keycloak
 {
     /// <summary>
     /// KeycloakService class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview
+    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
@@ -14,6 +14,7 @@ namespace Pims.Keycloak
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The configuration options for keycloak.
         /// </summary>
@@ -22,6 +23,7 @@ namespace Pims.Keycloak
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a KeycloakAdmin class, initializes it with the specified arguments.
         /// </summary>

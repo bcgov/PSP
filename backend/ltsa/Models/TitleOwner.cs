@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleOwner
+    /// TitleOwner.
     /// </summary>
     [DataContract]
     public partial class TitleOwner
@@ -82,7 +81,7 @@ namespace Pims.Ltsa.Models
         public string OccupationDescription { get; set; }
 
         /// <summary>
-        /// Gets or Sets Address
+        /// Gets or Sets Address.
         /// </summary>
         [DataMember(Name = "address", EmitDefaultValue = false)]
         public OwnerAddress Address { get; set; }

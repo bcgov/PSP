@@ -26,7 +26,7 @@ namespace Pims.Dal.Extensions
             where T : class
         {
             // Generate a sequence name based on the column name.
-            if (String.IsNullOrWhiteSpace(sequenceName))
+            if (string.IsNullOrWhiteSpace(sequenceName))
             {
                 var propInfo = GetPropertyInfo(propertyExpression);
                 var type = typeof(T);

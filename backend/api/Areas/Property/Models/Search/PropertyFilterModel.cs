@@ -26,6 +26,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PropertyFilterModel class.
         /// </summary>
@@ -35,7 +36,8 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// Creates a new instance of a PropertyFilterModel class, initializes with the specified arguments.
         /// </summary>
         /// <param name="query"></param>
-        public PropertyFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query) : base(query)
+        public PropertyFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
+            : base(query)
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
@@ -48,6 +50,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Convert to a ParcelFilter.
         /// </summary>
@@ -66,6 +69,7 @@ namespace Pims.Api.Areas.Property.Models.Search
 
             return filter;
         }
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
@@ -73,8 +77,8 @@ namespace Pims.Api.Areas.Property.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.PinOrPid)
-                || !String.IsNullOrWhiteSpace(this.Address);
+                || !string.IsNullOrWhiteSpace(this.PinOrPid)
+                || !string.IsNullOrWhiteSpace(this.Address);
         }
         #endregion
     }

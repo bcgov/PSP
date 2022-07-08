@@ -11,11 +11,10 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// DuplicateCertificate
+    /// DuplicateCertificate.
     /// </summary>
     [DataContract]
     public partial class DuplicateCertificate
@@ -74,13 +73,13 @@ namespace Pims.Ltsa.Models
         public DateTime? SurrenderDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets CertificateIdentifier
+        /// Gets or Sets CertificateIdentifier.
         /// </summary>
         [DataMember(Name = "certificateIdentifier", EmitDefaultValue = false)]
         public CertificateIdentifier CertificateIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or Sets CertificateDelivery
+        /// Gets or Sets CertificateDelivery.
         /// </summary>
         [DataMember(Name = "certificateDelivery", EmitDefaultValue = false)]
         public CertificateDelivery CertificateDelivery { get; set; }

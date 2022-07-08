@@ -8,6 +8,7 @@ namespace Pims.Dal.Entities.Models
     public class ResearchFilter : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The moti region that any of the properties on the research file belong to.
         /// </summary>

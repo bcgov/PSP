@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsSurplusDeclarationType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify surplus declaration type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a SurplusDeclarationType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsSurplusDeclarationType(string id) : this()
+        public PimsSurplusDeclarationType(string id)
+            : this()
         {
             Id = id;
         }

@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// SpcpOrder
+    /// SpcpOrder.
     /// </summary>
     [DataContract]
     public partial class SpcpOrder : OrderParent<StrataPlanCommonProperty>
@@ -23,7 +22,8 @@ namespace Pims.Ltsa.Models
         /// </summary>
         /// <param name="productOrderParameters">productOrderParameters.</param>
         /// <param name="orderedProduct">orderedProduct.</param>
-        public SpcpOrder(StrataPlanCommonPropertyOrderParameters productOrderParameters = default, OrderedProduct<StrataPlanCommonProperty> orderedProduct = default, ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default) : base(productType, fileReference, orderId, status, billingInfo)
+        public SpcpOrder(StrataPlanCommonPropertyOrderParameters productOrderParameters = default, OrderedProduct<StrataPlanCommonProperty> orderedProduct = default, ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default)
+            : base(productType, fileReference, orderId, status, billingInfo)
         {
             this.ProductOrderParameters = productOrderParameters;
             this.OrderedProduct = orderedProduct;
@@ -32,13 +32,13 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets ProductOrderParameters
+        /// Gets or Sets ProductOrderParameters.
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public StrataPlanCommonPropertyOrderParameters ProductOrderParameters { get; set; }
 
         /// <summary>
-        /// Gets or Sets OrderedProduct
+        /// Gets or Sets OrderedProduct.
         /// </summary>
         [DataMember(Name = "orderedProduct", EmitDefaultValue = false)]
         public override OrderedProduct<StrataPlanCommonProperty> OrderedProduct { get; set; }

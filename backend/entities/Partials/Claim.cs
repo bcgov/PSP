@@ -13,12 +13,14 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a Claim class.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="name"></param>
-        public PimsClaim(Guid key, string name) : this()
+        public PimsClaim(Guid key, string name)
+            : this()
         {
             this.ClaimUid = key;
             this.Name = name;

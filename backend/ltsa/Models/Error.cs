@@ -10,11 +10,10 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Error
+    /// Error.
     /// </summary>
     [DataContract]
     public partial class Error
@@ -29,7 +28,7 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets ErrorMessages
+        /// Gets or Sets ErrorMessages.
         /// </summary>
         [DataMember(Name = "errorMessages", EmitDefaultValue = false)]
         public ICollection<string> ErrorMessages { get; set; }

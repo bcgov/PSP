@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -6,10 +10,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Repositories
 {
@@ -22,6 +22,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a RoleService, and initializes it with the specified arguments.
         /// </summary>
@@ -29,10 +30,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public RoleService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<RoleService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public RoleService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<RoleService> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get a page of roles from the datasource.
         /// </summary>
@@ -46,7 +49,7 @@ namespace Pims.Dal.Repositories
 
             var query = this.Context.PimsRoles.AsNoTracking();
 
-            if (!String.IsNullOrWhiteSpace(name))
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
             }
