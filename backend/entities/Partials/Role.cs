@@ -12,7 +12,9 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         public ICollection<PimsClaim> GetClaims() => PimsRoleClaims?.Select(c => c.Claim).ToArray();
+
         public ICollection<PimsUser> GetUsers() => PimsUserRoles?.Select(u => u.User).ToArray();
+
         [NotMapped]
         public long Id { get => RoleId; set => RoleId = value; }
         #endregion

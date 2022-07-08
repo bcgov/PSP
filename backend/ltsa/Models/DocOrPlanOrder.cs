@@ -32,6 +32,7 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public DocumentOrPlanOrderParameters ProductOrderParameters { get; set; }
+
         public override OrderedProduct<IFieldedData> OrderedProduct { get; set; }
     }
 }

@@ -4,7 +4,9 @@ namespace Pims.Geocoder.Models
     {
         #region Properties
         public string Type { get; set; }
+
         public GeometryModel Geometry { get; set; }
+
         public PropertyModel Properties { get; set; }
         #endregion
     }

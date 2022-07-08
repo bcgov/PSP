@@ -29,7 +29,8 @@ namespace Pims.Dal.Repositories
         /// <param name="mapper"></param>
         protected BaseRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<BaseRepository> logger, IMapper mapper)
             : base(dbContext, user, service, logger, mapper)
-        { }
+        {
+        }
         #endregion
 
         #region Methods

@@ -24,7 +24,9 @@ namespace Pims.Dal.Repositories
             IPimsRepository service,
             ILogger<LeaseRepository> logger,
             IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+            : base(dbContext, user, service, logger, mapper)
+        {
+        }
 
         #endregion
 

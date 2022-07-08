@@ -35,7 +35,9 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// <summary>
         /// Creates a new instance of a ContactFilterModel class.
         /// </summary>
-        public ContactFilterModel() { }
+        public ContactFilterModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ContactFilterModel class, initializes with the specified arguments.

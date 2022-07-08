@@ -17,7 +17,9 @@ namespace Pims.Core.Exceptions
         /// Creates a new instance of an ProxyRequestException class.
         /// </summary>
         /// <returns></returns>
-        public ProxyRequestException() { }
+        public ProxyRequestException()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ProxyRequestException class, initializes it with the specified arguments.
@@ -26,7 +28,9 @@ namespace Pims.Core.Exceptions
         /// <param name="statusCode"></param>
         /// <returns></returns>
         public ProxyRequestException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
-            : base(message, statusCode) { }
+            : base(message, statusCode)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ProxyRequestException class, initializes it with the specified arguments.
@@ -36,7 +40,9 @@ namespace Pims.Core.Exceptions
         /// <param name="statusCode"></param>
         /// <returns></returns>
         public ProxyRequestException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
-            : base(message, innerException, statusCode) { }
+            : base(message, innerException, statusCode)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ProxyRequestException class, initializes it with the specified arguments.
@@ -44,7 +50,9 @@ namespace Pims.Core.Exceptions
         /// <param name="response"></param>
         /// <returns></returns>
         public ProxyRequestException(HttpResponseMessage response)
-            : base(response) { }
+            : base(response)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ProxyRequestException class, initializes it with the specified arguments.
@@ -52,7 +60,9 @@ namespace Pims.Core.Exceptions
         /// <param name="response"></param>
         /// <returns></returns>
         public ProxyRequestException(HttpResponseMessage response, Exception innerException)
-            : base(response, innerException) { }
+            : base(response, innerException)
+        {
+        }
 
         #endregion
     }

@@ -70,7 +70,9 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// <summary>
         /// Creates a new instance of a ResearchFilterModel class.
         /// </summary>
-        public ResearchFilterModel() { }
+        public ResearchFilterModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ResearchFilterModel class, initializes with the specified arguments.

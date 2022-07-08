@@ -30,7 +30,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a EnvironmentModel.
         /// </summary>
-        public EnvironmentModel() { }
+        public EnvironmentModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a EnvironmentModel, initialize with specified arguments.

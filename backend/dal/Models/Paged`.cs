@@ -54,7 +54,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a Paged class.
         /// </summary>
-        public Paged() { }
+        public Paged()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a Paged class, and initializes it with the specified data.

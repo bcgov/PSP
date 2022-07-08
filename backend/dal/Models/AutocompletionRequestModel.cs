@@ -20,7 +20,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a AutocompletionRequestModel class.
         /// </summary>
-        public AutocompletionRequestModel() { }
+        public AutocompletionRequestModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a AutocompletionRequestModel class, initializes with the specified arguments.

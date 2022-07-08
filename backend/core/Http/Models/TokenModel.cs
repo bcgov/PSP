@@ -13,6 +13,7 @@ namespace Pims.Core.Http.Models
         public TokenModel()
         {
         }
+
         public TokenModel(string jwtToken, string refreshToken)
         {
             var handler = new JwtSecurityTokenHandler();

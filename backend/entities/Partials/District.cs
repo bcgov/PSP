@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -14,8 +15,10 @@ namespace Pims.Dal.Entities
         /// </summary>
         [NotMapped]
         public short Id { get => DistrictCode; set => DistrictCode = value; }
+
         [NotMapped]
         public short Code { get => DistrictCode; set => DistrictCode = value; }
+
         [NotMapped]
         public string Description { get => DistrictName; set => DistrictName = value; }
         #endregion

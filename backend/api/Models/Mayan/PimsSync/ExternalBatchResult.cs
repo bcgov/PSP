@@ -17,12 +17,15 @@ namespace Pims.Api.Models.Mayan.Sync
         }
 
         public List<ExternalResult<string>> DeletedMetadata { get; set; }
+
         public List<ExternalResult<MetadataType>> CreatedMetadata { get; set; }
 
         public List<ExternalResult<string>> DeletedDocumentType { get; set; }
+
         public List<ExternalResult<DocumentType>> CreatedDocumentType { get; set; }
 
         public List<ExternalResult<string>> DeletedDocumentTypeMetadataType { get; set; }
+
         public List<ExternalResult<DocumentTypeMetadataType>> LinkedDocumentMetadataTypes { get; set; }
     }
 }

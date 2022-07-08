@@ -19,9 +19,13 @@ namespace Pims.Dal.Entities
         /// get - The friendly formated Parcel Id.
         /// </summary>
         [NotMapped]
-        public string ParcelIdentity { get { return this.Pid > 0 ? $"{this.Pid:000-000-000}" : null; } }
+        public string ParcelIdentity
+        {
+            get { return this.Pid > 0 ? $"{this.Pid:000-000-000}" : null; }
+        }
 
         public ICollection<PimsOrganization> GetOrganizations() => PimsPropertyOrganizations?.Select(o => o.Organization).ToArray();
+
         public ICollection<PimsLease> GetLeases() => PimsPropertyLeases?.Select(l => l.Lease).ToArray();
         #endregion
 

@@ -9,9 +9,13 @@ namespace Pims.Dal.Repositories
     public interface ISecurityDepositReturnRepository : IRepository<PimsSecurityDepositReturn>
     {
         PimsSecurityDepositReturn GetById(long id);
+
         IEnumerable<PimsSecurityDepositReturn> GetByDepositId(long id);
+
         PimsSecurityDepositReturn Add(PimsSecurityDepositReturn depositReturn);
+
         PimsSecurityDepositReturn Update(PimsSecurityDepositReturn depositReturn);
+
         void Delete(long id);
     }
 }

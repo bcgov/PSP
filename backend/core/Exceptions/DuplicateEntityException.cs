@@ -15,7 +15,9 @@ namespace Pims.Core.Exceptions
         /// Creates a new instance of an DuplicateEntityException class.
         /// </summary>
         /// <returns></returns>
-        public DuplicateEntityException() { }
+        public DuplicateEntityException()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an DuplicateEntityException class, initializes it with the specified arguments.
@@ -24,7 +26,9 @@ namespace Pims.Core.Exceptions
         /// <param name="statusCode"></param>
         /// <returns></returns>
         public DuplicateEntityException(string message)
-            : base(message) { }
+            : base(message)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an DuplicateEntityException class, initializes it with the specified arguments.
@@ -33,7 +37,9 @@ namespace Pims.Core.Exceptions
         /// <param name="statusCode"></param>
         /// <returns></returns>
         public DuplicateEntityException(string message, Exception innerException)
-            : base(message, innerException) { }
+            : base(message, innerException)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an DuplicateEntityException class, initializes it with the specified arguments.
@@ -42,7 +48,9 @@ namespace Pims.Core.Exceptions
         /// <param name="context"></param>
         /// <returns></returns>
         protected DuplicateEntityException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        {
+        }
         #endregion
     }
 }

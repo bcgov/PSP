@@ -31,7 +31,9 @@ namespace Pims.Dal.Repositories
         /// <param name="service"></param>
         /// <param name="logger"></param>
         public RoleService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<RoleService> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+            : base(dbContext, user, service, logger, mapper)
+        {
+        }
         #endregion
 
         #region Methods

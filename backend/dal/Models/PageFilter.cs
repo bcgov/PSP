@@ -33,7 +33,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a PageFilter class.
         /// </summary>
-        protected PageFilter() { }
+        protected PageFilter()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a PageFilter class, initializes it with the specified arguments.

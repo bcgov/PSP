@@ -1,4 +1,5 @@
 using Pims.Api.Models.Concepts;
+
 namespace Pims.Api.Areas.Contact.Models.Search
 {
     public class ContactSummaryModel

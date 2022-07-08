@@ -42,7 +42,9 @@ namespace Pims.Api.Models
         /// <summary>
         /// Creates a new instance of an ErrorResponseModel object.
         /// </summary>
-        public ErrorResponseModel() { }
+        public ErrorResponseModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ErrorResponseModel object, initializes with specified arguments.

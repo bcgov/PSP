@@ -76,6 +76,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The expiry filter end date.
         /// </summary>
         public DateTime? ExpiryEndDate { get; set; }
+
         public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string[] sort)
         {
             this.LFileNo = lFileNo;
@@ -100,7 +101,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a LeaseFilter class.
         /// </summary>
-        public LeaseFilter() { }
+        public LeaseFilter()
+        {
+        }
         #endregion
 
         #region Methods

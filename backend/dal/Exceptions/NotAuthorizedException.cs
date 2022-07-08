@@ -16,7 +16,9 @@ namespace Pims.Dal.Exceptions
         /// </summary>
         /// <returns></returns>
         public NotAuthorizedException()
-            : base() { }
+            : base()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a NotAuthorizedException class, and initializes it with the specified arguments.
@@ -24,7 +26,9 @@ namespace Pims.Dal.Exceptions
         /// <param name="message"></param>
         /// <returns></returns>
         public NotAuthorizedException(string message)
-            : base(message ?? "User is not authorized to perform this action.") { }
+            : base(message ?? "User is not authorized to perform this action.")
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a NotAuthorizedException class, and initializes it with the specified arguments.
@@ -33,7 +37,9 @@ namespace Pims.Dal.Exceptions
         /// <param name="innerException"></param>
         /// <returns></returns>
         public NotAuthorizedException(string message, Exception innerException)
-            : base(message ?? "User is not authorized to perform this action.", innerException) { }
+            : base(message ?? "User is not authorized to perform this action.", innerException)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a NotAuthorizedException class, and initializes it with the specified arguments.
@@ -42,7 +48,9 @@ namespace Pims.Dal.Exceptions
         /// <param name="context"></param>
         /// <returns></returns>
         protected NotAuthorizedException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        {
+        }
         #endregion
     }
 }

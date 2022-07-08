@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Comparers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using Entity = Pims.Dal.Entities;

@@ -40,7 +40,9 @@ namespace Pims.Api.Models.Health
         /// <summary>
         /// Creates a new instance of a EnvModel object.
         /// </summary>
-        public EnvModel() { }
+        public EnvModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a EnvModel object, initializes it with specified arguments.

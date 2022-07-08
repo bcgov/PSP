@@ -25,7 +25,9 @@ namespace Pims.Api.Models.Auth
         /// <summary>
         /// Creates a new instance of a ClaimModel object.
         /// </summary>
-        public ClaimModel() { }
+        public ClaimModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ClaimModel object, initializes it with specified arguments.

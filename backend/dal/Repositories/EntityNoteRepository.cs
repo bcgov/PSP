@@ -24,7 +24,9 @@ namespace Pims.Dal.Repositories
         /// <param name="service"></param>
         /// <param name="logger"></param>
         public EntityNoteRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<EntityNoteRepository> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+            : base(dbContext, user, service, logger, mapper)
+        {
+        }
 
         #endregion
 

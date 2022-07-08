@@ -16,6 +16,7 @@ namespace Pims.Dal.Services
         readonly Repositories.ILeaseRepository _leaseRepository;
         readonly ILeaseService _leaseService;
         readonly ClaimsPrincipal _user;
+
         public LeaseTermService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;

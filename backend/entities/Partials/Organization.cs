@@ -17,12 +17,15 @@ namespace Pims.Dal.Entities
         /// </summary>
         [NotMapped]
         public override long Id { get => OrganizationId; set => OrganizationId = value; }
+
         [NotMapped]
         public string Name { get => OrganizationName; set => OrganizationName = value; }
+
         [NotMapped]
         public string Description { get => OrganizationAlias; set => OrganizationAlias = value; }
 
         public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(po => po.Person).Select(p => { p.PimsPersonOrganizations = null; return p; }).ToArray();
+
         public ICollection<PimsUser> GetUsers() => PimsUserOrganizations?.Select(p => p.User).ToArray();
         #endregion
 

@@ -26,7 +26,9 @@ namespace Pims.Api.Helpers.Exceptions
         /// Creates a new instance of an ApiHttpRequestException class.
         /// </summary>
         /// <returns></returns>
-        public ApiHttpRequestException() { }
+        public ApiHttpRequestException()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ApiHttpRequestException class, initializes it with the specified arguments.
@@ -35,7 +37,9 @@ namespace Pims.Api.Helpers.Exceptions
         /// <param name="statusCode"></param>
         /// <returns></returns>
         public ApiHttpRequestException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
-            : base(message, null, statusCode) { }
+            : base(message, null, statusCode)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ApiHttpRequestException class, initializes it with the specified arguments.
@@ -45,7 +49,9 @@ namespace Pims.Api.Helpers.Exceptions
         /// <param name="statusCode"></param>
         /// <returns></returns>
         public ApiHttpRequestException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
-            : base(message, innerException, statusCode) { }
+            : base(message, innerException, statusCode)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ApiHttpRequestException class, initializes it with the specified arguments.

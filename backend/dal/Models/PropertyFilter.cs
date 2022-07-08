@@ -28,7 +28,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a PropertyFilter class.
         /// </summary>
-        public PropertyFilter() { }
+        public PropertyFilter()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a PropertyFilter class, initializes it with the specified arguments.

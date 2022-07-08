@@ -47,7 +47,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a UserFilter class.
         /// </summary>
-        public UserFilter() { }
+        public UserFilter()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a UserFilter class, initializes it with the specified arguments.

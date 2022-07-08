@@ -24,52 +24,82 @@ namespace Pims.Dal
         /// <summary>
         /// get - The lease service.
         /// </summary>
-        public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
+        public ILeaseService LeaseService
+        {
+            get { return _serviceProvider.GetService<ILeaseService>(); }
+        }
 
         /// <summary>
         /// get - The lease payment service.
         /// </summary>
-        public ILeasePaymentService LeasePaymentService { get { return _serviceProvider.GetService<ILeasePaymentService>(); } }
+        public ILeasePaymentService LeasePaymentService
+        {
+            get { return _serviceProvider.GetService<ILeasePaymentService>(); }
+        }
 
         /// <summary>
         /// get - The lease term service.
         /// </summary>
-        public ILeaseTermService LeaseTermService { get { return _serviceProvider.GetService<ILeaseTermService>(); } }
+        public ILeaseTermService LeaseTermService
+        {
+            get { return _serviceProvider.GetService<ILeaseTermService>(); }
+        }
 
         /// <summary>
         /// get - The lease report service.
         /// </summary>
-        public ILeaseReportsService LeaseReportsService { get { return _serviceProvider.GetService<ILeaseReportsService>(); } }
+        public ILeaseReportsService LeaseReportsService
+        {
+            get { return _serviceProvider.GetService<ILeaseReportsService>(); }
+        }
 
         /// <summary>
         /// get - The security deposit service.
         /// </summary>
-        public ISecurityDepositService SecurityDepositService { get { return _serviceProvider.GetService<ISecurityDepositService>(); } }
+        public ISecurityDepositService SecurityDepositService
+        {
+            get { return _serviceProvider.GetService<ISecurityDepositService>(); }
+        }
 
         /// <summary>
         /// get - The security deposit return service.
         /// </summary>
-        public ISecurityDepositReturnService SecurityDepositReturnService { get { return _serviceProvider.GetService<ISecurityDepositReturnService>(); } }
+        public ISecurityDepositReturnService SecurityDepositReturnService
+        {
+            get { return _serviceProvider.GetService<ISecurityDepositReturnService>(); }
+        }
 
         /// <summary>
         /// get - The person service.
         /// </summary>
-        public IPersonService PersonService { get { return _serviceProvider.GetService<IPersonService>(); } }
+        public IPersonService PersonService
+        {
+            get { return _serviceProvider.GetService<IPersonService>(); }
+        }
 
         /// <summary>
         /// get - The organization service.
         /// </summary>
-        public IOrganizationService OrganizationService { get { return _serviceProvider.GetService<IOrganizationService>(); } }
+        public IOrganizationService OrganizationService
+        {
+            get { return _serviceProvider.GetService<IOrganizationService>(); }
+        }
 
         /// <summary>
         /// get - The research file service.
         /// </summary>
-        public IResearchFileService ResearchFileService { get { return _serviceProvider.GetService<IResearchFileService>(); } }
+        public IResearchFileService ResearchFileService
+        {
+            get { return _serviceProvider.GetService<IResearchFileService>(); }
+        }
 
         /// <summary>
         /// get - The property service.
         /// </summary>
-        public IPropertyService PropertyService { get { return _serviceProvider.GetService<IPropertyService>(); } }
+        public IPropertyService PropertyService
+        {
+            get { return _serviceProvider.GetService<IPropertyService>(); }
+        }
         #endregion
 
         #region Constructors
