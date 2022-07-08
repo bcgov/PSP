@@ -8,21 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_ACQUISITION_OWNER_HIST")]
+    [Index(nameof(AcquisitionOwnerHistId), nameof(EndDateHist), Name = "PIMS_ACQOWN_H_UK", IsUnique = true)]
+    public partial class PimsAcquisitionOwnerHist
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
+        [Column("_ACQUISITION_OWNER_HIST_ID")]
+        public long AcquisitionOwnerHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
+        [Column("ACQUISITION_OWNER_ID")]
+        public long AcquisitionOwnerId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long? AcquisitionFileId { get; set; }
+        [Required]
+        [Column("OWNER_NAME")]
+        [StringLength(300)]
+        public string OwnerName { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -8,21 +8,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_ACQUISITION_FILE_PERSON_HIST")]
+    [Index(nameof(AcquisitionFilePersonHistId), nameof(EndDateHist), Name = "PIMS_ACQPER_H_UK", IsUnique = true)]
+    public partial class PimsAcquisitionFilePersonHist
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
+        [Column("_ACQUISITION_FILE_PERSON_HIST_ID")]
+        public long AcquisitionFilePersonHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
+        [Column("ACQUISITION_FILE_PERSON_ID")]
+        public long AcquisitionFilePersonId { get; set; }
+        [Column("ACQUISITION_FILE_ID")]
+        public long AcquisitionFileId { get; set; }
+        [Column("PERSON_ID")]
+        public long PersonId { get; set; }
+        [Column("ACQ_FL_PERSON_PROFILE_TYPE_CODE")]
+        [StringLength(20)]
+        public string AcqFlPersonProfileTypeCode { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

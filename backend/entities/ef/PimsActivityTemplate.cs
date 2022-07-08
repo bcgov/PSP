@@ -8,21 +8,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_ACTIVITY_TEMPLATE")]
+    [Index(nameof(ActivityTemplateTypeCode), Name = "ACTTMP_ACTIVITY_TEMPLATE_TYPE_CODE_IDX")]
+    public partial class PimsActivityTemplate
     {
+        public PimsActivityTemplate()
+        {
+            PimsActivityInstances = new HashSet<PimsActivityInstance>();
+        }
+
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
-        [Column("ACTIVITY_INSTANCE_ID")]
-        public long ActivityInstanceId { get; set; }
         [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
+        public long ActivityTemplateId { get; set; }
+        [Column("ACTIVITY_TEMPLATE_TYPE_CODE")]
+        [StringLength(20)]
+        public string ActivityTemplateTypeCode { get; set; }
+        [Required]
+        [Column("ACTIVITY_TEMPLATE_JSON")]
+        public string ActivityTemplateJson { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -61,5 +64,11 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(ActivityTemplateTypeCode))]
+        [InverseProperty(nameof(PimsActivityTemplateType.PimsActivityTemplates))]
+        public virtual PimsActivityTemplateType ActivityTemplateTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsActivityInstance.ActivityTemplate))]
+        public virtual ICollection<PimsActivityInstance> PimsActivityInstances { get; set; }
     }
 }
