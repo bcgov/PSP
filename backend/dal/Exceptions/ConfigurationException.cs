@@ -16,7 +16,9 @@ namespace Pims.Dal.Exceptions
         /// </summary>
         /// <returns></returns>
         public ConfigurationException()
-            : base() { }
+            : base()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ConfigurationException class, and initializes it with the specified arguments.
@@ -24,7 +26,9 @@ namespace Pims.Dal.Exceptions
         /// <param name="message"></param>
         /// <returns></returns>
         public ConfigurationException(string message)
-            : base(message) { }
+            : base(message)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ConfigurationException class, and initializes it with the specified arguments.
@@ -33,7 +37,9 @@ namespace Pims.Dal.Exceptions
         /// <param name="innerException"></param>
         /// <returns></returns>
         public ConfigurationException(string message, Exception innerException)
-            : base(message, innerException) { }
+            : base(message, innerException)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ConfigurationException class, and initializes it with the specified arguments.
@@ -42,7 +48,9 @@ namespace Pims.Dal.Exceptions
         /// <param name="context"></param>
         /// <returns></returns>
         protected ConfigurationException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        {
+        }
         #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace Pims.Dal.Services
         readonly ILeaseRepository _leaseRepository;
         readonly ILeaseService _leaseService;
         readonly ClaimsPrincipal _user;
+
         public SecurityDepositReturnService(ISecurityDepositReturnRepository depositReturnRepository, ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _securityDepositReturnRepository = depositReturnRepository;

@@ -18,6 +18,7 @@ namespace Pims.Geocoder
     {
         #region Properties
         protected IHttpRequestClient Client { get; }
+
         public GeocoderOptions Options { get; }
         #endregion
 

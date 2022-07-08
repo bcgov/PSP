@@ -15,7 +15,9 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         }
 
         public string FiscalYear { get; set; }
+
         public IEnumerable<AggregatedLeaseModel> AggregatedLeaseRegions { get; set; }
+
         public IEnumerable<AggregatedLeaseModel> AggregatedLeasePrograms { get; set; }
     }
 }

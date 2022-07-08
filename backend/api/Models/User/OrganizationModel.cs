@@ -12,8 +12,11 @@ namespace Pims.Api.Models.User
         public long Id { get; set; }
 
         public string Description { get; set; }
+
         public OrganizationModel Parent { get; set; }
+
         public ICollection<OrganizationModel> Children { get; } = new List<OrganizationModel>();
+
         public ICollection<UserModel> Users { get; } = new List<UserModel>();
         #endregion
     }

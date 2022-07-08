@@ -10,11 +10,17 @@ namespace Pims.Dal.Repositories
     public interface IClaimService : IRepository<PimsClaim>
     {
         Paged<PimsClaim> Get(int page, int quantity, string name = null);
+
         PimsClaim Get(Guid key);
+
         PimsClaim GetByName(string name);
+
         int RemoveAll(Guid[] exclude);
+
         PimsClaim Add(PimsClaim add);
+
         PimsClaim Update(PimsClaim update);
+
         void Delete(PimsClaim delete);
     }
 }

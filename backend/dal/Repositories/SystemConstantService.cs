@@ -23,7 +23,9 @@ namespace Pims.Dal.Repositories
         /// <param name="repository"></param>
         /// <param name="logger"></param>
         public SystemConstantService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository repository, ILogger<SystemConstantService> logger, IMapper mapper)
-            : base(dbContext, user, repository, logger, mapper) { }
+            : base(dbContext, user, repository, logger, mapper)
+        {
+        }
         #endregion
 
         #region Methods

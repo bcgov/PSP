@@ -28,7 +28,9 @@ namespace Pims.Core.Exceptions
         #endregion
 
         #region Constructors
-        public LtsaException() { }
+        public LtsaException()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an LtsaException class, initializes it with the specified arguments.

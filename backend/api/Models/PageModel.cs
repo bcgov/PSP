@@ -39,7 +39,9 @@ namespace Pims.Api.Models
         /// <summary>
         /// Create a new instance of a PageModel of type 'T'.
         /// </summary>
-        public PageModel() { }
+        public PageModel()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PageModel of type 'T', initialize with specified arguments.

@@ -10,14 +10,23 @@ namespace Pims.Dal.Repositories
     public interface IRoleService : IRepository<PimsRole>
     {
         Paged<PimsRole> Get(int page, int quantity, string name = null);
+
         PimsRole Get(Guid key);
+
         PimsRole GetByName(string name);
+
         PimsRole GetByKeycloakId(Guid key);
+
         PimsRole Add(PimsRole add);
+
         void AddWithoutSave(PimsRole add);
+
         PimsRole Update(PimsRole update);
+
         PimsRole UpdateWithoutSave(PimsRole update);
+
         void Delete(PimsRole delete);
+
         int RemoveAll(Guid[] exclude);
     }
 }

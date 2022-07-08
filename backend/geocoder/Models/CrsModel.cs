@@ -6,6 +6,7 @@ namespace Pims.Geocoder.Models
     {
         #region Properties
         public string Type { get; set; }
+
         public Dictionary<string, object> Properties { get; set; }
         #endregion
     }

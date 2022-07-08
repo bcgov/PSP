@@ -30,7 +30,9 @@ namespace Pims.Dal.Repositories
         /// <param name="service"></param>
         /// <param name="logger"></param>
         public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, IPimsRepository service, ILogger<ClaimService> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+            : base(dbContext, user, service, logger, mapper)
+        {
+        }
         #endregion
 
         #region Methods

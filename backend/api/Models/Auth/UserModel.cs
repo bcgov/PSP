@@ -26,7 +26,9 @@ namespace Pims.Api.Models.Auth
         /// <summary>
         /// Creates a new instance of a UserModel object.
         /// </summary>
-        public UserModel() { }
+        public UserModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a UserModel object, initializes it with specified arguments.

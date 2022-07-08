@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -80,7 +77,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a ResearchFilterModel class.
         /// </summary>
-        public ResearchFilter() { }
+        public ResearchFilter()
+        {
+        }
 
         #endregion
     }

@@ -14,7 +14,9 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
-        public PimsOrganizationAddress() {}
+        public PimsOrganizationAddress()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsOrganizationAddress class.

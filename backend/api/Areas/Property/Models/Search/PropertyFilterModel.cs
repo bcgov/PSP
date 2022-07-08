@@ -30,7 +30,9 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// Creates a new instance of a PropertyFilterModel class.
         /// </summary>
-        public PropertyFilterModel() { }
+        public PropertyFilterModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a PropertyFilterModel class, initializes with the specified arguments.

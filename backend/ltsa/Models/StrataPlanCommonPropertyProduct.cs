@@ -32,6 +32,7 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "strataPlanCommonProperty", EmitDefaultValue = false)]
         public StrataPlanCommonProperty StrataPlanCommonProperty { get; set; }
+
         public override StrataPlanCommonProperty FieldedData { get; set; }
     }
 }

@@ -8,7 +8,9 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyOrganization : IDisableBaseAppEntity
     {
         #region Constructors
-        public PimsPropertyOrganization() {}
+        public PimsPropertyOrganization()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PropertyOrganization class.

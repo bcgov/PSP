@@ -26,7 +26,9 @@ namespace Pims.Core.Exceptions
         /// Creates a new instance of an HttpClientRequestException class.
         /// </summary>
         /// <returns></returns>
-        public HttpClientRequestException() { }
+        public HttpClientRequestException()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an HttpClientRequestException class, initializes it with the specified arguments.

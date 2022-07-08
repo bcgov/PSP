@@ -31,7 +31,9 @@ namespace Pims.Api.Models.Keycloak
         #endregion
 
         #region Constructors
-        public ApplicationUserModel() { }
+        public ApplicationUserModel()
+        {
+        }
 
         public ApplicationUserModel(int id, Guid key, string firstName, string lastName)
         {

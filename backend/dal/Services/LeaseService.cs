@@ -6,6 +6,7 @@ namespace Pims.Dal.Services
     public class LeaseService : ILeaseService
     {
         readonly ILeaseRepository _leaseRepository;
+
         public LeaseService(ILeaseRepository leaseRepository)
         {
             _leaseRepository = leaseRepository;

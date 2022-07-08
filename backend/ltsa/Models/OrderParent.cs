@@ -125,7 +125,10 @@ namespace Pims.Ltsa.Models
             this.Status = status;
             this.BillingInfo = billingInfo;
         }
-        public OrderParent() { }
+
+        public OrderParent()
+        {
+        }
 
         /// <summary>
         /// This file reference will show in myLTSA account statements to identify the order transaction.

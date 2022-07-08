@@ -32,6 +32,7 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "title", EmitDefaultValue = false)]
         public Title Title { get; set; }
+
         public override Title FieldedData { get; set; }
     }
 }

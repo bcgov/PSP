@@ -9,11 +9,17 @@ namespace Pims.Api.Areas.Reports.Models.Lease
     public class AggregatedLeaseModel
     {
         public string Region { get; set; }
+
         public string Program { get; set; }
+
         public int AgreementCount { get; set; }
+
         public decimal ActualTotal { get; set; }
+
         public decimal ExpectedTotal { get; set; }
+
         public decimal[] ActualsByMonth { get; set; }
+
         public AggregatedLeaseModel(IEnumerable<PimsLease> leases, int fiscalYear, string region = null, string program = null)
         {
             

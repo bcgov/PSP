@@ -65,7 +65,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// Creates a new instance of a LeaseFilterModel class.
         /// </summary>
-        public LeaseFilterModel() { }
+        public LeaseFilterModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a LeaseFilterModel class, initializes with the specified arguments.

@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pims.Dal.Entities;
 
 namespace Pims.Dal.Extensions
 {

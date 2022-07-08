@@ -22,7 +22,9 @@ namespace Pims.Api.Helpers.Authorization
         public KeycloakClaimsFactory(
             UserManager<ApplicationUserModel> userManager,
             IOptions<IdentityOptions> optionsAccessor)
-            : base(userManager, optionsAccessor) { }
+            : base(userManager, optionsAccessor)
+        {
+        }
         #endregion
 
         #region Methods

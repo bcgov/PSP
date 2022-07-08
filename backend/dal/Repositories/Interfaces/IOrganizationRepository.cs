@@ -9,9 +9,13 @@ namespace Pims.Dal.Repositories
     public interface IOrganizationRepository : IRepository<PimsOrganization>
     {
         IEnumerable<PimsOrganization> GetAll();
+
         long GetRowVersion(long id);
+
         PimsOrganization Get(long id);
+
         PimsOrganization Add(PimsOrganization organization, bool userOverride);
+
         PimsOrganization Update(PimsOrganization organization);
     }
 }

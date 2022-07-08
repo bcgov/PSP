@@ -12,7 +12,9 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a AccessRequestOrganization class.
         /// </summary>
-        public PimsAccessRequestOrganization() { }
+        public PimsAccessRequestOrganization()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a AccessRequestOrganization class.

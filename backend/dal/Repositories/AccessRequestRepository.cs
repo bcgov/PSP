@@ -33,7 +33,9 @@ namespace Pims.Dal.Repositories
         /// <param name="logger"></param>
         /// <returns></returns>
         public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, IPimsRepository service, ILogger<AccessRequestRepository> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+            : base(dbContext, user, service, logger, mapper)
+        {
+        }
         #endregion
 
         #region Methods

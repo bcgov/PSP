@@ -10,8 +10,11 @@ namespace Pims.Dal.Repositories
     public interface IContactRepository : IRepository<PimsContactMgrVw>
     {
         int Count();
+
         IEnumerable<PimsContactMgrVw> Get(ContactFilter filter);
+
         PimsContactMgrVw Get(string id);
+
         Paged<PimsContactMgrVw> GetPage(ContactFilter filter);
     }
 }

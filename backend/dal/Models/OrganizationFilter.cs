@@ -52,7 +52,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a OrganizationFilter class.
         /// </summary>
-        public OrganizationFilter() { }
+        public OrganizationFilter()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a OrganizationFilter class, initializes it with the specified arguments.

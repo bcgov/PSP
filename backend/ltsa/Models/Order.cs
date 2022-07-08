@@ -22,6 +22,7 @@ namespace Pims.Ltsa.Models
         {
             Order = order;
         }
+
         [DataMember(Name = "order", EmitDefaultValue = false)]
         public T Order { get; set; }
     }

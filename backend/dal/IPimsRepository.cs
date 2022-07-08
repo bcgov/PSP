@@ -10,15 +10,22 @@ namespace Pims.Dal
     {
         #region Properties
         ILookupService Lookup { get; }
+
         ISystemConstantService SystemConstant { get; }
 
         #region Accounts
         IPersonRepository Person { get; }
+
         IOrganizationRepository Organization { get; }
+
         ClaimsPrincipal Principal { get; }
+
         IUserRepository User { get; }
+
         IRoleService Role { get; }
+
         IClaimService Claim { get; }
+
         IAccessRequestRepository AccessRequest { get; }
         #endregion
 
@@ -28,6 +35,7 @@ namespace Pims.Dal
 
         #region Leases
         ILeaseRepository Lease { get; }
+
         ILeaseTermRepository LeaseTerm { get; }
         #endregion
 

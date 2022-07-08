@@ -32,6 +32,7 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "parcelInfo", EmitDefaultValue = false)]
         public ParcelInfo ParcelInfo { get; set; }
+
         public override ParcelInfo FieldedData { get; set; }
     }
 }

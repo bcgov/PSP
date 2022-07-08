@@ -24,7 +24,8 @@ namespace Pims.Dal.Repositories
         /// <param name="logger"></param>
         public DocumentTypeRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<DocumentTypeRepository> logger, IMapper mapper)
             : base(dbContext, user, service, logger, mapper)
-        { }
+        {
+        }
         #endregion
 
         #region Methods
