@@ -14,7 +14,7 @@ export interface IUseAddNotesFormManagementProps {
 }
 
 /**
- * hook that provides form state and submit handlers for Add Notes.
+ * Hook that provides form state and submit handlers for Add Notes.
  */
 export function useAddNotesFormManagement(props: IUseAddNotesFormManagementProps) {
   const history = useHistory();
