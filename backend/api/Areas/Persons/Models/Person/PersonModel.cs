@@ -59,7 +59,6 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - The concurrency row version for the person-organization link (optional).
         /// </summary>
-        /// <value></value>
         public long? PersonOrganizationRowVersion { get; set; }
 
         /// <summary>

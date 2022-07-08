@@ -18,13 +18,11 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
-        /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
         /// get/set - The address to search by.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
 
         /// <summary>
@@ -35,7 +33,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The value of the tenant name.
         /// </summary>
-        /// <value></value>
         public string TenantName { get; set; }
 
         /// <summary>
@@ -46,25 +43,21 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The Program(s) to filter by.
         /// </summary>
-        /// <value></value>
         public IList<string> NotInStatus { get; set; } = new List<string>();
 
         /// <summary>
         /// get/set - Filter to return leases that have expired after or on a given date.
         /// </summary>
-        /// <value></value>
         public DateTime? ExpiryAfterDate { get; set; }
 
         /// <summary>
         /// get/set - Filter to return leases that had a start date before or on the given date.
         /// </summary>
-        /// <value></value>
         public DateTime? StartBeforeDate { get; set; }
 
         /// <summary>
         /// get/set - Filter to return only receivable leases.
         /// </summary>
-        /// <value></value>
         public bool? IsReceivable { get; set; }
 
         /// <summary>

@@ -60,7 +60,7 @@ namespace Pims.Dal.Services
             lease.ReturnNotes = note;
             _leaseRepository.Update(lease);
             _leaseRepository.CommitTransaction();
-            
+
             return _leaseRepository.Get(leaseId);
         }
 

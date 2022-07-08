@@ -23,7 +23,7 @@ namespace Pims.Dal.Test.Services
     [Trait("area", "admin")]
     [Trait("group", "lease")]
     [ExcludeFromCodeCoverage]
-    public class LeaseServicePaymentTest: IDisposable
+    public class LeaseServicePaymentTest : IDisposable
     {
         public TestHelper helper;
         public ILeasePaymentService paymentService;
@@ -31,7 +31,8 @@ namespace Pims.Dal.Test.Services
         public Mock<ILeaseTermRepository> leaseTermRepository;
         public Mock<ILeasePaymentRepository> leasePaymentRepository;
 
-        public LeaseServicePaymentTest() {
+        public LeaseServicePaymentTest()
+        {
             helper = new TestHelper();
         }
 
@@ -42,7 +43,7 @@ namespace Pims.Dal.Test.Services
             leasePaymentRepository = null;
         }
 
-        private  void MockCommonServices()
+        private void MockCommonServices()
         {
             paymentService = helper.Create<LeasePaymentService>();
             leaseService = helper.GetService<Mock<ILeaseService>>();
@@ -93,7 +94,7 @@ namespace Pims.Dal.Test.Services
             leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
 
             // Act
-            var unpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 0,  };
+            var unpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 0, };
             var overpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 3 };
             var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2 };
             var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1 };
@@ -132,7 +133,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView, Permissions.LeaseEdit);
 
-            
+
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
             MockCommonServices();

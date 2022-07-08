@@ -15,7 +15,6 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
         public long RowVersion { get; set; }
 
         /// <summary>

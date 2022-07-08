@@ -22,7 +22,6 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The string value of the street address.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
         #endregion
     }

@@ -14,31 +14,26 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The username.
         /// </summary>
-        /// <value></value>
         public string BusinessIdentifierValue { get; set; }
 
         /// <summary>
         /// get/set - The user email.
         /// </summary>
-        /// <value></value>
         public string Email { get; set; }
 
         /// <summary>
         /// get/set - role id.
         /// </summary>
-        /// <value></value>
         public long? Role { get; set; }
 
         /// <summary>
         /// get/set - region id.
         /// </summary>
-        /// <value></value>
         public short? Region { get; set; }
 
         /// <summary>
         /// get/set - account status.
         /// </summary>
-        /// <value></value>
         public bool? ActiveOnly { get; set; }
         #endregion
 

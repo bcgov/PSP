@@ -24,3 +24,8 @@ indent_style = tab
 
 [*.cs]
 indent_size = 4
+
+
+# Test files
+# Single-line comment should be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none

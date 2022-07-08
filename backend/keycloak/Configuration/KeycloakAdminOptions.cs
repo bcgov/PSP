@@ -14,14 +14,12 @@ namespace Pims.Keycloak.Configuration
         /// <summary>
         /// get/set - The authority URL to the keycloak admin API.
         /// </summary>
-        /// <value></value>
         [Required(ErrorMessage = "Configuration Keycloak:Admin:Authority is required.")]
         public string Authority { get; set; }
 
         /// <summary>
         /// get/set - The users endpoint path.
         /// </summary>
-        /// <value></value>
         public string Users { get; set; }
         #endregion
 

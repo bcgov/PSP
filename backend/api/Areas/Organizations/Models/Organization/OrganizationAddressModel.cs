@@ -15,7 +15,6 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
         /// <summary>
         /// get/set - The concurrency row version of the Organization-address relationship.
         /// </summary>
-        /// <value></value>
         public long OrganizationAddressRowVersion { get; set; }
 
         /// <summary>

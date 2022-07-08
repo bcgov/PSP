@@ -24,7 +24,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - An array of sorting page conditions (i.e. OrganizationId desc, ClassificationId asc).
         /// </summary>
-        /// <value></value>
+        /// <value>
+        /// <placeholder>get/set - An array of sorting page conditions (i.e. OrganizationId desc, ClassificationId asc).</placeholder>
+        /// </value>
         public string[] Sort { get; set; }
         #endregion
 
@@ -71,7 +73,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
-        /// <returns></returns>
         public virtual bool IsValid()
         {
             return this.Page > 0
@@ -83,7 +84,6 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <param name="startIndex"></param>
         /// <param name="quantity"></param>
-        /// <returns></returns>
         private static int CalcPage(int startIndex, int quantity)
         {
             if (startIndex < quantity)

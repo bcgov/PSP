@@ -94,7 +94,8 @@ namespace Pims.Dal.Services
             if (payment.PaymentAmountTotal == 0)
             {
                 return PimsLeasePaymentStatusTypes.UNPAID;
-            } else if (payment.PaymentAmountTotal < expectedTotal)
+            }
+            else if (payment.PaymentAmountTotal < expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PARTIAL;
             }
@@ -105,7 +106,8 @@ namespace Pims.Dal.Services
             else if (payment.PaymentAmountTotal > expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.OVERPAID;
-            } else
+            }
+            else
             {
                 throw new InvalidOperationException("Invalid payment value provided");
             }

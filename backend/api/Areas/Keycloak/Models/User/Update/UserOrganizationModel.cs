@@ -10,13 +10,11 @@ namespace Pims.Api.Areas.Keycloak.Models.User.Update
         /// <summary>
         /// get/set - The unique identify for the organization.
         /// </summary>
-        /// <value></value>
         public long Id { get; set; }
 
         /// <summary>
         /// get/set - The unique name to identify the organization.
         /// </summary>
-        /// <value></value>
         public string Name { get; set; }
         #endregion
     }

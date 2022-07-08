@@ -106,7 +106,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<ArgumentException>(() =>
-                service.GetPage(new ResearchFilter() { Page = -1}));
+                service.GetPage(new ResearchFilter() { Page = -1 }));
         }
 
         #endregion

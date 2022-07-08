@@ -15,19 +15,16 @@ namespace Pims.Keycloak.Configuration
         /// get/set - The keycloak service account configuration.
         /// This is for authenticating the api interaction with keycloak.
         /// </summary>
-        /// <value></value>
         public KeycloakServiceAccountOptions ServiceAccount { get; set; }
 
         /// <summary>
         /// get/set - The keycloak open id connect endpoint configuration.
         /// </summary>
-        /// <value></value>
         public OpenIdConnectOptions OpenIdConnect { get; set; }
 
         /// <summary>
         /// get/set - The keycloak admin API endpoint configuration.
         /// </summary>
-        /// <value></value>
         public KeycloakAdminOptions Admin { get; set; }
         #endregion
 

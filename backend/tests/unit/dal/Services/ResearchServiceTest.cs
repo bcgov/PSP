@@ -58,7 +58,7 @@ namespace Pims.Dal.Test.Services
             Assert.Throws<NotAuthorizedException>(() => service.GetPage(new ResearchFilter()));
             researchRepository.Verify(x => x.GetPage(It.IsAny<ResearchFilter>()), Times.Never);
         }
-        
+
         #endregion
         #endregion
     }
