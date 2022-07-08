@@ -25,7 +25,6 @@ namespace Pims.Dal.Entities
         public PimsLeaseInitiatorType(string id)
             : this()
         {
-
         }
         #endregion
     }

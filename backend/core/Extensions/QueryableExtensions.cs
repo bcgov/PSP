@@ -81,7 +81,6 @@ namespace Pims.Core.Extensions
                         query = (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, lambda });
                     }
                 }
-
             }
             return query;
         }

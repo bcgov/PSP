@@ -10,13 +10,11 @@ namespace Pims.Api.Models.Auth
         /// <summary>
         /// get/set - The claim name.
         /// </summary>
-        /// <value></value>
         public string Claim { get; set; }
 
         /// <summary>
         /// get/set - The claim value.
         /// </summary>
-        /// <value></value>
         public string Value { get; set; }
         #endregion
 

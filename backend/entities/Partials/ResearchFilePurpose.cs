@@ -1,4 +1,3 @@
-
 namespace Pims.Dal.Entities
 {
     /// <summary>

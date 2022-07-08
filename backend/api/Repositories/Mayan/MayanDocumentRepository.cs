@@ -46,7 +46,7 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Creating document type...");
 
             string authenticationToken = await _authRepository.GetTokenAsync();
-            JsonSerializerOptions serializerOptions = new()
+            JsonSerializerOptions serializerOptions = new ()
             {
                 IgnoreNullValues = true,
             };
@@ -54,7 +54,7 @@ namespace Pims.Api.Repositories.Mayan
             using HttpContent content = new StringContent(serializedDocumentType);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Uri endpoint = new($"{_config.BaseUri}/document_types/");
+            Uri endpoint = new ($"{_config.BaseUri}/document_types/");
 
             var response = await PostAsync<DocumentType>(endpoint, content, authenticationToken);
 
@@ -69,7 +69,7 @@ namespace Pims.Api.Repositories.Mayan
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/");
+            Uri endpoint = new ($"{this._config.BaseUri}/document_types/{documentTypeId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
 
@@ -83,7 +83,7 @@ namespace Pims.Api.Repositories.Mayan
 
             string endpointString = $"{_config.BaseUri}/document_types/";
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
-            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            Uri endpoint = new (QueryHelpers.AddQueryString(endpointString, queryParams));
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
@@ -101,7 +101,7 @@ namespace Pims.Api.Repositories.Mayan
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
 
             string endpointString = $"{this._config.BaseUri}/document_types/{documentId}/metadata_types/";
-            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            Uri endpoint = new (QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResult<DocumentTypeMetadataType>>(endpoint, authenticationToken).ConfigureAwait(true);
 
             _logger.LogDebug("Finished retrieving document type's metadata types");
@@ -117,7 +117,7 @@ namespace Pims.Api.Repositories.Mayan
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
 
             string endpointString = $"{_config.BaseUri}/documents/";
-            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            Uri endpoint = new (QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResult<DocumentDetail>>(endpoint, authenticationToken).ConfigureAwait(true);
 
             _logger.LogDebug("Finished retrieving document list");
@@ -129,7 +129,7 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Downloading file...");
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            ExternalResult<FileDownload> retVal = new()
+            ExternalResult<FileDownload> retVal = new ()
             {
                 Status = ExternalResultStatus.Error,
             };
@@ -139,7 +139,7 @@ namespace Pims.Api.Repositories.Mayan
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", authenticationToken);
             try
             {
-                Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
+                Uri endpoint = new ($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
                 HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
                 byte[] payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
                 _logger.LogTrace("Response: {response}", response);
@@ -202,7 +202,7 @@ namespace Pims.Api.Repositories.Mayan
             using HttpContent content = new StringContent(documentType.ToString());
             multiContent.Add(content, "document_type_id");
 
-            Uri endpoint = new($"{this._config.BaseUri}/documents/upload/");
+            Uri endpoint = new ($"{this._config.BaseUri}/documents/upload/");
 
             ExternalResult<DocumentDetail> result = await PostAsync<DocumentDetail>(endpoint, multiContent, authenticationToken);
 
@@ -217,7 +217,7 @@ namespace Pims.Api.Repositories.Mayan
 
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
             string endpointString = $"{_config.BaseUri}/metadata_types/";
-            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            Uri endpoint = new (QueryHelpers.AddQueryString(endpointString, queryParams));
 
             var response = await GetAsync<QueryResult<MetadataType>>(endpoint, authenticationToken);
 
@@ -235,7 +235,7 @@ namespace Pims.Api.Repositories.Mayan
             using HttpContent content = new StringContent(JsonSerializer.Serialize(linkModel));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/");
+            Uri endpoint = new ($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/");
 
             var response = await PostAsync<DocumentTypeMetadataType>(endpoint, content, authenticationToken);
 
@@ -253,7 +253,7 @@ namespace Pims.Api.Repositories.Mayan
             using StringContent isRequiredContent = new StringContent(isRequired.ToString());
             form.Add(isRequiredContent, "required");
 
-            Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/{documentTypeMetadataTypeId}/");
+            Uri endpoint = new ($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/{documentTypeMetadataTypeId}/");
 
             var response = await PutAsync<DocumentTypeMetadataType>(endpoint, form, authenticationToken);
 
@@ -267,7 +267,7 @@ namespace Pims.Api.Repositories.Mayan
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/{documentTypeMetadataTypeId}/");
+            Uri endpoint = new ($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/{documentTypeMetadataTypeId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
 
@@ -280,7 +280,7 @@ namespace Pims.Api.Repositories.Mayan
             const string fileNameFlag = "filename";
             string[] parts = contentDisposition.Split(" ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
+            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
     }
 }

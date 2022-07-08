@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Models.Contact
 {
     /// <summary>

@@ -75,8 +75,7 @@ namespace Pims.Api.Helpers.Mapping
                         }
                         // Default to providing serializer options.
                         return (IRegister)Activator.CreateInstance(registerType, new[] { optionsSerializer });
-                    }
-                        )).ToList();
+                    })).ToList();
 
             config.Apply(registers);
 

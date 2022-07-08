@@ -11,6 +11,5 @@ namespace Pims.Api.Areas.Autocomplete.Models
         /// get/set - The list of autocomplete predictions.
         /// </summary>
         public IList<AutocompletePrediction> Predictions { get; set; } = new List<AutocompletePrediction>();
-
     }
 }

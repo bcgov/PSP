@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Areas.Persons.Models.Person
 {
     /// <summary>

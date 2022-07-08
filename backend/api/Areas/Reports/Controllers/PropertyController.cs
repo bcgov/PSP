@@ -104,7 +104,6 @@ namespace Pims.Api.Areas.Reports.Controllers
                 ContentTypes.CONTENT_TYPE_CSV => ReportHelper.GenerateCsv(report.Items),
                 _ => ReportHelper.GenerateExcel(report.Items, "PIMS")
             };
-
         }
 
         #endregion

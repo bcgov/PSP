@@ -61,13 +61,11 @@ namespace Pims.Api
         /// <summary>
         /// get - The application configuration settings.
         /// </summary>
-        /// <value></value>
         public IConfiguration Configuration { get; }
 
         /// <summary>
         /// get/set - The environment settings for the application.
         /// </summary>
-        /// <value></value>
         public IWebHostEnvironment Environment { get; }
         #endregion
 
@@ -246,7 +244,6 @@ namespace Pims.Api
                 // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
                 // can also be used to control the format of the API version in route templates
                 options.SubstituteApiVersionInUrl = true;
-
             });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, Helpers.Swagger.ConfigureSwaggerOptions>();
 
@@ -276,7 +273,6 @@ namespace Pims.Api
                             Scheme = "oauth2",
                             Name = "Bearer",
                             In = ParameterLocation.Header,
-
                         },
                         new List<string>()
                     },
@@ -306,7 +302,6 @@ namespace Pims.Api
         /// Add PimsService objects to the dependency injection service collection.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
         private static void AddPimsApiServices(IServiceCollection services)
         {
             services.AddScoped<IDocumentService, DocumentService>();

@@ -92,8 +92,8 @@ namespace Pims.Dal.Repositories
             {
                 List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
                     p => EF.Functions.Collate(p.FirstName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.FirstName &&
-                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname
-                ).Include(p => p.PimsContactMethods).ToList();
+                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname)
+                .Include(p => p.PimsContactMethods).ToList();
 
                 var isDuplicate = existingPersons.Any(
                                 p => p.PimsContactMethods.Any(
@@ -147,8 +147,7 @@ namespace Pims.Dal.Repositories
                 personId,
                 person.PimsPersonAddresses.ToArray(),
                 // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
-                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false
-            );
+                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false);
 
             return existingPerson;
         }

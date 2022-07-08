@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Areas.Contact.Models.Contact
 {
     public class ProvinceStateModel

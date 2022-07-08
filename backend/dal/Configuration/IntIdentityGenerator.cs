@@ -18,7 +18,6 @@ namespace Pims.Dal.Configuration.Generators
         public IntIdentityGenerator()
             : base(1)
         {
-
         }
         #endregion
     }
