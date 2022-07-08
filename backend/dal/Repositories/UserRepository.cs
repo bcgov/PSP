@@ -26,6 +26,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserService, and initializes it with the specified arguments.
         /// </summary>
@@ -35,7 +36,8 @@ namespace Pims.Dal.Repositories
         /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper)
+        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper)
         {
             _options = options.CurrentValue;
         }
@@ -113,6 +115,7 @@ namespace Pims.Dal.Repositories
 
             return user;
         }
+
         /// <summary>
         /// Get the total number of user accounts.
         /// </summary>

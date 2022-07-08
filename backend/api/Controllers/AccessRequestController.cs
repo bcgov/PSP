@@ -24,6 +24,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AccessRequestController class.
         /// </summary>
@@ -37,6 +38,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the most recent access request for the current user.
         /// </summary>

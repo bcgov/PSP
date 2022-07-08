@@ -39,7 +39,7 @@ namespace Pims.Dal.Entities.Helpers
         }
 
         /// <summary>
-        /// Get the concatenated full name of this organization
+        /// Get the concatenated full name of this organization.
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
@@ -49,7 +49,7 @@ namespace Pims.Dal.Entities.Helpers
             if (person != null)
             {
                 string[] names = { person.Surname, person.FirstName, person.MiddleNames };
-                return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
+                return string.Join(", ", names.Where(n => n != null && n.Trim() != string.Empty));
             }
             return null;
         }

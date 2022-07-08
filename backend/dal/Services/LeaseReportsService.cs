@@ -1,10 +1,10 @@
-using Pims.Dal.Repositories;
-using Pims.Dal.Entities;
-using System.Collections.Generic;
 using System;
-using Pims.Core.Extensions;
-using Pims.Dal.Helpers.Extensions;
+using System.Collections.Generic;
 using System.Security.Claims;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
@@ -30,7 +30,7 @@ namespace Pims.Dal.Services
                 ExpiryAfterDate = fiscalYearStartDate,
                 StartBeforeDate = fiscalYearStartDate.AddYears(1).AddDays(-1),
                 NotInStatus = new List<string>() { PimsLeaseStatusTypes.DRAFT, PimsLeaseStatusTypes.DISCARD },
-                IsReceivable = true
+                IsReceivable = true,
             }, true);
         }
     }

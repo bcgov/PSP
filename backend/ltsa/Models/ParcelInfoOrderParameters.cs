@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Parameters required for ordering a Parcel Info
+    /// Parameters required for ordering a Parcel Info.
     /// </summary>
     [DataContract]
     public partial class ParcelInfoOrderParameters
@@ -37,9 +36,9 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Parcel identifier in Land Title Registry – format 123-123-123 or 123123123
+        /// Parcel identifier in Land Title Registry – format 123-123-123 or 123123123.
         /// </summary>
-        /// <value>Parcel identifier in Land Title Registry – format 123-123-123 or 123123123</value>
+        /// <value>Parcel identifier in Land Title Registry – format 123-123-123 or 123123123.</value>
         [DataMember(Name = "parcelIdentifier", EmitDefaultValue = false)]
         public string ParcelIdentifier { get; set; }
     }

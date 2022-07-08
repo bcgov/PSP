@@ -15,7 +15,7 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static int ConvertPID(this string pid)
         {
-            return int.TryParse(pid?.Replace("-", "") ?? "", out int value) ? value : 0;
+            return int.TryParse(pid?.Replace("-", string.Empty) ?? string.Empty, out int value) ? value : 0;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string ConvertPIDToDash(this string pid)
         {
-            return String.Join("-", Regex.Split(pid.Replace("-", "").PadLeft(9, '0'), @"(?<=\G.{3})(?!$)"));
+            return string.Join("-", Regex.Split(pid.Replace("-", string.Empty).PadLeft(9, '0'), @"(?<=\G.{3})(?!$)"));
         }
     }
 }

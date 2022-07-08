@@ -28,6 +28,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFileController class, initializes it with the specified arguments.
         /// </summary>
@@ -130,7 +131,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
-
 
         #endregion
     }

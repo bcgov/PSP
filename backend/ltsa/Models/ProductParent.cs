@@ -9,7 +9,6 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     public interface IProduct<T>
@@ -18,7 +17,7 @@ namespace Pims.Ltsa.Models
     }
 
     /// <summary>
-    /// ProductParent
+    /// ProductParent.
     /// </summary>
     [DataContract]
     public abstract partial class ProductParent<T> where T : IFieldedData

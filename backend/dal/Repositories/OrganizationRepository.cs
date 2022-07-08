@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
     public class OrganizationRepository : BaseRepository<PimsOrganization>, IOrganizationRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a OrganizationService, and initializes it with the specified arguments.
         /// </summary>
@@ -26,10 +27,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<OrganizationRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<OrganizationRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get all organizations from the datasource.
         /// </summary>

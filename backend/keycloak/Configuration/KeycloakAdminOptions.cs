@@ -1,6 +1,6 @@
-using Pims.Core.Exceptions;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Pims.Core.Exceptions;
 
 namespace Pims.Keycloak.Configuration
 {
@@ -10,6 +10,7 @@ namespace Pims.Keycloak.Configuration
     public class KeycloakAdminOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The authority URL to the keycloak admin API.
         /// </summary>
@@ -25,18 +26,19 @@ namespace Pims.Keycloak.Configuration
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Validates the configuration for the admin endpoints.
         /// </summary>
         /// <exception type="ConfigurationException">If the configuration property is invald.</exception>
         public void Validate()
         {
-            if (String.IsNullOrWhiteSpace(this.Authority))
+            if (string.IsNullOrWhiteSpace(this.Authority))
             {
                 throw new ConfigurationException("The configuration for Keycloak:Admin:Authority is invalid or missing.");
             }
 
-            if (String.IsNullOrWhiteSpace(this.Users))
+            if (string.IsNullOrWhiteSpace(this.Users))
             {
                 throw new ConfigurationException("The configuration for Keycloak:Admin:Users is invalid or missing.");
             }

@@ -8,69 +8,60 @@ namespace Pims.Api.Areas.Research.Models.Search
     public class ResearchFilterModel : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The moti region that any of the properties on the research file belong to.
         /// </summary>
         public short? RegionCode { get; set; }
 
         /// <summary>
-        /// get/set - The status of the research file, 
+        /// get/set - The status of the research file,. 
         /// </summary>
-        /// <value></value>
         public string ResearchFileStatusTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - The descriptive name of the address
+        /// get/set - The descriptive name of the address.
         /// </summary>
-        /// <value></value>
         public string Name { get; set; }
 
         /// <summary>
         /// get/set - The road name or the alias, search for both simultaneously.
         /// </summary>
-        /// <value></value>
         public string RoadOrAlias { get; set; }
 
         /// <summary>
-        /// get/set - The generated research file number
+        /// get/set - The generated research file number.
         /// </summary>
-        /// <value></value>
         public string RFileNumber { get; set; }
 
         /// <summary>
-        /// get/set - The username/idir of the user that created this row
+        /// get/set - The username/idir of the user that created this row.
         /// </summary>
-        /// <value></value>
         public string AppCreateUserid { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row creation date after this date.
         /// </summary>
-        /// <value></value>
         public DateTime? CreatedOnStartDate { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row creation date before this date.
         /// </summary>
-        /// <value></value>
         public DateTime? CreatedOnEndDate { get; set; }
 
         /// <summary>
         /// get/set - The idir or username of the user that updated this research file row.
         /// </summary>
-        /// <value></value>
         public string AppLastUpdateUserid { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row update date after this date.
         /// </summary>
-        /// <value></value>
         public DateTime? UpdatedOnStartDate { get; set; }
 
         /// <summary>
         /// get/set - Search for any research row update date before this date.
         /// </summary>
-        /// <value></value>
         public DateTime? UpdatedOnEndDate { get; set; }
         #endregion
 
@@ -85,7 +76,8 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// Creates a new instance of a ResearchFilterModel class, initializes with the specified arguments.
         /// </summary>
         /// <param name="query"></param>
-        public ResearchFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query) : base(query)
+        public ResearchFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
+            : base(query)
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
@@ -106,6 +98,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Convert to a ResearchFilterModel.
         /// </summary>
@@ -137,7 +130,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
-        /// <returns>true if the filter is valid, false otherwise</returns>
+        /// <returns>true if the filter is valid, false otherwise.</returns>
         public override bool IsValid()
         {
             if (this.CreatedOnStartDate.HasValue && (this.CreatedOnEndDate.HasValue && this.CreatedOnStartDate > this.CreatedOnEndDate) ||

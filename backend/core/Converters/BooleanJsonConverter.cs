@@ -11,6 +11,7 @@ namespace Pims.Core.Converters
     public class BooleanJsonConverter : JsonConverter<bool>
     {
         #region Methods
+
         /// <summary>
         /// Convert string into boolean, or default to false.
         /// </summary>
@@ -22,7 +23,7 @@ namespace Pims.Core.Converters
         {
             var value = reader.GetString();
 
-            return Boolean.TryParse(value, out bool result) && result;
+            return bool.TryParse(value, out bool result) && result;
         }
 
         /// <summary>

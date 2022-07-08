@@ -22,7 +22,7 @@ namespace Pims.Api.Helpers
             return new PimsOptions()
             {
                 Tenant = configuration["Pims:Tenant"],
-                HelpDeskEmail = configuration["Pims:HelpDeskEmail"]
+                HelpDeskEmail = configuration["Pims:HelpDeskEmail"],
             };
         }
 
@@ -35,12 +35,12 @@ namespace Pims.Api.Helpers
         {
             return new JsonSerializerOptions()
             {
-                DefaultIgnoreCondition = (!String.IsNullOrWhiteSpace(configuration["Serialization:Json:IgnoreNullValues"]) && Boolean.Parse(configuration["Serialization:Json:IgnoreNullValues"])) ? JsonIgnoreCondition.WhenWritingNull : JsonIgnoreCondition.Never,
-                PropertyNameCaseInsensitive = !String.IsNullOrWhiteSpace(configuration["Serialization:Json:PropertyNameCaseInsensitive"]) && Boolean.Parse(configuration["Serialization:Json:PropertyNameCaseInsensitive"]),
+                DefaultIgnoreCondition = (!string.IsNullOrWhiteSpace(configuration["Serialization:Json:IgnoreNullValues"]) && bool.Parse(configuration["Serialization:Json:IgnoreNullValues"])) ? JsonIgnoreCondition.WhenWritingNull : JsonIgnoreCondition.Never,
+                PropertyNameCaseInsensitive = !string.IsNullOrWhiteSpace(configuration["Serialization:Json:PropertyNameCaseInsensitive"]) && bool.Parse(configuration["Serialization:Json:PropertyNameCaseInsensitive"]),
                 PropertyNamingPolicy = configuration["Serialization:Json:PropertyNamingPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null,
-                WriteIndented = !string.IsNullOrWhiteSpace(configuration["Serialization:Json:WriteIndented"]) && Boolean.Parse(configuration["Serialization:Json:WriteIndented"]),
+                WriteIndented = !string.IsNullOrWhiteSpace(configuration["Serialization:Json:WriteIndented"]) && bool.Parse(configuration["Serialization:Json:WriteIndented"]),
                 Converters = { new JsonStringEnumMemberConverter(JsonNamingPolicy.CamelCase) },
-                ReferenceHandler = ReferenceHandler.IgnoreCycles
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
             };
         }
     }

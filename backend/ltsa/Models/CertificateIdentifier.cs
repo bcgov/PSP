@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// CertificateIdentifier
+    /// CertificateIdentifier.
     /// </summary>
     [DataContract]
     public partial class CertificateIdentifier
@@ -39,14 +38,14 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Certificate Number
+        /// Certificate Number.
         /// </summary>
-        /// <value>Certificate Number</value>
+        /// <value>Certificate Number.</value>
         [DataMember(Name = "documentNumber", EmitDefaultValue = false)]
         public string DocumentNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets DocumentDistrictCode
+        /// Gets or Sets DocumentDistrictCode.
         /// </summary>
         [DataMember(Name = "documentDistrictCode", EmitDefaultValue = false)]
         public LandTitleDistrictCode DocumentDistrictCode { get; set; }

@@ -15,6 +15,7 @@ namespace Pims.Dal.Repositories
     public class EntityNoteRepository : BaseRepository, IEntityNoteRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a NoteRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -22,14 +23,15 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public EntityNoteRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<EntityNoteRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public EntityNoteRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<EntityNoteRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
 
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Associates a note to an existing parent entity via intermediate table (e.g. PimsActivityInstanceNote)
+        /// Associates a note to an existing parent entity via intermediate table (e.g. PimsActivityInstanceNote).
         /// </summary>
         /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
         /// <param name="entity">The entity to add to the datastore.</param>
@@ -42,11 +44,11 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Retrieves all notes associated with a parent entity
+        /// Retrieves all notes associated with a parent entity.
         /// </summary>
         /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
-        /// <param name="predicate">The predicate to filter all notes - e.g. where parentId == parent.Id</param>
-        /// <returns>The entity-notes associations</returns>
+        /// <param name="predicate">The predicate to filter all notes - e.g. where parentId == parent.Id.</param>
+        /// <returns>The entity-notes associations.</returns>
         public IEnumerable<T> GetAll<T>(Func<T, bool> predicate) where T : class
         {
             predicate.ThrowIfNull(nameof(predicate));

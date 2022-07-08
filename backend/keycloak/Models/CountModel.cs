@@ -6,8 +6,9 @@ namespace Pims.Keycloak.Models
     public class CountModel
     {
         #region Properties
+
         /// <summary>
-        /// get/set - The number of items returned
+        /// get/set - The number of items returned.
         /// </summary>
         /// <value></value>
         public int Count { get; set; }

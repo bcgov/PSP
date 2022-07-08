@@ -1,14 +1,14 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Pims.Ltsa;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Model = Pims.Ltsa.Models;
-using Microsoft.AspNetCore.Http;
-using Pims.Dal.Entities;
 
 namespace Pims.Api.Areas.Tools.Controllers
 {
@@ -28,6 +28,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LtsaController class.
         /// </summary>
@@ -39,10 +40,11 @@ namespace Pims.Api.Areas.Tools.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Make a request to Ltsa for title summaries that match the specified `search`.
         /// </summary>
-        /// <param name="pid">the parcel identifier to search for</param>
+        /// <param name="pid">the parcel identifier to search for.</param>
         /// <returns>An array of title summary matches.</returns>
         [HttpGet("summaries")]
         [Produces("application/json")]
@@ -59,9 +61,9 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Post a new order using default parameters and the passed in titleNumber.
         /// </summary>
-        /// <param name="titleNumber">the title number to create the order for</param>
-        /// <param name="landTitleDistrictCode">the land title district code</param>
-        /// <returns>The order created within LTSA</returns>
+        /// <param name="titleNumber">the title number to create the order for.</param>
+        /// <param name="landTitleDistrictCode">the land title district code.</param>
+        /// <returns>The order created within LTSA.</returns>
         [HttpPost("order/title")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.TitleOrder>), 200)]
@@ -77,8 +79,8 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Post a new order using default parameters and the passed in titleNumber.
         /// </summary>
-        /// <param name="pid">the pid to create the order for</param>
-        /// <returns>The order created within LTSA</returns>
+        /// <param name="pid">the pid to create the order for.</param>
+        /// <returns>The order created within LTSA.</returns>
         [HttpPost("order/parcelInfo")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.ParcelInfoOrder>), 200)]
@@ -98,8 +100,8 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Post a new order using default parameters and the passed in titleNumber.
         /// </summary>
-        /// <param name="strataPlanNumber">the title number to create the order for</param>
-        /// <returns>The order created within LTSA</returns>
+        /// <param name="strataPlanNumber">the title number to create the order for.</param>
+        /// <returns>The order created within LTSA.</returns>
         [HttpPost("order/spcp")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.SpcpOrder>), 200)]
@@ -115,8 +117,8 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Get title and parcel information from LTSA by posting a title and parcel info order.
         /// </summary>
-        /// <param name="pid">the pid to retrieve parcel and title information for</param>
-        /// <returns>The orders created within LTSA</returns>
+        /// <param name="pid">the pid to retrieve parcel and title information for.</param>
+        /// <returns>The orders created within LTSA.</returns>
         [HttpPost("all")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Model.LtsaOrders>), 200)]

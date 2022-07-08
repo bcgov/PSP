@@ -21,7 +21,7 @@ namespace Pims.Api.Models
         public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The type display order
+        /// get/set - The type display order.
         /// </summary>
         public int? DisplayOrder { get; set; }
     }

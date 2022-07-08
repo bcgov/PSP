@@ -11,11 +11,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleOwnershipGroup
+    /// TitleOwnershipGroup.
     /// </summary>
     [DataContract]
     public partial class TitleOwnershipGroup
@@ -54,9 +53,9 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Indicator for joint tenancy
+        /// Indicator for joint tenancy.
         /// </summary>
-        /// <value>Indicator for joint tenancy</value>
+        /// <value>Indicator for joint tenancy.</value>
         [DataMember(Name = "jointTenancyIndication", EmitDefaultValue = false)]
         public string JointTenancyIndication { get; set; }
 
@@ -82,7 +81,7 @@ namespace Pims.Ltsa.Models
         public string OwnershipRemarks { get; set; }
 
         /// <summary>
-        /// Gets or Sets TitleOwners
+        /// Gets or Sets TitleOwners.
         /// </summary>
         [DataMember(Name = "titleOwners", EmitDefaultValue = false)]
         public List<TitleOwner> TitleOwners { get; set; }

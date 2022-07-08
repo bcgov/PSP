@@ -11,11 +11,10 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ChargeCorrection
+    /// ChargeCorrection.
     /// </summary>
     [DataContract]
     public partial class ChargeCorrection
@@ -58,23 +57,23 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Charge correction reason
+        /// Charge correction reason.
         /// </summary>
-        /// <value>Charge correction reason</value>
+        /// <value>Charge correction reason.</value>
         [DataMember(Name = "reason", EmitDefaultValue = false)]
         public string Reason { get; set; }
 
         /// <summary>
-        /// The Application that initiated the Charge correction
+        /// The Application that initiated the Charge correction.
         /// </summary>
-        /// <value>The Application that initiated the Charge correction</value>
+        /// <value>The Application that initiated the Charge correction.</value>
         [DataMember(Name = "originatingCorrectionApplication", EmitDefaultValue = false)]
         public string OriginatingCorrectionApplication { get; set; }
 
         /// <summary>
-        /// Entered date and time
+        /// Entered date and time.
         /// </summary>
-        /// <value>Entered date and time</value>
+        /// <value>Entered date and time.</value>
         [DataMember(Name = "enteredDate", EmitDefaultValue = false)]
         public DateTime? EnteredDate { get; set; }
     }

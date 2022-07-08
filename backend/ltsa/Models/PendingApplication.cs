@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// PendingApplication
+    /// PendingApplication.
     /// </summary>
     [DataContract]
     public partial class PendingApplication
@@ -32,23 +31,23 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Application number of the pending application
+        /// Application number of the pending application.
         /// </summary>
-        /// <value>Application number of the pending application</value>
+        /// <value>Application number of the pending application.</value>
         [DataMember(Name = "applicationNumber", EmitDefaultValue = false)]
         public string ApplicationNumber { get; set; }
 
         /// <summary>
-        /// Description of the transaction type
+        /// Description of the transaction type.
         /// </summary>
-        /// <value>Description of the transaction type</value>
+        /// <value>Description of the transaction type.</value>
         [DataMember(Name = "transactionType", EmitDefaultValue = false)]
         public string TransactionType { get; set; }
 
         /// <summary>
-        /// Defected indicator
+        /// Defected indicator.
         /// </summary>
-        /// <value>Defected indicator</value>
+        /// <value>Defected indicator.</value>
         [DataMember(Name = "defected", EmitDefaultValue = false)]
         public bool? Defected { get; set; }
     }

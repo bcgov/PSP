@@ -14,6 +14,7 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a Address class.
         /// </summary>
@@ -22,9 +23,10 @@ namespace Pims.Dal.Entities
         /// <param name="province"></param>
         /// <param name="district"></param>
         /// <param name="postal"></param>
-        public PimsAddress(string address1, string address2, string municipality, PimsProvinceState province, PimsDistrict district, string postal) : this()
+        public PimsAddress(string address1, string address2, string municipality, PimsProvinceState province, PimsDistrict district, string postal)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(address1))
+            if (string.IsNullOrWhiteSpace(address1))
             {
                 throw new ArgumentException($"Argument '{nameof(address1)}' is required.", nameof(address1));
             }
@@ -45,13 +47,14 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Return the address as a string.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Join(", ", new[] { this.StreetAddress1, this.StreetAddress2, this.StreetAddress3, this.MunicipalityName, this.ProvinceState?.ProvinceStateCode, this.DistrictCodeNavigation?.DistrictName, this.RegionCodeNavigation?.RegionName, this.PostalCode, this.Country?.CountryCode }.Where(s => !String.IsNullOrWhiteSpace(s)));
+            return string.Join(", ", new[] { this.StreetAddress1, this.StreetAddress2, this.StreetAddress3, this.MunicipalityName, this.ProvinceState?.ProvinceStateCode, this.DistrictCodeNavigation?.DistrictName, this.RegionCodeNavigation?.RegionName, this.PostalCode, this.Country?.CountryCode }.Where(s => !string.IsNullOrWhiteSpace(s)));
         }
         #endregion
     }

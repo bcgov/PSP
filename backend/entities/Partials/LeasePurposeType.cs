@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsLeasePurposeType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify lease purpose type.
         /// </summary>
@@ -20,7 +21,8 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a LeasePurposeType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLeasePurposeType(string id) : this()
+        public PimsLeasePurposeType(string id)
+            : this()
         {
             Id = id;
         }

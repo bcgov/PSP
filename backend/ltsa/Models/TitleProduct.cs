@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleProduct
+    /// TitleProduct.
     /// </summary>
     [DataContract]
     public partial class TitleProduct : ProductParent<Title>
@@ -22,13 +21,14 @@ namespace Pims.Ltsa.Models
         /// Initializes a new instance of the <see cref="TitleProduct" /> class.
         /// </summary>
         /// <param name="title">title.</param>
-        public TitleProduct(Title title = default, string href = default) : base(href)
+        public TitleProduct(Title title = default, string href = default)
+            : base(href)
         {
             this.Title = title;
         }
 
         /// <summary>
-        /// Gets or Sets Title
+        /// Gets or Sets Title.
         /// </summary>
         [DataMember(Name = "title", EmitDefaultValue = false)]
         public Title Title { get; set; }

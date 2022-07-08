@@ -10,11 +10,10 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ParcelTombstone
+    /// ParcelTombstone.
     /// </summary>
     [DataContract]
     public partial class ParcelTombstone
@@ -38,7 +37,7 @@ namespace Pims.Ltsa.Models
         public string AbsoluteFeeReferenceDescription { get; set; }
 
         /// <summary>
-        /// Gets or Sets TaxAuthorities
+        /// Gets or Sets TaxAuthorities.
         /// </summary>
         [DataMember(Name = "taxAuthorities", EmitDefaultValue = false)]
         public List<TaxAuthority> TaxAuthorities { get; set; }

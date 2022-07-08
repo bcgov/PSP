@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -7,7 +8,6 @@ using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services.Interfaces;
-using System.Linq;
 
 namespace Pims.Dal.Services
 {

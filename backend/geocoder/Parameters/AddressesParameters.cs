@@ -6,6 +6,7 @@ namespace Pims.Geocoder.Parameters
     public class AddressesParameters : BaseParameters
     {
         #region Properties
+
         /// <summary>
         /// get/set - The API version.
         /// </summary>
@@ -128,7 +129,7 @@ namespace Pims.Geocoder.Parameters
         public string ProvinceCode { get; set; }
 
         /// <summary>
-        /// get/set - A comma separated list of locality names that matched addresses must belong to. For example, setting localities to Nanaimo only returns addresses in Nanaimo
+        /// get/set - A comma separated list of locality names that matched addresses must belong to. For example, setting localities to Nanaimo only returns addresses in Nanaimo.
         /// </summary>
         public string Localities { get; set; }
 

@@ -7,6 +7,7 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
     public class OrganizationAddressModel : Pims.Api.Models.Contact.AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the Organization-address relationship.
         /// </summary>

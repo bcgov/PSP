@@ -10,57 +10,64 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Geographical district determined by location of associated Parcel(s). Needed to identify Titles issued prior introduction of province-wide unique Title Number in 1990s. (e.g. Victoria)
+    /// Geographical district determined by location of associated Parcel(s). Needed to identify Titles issued prior introduction of province-wide unique Title Number in 1990s. (e.g. Victoria).
     /// </summary>
-    /// <value>Geographical district determined by location of associated Parcel(s). Needed to identify Titles issued prior introduction of province-wide unique Title Number in 1990s. (e.g. Victoria)</value>
+    /// <value>Geographical district determined by location of associated Parcel(s). Needed to identify Titles issued prior introduction of province-wide unique Title Number in 1990s. (e.g. Victoria).</value>
     [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LandTitleDistrict
     {
         Unknown = 0,
+
         /// <summary>
         /// Enum KAMLOOPS for value: KAMLOOPS
         /// </summary>
         [EnumMember(Value = "KAMLOOPS")]
         KAMLOOPS = 1,
+
         /// <summary>
         /// Enum LOWERMAINLAND for value: LOWER MAINLAND
         /// </summary>
         [EnumMember(Value = "LOWER MAINLAND")]
         LOWERMAINLAND = 2,
+
         /// <summary>
         /// Enum NELSON for value: NELSON
         /// </summary>
         [EnumMember(Value = "NELSON")]
         NELSON = 3,
+
         /// <summary>
         /// Enum NEWWESTMINSTER for value: NEW WESTMINSTER
         /// </summary>
         [EnumMember(Value = "NEW WESTMINSTER")]
         NEWWESTMINSTER = 4,
+
         /// <summary>
         /// Enum PRINCEGEORGE for value: PRINCE GEORGE
         /// </summary>
         [EnumMember(Value = "PRINCE GEORGE")]
         PRINCEGEORGE = 5,
+
         /// <summary>
         /// Enum PRINCERUPERT for value: PRINCE RUPERT
         /// </summary>
         [EnumMember(Value = "PRINCE RUPERT")]
         PRINCERUPERT = 6,
+
         /// <summary>
         /// Enum VANCOUVER for value: VANCOUVER
         /// </summary>
         [EnumMember(Value = "VANCOUVER")]
         VANCOUVER = 7,
+
         /// <summary>
         /// Enum VICTORIA for value: VICTORIA
         /// </summary>
         [EnumMember(Value = "VICTORIA")]
-        VICTORIA = 8
+        VICTORIA = 8,
     }
 }

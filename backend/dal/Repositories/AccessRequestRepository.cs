@@ -32,10 +32,12 @@ namespace Pims.Dal.Repositories
         /// <param name="service"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, IPimsRepository service, ILogger<AccessRequestRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, IPimsRepository service, ILogger<AccessRequestRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get the most recent access request that has submitted.
         /// </summary>
@@ -127,9 +129,9 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Delete an access request
+        /// Delete an access request.
         /// </summary>
-        /// <param name="deleteRequest">The item to be deleted</param>
+        /// <param name="deleteRequest">The item to be deleted.</param>
         /// <returns></returns>
         public PimsAccessRequest Delete(PimsAccessRequest deleteRequest)
         {

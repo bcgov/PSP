@@ -57,6 +57,7 @@ namespace Pims.Api
     public class Startup
     {
         #region Properties
+
         /// <summary>
         /// get - The application configuration settings.
         /// </summary>
@@ -71,6 +72,7 @@ namespace Pims.Api
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instances of a Startup class.
         /// </summary>
@@ -84,6 +86,7 @@ namespace Pims.Api
         #endregion
 
         #region Methods
+
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
@@ -167,7 +170,7 @@ namespace Pims.Api
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ValidAlgorithms = new List<string>() { "RS256" }
+                        ValidAlgorithms = new List<string>() { "RS256" },
                     };
                     if (key.Length > 0)
                     {
@@ -189,7 +192,7 @@ namespace Pims.Api
                         OnForbidden = context =>
                         {
                             return Task.CompletedTask;
-                        }
+                        },
                     };
                 });
 
@@ -201,11 +204,10 @@ namespace Pims.Api
             // Generate the database connection string.
             var csBuilder = new SqlConnectionStringBuilder(this.Configuration.GetConnectionString("PIMS"));
             var pwd = this.Configuration["DB_PASSWORD"];
-            if (!String.IsNullOrEmpty(pwd))
+            if (!string.IsNullOrEmpty(pwd))
             {
                 csBuilder.Password = pwd;
             }
-
 
             services.AddHttpClient();
             services.AddTransient<LoggingHandler>();
@@ -259,7 +261,7 @@ namespace Pims.Api
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Description = "Please enter into field the word 'Bearer' following by space and JWT",
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.ApiKey,
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -269,7 +271,7 @@ namespace Pims.Api
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
+                                Id = "Bearer",
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
@@ -277,7 +279,7 @@ namespace Pims.Api
 
                         },
                         new List<string>()
-                    }
+                    },
                 });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -340,7 +342,7 @@ namespace Pims.Api
             {
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    options.SwaggerEndpoint(String.Format(this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
+                    options.SwaggerEndpoint(string.Format(this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
                 }
                 options.RoutePrefix = this.Configuration.GetValue<string>("Swagger:RoutePrefix");
             });
@@ -360,12 +362,12 @@ namespace Pims.Api
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Name.Contains("liveliness"),
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Tags.Contains("services"),
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
 
             app.UseEndpoints(config =>

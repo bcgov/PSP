@@ -9,6 +9,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPrfPropResearchPurposeType : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify of the property purpose.
         /// </summary>

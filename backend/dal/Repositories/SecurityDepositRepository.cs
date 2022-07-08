@@ -11,6 +11,7 @@ namespace Pims.Dal.Repositories
     public class SecurityDepositRepository : BaseRepository<PimsSecurityDeposit>, ISecurityDepositRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SecurityDepositRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -22,7 +23,8 @@ namespace Pims.Dal.Repositories
             ClaimsPrincipal user,
             IPimsRepository service,
             ILogger<LeaseRepository> logger,
-            IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+            IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
 
         #endregion
 
@@ -47,7 +49,6 @@ namespace Pims.Dal.Repositories
             this.Context.Add(securityDeposit);
             return securityDeposit;
         }
-
 
         public PimsSecurityDeposit Update(PimsSecurityDeposit securityDeposit)
         {

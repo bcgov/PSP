@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
     public class RoleModel : Api.Models.BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify record.
         /// </summary>

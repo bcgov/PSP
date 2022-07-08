@@ -1,7 +1,7 @@
+using System.Text.Json;
 using Mapster;
 using Microsoft.Extensions.Options;
 using Pims.Dal;
-using System.Text.Json;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Tenant;
 
@@ -15,6 +15,7 @@ namespace Pims.Api.Mapping.Tenant
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a TenantMap, initializes with specified arguments.
         /// </summary>

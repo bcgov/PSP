@@ -1,3 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
@@ -8,14 +16,6 @@ using Pims.Ltsa.Extensions;
 using Pims.Ltsa.Models;
 using Polly;
 using Polly.Retry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Pims.Ltsa
 {
@@ -36,6 +36,7 @@ namespace Pims.Ltsa
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LtsaService, initializes with specified arguments.
         /// </summary>
@@ -59,7 +60,6 @@ namespace Pims.Ltsa
                     this.Client.Client?.DefaultRequestHeaders?.Clear();
                     this.Client.Client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {_token.AccessToken}");
                 });
-
 
         }
         #endregion
@@ -140,7 +140,7 @@ namespace Pims.Ltsa
                 }
                 catch (JsonException)
                 {
-                    error = new Error(new List<String>() { ex.Message });
+                    error = new Error(new List<string>() { ex.Message });
                 }
                 _logger.LogError(ex, $"Failed to send/receive request: ${url}");
             }
@@ -194,7 +194,7 @@ namespace Pims.Ltsa
                 IntegratorUsername = integratorUsername ?? this.Options.IntegratorUsername,
                 IntegratorPassword = integratorPassword ?? this.Options.IntegratorPassword,
                 MyLtsaUserName = myLtsaUsername ?? this.Options.MyLtsaUsername,
-                MyLtsaUserPassword = myLtsaUserPassword ?? this.Options.MyLtsaUserPassword
+                MyLtsaUserPassword = myLtsaUserPassword ?? this.Options.MyLtsaUserPassword,
             };
 
             string url = this.Options.AuthUrl.AppendToURL(this.Options.LoginIntegratorEndpoint);
@@ -227,7 +227,7 @@ namespace Pims.Ltsa
         }
 
         /// <summary>
-        /// Post a Title Order using the passed titleNumber and landTitleDistrictCode
+        /// Post a Title Order using the passed titleNumber and landTitleDistrictCode.
         /// </summary>
         /// <param name="titleNumber"></param>
         /// <param name="landTitleDistrictCode"></param>
@@ -240,7 +240,7 @@ namespace Pims.Ltsa
         }
 
         /// <summary>
-        /// Post a Parcel Info Order using the passed pid
+        /// Post a Parcel Info Order using the passed pid.
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
@@ -252,7 +252,7 @@ namespace Pims.Ltsa
         }
 
         /// <summary>
-        /// Post a Strata Plan Common Property order using the passed strataPlanNumber
+        /// Post a Strata Plan Common Property order using the passed strataPlanNumber.
         /// </summary>
         /// <param name="strataPlanNumber"></param>
         /// <returns></returns>
@@ -275,7 +275,7 @@ namespace Pims.Ltsa
         }
 
         /// <summary>
-        /// Retrieve all of the title summaries for the given pid, and create a title order for each one. Return all of the title orders and the parcel info order for the given pid
+        /// Retrieve all of the title summaries for the given pid, and create a title order for each one. Return all of the title orders and the parcel info order for the given pid.
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
@@ -296,13 +296,13 @@ namespace Pims.Ltsa
             return new LtsaOrders()
             {
                 TitleOrders = titleOrders.Select(titleOrder => titleOrder?.Order),
-                ParcelInfo = parcelInfo.Order
+                ParcelInfo = parcelInfo.Order,
             };
         }
 
         private static int ConvertPID(string pid)
         {
-            _ = int.TryParse(pid?.Replace("-", "") ?? "", out int value);
+            _ = int.TryParse(pid?.Replace("-", string.Empty) ?? string.Empty, out int value);
             return value;
         }
 

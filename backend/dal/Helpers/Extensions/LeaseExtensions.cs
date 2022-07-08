@@ -31,7 +31,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
-                var pinOrPidValue = filter.PinOrPid.Replace("-", "").Trim().TrimStart('0');
+                var pinOrPidValue = filter.PinOrPid.Replace("-", string.Empty).Trim().TrimStart('0');
                 query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null && (EF.Functions.Like(pl.Property.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(pl.Property.Pin.ToString(), $"%{pinOrPidValue}%"))));
             }
 
@@ -135,7 +135,6 @@ namespace Pims.Dal.Helpers.Extensions
                 .Include(p => p.RegionCodeNavigation)
                 .Include(l => l.PimsLeaseTerms);
 
-
             if (loadPayments)
             {
                 query = query.Include(l => l.PimsLeaseTerms)
@@ -145,11 +144,11 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Checks for given source field name and if found replaces it with target field name for sorting the data in given sort array
+        /// Checks for given source field name and if found replaces it with target field name for sorting the data in given sort array.
         /// </summary>
-        /// <param name="sourceField">Sort field name from model</param>
-        /// <param name="targetField">Sort field name from entity</param>
-        /// <param name="sortDef">Find and replaces the soft field in this array</param>
+        /// <param name="sourceField">Sort field name from model.</param>
+        /// <param name="targetField">Sort field name from entity.</param>
+        /// <param name="sortDef">Find and replaces the soft field in this array.</param>
         private static void MapSortField(string sourceField, string targetField, string[] sortDef)
         {
             var sortField = sortDef.FirstOrDefault(x => x.Contains(sourceField));
@@ -181,18 +180,18 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Get the next available id from the PIMS_LEASE_ID_SEQ
+        /// Get the next available id from the PIMS_LEASE_ID_SEQ.
         /// </summary>
         /// <param name="context"></param>
-        public static Int64 GetNextLeaseSequenceValue(this PimsContext context)
+        public static long GetNextLeaseSequenceValue(this PimsContext context)
         {
             SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
             {
-                Direction = System.Data.ParameterDirection.Output
+                Direction = System.Data.ParameterDirection.Output,
             };
             context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
 
-            return (Int64)result.Value;
+            return (long)result.Value;
         }
 
         /// <summary>
@@ -201,14 +200,14 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="context"></param>
         public static PimsLease GenerateLFileNo(this PimsContext context, PimsLease lease)
         {
-            Int64 leaseId = GetNextLeaseSequenceValue(context);
+            long leaseId = GetNextLeaseSequenceValue(context);
             lease.LeaseId = leaseId;
             lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
             return lease;
         }
 
         /// <summary>
-        /// Get the Program name from the lease's program type description
+        /// Get the Program name from the lease's program type description.
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
@@ -268,7 +267,7 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Get the tenant name from either the person or the organization
+        /// Get the tenant name from either the person or the organization.
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>

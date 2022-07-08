@@ -1,12 +1,12 @@
-using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
+using Microsoft.Extensions.Logging;
+using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a TenantService, and initializes it with the specified arguments.
         /// </summary>
@@ -28,7 +29,8 @@ namespace Pims.Dal.Repositories
         /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public TenantRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<TenantRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public TenantRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<TenantRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods

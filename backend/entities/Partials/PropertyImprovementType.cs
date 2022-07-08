@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyImprovementType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify property improvement type.
         /// </summary>
@@ -20,7 +21,8 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a PropertyImprovementType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyImprovementType(string id) : this()
+        public PimsPropertyImprovementType(string id)
+            : this()
         {
             Id = id;
         }

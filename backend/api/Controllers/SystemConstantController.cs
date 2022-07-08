@@ -21,6 +21,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instances of a SystemConstantController class, initializes it with the specified arguments.
         /// </summary>
@@ -34,6 +35,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Returns the system constants.
         /// </summary>

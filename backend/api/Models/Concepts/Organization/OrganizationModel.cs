@@ -8,6 +8,7 @@ namespace Pims.Api.Models.Concepts
     public class OrganizationModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The organization's id.
         /// </summary>

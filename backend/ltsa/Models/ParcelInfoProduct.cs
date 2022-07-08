@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ParcelInfoProduct
+    /// ParcelInfoProduct.
     /// </summary>
     [DataContract]
     public partial class ParcelInfoProduct : ProductParent<ParcelInfo>
@@ -22,13 +21,14 @@ namespace Pims.Ltsa.Models
         /// Initializes a new instance of the <see cref="ParcelInfoProduct" /> class.
         /// </summary>
         /// <param name="parcelInfo">parcelInfo.</param>
-        public ParcelInfoProduct(ParcelInfo parcelInfo = default, string href = default) : base(href)
+        public ParcelInfoProduct(ParcelInfo parcelInfo = default, string href = default)
+            : base(href)
         {
             this.ParcelInfo = parcelInfo;
         }
 
         /// <summary>
-        /// Gets or Sets ParcelInfo
+        /// Gets or Sets ParcelInfo.
         /// </summary>
         [DataMember(Name = "parcelInfo", EmitDefaultValue = false)]
         public ParcelInfo ParcelInfo { get; set; }

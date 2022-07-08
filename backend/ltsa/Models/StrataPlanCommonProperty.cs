@@ -10,11 +10,10 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// StrataPlanCommonProperty
+    /// StrataPlanCommonProperty.
     /// </summary>
     [DataContract]
     public partial class StrataPlanCommonProperty : IFieldedData
@@ -33,19 +32,19 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets StrataPlanIdentifier
+        /// Gets or Sets StrataPlanIdentifier.
         /// </summary>
         [DataMember(Name = "strataPlanIdentifier", EmitDefaultValue = false)]
         public StrataPlanIdentifier StrataPlanIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or Sets LegalNotationsOnSCP
+        /// Gets or Sets LegalNotationsOnSCP.
         /// </summary>
         [DataMember(Name = "legalNotationsOnSCP", EmitDefaultValue = false)]
         public List<LegalNotationsOnStrataCommonProperty> LegalNotationsOnSCP { get; set; }
 
         /// <summary>
-        /// Gets or Sets ChargesOnSCP
+        /// Gets or Sets ChargesOnSCP.
         /// </summary>
         [DataMember(Name = "chargesOnSCP", EmitDefaultValue = false)]
         public List<ChargesOnStrataCommonProperty> ChargesOnSCP { get; set; }

@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SearchController(LIS) class, initializes it with the specified arguments.
         /// </summary>
@@ -47,10 +48,11 @@ namespace Pims.Api.Areas.Lease.Controllers
 
         #region Endpoints
         #region Lease List View Endpoints
+
         /// <summary>
         /// Get all the leases that satisfy the filter parameters.
         /// </summary>
-        /// <returns>An array of leases matching the filter</returns>
+        /// <returns>An array of leases matching the filter.</returns>
         [HttpGet]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
@@ -68,7 +70,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Get all the leases that satisfy the filter parameters.
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns>An array of leases matching the filter</returns>
+        /// <returns>An array of leases matching the filter.</returns>
         [HttpPost("filter")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]

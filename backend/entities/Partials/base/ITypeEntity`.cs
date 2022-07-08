@@ -3,6 +3,7 @@ namespace Pims.Dal.Entities
     public interface IBaseTypeEntity<KeyType, DisplayKeyType>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key of the type record.
         /// </summary>

@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
         {
         }
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a UserOrganization class.
         /// </summary>

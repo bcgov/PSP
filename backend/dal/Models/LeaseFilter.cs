@@ -9,6 +9,7 @@ namespace Pims.Dal.Entities.Models
     public class LeaseFilter : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The unique identifier for titled property, either pid or pin.
         /// </summary>
@@ -95,6 +96,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseFilter class.
         /// </summary>
@@ -102,6 +104,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>

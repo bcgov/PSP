@@ -1,3 +1,6 @@
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Pims.Core.Http;
@@ -5,9 +8,6 @@ using Pims.Geocoder.Configuration;
 using Pims.Geocoder.Extensions;
 using Pims.Geocoder.Models;
 using Pims.Geocoder.Parameters;
-using System;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Pims.Geocoder
 {
@@ -22,6 +22,7 @@ namespace Pims.Geocoder
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a GeocoderService, initializes with specified arguments.
         /// </summary>
@@ -31,7 +32,7 @@ namespace Pims.Geocoder
         {
             this.Options = options.Value;
             this.Client = client;
-            if (!String.IsNullOrWhiteSpace(this.Options.Key))
+            if (!string.IsNullOrWhiteSpace(this.Options.Key))
             {
                 client.Client.DefaultRequestHeaders.Add("apikey", this.Options.Key);
             }
@@ -39,6 +40,7 @@ namespace Pims.Geocoder
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Generates the full URL including the host.
         /// </summary>
@@ -54,14 +56,14 @@ namespace Pims.Geocoder
         /// <summary>
         /// Sends an HTTP request to Geocoder for addresses that match the specified 'address'.
         /// </summary>
-        /// <param name="address">The address to geocode</param>
-        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <param name="address">The address to geocode.</param>
+        /// <param name="outputFormat">The output format. Defaults to "json".</param>
         /// <returns></returns>
         public async Task<FeatureCollectionModel> GetSiteAddressesAsync(string address, string outputFormat = "json")
         {
             var parameters = new AddressesParameters()
             {
-                AddressString = WebUtility.UrlEncode(address)
+                AddressString = WebUtility.UrlEncode(address),
             };
             return await GetSiteAddressesAsync(parameters, outputFormat);
         }
@@ -69,8 +71,8 @@ namespace Pims.Geocoder
         /// <summary>
         /// Sends an HTTP request to Geocoder for addresses that match the specified 'parameters'.
         /// </summary>
-        /// <param name="parameters">The address search paramenters</param>
-        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <param name="parameters">The address search paramenters.</param>
+        /// <param name="outputFormat">The output format. Defaults to "json".</param>
         /// <returns></returns>
         public async Task<FeatureCollectionModel> GetSiteAddressesAsync(AddressesParameters parameters, string outputFormat = "json")
         {
@@ -82,8 +84,8 @@ namespace Pims.Geocoder
         /// <summary>
         /// Sends an HTTP request to Geocoder for addresses that provides the closest match for the specified lat/lng.
         /// </summary>
-        /// <param name="parameters">The nearest search paramenters</param>
-        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <param name="parameters">The nearest search paramenters.</param>
+        /// <param name="outputFormat">The output format. Defaults to "json".</param>
         /// <returns></returns>
         public async Task<FeatureModel> GetNearestSiteAsync(NearestParameters parameters, string outputFormat = "json")
         {
@@ -95,8 +97,8 @@ namespace Pims.Geocoder
         /// <summary>
         /// Sends an HTTP request to Geocoder for x addresses that are the closest matches for the specified lat/lng.
         /// </summary>
-        /// <param name="parameters">The near search paramenters</param>
-        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <param name="parameters">The near search paramenters.</param>
+        /// <param name="outputFormat">The output format. Defaults to "json".</param>
         /// <returns></returns>
         public async Task<FeatureCollectionModel> GetNearSitesAsync(NearParameters parameters, string outputFormat = "json")
         {
@@ -110,8 +112,8 @@ namespace Pims.Geocoder
         /// A 'siteId' is a unique identifier assigned to every site in B.C.
         /// Valid 'siteId' values for an address are returned by GetSiteAddressesAsync.
         /// </summary>
-        /// <param name="siteId">The site identifier</param>
-        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <param name="siteId">The site identifier.</param>
+        /// <param name="outputFormat">The output format. Defaults to "json".</param>
         /// <returns></returns>
         public async Task<SitePidsResponseModel> GetPids(Guid siteId, string outputFormat = "json")
         {

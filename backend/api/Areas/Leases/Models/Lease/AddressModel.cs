@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     public class AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>

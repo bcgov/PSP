@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TaxAuthority
+    /// TaxAuthority.
     /// </summary>
     [DataContract]
     public partial class TaxAuthority

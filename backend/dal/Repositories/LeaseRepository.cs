@@ -20,6 +20,7 @@ namespace Pims.Dal.Repositories
     public class LeaseRepository : BaseRepository<PimsLease>, ILeaseRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -27,10 +28,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Returns the total number of leases in the database.
         /// </summary>
@@ -205,10 +208,8 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
-
             return new Paged<PimsLease>(items, filter.Page, filter.Quantity, query.Count());
         }
-
 
         /// <summary>
         /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
@@ -305,7 +306,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// update the tenants on the lease
+        /// update the tenants on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <param name="pimsLeaseTenants"></param>
@@ -327,7 +328,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// update the tenants on the lease
+        /// update the tenants on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <param name="pimsPropertyImprovements"></param>
@@ -349,7 +350,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// update the properties on the lease
+        /// update the properties on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <param name="pimsPropertyLeases"></param>

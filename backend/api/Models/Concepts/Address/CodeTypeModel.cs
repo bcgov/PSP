@@ -7,6 +7,7 @@ namespace Pims.Api.Models.Concepts
     public class CodeTypeModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify code type.
         /// </summary>
@@ -23,7 +24,7 @@ namespace Pims.Api.Models.Concepts
         public string Description { get; set; }
 
         /// <summary>
-        /// get/set - The display order
+        /// get/set - The display order.
         /// </summary>
         public int? DisplayOrder { get; set; }
         #endregion

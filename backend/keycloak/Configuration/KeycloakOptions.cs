@@ -1,6 +1,6 @@
+using System;
 using Pims.Core.Exceptions;
 using Pims.Core.Http.Configuration;
-using System;
 
 namespace Pims.Keycloak.Configuration
 {
@@ -10,6 +10,7 @@ namespace Pims.Keycloak.Configuration
     public class KeycloakOptions : AuthClientOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The keycloak service account configuration.
         /// This is for authenticating the api interaction with keycloak.
@@ -31,23 +32,24 @@ namespace Pims.Keycloak.Configuration
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Validates the configuration for keycloak.
         /// </summary>
         /// <exception type="ConfigurationException">If the configuration property is invald.</exception>
         public override void Validate()
         {
-            if (String.IsNullOrWhiteSpace(this.Authority))
+            if (string.IsNullOrWhiteSpace(this.Authority))
             {
                 throw new ConfigurationException("The configuration for Keycloak:Authority is invalid or missing.");
             }
 
-            if (String.IsNullOrWhiteSpace(this.Audience))
+            if (string.IsNullOrWhiteSpace(this.Audience))
             {
                 throw new ConfigurationException("The configuration for Keycloak:Audience is invalid or missing.");
             }
 
-            if (String.IsNullOrWhiteSpace(this.Client))
+            if (string.IsNullOrWhiteSpace(this.Client))
             {
                 throw new ConfigurationException("The configuration for Keycloak:Client is invalid or missing.");
             }

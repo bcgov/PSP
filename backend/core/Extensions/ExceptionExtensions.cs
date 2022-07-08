@@ -8,7 +8,7 @@ namespace Pims.Core.Extensions
     public static class ExceptionExtensions
     {
         /// <summary>
-        /// Get all inner error messages
+        /// Get all inner error messages.
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>

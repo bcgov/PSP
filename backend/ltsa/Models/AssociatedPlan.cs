@@ -14,167 +14,197 @@ using System.Text.Json.Serialization;
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// AssociatedPlan
+    /// AssociatedPlan.
     /// </summary>
     [DataContract]
     public partial class AssociatedPlan
     {
         /// <summary>
-        /// Type of the associated plan
+        /// Type of the associated plan.
         /// </summary>
-        /// <value>Type of the associated plan</value>
+        /// <value>Type of the associated plan.</value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum PlanTypeEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum PLAN for value: PLAN
             /// </summary>
             [EnumMember(Value = "PLAN")]
             PLAN = 1,
+
             /// <summary>
             /// Enum BARELANDSTRATAPLAN for value: BARELAND STRATA PLAN
             /// </summary>
             [EnumMember(Value = "BARELAND STRATA PLAN")]
             BARELANDSTRATAPLAN = 2,
+
             /// <summary>
             /// Enum AIRSPACEPLAN for value: AIRSPACE PLAN
             /// </summary>
             [EnumMember(Value = "AIRSPACE PLAN")]
             AIRSPACEPLAN = 3,
+
             /// <summary>
             /// Enum BLOCKOUTLINEPLAN for value: BLOCK OUTLINE PLAN
             /// </summary>
             [EnumMember(Value = "BLOCK OUTLINE PLAN")]
             BLOCKOUTLINEPLAN = 4,
+
             /// <summary>
             /// Enum BYLAWPLAN for value: BYLAW PLAN
             /// </summary>
             [EnumMember(Value = "BYLAW PLAN")]
             BYLAWPLAN = 5,
+
             /// <summary>
             /// Enum CONSOLIDATIONPLAN for value: CONSOLIDATION PLAN
             /// </summary>
             [EnumMember(Value = "CONSOLIDATION PLAN")]
             CONSOLIDATIONPLAN = 6,
+
             /// <summary>
             /// Enum CROWNGRANTPLAN for value: CROWN GRANT PLAN
             /// </summary>
             [EnumMember(Value = "CROWN GRANT PLAN")]
             CROWNGRANTPLAN = 7,
+
             /// <summary>
             /// Enum DEDICATIONPLAN for value: DEDICATION PLAN
             /// </summary>
             [EnumMember(Value = "DEDICATION PLAN")]
             DEDICATIONPLAN = 8,
+
             /// <summary>
             /// Enum ENBLOCKPLAN for value: E&N BLOCK PLAN
             /// </summary>
             [EnumMember(Value = "E&N BLOCK PLAN")]
             ENBLOCKPLAN = 9,
+
             /// <summary>
             /// Enum EASEMENTPLAN for value: EASEMENT PLAN
             /// </summary>
             [EnumMember(Value = "EASEMENT PLAN")]
             EASEMENTPLAN = 10,
+
             /// <summary>
             /// Enum HIGHWAYPLAN for value: HIGHWAY PLAN
             /// </summary>
             [EnumMember(Value = "HIGHWAY PLAN")]
             HIGHWAYPLAN = 11,
+
             /// <summary>
             /// Enum KEYPLAN for value: KEY PLAN
             /// </summary>
             [EnumMember(Value = "KEY PLAN")]
             KEYPLAN = 12,
+
             /// <summary>
             /// Enum LEASEPLAN for value: LEASE PLAN
             /// </summary>
             [EnumMember(Value = "LEASE PLAN")]
             LEASEPLAN = 13,
+
             /// <summary>
             /// Enum LEASEOFPARTOFBUILDINGPLAN for value: LEASE OF PART OF BUILDING PLAN
             /// </summary>
             [EnumMember(Value = "LEASE OF PART OF BUILDING PLAN")]
             LEASEOFPARTOFBUILDINGPLAN = 14,
+
             /// <summary>
             /// Enum MISCELLANEOUSPLAN for value: MISCELLANEOUS PLAN
             /// </summary>
             [EnumMember(Value = "MISCELLANEOUS PLAN")]
             MISCELLANEOUSPLAN = 15,
+
             /// <summary>
             /// Enum OFFICIALSURVEYPLAN for value: OFFICIAL SURVEY PLAN
             /// </summary>
             [EnumMember(Value = "OFFICIAL SURVEY PLAN")]
             OFFICIALSURVEYPLAN = 16,
+
             /// <summary>
             /// Enum REFERENCEPLAN for value: REFERENCE PLAN
             /// </summary>
             [EnumMember(Value = "REFERENCE PLAN")]
             REFERENCEPLAN = 17,
+
             /// <summary>
             /// Enum RESTRICTIVECOVENANTPLAN for value: RESTRICTIVE COVENANT PLAN
             /// </summary>
             [EnumMember(Value = "RESTRICTIVE COVENANT PLAN")]
             RESTRICTIVECOVENANTPLAN = 18,
+
             /// <summary>
             /// Enum RIGHTOFWAYPLAN for value: RIGHT OF WAY PLAN
             /// </summary>
             [EnumMember(Value = "RIGHT OF WAY PLAN")]
             RIGHTOFWAYPLAN = 19,
+
             /// <summary>
             /// Enum ROADPLAN for value: ROAD PLAN
             /// </summary>
             [EnumMember(Value = "ROAD PLAN")]
             ROADPLAN = 20,
+
             /// <summary>
             /// Enum STATUTORYRIGHTOFWAYPLAN for value: STATUTORY RIGHT OF WAY PLAN
             /// </summary>
             [EnumMember(Value = "STATUTORY RIGHT OF WAY PLAN")]
             STATUTORYRIGHTOFWAYPLAN = 21,
+
             /// <summary>
             /// Enum STRATAPLAN for value: STRATA PLAN
             /// </summary>
             [EnumMember(Value = "STRATA PLAN")]
             STRATAPLAN = 22,
+
             /// <summary>
             /// Enum SUBDIVISIONPLAN for value: SUBDIVISION PLAN
             /// </summary>
             [EnumMember(Value = "SUBDIVISION PLAN")]
             SUBDIVISIONPLAN = 23,
+
             /// <summary>
             /// Enum WELLSITEPLAN for value: WELL SITE PLAN
             /// </summary>
             [EnumMember(Value = "WELL SITE PLAN")]
             WELLSITEPLAN = 24,
+
             /// <summary>
             /// Enum PLANTYPENOTIDENTIFIED for value: PLAN TYPE NOT IDENTIFIED
             /// </summary>
             [EnumMember(Value = "PLAN TYPE NOT IDENTIFIED")]
             PLANTYPENOTIDENTIFIED = 25,
+
             /// <summary>
             /// Enum REFERENCEWITHDEDICATION for value: REFERENCE WITH DEDICATION
             /// </summary>
             [EnumMember(Value = "REFERENCE WITH DEDICATION")]
             REFERENCEWITHDEDICATION = 26,
+
             /// <summary>
             /// Enum COVENANTPLAN for value: COVENANT PLAN
             /// </summary>
             [EnumMember(Value = "COVENANT PLAN")]
             COVENANTPLAN = 27,
+
             /// <summary>
             /// Enum POSTINGPLAN for value: POSTING PLAN
             /// </summary>
             [EnumMember(Value = "POSTING PLAN")]
-            POSTINGPLAN = 28
+            POSTINGPLAN = 28,
         }
+
         /// <summary>
-        /// Type of the associated plan
+        /// Type of the associated plan.
         /// </summary>
-        /// <value>Type of the associated plan</value>
+        /// <value>Type of the associated plan.</value>
         [DataMember(Name = "planType", EmitDefaultValue = false)]
         public PlanTypeEnum PlanType { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AssociatedPlan" /> class.
         /// </summary>
@@ -194,11 +224,10 @@ namespace Pims.Ltsa.Models
             }
         }
 
-
         /// <summary>
-        /// Plan number of the associated plan
+        /// Plan number of the associated plan.
         /// </summary>
-        /// <value>Plan number of the associated plan</value>
+        /// <value>Plan number of the associated plan.</value>
         [DataMember(Name = "planNumber", EmitDefaultValue = false)]
         public string PlanNumber { get; set; }
     }

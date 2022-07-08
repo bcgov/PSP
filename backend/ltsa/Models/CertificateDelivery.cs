@@ -11,11 +11,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// CertificateDelivery
+    /// CertificateDelivery.
     /// </summary>
     [DataContract]
     public partial class CertificateDelivery
@@ -65,7 +64,7 @@ namespace Pims.Ltsa.Models
         public string IntendedRecipientGivenName { get; set; }
 
         /// <summary>
-        /// Gets or Sets Address
+        /// Gets or Sets Address.
         /// </summary>
         [DataMember(Name = "address", EmitDefaultValue = false)]
         public List<OwnerAddress> Address { get; set; }

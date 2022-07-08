@@ -19,7 +19,7 @@ namespace Pims.Core.Extensions
         public static Guid GetUserKey(this ClaimsPrincipal user)
         {
             var value = user?.FindFirstValue(ClaimTypes.NameIdentifier);
-            return String.IsNullOrWhiteSpace(value) ? Guid.Empty : new Guid(value);
+            return string.IsNullOrWhiteSpace(value) ? Guid.Empty : new Guid(value);
         }
 
         /// <summary>

@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Parameters required for ordering a Strata Plan Common Property
+    /// Parameters required for ordering a Strata Plan Common Property.
     /// </summary>
     [DataContract]
     public partial class StrataPlanCommonPropertyOrderParameters
@@ -39,16 +38,16 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Strata plan number for the common property Mandatory parameter # Note: All plan numbers must include the plan’s prefix and/or suffix 
+        /// Strata plan number for the common property Mandatory parameter # Note: All plan numbers must include the plan’s prefix and/or suffix. 
         /// </summary>
-        /// <value>Strata plan number for the common property Mandatory parameter # Note: All plan numbers must include the plan’s prefix and/or suffix </value>
+        /// <value>Strata plan number for the common property Mandatory parameter # Note: All plan numbers must include the plan’s prefix and/or suffix. </value>
         [DataMember(Name = "strataPlanNumber", EmitDefaultValue = false)]
         public string StrataPlanNumber { get; set; }
 
         /// <summary>
-        /// Indicate whether to include cancelled charges, legal notations and corrections on the strata plan common property
+        /// Indicate whether to include cancelled charges, legal notations and corrections on the strata plan common property.
         /// </summary>
-        /// <value>Indicate whether to include cancelled charges, legal notations and corrections on the strata plan common property</value>
+        /// <value>Indicate whether to include cancelled charges, legal notations and corrections on the strata plan common property.</value>
         [DataMember(Name = "includeCancelledInfo", EmitDefaultValue = false)]
         public bool? IncludeCancelledInfo { get; set; }
     }

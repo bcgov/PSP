@@ -4,7 +4,7 @@ namespace Pims.Core.Helpers
 {
     /// <summary>
     /// ExceptionHelpers static class, provides methods to help with handling exceptions.
-    /// /// </summary>
+    /// ///. </summary>
     public static class ExceptionHelper
     {
         /// <summary>

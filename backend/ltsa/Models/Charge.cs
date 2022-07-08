@@ -12,11 +12,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Charge
+    /// Charge.
     /// </summary>
     [DataContract]
     public partial class Charge
@@ -88,25 +87,25 @@ namespace Pims.Ltsa.Models
         public DateTime? ApplicationReceivedDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets ChargeOwnershipGroups
+        /// Gets or Sets ChargeOwnershipGroups.
         /// </summary>
         [DataMember(Name = "chargeOwnershipGroups", EmitDefaultValue = false)]
         public List<ChargeOwnershipGroup> ChargeOwnershipGroups { get; set; }
 
         /// <summary>
-        /// Gets or Sets CertificatesOfCharge
+        /// Gets or Sets CertificatesOfCharge.
         /// </summary>
         [DataMember(Name = "certificatesOfCharge", EmitDefaultValue = false)]
         public List<CertificateOfCharge> CertificatesOfCharge { get; set; }
 
         /// <summary>
-        /// Gets or Sets CorrectionsAltos1
+        /// Gets or Sets CorrectionsAltos1.
         /// </summary>
         [DataMember(Name = "correctionsAltos1", EmitDefaultValue = false)]
         public List<Altos1ChargeCorrection> CorrectionsAltos1 { get; set; }
 
         /// <summary>
-        /// Gets or Sets Corrections
+        /// Gets or Sets Corrections.
         /// </summary>
         [DataMember(Name = "corrections", EmitDefaultValue = false)]
         public List<ChargeCorrection> Corrections { get; set; }

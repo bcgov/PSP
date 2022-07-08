@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyRoadType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify a road type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PimsPropertyRoadType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyRoadType(string id) : this()
+        public PimsPropertyRoadType(string id)
+            : this()
         {
             Id = id;
         }

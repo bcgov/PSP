@@ -12,11 +12,10 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ChargesOnStrataCommonProperty
+    /// ChargesOnStrataCommonProperty.
     /// </summary>
     [DataContract]
     public partial class ChargesOnStrataCommonProperty
@@ -30,54 +29,63 @@ namespace Pims.Ltsa.Models
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
             [EnumMember(Value = "CANCELLED")]
             CANCELLED = 1,
+
             /// <summary>
             /// Enum REGISTERED for value: REGISTERED
             /// </summary>
             [EnumMember(Value = "REGISTERED")]
-            REGISTERED = 2
+            REGISTERED = 2,
         }
+
         /// <summary>
         /// The current status of the charge in relationship with the Strata Common Property.  Only active Charges are presented on Current View of Title.
         /// </summary>
         /// <value>The current status of the charge in relationship with the Strata Common Property.  Only active Charges are presented on Current View of Title.</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum Status { get; set; }
+
         /// <summary>
-        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; 
+        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. 
         /// </summary>
-        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; </value>
+        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. </value>
         [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum CancellationTypeEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum I for value: I
             /// </summary>
             [EnumMember(Value = "I")]
             I = 1,
+
             /// <summary>
             /// Enum M for value: M
             /// </summary>
             [EnumMember(Value = "M")]
             M = 2,
+
             /// <summary>
             /// Enum R for value: R
             /// </summary>
             [EnumMember(Value = "R")]
-            R = 3
+            R = 3,
         }
+
         /// <summary>
-        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; 
+        /// Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. 
         /// </summary>
-        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot; </value>
+        /// <value>Records the way the Charge was canceled. \&quot;I - Inactive\&quot;, \&quot;M - Merged\&quot;, \&quot;R - Released\&quot;. </value>
         [DataMember(Name = "cancellationType", EmitDefaultValue = false)]
         public CancellationTypeEnum? CancellationType { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ChargesOnStrataCommonProperty" /> class.
         /// </summary>
@@ -134,8 +142,6 @@ namespace Pims.Ltsa.Models
             this.ChargeRelease = chargeRelease;
         }
 
-
-
         /// <summary>
         /// Date and Time when the Charge status was changed from Pending to Registered.  This data is only for internal purposes.
         /// </summary>
@@ -151,27 +157,27 @@ namespace Pims.Ltsa.Models
         public bool? InterAlia { get; set; }
 
         /// <summary>
-        /// Charge Number
+        /// Charge Number.
         /// </summary>
-        /// <value>Charge Number</value>
+        /// <value>Charge Number.</value>
         [DataMember(Name = "chargeNumber", EmitDefaultValue = false)]
         public string ChargeNumber { get; set; }
 
         /// <summary>
-        /// Charge remarks
+        /// Charge remarks.
         /// </summary>
-        /// <value>Charge remarks</value>
+        /// <value>Charge remarks.</value>
         [DataMember(Name = "chargeRemarks", EmitDefaultValue = false)]
         public string ChargeRemarks { get; set; }
 
         /// <summary>
-        /// Gets or Sets Charge
+        /// Gets or Sets Charge.
         /// </summary>
         [DataMember(Name = "charge", EmitDefaultValue = false)]
         public Charge Charge { get; set; }
 
         /// <summary>
-        /// Gets or Sets ChargeRelease
+        /// Gets or Sets ChargeRelease.
         /// </summary>
         [DataMember(Name = "chargeRelease", EmitDefaultValue = false)]
         public ChargeRelease ChargeRelease { get; set; }

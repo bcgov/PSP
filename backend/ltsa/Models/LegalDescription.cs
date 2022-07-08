@@ -11,11 +11,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// LegalDescription
+    /// LegalDescription.
     /// </summary>
     [DataContract]
     public partial class LegalDescription
@@ -42,20 +41,20 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Full legal description
+        /// Full legal description.
         /// </summary>
-        /// <value>Full legal description</value>
+        /// <value>Full legal description.</value>
         [DataMember(Name = "fullLegalDescription", EmitDefaultValue = false)]
         public string FullLegalDescription { get; set; }
 
         /// <summary>
-        /// Gets or Sets SubdividedShortLegals
+        /// Gets or Sets SubdividedShortLegals.
         /// </summary>
         [DataMember(Name = "subdividedShortLegals", EmitDefaultValue = false)]
         public List<SubdividedShortLegalDescription> SubdividedShortLegals { get; set; }
 
         /// <summary>
-        /// Gets or Sets UnsubdividedShortLegals
+        /// Gets or Sets UnsubdividedShortLegals.
         /// </summary>
         [DataMember(Name = "unsubdividedShortLegals", EmitDefaultValue = false)]
         public List<UnsubdividedShortLegalDescription> UnsubdividedShortLegals { get; set; }

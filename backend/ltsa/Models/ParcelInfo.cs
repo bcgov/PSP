@@ -12,11 +12,10 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// ParcelInfo
+    /// ParcelInfo.
     /// </summary>
     [DataContract]
     public partial class ParcelInfo : IFieldedData
@@ -30,23 +29,27 @@ namespace Pims.Ltsa.Models
         public enum StatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum ACTIVE for value: ACTIVE
             /// </summary>
             [EnumMember(Value = "ACTIVE")]
             ACTIVE = 1,
+
             /// <summary>
             /// Enum INACTIVE for value: INACTIVE
             /// </summary>
             [EnumMember(Value = "INACTIVE")]
-            INACTIVE = 2
+            INACTIVE = 2,
         }
+
         /// <summary>
         /// Indicates the state with respect to Parcel lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to Parcel lifecycle.</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum Status { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ParcelInfo" /> class.
         /// </summary>
@@ -109,42 +112,41 @@ namespace Pims.Ltsa.Models
         [DataMember(Name = "parcelIdentifier", EmitDefaultValue = false)]
         public string ParcelIdentifier { get; set; }
 
-
         /// <summary>
-        /// Count of registered titles on parcel
+        /// Count of registered titles on parcel.
         /// </summary>
-        /// <value>Count of registered titles on parcel</value>
+        /// <value>Count of registered titles on parcel.</value>
         [DataMember(Name = "registeredTitlesCount", EmitDefaultValue = false)]
         public int? RegisteredTitlesCount { get; set; }
 
         /// <summary>
-        /// Count of pending applications
+        /// Count of pending applications.
         /// </summary>
-        /// <value>Count of pending applications</value>
+        /// <value>Count of pending applications.</value>
         [DataMember(Name = "pendingApplicationCount", EmitDefaultValue = false)]
         public int? PendingApplicationCount { get; set; }
 
         /// <summary>
-        /// Miscellaneous Note
+        /// Miscellaneous Note.
         /// </summary>
-        /// <value>Miscellaneous Note</value>
+        /// <value>Miscellaneous Note.</value>
         [DataMember(Name = "miscellaneousNotes", EmitDefaultValue = false)]
         public string MiscellaneousNotes { get; set; }
 
         /// <summary>
-        /// Gets or Sets Tombstone
+        /// Gets or Sets Tombstone.
         /// </summary>
         [DataMember(Name = "tombstone", EmitDefaultValue = false)]
         public ParcelTombstone Tombstone { get; set; }
 
         /// <summary>
-        /// Gets or Sets LegalDescription
+        /// Gets or Sets LegalDescription.
         /// </summary>
         [DataMember(Name = "legalDescription", EmitDefaultValue = false)]
         public LegalDescription LegalDescription { get; set; }
 
         /// <summary>
-        /// Gets or Sets AssociatedPlans
+        /// Gets or Sets AssociatedPlans.
         /// </summary>
         [DataMember(Name = "associatedPlans", EmitDefaultValue = false)]
         public List<AssociatedPlan> AssociatedPlans { get; set; }

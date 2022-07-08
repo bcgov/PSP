@@ -1,6 +1,6 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities.Models
     public abstract class PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The page number.
         /// </summary>
@@ -21,13 +22,14 @@ namespace Pims.Dal.Entities.Models
         public int Quantity { get; set; } = 10;
 
         /// <summary>
-        /// get/set - An array of sorting page conditions (i.e. OrganizationId desc, ClassificationId asc)
+        /// get/set - An array of sorting page conditions (i.e. OrganizationId desc, ClassificationId asc).
         /// </summary>
         /// <value></value>
         public string[] Sort { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PageFilter class.
         /// </summary>
@@ -63,6 +65,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>

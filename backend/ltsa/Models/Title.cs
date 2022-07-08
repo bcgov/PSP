@@ -12,11 +12,10 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Title
+    /// Title.
     /// </summary>
     [DataContract]
     public partial class Title : IFieldedData
@@ -30,23 +29,27 @@ namespace Pims.Ltsa.Models
         public enum TitleStatusEnum
         {
             Unknown = 0,
+
             /// <summary>
             /// Enum REGISTERED for value: REGISTERED
             /// </summary>
             [EnumMember(Value = "REGISTERED")]
             REGISTERED = 1,
+
             /// <summary>
             /// Enum CANCELLED for value: CANCELLED
             /// </summary>
             [EnumMember(Value = "CANCELLED")]
-            CANCELLED = 2
+            CANCELLED = 2,
         }
+
         /// <summary>
         /// Indicates the state with respect to Title lifecycle.
         /// </summary>
         /// <value>Indicates the state with respect to Title lifecycle.</value>
         [DataMember(Name = "titleStatus", EmitDefaultValue = false)]
         public TitleStatusEnum TitleStatus { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Title" /> class.
         /// </summary>
@@ -118,69 +121,68 @@ namespace Pims.Ltsa.Models
             this.Corrections = corrections;
         }
 
-
         /// <summary>
-        /// Gets or Sets TitleIdentifier
+        /// Gets or Sets TitleIdentifier.
         /// </summary>
         [DataMember(Name = "titleIdentifier", EmitDefaultValue = false)]
         public TitleIdentifier TitleIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or Sets Tombstone
+        /// Gets or Sets Tombstone.
         /// </summary>
         [DataMember(Name = "tombstone", EmitDefaultValue = false)]
         public TitleTombstone Tombstone { get; set; }
 
         /// <summary>
-        /// Gets or Sets OwnershipGroups
+        /// Gets or Sets OwnershipGroups.
         /// </summary>
         [DataMember(Name = "ownershipGroups", EmitDefaultValue = false)]
         public List<TitleOwnershipGroup> OwnershipGroups { get; set; }
 
         /// <summary>
-        /// Gets or Sets TaxAuthorities
+        /// Gets or Sets TaxAuthorities.
         /// </summary>
         [DataMember(Name = "taxAuthorities", EmitDefaultValue = false)]
         public List<TaxAuthority> TaxAuthorities { get; set; }
 
         /// <summary>
-        /// Gets or Sets DescriptionsOfLand
+        /// Gets or Sets DescriptionsOfLand.
         /// </summary>
         [DataMember(Name = "descriptionsOfLand", EmitDefaultValue = false)]
         public List<DescriptionOfLand> DescriptionsOfLand { get; set; }
 
         /// <summary>
-        /// Gets or Sets LegalNotationsOnTitle
+        /// Gets or Sets LegalNotationsOnTitle.
         /// </summary>
         [DataMember(Name = "legalNotationsOnTitle", EmitDefaultValue = false)]
         public List<LegalNotationOnTitle> LegalNotationsOnTitle { get; set; }
 
         /// <summary>
-        /// Gets or Sets ChargesOnTitle
+        /// Gets or Sets ChargesOnTitle.
         /// </summary>
         [DataMember(Name = "chargesOnTitle", EmitDefaultValue = false)]
         public List<ChargeOnTitle> ChargesOnTitle { get; set; }
 
         /// <summary>
-        /// Gets or Sets DuplicateCertificatesOfTitle
+        /// Gets or Sets DuplicateCertificatesOfTitle.
         /// </summary>
         [DataMember(Name = "duplicateCertificatesOfTitle", EmitDefaultValue = false)]
         public List<DuplicateCertificate> DuplicateCertificatesOfTitle { get; set; }
 
         /// <summary>
-        /// Gets or Sets TitleTransfersOrDispositions
+        /// Gets or Sets TitleTransfersOrDispositions.
         /// </summary>
         [DataMember(Name = "titleTransfersOrDispositions", EmitDefaultValue = false)]
         public List<TitleTransferDisposition> TitleTransfersOrDispositions { get; set; }
 
         /// <summary>
-        /// Gets or Sets CorrectionsAltos1
+        /// Gets or Sets CorrectionsAltos1.
         /// </summary>
         [DataMember(Name = "correctionsAltos1", EmitDefaultValue = false)]
         public List<Altos1TitleCorrection> CorrectionsAltos1 { get; set; }
 
         /// <summary>
-        /// Gets or Sets Corrections
+        /// Gets or Sets Corrections.
         /// </summary>
         [DataMember(Name = "corrections", EmitDefaultValue = false)]
         public List<TitleCorrection> Corrections { get; set; }

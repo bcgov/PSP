@@ -27,6 +27,7 @@ namespace Pims.Core.Http.Models
         }
 
         #region Properties
+
         /// <summary>
         /// get/set - The access token.
         /// </summary>

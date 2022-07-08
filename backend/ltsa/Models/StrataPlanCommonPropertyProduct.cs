@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// StrataPlanCommonPropertyProduct
+    /// StrataPlanCommonPropertyProduct.
     /// </summary>
     [DataContract]
     public partial class StrataPlanCommonPropertyProduct : ProductParent<StrataPlanCommonProperty>
@@ -22,13 +21,14 @@ namespace Pims.Ltsa.Models
         /// Initializes a new instance of the <see cref="StrataPlanCommonPropertyProduct" /> class.
         /// </summary>
         /// <param name="strataPlanCommonProperty">strataPlanCommonProperty.</param>
-        public StrataPlanCommonPropertyProduct(StrataPlanCommonProperty strataPlanCommonProperty = default, string href = default) : base(href)
+        public StrataPlanCommonPropertyProduct(StrataPlanCommonProperty strataPlanCommonProperty = default, string href = default)
+            : base(href)
         {
             this.StrataPlanCommonProperty = strataPlanCommonProperty;
         }
 
         /// <summary>
-        /// Gets or Sets StrataPlanCommonProperty
+        /// Gets or Sets StrataPlanCommonProperty.
         /// </summary>
         [DataMember(Name = "strataPlanCommonProperty", EmitDefaultValue = false)]
         public StrataPlanCommonProperty StrataPlanCommonProperty { get; set; }

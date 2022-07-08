@@ -15,6 +15,7 @@ namespace Pims.Core.Exceptions
     public class LtsaException : HttpClientRequestException
     {
         #region Properties
+
         /// <summary>
         /// get - Additional detail on the error.
         /// </summary>
@@ -42,7 +43,7 @@ namespace Pims.Core.Exceptions
             {
                 if (error?.ErrorMessages?.Count > 0)
                 {
-                    this.Detail = String.Join(Environment.NewLine, error.ErrorMessages.Select(e => $"\t{e}"));
+                    this.Detail = string.Join(Environment.NewLine, error.ErrorMessages.Select(e => $"\t{e}"));
                 }
             }
             else
@@ -56,7 +57,8 @@ namespace Pims.Core.Exceptions
         /// <param name="message"></param>
         /// <param name="statusCode"></param>
         /// <returns></returns>
-        public LtsaException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message, statusCode)
+        public LtsaException(string message, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+            : base(message, statusCode)
         {
         }
 
@@ -67,7 +69,8 @@ namespace Pims.Core.Exceptions
         /// <param name="innerException"></param>
         /// <param name="statusCode"></param>
         /// <returns></returns>
-        public LtsaException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(message, innerException, statusCode)
+        public LtsaException(string message, Exception innerException, HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
+            : base(message, innerException, statusCode)
         {
         }
 
@@ -76,7 +79,8 @@ namespace Pims.Core.Exceptions
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public LtsaException(HttpResponseMessage response) : base(response)
+        public LtsaException(HttpResponseMessage response)
+            : base(response)
         {
         }
 
@@ -85,10 +89,10 @@ namespace Pims.Core.Exceptions
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public LtsaException(HttpResponseMessage response, Exception innerException) : base(response, innerException)
+        public LtsaException(HttpResponseMessage response, Exception innerException)
+            : base(response, innerException)
         {
         }
-
 
         #endregion
     }

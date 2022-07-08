@@ -13,13 +13,15 @@ namespace Pims.Dal.Entities
         public ICollection<PimsOrganization> GetOrganizations() => PimsAccessRequestOrganizations?.Select(o => o.Organization).ToArray();
         #endregion
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a AccessRequest class.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <param name="status"></param>
-        public PimsAccessRequest(PimsUser user, PimsRole role, PimsAccessRequestStatusType status) : this()
+        public PimsAccessRequest(PimsUser user, PimsRole role, PimsAccessRequestStatusType status)
+            : this()
         {
             this.User = user ?? throw new ArgumentNullException(nameof(user));
             this.UserId = user.Id;

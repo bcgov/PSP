@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Parameteres required for ordering a State Title Certificate
+    /// Parameteres required for ordering a State Title Certificate.
     /// </summary>
     [DataContract]
     public partial class StateTitleCertificateOrderParameters
@@ -47,16 +46,16 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Title number of a registered or pending title
+        /// Title number of a registered or pending title.
         /// </summary>
-        /// <value>Title number of a registered or pending title</value>
+        /// <value>Title number of a registered or pending title.</value>
         [DataMember(Name = "titleNumber", EmitDefaultValue = false)]
         public string TitleNumber { get; set; }
 
         /// <summary>
-        /// Optional application number of a pending application for the title
+        /// Optional application number of a pending application for the title.
         /// </summary>
-        /// <value>Optional application number of a pending application for the title</value>
+        /// <value>Optional application number of a pending application for the title.</value>
         [DataMember(Name = "pendingApplicationNumber", EmitDefaultValue = false)]
         public string PendingApplicationNumber { get; set; }
 
@@ -68,20 +67,20 @@ namespace Pims.Ltsa.Models
         public string LtoClientNumber { get; set; }
 
         /// <summary>
-        /// Name of the recipient to be printed on the STC
+        /// Name of the recipient to be printed on the STC.
         /// </summary>
-        /// <value>Name of the recipient to be printed on the STC</value>
+        /// <value>Name of the recipient to be printed on the STC.</value>
         [DataMember(Name = "recipientName", EmitDefaultValue = false)]
         public string RecipientName { get; set; }
 
         /// <summary>
-        /// Gets or Sets LandTitleDistrictCode
+        /// Gets or Sets LandTitleDistrictCode.
         /// </summary>
         [DataMember(Name = "landTitleDistrictCode", EmitDefaultValue = false)]
         public LandTitleDistrictCode LandTitleDistrictCode { get; set; }
 
         /// <summary>
-        /// Gets or Sets RecipientAddress
+        /// Gets or Sets RecipientAddress.
         /// </summary>
         [DataMember(Name = "recipientAddress", EmitDefaultValue = false)]
         public RecipientAddress RecipientAddress { get; set; }

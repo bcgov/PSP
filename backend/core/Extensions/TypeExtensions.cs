@@ -15,6 +15,7 @@ namespace Pims.Core.Extensions
     public static class TypeExtensions
     {
         #region Variables
+
         /// <summary>
         /// To speed things up so that we don't have to use reflection to gather properties every time we cache them after doing it the first time.
         /// </summary>
@@ -23,6 +24,7 @@ namespace Pims.Core.Extensions
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Creates a basic new instance of the specified type.
         /// </summary>
@@ -204,7 +206,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static MethodInfo FindMethod(this Type type, string name, BindingFlags bindingFlags, params Type[] parameterTypes)
         {
-            if (String.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException($"Argument cannot be null, empty or whitespace.", nameof(name));
             }

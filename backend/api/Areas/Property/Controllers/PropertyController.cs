@@ -29,6 +29,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PropertyController class, initializes it with the specified arguments.
         /// </summary>
@@ -45,6 +46,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the property for the specified unique 'pid'.
         /// </summary>
@@ -95,6 +97,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Concept Endpoints
+
         /// <summary>
         /// Get the property for the specified unique 'pid'.
         /// </summary>

@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class PropertyAnomalyModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Property anomaly id.
         /// </summary>

@@ -1,8 +1,8 @@
-using Pims.Core.Extensions;
-using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 
 namespace Pims.Api.Areas.Reports.Models.Lease
 {
@@ -11,9 +11,9 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         public string Region { get; set; }
         public string Program { get; set; }
         public int AgreementCount { get; set; }
-        public Decimal ActualTotal { get; set; }
-        public Decimal ExpectedTotal { get; set; }
-        public Decimal[] ActualsByMonth { get; set; }
+        public decimal ActualTotal { get; set; }
+        public decimal ExpectedTotal { get; set; }
+        public decimal[] ActualsByMonth { get; set; }
         public AggregatedLeaseModel(IEnumerable<PimsLease> leases, int fiscalYear, string region = null, string program = null)
         {
             

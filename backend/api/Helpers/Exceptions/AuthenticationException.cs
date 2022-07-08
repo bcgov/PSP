@@ -10,6 +10,7 @@ namespace Pims.Api.Helpers.Exceptions
     public class AuthenticationException : Exception
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AuthenticationException object.
         /// </summary>
@@ -21,23 +22,26 @@ namespace Pims.Api.Helpers.Exceptions
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public AuthenticationException(string message) : base(message) { }
+        public AuthenticationException(string message)
+            : base(message) { }
 
         /// <summary>
         /// Creates a new instance of a AuthenticationException object, initializes it with the specified arguments.
-        /// /// </summary>
+        /// ///. </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         /// <returns></returns>
-        public AuthenticationException(string message, Exception innerException) : base(message, innerException) { }
+        public AuthenticationException(string message, Exception innerException)
+            : base(message, innerException) { }
 
         /// <summary>
         /// Creates a new instance of a AuthenticationException object, initializes it with the specified arguments.
-        /// /// </summary>
+        /// ///. </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected AuthenticationException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected AuthenticationException(SerializationInfo info, StreamingContext context)
+            : base(info, context) { }
         #endregion
     }
 }

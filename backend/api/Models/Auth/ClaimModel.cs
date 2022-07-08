@@ -6,6 +6,7 @@ namespace Pims.Api.Models.Auth
     public class ClaimModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The claim name.
         /// </summary>
@@ -20,6 +21,7 @@ namespace Pims.Api.Models.Auth
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ClaimModel object.
         /// </summary>

@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +10,6 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Notes.Controllers
 {
@@ -30,6 +30,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a NoteController class, initializes it with the specified arguments.
         /// </summary>

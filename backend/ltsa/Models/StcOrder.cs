@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// StcOrder
+    /// StcOrder.
     /// </summary>
     [DataContract]
     public partial class StcOrder : OrderParent<IFieldedData>
@@ -28,7 +27,7 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Gets or Sets ProductOrderParameters
+        /// Gets or Sets ProductOrderParameters.
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public StateTitleCertificateOrderParameters ProductOrderParameters { get; set; }

@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
     public class OrganizationLinkModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The organization's id.
         /// </summary>

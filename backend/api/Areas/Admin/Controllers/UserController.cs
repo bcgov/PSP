@@ -1,3 +1,4 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,6 @@ using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using EModel = Pims.Dal.Entities.Models;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
@@ -29,6 +29,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
@@ -42,6 +43,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// GET - Returns a paged array of users from the datasource.
         /// </summary>

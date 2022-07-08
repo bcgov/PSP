@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// SubdividedShortLegalDescription
+    /// SubdividedShortLegalDescription.
     /// </summary>
     [DataContract]
     public partial class SubdividedShortLegalDescription
@@ -73,107 +72,107 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Plan
+        /// Plan.
         /// </summary>
-        /// <value>Plan</value>
+        /// <value>Plan.</value>
         [DataMember(Name = "planNumber1", EmitDefaultValue = false)]
         public string PlanNumber1 { get; set; }
 
         /// <summary>
-        /// Township/Townsite
+        /// Township/Townsite.
         /// </summary>
-        /// <value>Township/Townsite</value>
+        /// <value>Township/Townsite.</value>
         [DataMember(Name = "townshipOrTownSite2", EmitDefaultValue = false)]
         public string TownshipOrTownSite2 { get; set; }
 
         /// <summary>
-        /// Range
+        /// Range.
         /// </summary>
-        /// <value>Range</value>
+        /// <value>Range.</value>
         [DataMember(Name = "range3", EmitDefaultValue = false)]
         public string Range3 { get; set; }
 
         /// <summary>
-        /// Block
+        /// Block.
         /// </summary>
-        /// <value>Block</value>
+        /// <value>Block.</value>
         [DataMember(Name = "block4", EmitDefaultValue = false)]
         public string Block4 { get; set; }
 
         /// <summary>
-        /// Subdivision
+        /// Subdivision.
         /// </summary>
-        /// <value>Subdivision</value>
+        /// <value>Subdivision.</value>
         [DataMember(Name = "subdivision5", EmitDefaultValue = false)]
         public string Subdivision5 { get; set; }
 
         /// <summary>
-        /// District Lot/Lot/Sublot
+        /// District Lot/Lot/Sublot.
         /// </summary>
-        /// <value>District Lot/Lot/Sublot</value>
+        /// <value>District Lot/Lot/Sublot.</value>
         [DataMember(Name = "lotOrDistrictLotOrSubLot6", EmitDefaultValue = false)]
         public string LotOrDistrictLotOrSubLot6 { get; set; }
 
         /// <summary>
-        /// Subdivision
+        /// Subdivision.
         /// </summary>
-        /// <value>Subdivision</value>
+        /// <value>Subdivision.</value>
         [DataMember(Name = "subdivision7", EmitDefaultValue = false)]
         public string Subdivision7 { get; set; }
 
         /// <summary>
-        /// Lot/Parcel
+        /// Lot/Parcel.
         /// </summary>
-        /// <value>Lot/Parcel</value>
+        /// <value>Lot/Parcel.</value>
         [DataMember(Name = "lotOrParcel8", EmitDefaultValue = false)]
         public string LotOrParcel8 { get; set; }
 
         /// <summary>
-        /// Section
+        /// Section.
         /// </summary>
-        /// <value>Section</value>
+        /// <value>Section.</value>
         [DataMember(Name = "section9", EmitDefaultValue = false)]
         public string Section9 { get; set; }
 
         /// <summary>
-        /// Quadrant
+        /// Quadrant.
         /// </summary>
-        /// <value>Quadrant</value>
+        /// <value>Quadrant.</value>
         [DataMember(Name = "quadrant10", EmitDefaultValue = false)]
         public string Quadrant10 { get; set; }
 
         /// <summary>
-        /// Block/Lot
+        /// Block/Lot.
         /// </summary>
-        /// <value>Block/Lot</value>
+        /// <value>Block/Lot.</value>
         [DataMember(Name = "blockOrLot11", EmitDefaultValue = false)]
         public string BlockOrLot11 { get; set; }
 
         /// <summary>
-        /// Lot/Parcel
+        /// Lot/Parcel.
         /// </summary>
-        /// <value>Lot/Parcel</value>
+        /// <value>Lot/Parcel.</value>
         [DataMember(Name = "lotOrParcel12", EmitDefaultValue = false)]
         public string LotOrParcel12 { get; set; }
 
         /// <summary>
-        /// Parcel/Block
+        /// Parcel/Block.
         /// </summary>
-        /// <value>Parcel/Block</value>
+        /// <value>Parcel/Block.</value>
         [DataMember(Name = "parcelOrBlock13", EmitDefaultValue = false)]
         public string ParcelOrBlock13 { get; set; }
 
         /// <summary>
-        /// Parcel Short Legal obtained by concatenating all previous Short Legal search fields
+        /// Parcel Short Legal obtained by concatenating all previous Short Legal search fields.
         /// </summary>
-        /// <value>Parcel Short Legal obtained by concatenating all previous Short Legal search fields</value>
+        /// <value>Parcel Short Legal obtained by concatenating all previous Short Legal search fields.</value>
         [DataMember(Name = "concatShortLegal", EmitDefaultValue = false)]
         public string ConcatShortLegal { get; set; }
 
         /// <summary>
-        /// Marginal Notes
+        /// Marginal Notes.
         /// </summary>
-        /// <value>Marginal Notes</value>
+        /// <value>Marginal Notes.</value>
         [DataMember(Name = "marginalNotes", EmitDefaultValue = false)]
         public string MarginalNotes { get; set; }
     }

@@ -1,6 +1,6 @@
-using Pims.Core.Converters;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Pims.Core.Converters;
 
 namespace Pims.Geocoder.Models
 {

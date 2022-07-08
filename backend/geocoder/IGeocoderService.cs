@@ -1,7 +1,7 @@
-using Pims.Geocoder.Models;
-using Pims.Geocoder.Parameters;
 using System;
 using System.Threading.Tasks;
+using Pims.Geocoder.Models;
+using Pims.Geocoder.Parameters;
 
 namespace Pims.Geocoder
 {

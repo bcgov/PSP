@@ -18,7 +18,8 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <param name="personRepository"></param>
-        public PersonService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IPersonRepository personRepository) : base(user, logger)
+        public PersonService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IPersonRepository personRepository)
+            : base(user, logger)
         {
             _personRepository = personRepository;
         }

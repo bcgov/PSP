@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Parameters required for a title order
+    /// Parameters required for a title order.
     /// </summary>
     [DataContract]
     public partial class TitleOrderParameters
@@ -49,22 +48,22 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Title number of the title to be ordered
+        /// Title number of the title to be ordered.
         /// </summary>
-        /// <value>Title number of the title to be ordered</value>
+        /// <value>Title number of the title to be ordered.</value>
         [DataMember(Name = "titleNumber", EmitDefaultValue = false)]
         public string TitleNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets LandTitleDistrictCode
+        /// Gets or Sets LandTitleDistrictCode.
         /// </summary>
         [DataMember(Name = "landTitleDistrictCode", EmitDefaultValue = false)]
         public LandTitleDistrictCode LandTitleDistrictCode { get; set; }
 
         /// <summary>
-        /// Indicate whether to include cancelled charges, legal notations and corrections on the title
+        /// Indicate whether to include cancelled charges, legal notations and corrections on the title.
         /// </summary>
-        /// <value>Indicate whether to include cancelled charges, legal notations and corrections on the title</value>
+        /// <value>Indicate whether to include cancelled charges, legal notations and corrections on the title.</value>
         [DataMember(Name = "includeCancelledInfo", EmitDefaultValue = false)]
         public bool? IncludeCancelledInfo { get; set; }
     }

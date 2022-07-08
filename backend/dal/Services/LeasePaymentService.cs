@@ -1,9 +1,9 @@
+using System;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Security.Claims;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
 namespace Pims.Dal.Services

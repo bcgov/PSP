@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsResearchPurposeType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify research file purpose type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PimsResearchPurposeType class.
         /// </summary>
         /// <param name="id"></param>PimsResearchPurposeType
-        public PimsResearchPurposeType(string id) : this()
+        public PimsResearchPurposeType(string id)
+            : this()
         {
             Id = id;
         }

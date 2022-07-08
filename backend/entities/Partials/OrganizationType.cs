@@ -7,6 +7,7 @@ namespace Pims.Dal.Entities
     public partial class PimsOrganizationType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify organization type.
         /// </summary>
@@ -15,11 +16,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a OrganizationType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsOrganizationType(string id) : this()
+        public PimsOrganizationType(string id)
+            : this()
         {
             Id = id;
         }

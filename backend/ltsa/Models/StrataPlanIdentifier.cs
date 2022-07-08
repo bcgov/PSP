@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// StrataPlanIdentifier
+    /// StrataPlanIdentifier.
     /// </summary>
     [DataContract]
     public partial class StrataPlanIdentifier
@@ -37,7 +36,7 @@ namespace Pims.Ltsa.Models
         public string StrataPlanNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets LandTitleDistrict
+        /// Gets or Sets LandTitleDistrict.
         /// </summary>
         [DataMember(Name = "landTitleDistrict", EmitDefaultValue = false)]
         public LandTitleDistrict LandTitleDistrict { get; set; }

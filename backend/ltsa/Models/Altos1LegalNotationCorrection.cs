@@ -11,11 +11,10 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Altos1LegalNotationCorrection
+    /// Altos1LegalNotationCorrection.
     /// </summary>
     [DataContract]
     public partial class Altos1LegalNotationCorrection
@@ -80,44 +79,44 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Correction number
+        /// Correction number.
         /// </summary>
-        /// <value>Correction number</value>
+        /// <value>Correction number.</value>
         [DataMember(Name = "number", EmitDefaultValue = false)]
         public string Number { get; set; }
 
         /// <summary>
-        /// Free text
+        /// Free text.
         /// </summary>
-        /// <value>Free text</value>
+        /// <value>Free text.</value>
         [DataMember(Name = "referenceDescription", EmitDefaultValue = false)]
         public string ReferenceDescription { get; set; }
 
         /// <summary>
-        /// Entered date and time
+        /// Entered date and time.
         /// </summary>
-        /// <value>Entered date and time</value>
+        /// <value>Entered date and time.</value>
         [DataMember(Name = "enteredDate", EmitDefaultValue = false)]
         public DateTime? EnteredDate { get; set; }
 
         /// <summary>
-        /// Correction date and time
+        /// Correction date and time.
         /// </summary>
-        /// <value>Correction date and time</value>
+        /// <value>Correction date and time.</value>
         [DataMember(Name = "correctionDate", EmitDefaultValue = false)]
         public DateTime? CorrectionDate { get; set; }
 
         /// <summary>
-        /// Previous correction number
+        /// Previous correction number.
         /// </summary>
-        /// <value>Previous correction number</value>
+        /// <value>Previous correction number.</value>
         [DataMember(Name = "previousCorrectionNumber", EmitDefaultValue = false)]
         public string PreviousCorrectionNumber { get; set; }
 
         /// <summary>
-        /// Charge correction text
+        /// Charge correction text.
         /// </summary>
-        /// <value>Charge correction text</value>
+        /// <value>Charge correction text.</value>
         [DataMember(Name = "correctionText", EmitDefaultValue = false)]
         public string CorrectionText { get; set; }
     }

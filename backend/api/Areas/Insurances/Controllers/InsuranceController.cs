@@ -27,6 +27,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a InsuranceController class, initializes it with the specified arguments.
         /// </summary>
@@ -41,6 +42,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Updates a list of insurances for a lease.
         /// </summary>

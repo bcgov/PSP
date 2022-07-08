@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Hosting;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Pims.Api.Models.Health
 {
@@ -9,6 +9,7 @@ namespace Pims.Api.Models.Health
     public class EnvModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The environment name.
         /// </summary>
@@ -35,6 +36,7 @@ namespace Pims.Api.Models.Health
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a EnvModel object.
         /// </summary>

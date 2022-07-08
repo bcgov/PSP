@@ -11,11 +11,10 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// TitleTransferDisposition
+    /// TitleTransferDisposition.
     /// </summary>
     [DataContract]
     public partial class TitleTransferDisposition
@@ -54,28 +53,28 @@ namespace Pims.Ltsa.Models
         public string Disposition { get; set; }
 
         /// <summary>
-        /// The date the disposition was entered
+        /// The date the disposition was entered.
         /// </summary>
-        /// <value>The date the disposition was entered</value>
+        /// <value>The date the disposition was entered.</value>
         [DataMember(Name = "dispositionDate", EmitDefaultValue = false)]
         public DateTime? DispositionDate { get; set; }
 
         /// <summary>
-        /// To title acceptance data and time
+        /// To title acceptance data and time.
         /// </summary>
-        /// <value>To title acceptance data and time</value>
+        /// <value>To title acceptance data and time.</value>
         [DataMember(Name = "acceptanceDate", EmitDefaultValue = false)]
         public DateTime? AcceptanceDate { get; set; }
 
         /// <summary>
-        /// Title Number of the To Title
+        /// Title Number of the To Title.
         /// </summary>
-        /// <value>Title Number of the To Title</value>
+        /// <value>Title Number of the To Title.</value>
         [DataMember(Name = "titleNumber", EmitDefaultValue = false)]
         public string TitleNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets LandLandDistrict
+        /// Gets or Sets LandLandDistrict.
         /// </summary>
         [DataMember(Name = "landLandDistrict", EmitDefaultValue = false)]
         public LandTitleDistrict LandLandDistrict { get; set; }

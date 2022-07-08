@@ -10,11 +10,10 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// Parameters required for ordering a Document or Plan
+    /// Parameters required for ordering a Document or Plan.
     /// </summary>
     [DataContract]
     public partial class DocumentOrPlanOrderParameters
@@ -51,16 +50,16 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Document or plan number # Note: All plan numbers must include the plan’s prefix and/or suffix 
+        /// Document or plan number # Note: All plan numbers must include the plan’s prefix and/or suffix. 
         /// </summary>
-        /// <value>Document or plan number # Note: All plan numbers must include the plan’s prefix and/or suffix </value>
+        /// <value>Document or plan number # Note: All plan numbers must include the plan’s prefix and/or suffix. </value>
         [DataMember(Name = "docOrPlanNumber", EmitDefaultValue = false)]
         public string DocOrPlanNumber { get; set; }
 
         /// <summary>
-        /// Optional remarks that describe the order
+        /// Optional remarks that describe the order.
         /// </summary>
-        /// <value>Optional remarks that describe the order</value>
+        /// <value>Optional remarks that describe the order.</value>
         [DataMember(Name = "orderRemarks", EmitDefaultValue = false)]
         public string OrderRemarks { get; set; }
 
@@ -72,7 +71,7 @@ namespace Pims.Ltsa.Models
         public bool? IncludePlanCertificationPage { get; set; }
 
         /// <summary>
-        /// Gets or Sets DocumentDistrictCode
+        /// Gets or Sets DocumentDistrictCode.
         /// </summary>
         [DataMember(Name = "documentDistrictCode", EmitDefaultValue = false)]
         public LandTitleDistrictCode DocumentDistrictCode { get; set; }

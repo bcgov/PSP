@@ -1,6 +1,6 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities.Models
     public class OrganizationFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The page number.
         /// </summary>
@@ -31,22 +32,23 @@ namespace Pims.Dal.Entities.Models
         public long ParentId { get; set; }
 
         /// <summary>
-        /// get/set - account status
+        /// get/set - account status.
         /// </summary>
         public bool? IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The organization ID
+        /// get/set - The organization ID.
         /// </summary>
         public long? Id { get; set; }
 
         /// <summary>
-        /// get/set - An array of sorting conditions (i.e. FirstName desc, LastName asc)
+        /// get/set - An array of sorting conditions (i.e. FirstName desc, LastName asc).
         /// </summary>
         public string[] Sort { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a OrganizationFilter class.
         /// </summary>
@@ -73,7 +75,8 @@ namespace Pims.Dal.Entities.Models
         /// <param name="isDisabled"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public OrganizationFilter(int page, int quantity, long id, string name, long parentId, bool? isDisabled, string[] sort) : this(page, quantity)
+        public OrganizationFilter(int page, int quantity, long id, string name, long parentId, bool? isDisabled, string[] sort)
+            : this(page, quantity)
         {
             this.Name = name;
             this.ParentId = parentId;

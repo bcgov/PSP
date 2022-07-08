@@ -8,6 +8,7 @@ namespace Pims.Api.Models.Contact
     public class ContactMethodModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the contact method.
         /// </summary>

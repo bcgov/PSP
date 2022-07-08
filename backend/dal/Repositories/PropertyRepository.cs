@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
     public class PropertyRepository : BaseRepository<PimsProperty>, IPropertyRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PropertyRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -31,6 +32,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Returns the total number of properties in the database.
         /// </summary>
@@ -212,7 +214,6 @@ namespace Pims.Dal.Repositories
 
             return property;
         }
-
 
         /// <summary>
         /// Update the passed property in the database assuming the user has the required claims.

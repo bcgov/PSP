@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
     public class ContactRepository : BaseRepository, IContactRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ContactService, and initializes it with the specified arguments.
         /// </summary>
@@ -26,10 +27,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ContactRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ContactRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public ContactRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ContactRepository> logger, IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Returns the total number of contacts in the database.
         /// </summary>
@@ -62,7 +65,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get a contact with the given id.
         /// </summary>
-        /// <param name="id">The id of the contact to retrieve</param>
+        /// <param name="id">The id of the contact to retrieve.</param>
         /// <returns></returns>
         public PimsContactMgrVw Get(string id)
         {
@@ -105,7 +108,7 @@ namespace Pims.Dal.Repositories
         /// Generate an SQL statement for the specified 'filter'.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="totalItems">To hold and return total actual items</param>
+        /// <param name="totalItems">To hold and return total actual items.</param>
         /// <returns></returns>
         private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter, out int totalItems)
         {

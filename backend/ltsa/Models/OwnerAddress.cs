@@ -9,11 +9,10 @@
  */
 using System.Runtime.Serialization;
 
-
 namespace Pims.Ltsa.Models
 {
     /// <summary>
-    /// OwnerAddress
+    /// OwnerAddress.
     /// </summary>
     [DataContract]
     public partial class OwnerAddress
@@ -40,50 +39,50 @@ namespace Pims.Ltsa.Models
         }
 
         /// <summary>
-        /// Mailing address destination
+        /// Mailing address destination.
         /// </summary>
-        /// <value>Mailing address destination</value>
+        /// <value>Mailing address destination.</value>
         [DataMember(Name = "addressLine1", EmitDefaultValue = false)]
         public string AddressLine1 { get; set; }
 
         /// <summary>
-        /// Mailing address destination
+        /// Mailing address destination.
         /// </summary>
-        /// <value>Mailing address destination</value>
+        /// <value>Mailing address destination.</value>
         [DataMember(Name = "addressLine2", EmitDefaultValue = false)]
         public string AddressLine2 { get; set; }
 
         /// <summary>
-        /// City
+        /// City.
         /// </summary>
-        /// <value>City</value>
+        /// <value>City.</value>
         [DataMember(Name = "city", EmitDefaultValue = false)]
         public string City { get; set; }
 
         /// <summary>
-        /// Gets or Sets Province
+        /// Gets or Sets Province.
         /// </summary>
         [DataMember(Name = "province", EmitDefaultValue = false)]
         public CanadianProvince? Province { get; set; }
 
         /// <summary>
-        /// Non-Canadian Province / geographic division
+        /// Non-Canadian Province / geographic division.
         /// </summary>
-        /// <value>Non-Canadian Province / geographic division</value>
+        /// <value>Non-Canadian Province / geographic division.</value>
         [DataMember(Name = "provinceName", EmitDefaultValue = false)]
         public string ProvinceName { get; set; }
 
         /// <summary>
-        /// Country
+        /// Country.
         /// </summary>
-        /// <value>Country</value>
+        /// <value>Country.</value>
         [DataMember(Name = "country", EmitDefaultValue = false)]
         public string Country { get; set; }
 
         /// <summary>
-        /// Postal Code
+        /// Postal Code.
         /// </summary>
-        /// <value>Postal Code</value>
+        /// <value>Postal Code.</value>
         [DataMember(Name = "postalCode", EmitDefaultValue = false)]
         public string PostalCode { get; set; }
 

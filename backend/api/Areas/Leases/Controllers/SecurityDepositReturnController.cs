@@ -31,6 +31,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SecurityDepositReturnController class, initializes it with the specified arguments.
         /// </summary>
@@ -45,6 +46,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Adds the specified return deposit to the lease.
         /// </summary>
