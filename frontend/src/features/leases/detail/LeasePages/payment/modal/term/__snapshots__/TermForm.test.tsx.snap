@@ -256,6 +256,7 @@ exports[`TermForm component renders as expected 1`] = `
         <span
           class="tooltip-icon"
           data-testid="tooltip-icon"
+          id="paymentDueDate-tooltip"
         >
           <svg
             class="tooltip-icon"
@@ -620,6 +621,7 @@ exports[`TermForm component renders with data as expected 1`] = `
         <span
           class="tooltip-icon"
           data-testid="tooltip-icon"
+          id="paymentDueDate-tooltip"
         >
           <svg
             class="tooltip-icon"

@@ -82,6 +82,18 @@ namespace Pims.Dal.Security
         ResearchFileEdit = 25,
 
         [Display(GroupName = "researchfile", Name = "researchfile-delete", Description = "Can delete existing research files.")]
-        ResearchFileDelete = 26
+        ResearchFileDelete = 26,
+
+        [Display(GroupName = "note", Name = "note-view", Description = "Can view notes.")]
+        NoteView = 27,
+
+        [Display(GroupName = "note", Name = "note-add", Description = "Can add new notes.")]
+        NoteAdd = 28,
+
+        [Display(GroupName = "note", Name = "note-edit", Description = "Can update existing notes.")]
+        NoteEdit = 29,
+
+        [Display(GroupName = "note", Name = "note-delete", Description = "Can delete existing notes.")]
+        NoteDelete = 30,
     }
 }

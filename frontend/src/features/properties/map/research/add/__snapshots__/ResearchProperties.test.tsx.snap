@@ -842,6 +842,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="property-selector-tooltip"
             >
               <svg
                 class="tooltip-icon"
