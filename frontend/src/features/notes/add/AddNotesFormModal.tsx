@@ -1,6 +1,6 @@
 import { TextArea } from 'components/common/form';
 import { GenericModal } from 'components/common/GenericModal';
-import { Formik, FormikHelpers, FormikProps, useFormikContext } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
 import { EntityNoteForm } from './models';
@@ -28,7 +28,6 @@ export interface IAddNotesFormModalProps {
 }
 
 export const AddNotesFormModal: React.FC<IAddNotesFormModalProps> = props => {
-  const formikProps = useFormikContext<EntityNoteForm>();
   const {
     isOpened,
     closeModal,
@@ -46,7 +45,7 @@ export const AddNotesFormModal: React.FC<IAddNotesFormModalProps> = props => {
       initialValues={initialValues}
       onSubmit={onSubmit}
     >
-      {() => (
+      {formikProps => (
         <StyledModal
           display={isOpened}
           title="Notes"
