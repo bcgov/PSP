@@ -34,12 +34,12 @@ export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
 
   return (
     <AddNotesFormModal
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
       isOpened={props.isOpened}
       openModal={props.openModal}
       closeModal={props.closeModal}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
       onSaveClick={onSaveClick}
       onCancelClick={onCancelClick}
     />

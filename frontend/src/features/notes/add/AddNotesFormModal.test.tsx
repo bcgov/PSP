@@ -58,14 +58,14 @@ describe('AddNotesFormModal component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', async () => {
+  it('renders as expected', () => {
     setup({ initialValues });
     expect(document.body).toMatchSnapshot();
   });
 
-  it('renders the Note field', async () => {
-    const { findByLabelText } = setup({ initialValues });
-    const textarea = await findByLabelText(/Type a note/i);
+  it('renders the Note field', () => {
+    const { getByLabelText } = setup({ initialValues });
+    const textarea = getByLabelText(/Type a note/i);
 
     expect(textarea).toBeVisible();
     expect(textarea.tagName).toBe('TEXTAREA');
