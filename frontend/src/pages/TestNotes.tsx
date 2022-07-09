@@ -24,7 +24,7 @@ export const TestNotes: React.FC = () => {
           setShowNotes={setShow}
         />
 
-        <NoteListView type={NoteTypes.Activity} />
+        <NoteListView type={NoteTypes.Activity} entityId={1} />
       </Row>
     </Container>
   );

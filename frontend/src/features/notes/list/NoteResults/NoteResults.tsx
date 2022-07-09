@@ -1,6 +1,8 @@
 import { IconButton } from 'components/common/buttons';
 import { ColumnWithProps, DateCell, Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
+import { Claims } from 'constants/claims';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Note } from 'models/api/Note';
 import { MdDelete } from 'react-icons/md';
 import { CellProps } from 'react-table';
@@ -15,6 +17,7 @@ export interface INoteResultProps {
 }
 
 export function NoteResults(props: INoteResultProps) {
+  const { hasClaim } = useKeycloakWrapper();
   const { results, setSort, sort, ...rest } = props;
 
   const columns: ColumnWithProps<Api_Note>[] = [
@@ -53,15 +56,17 @@ export function NoteResults(props: INoteResultProps) {
       maxWidth: 20,
       Cell: (cellProps: CellProps<Api_Note>) => {
         return (
-          <IconButton
-            title="Delete Note"
-            variant="light"
-            onClick={() => {
-              props.onDelete(cellProps.row.original);
-            }}
-          >
-            <MdDelete size={22} />
-          </IconButton>
+          hasClaim(Claims.NOTE_DELETE) && (
+            <IconButton
+              title="Delete Note"
+              variant="light"
+              onClick={() => {
+                props.onDelete(cellProps.row.original);
+              }}
+            >
+              <MdDelete size={22} />
+            </IconButton>
+          )
         );
       },
     },
@@ -70,7 +75,6 @@ export function NoteResults(props: INoteResultProps) {
     <Table<Api_Note>
       name="notesTable"
       manualSortBy={false}
-      pageSize={-1}
       lockPageSize={true}
       manualPagination={false}
       totalItems={results.length}

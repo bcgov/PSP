@@ -1,10 +1,14 @@
+import { Claims } from 'constants/claims';
 import { noop } from 'lodash';
-import { Api_Note } from 'models/api/Note';
-import { render, RenderOptions } from 'utils/test-utils';
+import { mockNotesResponse } from 'mocks/mockNoteResponses';
+import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { INoteResultProps, NoteResults } from './NoteResults';
 
 const setSort = jest.fn();
+
+// mock auth library
+jest.mock('@react-keycloak/web');
 
 // render component under test
 const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { results: [] }) => {
@@ -27,18 +31,14 @@ const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { resu
   };
 };
 
-const mockResults: Api_Note[] = [
-  { note: 'Note 1', appCreateTimestamp: '10-Jan-2022', appLastUpdateUserid: 'test user1', id: 1 },
-  { note: 'Note 2', appCreateTimestamp: '10-Jan-2022', appLastUpdateUserid: 'test user2', id: 2 },
-];
-
-describe('Lease Search Results Table', () => {
+describe('Note Results Table', () => {
   beforeEach(() => {
+    mockKeycloak({ claims: [Claims.NOTE_DELETE] });
     setSort.mockClear();
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup({ results: mockResults });
+    const { asFragment } = setup({ results: mockNotesResponse() });
     expect(asFragment()).toMatchSnapshot();
   });
 

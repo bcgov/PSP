@@ -1,5 +1,5 @@
-using Pims.Dal.Entities;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -9,7 +9,7 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long id);
         int Count();
 
-        IEnumerable<PimsNote> GetActivityNotes();
+        IEnumerable<PimsNote> GetActivityNotes(long entityId);
 
         void DeleteActivityNotes(int noteId);
     }
