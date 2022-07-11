@@ -2,6 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
+import { mockEntityNote } from 'mocks/mockNoteResponses';
 import { Api_EntityNote } from 'models/api/Note';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
@@ -87,7 +88,7 @@ describe('AddNotesContainer component', () => {
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.type(textarea, form.note.note);
 
-    mockAxios.onPost().reply(200, { id: 1 } as Api_EntityNote);
+    mockAxios.onPost().reply(200, mockEntityNote(1));
     userEvent.click(getSaveButton());
 
     expect(closeModal).toBeCalled();
