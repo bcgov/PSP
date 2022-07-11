@@ -38,7 +38,8 @@ namespace Pims.Dal.Repositories
         /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
         /// <param name="entity">The entity to add to the datastore.</param>
         /// <returns>The created association.</returns>
-        public T Add<T>(T entity) where T : class
+        public T Add<T>(T entity)
+            where T : class
         {
             entity.ThrowIfNull(nameof(entity));
             this.Context.Add<T>(entity);
@@ -51,7 +52,8 @@ namespace Pims.Dal.Repositories
         /// <typeparam name="T">The entity type - e.g. PimsActivityInstanceNote.</typeparam>
         /// <param name="predicate">The predicate to filter all notes - e.g. where parentId == parent.Id.</param>
         /// <returns>The entity-notes associations.</returns>
-        public IEnumerable<T> GetAll<T>(Func<T, bool> predicate) where T : class
+        public IEnumerable<T> GetAll<T>(Func<T, bool> predicate)
+            where T : class
         {
             predicate.ThrowIfNull(nameof(predicate));
             return this.Context.Set<T>().AsNoTracking().Where(predicate).ToArray();

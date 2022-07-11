@@ -18,10 +18,10 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public abstract class MayanBaseRepository
     {
-        private const string MayanConfigSectionKey = "Mayan";
         protected readonly MayanConfig _config;
         protected readonly IHttpClientFactory _httpClientFactory;
         protected readonly ILogger _logger;
+        private const string MayanConfigSectionKey = "Mayan";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MayanBaseRepository"/> class.

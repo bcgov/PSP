@@ -41,23 +41,6 @@ namespace Pims.Dal
             _httpContextAccessor = httpContextAccessor;
             _serializerOptions = serializerOptions.Value;
         }
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Configures the DbContext with the specified options.
-        /// </summary>
-        /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.EnableSensitiveDataLogging();
-            }
-
-            base.OnConfiguring(optionsBuilder);
-        }
 
         /// <summary>
         /// Save the entities with who created them or updated them.
@@ -104,6 +87,10 @@ namespace Pims.Dal
             return result;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Deserialize the specified 'json' to the specified type of 'T'.
         /// </summary>
@@ -124,6 +111,20 @@ namespace Pims.Dal
         public string Serialize<T>(T item)
         {
             return JsonSerializer.Serialize(item, _serializerOptions);
+        }
+
+        /// <summary>
+        /// Configures the DbContext with the specified options.
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.EnableSensitiveDataLogging();
+            }
+
+            base.OnConfiguring(optionsBuilder);
         }
         #endregion
     }

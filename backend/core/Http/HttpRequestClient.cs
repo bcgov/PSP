@@ -61,18 +61,6 @@ namespace Pims.Core.Http
         }
 
         /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Deserialize the specified 'response' into the specified type of 'TModel'.
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
@@ -694,6 +682,18 @@ namespace Pims.Core.Http
         public async Task<TModel> DeleteAsync<TModel>(Uri url, HttpContent content = null)
         {
             return await SendAsync<TModel>(url, HttpMethod.Delete, content);
+        }
+
+         /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>

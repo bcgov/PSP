@@ -12,8 +12,8 @@ namespace Pims.Dal.Services
 {
     public class LeaseReportsService : ILeaseReportsService
     {
-        readonly ILeaseRepository _leaseRepository;
-        readonly ClaimsPrincipal _user;
+        private readonly ILeaseRepository _leaseRepository;
+        private readonly ClaimsPrincipal _user;
 
         public LeaseReportsService(ILeaseRepository leaseRepository, ClaimsPrincipal user)
         {
@@ -25,7 +25,7 @@ namespace Pims.Dal.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             DateTime fiscalYearStartDate = fiscalYearStart.ToFiscalYearDate();
-            //fiscal defined as April 01 to March 31 of following year
+            // fiscal defined as April 01 to March 31 of following year
             return _leaseRepository.Get(new Entities.Models.LeaseFilter()
             {
                 ExpiryAfterDate = fiscalYearStartDate,

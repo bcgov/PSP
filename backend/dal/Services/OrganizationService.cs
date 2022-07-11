@@ -10,7 +10,7 @@ namespace Pims.Dal.Services
 {
     public class OrganizationService : BaseService, IOrganizationService
     {
-        readonly Repositories.IOrganizationRepository _organizationRepository;
+        private readonly Repositories.IOrganizationRepository _organizationRepository;
 
         /// <summary>
         /// Creates a new instance of a OrganizationService, and initializes it with the specified arguments.

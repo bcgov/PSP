@@ -13,6 +13,36 @@ namespace Pims.Dal.Helpers.Extensions
     public static class PropertyExtensions
     {
         /// <summary>
+        /// Generate a query for the specified 'filter'.
+        /// Only includes properties that belong to the user's organization or sub-organizations.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="user"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public static IQueryable<Entity.PimsProperty> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        {
+            filter.ThrowIfNull(nameof(filter));
+            filter.ThrowIfNull(nameof(user));
+
+            // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning organization.
+            var query = context.PimsProperties
+                .Include(p => p.Address)
+                .ThenInclude(a => a.RegionCodeNavigation)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.DistrictCodeNavigation)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.ProvinceState)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Country)
+                .AsNoTracking();
+
+            query = query.GenerateCommonPropertyQuery(user, filter);
+
+            return query;
+        }
+
+        /// <summary>
         /// Generate an SQL statement for the specified 'user' and 'filter'.
         /// </summary>
         /// <param name="query"></param>
@@ -51,36 +81,6 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 query = query.OrderBy(p => p.PropertyTypeCode);
             }
-
-            return query;
-        }
-
-        /// <summary>
-        /// Generate a query for the specified 'filter'.
-        /// Only includes properties that belong to the user's organization or sub-organizations.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="user"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public static IQueryable<Entity.PimsProperty> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
-        {
-            filter.ThrowIfNull(nameof(filter));
-            filter.ThrowIfNull(nameof(user));
-
-            // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning organization.
-            var query = context.PimsProperties
-                .Include(p => p.Address)
-                .ThenInclude(a => a.RegionCodeNavigation)
-                .Include(p => p.Address)
-                .ThenInclude(a => a.DistrictCodeNavigation)
-                .Include(p => p.Address)
-                .ThenInclude(a => a.ProvinceState)
-                .Include(p => p.Address)
-                .ThenInclude(a => a.Country)
-                .AsNoTracking();
-
-            query = query.GenerateCommonPropertyQuery(user, filter);
 
             return query;
         }

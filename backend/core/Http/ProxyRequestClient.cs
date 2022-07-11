@@ -38,18 +38,6 @@ namespace Pims.Core.Http
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
-        }
-
         #region Proxy Methods
 
         /// <summary>
@@ -114,6 +102,18 @@ namespace Pims.Core.Http
         public async Task<HttpResponseMessage> ProxyDeleteAsync(HttpRequest request, string url, HttpContent content = null)
         {
             return await ProxySendAsync(request, url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         public short? RegionCode { get; set; }
 
         /// <summary>
-        /// get/set - The status of the research file,. 
+        /// get/set - The status of the research file. 
         /// </summary>
         public string ResearchFileStatusTypeCode { get; set; }
 

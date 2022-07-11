@@ -49,7 +49,9 @@ namespace Pims.Core.Exceptions
                 }
             }
             else
+            {
                 this.Client = client;
+            }
         }
 
         /// <summary>

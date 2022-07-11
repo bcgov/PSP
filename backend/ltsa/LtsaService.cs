@@ -29,11 +29,11 @@ namespace Pims.Ltsa
         private readonly ILogger<ILtsaService> _logger;
         private readonly AsyncRetryPolicy _authPolicy;
 
+        public LtsaOptions Options { get; }
+
         #endregion
         #region Properties
         protected IHttpRequestClient Client { get; }
-
-        public LtsaOptions Options { get; }
         #endregion
 
         #region Constructors
@@ -61,121 +61,6 @@ namespace Pims.Ltsa
                     this.Client.Client?.DefaultRequestHeaders?.Clear();
                     this.Client.Client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {_token.AccessToken}");
                 });
-        }
-        #endregion
-
-        #region methods
-
-        /// <summary>
-        /// Send a request to the specified endpoint.
-        /// </summary>
-        /// <typeparam name="TR"></typeparam>
-        /// <param name="url"></param>
-        /// <param name="method"></param>
-        /// <returns></returns>
-        private async Task<TR> SendAsync<TR>(string url, HttpMethod method)
-        {
-            try
-            {
-                return await _authPolicy.ExecuteAsync(async () => await this.Client.SendAsync<TR>(url, method));
-            }
-            catch (HttpClientRequestException ex)
-            {
-                Error error = await GetLtsaError(ex, url);
-                throw new LtsaException(ex, this.Client, error);
-            }
-        }
-
-        /// <summary>
-        /// Send a request to the specified endpoint.
-        /// Make a request to get an access token if required.
-        /// </summary>
-        /// <typeparam name="TR"></typeparam>
-        /// <typeparam name="TD"></typeparam>
-        /// <param name="url"></param>
-        /// <param name="method"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        private async Task<OrderWrapper<OrderParent<TR>>> SendOrderAsync<TR, TD>(string url, HttpMethod method, TD data) where TR : IFieldedData
-            where TD : class
-        {
-            var orderProcessingPolicy = Policy
-                .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
-                 .WaitAndRetryAsync(Options.MaxRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-
-            try
-            {
-                var response = await _authPolicy.ExecuteAsync(async () => await this.Client.SendJsonAsync<OrderWrapper<OrderParent<TR>>, TD>(url, method, data));
-                if (IsResponseMissingJsonAndProcessing(response))
-                {
-                    response = await _authPolicy.WrapAsync(orderProcessingPolicy).ExecuteAsync(async () => await GetOrderById<TR>(response?.Order?.OrderId));
-                    if (IsResponseMissingJsonAndProcessing(response))
-                    {
-                        throw new LtsaException("Request timed out waiting for ltsa response", HttpStatusCode.RequestTimeout);
-                    }
-                }
-                return response;
-            }
-            catch (HttpClientRequestException ex)
-            {
-                Error error = await GetLtsaError(ex, url);
-                throw new LtsaException(ex, this.Client, error);
-            }
-        }
-
-        private static bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response) where T : IFieldedData
-        {
-            return response?.Order?.Status == OrderParent<T>.StatusEnum.Processing && response?.Order?.OrderedProduct == null;
-        }
-
-        private async Task<Error> GetLtsaError(HttpClientRequestException ex, string url)
-        {
-            Error error = null;
-            if (ex?.Response?.Content != null)
-            {
-                var errorContent = await ex.Response.Content.ReadAsStringAsync();
-                try
-                {
-                    error = JsonSerializer.Deserialize<Error>(errorContent, _jsonSerializerOptions);
-                }
-                catch (JsonException)
-                {
-                    error = new Error(new List<string>() { ex.Message });
-                }
-                _logger.LogError(ex, $"Failed to send/receive request: ${url}");
-            }
-            return error;
-        }
-
-        /// <summary>
-        /// Ensure we have an active access token.
-        /// Make an HTTP request if one is needed.
-        /// </summary>
-        /// <returns></returns>
-        private async Task<TokenModel> RefreshAccessTokenAsync()
-        {
-            //If the refresh token exists, try an refresh the token.
-            if (_token?.RefreshToken != null)
-            {
-                try
-                {
-                    var refreshToken = _token.RefreshToken;
-                    _token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
-                    var response = await _authPolicy.ExecuteAsync(async () => await this.Client.PostJsonAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), new { refreshToken }));
-                    var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
-                    _token = new TokenModel(tokens.AccessToken, tokens.RefreshToken);
-                }
-                catch (HttpClientRequestException ex)
-                {
-                    _logger.LogError(ex, $"Failed to send/receive auth refresh request: ${this.Options.AuthUrl}");
-                    throw new LtsaException(ex.Message, ex, ex.StatusCode.Value);
-                }
-            }
-            else
-            {
-                _token = await GetTokenAsync();
-            }
-            return _token;
         }
 
         /// <summary>
@@ -226,6 +111,10 @@ namespace Pims.Ltsa
             return await SendAsync<TitleSummariesResponse>(url, HttpMethod.Get);
         }
 
+        #endregion
+
+        #region methods
+
         /// <summary>
         /// Post a Title Order using the passed titleNumber and landTitleDistrictCode.
         /// </summary>
@@ -268,7 +157,8 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
+        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId)
+            where T : IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
             return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);
@@ -298,6 +188,120 @@ namespace Pims.Ltsa
                 TitleOrders = titleOrders.Select(titleOrder => titleOrder?.Order),
                 ParcelInfo = parcelInfo.Order,
             };
+        }
+
+        /// <summary>
+        /// Send a request to the specified endpoint.
+        /// </summary>
+        /// <typeparam name="TR"></typeparam>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        private async Task<TR> SendAsync<TR>(string url, HttpMethod method)
+        {
+            try
+            {
+                return await _authPolicy.ExecuteAsync(async () => await this.Client.SendAsync<TR>(url, method));
+            }
+            catch (HttpClientRequestException ex)
+            {
+                Error error = await GetLtsaError(ex, url);
+                throw new LtsaException(ex, this.Client, error);
+            }
+        }
+
+        /// <summary>
+        /// Send a request to the specified endpoint.
+        /// Make a request to get an access token if required.
+        /// </summary>
+        /// <typeparam name="TR"></typeparam>
+        /// <typeparam name="TD"></typeparam>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private async Task<OrderWrapper<OrderParent<TR>>> SendOrderAsync<TR, TD>(string url, HttpMethod method, TD data)
+            where TR : IFieldedData
+            where TD : class
+        {
+            var orderProcessingPolicy = Policy
+                .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
+                 .WaitAndRetryAsync(Options.MaxRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            try
+            {
+                var response = await _authPolicy.ExecuteAsync(async () => await this.Client.SendJsonAsync<OrderWrapper<OrderParent<TR>>, TD>(url, method, data));
+                if (IsResponseMissingJsonAndProcessing(response))
+                {
+                    response = await _authPolicy.WrapAsync(orderProcessingPolicy).ExecuteAsync(async () => await GetOrderById<TR>(response?.Order?.OrderId));
+                    if (IsResponseMissingJsonAndProcessing(response))
+                    {
+                        throw new LtsaException("Request timed out waiting for ltsa response", HttpStatusCode.RequestTimeout);
+                    }
+                }
+                return response;
+            }
+            catch (HttpClientRequestException ex)
+            {
+                Error error = await GetLtsaError(ex, url);
+                throw new LtsaException(ex, this.Client, error);
+            }
+        }
+
+        private static bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response)
+            where T : IFieldedData
+        {
+            return response?.Order?.Status == OrderParent<T>.StatusEnum.Processing && response?.Order?.OrderedProduct == null;
+        }
+
+        private async Task<Error> GetLtsaError(HttpClientRequestException ex, string url)
+        {
+            Error error = null;
+            if (ex?.Response?.Content != null)
+            {
+                var errorContent = await ex.Response.Content.ReadAsStringAsync();
+                try
+                {
+                    error = JsonSerializer.Deserialize<Error>(errorContent, _jsonSerializerOptions);
+                }
+                catch (JsonException)
+                {
+                    error = new Error(new List<string>() { ex.Message });
+                }
+                _logger.LogError(ex, $"Failed to send/receive request: ${url}");
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Ensure we have an active access token.
+        /// Make an HTTP request if one is needed.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<TokenModel> RefreshAccessTokenAsync()
+        {
+            // If the refresh token exists, try an refresh the token.
+            if (_token?.RefreshToken != null)
+            {
+                try
+                {
+                    var refreshToken = _token.RefreshToken;
+                    _token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
+                    var response = await _authPolicy.ExecuteAsync(async () => await this.Client.PostJsonAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), new { refreshToken }));
+                    var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
+                    _token = new TokenModel(tokens.AccessToken, tokens.RefreshToken);
+                }
+                catch (HttpClientRequestException ex)
+                {
+                    _logger.LogError(ex, $"Failed to send/receive auth refresh request: ${this.Options.AuthUrl}");
+                    throw new LtsaException(ex.Message, ex, ex.StatusCode.Value);
+                }
+            }
+            else
+            {
+                _token = await GetTokenAsync();
+            }
+            return _token;
         }
 
         private static int ConvertPID(string pid)

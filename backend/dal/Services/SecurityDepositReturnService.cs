@@ -9,10 +9,10 @@ namespace Pims.Dal.Services
 {
     public class SecurityDepositReturnService : ISecurityDepositReturnService
     {
-        readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
-        readonly ILeaseRepository _leaseRepository;
-        readonly ILeaseService _leaseService;
-        readonly ClaimsPrincipal _user;
+        private readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
+        private readonly ILeaseRepository _leaseRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ClaimsPrincipal _user;
 
         public SecurityDepositReturnService(ISecurityDepositReturnRepository depositReturnRepository, ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {

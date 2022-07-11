@@ -62,7 +62,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPost()]
+        [HttpPost]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]

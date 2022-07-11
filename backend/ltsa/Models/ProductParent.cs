@@ -20,7 +20,8 @@ namespace Pims.Ltsa.Models
     /// ProductParent.
     /// </summary>
     [DataContract]
-    public abstract partial class ProductParent<T> where T : IFieldedData
+    public abstract partial class ProductParent<T>
+        where T : IFieldedData
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductParent" /> class.
