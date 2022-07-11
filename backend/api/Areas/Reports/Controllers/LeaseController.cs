@@ -120,7 +120,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
         /// <summary>
         /// Exports leases aggregated by program and region as an Excel file, only including leases that are part of the passed fiscal year.
-        /// 
+        ///
         /// </summary>
         /// <param name="fiscalYearStart"></param>
         /// <returns></returns>

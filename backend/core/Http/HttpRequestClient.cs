@@ -684,7 +684,7 @@ namespace Pims.Core.Http
             return await SendAsync<TModel>(url, HttpMethod.Delete, content);
         }
 
-         /// <summary>
+        /// <summary>
         /// Dispose the HttpClient.
         /// </summary>
         protected virtual void Dispose(bool disposing)

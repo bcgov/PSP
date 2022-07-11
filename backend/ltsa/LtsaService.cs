@@ -190,6 +190,18 @@ namespace Pims.Ltsa
             };
         }
 
+        private static bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response)
+            where T : IFieldedData
+        {
+            return response?.Order?.Status == OrderParent<T>.StatusEnum.Processing && response?.Order?.OrderedProduct == null;
+        }
+
+        private static int ConvertPID(string pid)
+        {
+            _ = int.TryParse(pid?.Replace("-", string.Empty) ?? string.Empty, out int value);
+            return value;
+        }
+
         /// <summary>
         /// Send a request to the specified endpoint.
         /// </summary>
@@ -248,12 +260,6 @@ namespace Pims.Ltsa
             }
         }
 
-        private static bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response)
-            where T : IFieldedData
-        {
-            return response?.Order?.Status == OrderParent<T>.StatusEnum.Processing && response?.Order?.OrderedProduct == null;
-        }
-
         private async Task<Error> GetLtsaError(HttpClientRequestException ex, string url)
         {
             Error error = null;
@@ -302,12 +308,6 @@ namespace Pims.Ltsa
                 _token = await GetTokenAsync();
             }
             return _token;
-        }
-
-        private static int ConvertPID(string pid)
-        {
-            _ = int.TryParse(pid?.Replace("-", string.Empty) ?? string.Empty, out int value);
-            return value;
         }
 
         #endregion

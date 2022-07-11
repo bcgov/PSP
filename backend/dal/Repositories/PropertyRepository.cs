@@ -64,7 +64,6 @@ namespace Pims.Dal.Repositories
             var properties = query.ToArray();
 
             // TODO: Add optional paging ability to query.
-
             return properties;
         }
 
