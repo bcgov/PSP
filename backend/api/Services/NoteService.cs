@@ -62,7 +62,7 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="type">Note type to determine the type of note to delete.</param>
         /// <param name="noteId">Note id to identify the note to delete</param>
-        public void DeleteNote(NoteType type, int noteId)
+        public void DeleteNote(NoteType type, long noteId)
         {
             switch (type)
             {

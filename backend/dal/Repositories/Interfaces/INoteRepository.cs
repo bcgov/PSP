@@ -11,6 +11,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsNote> GetActivityNotes(long entityId);
 
-        void DeleteActivityNotes(int noteId);
+        void DeleteActivityNotes(long noteId);
     }
 }

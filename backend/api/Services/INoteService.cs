@@ -9,7 +9,7 @@ namespace Pims.Api.Services
     {
         EntityNoteModel Add(NoteType type, EntityNoteModel model);
 
-        void DeleteNote(NoteType type, int noteId);
+        void DeleteNote(NoteType type, long noteId);
         IEnumerable<PimsNote> GetNotes(NoteType type, long entityId);
     }
 }
