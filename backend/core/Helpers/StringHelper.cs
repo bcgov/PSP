@@ -36,7 +36,7 @@ namespace Pims.Core.Helpers
             string value = string.Empty;
             value += constonants[rand.Next(constonants.Length)].ToUpper();
             value += vowels[rand.Next(vowels.Length)];
-            int b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
+            int b = 2; // b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
             while (b < length)
             {
                 value += all[rand.Next(all.Length)];

@@ -10,10 +10,10 @@ namespace Pims.Dal.Services
 {
     public class LeasePaymentService : ILeasePaymentService
     {
-        readonly Repositories.ILeaseTermRepository _leaseTermRepository;
-        readonly Repositories.ILeasePaymentRepository _leasePaymentRepository;
-        readonly ILeaseService _leaseService;
-        readonly ClaimsPrincipal _user;
+        private readonly Repositories.ILeaseTermRepository _leaseTermRepository;
+        private readonly Repositories.ILeasePaymentRepository _leasePaymentRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ClaimsPrincipal _user;
 
         public LeasePaymentService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeasePaymentRepository leasePaymentRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {

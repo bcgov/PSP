@@ -291,24 +291,6 @@ namespace Pims.Api
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
-        private static void AddPimsApiRepositories(IServiceCollection services)
-        {
-            services.AddSingleton<IEdmsAuthRepository, MayanAuthRepository>();
-            services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
-            services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
-        }
-
-        /// <summary>
-        /// Add PimsService objects to the dependency injection service collection.
-        /// </summary>
-        /// <param name="services"></param>
-        private static void AddPimsApiServices(IServiceCollection services)
-        {
-            services.AddScoped<IDocumentService, DocumentService>();
-            services.AddScoped<IDocumentSyncService, DocumentSyncService>();
-            services.AddScoped<INoteService, NoteService>();
-        }
-
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
@@ -369,6 +351,24 @@ namespace Pims.Api
             {
                 config.MapControllers();
             });
+        }
+
+        private static void AddPimsApiRepositories(IServiceCollection services)
+        {
+            services.AddSingleton<IEdmsAuthRepository, MayanAuthRepository>();
+            services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
+            services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
+        }
+
+        /// <summary>
+        /// Add PimsService objects to the dependency injection service collection.
+        /// </summary>
+        /// <param name="services"></param>
+        private static void AddPimsApiServices(IServiceCollection services)
+        {
+            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IDocumentSyncService, DocumentSyncService>();
+            services.AddScoped<INoteService, NoteService>();
         }
         #endregion
     }

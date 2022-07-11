@@ -59,27 +59,6 @@ namespace Pims.Dal.Repositories
             this.Self = service;
             this.Mapper = mapper;
         }
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Provides a way to fetch the context within the assembly.
-        /// </summary>
-        /// <returns></returns>
-        internal PimsContext GetContext()
-        {
-            return this.Context;
-        }
-
-        /// <summary>
-        /// Provides a way to fetch the user within the assembly.
-        /// </summary>
-        /// <returns></returns>
-        internal ClaimsPrincipal GetUser()
-        {
-            return this.User;
-        }
 
         /// <summary>
         /// Get the original value of the specified 'propertyName'.
@@ -109,6 +88,28 @@ namespace Pims.Dal.Repositories
         public void CommitTransaction()
         {
             this.Context.CommitTransaction();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Provides a way to fetch the context within the assembly.
+        /// </summary>
+        /// <returns></returns>
+        internal PimsContext GetContext()
+        {
+            return this.Context;
+        }
+
+        /// <summary>
+        /// Provides a way to fetch the user within the assembly.
+        /// </summary>
+        /// <returns></returns>
+        internal ClaimsPrincipal GetUser()
+        {
+            return this.User;
         }
         #endregion
     }

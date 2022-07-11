@@ -15,18 +15,6 @@ namespace Pims.Core.Extensions
         private static readonly MethodInfo OrderByMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderBy" && method.GetParameters().Length == 2);
         private static readonly MethodInfo OrderByDescendingMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderByDescending" && method.GetParameters().Length == 2);
         private static readonly MethodInfo GeneratePropertyPathLambdaMethod = typeof(QueryableExtensions).GetMethod(nameof(GeneratePropertyPathLambda), BindingFlags.NonPublic | BindingFlags.Static);
-        #endregion
-
-        /// <summary>
-        /// Check if the specified property exists in the specified type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        private static bool PropertyExists<T>(string propertyName)
-        {
-            return typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
-        }
 
         /// <summary>
         /// Order the query results by the specified property names.
@@ -128,6 +116,32 @@ namespace Pims.Core.Extensions
             return query;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Generates a LambdaExpression for the specified 'Type' and 'path'.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static LambdaExpression MakeSelector(this Type objectType, string path)
+        {
+            var parameter = Expression.Parameter(objectType, "x");
+            var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
+            return Expression.Lambda(body, parameter);
+        }
+
+        /// <summary>
+        /// Check if the specified property exists in the specified type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        private static bool PropertyExists<T>(string propertyName)
+        {
+            return typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
+        }
+
         /// <summary>
         /// Get the 'Type' of the object specified by the 'path'.
         /// Fetches the properties from cache so that it doesn't haven't to iterate with reflection each time it is is called.
@@ -148,27 +162,13 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Generates a LambdaExpression for the specified 'Type' and 'path'.
-        /// </summary>
-        /// <param name="objectType"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static LambdaExpression MakeSelector(this Type objectType, string path)
-        {
-            var parameter = Expression.Parameter(objectType, "x");
-            var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
-            return Expression.Lambda(body, parameter);
-        }
-
-        /// <summary>
         /// Generates an Expression for the specified 'path'.
         /// </summary>
-        /// <param name="entity"></param>
         /// <param name="path"></param>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="RT"></typeparam>
+        /// <typeparam name="TR"></typeparam>
         /// <returns></returns>
-        private static Expression<Func<T, RT>> GeneratePropertyPathLambda<T, RT>(string path)
+        private static Expression<Func<T, TR>> GeneratePropertyPathLambda<T, TR>(string path)
             where T : class
         {
             if (!path.Contains('.'))
@@ -177,7 +177,7 @@ namespace Pims.Core.Extensions
             }
 
             var parameter = Expression.Parameter(typeof(T), "x");
-            return Expression.Lambda<Func<T, RT>>(path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField), parameter);
+            return Expression.Lambda<Func<T, TR>>(path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField), parameter);
         }
     }
 }

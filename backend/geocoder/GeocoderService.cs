@@ -16,10 +16,10 @@ namespace Pims.Geocoder
     /// </summary>
     public class GeocoderService : IGeocoderService
     {
+        public GeocoderOptions Options { get; }
+
         #region Properties
         protected IHttpRequestClient Client { get; }
-
-        public GeocoderOptions Options { get; }
         #endregion
 
         #region Constructors
@@ -37,21 +37,6 @@ namespace Pims.Geocoder
             {
                 client.Client.DefaultRequestHeaders.Add("apikey", this.Options.Key);
             }
-        }
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Generates the full URL including the host.
-        /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="outputFormat"></param>
-        /// <returns></returns>
-        private string GenerateUrl(string endpoint, string outputFormat = "json")
-        {
-            var host = this.Options.HostUri;
-            return $"{host}{endpoint.Replace("{outputFormat}", outputFormat)}";
         }
 
         /// <summary>
@@ -81,6 +66,10 @@ namespace Pims.Geocoder
             var url = QueryHelpers.AddQueryString(uri.AbsoluteUri, parameters.ToQueryStringDictionary());
             return await this.Client.GetAsync<FeatureCollectionModel>(url);
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Sends an HTTP request to Geocoder for addresses that provides the closest match for the specified lat/lng.
@@ -121,6 +110,18 @@ namespace Pims.Geocoder
             var endpoint = this.Options.Parcels.PidsUrl.Replace("{siteId}", siteId.ToString());
             var uri = new Uri(GenerateUrl(endpoint, outputFormat));
             return await this.Client.GetAsync<SitePidsResponseModel>(uri);
+        }
+
+        /// <summary>
+        /// Generates the full URL including the host.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="outputFormat"></param>
+        /// <returns></returns>
+        private string GenerateUrl(string endpoint, string outputFormat = "json")
+        {
+            var host = this.Options.HostUri;
+            return $"{host}{endpoint.Replace("{outputFormat}", outputFormat)}";
         }
         #endregion
     }

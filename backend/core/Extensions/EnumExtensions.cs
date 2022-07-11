@@ -27,7 +27,8 @@ namespace Pims.Core.Extensions
         /// <param name="val"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static bool In<T>(this T val, params T[] values) where T : struct
+        public static bool In<T>(this T val, params T[] values)
+            where T : struct
         {
             return values.Contains(val);
         }
@@ -35,15 +36,15 @@ namespace Pims.Core.Extensions
         /// <summary>
         /// Convert the enum value to the destination enum value with the same name.
         /// </summary>
-        /// <typeparam name="SourceT"></typeparam>
-        /// <typeparam name="DestinationT"></typeparam>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static DestinationT ConvertTo<SourceT, DestinationT>(this SourceT value)
-            where SourceT : struct, IConvertible
-            where DestinationT : struct, IConvertible
+        public static TDestination ConvertTo<TSource, TDestination>(this TSource value)
+            where TSource : struct, IConvertible
+            where TDestination : struct, IConvertible
         {
-            return Enum.TryParse(typeof(DestinationT), value.ToString(), out object result) ? (DestinationT)result : default;
+            return Enum.TryParse(typeof(TDestination), value.ToString(), out object result) ? (TDestination)result : default;
         }
         #endregion
     }

@@ -51,7 +51,7 @@ namespace Pims.Api.Helpers.Authorization
     /// <summary>
     /// RealmAccess private class, provides a way to deserialize the realm access.
     /// </summary>
-    class RealmAccess
+    internal class RealmAccess
     {
         public string[] Roles { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Pims.Api.Policies
     public class PermissionFilter : IAuthorizationFilter
     {
         #region Variables
-        readonly Permissions[] _permissions;
+        private readonly Permissions[] _permissions;
         #endregion
 
         #region Constructors

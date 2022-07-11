@@ -16,7 +16,8 @@ namespace Pims.Ltsa.Models
     /// OrderParent.
     /// </summary>
     [DataContract]
-    public partial class OrderParent<T> where T : IFieldedData
+    public partial class OrderParent<T>
+        where T : IFieldedData
     {
         /// <summary>
         /// Indicate the type of the search product requested for an order.

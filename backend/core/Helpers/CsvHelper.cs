@@ -96,7 +96,7 @@ namespace Pims.Core.Helpers
     /// ExportColumn private class, provides an object to maintain the original property and the column information.
     /// This is only used in the CsvHelper.
     /// </summary>
-    class ExportColumn
+    internal class ExportColumn
     {
         #region Properties
 

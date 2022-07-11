@@ -47,7 +47,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
         /// Updates a list of insurances for a lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPost()]
+        [HttpPost]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Api.Models.BatchUpdate.Reply<InsuranceModel>), 200)]

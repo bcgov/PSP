@@ -16,12 +16,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The note text contents.
         /// </summary>
         public string Note { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        public long RowVersion { get; set; }
         #endregion
-
     }
 }

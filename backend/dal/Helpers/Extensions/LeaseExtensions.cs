@@ -14,6 +14,138 @@ namespace Pims.Dal.Helpers.Extensions
     public static class LeaseExtensions
     {
         /// <summary>
+        /// Generate a query for the specified 'filter'.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public static IQueryable<Entities.PimsLease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter, bool loadPayments = false)
+        {
+            filter.ThrowIfNull(nameof(filter));
+
+            var query = context.PimsLeases.AsNoTracking();
+
+            query = query.GenerateCommonLeaseQuery(filter, loadPayments);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Get the next available id from the PIMS_LEASE_ID_SEQ.
+        /// </summary>
+        /// <param name="context"></param>
+        public static long GetNextLeaseSequenceValue(this PimsContext context)
+        {
+            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
+            {
+                Direction = System.Data.ParameterDirection.Output,
+            };
+            context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
+
+            return (long)result.Value;
+        }
+
+        /// <summary>
+        /// Generate a new L File in format L-XXX-YYY using the lease id. Add the lease id and lfileno to the passed lease.
+        /// </summary>
+        /// <param name="context"></param>
+        public static PimsLease GenerateLFileNo(this PimsContext context, PimsLease lease)
+        {
+            long leaseId = GetNextLeaseSequenceValue(context);
+            lease.LeaseId = leaseId;
+            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
+            return lease;
+        }
+
+        /// <summary>
+        /// Get the Program name from the lease's program type description.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetProgramName(this Pims.Dal.Entities.PimsLease lease)
+        {
+            return lease?.LeaseProgramTypeCodeNavigation?.Description;
+        }
+
+        /// <summary>
+        /// Get the full name from the lease's first tenant (person).
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetFullName(this Pims.Dal.Entities.PimsLease lease)
+        {
+            return lease?.PimsLeaseTenants.FirstOrDefault(t => t != null && t.Person != null)?.Person?.GetFullName();
+        }
+
+        /// <summary>
+        /// Get the full name from the lease's first tenant (person).
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetMotiName(this Pims.Dal.Entities.PimsLease lease)
+        {
+            return lease.MotiContact;
+        }
+
+        /// <summary>
+        /// Get the active term of this lease.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static PimsLeaseTerm GetCurrentTerm(this Pims.Dal.Entities.PimsLease lease)
+        {
+            return lease.PimsLeaseTerms.FirstOrDefault(term => term != null && DateTime.Now > term.TermStartDate && DateTime.Now <= term.TermExpiryDate);
+        }
+
+        /// <summary>
+        /// Get the active term start date of this lease.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static DateTime? GetCurrentTermStartDate(this Pims.Dal.Entities.PimsLease lease)
+        {
+            return GetCurrentTerm(lease)?.TermStartDate;
+        }
+
+        /// <summary>
+        /// Get the active term end date of this lease.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static DateTime? GetCurrentTermEndDate(this Pims.Dal.Entities.PimsLease lease)
+        {
+            return GetCurrentTerm(lease)?.TermExpiryDate;
+        }
+
+        /// <summary>
+        /// Get the tenant name from either the person or the organization.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetTenantName(this Pims.Dal.Entities.PimsLeaseTenant lease)
+        {
+            return lease?.Person?.GetFullName() ?? lease?.Organization?.Name;
+        }
+
+        /// <summary>
+        /// Get the calculated expiry date.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.PimsLease lease)
+        {
+            if (lease.OrigExpiryDate != null)
+            {
+                if (lease.PimsLeaseTerms != null && lease.PimsLeaseTerms.Any(t => t.TermExpiryDate > lease.OrigExpiryDate))
+                {
+                    return lease.PimsLeaseTerms.OrderByDescending(t => t.TermExpiryDate).FirstOrDefault().TermExpiryDate;
+                }
+                return lease.OrigExpiryDate;
+            }
+            return lease.PimsLeaseTerms?.OrderByDescending(t => t.TermExpiryDate).FirstOrDefault()?.TermExpiryDate;
+        }
+
+        /// <summary>
         /// Generate an SQL statement for the specified 'user' and 'filter'.
         /// </summary>
         /// <param name="query"></param>
@@ -159,138 +291,6 @@ namespace Pims.Dal.Helpers.Extensions
                     sortDef[sortFieldIndex] = sortField.Replace(sourceField, targetField);
                 }
             }
-        }
-
-        /// <summary>
-        /// Generate a query for the specified 'filter'.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public static IQueryable<Entities.PimsLease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter, bool loadPayments = false)
-        {
-            filter.ThrowIfNull(nameof(filter));
-
-            var query = context.PimsLeases.AsNoTracking();
-
-            query = query.GenerateCommonLeaseQuery(filter, loadPayments);
-
-            return query;
-        }
-
-        /// <summary>
-        /// Get the next available id from the PIMS_LEASE_ID_SEQ.
-        /// </summary>
-        /// <param name="context"></param>
-        public static long GetNextLeaseSequenceValue(this PimsContext context)
-        {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output,
-            };
-            context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
-
-            return (long)result.Value;
-        }
-
-        /// <summary>
-        /// Generate a new L File in format L-XXX-YYY using the lease id. Add the lease id and lfileno to the passed lease.
-        /// </summary>
-        /// <param name="context"></param>
-        public static PimsLease GenerateLFileNo(this PimsContext context, PimsLease lease)
-        {
-            long leaseId = GetNextLeaseSequenceValue(context);
-            lease.LeaseId = leaseId;
-            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
-            return lease;
-        }
-
-        /// <summary>
-        /// Get the Program name from the lease's program type description.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static string GetProgramName(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease?.LeaseProgramTypeCodeNavigation?.Description;
-        }
-
-        /// <summary>
-        /// Get the full name from the lease's first tenant (person).
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static string GetFullName(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease?.PimsLeaseTenants.FirstOrDefault(t => t != null && t.Person != null)?.Person?.GetFullName();
-        }
-
-        /// <summary>
-        /// Get the full name from the lease's first tenant (person).
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static string GetMotiName(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease.MotiContact;
-        }
-
-        /// <summary>
-        /// Get the active term of this lease.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static PimsLeaseTerm GetCurrentTerm(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease.PimsLeaseTerms.FirstOrDefault(term => term != null && DateTime.Now > term.TermStartDate && DateTime.Now <= term.TermExpiryDate);
-        }
-
-        /// <summary>
-        /// Get the active term start date of this lease.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static DateTime? GetCurrentTermStartDate(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return GetCurrentTerm(lease)?.TermStartDate;
-        }
-
-        /// <summary>
-        /// Get the active term end date of this lease.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static DateTime? GetCurrentTermEndDate(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return GetCurrentTerm(lease)?.TermExpiryDate;
-        }
-
-        /// <summary>
-        /// Get the tenant name from either the person or the organization.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static string GetTenantName(this Pims.Dal.Entities.PimsLeaseTenant lease)
-        {
-            return lease?.Person?.GetFullName() ?? lease?.Organization?.Name;
-        }
-
-        /// <summary>
-        /// Get the calculated expiry date.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.PimsLease lease)
-        {
-            if (lease.OrigExpiryDate != null)
-            {
-                if (lease.PimsLeaseTerms != null && lease.PimsLeaseTerms.Any(t => t.TermExpiryDate > lease.OrigExpiryDate))
-                {
-                    return lease.PimsLeaseTerms.OrderByDescending(t => t.TermExpiryDate).FirstOrDefault().TermExpiryDate;
-                }
-                return lease.OrigExpiryDate;
-            }
-            return lease.PimsLeaseTerms?.OrderByDescending(t => t.TermExpiryDate).FirstOrDefault()?.TermExpiryDate;
         }
     }
 }
