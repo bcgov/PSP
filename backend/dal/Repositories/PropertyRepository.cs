@@ -250,7 +250,6 @@ namespace Pims.Dal.Repositories
                 property.PphStatusUpdateUserid = User.GetUsername();
                 property.PphStatusUpdateUserGuid = User.GetUserKey();
             }
-
             else
             {
                 property.PphStatusUpdateTimestamp = existingProperty.PphStatusUpdateTimestamp;

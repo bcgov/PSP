@@ -32,31 +32,31 @@ namespace Pims.Ltsa.Models
             /// Enum Title for value: title
             /// </summary>
             [EnumMember(Value = "title")]
-            title = 1,
+            Title = 1,
 
             /// <summary>
             /// Enum CommonProperty for value: commonProperty
             /// </summary>
             [EnumMember(Value = "commonProperty")]
-            commonProperty = 2,
+            CommonProperty = 2,
 
             /// <summary>
             /// Enum ParcelInfo for value: parcelInfo
             /// </summary>
             [EnumMember(Value = "parcelInfo")]
-            parcelInfo = 3,
+            ParcelInfo = 3,
 
             /// <summary>
             /// Enum DocOrPlan for value: docOrPlan
             /// </summary>
             [EnumMember(Value = "docOrPlan")]
-            docOrPlan = 4,
+            DocOrPlan = 4,
 
             /// <summary>
             /// Enum Stc for value: stc
             /// </summary>
             [EnumMember(Value = "stc")]
-            stc = 5,
+            Stc = 5,
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Pims.Ltsa.Models
         {
             this.ProductOrderParameters = productOrderParameters;
             this.OrderedProduct = orderedProduct;
-            this.ProductType = ProductTypeEnum.commonProperty;
+            this.ProductType = ProductTypeEnum.CommonProperty;
             this.FileReference = "folio";
         }
 

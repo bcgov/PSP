@@ -29,7 +29,7 @@ namespace Pims.Ltsa.Models
         {
             this.ProductOrderParameters = productOrderParameters;
             this.OrderedProduct = orderedProduct;
-            this.ProductType = ProductTypeEnum.parcelInfo;
+            this.ProductType = ProductTypeEnum.ParcelInfo;
             this.FileReference = "folio";
         }
 

@@ -17,19 +17,19 @@ namespace Pims.Core.Extensions
         /// </summary>
         /// <param name="source"></param>
         /// <param name="destination"></param>
-        /// <typeparam name="ST"></typeparam>
-        /// <typeparam name="DT"></typeparam>
-        public static DT CopyValues<ST, DT>(this ST source, DT destination)
-            where ST : class
-            where DT : class
+        /// <typeparam name="TS"></typeparam>
+        /// <typeparam name="TD"></typeparam>
+        public static TD CopyValues<TS, TD>(this TS source, TD destination)
+            where TS : class
+            where TD : class
         {
             if (destination == null)
             {
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            var type = typeof(DT);
-            var sProps = typeof(ST)
+            var type = typeof(TD);
+            var sProps = typeof(TS)
                 .GetCachedProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => p.PropertyType.IsPrimitive
                     || p.PropertyType.IsEnum

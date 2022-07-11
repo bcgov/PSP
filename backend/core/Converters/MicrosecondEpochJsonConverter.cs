@@ -38,7 +38,7 @@ namespace Pims.Core.Converters
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            var date = ((DateTimeOffset)value);
+            var date = (DateTimeOffset)value;
             if (date <= DateTime.UtcNow.AddHours(1))
             {
                 writer.WriteNumberValue(0);

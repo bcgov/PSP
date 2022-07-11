@@ -11,9 +11,9 @@ namespace Pims.Core.Converters
     /// Serialization - Extract value from 'EnumValueAttribute' otherwise lowercase the enum name value.
     /// Deserialization - Ignore case.
     /// </summary>
-    /// <typeparam name="ET"></typeparam>
-    public class EnumValueJsonConverter<ET> : JsonConverter<ET>
-        where ET : struct, IConvertible
+    /// <typeparam name="TEnumType"></typeparam>
+    public class EnumValueJsonConverter<TEnumType> : JsonConverter<TEnumType>
+        where TEnumType : struct, IConvertible
     {
         #region Methods
 
@@ -24,11 +24,11 @@ namespace Pims.Core.Converters
         /// <param name="typeToConvert"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public override ET Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override TEnumType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var value = reader.GetString();
 
-            var valid = Enum.TryParse(value, true, out ET result);
+            var valid = Enum.TryParse(value, true, out TEnumType result);
 
             if (valid)
             {
@@ -36,14 +36,14 @@ namespace Pims.Core.Converters
             }
             else
             {
-                var fields = Enum.GetValues(typeof(ET));
+                var fields = Enum.GetValues(typeof(TEnumType));
                 foreach (var field in fields)
                 {
-                    var mi = typeof(ET).GetMember(field.ToString());
+                    var mi = typeof(TEnumType).GetMember(field.ToString());
                     var attr = mi[0].GetCustomAttribute<EnumValueAttribute>();
                     if (attr != null && string.CompareOrdinal(value, attr.Value) == 0)
                     {
-                        return (ET)field;
+                        return (TEnumType)field;
                     }
                 }
             }
@@ -57,9 +57,9 @@ namespace Pims.Core.Converters
         /// <param name="writer"></param>
         /// <param name="value"></param>
         /// <param name="options"></param>
-        public override void Write(Utf8JsonWriter writer, ET value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, TEnumType value, JsonSerializerOptions options)
         {
-            var fi = typeof(ET).GetField(value.ToString());
+            var fi = typeof(TEnumType).GetField(value.ToString());
             var attr = fi.GetCustomAttribute<EnumValueAttribute>();
 
             if (attr != null)
