@@ -168,7 +168,8 @@ namespace Pims.Core.Http
 
             using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
             var p = new Dictionary<string, string>
-                { { "client_id", client },
+                {
+                    { "client_id", client },
                     { "grant_type", "client_credentials" },
                     { "client_secret", clientSecret },
                     { "audience", audience },
@@ -207,7 +208,8 @@ namespace Pims.Core.Http
 
             using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
             var p = new Dictionary<string, string>
-                { { "client_id", client },
+                {
+                    { "client_id", client },
                     { "grant_type", "refresh_token" },
                     { "client_secret", clientSecret },
                     { "refresh_token", refreshToken },

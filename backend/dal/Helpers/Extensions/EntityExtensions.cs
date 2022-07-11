@@ -153,22 +153,22 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type.</typeparam>
-        /// <typeparam name="I">The type of the id property.</typeparam>
-        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <typeparam name="TParentType">The parent entity type.</typeparam>
+        /// <typeparam name="TIdType">The type of the id property.</typeparam>
+        /// <typeparam name="TChildProperty">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
-        public static void UpdateGrandchild<T, I, C>(
+        public static void UpdateGrandchild<TParentType, TIdType, TChildProperty>(
             this PimsContext context,
-            Expression<Func<T, object>> childNavigation,
-            Expression<Func<C, object>> grandchildNavigation,
-            I parentId,
-            C[] childrenWithGrandchildren)
-            where T : IdentityBaseAppEntity<I>
-            where C : IdentityBaseAppEntity<I>
+            Expression<Func<TParentType, object>> childNavigation,
+            Expression<Func<TChildProperty, object>> grandchildNavigation,
+            TIdType parentId,
+            TChildProperty[] childrenWithGrandchildren)
+            where TParentType : IdentityBaseAppEntity<TIdType>
+            where TChildProperty : IdentityBaseAppEntity<TIdType>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
         }

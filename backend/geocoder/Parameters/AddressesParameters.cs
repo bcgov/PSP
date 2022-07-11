@@ -144,12 +144,12 @@ namespace Pims.Geocoder.Parameters
         public string Bbox { get; set; }
 
         /// <summary>
-        /// get/set - Example: -124.0165926,49.2296251 . The coordinates of a centre point (x,y) used to define a bounding circle that will limit the search area. This parameter must be specified together with 'maxDistance'. 
+        /// get/set - Example: -124.0165926,49.2296251 . The coordinates of a centre point (x,y) used to define a bounding circle that will limit the search area. This parameter must be specified together with 'maxDistance'.
         /// </summary>
         public string Center { get; set; }
 
         /// <summary>
-        /// get/set - If true, uses supplied parcelPoint to derive an appropriate accessPoint. 
+        /// get/set - If true, uses supplied parcelPoint to derive an appropriate accessPoint.
         /// </summary>
         public bool Extrapolate { get; set; }
 
