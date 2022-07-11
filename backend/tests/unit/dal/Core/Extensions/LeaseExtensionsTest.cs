@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Xunit;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using System.Collections.Generic;
+using Xunit;
 
 namespace Pims.Dal.Test.Core.Extensions
 {
@@ -37,7 +37,7 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = null,
                 PimsLeaseTerms = new List<PimsLeaseTerm>() {
-                new PimsLeaseTerm() { TermExpiryDate = now } }
+                new PimsLeaseTerm() { TermExpiryDate = now }, },
             };
             Assert.Equal(now, lease.GetExpiryDate());
         }
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = later,
                 PimsLeaseTerms = new List<PimsLeaseTerm>() {
-                new PimsLeaseTerm() { TermExpiryDate = now } }
+                new PimsLeaseTerm() { TermExpiryDate = now }, },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
@@ -65,7 +65,7 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = now,
                 PimsLeaseTerms =
-                new List<PimsLeaseTerm>() { new PimsLeaseTerm() { TermExpiryDate = later } }
+                new List<PimsLeaseTerm>() { new PimsLeaseTerm() { TermExpiryDate = later } },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
@@ -81,7 +81,7 @@ namespace Pims.Dal.Test.Core.Extensions
                 OrigExpiryDate = now,
                 PimsLeaseTerms =
                 new List<PimsLeaseTerm>() { new PimsLeaseTerm() { TermExpiryDate = later },
-                    new PimsLeaseTerm() { TermExpiryDate = before } }
+                    new PimsLeaseTerm() { TermExpiryDate = before }, },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }

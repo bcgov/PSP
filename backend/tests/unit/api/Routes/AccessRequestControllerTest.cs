@@ -1,7 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Api.Test.Routes

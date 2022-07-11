@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -9,12 +15,6 @@ using Pims.Ltsa;
 using Pims.Ltsa.Configuration;
 using Pims.Ltsa.Extensions;
 using Pims.Ltsa.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
@@ -132,7 +132,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new TitleSummariesResponse()
             {
@@ -142,8 +142,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
-                }
+                    },
+                },
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
@@ -187,15 +187,15 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
-                }
+                    },
+                },
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.SetupSequence(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>()))
                 .ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) })
                 .ThrowsAsync(new HttpClientRequestException(response));
-            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<object>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
             client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()))
                 .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse).ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse);
 
@@ -207,7 +207,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/token",
-                It.IsAny<Object>()), Times.Once);
+                It.IsAny<object>()), Times.Once);
         }
 
         [Fact]
@@ -233,14 +233,14 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
-                }
+                    },
+                },
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>()))
                 .ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.SetupSequence(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>()))
+            client.SetupSequence(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<object>()))
                 .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
             client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()))
                 .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse).ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse);
@@ -253,7 +253,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Exactly(2));
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/token",
-                It.IsAny<Object>()), Times.Exactly(2));
+                It.IsAny<object>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -284,14 +284,14 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
-                }
+                    },
+                },
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>()))
                 .ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>()))
+            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<object>()))
                 .ThrowsAsync(new HttpClientRequestException(refreshTokenRequestResponse));
             client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()))
                 .ThrowsAsync(new HttpClientRequestException(tokenRequestResponse)).ReturnsAsync(titleSummariesResponse).ThrowsAsync(new HttpClientRequestException(tokenRequestResponse)).ReturnsAsync(titleSummariesResponse);
@@ -304,7 +304,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/token",
-                It.IsAny<Object>()), Times.Once);
+                It.IsAny<object>()), Times.Once);
         }
 
         [Fact]
@@ -319,7 +319,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
@@ -349,7 +349,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new OrderWrapper<OrderParent<Title>>(new TitleOrder());
 
@@ -380,7 +380,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var orderResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Processing, OrderId = "1" });
             var orderIdResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Completed, OrderId = "1" });
@@ -413,7 +413,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Processing, OrderId = "1" });
 
@@ -443,7 +443,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
@@ -472,7 +472,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new OrderWrapper<OrderParent<ParcelInfo>>(new ParcelInfoOrder());
 
@@ -503,7 +503,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
@@ -532,7 +532,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new OrderWrapper<OrderParent<StrataPlanCommonProperty>>(new SpcpOrder());
 
@@ -563,7 +563,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
@@ -592,7 +592,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var titleResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder());
             var parcelInfoResponse = new OrderWrapper<OrderParent<ParcelInfo>>(new ParcelInfoOrder());
@@ -604,8 +604,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
-                }
+                    },
+                },
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
@@ -640,7 +640,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var token = new TokenModel()
             {
-                AccessToken = "test"
+                AccessToken = "test",
             };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
@@ -655,8 +655,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
-                }
+                    },
+                },
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();

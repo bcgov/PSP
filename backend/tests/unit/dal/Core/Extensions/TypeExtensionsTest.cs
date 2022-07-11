@@ -1,10 +1,10 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -384,7 +384,7 @@ namespace Pims.Api.Test.Core.Extensions
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => value.GetType().FindMethod(""));
+            Assert.Throws<ArgumentException>(() => value.GetType().FindMethod(string.Empty));
         }
 
         [Fact]
@@ -504,7 +504,7 @@ namespace Pims.Api.Test.Core.Extensions
 
             public string GetValue()
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 

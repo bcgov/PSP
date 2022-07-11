@@ -1,18 +1,18 @@
-using Pims.Core.Test;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
-using Pims.Dal.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Xunit;
-using Entity = Pims.Dal.Entities;
 using System.Security.Claims;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
+using Pims.Core.Test;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
+using Pims.Dal.Security;
+using Xunit;
+using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -136,7 +136,7 @@ namespace Pims.Dal.Test.Repositories
                     Username = "username",
                     FirstName = "first",
                     LastName = "last",
-                }
+                },
             });
             helper.AddSingleton(monitor);
             helper.AddSingleton(monitor.Object);
@@ -647,7 +647,6 @@ namespace Pims.Dal.Test.Repositories
 
             var service = helper.CreateRepository<UserRepository>(user);
             var context = helper.GetService<PimsContext>();
-
 
             // Act
             service.Delete(euser);

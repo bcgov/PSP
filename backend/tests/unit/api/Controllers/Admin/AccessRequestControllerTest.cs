@@ -1,3 +1,5 @@
+using System.Linq;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -11,8 +13,6 @@ using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
-using FluentAssertions;
-using System.Linq;
 
 namespace Pims.Api.Test.Admin.Controllers
 {
@@ -152,4 +152,3 @@ namespace Pims.Api.Test.Admin.Controllers
         #endregion
     }
 }
-

@@ -1,7 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NetTopologySuite.Geometries;
 using Pims.Dal.Entities.Models;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities

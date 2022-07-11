@@ -23,7 +23,7 @@ namespace Pims.Core.Test
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
@@ -32,14 +32,14 @@ namespace Pims.Core.Test
                     Register = "/protocol/openid-connect/registrations",
                     Token = "/protocol/openid-connect/token",
                     TokenIntrospect = "/protocol/openid-connect/token/introspect",
-                    UserInfo = "/protocol/openid-connect/userinfo"
+                    UserInfo = "/protocol/openid-connect/userinfo",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
                     Audience = "pims-service-account",
                     Secret = "[USE SECRETS]",
-                    Client = "pims-service-account"
-                }
+                    Client = "pims-service-account",
+                },
             };
         }
 

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -5,11 +7,9 @@ using Pims.Api.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
-using FluentAssertions;
 
 namespace PimsApi.Test.Controllers
 {
@@ -160,7 +160,7 @@ namespace PimsApi.Test.Controllers
             {
                 RegionCode = null,
                 AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
-                RoleId = new Model.RoleModel().Id
+                RoleId = new Model.RoleModel().Id,
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -186,7 +186,7 @@ namespace PimsApi.Test.Controllers
             {
                 RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
                 AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
-                RoleId = null
+                RoleId = null,
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -212,7 +212,7 @@ namespace PimsApi.Test.Controllers
             {
                 RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
                 AccessRequestStatusTypeCode = null,
-                RoleId = new Model.RoleModel().Id
+                RoleId = new Model.RoleModel().Id,
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -287,7 +287,7 @@ namespace PimsApi.Test.Controllers
             {
                 RegionCode = null,
                 AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
-                RoleId = new Model.RoleModel().Id
+                RoleId = new Model.RoleModel().Id,
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -313,7 +313,7 @@ namespace PimsApi.Test.Controllers
             {
                 RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
                 AccessRequestStatusTypeCode = new Pims.Api.Models.TypeModel<string>() { Id = "received" },
-                RoleId = null
+                RoleId = null,
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -339,7 +339,7 @@ namespace PimsApi.Test.Controllers
             {
                 RegionCode = new Pims.Api.Models.TypeModel<short>() { Id = 1 },
                 AccessRequestStatusTypeCode = null,
-                RoleId = new Model.RoleModel().Id
+                RoleId = new Model.RoleModel().Id,
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 

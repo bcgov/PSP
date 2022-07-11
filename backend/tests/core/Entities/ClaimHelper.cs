@@ -53,7 +53,7 @@ namespace Pims.Core.Test
             return new Entity.PimsClaim(keycloakUserId, name)
             {
                 ClaimId = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
 

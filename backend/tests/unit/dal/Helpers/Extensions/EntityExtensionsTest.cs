@@ -1,11 +1,11 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Helpers.Extensions

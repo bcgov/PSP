@@ -58,7 +58,7 @@ namespace Pims.Api.Test.Core.Extensions
         {
             Utf8,
             Binary,
-            Hex
+            Hex,
         }
     }
 }
