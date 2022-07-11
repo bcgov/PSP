@@ -7,7 +7,6 @@ using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
-using KModel = Pims.Api.Areas.Keycloak.Models.User;
 using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Keycloak.Controllers

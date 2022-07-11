@@ -19,7 +19,8 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public SecurityDepositReturnRepository(PimsContext dbContext,
+        public SecurityDepositReturnRepository(
+            PimsContext dbContext,
             ClaimsPrincipal user,
             IPimsRepository service,
             ILogger<LeaseRepository> logger,

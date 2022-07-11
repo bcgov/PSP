@@ -1,6 +1,5 @@
 namespace Pims.Api.Areas.Property.Mapping.Search
 {
-    using System;
     using System.Linq;
     using Mapster;
     using Entity = Pims.Dal.Entities;

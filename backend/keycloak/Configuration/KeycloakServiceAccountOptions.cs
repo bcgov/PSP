@@ -1,4 +1,3 @@
-using System;
 using Pims.Core.Exceptions;
 using Pims.Core.Http.Configuration;
 

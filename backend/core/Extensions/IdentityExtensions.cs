@@ -85,7 +85,7 @@ namespace Pims.Core.Extensions
         public static string GetUserDirectory(this ClaimsPrincipal user)
         {
             var value = user?.FindFirstValue("username");
-            return value?.Contains("@") == true ? value.Split("@").Last() : null;
+            return value?.Contains('@') == true ? value.Split("@").Last() : null;
         }
 
         /// <summary>

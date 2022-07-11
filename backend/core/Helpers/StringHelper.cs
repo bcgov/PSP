@@ -9,7 +9,7 @@ namespace Pims.Core.Helpers
     public static class StringHelper
     {
         #region Variables
-        private static readonly Random rand = new Random(DateTime.Now.Second);
+        private static readonly Random Rand = new Random(DateTime.Now.Second);
         #endregion
 
         #region Methods
@@ -34,12 +34,12 @@ namespace Pims.Core.Helpers
             var all = constonants.Concat(vowels).Concat(numbers).Concat(symbols).ToArray();
 
             string value = string.Empty;
-            value += constonants[rand.Next(constonants.Length)].ToUpper();
-            value += vowels[rand.Next(vowels.Length)];
+            value += constonants[Rand.Next(constonants.Length)].ToUpper();
+            value += vowels[Rand.Next(vowels.Length)];
             int b = 2; // b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
             while (b < length)
             {
-                value += all[rand.Next(all.Length)];
+                value += all[Rand.Next(all.Length)];
                 b++;
             }
 

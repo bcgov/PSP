@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -147,7 +146,7 @@ namespace Pims.Dal.Repositories
                 personId,
                 person.PimsPersonAddresses.ToArray(),
                 // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
-                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false);
+                (context, pa) => !context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId));
 
             return existingPerson;
         }

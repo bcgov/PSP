@@ -146,4 +146,3 @@ namespace Pims.Api.Areas.Research.Models.Search
         #endregion
     }
 }
-

@@ -1,6 +1,6 @@
 namespace Pims.Dal.Entities
 {
-    public interface ILookupEntity<KeyType> : ITypeEntity<KeyType>
+    public interface ILookupEntity<TKeyType> : ITypeEntity<TKeyType>
     {
         #region Properties
 

@@ -44,7 +44,7 @@ namespace Pims.Core.Extensions
         /// <returns>Postal with format XXX XXX.</returns>
         public static string FormatAsPostal(this string postal)
         {
-            if (postal?.Length == 6 && (!postal?.Contains(" ") ?? false))
+            if (postal?.Length == 6 && (!postal?.Contains(' ') ?? false))
             {
                 return postal?.ToUpper().Insert(3, " ");
             }
@@ -73,11 +73,11 @@ namespace Pims.Core.Extensions
         /// <return></return>
         public static HttpMethod GetHttpMethod(this string method)
         {
-            return (method?.ToLower()) switch
+            return method?.ToLower() switch
             {
-                ("get") => HttpMethod.Get,
-                ("delete") => HttpMethod.Delete,
-                ("put") => HttpMethod.Put,
+                "get" => HttpMethod.Get,
+                "delete" => HttpMethod.Delete,
+                "put" => HttpMethod.Put,
                 _ => HttpMethod.Post,
             };
         }
