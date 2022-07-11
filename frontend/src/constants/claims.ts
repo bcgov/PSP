@@ -25,6 +25,10 @@ export enum Claims {
   ACQUISITION_VIEW = 'acquisitionfile-view',
   ACQUISITION_ADD = 'acquisitionfile-add',
   ACQUISITION_DELETE = 'acquisitionfile-delete',
+  NOTE_EDIT = 'note-edit',
+  NOTE_VIEW = 'note-view',
+  NOTE_ADD = 'note-add',
+  NOTE_DELETE = 'note-delete',
 }
 
 export default Claims;
