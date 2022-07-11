@@ -26,7 +26,7 @@ namespace Pims.Api.Test.Controllers.Note
 {
     [Trait("category", "unit")]
     [Trait("category", "api")]
-    [Trait("group", "research")]
+    [Trait("group", "note")]
     [ExcludeFromCodeCoverage]
     public class NoteControllerTest
     {
@@ -44,7 +44,7 @@ namespace Pims.Api.Test.Controllers.Note
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<NoteController>(Permissions.ContactView);
+            var controller = helper.CreateController<NoteController>(Permissions.NoteView);
 
             var notes = new[] { new PimsNote() {
                 NoteId = 1,
@@ -60,17 +60,17 @@ namespace Pims.Api.Test.Controllers.Note
             var service = helper.GetService<Mock<INoteService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.GetNotes(It.IsAny<NoteType>())).Returns(notes);
+            service.Setup(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>())).Returns(notes);
 
             // Act
-            var result = controller.GetNotes(Constants.NoteType.Activity);
+            var result = controller.GetNotes(Constants.NoteType.Activity, 1);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<List<NoteModel>>(actionResult.Value);
             var expectedResult = mapper.Map<List<NoteModel>>(notes);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.GetNotes(It.IsAny<NoteType>()), Times.Once());
+            service.Verify(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>()), Times.Once());
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Controllers.Note
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<NoteController>(Permissions.ContactView);
+            var controller = helper.CreateController<NoteController>(Permissions.NoteDelete);
 
             var service = helper.GetService<Mock<INoteService>>();
             var mapper = helper.GetService<IMapper>();

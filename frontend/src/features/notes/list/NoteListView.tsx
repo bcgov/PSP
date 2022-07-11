@@ -13,6 +13,7 @@ import * as Styled from './styles';
 
 export interface INoteListViewProps {
   type: NoteTypes;
+  entityId: number;
 }
 /**
  * Page that displays notes information.
@@ -20,7 +21,7 @@ export interface INoteListViewProps {
 export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
   props: INoteListViewProps,
 ) => {
-  const { type } = props;
+  const { type, entityId } = props;
   const isMounted = useIsMounted();
   const { getNotes, deleteNote } = useApiNotes();
 
@@ -32,14 +33,14 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
 
   React.useEffect(() => {
     setIsLoading(true);
-    getNotes(type)
+    getNotes(type, entityId)
       .then(({ data }) => {
         if (data && isMounted()) {
           setNoteResult(data);
         }
       })
       .finally(() => setIsLoading(false));
-  }, [type, isMounted, getNotes]);
+  }, [type, entityId, isMounted, getNotes]);
 
   const sortedNoteList = React.useMemo(() => {
     if (sort && noteResult?.length) {
@@ -60,7 +61,7 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
         setShowDeleteConfirm(false);
         toast.success('Deleted successfully.');
         setIsLoading(true);
-        getNotes(type)
+        getNotes(type, entityId)
           .then(({ data }) => {
             setNoteResult(data);
           })
