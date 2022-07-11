@@ -63,9 +63,6 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsActivityInstanceNotes
                 .Where(x => x.ActivityInstanceId == entityId && x.IsDisabled == false).Select(x => x.Note).ToList();
-
-            //return this.Context.PimsNotes
-            //    .Include(n => n.PimsActivityInstanceNotes.Where(x => x.ActivityInstanceId == entityId && x.IsDisabled == false)).ToArray();
         }
 
         public void DeleteActivityNotes(int noteId)
