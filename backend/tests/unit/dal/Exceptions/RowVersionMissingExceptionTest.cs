@@ -1,7 +1,7 @@
-using FluentAssertions;
-using Pims.Dal.Exceptions;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Dal.Exceptions;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +12,9 @@ using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Contact.Models.Search;
-using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Contact
 {
@@ -39,9 +39,9 @@ namespace Pims.Api.Test.Controllers.Contact
         public readonly static IEnumerable<object[]> ContactQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/contact/search?searchBy=persons") },
-            new object [] { new Uri("http://host/api/contact/search?searchBy=organizations")},
+            new object [] { new Uri("http://host/api/contact/search?searchBy=organizations") },
             new object [] { new Uri("http://host/api/contact/search?searchBy=all") },
-            new object [] { new Uri("http://host/api/contact/search?summary=person")},
+            new object [] { new Uri("http://host/api/contact/search?summary=person") },
             new object [] { new Uri("http://host/api/contact/search?summary=organization") },
             new object [] { new Uri("http://host/api/contact/search?municipality=victoria") },
             new object [] { new Uri("http://host/api/contact/search?activeContactsOnly=false") },

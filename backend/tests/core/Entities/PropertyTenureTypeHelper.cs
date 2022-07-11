@@ -27,7 +27,7 @@ namespace Pims.Core.Test
             return new List<Entity.PimsPropertyTenureType>()
             {
                 new Entity.PimsPropertyTenureType("HWYROAD") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyTenureType("ADJLAND") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsPropertyTenureType("ADJLAND") { ConcurrencyControlNumber = 1 },
             };
         }
     }

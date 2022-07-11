@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -5,9 +8,6 @@ using Pims.Api.Areas.Tools.Controllers;
 using Pims.Core.Test;
 using Pims.Dal.Security;
 using Pims.Ltsa;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Model = Pims.Ltsa.Models;
 
@@ -38,11 +38,11 @@ namespace Pims.Api.Test.Controllers.Tools
 
             var response = new Model.TitleSummariesResponse()
             {
-                TitleSummaries = new List<Model.TitleSummary>()
+                TitleSummaries = new List<Model.TitleSummary>(),
             };
 
             var service = helper.GetService<Mock<ILtsaService>>();
-            service.Setup(m => m.GetTitleSummariesAsync(It.IsAny<Int32>())).ReturnsAsync(response);
+            service.Setup(m => m.GetTitleSummariesAsync(It.IsAny<int>())).ReturnsAsync(response);
 
             // Act
             var result = await controller.FindTitleSummariesAsync("123-456-789");
@@ -50,7 +50,7 @@ namespace Pims.Api.Test.Controllers.Tools
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<ICollection<Model.TitleSummary>>(actionResult.Value);
-            service.Verify(m => m.GetTitleSummariesAsync(It.IsAny<Int32>()), Times.Once());
+            service.Verify(m => m.GetTitleSummariesAsync(It.IsAny<int>()), Times.Once());
         }
         #endregion
 
@@ -133,8 +133,7 @@ namespace Pims.Api.Test.Controllers.Tools
             service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            await Assert.ThrowsAsync<BadHttpRequestException>(() => controller.PostParcelInfoOrderAsync(""));
-
+            await Assert.ThrowsAsync<BadHttpRequestException>(() => controller.PostParcelInfoOrderAsync(string.Empty));
         }
         #endregion
 

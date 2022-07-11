@@ -32,7 +32,7 @@ namespace Pims.Core.Test
                 new Entity.PimsPropertyClassificationType("Surplus Encumbered") { ConcurrencyControlNumber = 1 },
                 new Entity.PimsPropertyClassificationType("Disposed") { ConcurrencyControlNumber = 1 },
                 new Entity.PimsPropertyClassificationType("Demolished") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Subdivided") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsPropertyClassificationType("Subdivided") { ConcurrencyControlNumber = 1 },
             };
         }
     }

@@ -1,17 +1,17 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Pims.Api.Helpers.Extensions;
-using Pims.Core.Test;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Pims.Api.Helpers.Extensions;
+using Pims.Core.Test;
 using Xunit;
 using Model = Pims.Api.Areas.Property.Models.Search;
-using FluentAssertions;
 
 namespace Pims.Api.Test.Helpers
 {
@@ -26,7 +26,7 @@ namespace Pims.Api.Test.Helpers
             new List<object[]>
             {
                 new object[] { HttpStatusCode.OK },
-                new object[] { HttpStatusCode.Created }
+                new object[] { HttpStatusCode.Created },
             };
 
         public static IEnumerable<object[]> FailureCodes =
@@ -36,7 +36,7 @@ namespace Pims.Api.Test.Helpers
                 new object[] { HttpStatusCode.InternalServerError, new Exception("InternalServerError") },
                 new object[] { HttpStatusCode.Unauthorized, new Exception("Unauthorized") },
                 new object[] { HttpStatusCode.NotFound, new Exception("NotFound") },
-                new object[] { HttpStatusCode.Forbidden, new Exception("Forbidden") }
+                new object[] { HttpStatusCode.Forbidden, new Exception("Forbidden") },
             };
         #endregion
 
@@ -53,7 +53,7 @@ namespace Pims.Api.Test.Helpers
             var response = new HttpResponseMessage
             {
                 StatusCode = code,
-                Content = new StringContent(json)
+                Content = new StringContent(json),
             };
 
             // Act
@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Helpers
             var response = new HttpResponseMessage
             {
                 StatusCode = code,
-                Content = new StringContent(json)
+                Content = new StringContent(json),
             };
 
             // Act
@@ -103,7 +103,7 @@ namespace Pims.Api.Test.Helpers
             var response = new HttpResponseMessage
             {
                 StatusCode = code,
-                Content = new StringContent(json)
+                Content = new StringContent(json),
             };
             response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 

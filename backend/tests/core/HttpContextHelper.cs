@@ -1,12 +1,12 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.IdentityModel.Tokens;
-using Moq;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.IdentityModel.Tokens;
+using Moq;
 
 namespace Pims.Core.Test
 {
@@ -42,11 +42,11 @@ namespace Pims.Core.Test
             var request = new Mock<HttpRequest>();
             helper.AddSingleton(request);
             request.Setup(m => m.Scheme).Returns(uri?.Scheme ?? "http");
-            request.Setup(m => m.Host).Returns(String.IsNullOrWhiteSpace(uri?.Host) ? new HostString("localhost") : new HostString(uri.Host));
-            request.Setup(m => m.Path).Returns(String.IsNullOrWhiteSpace(uri?.AbsolutePath) ? new PathString("/test") : new PathString(uri.AbsolutePath));
+            request.Setup(m => m.Host).Returns(string.IsNullOrWhiteSpace(uri?.Host) ? new HostString("localhost") : new HostString(uri.Host));
+            request.Setup(m => m.Path).Returns(string.IsNullOrWhiteSpace(uri?.AbsolutePath) ? new PathString("/test") : new PathString(uri.AbsolutePath));
             request.Setup(m => m.PathBase).Returns(new PathString("/"));
             request.Setup(m => m.Body).Returns(new MemoryStream());
-            request.Setup(m => m.QueryString).Returns(String.IsNullOrWhiteSpace(uri?.Query) ? new QueryString("?") : new QueryString(uri.Query));
+            request.Setup(m => m.QueryString).Returns(string.IsNullOrWhiteSpace(uri?.Query) ? new QueryString("?") : new QueryString(uri.Query));
 
             var header = new Mock<IHeaderDictionary>();
             helper.AddSingleton(header);

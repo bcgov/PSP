@@ -53,7 +53,7 @@ namespace Pims.Core.Test
             return new Entity.PimsRole(keycloakUserId, name)
             {
                 Id = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
 
@@ -68,7 +68,7 @@ namespace Pims.Core.Test
                 new Entity.PimsRole(Guid.Parse("bbf27108-a0dc-4782-8025-7af7af711335"), "System Administrator") { Id = 1, ConcurrencyControlNumber = 1 },
                 new Entity.PimsRole(Guid.Parse("6ae8448d-5f0a-4607-803a-df0bc4efdc0f"), "Organization Administrator") { Id = 2, ConcurrencyControlNumber = 1 },
                 new Entity.PimsRole(Guid.Parse("aad8c03d-892c-4cc3-b992-5b41c4f2392c"), "Real Estate Manager") { Id = 3, ConcurrencyControlNumber = 1 },
-                new Entity.PimsRole(Guid.Parse("7a7b2549-ae85-4ad6-a8d3-3a5f8d4f9ca5"), "Real Estate Analyst") { Id = 4, ConcurrencyControlNumber = 1 }
+                new Entity.PimsRole(Guid.Parse("7a7b2549-ae85-4ad6-a8d3-3a5f8d4f9ca5"), "Real Estate Analyst") { Id = 4, ConcurrencyControlNumber = 1 },
             };
         }
     }

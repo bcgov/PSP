@@ -1,6 +1,6 @@
+using System.Net.Http;
 using Moq;
 using Pims.Core.Test.Http;
-using System.Net.Http;
 
 namespace Pims.Core.Test
 {

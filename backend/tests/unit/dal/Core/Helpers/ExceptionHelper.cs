@@ -1,6 +1,6 @@
-using Pims.Core.Helpers;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Helpers;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -17,7 +17,7 @@ namespace Pims.Api.Test.Helpers
             new List<object[]>
             {
                 new object[] { new[] { new { Id = 1, Name = "test1" }, new { Id = 2, Name = "test2" } }, 2 },
-                new object[] { new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") }, 10 }
+                new object[] { new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") }, 10 },
             };
         #endregion
 

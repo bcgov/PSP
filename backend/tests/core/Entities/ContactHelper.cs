@@ -1,5 +1,5 @@
-using Pims.Dal.Entities;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -27,7 +27,7 @@ namespace Pims.Core.Test
                 OrganizationId = organization?.Id,
                 Person = person,
                 PersonId = person?.Id,
-                OrganizationName = organization?.OrganizationName ?? "",
+                OrganizationName = organization?.OrganizationName ?? string.Empty,
                 MunicipalityName = address.MunicipalityName,
             };
             return contact;
