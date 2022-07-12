@@ -1,4 +1,6 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using MapsterMapper;
 using Moq;
 using Pims.Api.Constants;
@@ -58,8 +60,11 @@ namespace Pims.Dal.Test.Services
             var repository = helper.GetService<Mock<IEntityNoteRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsActivityInstanceNote>())).Returns(activityNote);
 
+            // Act
+            Action act = () => service.Add(NoteType.Activity, noteModel);
+
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => service.Add(NoteType.Activity, noteModel));
+            act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.Add(It.IsAny<PimsActivityInstanceNote>()), Times.Never);
         }
 

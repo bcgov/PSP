@@ -14,10 +14,11 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PimsActivityInstance CreateActivity(Entity.PimsNote note = null)
+        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote note = null)
         {
             var activity = new Entity.PimsActivityInstance()
             {
+                ActivityInstanceId = id,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",
                 AppCreateUserDirectory = "",

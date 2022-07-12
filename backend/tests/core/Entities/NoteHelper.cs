@@ -16,10 +16,10 @@ namespace Pims.Core.Test
         /// <param name="note"></param>
         /// <param name="activity"></param>
         /// <returns></returns>
-        public static Entity.PimsActivityInstanceNote CreateActivityNote(Entity.PimsNote note = null, Entity.PimsActivityInstance activity = null)
+        public static Entity.PimsActivityInstanceNote CreateActivityNote(Entity.PimsActivityInstance activity = null, Entity.PimsNote note = null)
         {
             note ??= EntityHelper.CreateNote("Test Note");
-            activity ??= EntityHelper.CreateActivity();
+            activity ??= EntityHelper.CreateActivity(1);
 
             return new Entity.PimsActivityInstanceNote()
             {
