@@ -13,7 +13,7 @@ import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
-  pid?: string;
+  pid: string;
 }
 
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {

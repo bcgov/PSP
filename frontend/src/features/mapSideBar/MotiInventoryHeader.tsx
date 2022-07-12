@@ -19,7 +19,6 @@ interface IMotiInventoryHeaderProps {
   property?: IPropertyApiModel;
   showEditButton?: boolean;
   onZoom?: (apiProperty?: IPropertyApiModel | undefined) => void;
-  onEdit?: () => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
@@ -65,18 +64,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             </Row>
           </Col>
           <Col xs="2" className="d-flex p-0 align-items-center justify-content-end">
-            {props.showEditButton && (
-              <ProtectedComponent hideIfNotAuthorized claims={[Claims.PROPERTY_EDIT]}>
-                <TooltipWrapper
-                  toolTipId="edit-sidebar-tooltip"
-                  toolTip="Edit Property Information"
-                >
-                  <IconButton title="Edit Property" variant="light" onClick={props.onEdit}>
-                    <FaEdit size={22} />
-                  </IconButton>
-                </TooltipWrapper>
-              </ProtectedComponent>
-            )}
             <TooltipWrapper toolTipId="property-zoom-map" toolTip="Zoom Map">
               <IconButton
                 variant="info"
