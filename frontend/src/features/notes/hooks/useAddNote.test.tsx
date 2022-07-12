@@ -1,21 +1,17 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { NoteTypes } from 'constants/index';
 import find from 'lodash/find';
 import * as MOCK from 'mocks/dataMocks';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { mockEntityNote } from 'mocks/mockNoteResponses';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { networkSlice } from 'store/slices/network/networkSlice';
 
-import { useAddResearch } from './useAddResearch';
-
-const testResearchFile: Api_ResearchFile = {
-  id: 1,
-  rfileNumber: 'RFile-0123456789',
-};
+import { useAddNote } from './useAddNote';
 
 const dispatch = jest.fn();
 const toastSuccessSpy = jest.spyOn(toast, 'success');
@@ -31,13 +27,14 @@ const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});
   return currentStore;
 };
+
 const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>{children}</Provider>
 );
 
-describe('useAddResearch functions', () => {
+describe('useAddNote hook', () => {
   const setup = (values?: any) => {
-    const { result } = renderHook(useAddResearch, { wrapper: getWrapper(getStore(values)) });
+    const { result } = renderHook(useAddNote, { wrapper: getWrapper(getStore(values)) });
     return result.current;
   };
 
@@ -53,32 +50,31 @@ describe('useAddResearch functions', () => {
     jest.restoreAllMocks();
   });
 
-  describe('addResearch', () => {
-    const url = `/researchFiles`;
-    it('Request successful, dispatches success with correct response', async () => {
-      mockAxios.onPost(url).reply(200, testResearchFile);
-      const { addResearchFile } = setup();
+  const url = `/notes/activity`;
 
-      await act(async () => {
-        const response = await addResearchFile(testResearchFile);
-        expect(response).toEqual(testResearchFile);
-      });
+  it('Dispatches success with correct response when request is successful', async () => {
+    mockAxios.onPost(url).reply(200, mockEntityNote(1));
+    const { addNote } = setup();
 
-      expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(toastSuccessSpy).toHaveBeenCalled();
+    await act(async () => {
+      const response = await addNote(NoteTypes.Activity, mockEntityNote());
+      expect(response).toEqual(mockEntityNote(1));
     });
 
-    it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onPost(url).reply(400, MOCK.ERROR);
-      const { addResearchFile } = setup();
+    expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
+    expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
+    expect(toastSuccessSpy).toHaveBeenCalledWith('Note saved');
+  });
 
-      await act(async () => {
-        await addResearchFile(testResearchFile);
-      });
+  it('Dispatches error with correct response when request fails', async () => {
+    mockAxios.onPost(url).reply(400, MOCK.ERROR);
+    const { addNote } = setup();
 
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-      expect(toastErrorSpy).toHaveBeenCalled();
+    await act(async () => {
+      await addNote(NoteTypes.Activity, mockEntityNote());
     });
+
+    expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+    expect(toastErrorSpy).toHaveBeenCalled();
   });
 });

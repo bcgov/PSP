@@ -92,7 +92,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HasPermission(Permissions.NoteDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult DeleteNote(NoteType type, int noteId)
+        public IActionResult DeleteNote(NoteType type, long noteId)
         {
             _noteService.DeleteNote(type, noteId);
             return new JsonResult(true);

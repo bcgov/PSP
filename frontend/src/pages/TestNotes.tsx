@@ -2,11 +2,11 @@ import { Button } from 'components/common/buttons';
 import { NoteTypes } from 'constants/noteTypes';
 import { AddNotesContainer } from 'features/notes/add/AddNotesContainer';
 import NoteListView from 'features/notes/list/NoteListView';
-import { useState } from 'react';
+import { useModalManagement } from 'hooks/useModalManagement';
 import { Col, Container, Row } from 'react-bootstrap';
 
 export const TestNotes: React.FC = () => {
-  const [show, setShow] = useState(false);
+  const { isModalOpened, openModal, closeModal } = useModalManagement();
 
   return (
     <Container>
@@ -16,12 +16,13 @@ export const TestNotes: React.FC = () => {
         </Col>
       </Row>
       <Row className="py-5">
-        <Button onClick={() => setShow(true)}>Add a Note</Button>
+        <Button onClick={openModal}>Add a Note</Button>
         <AddNotesContainer
           parentType="activity"
           parentId={1}
-          showNotes={show}
-          setShowNotes={setShow}
+          isOpened={isModalOpened}
+          openModal={openModal}
+          closeModal={closeModal}
         />
 
         <NoteListView type={NoteTypes.Activity} entityId={1} />

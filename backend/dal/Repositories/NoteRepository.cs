@@ -65,7 +65,7 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.ActivityInstanceId == entityId && x.IsDisabled == false).Select(x => x.Note).ToList();
         }
 
-        public void DeleteActivityNotes(int noteId)
+        public void DeleteActivityNotes(long noteId)
         {
             var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
             if (activityNotes.Any())
