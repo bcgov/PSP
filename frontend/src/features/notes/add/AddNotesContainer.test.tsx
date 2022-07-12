@@ -61,7 +61,7 @@ describe('AddNotesContainer component', () => {
   it('renders the underlying form', () => {
     const { getByLabelText, getByText } = setup();
 
-    const modalTitle = getByText(/Notes/);
+    const modalTitle = getByText(/Notes/i);
     const textarea = getByLabelText(/Type a note/i);
 
     expect(modalTitle).toBeVisible();
@@ -69,24 +69,24 @@ describe('AddNotesContainer component', () => {
     expect(textarea.tagName).toBe('TEXTAREA');
   });
 
-  it('should cancel form when Cancel button is clicked', async () => {
+  it('should cancel form when Cancel button is clicked', () => {
     const { getCancelButton, getByText } = setup();
 
-    expect(getByText(/Notes/)).toBeVisible();
+    expect(getByText(/Notes/i)).toBeVisible();
     userEvent.click(getCancelButton());
 
     expect(closeModal).toBeCalled();
   });
 
   it('should save the form and close the modal when Submit button is clicked', async () => {
-    const form = new EntityNoteForm();
-    form.parentId = BASIC_PROPS.parentId;
-    form.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    const formValues = new EntityNoteForm();
+    formValues.parentId = BASIC_PROPS.parentId;
+    formValues.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
     const { getSaveButton, findByLabelText } = setup(BASIC_PROPS);
 
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.type(textarea, form.note.note);
+    userEvent.type(textarea, formValues.note.note);
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
     userEvent.click(getSaveButton());
@@ -98,7 +98,7 @@ describe('AddNotesContainer component', () => {
 
     await waitFor(() => {
       const axiosData: Api_EntityNote = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = form.toApi();
+      const expectedValues = formValues.toApi();
 
       expect(mockAxios.history.post[0].url).toBe('/notes/activity');
       expect(axiosData.parent).toEqual(expectedValues.parent);
@@ -109,32 +109,24 @@ describe('AddNotesContainer component', () => {
   });
 
   it('should support adding notes to other entity types', async () => {
-    const form = new EntityNoteForm();
-    form.parentId = BASIC_PROPS.parentId;
-    form.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    const formValues = new EntityNoteForm();
+    formValues.parentId = BASIC_PROPS.parentId;
+    formValues.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
     const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, parentType: 'file' });
 
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.type(textarea, form.note.note);
+    userEvent.type(textarea, formValues.note.note);
 
-    mockAxios.onPost().reply(200, { id: 1 } as Api_EntityNote);
+    mockAxios.onPost().reply(200, mockEntityNote(1));
     userEvent.click(getSaveButton());
 
     expect(closeModal).toBeCalled();
 
     // TODO: navigate to Notes LIST VIEW - route not implemented yet
-    await waitFor(() => expect(history.location.pathname).toBe('/mapview'));
-
     await waitFor(() => {
-      const axiosData: Api_EntityNote = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = form.toApi();
-
+      expect(history.location.pathname).toBe('/mapview');
       expect(mockAxios.history.post[0].url).toBe('/notes/file');
-      expect(axiosData.parent).toEqual(expectedValues.parent);
-      expect({ ...axiosData.note, id: undefined, rowVersion: undefined }).toEqual(
-        expectedValues.note,
-      );
     });
   });
 });
