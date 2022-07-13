@@ -19,7 +19,7 @@ const PropertyViewSelector: React.FunctionComponent<IPropertyViewSelectorProps> 
   if (props.isEditMode) {
     return <UpdatePropertyDetailsContainer pid={''} />;
   } else {
-    return <PropertyContainer pid={''} />;
+    return <PropertyContainer composedProperty={props.composedProperty} />;
   }
 };
 
