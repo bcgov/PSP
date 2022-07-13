@@ -91,6 +91,7 @@ services:
       - psp
 
   ####################### Clam AV #######################
+  # example av test file here: https://serverfault.com/questions/484082/how-should-i-test-clam-anti-virus
   clamav:
     image: mkodockx/docker-clamav:alpine-idb-amd64
     ports:
