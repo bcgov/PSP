@@ -12,7 +12,7 @@ import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
-import ResearchFooter from './common/ResearchFooter';
+import SidebarFooter from '../shared/SidebarFooter';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
 import { useGetResearch } from './hooks/useGetResearch';
@@ -154,7 +154,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         header={<ResearchHeader researchFile={researchFile} />}
         footer={
           isEditing && (
-            <ResearchFooter
+            <SidebarFooter
               isOkDisabled={formikRef?.current?.isSubmitting}
               onSave={handleSaveClick}
               onCancel={handleCancelClick}

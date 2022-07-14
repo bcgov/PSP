@@ -10,7 +10,7 @@ import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import ResearchFooter from '../common/ResearchFooter';
+import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
@@ -72,7 +72,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       title="Create Research File"
       icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
       footer={
-        <ResearchFooter
+        <SidebarFooter
           isOkDisabled={formikRef.current?.isSubmitting}
           onSave={handleSave}
           onCancel={handleCancel}

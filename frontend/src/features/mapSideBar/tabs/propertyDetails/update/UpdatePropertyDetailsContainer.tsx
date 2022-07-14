@@ -1,11 +1,11 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import isNumber from 'lodash/isNumber';
 import { Api_Property } from 'models/api/Property';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
 import { UpdatePropertyDetailsFormModel } from './models';
@@ -14,14 +14,19 @@ import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
   pid: string;
+  setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
+  onSuccess: () => void;
 }
 
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
   const isMounted = useIsMounted();
-  const history = useHistory();
   const { retrieveProperty, retrievePropertyLoading } = useGetProperty();
   const { updateProperty } = useUpdateProperty();
   const { queryAll } = useQueryMapLayersByLocation();
+
+  const formikRef = useRef<FormikProps<UpdatePropertyDetailsFormModel>>(null);
+
+  props.setFormikRef(formikRef);
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
 
@@ -49,7 +54,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     fetchProperty();
   }, [isMounted, props.pid, queryAll, retrieveProperty]);
 
-  // save handler - sends updated property information to backend and redirects back to view screen
+  // save handler - sends updated property information to backend
   const savePropertyInformation = async (
     values: UpdatePropertyDetailsFormModel,
     formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
@@ -57,19 +62,13 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     const apiProperty: Api_Property = values.toApi();
     const response = await updateProperty(apiProperty);
 
+    formikHelpers.setSubmitting(false);
+
     if (!!response?.pid) {
       formikHelpers.resetForm();
-      history.push(`/mapview/property/${apiProperty.pid}`);
+      props.onSuccess();
     }
-
-    formikHelpers.setSubmitting(false);
   };
-
-  const onCancel = useCallback(() => {
-    if (!!initialForm?.pid) {
-      history.push(`/mapview/property/${initialForm.pid}`);
-    }
-  }, [history, initialForm?.pid]);
 
   if (retrievePropertyLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
@@ -78,11 +77,27 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
+      innerRef={formikRef}
       validationSchema={UpdatePropertyDetailsYupSchema}
       initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
       onSubmit={savePropertyInformation}
     >
-      {formikProps => <UpdatePropertyDetailsForm {...formikProps} onCancel={onCancel} />}
+      {formikProps => (
+        <StyledFormWrapper>
+          <UpdatePropertyDetailsForm formikProps={formikProps} />
+        </StyledFormWrapper>
+      )}
     </Formik>
   );
 };
+
+const StyledFormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+`;

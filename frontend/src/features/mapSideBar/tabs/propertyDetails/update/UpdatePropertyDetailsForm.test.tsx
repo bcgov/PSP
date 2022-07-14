@@ -193,7 +193,7 @@ describe('UpdatePropertyDetailsForm component', () => {
   ) => {
     const utils = render(
       <Formik onSubmit={onSubmit} initialValues={renderOptions.initialValues}>
-        {formikProps => <UpdatePropertyDetailsForm {...formikProps} onCancel={onCancel} />}
+        {formikProps => <UpdatePropertyDetailsForm formikProps={formikProps} />}
       </Formik>,
       {
         ...renderOptions,
@@ -204,8 +204,6 @@ describe('UpdatePropertyDetailsForm component', () => {
 
     return {
       ...utils,
-      getSaveButton: () => utils.getByText(/Save/i),
-      getCancelButton: () => utils.getByText(/Cancel/i),
     };
   };
 
@@ -223,34 +221,5 @@ describe('UpdatePropertyDetailsForm component', () => {
   it('renders as expected', () => {
     const { asFragment } = setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('cancels the form when Cancel is clicked', () => {
-    const { getCancelButton } = setup({ initialValues });
-    userEvent.click(getCancelButton());
-    expect(onCancel).toBeCalled();
-  });
-
-  it('saves the form with minimal data when Save is clicked', async () => {
-    const { getSaveButton } = setup({
-      initialValues,
-    });
-    userEvent.click(getSaveButton());
-    await waitFor(() => expect(onSubmit).toBeCalledWith(initialValues, expect.anything()));
-  });
-
-  it('saves the form with updated values when Save is clicked', async () => {
-    const expectedValues = Object.assign(new UpdatePropertyDetailsFormModel(), initialValues);
-    expectedValues.municipalZoning = 'Lorem ipsum';
-    expectedValues.notes = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-
-    const { getSaveButton, container } = setup({ initialValues });
-
-    // modify form values
-    await fillInput(container, 'municipalZoning', expectedValues.municipalZoning);
-    await fillInput(container, 'notes', expectedValues.notes, 'textarea');
-    userEvent.click(getSaveButton());
-
-    await waitFor(() => expect(onSubmit).toBeCalledWith(expectedValues, expect.anything()));
   });
 });

@@ -4,9 +4,11 @@ import { Api_PropertyAssociations } from 'models/api/Property';
 
 export default interface ComposedProperty {
   pid?: string;
-  ltsaData?: LtsaOrders;
   ltsaDataRequestedOn?: Date;
+  ltsaData?: LtsaOrders;
   ltsaLoading: boolean;
   apiProperty?: IPropertyApiModel;
+  apiPropertyLoading: boolean;
   propertyAssociations?: Api_PropertyAssociations;
+  propertyAssociationsLoading: boolean;
 }

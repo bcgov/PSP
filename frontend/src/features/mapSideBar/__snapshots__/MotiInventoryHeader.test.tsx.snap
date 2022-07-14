@@ -8,7 +8,7 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c1.btn {
+  .c0.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +38,49 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c1.btn:hover {
+.c0.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c1.btn:focus {
+.c0.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
+.c0.btn.btn-primary {
   border: none;
 }
 
-.c1.btn.btn-secondary {
+.c0.btn.btn-secondary {
   background: none;
 }
 
-.c1.btn.btn-info {
+.c0.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
   background: none;
 }
 
-.c1.btn.btn-light {
+.c0.btn.btn-light {
   border: none;
 }
 
-.c1.btn.btn-dark {
+.c0.btn.btn-dark {
   border: none;
 }
 
-.c1.btn.btn-link {
+.c0.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   padding: 0;
 }
 
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   outline: none;
 }
 
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,175 +129,164 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c1.Button .Button__icon {
+.c0.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c1.Button--icon-only:focus {
+.c0.Button--icon-only:focus {
   outline: none;
 }
 
-.c1.Button--icon-only .Button__icon {
+.c0.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c2.c2.btn {
+.c1.c1.btn {
   background-color: unset;
   border: none;
 }
 
-.c2.c2.btn:hover,
-.c2.c2.btn:focus,
-.c2.c2.btn:active {
+.c1.c1.btn:hover,
+.c1.c1.btn:focus,
+.c1.c1.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c2.c2.btn svg {
+.c1.c1.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c2.c2.btn svg:hover {
+.c1.c1.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c0 {
-  margin-left: 3rem;
-  margin-right: 3rem;
-  margin-top: 1rem;
-  position: relative;
-}
-
 <div
-    class="c0"
+    class="no-gutters row"
   >
     <div
-      class="row"
+      class="col"
     >
       <div
-        class="col-10"
+        class="no-gutters row"
       >
         <div
-          class="row"
+          class="col-8"
         >
           <div
-            class="col-8"
+            class="row"
           >
             <div
-              class="row"
+              class="pr-0 text-left col-3"
             >
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  Civic Address:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
-              >
-                <strong>
-                  -
-                </strong>
-              </div>
+              <label>
+                Civic Address:
+              </label>
             </div>
-          </div>
-          <div
-            class="col"
-          >
             <div
-              class="justify-content-end row"
+              class="pl-1 text-left col-9"
             >
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  PID:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
-              >
-                <strong />
-              </div>
+              <strong>
+                -
+              </strong>
             </div>
           </div>
         </div>
         <div
-          class="row"
+          class="col"
         >
           <div
-            class="col-8"
+            class="justify-content-end row"
           >
             <div
-              class="row"
+              class="pr-0 text-left col-auto"
             >
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  Plan #:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
-              >
-                <strong />
-              </div>
+              <label>
+                PID:
+              </label>
             </div>
-          </div>
-          <div
-            class="col"
-          >
             <div
-              class="justify-content-end row"
+              class="pl-1 text-left col-5"
             >
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  Land parcel type:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
-              >
-                <strong />
-              </div>
+              <strong />
             </div>
           </div>
         </div>
       </div>
       <div
-        class="d-flex p-0 align-items-center justify-content-end col-2"
+        class="no-gutters row"
       >
-        <button
-          class="c1 Button c2 btn btn-info"
-          title="Zoom Map"
-          type="button"
+        <div
+          class="col-8"
         >
           <div
-            class="Button__value"
+            class="row"
           >
-            <svg
-              fill="currentColor"
-              height="22"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 512 512"
-              width="22"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="pr-0 text-left col-3"
             >
-              <path
-                d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
-              />
-            </svg>
+              <label>
+                Plan #:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            >
+              <strong />
+            </div>
           </div>
-        </button>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="justify-content-end row"
+          >
+            <div
+              class="pr-0 text-left col-auto"
+            >
+              <label>
+                Land parcel type:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-5"
+            >
+              <strong />
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div
+      class="d-flex p-0 align-items-center justify-content-end col-auto"
+    >
+      <button
+        class="c0 Button c1 btn btn-info"
+        title="Zoom Map"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          <svg
+            fill="currentColor"
+            height="22"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="22"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+            />
+          </svg>
+        </div>
+      </button>
     </div>
   </div>
   .c0 {

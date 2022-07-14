@@ -1,6 +1,5 @@
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import { FormikProps } from 'formik';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 
 import ComposedProperty from './ComposedProperty';
@@ -17,9 +16,20 @@ export interface IPropertyViewSelectorProps {
 
 const PropertyViewSelector: React.FunctionComponent<IPropertyViewSelectorProps> = props => {
   if (props.isEditMode) {
-    return <UpdatePropertyDetailsContainer pid={''} />;
+    return (
+      <UpdatePropertyDetailsContainer
+        pid={props.composedProperty.pid || ''}
+        onSuccess={props.onSuccess}
+        setFormikRef={props.setFormikRef}
+      />
+    );
   } else {
-    return <PropertyContainer composedProperty={props.composedProperty} />;
+    return (
+      <PropertyContainer
+        composedProperty={props.composedProperty}
+        setEditMode={props.setEditMode}
+      />
+    );
   }
 };
 

@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
 import {
   InventoryTabNames,
@@ -8,20 +7,13 @@ import {
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
-import useIsMounted from 'hooks/useIsMounted';
-import { useLtsa } from 'hooks/useLtsa';
-import { useProperties } from 'hooks/useProperties';
-import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
-import { IApiError } from 'interfaces/IApiError';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
-import { LtsaOrders } from 'interfaces/ltsaModels';
-import { Api_PropertyAssociations } from 'models/api/Property';
-import React, { useEffect, useState } from 'react';
-import { pidFormatter } from 'utils';
+import React, { useState } from 'react';
+
 import ComposedProperty from './ComposedProperty';
 
 export interface IPropertyContainerProps {
   composedProperty: ComposedProperty;
+  setEditMode: (isEditing: boolean) => void;
 }
 
 /**
@@ -29,15 +21,9 @@ export interface IPropertyContainerProps {
  */
 export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps> = ({
   composedProperty,
+  setEditMode,
 }) => {
-  /*if (isMounted() && propInfo.pid === pidFormatter(pid)) {
-    setApiProperty(propInfo);
-    setShowPropertyInfoTab(true);
-  }*/
-  //const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
-
   const showPropertyInfoTab = composedProperty.apiProperty !== undefined;
-  const activeTab = InventoryTabNames.property;
 
   const tabViews: TabInventoryView[] = [];
 
@@ -61,13 +47,21 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
 
   var defaultTab = InventoryTabNames.title;
 
+  // TODO: this should have a loading flag
+  const propertyViewForm = usePropertyDetails(composedProperty.apiProperty);
+
   if (showPropertyInfoTab) {
     // After API property object has been received, we query relevant map layers to find
     // additional information which we store in a different model (IPropertyDetailsForm)
-    const propertyViewForm = usePropertyDetails(composedProperty.apiProperty);
 
     tabViews.push({
-      content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
+      content: (
+        <PropertyDetailsTabView
+          property={propertyViewForm}
+          loading={composedProperty.apiPropertyLoading}
+          setEditMode={setEditMode}
+        />
+      ),
       key: InventoryTabNames.property,
       name: 'Property Details',
     });
@@ -86,6 +80,8 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       name: 'PIMS Files',
     });
   }
+
+  const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);
 
   return (
     <InventoryTabs
