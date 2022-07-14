@@ -22,7 +22,7 @@ namespace Pims.Api.Test.Controllers.Property
         /// Make a successful request to fetch property by PID.
         /// </summary>
         [Fact]
-        public void GetConceptPropertyByPid_Success()
+        public void GetConceptPropertyById_Success()
         {
             // Arrange
             var pid = 12345;
@@ -33,17 +33,17 @@ namespace Pims.Api.Test.Controllers.Property
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.PropertyService.GetByPid(It.IsAny<string>())).Returns(property);
+            service.Setup(m => m.PropertyService.GetById(It.IsAny<long>())).Returns(property);
 
             // Act
-            var result = controller.GetConceptPropertyWithPid(pid.ToString());
+            var result = controller.GetConceptPropertyWithId(property.Id);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.Concepts.PropertyModel>(actionResult.Value);
             var expectedResult = mapper.Map<Models.Concepts.PropertyModel>(property);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.PropertyService.GetByPid(It.IsAny<string>()), Times.Once());
+            service.Verify(m => m.PropertyService.GetById(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region Update

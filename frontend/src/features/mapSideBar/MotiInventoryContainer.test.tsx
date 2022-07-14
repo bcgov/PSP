@@ -38,6 +38,7 @@ describe('MotiInventoryContainer component', () => {
         onClose={renderOptions.onClose}
         pid={renderOptions.pid}
         onZoom={renderOptions.onZoom}
+        id={renderOptions.id}
       />,
       {
         ...renderOptions,
@@ -79,14 +80,14 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onGet(new RegExp('/ogs-internal/*')).reply(200, {});
 
     const { findByText, queryByTestId } = setup({
-      pid: '9212434',
+      id: 9212434,
       onClose,
       onZoom,
     });
 
     await waitFor(() => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
-      expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
+      expect(mockAxios.history.get[0].url).toBe(`/properties/9212434`);
     });
     await waitFor(() => {
       expect(queryByTestId('filter-backdrop-loading')).toBeNull();
@@ -96,7 +97,7 @@ describe('MotiInventoryContainer component', () => {
 
   it('hides the property information tab for non-inventory properties', async () => {
     mockAxios.onPost().reply(200, {});
-    // non-inventory properties return a "not-found" error from API
+    // non-inventory properties will not attempt to contact the backend.
     const error = {
       isAxiosError: true,
       response: { status: 404 },
@@ -104,18 +105,16 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onGet(new RegExp('/properties/*')).reply(404, error);
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
 
-    const { queryByText, getByText, queryByTestId } = setup({
+    const { queryByText, getByText, queryAllByTestId } = setup({
       pid: '9212434',
       onClose,
       onZoom,
     });
 
-    await waitFor(() => {
-      expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
-      expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
-    });
     expect(queryByText(/property attributes/i)).toBeNull();
     expect(getByText('Title')).toHaveClass('active');
-    expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+    await waitFor(() => {
+      expect(queryAllByTestId('filter-backdrop-loading')).toHaveLength(0);
+    });
   });
 });

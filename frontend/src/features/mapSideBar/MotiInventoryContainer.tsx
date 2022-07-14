@@ -19,6 +19,7 @@ import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
 
 export interface IMotiInventoryContainerProps {
+  id?: number;
   pid?: string;
   onClose: () => void;
   onZoom: (apiProperty?: IPropertyApiModel | undefined) => void;
@@ -37,9 +38,12 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
     undefined,
   );
+    !!props.id ? InventoryTabNames.property : InventoryTabNames.title,
+  );
+  const pid = props.pid ? props.pid : apiProperty?.pid;
 
   // First, fetch property information from PSP API
-  const { getPropertyWithPid, getPropertyWithPidLoading: propertyLoading } = useProperties();
+  const { getPropertyLoading: propertyLoading, getProperty } = useProperties();
 
   const {
     getPropertyAssociations,
@@ -73,9 +77,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
 
   const fetchPimsProperty = React.useCallback(async () => {
     try {
-      if (!!props.pid) {
-        const propInfo = await getPropertyWithPid(props.pid);
-        if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
+        if (!!props.id) {
+          const propInfo = await getProperty(props.id);
+          if (isMounted() && propInfo?.id === props.id) {
           setComposedProperty(property => ({ ...property, apiProperty: propInfo }));
         }
       }
@@ -89,7 +93,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
         }
       }
     }
-  }, [getPropertyWithPid, isMounted, props.pid]);
+  }, [getProperty, isMounted, props.id]);
 
   useEffect(() => {
     fetchPimsProperty();
@@ -97,15 +101,15 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
 
   useEffect(() => {
     const getAssociations = async () => {
-      if (props.pid !== undefined) {
-        const response = await getPropertyAssociations(props.pid);
+      if (props?.id !== undefined) {
+        const response = await getPropertyAssociations(props.id);
         if (response !== undefined) {
           setComposedProperty(property => ({ ...property, propertyAssociations: response }));
         }
       }
     };
     getAssociations();
-  }, [getPropertyAssociations, props.pid]);
+  }, [getPropertyAssociations, props?.id]);
 
   useEffect(() => {
     const func = async () => {
@@ -115,19 +119,16 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
         ltsaData: undefined,
       }));
 
-      if (!!props.pid) {
-        const ltsaData = await getLtsaData(pidFormatter(props.pid));
         if (
           isMounted() &&
-          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier ===
-            pidFormatter(props.pid)
+          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
         ) {
           setComposedProperty(property => ({ ...property, ltsaData: ltsaData }));
         }
       }
     };
     func();
-  }, [getLtsaData, props.pid, isMounted]);
+  }, [getLtsaData, pid, isMounted]);
 
   const onSuccess = () => {
     fetchPimsProperty();

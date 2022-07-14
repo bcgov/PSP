@@ -40,5 +40,17 @@ export const useGeoServer = () => {
     [baseUrl],
   );
 
-  return { getPropertyWfs, getPropertyWithPidWfs };
+  const getPropertyWithIdWfs = useCallback(
+    async function(id: number): Promise<Feature<Point> | null> {
+      if (!id) {
+        return null;
+      }
+      const wfsUrl = buildUrl(baseUrl, { ID: id });
+      const { data } = await CustomAxios().get<FeatureCollection>(wfsUrl);
+      return data.features?.length ? (data.features[0] as Feature<Point>) : null;
+    },
+    [baseUrl],
+  );
+
+  return { getPropertyWfs, getPropertyWithPidWfs, getPropertyWithIdWfs };
 };

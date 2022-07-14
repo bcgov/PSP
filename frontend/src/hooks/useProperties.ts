@@ -10,7 +10,6 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
-import { pidFormatter, pidPadded } from 'utils';
 import { downloadFile } from 'utils/download';
 
 import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
@@ -21,11 +20,11 @@ export const useProperties = () => {
   const dispatch = useDispatch();
   const {
     getPropertiesPaged,
-    getPropertyWithPid,
+    getProperty,
     exportProperties: rawApiExportProperties,
   } = useApiProperties();
 
-  const { getPropertyWithPidWfs } = useGeoServer();
+  const { getPropertyWithIdWfs } = useGeoServer();
 
   const fetchProperties = useApiRequestWrapper<
     (
@@ -42,14 +41,10 @@ export const useProperties = () => {
     throwError: true,
   });
 
-  const {
-    execute: getPropertyWithPidWrapped,
-    loading: getPropertyWithPidLoading,
-  } = useApiRequestWrapper<(pid: string) => Promise<AxiosResponse<IPropertyApiModel>>>({
-    requestFunction: useCallback(
-      async (pid: string) => await getPropertyWithPid(pidFormatter(pid)),
-      [getPropertyWithPid],
-    ),
+  const { execute: getPropertyWrapped, loading: getPropertyLoading } = useApiRequestWrapper<
+    (id: number) => Promise<AxiosResponse<IPropertyApiModel>>
+  >({
+    requestFunction: useCallback(async (id: number) => await getProperty(id), [getProperty]),
     requestName: actionTypes.GET_PARCELS,
     skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
@@ -57,27 +52,26 @@ export const useProperties = () => {
 
   /**
    * Make an AJAX request to fetch the specified 'property' from inventory.
-   * @param params PID of the property
+   * @param params Id of the property
    */
-  const fetchPropertyWithPid = useCallback(
-    async (pid: string): Promise<IPropertyApiModel> => {
+  const fetchPropertyWithId = useCallback(
+    async (id: number): Promise<IPropertyApiModel> => {
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
       //   1. to the REST API to fetch property field attributes (e.g. address, etc)
       //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
-      return Promise.all([
-        getPropertyWithPidWrapped(pidFormatter(pid)),
-        getPropertyWithPidWfs(pidPadded(pid)),
-      ]).then(([propertyResponse, wfsResponse]) => {
-        const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-        const property: IPropertyApiModel = {
-          ...propertyResponse,
-          latitude,
-          longitude,
-        };
-        return property;
-      });
+      return Promise.all([getPropertyWrapped(id), getPropertyWithIdWfs(id)]).then(
+        ([propertyResponse, wfsResponse]) => {
+          const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
+          const property: IPropertyApiModel = {
+            ...propertyResponse,
+            latitude,
+            longitude,
+          };
+          return property;
+        },
+      );
     },
-    [getPropertyWithPidWrapped, getPropertyWithPidWfs],
+    [getPropertyWrapped, getPropertyWithIdWfs],
   );
 
   /**
@@ -113,9 +107,9 @@ export const useProperties = () => {
   );
 
   return {
+    getProperty: fetchPropertyWithId,
+    getPropertyLoading: getPropertyLoading,
     getProperties: fetchProperties,
-    getPropertyWithPid: fetchPropertyWithPid,
-    getPropertyWithPidLoading: getPropertyWithPidLoading,
     exportProperties,
   };
 };
