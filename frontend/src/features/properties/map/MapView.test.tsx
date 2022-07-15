@@ -19,7 +19,6 @@ import { useApiProperties } from 'hooks/pims-api';
 import { useLtsa } from 'hooks/useLtsa';
 import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IProperty } from 'interfaces';
-import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -188,9 +187,10 @@ describe('MapView', () => {
 
   const getMap = () => {
     process.env.REACT_APP_TENANT = 'MOTI';
+    const onMarkerPopupClosed = jest.fn();
     return (
       <TestCommonWrapper store={store} history={history}>
-        <MapView showParcelBoundaries={true} onMarkerPopupClosed={noop} />
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
       </TestCommonWrapper>
     );
   };
@@ -203,7 +203,6 @@ describe('MapView', () => {
     expect(document.querySelector('.leaflet-container')).toBeVisible();
   });
 
-  /*
   it('Can toggle the base map', async () => {
     mockAxios.reset();
     mockAxios.onGet('/basemaps.json').reply(200, {
@@ -429,5 +428,5 @@ describe('MapView', () => {
     expect(text).toBeVisible();
     const label = await screen.queryByText('Search:');
     expect(label).toBeNull();
-  });*/
+  });
 });

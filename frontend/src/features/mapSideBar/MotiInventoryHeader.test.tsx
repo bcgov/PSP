@@ -1,6 +1,4 @@
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
-import { LtsaOrders } from 'interfaces/ltsaModels';
-import { mockLtsaResponse } from 'mocks/filterDataMock';
 import { render, RenderOptions, RenderResult, userEvent } from 'utils/test-utils';
 
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';

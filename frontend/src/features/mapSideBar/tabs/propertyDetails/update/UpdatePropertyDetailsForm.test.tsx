@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_Property } from 'models/api/Property';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { render, RenderOptions } from 'utils/test-utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -16,7 +16,6 @@ const storeState = {
 };
 
 const onSubmit = jest.fn();
-const onCancel = jest.fn();
 
 const mockAxios = new MockAdapter(axios);
 const fakeProperty: Api_Property = {
