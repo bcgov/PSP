@@ -17,6 +17,6 @@ namespace Pims.Api.Services
 
         ExternalResult<FileDownload> DownloadFile(int documentId, int fileId);
 
-        Task<ExternalResult<DocumentDetail>> UploadDocument(int documentType, IFormFile fileRaw);
+        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw);
     }
 }

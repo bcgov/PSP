@@ -39,7 +39,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            await service.Scan(new byte[] { 1, 2, 3 });
+            await service.ScanAsync(new byte[] { 1, 2, 3 });
 
             // Verify
             client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
@@ -60,7 +60,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            await service.Scan(new byte[] { 1, 2, 3 });
+            await service.ScanAsync(new byte[] { 1, 2, 3 });
 
             // Verify
             client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Never);
@@ -81,7 +81,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.Scan(new byte[] { 1, 2, 3 }));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new byte[] { 1, 2, 3 }));
 
             // Verify
             exception.Message.Should().Contain("threats found");
@@ -103,7 +103,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.Scan(new byte[] { 1, 2, 3 }));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new byte[] { 1, 2, 3 }));
 
             // Verify
             exception.Message.Should().Contain("error");
@@ -125,7 +125,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.Scan(new byte[] { 1, 2, 3 }));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new byte[] { 1, 2, 3 }));
 
             // Verify
             exception.Message.Should().Contain("unknown");
@@ -147,7 +147,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            await service.Scan(helper.GetFormFile(""));
+            await service.ScanAsync(helper.GetFormFile(""));
 
             // Verify
             client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
@@ -168,7 +168,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            await service.Scan(helper.GetFormFile(""));
+            await service.ScanAsync(helper.GetFormFile(""));
 
             // Verify
             client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Never);
@@ -189,7 +189,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.Scan(helper.GetFormFile("")));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(helper.GetFormFile("")));
 
             // Verify
             exception.Message.Should().Contain("threats found");
@@ -211,7 +211,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.Scan(helper.GetFormFile("")));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(helper.GetFormFile("")));
 
             // Verify
             exception.Message.Should().Contain("error");
@@ -233,7 +233,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.Scan(helper.GetFormFile("")));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(helper.GetFormFile("")));
 
             // Verify
             exception.Message.Should().Contain("unknown");

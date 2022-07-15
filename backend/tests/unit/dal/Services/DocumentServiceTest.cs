@@ -36,13 +36,14 @@ namespace Pims.Dal.Test.Services
             var documentRepository = helper.GetService<Mock<IEdmsDocumentRepository>>();
             documentRepository.Setup(x => x.UploadDocumentAsync(It.IsAny<int>(), It.IsAny<IFormFile>()));
             var avService = helper.GetService<Mock<IAvService>>();
-            avService.Setup(x => x.Scan(It.IsAny<IFormFile>()));
+            avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>()));
 
             // Act
-            var updatedLease = service.UploadDocument(1, helper.GetFormFile(""));
+            var updatedLease = service.UploadDocumentAsync(1, helper.GetFormFile(""));
 
             // Assert
             documentRepository.Verify(x => x.UploadDocumentAsync(It.IsAny<int>(), It.IsAny<IFormFile>()), Times.Once);
+            avService.Verify(x => x.ScanAsync(It.IsAny<IFormFile>()), Times.Once);
         }
 
         #endregion

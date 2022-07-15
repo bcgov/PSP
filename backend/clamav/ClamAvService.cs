@@ -46,7 +46,7 @@ namespace Pims.Av
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public async Task Scan(IFormFile file)
+        public async Task ScanAsync(IFormFile file)
         {
             if (this.Options.DisableScan)
             {
@@ -57,7 +57,7 @@ namespace Pims.Av
             file.OpenReadStream().CopyTo(ms);
             byte[] fileBytes = ms.ToArray();
 
-            await Scan(fileBytes);
+            await ScanAsync(fileBytes);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Pims.Av
         /// </summary>
         /// <param name="fileData"></param>
         /// <returns></returns>
-        public async Task Scan(byte[] fileData)
+        public async Task ScanAsync(byte[] fileData)
         {
             if (this.Options.DisableScan)
             {

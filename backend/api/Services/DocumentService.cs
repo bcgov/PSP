@@ -43,9 +43,9 @@ namespace Pims.Api.Services
             return task.Result;
         }
 
-        public async Task<ExternalResult<DocumentDetail>> UploadDocument(int documentType, IFormFile fileRaw)
+        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw)
         {
-            await this.avService.Scan(fileRaw);
+            await this.avService.ScanAsync(fileRaw);
             Task<ExternalResult<DocumentDetail>> task = documentRepository.UploadDocumentAsync(documentType, fileRaw);
             task.Wait();
             return task.Result;
