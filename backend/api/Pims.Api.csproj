@@ -49,6 +49,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.4" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\clamav\Pims.Av.csproj" />
     <ProjectReference Include="..\dal\Pims.Dal.csproj" />
     <ProjectReference Include="..\dal.keycloak\Pims.Dal.Keycloak.csproj" />
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />

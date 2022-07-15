@@ -62,6 +62,20 @@ parameters:
     description: "The URL path to the API Swagger endpoint"
     value: "/api-docs"
 
+  - name: AV_HOST_URI
+    displayName: "Antivirus host uri"
+    description: "The host URI of the antivirus service"
+    value: "localhost"
+  - name: AV_PORT
+    displayName: "Antivirus port"
+    description: "The port of the antivirus service"
+    value: "3310"
+  - name: AV_DISABLE_SCAN
+    displayName: "Disable Antivirus scan"
+    description: "Flag that skips all av scanning when true"
+    value: "false"
+
+
   - name: ASPNETCORE_ENVIRONMENT
     displayName: "AspNetCore Environment"
     description: "The ASP Net Core deployment environment setting, [Development, Staging, Production]."
@@ -406,6 +420,12 @@ objects:
                   value: ${READINESS_PATH}
                 - name: TZ
                   value: ${TIME_ZONE}
+                - name: AV__HostUri
+                  value: ${AV_HOST_URI}
+                - name: AV__PORT
+                  value: ${AV_PORT}
+                - name: AV__DisableScan
+                  value: ${AV_DISABLE_SCAN}
                 - name: ConnectionStrings__PIMS
                   valueFrom:
                     configMapKeyRef:

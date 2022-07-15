@@ -182,6 +182,13 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "Ltsa unhandled exception.");
             }
+            else if (ex is AvException)
+            {
+                code = HttpStatusCode.BadRequest;
+                message = ex.Message;
+
+                _logger.LogError(ex, "clamav unhandled exception.");
+            }
             else if (ex is HttpClientRequestException || ex is ProxyRequestException)
             {
                 var exception = ex as HttpClientRequestException;

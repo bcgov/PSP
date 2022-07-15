@@ -1,5 +1,6 @@
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -8,6 +9,7 @@ using Pims.Dal.Configuration.Generators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -216,6 +218,21 @@ namespace Pims.Core.Test
         {
             return (T)ActivatorUtilities.CreateInstance(Provider, typeof(T));
         }
+
+        public IFormFile GetFormFile(string text)
+        {
+            //Setup mock file using a memory stream
+            var fileName = "test.pdf";
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(text);
+            writer.Flush();
+            stream.Position = 0;
+
+            //create FormFile with desired data
+            IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
+            return file;
+        } 
         #endregion
     }
 }
