@@ -166,7 +166,7 @@ namespace Pims.Ltsa
             {
                 try
                 {
-                    var refreshToken = _token.RefreshToken;
+                    var refreshToken = _token?.RefreshToken;
                     _token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
                     var response = await _authPolicy.ExecuteAsync(async () => await this.Client.PostJsonAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), new { refreshToken }));
                     var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
