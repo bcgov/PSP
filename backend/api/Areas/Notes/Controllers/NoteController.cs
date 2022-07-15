@@ -8,8 +8,8 @@ using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
-using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Notes.Controllers
 {
@@ -30,6 +30,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a NoteController class, initializes it with the specified arguments.
         /// </summary>
@@ -63,18 +64,19 @@ namespace Pims.Api.Areas.Notes.Controllers
         }
 
         /// <summary>
-        /// Get the notes for the specified type.
+        /// Get the notes for the specified type and entity id.
         /// </summary>
         /// <param name="type">Used to identify note type.</param>
+        /// <param name="entityId">Used to identify note's parent entity.</param>
         /// <returns></returns>
-        [HttpGet("{type}")]
+        [HttpGet("{type}/{entityId}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult GetNotes(NoteType type)
+        public IActionResult GetNotes(NoteType type, long entityId)
         {
-            var notes = _noteService.GetNotes(type);
+            var notes = _noteService.GetNotes(type, entityId);
             var mappedNotes = _mapper.Map<List<NoteModel>>(notes);
             return new JsonResult(mappedNotes);
         }
@@ -89,9 +91,8 @@ namespace Pims.Api.Areas.Notes.Controllers
         [Produces("application/json")]
         [HasPermission(Permissions.NoteDelete)]
         [ProducesResponseType(typeof(bool), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult DeleteNote(NoteType type, int noteId)
+        public IActionResult DeleteNote(NoteType type, long noteId)
         {
             _noteService.DeleteNote(type, noteId);
             return new JsonResult(true);

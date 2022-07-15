@@ -59,13 +59,13 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsNotes.Count();
         }
 
-        public IEnumerable<PimsNote> GetActivityNotes()
+        public IEnumerable<PimsNote> GetActivityNotes(long entityId)
         {
-            return this.Context.PimsNotes
-                .Include(n => n.PimsActivityInstanceNotes.Where(x => x.IsDisabled == false)).ToArray();
+            return this.Context.PimsActivityInstanceNotes
+                .Where(x => x.ActivityInstanceId == entityId && x.IsDisabled == false).Select(x => x.Note).ToList();
         }
 
-        public void DeleteActivityNotes(int noteId)
+        public void DeleteActivityNotes(long noteId)
         {
             var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
             if (activityNotes.Any())
@@ -77,7 +77,6 @@ namespace Pims.Dal.Repositories
                     note.AppLastUpdateUserid = User.GetUsername();
                     note.AppLastUpdateUserGuid = User.GetUserKey();
                 }
-                this.Context.SaveChanges();
             }
         }
         #endregion

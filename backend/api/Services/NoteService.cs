@@ -62,12 +62,13 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="type">Note type to determine the type of note to delete.</param>
         /// <param name="noteId">Note id to identify the note to delete</param>
-        public void DeleteNote(NoteType type, int noteId)
+        public void DeleteNote(NoteType type, long noteId)
         {
             switch (type)
             {
                 case NoteType.Activity:
                     _noteRepository.DeleteActivityNotes(noteId);
+                    _entityNoteRepository.CommitTransaction();
                     break;
                 case NoteType.File:
                     // Write code to delete the note from FileNotes table
@@ -81,13 +82,14 @@ namespace Pims.Api.Services
         /// Get notes by note type.
         /// </summary>
         /// <param name="type">Note type to determine the type of notes to return.</param>
+        /// <param name="entityId">Entity Id to determine the entity to which notes belongs to.</param>
         /// <returns></returns>
-        public IEnumerable<PimsNote> GetNotes(NoteType type)
+        public IEnumerable<PimsNote> GetNotes(NoteType type, long entityId)
         {
             switch (type)
             {
                 case NoteType.Activity:
-                    return _noteRepository.GetActivityNotes();
+                    return _noteRepository.GetActivityNotes(entityId);
                 case NoteType.File:
                 default:
                     return new List<PimsNote>();

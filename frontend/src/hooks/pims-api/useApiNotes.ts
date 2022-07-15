@@ -16,7 +16,8 @@ export const useApiNotes = () => {
     () => ({
       postNote: (type: NoteTypes, note: Api_EntityNote) =>
         api.post<Api_EntityNote>(`/notes/${type}`, note),
-      getNotes: (type: NoteTypes) => api.get<Api_Note[]>(`/notes/${type}`),
+      getNotes: (type: NoteTypes, entityId: number) =>
+        api.get<Api_Note[]>(`/notes/${type}/${entityId}`),
       deleteNote: (type: NoteTypes, noteId: number) =>
         api.delete<boolean>(`/notes/${type}/${noteId}`),
     }),
