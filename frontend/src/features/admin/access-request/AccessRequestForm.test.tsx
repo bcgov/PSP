@@ -1,7 +1,8 @@
 import { getMockAccessRequest } from 'mocks/accessRequestMock';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_AccessRequest } from 'models/api/AccessRequest';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import AccessRequestForm from './AccessRequestForm';
 import { FormAccessRequest } from './models';
@@ -74,10 +75,26 @@ describe('AccessRequestForm component', () => {
     const submitButton = getUpdateButton();
     userEvent.click(submitButton);
 
-    const expectedValues = { ...initialValues.toApi() };
+    const expectedValues: Api_AccessRequest = { ...initialValues.toApi() };
     expectedValues.user!.position = 'position';
     expectedValues.note = 'test note';
 
     await waitFor(() => expect(addAccessRequest).toHaveBeenCalledWith(expectedValues));
+  });
+
+  it('validates character limits', async () => {
+    const { container, findByText, getUpdateButton } = setup({ initialValues });
+
+    // first name cannot exceed 50 characters
+    await fillInput(container, 'position', fakeText(150));
+    expect(await findByText(/Position must be less than 100 characters/i)).toBeVisible();
+
+    await fillInput(container, 'note', fakeText(4001), 'textarea');
+    expect(await findByText(/Note must be less than 4000 characters/i)).toBeVisible();
+
+    const submitButton = getUpdateButton();
+    userEvent.click(submitButton);
+
+    await waitFor(() => expect(addAccessRequest).not.toHaveBeenCalled());
   });
 });

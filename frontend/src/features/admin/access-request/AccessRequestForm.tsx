@@ -18,7 +18,7 @@ import { FormAccessRequest as AccessRequestFormModel } from './models';
 import RolesToolTip from './RolesToolTip';
 
 interface IAccessRequestFormProps {
-  initialValues: any;
+  initialValues: AccessRequestFormModel;
   addAccessRequest: (accessRequest: Api_AccessRequest) => Promise<Api_AccessRequest | undefined>;
   onCancel?: () => void;
 }
@@ -33,7 +33,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
   const selectRegions = getOptionsByType(API.REGION_TYPES).filter(
     region => region.label !== 'Cannot determine',
   );
-  const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.role?.id));
+  const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.roleId));
   return (
     <Formik<AccessRequestFormModel>
       enableReinitialize={true}
@@ -50,7 +50,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
         <SectionField label="IDIR/BCeID" wideScreen>
           <Input
             field="businessIdentifierValue"
-            placeholder={initialValues?.user?.businessIdentifierValue}
+            placeholder={initialValues?.businessIdentifierValue}
             readOnly={true}
             type="text"
           />
@@ -59,31 +59,21 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
         <SectionField label="First name" wideScreen>
           <Input
             field="firstName"
-            placeholder={initialValues?.user?.firstName}
+            placeholder={initialValues?.firstName}
             readOnly={true}
             type="text"
           />
         </SectionField>
         <SectionField label="Last name" wideScreen>
-          <Input
-            field="surname"
-            placeholder={initialValues?.user?.surname}
-            readOnly={true}
-            type="text"
-          />
+          <Input field="surname" placeholder={initialValues?.surname} readOnly={true} type="text" />
         </SectionField>
         <SectionField label="Email" wideScreen>
-          <Input
-            field="email"
-            placeholder={initialValues?.user?.email}
-            readOnly={true}
-            type="email"
-          />
+          <Input field="email" placeholder={initialValues?.email} readOnly={true} type="email" />
         </SectionField>
         <SectionField label="Position" wideScreen>
           <Input
             field="position"
-            placeholder="e.g. Property Analyst, Integrated Transportion & Infrastructure Services"
+            placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
             type="text"
           />
         </SectionField>
