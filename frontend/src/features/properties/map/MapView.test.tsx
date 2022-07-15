@@ -63,30 +63,30 @@ const ltsaMock = {
 }));
 
 const largeMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672 },
-  { id: 3, latitude: 53.917065, longitude: -122.749672 },
-  { id: 4, latitude: 53.917065, longitude: -122.749672 },
+  { id: 1, latitude: 53.917061, longitude: -122.749672 },
+  { id: 2, latitude: 53.917062, longitude: -122.749672 },
+  { id: 3, latitude: 53.917063, longitude: -122.749672 },
+  { id: 4, latitude: 53.917064, longitude: -122.749672 },
   { id: 5, latitude: 53.917065, longitude: -122.749672 },
-  { id: 6, latitude: 53.917065, longitude: -122.749672 },
-  { id: 7, latitude: 53.917065, longitude: -122.749672 },
-  { id: 8, latitude: 53.917065, longitude: -122.749672 },
-  { id: 9, latitude: 53.917065, longitude: -122.749672 },
-  { id: 10, latitude: 53.917065, longitude: -122.749672 },
-  { id: 11, latitude: 53.918165, longitude: -122.749772 },
+  { id: 6, latitude: 53.917066, longitude: -122.749672 },
+  { id: 7, latitude: 53.917067, longitude: -122.749672 },
+  { id: 8, latitude: 53.917068, longitude: -122.749672 },
+  { id: 9, latitude: 53.917069, longitude: -122.749672 },
+  { id: 10, latitude: 53.917071, longitude: -122.749672 },
+  { id: 11, latitude: 53.918172, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const smallMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672 },
-  { id: 3, latitude: 53.918165, longitude: -122.749772 },
+  { id: 1, latitude: 54.917061, longitude: -122.749672 },
+  { id: 3, latitude: 54.918162, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672 },
-  { id: 3, latitude: 53.917065, longitude: -122.749772 },
+  { id: 1, latitude: 55.917061, longitude: -122.749672, pid: '7771' },
+  { id: 2, latitude: 55.917062, longitude: -122.749672, pid: '7772' },
+  { id: 3, latitude: 55.917063, longitude: -122.749772, pid: '7773' },
 ] as IProperty[];
 
 const useLayerQueryMock = {

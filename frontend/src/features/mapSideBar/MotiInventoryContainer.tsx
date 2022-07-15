@@ -96,12 +96,14 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   }, [fetchPimsProperty]);
 
   useEffect(() => {
-    async function getAssociations() {
+    const getAssociations = async () => {
       if (props.pid !== undefined) {
         const response = await getPropertyAssociations(props.pid);
-        setComposedProperty(property => ({ ...property, propertyAssociations: response }));
+        if (response !== undefined) {
+          setComposedProperty(property => ({ ...property, propertyAssociations: response }));
+        }
       }
-    }
+    };
     getAssociations();
   }, [getPropertyAssociations, props.pid]);
 
