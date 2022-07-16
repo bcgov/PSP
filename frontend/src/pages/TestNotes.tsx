@@ -1,5 +1,5 @@
 import { Button } from 'components/common/buttons';
-import { NoteTypes } from 'constants/noteTypes';
+import { NoteTypes } from 'constants/index';
 import { AddNotesContainer } from 'features/notes/add/AddNotesContainer';
 import NoteListView from 'features/notes/list/NoteListView';
 import { useModalManagement } from 'hooks/useModalManagement';
@@ -18,7 +18,7 @@ export const TestNotes: React.FC = () => {
       <Row className="py-5">
         <Button onClick={openModal}>Add a Note</Button>
         <AddNotesContainer
-          parentType="activity"
+          type={NoteTypes.Activity}
           parentId={1}
           isOpened={isModalOpened}
           openModal={openModal}

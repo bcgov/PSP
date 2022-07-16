@@ -1,3 +1,4 @@
+import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
 
 import { useAddNotesFormManagement } from '../hooks/useAddNotesFormManagement';
@@ -6,7 +7,7 @@ import { EntityNoteForm } from './models';
 
 export interface IAddNotesContainerProps {
   /** The parent entity type for adding notes - e.g. 'activity' */
-  parentType: string;
+  type: NoteTypes;
   /** The parent's ID */
   parentId: number;
   /** Whether to show the notes modal. Default: false */
@@ -19,7 +20,7 @@ export interface IAddNotesContainerProps {
 
 export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
   const { handleSubmit, initialValues, validationSchema } = useAddNotesFormManagement({
-    parentType: props.parentType,
+    type: props.type,
     parentId: props.parentId,
   });
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockEntityNote } from 'mocks/mockNoteResponses';
@@ -21,7 +22,7 @@ const BASIC_PROPS: IAddNotesContainerProps = {
   openModal,
   closeModal,
   parentId: 1,
-  parentType: 'activity',
+  type: NoteTypes.Activity,
 };
 
 describe('AddNotesContainer component', () => {
@@ -113,7 +114,7 @@ describe('AddNotesContainer component', () => {
     formValues.parentId = BASIC_PROPS.parentId;
     formValues.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, parentType: 'file' });
+    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, type: NoteTypes.File });
 
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.type(textarea, formValues.note.note);
