@@ -35,7 +35,6 @@ describe('MotiInventoryContainer component', () => {
     // render component under test
     const utils = render(
       <MotiInventoryContainer
-        readOnly={renderOptions.readOnly}
         onClose={renderOptions.onClose}
         pid={renderOptions.pid}
         onZoom={renderOptions.onZoom}
@@ -63,7 +62,6 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onGet().reply(200, {});
 
     setup({
-      readOnly: true,
       pid: '9212434',
       onClose,
       onZoom,
@@ -77,11 +75,10 @@ describe('MotiInventoryContainer component', () => {
 
   it('shows the property information tab for inventory properties', async () => {
     mockAxios.onPost().reply(200, {});
-    mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
+    mockAxios.onGet(new RegExp('/properties/*')).reply(200, { pid: '009-212-434' });
+    mockAxios.onGet(new RegExp('/ogs-internal/*')).reply(200, {});
 
     const { findByText, queryByTestId } = setup({
-      readOnly: true,
       pid: '9212434',
       onClose,
       onZoom,
@@ -91,10 +88,10 @@ describe('MotiInventoryContainer component', () => {
       expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
       expect(mockAxios.history.get[0].url).toBe(`/properties/009-212-434`);
     });
-    expect(await findByText(/property attributes/i)).toBeInTheDocument();
     await waitFor(() => {
       expect(queryByTestId('filter-backdrop-loading')).toBeNull();
     });
+    expect(await findByText(/property attributes/i)).toBeInTheDocument();
   });
 
   it('hides the property information tab for non-inventory properties', async () => {
@@ -108,7 +105,6 @@ describe('MotiInventoryContainer component', () => {
     mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
 
     const { queryByText, getByText, queryByTestId } = setup({
-      readOnly: true,
       pid: '9212434',
       onClose,
       onZoom,
@@ -121,28 +117,5 @@ describe('MotiInventoryContainer component', () => {
     expect(queryByText(/property attributes/i)).toBeNull();
     expect(getByText('Title')).toHaveClass('active');
     expect(queryByTestId('filter-backdrop-loading')).toBeNull();
-  });
-
-  it('shows the EDIT property form when read-only prop set to FALSE', async () => {
-    mockAxios.onPost().reply(200, {});
-    mockAxios.onGet(new RegExp('properties/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-
-    const { findByText, queryByTestId } = setup({
-      readOnly: false,
-      pid: '9212434',
-      onClose,
-      onZoom,
-    });
-
-    await waitFor(() => {
-      expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
-      expect(mockAxios.history.get[0].url).toBe(`/properties/concept/9212434`);
-    });
-
-    expect(await findByText(/property attributes/i)).toBeInTheDocument();
-    await waitFor(() => {
-      expect(queryByTestId('filter-backdrop-loading')).toBeNull();
-    });
   });
 });

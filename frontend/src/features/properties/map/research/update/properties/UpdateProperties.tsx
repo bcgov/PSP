@@ -1,5 +1,6 @@
 import GenericModal from 'components/common/GenericModal';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, Formik, FormikProps } from 'formik';
@@ -8,7 +9,6 @@ import { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { PropertyForm, ResearchForm } from '../../add/models';
-import ResearchFooter from '../../common/ResearchFooter';
 import { useUpdateResearchProperties } from '../../hooks/useUpdateResearchProperties';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
@@ -73,7 +73,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         title={'Property selection'}
         icon={undefined}
         footer={
-          <ResearchFooter
+          <SidebarFooter
             isOkDisabled={formikRef.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}

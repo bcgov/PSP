@@ -1,13 +1,13 @@
 import { Button } from 'components/common/buttons/Button';
 import { Col, Row } from 'react-bootstrap';
 
-interface IAddResearchFooterProps {
+interface ISidebarFooterProps {
   isOkDisabled?: boolean;
   onSave: () => void;
   onCancel: () => void;
 }
 
-const AddResearchFooter: React.FunctionComponent<IAddResearchFooterProps> = props => {
+const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = props => {
   return (
     <Row className="justify-content-end mt-auto no-gutters pt-3">
       <Col xs="auto" className="pr-4">
@@ -24,4 +24,4 @@ const AddResearchFooter: React.FunctionComponent<IAddResearchFooterProps> = prop
   );
 };
 
-export default AddResearchFooter;
+export default SidebarFooter;
