@@ -27,7 +27,7 @@ describe('useAddNotesFormManagement hook', () => {
       () =>
         useAddNotesFormManagement({
           parentId: hookProps.parentId,
-          parentType: hookProps.parentType,
+          type: hookProps.type,
         }),
       {
         wrapper: props => (
@@ -51,7 +51,7 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   it('should return valid initial values', async () => {
-    const { initialValues } = setup({ parentId: 1, parentType: NoteTypes.Activity });
+    const { initialValues } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     expect(initialValues).toEqual(
       expect.objectContaining({
@@ -63,7 +63,7 @@ describe('useAddNotesFormManagement hook', () => {
 
   it('should provide form validation schema', async () => {
     expect.assertions(3);
-    const { validationSchema } = setup({ parentId: 1, parentType: NoteTypes.Activity });
+    const { validationSchema } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const validForm = new EntityNoteForm();
     const invalidForm = new EntityNoteForm();
@@ -75,7 +75,7 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   it('should provide form submission handler', async () => {
-    const { handleSubmit } = setup({ parentId: 1, parentType: NoteTypes.Activity });
+    const { handleSubmit } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const formValues = new EntityNoteForm();
     formValues.note.note = 'Test Note';
