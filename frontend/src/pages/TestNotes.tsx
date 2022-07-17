@@ -6,7 +6,7 @@ import { useModalManagement } from 'hooks/useModalManagement';
 import { Col, Container, Row } from 'react-bootstrap';
 
 export const TestNotes: React.FC = () => {
-  const { isModalOpened, openModal, closeModal } = useModalManagement();
+  const [isModalOpened, openModal, closeModal] = useModalManagement();
 
   return (
     <Container>

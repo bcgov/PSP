@@ -9,9 +9,5 @@ export function useModalManagement() {
   const openModal = useCallback(() => setModalVisibility(true), []);
   const closeModal = useCallback(() => setModalVisibility(false), []);
 
-  return {
-    isModalOpened,
-    openModal,
-    closeModal,
-  };
+  return [isModalOpened, openModal, closeModal] as const;
 }
