@@ -20,8 +20,8 @@ export const useApiNotes = () => {
         api.get<Api_Note[]>(`/notes/${type}/${entityId}`),
       getNote: (type: NoteTypes, noteId: number) =>
         api.get<Api_Note>(`/notes/${type}/id/${noteId}`),
-      putNote: (type: NoteTypes, noteId: number) =>
-        api.put<Api_Note>(`/notes/${type}/id/${noteId}`),
+      putNote: (type: NoteTypes, note: Api_Note) =>
+        api.put<Api_Note>(`/notes/${type}/id/${note.id ?? 0}`, note),
       deleteNote: (type: NoteTypes, noteId: number) =>
         api.delete<boolean>(`/notes/${type}/${noteId}`),
     }),

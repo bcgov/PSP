@@ -40,7 +40,7 @@ export const useNoteRepository = () => {
     (...args: any[]) => Promise<AxiosResponse<Api_Note, any>>
   >({
     requestFunction: useCallback(
-      async (type: NoteTypes, noteId: number) => await putNote(type, noteId),
+      async (type: NoteTypes, note: Api_Note) => await putNote(type, note),
       [putNote],
     ),
     requestName: 'UpdateNote',

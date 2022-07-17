@@ -3,11 +3,13 @@ import { TableSort } from 'components/Table/TableSort';
 import { NoteTypes } from 'constants/noteTypes';
 import { useApiNotes } from 'hooks/pims-api/useApiNotes';
 import useIsMounted from 'hooks/useIsMounted';
+import { useModalManagement } from 'hooks/useModalManagement';
 import { orderBy } from 'lodash';
 import { Api_Note } from 'models/api/Note';
 import React from 'react';
 import { toast } from 'react-toastify';
 
+import { NoteContainer } from '../NoteContainer';
 import { NoteResults } from './NoteResults/NoteResults';
 import * as Styled from './styles';
 
@@ -30,6 +32,8 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<TableSort<Api_Note>>({});
   const [noteResult, setNoteResult] = React.useState<Api_Note[]>([]);
+
+  const [isViewNotesOpened, openViewNotesModal, closeViewNotesModal] = useModalManagement();
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -82,11 +86,26 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
           loading={isLoading}
           sort={sort}
           setSort={setSort}
+          onShowDetails={(note: Api_Note) => {
+            setCurrentNote(note);
+            openViewNotesModal();
+          }}
           onDelete={(note: Api_Note) => {
             setCurrentNote(note);
             setShowDeleteConfirm(true);
           }}
         />
+
+        {currentNote && (
+          <NoteContainer
+            type={props.type}
+            noteId={currentNote.id as number}
+            isOpened={isViewNotesOpened}
+            openModal={openViewNotesModal}
+            closeModal={closeViewNotesModal}
+          ></NoteContainer>
+        )}
+
         <GenericModal
           display={showDeleteConfirm}
           title="Delete Note"
