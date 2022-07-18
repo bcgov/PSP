@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
-    <Version>1.1.0-31.14</Version>
-    <AssemblyVersion>1.1.0.31</AssemblyVersion>
+    <Version>1.1.0-32.10</Version>
+    <AssemblyVersion>1.1.0.32</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ProjectGuid>16BC0468-78F6-4C91-87DA-7403C919E646</ProjectGuid>
   </PropertyGroup>
@@ -49,6 +49,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.4" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\clamav\Pims.Av.csproj" />
     <ProjectReference Include="..\dal\Pims.Dal.csproj" />
     <ProjectReference Include="..\dal.keycloak\Pims.Dal.Keycloak.csproj" />
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />

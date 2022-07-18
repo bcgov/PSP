@@ -91,9 +91,9 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(ExternalResult<DocumentDetail>), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public IActionResult UploadDocument([FromForm] int documentType, [FromForm] IFormFile file)
+        public async Task<IActionResult> UploadDocument([FromForm] int documentType, [FromForm] IFormFile file)
         {
-            var result = _documentService.UploadDocument(documentType, file);
+            var result = await _documentService.UploadDocumentAsync(documentType, file);
             return new JsonResult(result);
         }
 

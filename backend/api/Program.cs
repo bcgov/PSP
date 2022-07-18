@@ -66,6 +66,8 @@ namespace Pims.Api
                     config.AddJsonFile($"geocoder.{env}.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile("ltsa.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"ltsa.{env}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("av.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile($"av.{env}.json", optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
                     config.AddCommandLine(args);
                 })

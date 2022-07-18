@@ -45,8 +45,10 @@ using Pims.Dal;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
+using Pims.Av;
 using Prometheus;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using nClam;
 
 namespace Pims.Api
 {
@@ -218,6 +220,7 @@ namespace Pims.Api
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
+            services.AddClamAvService(this.Configuration.GetSection("Av"));
             services.AddSingleton<IAuthorizationHandler, RealmAccessRoleHandler>();
             services.AddTransient<IClaimsTransformation, KeycloakClaimTransformer>();
             services.AddHttpContextAccessor();
@@ -309,6 +312,7 @@ namespace Pims.Api
         {
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IDocumentSyncService, DocumentSyncService>();
+            services.AddScoped<INoteService, NoteService>();
         }
 
         /// <summary>

@@ -15,6 +15,7 @@ import PublicLayout from 'layouts/PublicLayout';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
 import Test from 'pages/Test.ignore';
 import { TestFileManagement } from 'pages/TestFileManagement';
+import { TestNotes } from 'pages/TestNotes';
 import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
@@ -98,6 +99,7 @@ const AppRouter: React.FC = () => {
           layout={PublicLayout}
         ></AppRoute>
         <AppRoute
+          exact
           path="/test"
           title={getTitle('Test')}
           component={Test}
@@ -173,7 +175,7 @@ const AppRouter: React.FC = () => {
           path="/lease/:leaseId"
           component={LeaseContainerWrapper}
           layout={AuthLayout}
-          claim={Claims.PROPERTY_VIEW}
+          claim={Claims.LEASE_VIEW}
           title={getTitle('Create/Edit Lease & Licenses')}
         />
         <AppRoute
@@ -229,6 +231,13 @@ const AppRouter: React.FC = () => {
           path="/testFileManagement"
           title={getTitle('Test')}
           component={TestFileManagement}
+          layout={AuthLayout}
+        />
+        <AppRoute
+          exact
+          path="/test/notes"
+          title={getTitle('Test Notes')}
+          component={TestNotes}
           layout={AuthLayout}
         />
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />

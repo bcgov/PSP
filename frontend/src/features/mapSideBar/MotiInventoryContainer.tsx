@@ -1,30 +1,25 @@
 import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
 import axios, { AxiosError } from 'axios';
+import GenericModal from 'components/common/GenericModal';
+import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
+import PropertyViewSelector from 'features/properties/map/propertyInformation/PropertyViewSelector';
+import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
+import { FormikProps } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
 import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
-import { LtsaOrders } from 'interfaces/ltsaModels';
-import { Api_PropertyAssociations } from 'models/api/Property';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
-import { usePropertyDetails } from './hooks/usePropertyDetails';
 import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
-import { InventoryTabNames, InventoryTabs, TabInventoryView } from './tabs/InventoryTabs';
-import LtsaTabView from './tabs/ltsa/LtsaTabView';
-import PropertyAssociationTabView from './tabs/propertyAssociations/PropertyAssociationTabView';
-import { PropertyDetailsTabView } from './tabs/propertyDetails/detail/PropertyDetailsTabView';
-import { UpdatePropertyDetailsContainer } from './tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 
 export interface IMotiInventoryContainerProps {
   pid?: string;
-  readOnly?: boolean;
   onClose: () => void;
   onZoom: (apiProperty?: IPropertyApiModel | undefined) => void;
 }
@@ -34,68 +29,92 @@ export interface IMotiInventoryContainerProps {
  */
 export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryContainerProps> = props => {
   const isMounted = useIsMounted();
-  const history = useHistory();
-  const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
-  const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
-  const [propertyAssociations, setPropertyAssociations] = useState<
-    Api_PropertyAssociations | undefined
-  >(undefined);
-  const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
-  const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
-  const [activeTab, setActiveTab] = useState<InventoryTabNames>(InventoryTabNames.property);
+
+  const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
+    undefined,
+  );
 
   // First, fetch property information from PSP API
   const { getPropertyWithPid, getPropertyWithPidLoading: propertyLoading } = useProperties();
-  useEffect(() => {
-    const func = async () => {
-      try {
-        if (!!props.pid && !!props.readOnly) {
-          const propInfo = await getPropertyWithPid(props.pid);
-          if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
-            setApiProperty(propInfo);
-            setShowPropertyInfoTab(true);
-          }
-        }
-      } catch (e) {
-        // PSP-2919 Hide the property info tab for non-inventory properties
-        // We get an error because PID is not on our database
-        if (axios.isAxiosError(e)) {
-          const axiosError = e as AxiosError<IApiError>;
-          if (axiosError?.response?.status === 404) {
-            setShowPropertyInfoTab(false);
-            setActiveTab(InventoryTabNames.title);
-          }
-        }
-      }
-    };
-
-    func();
-  }, [getPropertyWithPid, isMounted, props.pid, props.readOnly]);
 
   const {
     getPropertyAssociations,
     isLoading: propertyAssociationsLoading,
   } = usePropertyAssociations();
 
+  const { getLtsaData, ltsaLoading } = useLtsa();
+
+  const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
+    apiPropertyLoading: ltsaLoading,
+    ltsaLoading: propertyLoading,
+    propertyAssociationsLoading: propertyAssociationsLoading,
+  });
+
   useEffect(() => {
-    async function fetchResearchFile() {
-      if (props.pid !== undefined) {
-        const response = await getPropertyAssociations(props.pid);
-        setPropertyAssociations(response);
+    setComposedProperty(property => ({
+      ...property,
+      pid: props.pid,
+    }));
+    setIsEditing(false);
+  }, [props.pid]);
+
+  useEffect(() => {
+    setComposedProperty(property => ({
+      ...property,
+      ltsaLoading: ltsaLoading,
+      apiPropertyLoading: propertyLoading,
+      propertyAssociationsLoading: propertyAssociationsLoading,
+    }));
+  }, [propertyLoading, ltsaLoading, propertyAssociationsLoading]);
+
+  const fetchPimsProperty = React.useCallback(async () => {
+    try {
+      if (!!props.pid) {
+        const propInfo = await getPropertyWithPid(props.pid);
+        if (isMounted() && propInfo.pid === pidFormatter(props.pid)) {
+          setComposedProperty(property => ({ ...property, apiProperty: propInfo }));
+        }
+      }
+    } catch (e) {
+      // PSP-2919 Hide the property info tab for non-inventory properties
+      // We get an error because PID is not on our database
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 404) {
+          setComposedProperty(property => ({ ...property, apiProperty: undefined }));
+        }
       }
     }
-    fetchResearchFile();
+  }, [getPropertyWithPid, isMounted, props.pid]);
+
+  useEffect(() => {
+    fetchPimsProperty();
+  }, [fetchPimsProperty]);
+
+  useEffect(() => {
+    const getAssociations = async () => {
+      if (props.pid !== undefined) {
+        const response = await getPropertyAssociations(props.pid);
+        if (response !== undefined) {
+          setComposedProperty(property => ({ ...property, propertyAssociations: response }));
+        }
+      }
+    };
+    getAssociations();
   }, [getPropertyAssociations, props.pid]);
 
-  // After API property object has been received, we query relevant map layers to find
-  // additional information which we store in a different model (IPropertyDetailsForm)
-  const propertyViewForm = usePropertyDetails(apiProperty);
-
-  const { getLtsaData, ltsaLoading } = useLtsa();
   useEffect(() => {
     const func = async () => {
-      setLtsaDataRequestedOn(new Date());
-      setLtsaData(undefined);
+      setComposedProperty(property => ({
+        ...property,
+        ltsaDataRequestedOn: new Date(),
+        ltsaData: undefined,
+      }));
+
       if (!!props.pid) {
         const ltsaData = await getLtsaData(pidFormatter(props.pid));
         if (
@@ -103,94 +122,87 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
           ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier ===
             pidFormatter(props.pid)
         ) {
-          setLtsaData(ltsaData);
+          setComposedProperty(property => ({ ...property, ltsaData: ltsaData }));
         }
       }
     };
     func();
   }, [getLtsaData, props.pid, isMounted]);
 
-  const tabViews: TabInventoryView[] = [];
+  const onSuccess = () => {
+    fetchPimsProperty();
+    setIsEditing(false);
+  };
 
-  tabViews.push({
-    content: (
-      <LtsaTabView
-        ltsaData={ltsaData}
-        ltsaRequestedOn={ltsaDataRequestedOn}
-        loading={ltsaLoading}
-      />
-    ),
-    key: InventoryTabNames.title,
-    name: 'Title',
-  });
-
-  tabViews.push({
-    content: <></>,
-    key: InventoryTabNames.value,
-    name: 'Value',
-  });
-
-  var defaultTab = InventoryTabNames.title;
-
-  if (showPropertyInfoTab) {
-    if (props.readOnly) {
-      tabViews.push({
-        content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
-        key: InventoryTabNames.property,
-        name: 'Property Details',
-      });
-    } else {
-      tabViews.push({
-        content: <UpdatePropertyDetailsContainer pid={props.pid} />,
-        key: InventoryTabNames.property,
-        name: 'Property Details',
-      });
+  const handleSaveClick = async () => {
+    if (formikRef !== undefined) {
+      formikRef.current?.setSubmitting(true);
+      formikRef.current?.submitForm();
     }
-    defaultTab = InventoryTabNames.property;
-  }
+  };
 
-  if (propertyAssociations?.id !== undefined) {
-    tabViews.push({
-      content: (
-        <PropertyAssociationTabView
-          isLoading={propertyAssociationsLoading}
-          associations={propertyAssociations}
-        />
-      ),
-      key: InventoryTabNames.pims,
-      name: 'PIMS Files',
-    });
-  }
+  const handleCancelClick = () => {
+    if (formikRef !== undefined) {
+      if (formikRef.current?.dirty) {
+        setShowCancelConfirmModal(true);
+      } else {
+        handleCancelConfirm();
+      }
+    } else {
+      handleCancelConfirm();
+    }
+  };
 
-  const onEditPropertyInformation = useCallback(
-    () => history.push(`/mapview/property/${props.pid}/edit`),
-    [history, props.pid],
-  );
+  const handleCancelConfirm = () => {
+    if (formikRef !== undefined) {
+      formikRef.current?.resetForm();
+    }
+    setIsEditing(false);
+    setShowCancelConfirmModal(false);
+  };
 
   return (
     <MapSideBarLayout
       title="Property Information"
-      header={
-        <MotiInventoryHeader
-          ltsaData={ltsaData}
-          ltsaLoading={ltsaLoading}
-          propertyLoading={propertyLoading}
-          property={apiProperty}
-          showEditButton={props.readOnly}
-          onEdit={onEditPropertyInformation}
-          onZoom={props.onZoom}
-        />
+      header={<MotiInventoryHeader composedProperty={composedProperty} onZoom={props.onZoom} />}
+      footer={
+        isEditing && (
+          <SidebarFooter
+            isOkDisabled={formikRef?.current?.isSubmitting}
+            onSave={handleSaveClick}
+            onCancel={handleCancelClick}
+          />
+        )
       }
       icon={<LotIcon className="mr-1" />}
       showCloseButton
       onClose={props.onClose}
     >
-      <InventoryTabs
-        tabViews={tabViews}
-        defaultTabKey={defaultTab}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+      <>
+        <PropertyViewSelector
+          composedProperty={composedProperty}
+          isEditMode={isEditing}
+          setEditMode={setIsEditing}
+          setFormikRef={setFormikRef}
+          onSuccess={onSuccess}
+        />
+        <GenericModal
+          display={showCancelConfirmModal}
+          title={'Confirm changes'}
+          message={
+            <>
+              <div>If you cancel now, this property information will not be saved.</div>
+              <br />
+              <strong>Are you sure you want to Cancel?</strong>
+            </>
+          }
+          handleOk={handleCancelConfirm}
+          handleCancel={() => setShowCancelConfirmModal(false)}
+          okButtonText="Ok"
+          cancelButtonText="Resume editing"
+          show
+        />
+      </>
     </MapSideBarLayout>
   );
 };

@@ -1,8 +1,11 @@
 using FluentAssertions;
 using Moq;
 using Pims.Core.Test;
+using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Repositories;
+using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -424,6 +427,134 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Act
             await Assert.ThrowsAsync<KeyNotFoundException>(() => service.AppendToUserAsync(user));
+        }
+
+        [Fact]
+        public async Task UpdateAccessRequestAsync_Recieved()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
+            var service = helper.Create<PimsKeycloakService>(user);
+
+            var eAccessRequest = EntityHelper.CreateAccessRequest(1);
+            var eRole = EntityHelper.CreateRole("test-role");
+            eRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Id = eAccessRequest.User.GuidIdentifierValue.Value,
+                Username = eAccessRequest.User.BusinessIdentifierValue,
+                Groups = new string[] { eRole.KeycloakGroupId.ToString() }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+
+            var updatedAccessRequest = new Entity.PimsAccessRequest()
+            {
+                AccessRequestId = eAccessRequest.AccessRequestId,
+                AccessRequestStatusTypeCode = AccessRequestStatusTypes.RECEIVED,
+                User = eAccessRequest.User,
+                Role = eRole,
+                RoleId = eRole.Id,
+            };
+
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
+            var values = new List<Entity.PimsAccessRequest>();
+            pimsServiceMock.Setup(m => m.AccessRequest.Get(It.IsAny<long>())).Returns(eAccessRequest);
+            pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(updatedAccessRequest.User);
+            pimsServiceMock.Setup(m => m.Role.Find(It.IsAny<long>())).Returns(updatedAccessRequest.Role);
+            pimsServiceMock.Setup(m => m.AccessRequest.Update(Capture.In(values))).Returns(updatedAccessRequest);
+
+            // Act
+            var response = await service.UpdateAccessRequestAsync(updatedAccessRequest);
+
+            var updated = values.First();
+            updated.Role.Should().Be(eRole);
+            updated.AccessRequestStatusTypeCode.Should().Be(AccessRequestStatusTypes.RECEIVED);
+            updated.User.IsDisabled.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task UpdateAccessRequestAsync_Approved()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
+            var service = helper.Create<PimsKeycloakService>(user);
+
+            var eAccessRequest = EntityHelper.CreateAccessRequest(1);
+            var eRole = EntityHelper.CreateRole("test-role");
+            eRole.KeycloakGroupId = Guid.NewGuid();
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var kuser = new Pims.Keycloak.Models.UserModel()
+            {
+                Id = eAccessRequest.User.GuidIdentifierValue.Value,
+                Username = eAccessRequest.User.BusinessIdentifierValue,
+                Groups = new string[] { eRole.KeycloakGroupId.ToString() }
+            };
+            keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
+
+            var updatedAccessRequest = new Entity.PimsAccessRequest()
+            {
+                AccessRequestId = eAccessRequest.AccessRequestId,
+                AccessRequestStatusTypeCode = AccessRequestStatusTypes.APPROVED,
+                User = eAccessRequest.User,
+                Role = eRole,
+                RoleId = eRole.Id,
+            };
+
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
+            var values = new List<Entity.PimsAccessRequest>();
+            pimsServiceMock.Setup(m => m.AccessRequest.Get(It.IsAny<long>())).Returns(eAccessRequest);
+            pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(updatedAccessRequest.User);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(updatedAccessRequest.User);
+            pimsServiceMock.Setup(m => m.Role.Find(It.IsAny<long>())).Returns(updatedAccessRequest.Role);
+            pimsServiceMock.Setup(m => m.AccessRequest.Update(Capture.In(values))).Returns(updatedAccessRequest);
+
+            // Act
+            var response = await service.UpdateAccessRequestAsync(updatedAccessRequest);
+
+            var updated = values.First();
+            updated.Role.Should().Be(eRole);
+            updated.AccessRequestStatusTypeCode.Should().Be(AccessRequestStatusTypes.APPROVED);
+            updated.User.IsDisabled.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task UpdateAccessRequestAsync_Null()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<PimsKeycloakService>();
+
+            // Act
+            await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateAccessRequestAsync(null));
+        }
+
+        [Fact]
+        public async Task UpdateAccessRequestAsync_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<PimsKeycloakService>();
+
+            var eAccessRequest = EntityHelper.CreateAccessRequest(1);
+
+            var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
+            var updatedAccessRequest = new Entity.PimsAccessRequest()
+            {
+                AccessRequestId = eAccessRequest.AccessRequestId,
+                AccessRequestStatusTypeCode = AccessRequestStatusTypes.APPROVED,
+                User = eAccessRequest.User,
+            };
+
+            // Act
+            await Assert.ThrowsAsync<NotAuthorizedException>(() => service.UpdateAccessRequestAsync(updatedAccessRequest));
         }
 
         #endregion

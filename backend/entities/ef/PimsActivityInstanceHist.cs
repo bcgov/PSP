@@ -21,6 +21,8 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("ACTIVITY_INSTANCE_ID")]
         public long ActivityInstanceId { get; set; }
+        [Column("ACTIVITY_TEMPLATE_ID")]
+        public long? ActivityTemplateId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -57,7 +57,9 @@ describe('LeaseHeaderAddresses component', () => {
     const moreButton = getByText('[+2 more...]');
     userEvent.click(moreButton);
 
-    expect(getByText('000-000-000', { exact: false })).toBeVisible();
+    expect(
+      getByText('000-000-000 - Address not available in PIMS', { exact: false }),
+    ).toBeVisible();
     expect(getByText('1234 fake st', { exact: false })).toBeVisible();
     expect(getByText('Victoria', { exact: false })).toBeVisible();
     expect(getByText('4321 real st, Vancouver', { exact: false })).toBeVisible();

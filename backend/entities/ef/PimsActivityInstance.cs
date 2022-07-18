@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACTIVITY_INSTANCE")]
+    [Index(nameof(ActivityTemplateId), Name = "ACTINS_ACTIVITY_TEMPLATE_ID_IDX")]
     public partial class PimsActivityInstance
     {
         public PimsActivityInstance()
         {
+            PimsAcquisitionActivityInstances = new HashSet<PimsAcquisitionActivityInstance>();
             PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
             PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
         }
@@ -20,6 +22,11 @@ namespace Pims.Dal.Entities
         [Key]
         [Column("ACTIVITY_INSTANCE_ID")]
         public long ActivityInstanceId { get; set; }
+        [Column("ACTIVITY_TEMPLATE_ID")]
+        public long? ActivityTemplateId { get; set; }
+        [Required]
+        [Column("ACTIVITY_DATA_JSON")]
+        public string ActivityDataJson { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -59,6 +66,11 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [ForeignKey(nameof(ActivityTemplateId))]
+        [InverseProperty(nameof(PimsActivityTemplate.PimsActivityInstances))]
+        public virtual PimsActivityTemplate ActivityTemplate { get; set; }
+        [InverseProperty(nameof(PimsAcquisitionActivityInstance.ActivityInstance))]
+        public virtual ICollection<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceDocument.ActivityInstance))]
         public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceNote.ActivityInstance))]

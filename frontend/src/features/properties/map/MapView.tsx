@@ -1,6 +1,7 @@
 import DraftSvg from 'assets/images/pins/icon-draft.svg';
 import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
+import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
   SelectedPropertyContext,
   SelectedPropertyContextProvider,
@@ -50,26 +51,28 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
     <SelectedPropertyContextProvider>
       <SelectedPropertyContext.Consumer>
         {({ cursor }) => (
-          <StyleMapView className={clsx(cursor)}>
-            <MapSideBar showSideBar={showSideBar}>{sidebarComponent}</MapSideBar>
-            <FilterProvider>
-              <Map
-                lat={defaultLatLng.lat}
-                lng={defaultLatLng.lng}
-                onViewportChanged={() => {
-                  if (!loadedProperties) {
-                    setLoadedProperties(true);
-                  }
-                }}
-                showParcelBoundaries={props.showParcelBoundaries ?? true}
-                zoom={6}
-                onPropertyMarkerClick={onMarkerClicked}
-                onViewPropertyClick={onPropertyViewClicked}
-                showSideBar={showSideBar}
-                whenCreated={setMapInstance}
-              />
-            </FilterProvider>
-          </StyleMapView>
+          <PropertyContextProvider>
+            <StyleMapView className={clsx(cursor)}>
+              <MapSideBar showSideBar={showSideBar}>{sidebarComponent}</MapSideBar>
+              <FilterProvider>
+                <Map
+                  lat={defaultLatLng.lat}
+                  lng={defaultLatLng.lng}
+                  onViewportChanged={() => {
+                    if (!loadedProperties) {
+                      setLoadedProperties(true);
+                    }
+                  }}
+                  showParcelBoundaries={props.showParcelBoundaries ?? true}
+                  zoom={6}
+                  onPropertyMarkerClick={onMarkerClicked}
+                  onViewPropertyClick={onPropertyViewClicked}
+                  showSideBar={showSideBar}
+                  whenCreated={setMapInstance}
+                />
+              </FilterProvider>
+            </StyleMapView>
+          </PropertyContextProvider>
         )}
       </SelectedPropertyContext.Consumer>
     </SelectedPropertyContextProvider>
