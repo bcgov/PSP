@@ -53,7 +53,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Update the specified note.
+        /// Updates the specified note.
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
@@ -61,9 +61,8 @@ namespace Pims.Dal.Repositories
         {
             note.ThrowIfNull(nameof(note));
 
-            var noteId = note.Id;
             var existingNote = this.Context.PimsNotes
-                .FirstOrDefault(x => x.NoteId == noteId) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.NoteId == note.Id) ?? throw new KeyNotFoundException();
 
             // update main entity - PimsNote
             this.Context.Entry(existingNote).CurrentValues.SetValues(note);
