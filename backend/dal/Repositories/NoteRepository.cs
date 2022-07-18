@@ -30,6 +30,17 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
+        /// Retrieves the note with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PimsNote GetById(long id)
+        {
+            return this.Context.PimsNotes.AsNoTracking()
+                .FirstOrDefault(x => x.NoteId == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
         /// Adds the specified note to the datasource
         /// </summary>
         /// <param name="note">The note to add.</param>
@@ -39,6 +50,25 @@ namespace Pims.Dal.Repositories
             note.ThrowIfNull(nameof(note));
             this.Context.PimsNotes.Add(note);
             return note;
+        }
+
+        /// <summary>
+        /// Update the specified note.
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public PimsNote Update(PimsNote note)
+        {
+            note.ThrowIfNull(nameof(note));
+
+            var noteId = note.Id;
+            var existingNote = this.Context.PimsNotes
+                .FirstOrDefault(x => x.NoteId == noteId) ?? throw new KeyNotFoundException();
+
+            // update main entity - PimsNote
+            this.Context.Entry(existingNote).CurrentValues.SetValues(note);
+
+            return existingNote;
         }
 
         /// <summary>
