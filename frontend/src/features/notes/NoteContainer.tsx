@@ -31,15 +31,25 @@ export const NoteContainer: React.FC<INotesDetailContainerProps> = props => {
     getNote.execute(props.type, props.noteId);
   }, [getNote, props.noteId, props.type]);
 
+  // re-fetch note from API after update
+  const onSuccess = () => {
+    getNote.execute(props.type, props.noteId);
+    setEditMode(false);
+  };
+
+  const onSaveClick = () => props.closeModal();
+  const onCancelClick = () => props.closeModal();
+
   if (isEditMode) {
     return (
       <UpdateNoteContainer
         type={props.type}
         isOpened={props.isOpened}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
         loading={getNote.loading}
         note={getNote.response}
+        onSuccess={onSuccess}
+        onSaveClick={onSaveClick}
+        onCancelClick={onCancelClick}
       ></UpdateNoteContainer>
     );
   } else {
@@ -48,8 +58,6 @@ export const NoteContainer: React.FC<INotesDetailContainerProps> = props => {
         loading={getNote.loading}
         note={getNote.response}
         isOpened={props.isOpened}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
         onEdit={() => setEditMode(true)}
       ></NoteDetailsFormModal>
     );

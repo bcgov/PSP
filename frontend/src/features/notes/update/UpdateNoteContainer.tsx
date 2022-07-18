@@ -17,10 +17,10 @@ export interface IUpdateNoteContainerProps {
   onSuccess?: () => void;
   /** Whether to show the notes modal. Default: false */
   isOpened: boolean;
-  /** set the value of the externally tracked 'isOpened' prop above. */
-  openModal: () => void;
-  /** set the value of the externally tracked 'isOpened' prop above. */
-  closeModal: () => void;
+  /** Optional - callback to notify when save button is pressed. */
+  onSaveClick?: (noteForm: NoteForm, formikProps: FormikProps<NoteForm>) => void;
+  /** Optional - callback to notify when cancel button is pressed. */
+  onCancelClick?: (formikProps: FormikProps<NoteForm>) => void;
 }
 
 export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props => {
@@ -30,25 +30,26 @@ export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props =>
     onSuccess: props.onSuccess,
   });
 
-  const onSaveClick = (values: NoteForm, formikProps: FormikProps<NoteForm>) => {
+  const handleSaveClick = async (values: NoteForm, formikProps: FormikProps<NoteForm>) => {
     formikProps?.setSubmitting(true);
-    formikProps?.submitForm();
-    props.closeModal();
+    await formikProps?.submitForm();
+    props.onSaveClick && props.onSaveClick(values, formikProps);
   };
 
-  const onCancelClick = (formikProps: FormikProps<NoteForm>) => {
+  const handleCancelClick = (formikProps: FormikProps<NoteForm>) => {
     formikProps?.resetForm();
-    props.closeModal();
+    props.onCancelClick && props.onCancelClick(formikProps);
   };
 
   return (
     <UpdateNoteFormModal
       isOpened={props.isOpened}
+      loading={props.loading}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
-      onSaveClick={onSaveClick}
-      onCancelClick={onCancelClick}
+      onSaveClick={handleSaveClick}
+      onCancelClick={handleCancelClick}
     />
   );
 };

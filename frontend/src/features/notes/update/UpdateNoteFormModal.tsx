@@ -1,11 +1,17 @@
 import { TextArea } from 'components/common/form';
 import { GenericModal } from 'components/common/GenericModal';
+import { UserNameTooltip } from 'components/common/UserNameTooltip';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
+import { Col, Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 
 import { NoteForm } from '../models';
 
 export interface IUpdateNoteFormModalProps {
+  /** Whether the to show a loading spinner instead of the form */
+  loading?: boolean;
   /** Whether to show the notes modal. Default: false */
   isOpened: boolean;
   /** Initial values of the form */
@@ -21,7 +27,17 @@ export interface IUpdateNoteFormModalProps {
 }
 
 export const UpdateNoteFormModal: React.FC<IUpdateNoteFormModalProps> = props => {
-  const { isOpened, onSaveClick, onCancelClick, initialValues, validationSchema, onSubmit } = props;
+  const {
+    loading,
+    isOpened,
+    onSaveClick,
+    onCancelClick,
+    initialValues,
+    validationSchema,
+    onSubmit,
+  } = props;
+
+  const spinner = <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
 
   return (
     <Formik<NoteForm>
@@ -34,14 +50,7 @@ export const UpdateNoteFormModal: React.FC<IUpdateNoteFormModalProps> = props =>
         <StyledModal
           display={isOpened}
           title="Notes"
-          message={
-            <TextArea
-              rows={15}
-              field="note"
-              label="Type a note:"
-              data-testid="note-field"
-            ></TextArea>
-          }
+          message={loading ? spinner : <FormBody {...formikProps}></FormBody>}
           closeButton
           okButtonText="Save"
           cancelButtonText="Cancel"
@@ -54,6 +63,40 @@ export const UpdateNoteFormModal: React.FC<IUpdateNoteFormModalProps> = props =>
         ></StyledModal>
       )}
     </Formik>
+  );
+};
+
+const FormBody: React.FC<FormikProps<NoteForm>> = ({ values }) => {
+  return (
+    <Container>
+      <Row className="no-gutters">
+        <Col>
+          <span>
+            Created: <strong>{prettyFormatDate(values?.appCreateTimestamp)}</strong> by{' '}
+            <UserNameTooltip
+              userName={values?.appCreateUserid}
+              userGuid={values?.appCreateUserGuid}
+            />
+          </span>
+        </Col>
+      </Row>
+      <Row className="no-gutters">
+        <Col>
+          <span>
+            Last updated: <strong>{prettyFormatDate(values?.appLastUpdateTimestamp)}</strong> by{' '}
+            <UserNameTooltip
+              userName={values?.appLastUpdateUserid}
+              userGuid={values?.appLastUpdateUserGuid}
+            />
+          </span>
+        </Col>
+      </Row>
+      <Row className="no-gutters">
+        <Col>
+          <TextArea rows={15} field="note" label="Type a note:" data-testid="note-field"></TextArea>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

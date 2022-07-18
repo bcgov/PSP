@@ -14,10 +14,6 @@ import { prettyFormatDate } from 'utils';
 export interface INoteDetailsFormModalProps {
   /** Whether to show the notes modal. Default: false */
   isOpened: boolean;
-  /** set the value of the externally tracked 'isOpened' prop above. */
-  openModal: () => void;
-  /** set the value of the externally tracked 'isOpened' prop above. */
-  closeModal: () => void;
   /** Whether the to show a loading spinner instead of the form */
   loading?: boolean;
   /** The note details to show */
@@ -70,11 +66,11 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
 
   return (
     <StyledModal
-      display={isOpened}
       title="Notes"
+      showFooter={false}
+      display={isOpened}
       message={loading ? spinner : body}
       closeButton
-      showFooter={false}
     ></StyledModal>
   );
 };
