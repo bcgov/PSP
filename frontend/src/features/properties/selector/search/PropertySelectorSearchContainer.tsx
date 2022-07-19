@@ -85,6 +85,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     findByPid,
     findByPin,
     findByPlanNumber,
+    getNearestToPoint,
     layerSearch,
     districtService,
     regionService,
