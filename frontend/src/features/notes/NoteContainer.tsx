@@ -19,45 +19,50 @@ export interface INotesDetailContainerProps {
   openModal: () => void;
   /** set the value of the externally tracked 'isOpened' prop above. */
   closeModal: () => void;
-  /** Edit note callback */
-  onEdit?: (note?: Api_Note) => void;
+  /** Success callback */
+  onSuccess?: () => void;
 }
 
 export const NoteContainer: React.FC<INotesDetailContainerProps> = props => {
-  const { getNote } = useNoteRepository();
   const [isEditMode, setEditMode] = useState<boolean>(!!props.editMode);
+  const {
+    getNote: { execute, loading, response },
+  } = useNoteRepository();
 
   useEffect(() => {
-    getNote.execute(props.type, props.noteId);
-  }, [getNote, props.noteId, props.type]);
+    execute(props.type, props.noteId);
+  }, [execute, props.noteId, props.type]);
 
   // re-fetch note from API after update
   const onSuccess = () => {
-    getNote.execute(props.type, props.noteId);
-    setEditMode(false);
+    execute(props.type, props.noteId);
+    props.onSuccess && props.onSuccess();
   };
 
-  const onSaveClick = () => props.closeModal();
-  const onCancelClick = () => props.closeModal();
+  const close = () => {
+    props.closeModal();
+    setEditMode(false);
+  };
 
   if (isEditMode) {
     return (
       <UpdateNoteContainer
         type={props.type}
         isOpened={props.isOpened}
-        loading={getNote.loading}
-        note={getNote.response}
+        loading={loading}
+        note={response}
         onSuccess={onSuccess}
-        onSaveClick={onSaveClick}
-        onCancelClick={onCancelClick}
+        onSaveClick={close}
+        onCancelClick={close}
       ></UpdateNoteContainer>
     );
   } else {
     return (
       <NoteDetailsFormModal
-        loading={getNote.loading}
-        note={getNote.response}
+        loading={loading}
+        note={response}
         isOpened={props.isOpened}
+        onCloseClick={close}
         onEdit={() => setEditMode(true)}
       ></NoteDetailsFormModal>
     );

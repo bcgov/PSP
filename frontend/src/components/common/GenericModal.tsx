@@ -75,9 +75,6 @@ export interface ModalProps {
   /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
   asPopup?: boolean;
   show?: boolean;
-  /** Whether to render the modal footer with Ok, Cancel buttons
-   * Default behaviour is to show the footer */
-  showFooter?: boolean;
 }
 
 /**
@@ -97,7 +94,6 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
     cancelButtonVariant,
     cancelButtonText,
     closeButton,
-    showFooter = true,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -137,22 +133,20 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
 
       <Modal.Body>{message}</Modal.Body>
 
-      {showFooter && (
-        <Modal.Footer>
-          {cancelButtonText && (
-            <Button
-              variant={cancelButtonVariant ?? 'secondary'}
-              onClick={close}
-              style={{ width: 'unset' }}
-            >
-              {cancelButtonText}
-            </Button>
-          )}
-          <Button variant={okButtonVariant ?? 'primary'} onClick={ok}>
-            {okButtonText ?? 'Ok'}
+      <Modal.Footer>
+        {cancelButtonText && (
+          <Button
+            variant={cancelButtonVariant ?? 'secondary'}
+            onClick={close}
+            style={{ width: 'unset' }}
+          >
+            {cancelButtonText}
           </Button>
-        </Modal.Footer>
-      )}
+        )}
+        <Button variant={okButtonVariant ?? 'primary'} onClick={ok}>
+          {okButtonText ?? 'Ok'}
+        </Button>
+      </Modal.Footer>
     </ModalContainer>
   );
 };

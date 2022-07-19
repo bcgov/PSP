@@ -3,7 +3,7 @@ import { NoteTypes } from 'constants/index';
 import { useApiNotes } from 'hooks/pims-api/useApiNotes';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { Api_EntityNote, Api_Note } from 'models/api/Note';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
 /**
@@ -48,9 +48,12 @@ export const useNoteRepository = () => {
     onError: useAxiosErrorHandler(),
   });
 
-  return {
-    addNote: addNoteApi,
-    getNote: getNoteApi,
-    updateNote: updateNoteApi,
-  };
+  return useMemo(
+    () => ({
+      addNote: addNoteApi,
+      getNote: getNoteApi,
+      updateNote: updateNoteApi,
+    }),
+    [addNoteApi, getNoteApi, updateNoteApi],
+  );
 };

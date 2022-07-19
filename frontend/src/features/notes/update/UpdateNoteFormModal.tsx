@@ -70,9 +70,12 @@ const FormBody: React.FC<FormikProps<NoteForm>> = ({ values }) => {
   return (
     <Container>
       <Row className="no-gutters">
+        <Col md={2} className="mr-2">
+          Created:
+        </Col>
         <Col>
           <span>
-            Created: <strong>{prettyFormatDate(values?.appCreateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatDate(values?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={values?.appCreateUserid}
               userGuid={values?.appCreateUserGuid}
@@ -81,9 +84,12 @@ const FormBody: React.FC<FormikProps<NoteForm>> = ({ values }) => {
         </Col>
       </Row>
       <Row className="no-gutters">
+        <Col md={2} className="mr-2">
+          Last updated:
+        </Col>
         <Col>
           <span>
-            Last updated: <strong>{prettyFormatDate(values?.appLastUpdateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatDate(values?.appLastUpdateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={values?.appLastUpdateUserid}
               userGuid={values?.appLastUpdateUserGuid}
@@ -91,7 +97,7 @@ const FormBody: React.FC<FormikProps<NoteForm>> = ({ values }) => {
           </span>
         </Col>
       </Row>
-      <Row className="no-gutters">
+      <Row className="no-gutters mt-3">
         <Col>
           <TextArea rows={15} field="note" label="Type a note:" data-testid="note-field"></TextArea>
         </Col>

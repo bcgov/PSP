@@ -76,6 +76,16 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
       });
   };
 
+  const onNoteEditSuccess = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await getNotes(type, entityId);
+      setNoteResult(data);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Styled.ListPage>
       <Styled.Scrollable vertical={true}>
@@ -103,6 +113,7 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
             isOpened={isViewNotesOpened}
             openModal={openViewNotesModal}
             closeModal={closeViewNotesModal}
+            onSuccess={onNoteEditSuccess}
           ></NoteContainer>
         )}
 

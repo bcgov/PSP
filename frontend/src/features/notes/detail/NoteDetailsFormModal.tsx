@@ -18,13 +18,15 @@ export interface INoteDetailsFormModalProps {
   loading?: boolean;
   /** The note details to show */
   note?: Api_Note;
+  /** Optional - callback to notify when save button is pressed. */
+  onCloseClick?: () => void;
   /** Edit note callback */
   onEdit?: (note?: Api_Note) => void;
 }
 
 export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props => {
   const keycloak = useKeycloakWrapper();
-  const { loading, isOpened, onEdit, note } = props;
+  const { loading, isOpened, onEdit, onCloseClick, note } = props;
 
   const spinner = <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
 
@@ -37,17 +39,23 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
   const body = (
     <Container>
       <Row className="no-gutters">
+        <Col md={2} className="mr-2">
+          Created:
+        </Col>
         <Col>
           <span>
-            Created: <strong>{prettyFormatDate(note?.appCreateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatDate(note?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip userName={note?.appCreateUserid} userGuid={note?.appCreateUserGuid} />
           </span>
         </Col>
       </Row>
       <Row className="no-gutters">
+        <Col md={2} className="mr-2">
+          Last updated:
+        </Col>
         <Col>
           <span>
-            Last updated: <strong>{prettyFormatDate(note?.appLastUpdateTimestamp)}</strong> by{' '}
+            <strong>{prettyFormatDate(note?.appLastUpdateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={note?.appLastUpdateUserid}
               userGuid={note?.appLastUpdateUserGuid}
@@ -67,9 +75,10 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
   return (
     <StyledModal
       title="Notes"
-      showFooter={false}
       display={isOpened}
       message={loading ? spinner : body}
+      okButtonText="Close"
+      handleOk={() => onCloseClick && onCloseClick()}
       closeButton
     ></StyledModal>
   );
@@ -77,7 +86,8 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
 
 const StyledCol = styled(Col)`
   color: ${props => props.theme.css.primary};
-  text-align: right;
+  display: flex;
+  justify-content: end;
 `;
 
 const StyledModal = styled(GenericModal)`
