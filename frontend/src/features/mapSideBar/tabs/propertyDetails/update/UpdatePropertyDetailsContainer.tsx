@@ -20,7 +20,6 @@ export interface IUpdatePropertyDetailsContainerProps {
 
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
   const isMounted = useIsMounted();
-  const history = useHistory();
   const { retrieveProperty, retrievePropertyLoading } = useGetProperty();
   const { updateProperty } = useUpdateProperty();
   const { queryAll } = useQueryMapLayersByLocation();
@@ -71,10 +70,6 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     }
   };
 
-  if (retrievePropertyLoading) {
-    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
-  }
-
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
@@ -85,6 +80,10 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     >
       {formikProps => (
         <StyledFormWrapper>
+          <LoadingBackdrop
+            show={retrievePropertyLoading || !initialForm}
+            parentScreen={true}
+          ></LoadingBackdrop>
           <UpdatePropertyDetailsForm formikProps={formikProps} />
         </StyledFormWrapper>
       )}

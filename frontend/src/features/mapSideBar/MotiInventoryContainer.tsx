@@ -12,6 +12,7 @@ import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
@@ -38,9 +39,6 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
   const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
     undefined,
   );
-    !!props.id ? InventoryTabNames.property : InventoryTabNames.title,
-  );
-  const pid = props.pid ? props.pid : apiProperty?.pid;
 
   // First, fetch property information from PSP API
   const { getPropertyLoading: propertyLoading, getProperty } = useProperties();
@@ -77,9 +75,9 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
 
   const fetchPimsProperty = React.useCallback(async () => {
     try {
-        if (!!props.id) {
-          const propInfo = await getProperty(props.id);
-          if (isMounted() && propInfo?.id === props.id) {
+      if (!!props.id) {
+        const propInfo = await getProperty(props.id);
+        if (isMounted() && propInfo?.id === props.id) {
           setComposedProperty(property => ({ ...property, apiProperty: propInfo }));
         }
       }
@@ -90,6 +88,8 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
         const axiosError = e as AxiosError<IApiError>;
         if (axiosError?.response?.status === 404) {
           setComposedProperty(property => ({ ...property, apiProperty: undefined }));
+        } else {
+          toast.error('Failed to load property. Please refresh this page to try again');
         }
       }
     }
@@ -119,16 +119,19 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
         ltsaData: undefined,
       }));
 
+      if (!!props?.pid) {
+        const ltsaData = await getLtsaData(pidFormatter(props.pid));
         if (
           isMounted() &&
-          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
+          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier ===
+            pidFormatter(props?.pid)
         ) {
           setComposedProperty(property => ({ ...property, ltsaData: ltsaData }));
         }
       }
     };
     func();
-  }, [getLtsaData, pid, isMounted]);
+  }, [getLtsaData, props?.pid, isMounted]);
 
   const onSuccess = () => {
     fetchPimsProperty();

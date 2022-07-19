@@ -4,6 +4,7 @@ import AddResearchContainer from 'features/properties/map/research/add/AddResear
 import ResearchContainer from 'features/properties/map/research/ResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
+import queryString from 'query-string';
 import React, { useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -55,6 +56,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
     var currentState: MapViewState = MapViewState.MAP_ONLY;
     var researchId = 0;
     var propertyId = '';
+    var pid = '';
     if (parts.length === 2) {
       currentState = MapViewState.MAP_ONLY;
     } else if (parts.length > 2) {
@@ -68,7 +70,11 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
           currentState = MapViewState.MAP_ONLY;
         }
       } else if (parts.length > 3 && parts[2] === 'property') {
+        pid = queryString.parse(location.search).pid?.toString() ?? '';
         propertyId = parts[3];
+        currentState = MapViewState.PROPERTY_INFORMATION;
+      } else if (parts.length > 3 && parts[2] === 'non-inventory-property') {
+        pid = parts[3];
         currentState = MapViewState.PROPERTY_INFORMATION;
       } else if (parts[2] === 'acquisition') {
         if (parts.length === 4 && parts[3] === 'new') {
@@ -98,7 +104,12 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         break;
       case MapViewState.PROPERTY_INFORMATION:
         setSidebarComponent(
-          <MotiInventoryContainer onClose={handleClose} pid={propertyId} onZoom={onZoom} />,
+          <MotiInventoryContainer
+            onClose={handleClose}
+            id={!!propertyId ? +propertyId : undefined}
+            pid={pid}
+            onZoom={onZoom}
+          />,
         );
         setShowSideBar(true);
         break;

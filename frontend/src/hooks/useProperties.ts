@@ -24,7 +24,7 @@ export const useProperties = () => {
     exportProperties: rawApiExportProperties,
   } = useApiProperties();
 
-  const { getPropertyWithIdWfs } = useGeoServer();
+  const { getPropertyWfs } = useGeoServer();
 
   const fetchProperties = useApiRequestWrapper<
     (
@@ -59,7 +59,7 @@ export const useProperties = () => {
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
       //   1. to the REST API to fetch property field attributes (e.g. address, etc)
       //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
-      return Promise.all([getPropertyWrapped(id), getPropertyWithIdWfs(id)]).then(
+      return Promise.all([getPropertyWrapped(id), getPropertyWfs(id)]).then(
         ([propertyResponse, wfsResponse]) => {
           const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
           const property: IPropertyApiModel = {
@@ -71,7 +71,7 @@ export const useProperties = () => {
         },
       );
     },
-    [getPropertyWrapped, getPropertyWithIdWfs],
+    [getPropertyWrapped, getPropertyWfs],
   );
 
   /**

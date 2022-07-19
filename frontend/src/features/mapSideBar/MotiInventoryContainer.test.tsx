@@ -76,7 +76,7 @@ describe('MotiInventoryContainer component', () => {
 
   it('shows the property information tab for inventory properties', async () => {
     mockAxios.onPost().reply(200, {});
-    mockAxios.onGet(new RegExp('/properties/*')).reply(200, { pid: '009-212-434' });
+    mockAxios.onGet(new RegExp('/properties/*')).reply(200, { id: 9212434 });
     mockAxios.onGet(new RegExp('/ogs-internal/*')).reply(200, {});
 
     const { findByText, queryByTestId } = setup({
