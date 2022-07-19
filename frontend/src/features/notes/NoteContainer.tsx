@@ -1,5 +1,4 @@
 import { NoteTypes } from 'constants/index';
-import { Api_Note } from 'models/api/Note';
 import { useEffect, useState } from 'react';
 
 import { NoteDetailsFormModal } from './detail/NoteDetailsFormModal';

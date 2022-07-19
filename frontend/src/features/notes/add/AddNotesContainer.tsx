@@ -16,12 +16,15 @@ export interface IAddNotesContainerProps {
   openModal: () => void;
   /** set the value of the externally tracked 'isOpened' prop above. */
   closeModal: () => void;
+  /** Optional - callback to execute after note has been added to the datastore */
+  onSuccess?: () => void;
 }
 
 export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
   const { handleSubmit, initialValues, validationSchema } = useAddNotesFormManagement({
     type: props.type,
     parentId: props.parentId,
+    onSuccess: props.onSuccess,
   });
 
   const onSaveClick = (noteForm: EntityNoteForm, formikProps: FormikProps<EntityNoteForm>) => {
