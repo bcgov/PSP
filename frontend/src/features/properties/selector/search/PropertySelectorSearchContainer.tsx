@@ -1,8 +1,8 @@
+import { AxiosResponse } from 'axios';
 import {
   HWY_DISTRICT_LAYER_URL,
   IUserLayerQuery,
   MOTI_REGION_LAYER_URL,
-  PARCELS_LAYER_URL,
   useLayerQuery,
 } from 'components/maps/leaflet/LayerPopup';
 import { DistrictCodes, RegionCodes } from 'constants/index';
@@ -38,39 +38,33 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
-  const { getSitePids, searchAddress } = useApiGeocoder();
-
-  const {
-    findByPid,
-    findByPin,
-    findByPlanNumber,
-    findByPidLoading,
-    findByPinLoading,
-    findByPlanNumberLoading,
-  } = useLayerQuery(PARCELS_LAYER_URL);
+  const { getSitePids, searchAddress, getNearestToPoint } = useApiGeocoder();
 
   const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
   const { parcelMapFullyAttributed } = useTenant();
   const {
+    findByPid,
+    findByPin,
+    findByPlanNumber,
     findByLegalDescription,
-    findByLegalDescriptionLoading,
+    loadingIndicator,
   } = useFullyAttributedParcelMapLayer(parcelMapFullyAttributed.url, parcelMapFullyAttributed.name);
 
   React.useEffect(() => {
     const searchFunc = async () => {
       let result: FeatureCollection<Geometry, GeoJsonProperties> | undefined = undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
-        result = await findByPid(layerSearch.pid, true);
+        result = await findByPid(layerSearch.pid);
       } else if (
         layerSearch?.searchBy === 'pin' &&
         layerSearch.pin &&
         isNumber(+layerSearch?.pin)
       ) {
-        result = await findByPin(layerSearch.pin, true);
+        result = await findByPin(layerSearch.pin);
       } else if (layerSearch?.searchBy === 'planNumber' && layerSearch.planNumber) {
-        result = await findByPlanNumber(layerSearch.planNumber, true);
+        result = await findByPlanNumber(layerSearch.planNumber);
       } else if (layerSearch?.searchBy === 'legalDescription' && layerSearch.legalDescription) {
         result = await findByLegalDescription(layerSearch.legalDescription);
       }
@@ -81,6 +75,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         foundProperties.map(p => matchRegionAndDistrict(p, regionService, districtService)),
       );
 
+      await Promise.all(foundProperties.map(p => matchAddress(p, getNearestToPoint)));
+
       setSearchResults(foundProperties);
     };
     searchFunc();
@@ -89,6 +85,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     findByPid,
     findByPin,
     findByPlanNumber,
+    getNearestToPoint,
     layerSearch,
     districtService,
     regionService,
@@ -111,7 +108,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         FeatureCollection<Geometry, GeoJsonProperties> | undefined
       >[] = [];
       pidResults.data.pids.forEach(async (pid: string) => {
-        findByPidCalls.push(findByPid(pid, true));
+        findByPidCalls.push(findByPid(pid));
       });
 
       const responses = await Promise.all(findByPidCalls);
@@ -164,12 +161,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         selectedProperties={selectedProperties}
         search={layerSearch}
         searchResults={searchResults}
-        loading={
-          findByPidLoading ||
-          findByPinLoading ||
-          findByPlanNumberLoading ||
-          findByLegalDescriptionLoading
-        }
+        loading={loadingIndicator}
         onSelectedProperties={setSelectedProperties}
         addressResults={addressResults}
         onAddressChange={handleOnAddressChange}
@@ -195,6 +187,7 @@ export const featuresToIdentifiedMapProperty = (
           planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? '',
           latitude: boundedCenter[1],
           longitude: boundedCenter[0],
+          legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
         };
         property.id = getPropertyIdentifier(property);
         return property;
@@ -228,6 +221,18 @@ async function matchRegionAndDistrict(
     ? district.DISTRICT_NUMBER
     : DistrictCodes.Unknown;
   property.districtName = district.DISTRICT_NAME ?? 'Cannot determine';
+}
+
+async function matchAddress(
+  property: IMapProperty,
+  getNearestToPoint: (lng: number, lat: number) => Promise<AxiosResponse<IGeocoderResponse, any>>,
+) {
+  if (property?.latitude === undefined || property?.longitude === undefined) {
+    return property;
+  }
+
+  const queryResult = await getNearestToPoint(property.longitude, property.latitude);
+  property.address = queryResult?.data?.fullAddress;
 }
 
 export default PropertySelectorSearchContainer;

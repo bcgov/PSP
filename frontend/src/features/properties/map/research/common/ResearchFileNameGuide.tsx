@@ -10,6 +10,7 @@ export const ResearchFileNameGuide: React.FunctionComponent = () => {
     <>
       <StyledSectionHeader>
         <StyledRow
+          className="no-gutters"
           onClick={() => {
             setIsCollapsed(!isCollapsed);
           }}
