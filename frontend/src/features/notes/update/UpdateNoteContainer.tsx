@@ -1,5 +1,7 @@
+import { CancelConfirmationModal } from 'components/common/CancelConfirmationModal';
 import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
+import { useModalManagement } from 'hooks/useModalManagement';
 import { Api_Note } from 'models/api/Note';
 
 import { useUpdateNotesFormManagement } from '../hooks/useUpdateNotesFormManagement';
@@ -24,6 +26,8 @@ export interface IUpdateNoteContainerProps {
 }
 
 export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props => {
+  const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
+
   const { handleSubmit, initialValues, validationSchema } = useUpdateNotesFormManagement({
     type: props.type,
     note: props.note,
@@ -37,19 +41,36 @@ export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props =>
   };
 
   const handleCancelClick = (formikProps: FormikProps<NoteForm>) => {
+    if (formikProps?.dirty && formikProps.submitCount === 0) {
+      openConfirmModal();
+    } else {
+      handleCancelConfirm(formikProps);
+    }
+  };
+
+  const handleCancelConfirm = (formikProps: FormikProps<NoteForm>) => {
+    closeConfirmModal();
     formikProps?.resetForm();
     props.onCancelClick && props.onCancelClick(formikProps);
   };
 
   return (
-    <UpdateNoteFormModal
-      isOpened={props.isOpened}
-      loading={props.loading}
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      onSaveClick={handleSaveClick}
-      onCancelClick={handleCancelClick}
-    />
+    <>
+      <UpdateNoteFormModal
+        isOpened={props.isOpened}
+        loading={props.loading}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        onSaveClick={handleSaveClick}
+        onCancelClick={handleCancelClick}
+      />
+
+      <CancelConfirmationModal
+        display={showConfirmModal}
+        handleOk={handleCancelConfirm}
+        handleCancel={closeConfirmModal}
+      />
+    </>
   );
 };
