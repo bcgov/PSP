@@ -159,7 +159,7 @@ export const asProperty = (point: PointFeature): IProperty => {
  * The resulting filter is URL-encoded
  * @param object an object to convert to a cql filter string.
  */
-export const toCqlFilter = (object: any, pidOverride?: boolean) => {
+export const toCqlFilter = (object: Record<string, any>, pidOverride?: boolean) => {
   const cqlValue: string = toCqlFilterValue(object, pidOverride);
   return cqlValue.length ? `cql_filter=${encodeURIComponent(cqlValue)}` : '';
 };
@@ -169,11 +169,11 @@ export const toCqlFilter = (object: any, pidOverride?: boolean) => {
  * NOTE: The resulting string value is left as-is. It will not be URL-encoded
  * @param object an object to convert to a cql filter string.
  */
-export const toCqlFilterValue = (object: any, pidOverride?: boolean) => {
+export const toCqlFilterValue = (object: Record<string, string>, forceSimplePid?: boolean) => {
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
-      if (key === 'PID' || (key === 'PID_PADDED' && object[key] && !pidOverride)) {
+      if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
         cql.push(
           `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'  OR PID_PADDED ilike '%${object[key]}%'`,
         );

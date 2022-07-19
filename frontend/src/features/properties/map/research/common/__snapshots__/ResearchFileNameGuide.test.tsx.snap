@@ -39,7 +39,7 @@ exports[`ResearchFileNameGuide renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1 row"
+      class="c1 no-gutters row"
     >
       <div
         class="col"

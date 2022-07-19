@@ -1,13 +1,9 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import {
-  mockDistrictLayerResponse,
-  mockMotiRegionLayerResponse,
-  mockPropertyLayerSearchResponse,
-} from 'mocks';
+import { mockFAParcelLayerResponse, mockGeocoderOptions } from 'mocks';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
@@ -58,63 +54,60 @@ describe('MapSelectorContainer component', () => {
 
   beforeEach(() => {
     mockAxios
-      .onGet(
-        new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs',
-        ),
-      )
-      .reply(200, mockPropertyLayerSearchResponse)
-      .onGet(
-        new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY/wfs',
-        ),
-      )
-      .reply(200, mockMotiRegionLayerResponse)
-      .onGet(
-        new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/wfs',
-        ),
-      )
-      .reply(200, mockDistrictLayerResponse);
+      .onGet(new RegExp('ogs-internal/ows'))
+      .reply(200, mockFAParcelLayerResponse)
+      .onGet(new RegExp('tools/geocoder/nearest*'))
+      .reply(200, mockGeocoderOptions[0]);
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('renders as expected when provided no properties', () => {
+  it('renders as expected when provided no properties', async () => {
     const { asFragment } = setup({});
-    expect(asFragment()).toMatchSnapshot();
-  });
-  it('displays two tabs', () => {
-    const { getByText } = setup({});
-    expect(getByText('Locate on Map')).toBeVisible();
-  });
-  it('displays locate on Map by default', () => {
-    const { getByText } = setup({});
-    expect(getByText('Locate on Map')).toHaveClass('active');
+    await act(async () => {
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 
-  it('allows the search tab to be selected', () => {
+  it('displays two tabs', async () => {
+    const { getByText } = setup({});
+    await act(async () => {
+      expect(getByText('Locate on Map')).toBeVisible();
+    });
+  });
+
+  it('displays locate on Map by default', async () => {
+    const { getByText } = setup({});
+    await act(async () => {
+      expect(getByText('Locate on Map')).toHaveClass('active');
+    });
+  });
+
+  it('allows the search tab to be selected', async () => {
     const { getByText } = setup({});
     const searchTab = getByText('Search');
-    userEvent.click(searchTab);
+    await act(async () => userEvent.click(searchTab));
     expect(searchTab).toHaveClass('active');
   });
 
-  it('lists selected properties', () => {
+  it('lists selected properties', async () => {
     const { getByText } = setup({
       existingProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
-    expect(getByText('PID: 123-456-789')).toBeVisible();
+    await act(async () => {
+      expect(getByText('PID: 123-456-789')).toBeVisible();
+    });
   });
 
-  it('selected properties can be removed', () => {
+  it('selected properties can be removed', async () => {
     const { getByText } = setup({
       existingProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
     const removeButton = getByText('Remove');
-    userEvent.click(removeButton);
+
+    await act(async () => userEvent.click(removeButton));
     expect(onRemoveProperty).toHaveBeenCalled();
   });
 
@@ -124,51 +117,60 @@ describe('MapSelectorContainer component', () => {
     });
 
     const searchTab = getByText('Search');
-    userEvent.click(searchTab);
-    await fillInput(container, 'searchBy', 'pid', 'select');
+    await act(async () => userEvent.click(searchTab));
+    await act(async () => {
+      fillInput(container, 'searchBy', 'pid', 'select');
+    });
     await fillInput(container, 'pid', '123-456-789');
     const searchButton = getByTitle('search');
-    userEvent.click(searchButton);
-    const checkbox = await findByTestId('selectrow-PID: 017-723-311');
-    userEvent.click(checkbox);
+    await act(async () => userEvent.click(searchButton));
+    const checkbox = await findByTestId('selectrow-PID: 009-727-493');
+    await act(async () => userEvent.click(checkbox));
     const addButton = getByText('Add to selection');
-    userEvent.click(addButton);
+    await act(async () => userEvent.click(addButton));
 
     expect(onSelectedProperty).toHaveBeenCalledWith({
-      district: 2,
-      districtName: 'Vancouver Island',
-      id: 'PID: 017-723-311',
-      latitude: 49.104223239999996,
-      longitude: -122.6414763,
-      pid: '017723311',
+      address: '1234 Fake St',
+      district: 12,
+      districtName: 'Cannot determine',
+      id: 'PID: 009-727-493',
+      latitude: 48.7662,
+      legalDescription:
+        'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
+      longitude: -123.4617,
+      pid: '9727493',
       pin: '',
-      planNumber: 'LMS312',
-      region: 1,
-      regionName: 'South Coast',
+      planNumber: 'NO_PLAN',
+      region: 4,
+      regionName: 'Cannot determine',
     });
   });
 
   it('selected properties display a warning if added multiple times', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
       existingProperties: featuresToIdentifiedMapProperty(
-        mockPropertyLayerSearchResponse as any,
+        mockFAParcelLayerResponse as any,
       )?.map(p => PropertyForm.fromMapProperty(p)),
     });
 
     const searchTab = getByText('Search');
-    userEvent.click(searchTab);
-    await fillInput(container, 'searchBy', 'pid', 'select');
+    await act(async () => userEvent.click(searchTab));
+    await act(async () => {
+      fillInput(container, 'searchBy', 'pid', 'select');
+    });
     await fillInput(container, 'pid', '123-456-789');
     const searchButton = getByTitle('search');
-    userEvent.click(searchButton);
-    const checkbox = await findByTestId('selectrow-PID: 017-723-311');
-    userEvent.click(checkbox);
-    const addButton = getByText('Add to selection');
-    userEvent.click(addButton);
 
-    const toast = await screen.findByText(
+    await act(async () => userEvent.click(searchButton));
+
+    const checkbox = await findByTestId('selectrow-PID: 009-727-493');
+    await act(async () => userEvent.click(checkbox));
+    const addButton = getByText('Add to selection');
+    await act(async () => userEvent.click(addButton));
+
+    const toast = await screen.findAllByText(
       'A property that the user is trying to select has already been added to the selected properties list',
     );
-    expect(toast).toBeVisible();
+    expect(toast[0]).toBeVisible();
   });
 });
