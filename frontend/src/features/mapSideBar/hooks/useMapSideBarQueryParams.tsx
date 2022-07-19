@@ -54,8 +54,8 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
 
     var parts = location.pathname.split('/');
     var currentState: MapViewState = MapViewState.MAP_ONLY;
-    var researchId = 0;
-    var propertyId = '';
+    var researchId: number = 0;
+    var propertyId: number | undefined = 0;
     var pid = '';
     if (parts.length === 2) {
       currentState = MapViewState.MAP_ONLY;
@@ -71,7 +71,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         }
       } else if (parts.length > 3 && parts[2] === 'property') {
         pid = queryString.parse(location.search).pid?.toString() ?? '';
-        propertyId = parts[3];
+        propertyId = !!parts[3] ? +propertyId : undefined;
         currentState = MapViewState.PROPERTY_INFORMATION;
       } else if (parts.length > 3 && parts[2] === 'non-inventory-property') {
         pid = parts[3];
@@ -106,7 +106,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         setSidebarComponent(
           <MotiInventoryContainer
             onClose={handleClose}
-            id={!!propertyId ? +propertyId : undefined}
+            id={propertyId}
             pid={pid}
             onZoom={onZoom}
           />,

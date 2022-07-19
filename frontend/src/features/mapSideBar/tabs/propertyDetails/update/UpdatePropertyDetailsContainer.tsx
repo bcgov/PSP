@@ -13,7 +13,7 @@ import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
-  id?: number;
+  id: number;
   setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
   onSuccess: () => void;
 }
