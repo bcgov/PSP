@@ -22,17 +22,14 @@ SELECT @noteDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'note-delete';
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteView AND ROLE_ID = @functional;
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteEdit AND ROLE_ID = @functional;
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteAdd AND ROLE_ID = @functional;
-GO
 
 /* Functional Restricted */
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteView AND ROLE_ID = @restricted;
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteEdit AND ROLE_ID = @restricted;
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteAdd AND ROLE_ID = @restricted;
-GO
 
 /* Read Only */
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteView AND ROLE_ID = @readOnly;
-GO
 
 /* System Administrator */
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @noteView AND ROLE_ID = @systemAdministrator;
