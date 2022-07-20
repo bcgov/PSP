@@ -1,5 +1,3 @@
-import { Button } from 'components/common/buttons/Button';
-import { InlineForm, InlineInput } from 'components/common/form/styles';
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import styled from 'styled-components';
 
@@ -19,33 +17,4 @@ export const Scrollable = styled(ScrollableBase)`
 
 export const PageHeader = styled.h3`
   text-align: left;
-`;
-
-export const PageToolbar = styled.div`
-  align-items: center;
-  padding: 0;
-  padding-bottom: 2rem;
-`;
-
-export const Spacer = styled.div`
-  display: flex;
-  flex: 1 1 auto;
-`;
-
-export const FileIcon = styled(Button)`
-  &&.btn {
-    background-color: #fff;
-    color: ${({ theme, disabled }) =>
-      disabled ? theme.css.disabledColor : theme.css.primaryColor};
-    padding: 6px 0.5rem;
-  }
-`;
-
-export const FilterBox = styled(InlineForm)`
-  background-color: ${({ theme }) => theme.css.filterBoxColor};
-`;
-
-export const LongInlineInput = styled(InlineInput)`
-  flex: 3 1 auto;
-  max-width: 31rem;
 `;

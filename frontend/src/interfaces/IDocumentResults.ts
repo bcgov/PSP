@@ -1,9 +1,9 @@
 export interface IDocumentFilter {
-  documentType?: number;
+  documentTypeId?: number;
   status: string;
 }
 
 export const defaultDocumentFilter: IDocumentFilter = {
-  documentType: undefined,
+  documentTypeId: undefined,
   status: '',
 };

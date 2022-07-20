@@ -21,6 +21,6 @@ namespace Pims.Api.Services
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw);
 
-        IEnumerable<PimsDocumentTyp> GetPIMSDocumentTypes();
+        IEnumerable<PimsDocumentTyp> GetPimsDocumentTypes();
     }
 }

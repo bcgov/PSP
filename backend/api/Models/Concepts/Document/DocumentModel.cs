@@ -15,24 +15,14 @@ namespace Pims.Api.Models.Concepts
         public int Id { get; set; }
 
         /// <summary>
-        /// get/set - Document Type Id.
-        /// </summary>
-        public string DocumentTypeId { get; set; }
-
-        /// <summary>
         /// get/set - Document Type.
         /// </summary>
-        public string DocumentType { get; set; }
+        public DocumentTypeModel DocumentType { get; set; }
 
         /// <summary>
-        /// get/set - Document Status.
+        /// get/set - The document status type.
         /// </summary>
-        public string Status { get; set; }
-
-        /// <summary>
-        /// get/set - Document Status Code.
-        /// </summary>
-        public string StatusCode { get; set; }
+        public TypeModel<string> DocumentStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Document/File Name.

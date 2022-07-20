@@ -1,4 +1,4 @@
-import { ColumnWithProps, DateCell, Table } from 'components/Table';
+import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
 import { Api_Document } from 'models/api/Document';
 
@@ -41,13 +41,13 @@ const columns: ColumnWithProps<Api_Document>[] = [
     width: 10,
     maxWidth: 20,
   },
-
   {
     Header: 'Status',
-    accessor: 'status',
+    accessor: 'statusTypeCode',
     sortable: true,
     width: 10,
     maxWidth: 20,
+    Cell: renderTypeCode,
   },
 ];
 export function DocumentResults(props: IDocumentResultProps) {

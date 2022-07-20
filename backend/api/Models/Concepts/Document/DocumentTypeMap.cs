@@ -11,9 +11,7 @@ namespace Pims.Api.Models.Concepts.Document
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.DocumentTypeId)
                 .Map(dest => dest.DocumentType, src => src.DocumentType)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
-
         }
     }
 }

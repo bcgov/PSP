@@ -55,7 +55,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
             <Col md={4}>
               <Select
                 data-testid="document-type"
-                field="documentType"
+                field="documentTypeId"
                 placeholder="All document types"
                 options={documentTypes}
               />
@@ -89,15 +89,6 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
 const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
-  .idir-input-group {
-    .input-group-prepend select {
-      width: 16rem;
-    }
-    input {
-      width: 18rem;
-      max-width: 100%;
-    }
-  }
 `;
 
 const ColButtons = styled(Col)`

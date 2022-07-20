@@ -31,14 +31,15 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   );
 
   const sortedFilteredDocuments = React.useMemo(() => {
-    if (documentResults?.length) {
+    if (documentResults?.length > 0) {
       let documentItems = [...documentResults];
 
       if (filters) {
         documentItems = documentItems.filter(document => {
           return (
-            (!filters.documentType || document.documentTypeId === filters.documentType) &&
-            (!filters.status || document.statusCode === filters.status)
+            (!filters.documentTypeId ||
+              document.documentTypeId === Number(filters.documentTypeId)) &&
+            (!filters.status || document.statusTypeCode?.id === filters.status)
           );
         });
       }
@@ -46,7 +47,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
           const keyName = (sort as any)[sortFields[0]];
-          return orderBy(documentItems, sortFields[0], keyName) as Api_Document[];
+          return orderBy(documentItems, sortFields[0], keyName);
         }
       }
       return documentItems;

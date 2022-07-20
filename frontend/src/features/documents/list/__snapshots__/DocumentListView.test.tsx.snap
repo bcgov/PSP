@@ -174,15 +174,6 @@ exports[`Document List View renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c4 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c5 {
   border-left: 0.2rem solid white;
 }
@@ -256,8 +247,8 @@ exports[`Document List View renders as expected 1`] = `
               <select
                 class="form-select form-control"
                 data-testid="document-type"
-                id="input-documentType"
-                name="documentType"
+                id="input-documentTypeId"
+                name="documentTypeId"
               >
                 <option
                   value=""

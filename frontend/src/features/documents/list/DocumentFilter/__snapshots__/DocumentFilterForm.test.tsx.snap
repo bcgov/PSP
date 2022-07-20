@@ -145,15 +145,6 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c0 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c0 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c1 {
   border-left: 0.2rem solid white;
 }
@@ -181,8 +172,8 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
           <select
             class="form-select form-control"
             data-testid="document-type"
-            id="input-documentType"
-            name="documentType"
+            id="input-documentTypeId"
+            name="documentTypeId"
           >
             <option
               value=""
@@ -428,15 +419,6 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c0 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c0 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c1 {
   border-left: 0.2rem solid white;
 }
@@ -464,8 +446,8 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
           <select
             class="form-select form-control"
             data-testid="document-type"
-            id="input-documentType"
-            name="documentType"
+            id="input-documentTypeId"
+            name="documentTypeId"
           >
             <option
               value=""

@@ -57,7 +57,7 @@ namespace Pims.Api.Services
             return task.Result;
         }
 
-        public IEnumerable<PimsDocumentTyp> GetPIMSDocumentTypes()
+        public IEnumerable<PimsDocumentTyp> GetPimsDocumentTypes()
         {
             return documentTypeRepository.GetAll();
         }
