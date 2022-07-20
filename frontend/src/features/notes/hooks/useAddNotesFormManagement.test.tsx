@@ -21,6 +21,8 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
 
+const onSuccess = jest.fn();
+
 describe('useAddNotesFormManagement hook', () => {
   const setup = (hookProps: IUseAddNotesFormManagementProps) => {
     const { result } = renderHook(
@@ -28,6 +30,7 @@ describe('useAddNotesFormManagement hook', () => {
         useAddNotesFormManagement({
           parentId: hookProps.parentId,
           type: hookProps.type,
+          onSuccess,
         }),
       {
         wrapper: props => (
@@ -66,6 +69,8 @@ describe('useAddNotesFormManagement hook', () => {
     const { validationSchema } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const validForm = new EntityNoteForm();
+    validForm.note.note = 'Lorem ipsum';
+
     const invalidForm = new EntityNoteForm();
     invalidForm.note.note = fakeText(4001);
 
@@ -89,7 +94,6 @@ describe('useAddNotesFormManagement hook', () => {
 
     expect(formikHelpers.setSubmitting).toBeCalledWith(false);
     expect(formikHelpers.resetForm).toBeCalled();
-    // TODO: navigate to Notes LIST VIEW - route not implemented yet
-    expect(history.location.pathname).toBe('/mapview');
+    expect(onSuccess).toBeCalled();
   });
 });
