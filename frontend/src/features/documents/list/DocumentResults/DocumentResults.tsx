@@ -15,7 +15,7 @@ const columns: ColumnWithProps<Api_Document>[] = [
     Header: 'Document type',
     accessor: 'documentType',
     align: 'left',
-    sortable: false,
+    sortable: true,
     minWidth: 30,
     maxWidth: 40,
   },

@@ -369,6 +369,39 @@ exports[`Document List View renders as expected 1`] = `
                 class="sortable-column"
               >
                 Document type
+                <div
+                  class="c7"
+                >
+                  <svg
+                    class="c8"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c9"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div
