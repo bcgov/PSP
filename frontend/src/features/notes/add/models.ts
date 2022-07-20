@@ -1,18 +1,6 @@
-import { Api_EntityNote, Api_Note } from 'models/api/Note';
+import { Api_EntityNote } from 'models/api/Note';
 
-export class NoteForm {
-  id?: number;
-  note?: string = '';
-  rowVersion?: number;
-
-  toApi(): Api_Note {
-    return {
-      id: this.id,
-      note: this.note,
-      rowVersion: this.rowVersion,
-    };
-  }
-}
+import { NoteForm } from '../models';
 
 export class EntityNoteForm {
   id?: number;

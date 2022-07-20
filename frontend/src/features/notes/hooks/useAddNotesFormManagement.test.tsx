@@ -21,13 +21,16 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
 
+const onSuccess = jest.fn();
+
 describe('useAddNotesFormManagement hook', () => {
   const setup = (hookProps: IUseAddNotesFormManagementProps) => {
     const { result } = renderHook(
       () =>
         useAddNotesFormManagement({
           parentId: hookProps.parentId,
-          parentType: hookProps.parentType,
+          type: hookProps.type,
+          onSuccess,
         }),
       {
         wrapper: props => (
@@ -51,7 +54,7 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   it('should return valid initial values', async () => {
-    const { initialValues } = setup({ parentId: 1, parentType: NoteTypes.Activity });
+    const { initialValues } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     expect(initialValues).toEqual(
       expect.objectContaining({
@@ -63,9 +66,11 @@ describe('useAddNotesFormManagement hook', () => {
 
   it('should provide form validation schema', async () => {
     expect.assertions(3);
-    const { validationSchema } = setup({ parentId: 1, parentType: NoteTypes.Activity });
+    const { validationSchema } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const validForm = new EntityNoteForm();
+    validForm.note.note = 'Lorem ipsum';
+
     const invalidForm = new EntityNoteForm();
     invalidForm.note.note = fakeText(4001);
 
@@ -75,7 +80,7 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   it('should provide form submission handler', async () => {
-    const { handleSubmit } = setup({ parentId: 1, parentType: NoteTypes.Activity });
+    const { handleSubmit } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const formValues = new EntityNoteForm();
     formValues.note.note = 'Test Note';
@@ -89,7 +94,6 @@ describe('useAddNotesFormManagement hook', () => {
 
     expect(formikHelpers.setSubmitting).toBeCalledWith(false);
     expect(formikHelpers.resetForm).toBeCalled();
-    // TODO: navigate to Notes LIST VIEW - route not implemented yet
-    expect(history.location.pathname).toBe('/mapview');
+    expect(onSuccess).toBeCalled();
   });
 });

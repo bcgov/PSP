@@ -144,6 +144,40 @@ exports[`CreatePersonForm renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c11.c11.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c11.c11.btn .text {
+  display: none;
+}
+
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
 .c6 button.close {
   font-size: 2.4rem;
 }
@@ -195,40 +229,6 @@ exports[`CreatePersonForm renders as expected 1`] = `
   -ms-flex-direction: row;
   flex-direction: row;
   gap: 1.6rem;
-}
-
-.c11.c11.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c11.c11.btn .text {
-  display: none;
-}
-
-.c11.c11.btn:hover,
-.c11.c11.btn:active,
-.c11.c11.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c11.c11.btn:hover .text,
-.c11.c11.btn:active .text,
-.c11.c11.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c9 {

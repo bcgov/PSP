@@ -8,12 +8,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
   <div
     class="Toastify"
   />
-  .c4 {
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
-.c6.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -144,6 +139,11 @@ exports[`Edit user page EditUserPage renders 1`] = `
 
 .c6.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c4 {
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
 
 .c1 {

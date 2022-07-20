@@ -10,7 +10,7 @@ const mockAxios = new MockAdapter(axios);
 
 describe('useApiNotes hook', () => {
   beforeEach(() => {
-    mockAxios.onGet(`/notes/file/1`).reply(200, mockNotesResponse());
+    mockAxios.onGet(`/notes/file/owner/1`).reply(200, mockNotesResponse());
     mockAxios.onDelete(`/notes/file/1`).reply(200, true);
     mockAxios.onPost(`/notes/activity`).reply(200, mockEntityNote(1));
   });

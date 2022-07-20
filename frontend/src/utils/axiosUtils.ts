@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
  * Provides default boilerplate applicable to handling axios requests completed successfully.
  * @param message The message to show as a toast
  */
-export function useAxiosSuccessHandler(message: string) {
+export function useAxiosSuccessHandler(message?: string) {
   return useCallback(() => {
     if (message) {
       toast.success(message);

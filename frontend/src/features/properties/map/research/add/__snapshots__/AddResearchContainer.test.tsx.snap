@@ -89,25 +89,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
       class="c2"
     />
   </div>
-  .c21 {
-  padding-right: 0;
-}
-
-.c21 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c22:not(:first-child) {
-  padding-left: 0;
-}
-
-.c22:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c23.btn {
+  .c23.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -238,6 +220,24 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 
 .c23.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c21 {
+  padding-right: 0;
+}
+
+.c21 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c22:not(:first-child) {
+  padding-left: 0;
+}
+
+.c22:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .c24 {

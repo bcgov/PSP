@@ -11,7 +11,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { networkSlice } from 'store/slices/network/networkSlice';
 
-import { useAddNote } from './useAddNote';
+import { useNoteRepository } from './useNoteRepository';
 
 const dispatch = jest.fn();
 const toastSuccessSpy = jest.spyOn(toast, 'success');
@@ -34,7 +34,7 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useAddNote hook', () => {
   const setup = (values?: any) => {
-    const { result } = renderHook(useAddNote, { wrapper: getWrapper(getStore(values)) });
+    const { result } = renderHook(useNoteRepository, { wrapper: getWrapper(getStore(values)) });
     return result.current;
   };
 
@@ -57,7 +57,7 @@ describe('useAddNote hook', () => {
     const { addNote } = setup();
 
     await act(async () => {
-      const response = await addNote(NoteTypes.Activity, mockEntityNote());
+      const response = await addNote.execute(NoteTypes.Activity, mockEntityNote());
       expect(response).toEqual(mockEntityNote(1));
     });
 
@@ -71,7 +71,7 @@ describe('useAddNote hook', () => {
     const { addNote } = setup();
 
     await act(async () => {
-      await addNote(NoteTypes.Activity, mockEntityNote());
+      await addNote.execute(NoteTypes.Activity, mockEntityNote());
     });
 
     expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
