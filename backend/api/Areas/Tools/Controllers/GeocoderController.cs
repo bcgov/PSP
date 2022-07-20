@@ -87,7 +87,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Make a request to Data BC Geocoder for the property that is the closest to the given lat/lng point.
         /// </summary>
-        /// <param name="point">The lat/lng of the desired property.</param>
+        /// <param name="point">The lat/lng of the desired property in the format 'lng,lat'.</param>
         /// <returns>A single address match.</returns>
         [HttpGet("nearest")]
         [Produces("application/json")]

@@ -101,6 +101,7 @@ namespace Pims.Ltsa
         {
             var orderProcessingPolicy = Policy
                 .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
+                 .Or<JsonException>()
                  .WaitAndRetryAsync(Options.MaxRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             try
@@ -121,6 +122,11 @@ namespace Pims.Ltsa
                 Error error = await GetLtsaError(ex, url);
                 throw new LtsaException(ex, this.Client, error);
             }
+            catch (JsonException ex)
+            {
+                this._logger.LogError("Failed to process LTSA json: ", ex);
+                throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
+            }
         }
 
         private static bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response) where T : IFieldedData
@@ -140,7 +146,8 @@ namespace Pims.Ltsa
                 }
                 catch (JsonException)
                 {
-                    error = new Error(new List<String>() { ex.Message });
+                    _logger.LogError(ex, $"Failed to deserialize error from remote host: ${errorContent}");
+                    error = new Error(new List<String>() { ex.Message, "LTSA returned an invalid response. Please refresh your page to try again." });
                 }
                 _logger.LogError(ex, $"Failed to send/receive request: ${url}");
             }
@@ -159,7 +166,7 @@ namespace Pims.Ltsa
             {
                 try
                 {
-                    var refreshToken = _token.RefreshToken;
+                    var refreshToken = _token?.RefreshToken;
                     _token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
                     var response = await _authPolicy.ExecuteAsync(async () => await this.Client.PostJsonAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), new { refreshToken }));
                     var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);

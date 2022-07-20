@@ -730,7 +730,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                   <div
                     class="tr"
                     role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 90px;"
+                    style="display: flex; flex: 1 0 auto; min-width: 150px;"
                   >
                     <div
                       class="th"
@@ -786,6 +786,30 @@ exports[`ResearchProperties component renders as expected when provided no prope
                         class="sortable-column"
                       >
                         Plan #
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Address
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Legal Description
                       </div>
                     </div>
                   </div>

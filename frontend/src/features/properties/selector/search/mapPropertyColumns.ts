@@ -26,6 +26,20 @@ const columns: ColumnWithProps<IMapProperty>[] = [
     width: 20,
     maxWidth: 20,
   },
+  {
+    Header: 'Address',
+    accessor: 'address',
+    align: 'left',
+    width: 20,
+    maxWidth: 20,
+  },
+  {
+    Header: 'Legal Description',
+    accessor: 'legalDescription',
+    align: 'left',
+    width: 30,
+    maxWidth: 30,
+  },
 ];
 
 export default columns;
