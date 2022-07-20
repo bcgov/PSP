@@ -78,7 +78,7 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col className="align-items-end d-flex">
                 <FastCurrencyInput
                   formikProps={formikProps}
                   label="Claims against deposit ($):"
@@ -88,7 +88,7 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
               <Col>
                 <FastCurrencyInput
                   formikProps={formikProps}
-                  label="Returned amount ($):"
+                  label="Returned amount ($) without interest:"
                   field="returnAmount"
                   required
                 />
