@@ -1,9 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Pims.Core.Test;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Repositories;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 
 namespace Pims.Dal.Test.Services

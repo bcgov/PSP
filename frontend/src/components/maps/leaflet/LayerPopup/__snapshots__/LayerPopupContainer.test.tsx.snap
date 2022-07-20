@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayerPopupContainer component renders as expected with layer popup content 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-top: 1px solid #bcbec5;
+  margin-top: 0.8rem;
+}
+
+.c1 {
+  font-weight: bold;
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  line-height: 2.4rem;
+}
+
+.c0 {
+  padding: 0.5rem 1.2rem;
+}
+
+.c0 .btn-link {
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  padding: 0;
+}
+
+.c0 .list-group .list-group-item {
+  font-size: 1.4rem;
+  border: none;
+  padding: 0;
+  padding-top: 0.8rem;
+}
+
+<div
+    class="c0"
+  >
+    <h5
+      class="c1"
+    />
+    <div
+      class="list-group"
+    />
+    <div
+      class="c2"
+    >
+      <button
+        class="c3 Button btn btn-link"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Zoom map
+        </div>
+      </button>
+      <button
+        class="c3 Button btn btn-link"
+        data-testid="fly-out-ellipsis"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          <svg
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

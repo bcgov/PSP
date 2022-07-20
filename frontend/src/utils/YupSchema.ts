@@ -19,9 +19,7 @@ export const AccessRequestSchema = Yup.object().shape({
     .min(0, 'Invalid Region')
     .required('Required'),
   note: Yup.string().max(4000, 'Note must be less than 4000 characters'),
-  user: Yup.object().shape({
-    position: Yup.string().max(100, 'Note must be less than 100 characters'),
-  }),
+  position: Yup.string().max(100, 'Position must be less than 100 characters'),
 });
 
 export const UserUpdateSchema = Yup.object().shape({

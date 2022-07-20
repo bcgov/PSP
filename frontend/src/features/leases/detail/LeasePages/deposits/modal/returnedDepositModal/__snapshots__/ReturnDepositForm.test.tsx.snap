@@ -284,7 +284,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
       class="row"
     >
       <div
-        class="col"
+        class="align-items-end d-flex col"
       >
         <div
           class="form-group"
@@ -320,7 +320,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             class="form-label"
             for="input-returnAmount"
           >
-            Returned amount ($): 
+            Returned amount ($) without interest: 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -356,6 +356,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="interestPaid-tooltip"
             >
               <svg
                 class="tooltip-icon"
@@ -841,7 +842,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
       class="row"
     >
       <div
-        class="col"
+        class="align-items-end d-flex col"
       >
         <div
           class="form-group"
@@ -877,7 +878,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             class="form-label"
             for="input-returnAmount"
           >
-            Returned amount ($): 
+            Returned amount ($) without interest: 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -913,6 +914,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
+              id="interestPaid-tooltip"
             >
               <svg
                 class="tooltip-icon"

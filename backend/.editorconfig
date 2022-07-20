@@ -116,9 +116,8 @@ dotnet_diagnostic.SA1124.severity = none
 # SA1507 Code should not contain multiple blank lines in a row
 dotnet_diagnostic.SA1507.severity = none
 
-
 # Entity Framework files
-[**{entities/ef/*,PIMSContext}.cs]
+[**{entities/ef/*,PIMSContext,PimsBaseContext}.cs]
 # CS8019: Using directive is unnecessary.
 dotnet_diagnostic.CS8019.severity = none
 

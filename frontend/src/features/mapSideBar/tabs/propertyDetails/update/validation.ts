@@ -33,4 +33,5 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
     then: Yup.string().required('Volumetric Type is required'),
     otherwise: Yup.string().nullable(),
   }),
+  notes: Yup.string().max(4000, 'Notes must be less than 4000 characters'),
 });

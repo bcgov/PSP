@@ -13,32 +13,28 @@
       }
     },
     {
-      "name": "Debug CRA Tests",
       "type": "node",
+      "name": "Debug tests watch mode",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-app-rewired",
+      "args": ["test", "--env=jsdom", "--runInBand", "--no-cache", "--watchAll"],
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "env": {
-        "CI": "true"
-      },
-      "disableOptimisticBPs": true
+      "protocol": "inspector",
+      "internalConsoleOptions": "neverOpen"
     },
     {
       "type": "node",
-      "name": "vscode-jest-tests",
+      "name": "Debug tests opened file",
       "request": "launch",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-app-rewired",
       "args": [
         "test",
-        "--ci",
-        "react-scripts-ts",
-        "--watchAll=false",
+        "${fileBasenameNoExtension}",
         "--env=jsdom",
-        "--runInBand"
+        "--runInBand",
+        "--no-cache",
+        "--watchAll"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",

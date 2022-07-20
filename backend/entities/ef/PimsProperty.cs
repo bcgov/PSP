@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,12 +28,10 @@ namespace Pims.Dal.Entities
     {
         public PimsProperty()
         {
-            PimsProjectProperties = new HashSet<PimsProjectProperty>();
             PimsPropPropAdjacentLandTypes = new HashSet<PimsPropPropAdjacentLandType>();
             PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
             PimsPropPropRoadTypes = new HashSet<PimsPropPropRoadType>();
             PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
-            PimsPropertyActivities = new HashSet<PimsPropertyActivity>();
             PimsPropertyEvaluations = new HashSet<PimsPropertyEvaluation>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
             PimsPropertyOrganizations = new HashSet<PimsPropertyOrganization>();
@@ -99,6 +97,11 @@ namespace Pims.Dal.Entities
         public int? Pid { get; set; }
         [Column("PIN")]
         public int? Pin { get; set; }
+        [Column("FILE_NUMBER")]
+        public int? FileNumber { get; set; }
+        [Column("FILE_NUMBER_SUFFIX")]
+        [StringLength(2)]
+        public string FileNumberSuffix { get; set; }
         [Column("LAND_AREA")]
         public float? LandArea { get; set; }
         [Column("LAND_LEGAL_DESCRIPTION")]
@@ -234,8 +237,6 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(VolumetricTypeCode))]
         [InverseProperty(nameof(PimsVolumetricType.PimsProperties))]
         public virtual PimsVolumetricType VolumetricTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsProjectProperty.Property))]
-        public virtual ICollection<PimsProjectProperty> PimsProjectProperties { get; set; }
         [InverseProperty(nameof(PimsPropPropAdjacentLandType.Property))]
         public virtual ICollection<PimsPropPropAdjacentLandType> PimsPropPropAdjacentLandTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropAnomalyType.Property))]
@@ -244,8 +245,6 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropTenureType.Property))]
         public virtual ICollection<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
-        [InverseProperty(nameof(PimsPropertyActivity.Property))]
-        public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; }
         [InverseProperty(nameof(PimsPropertyEvaluation.Property))]
         public virtual ICollection<PimsPropertyEvaluation> PimsPropertyEvaluations { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.Property))]

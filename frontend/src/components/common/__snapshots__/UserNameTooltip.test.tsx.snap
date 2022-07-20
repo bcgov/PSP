@@ -15,6 +15,7 @@ exports[`UserNameTooltip renders as expected 1`] = `
 <span
     class="tooltip-icon"
     data-testid="tooltip-icon"
+    id="userNameTooltip"
   >
     <span
       class="c0"

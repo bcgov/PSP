@@ -227,6 +227,7 @@ exports[`PaymentForm component renders as expected 1`] = `
         <span
           class="tooltip-icon"
           data-testid="tooltip-icon"
+          id="actual-calculation-tooltip"
         >
           <svg
             class="tooltip-icon"
@@ -526,6 +527,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
         <span
           class="tooltip-icon"
           data-testid="tooltip-icon"
+          id="actual-calculation-tooltip"
         >
           <svg
             class="tooltip-icon"

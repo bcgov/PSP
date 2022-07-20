@@ -54,6 +54,12 @@ namespace Pims.Dal
         #region ResearchFiles
         IResearchFileRepository ResearchFile { get; }
         #endregion
+
+        #region Notes
+        INoteRepository Note { get; }
+
+        IEntityNoteRepository EntityNote { get; }
+        #endregion
         #endregion
     }
 }
