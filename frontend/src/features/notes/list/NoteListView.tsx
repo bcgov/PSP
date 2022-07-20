@@ -1,17 +1,18 @@
 import GenericModal from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
 import { NoteTypes } from 'constants/noteTypes';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { useApiNotes } from 'hooks/pims-api/useApiNotes';
 import useIsMounted from 'hooks/useIsMounted';
 import { useModalManagement } from 'hooks/useModalManagement';
 import { orderBy } from 'lodash';
 import { Api_Note } from 'models/api/Note';
 import React, { useCallback } from 'react';
-import { FaUpload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';
+import { NoteListHeader } from './NoteListHeader/NoteListHeader';
 import { NoteResults } from './NoteResults/NoteResults';
 import * as Styled from './styles';
 
@@ -82,59 +83,57 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
   return (
     <Styled.ListPage>
       <Styled.Scrollable vertical={true}>
-        <Styled.PageHeader>
-          Notes
-          <Styled.AddNoteButton onClick={openAddNotes}>
-            <FaUpload size="2rem" />
-            &nbsp;Add a Note
-          </Styled.AddNoteButton>
-        </Styled.PageHeader>
+        <Section
+          header={<NoteListHeader title="Notes" onAddNote={openAddNotes} />}
+          isCollapsable
+          initiallyExpanded
+        >
+          <NoteResults
+            results={sortedNoteList}
+            loading={isLoading}
+            sort={sort}
+            setSort={setSort}
+            onShowDetails={(note: Api_Note) => {
+              setCurrentNote(note);
+              openViewNotes();
+            }}
+            onDelete={(note: Api_Note) => {
+              setCurrentNote(note);
+              setShowDeleteConfirm(true);
+            }}
+          />
 
-        <NoteResults
-          results={sortedNoteList}
-          loading={isLoading}
-          sort={sort}
-          setSort={setSort}
-          onShowDetails={(note: Api_Note) => {
-            setCurrentNote(note);
-            openViewNotes();
-          }}
-          onDelete={(note: Api_Note) => {
-            setCurrentNote(note);
-            setShowDeleteConfirm(true);
-          }}
-        />
-
-        <AddNotesContainer
-          type={type}
-          parentId={entityId}
-          isOpened={isAddNotesOpened}
-          openModal={openAddNotes}
-          closeModal={closeAddNotes}
-          onSuccess={fetchNotes}
-        />
-
-        {currentNote && (
-          <NoteContainer
+          <AddNotesContainer
             type={type}
-            noteId={currentNote.id as number}
-            isOpened={isViewNotesOpened}
-            openModal={openViewNotes}
-            closeModal={closeViewNotes}
+            parentId={entityId}
+            isOpened={isAddNotesOpened}
+            openModal={openAddNotes}
+            closeModal={closeAddNotes}
             onSuccess={fetchNotes}
-          ></NoteContainer>
-        )}
+          />
 
-        <GenericModal
-          display={showDeleteConfirm}
-          title="Delete Note"
-          message={`Are you sure you want to delete note?`}
-          handleOk={onDeleteNoteConfirm}
-          okButtonText="OK"
-          cancelButtonText="Cancel"
-          closeButton={false}
-          setDisplay={setShowDeleteConfirm}
-        />
+          {currentNote && (
+            <NoteContainer
+              type={type}
+              noteId={currentNote.id as number}
+              isOpened={isViewNotesOpened}
+              openModal={openViewNotes}
+              closeModal={closeViewNotes}
+              onSuccess={fetchNotes}
+            ></NoteContainer>
+          )}
+
+          <GenericModal
+            display={showDeleteConfirm}
+            title="Delete Note"
+            message={`Are you sure you want to delete note?`}
+            handleOk={onDeleteNoteConfirm}
+            okButtonText="OK"
+            cancelButtonText="Cancel"
+            closeButton={false}
+            setDisplay={setShowDeleteConfirm}
+          />
+        </Section>
       </Styled.Scrollable>
     </Styled.ListPage>
   );
