@@ -49,7 +49,7 @@ export const mockNoteResponse = (id = 1, note = 'Test Note', rowVersion = 1): Ap
   id,
   note,
   rowVersion,
-  appCreateTimestamp: '2022-07-20T20:06:10.743s',
+  appCreateTimestamp: '2022-07-20T20:06:10.743',
   appLastUpdateTimestamp: '2022-07-20T20:06:10.743',
   appLastUpdateUserid: 'admin',
   appCreateUserid: 'admin',
