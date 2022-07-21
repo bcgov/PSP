@@ -14,37 +14,6 @@ namespace Pims.Dal.Extensions
     public static class EntityTypeBuilderExtensions
     {
         /// <summary>
-        /// Adds the configured table name
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static EntityTypeBuilder<T> ToMotiTable<T>(this EntityTypeBuilder<T> builder)
-            where T : class
-        {
-            var type = typeof(T);
-            var table = type.GetCustomAttribute<MotiTableAttribute>() ?? throw new InvalidOperationException($"Entity '{type.Name}' model requires MotiAttribute defined.");
-            builder.ToTable(table.Name);
-            return builder;
-        }
-
-        /// <summary>
-        /// Add the primary key to the table and name it with the abbreviation configured.
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <param name="keyExpression"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static KeyBuilder HasMotiKey<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, object>> keyExpression)
-            where T : class
-        {
-            var type = typeof(T);
-            var table = type.GetCustomAttribute<MotiTableAttribute>() ?? throw new InvalidOperationException($"Entity '{type.Name}' model requires MotiAttribute defined.");
-            var primaryKeyName = $"{table.Abbreviation}_PK";
-            return builder.HasKey(keyExpression).HasName(primaryKeyName);
-        }
-
-        /// <summary>
         /// Add a sequence property to the table with the appropriate naming convention.
         /// </summary>
         /// <param name="builder"></param>

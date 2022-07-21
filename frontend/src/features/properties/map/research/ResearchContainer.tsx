@@ -70,9 +70,9 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       return researchProperty.propertyName;
     } else if (researchProperty.property !== undefined) {
       const property = researchProperty.property;
-      if (property.pin !== undefined) {
+      if (property.pin !== undefined && property.pin !== 0) {
         return property.pin.toString();
-      } else if (property.pid !== undefined) {
+      } else if (property.pid !== undefined && property.pid !== 0) {
         return pidFormatter(property.pid.toString());
       } else if (property.planNumber !== undefined) {
         return property.planNumber;
