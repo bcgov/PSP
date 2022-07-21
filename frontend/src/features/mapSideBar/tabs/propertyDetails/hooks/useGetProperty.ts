@@ -9,11 +9,11 @@ import { toast } from 'react-toastify';
  * hook that retrieves a property from the inventory.
  */
 export const useGetProperty = () => {
-  const { getPropertyConceptWithPid } = useApiProperties();
+  const { getPropertyConceptWithId } = useApiProperties();
 
   const { execute, loading } = useApiRequestWrapper({
-    requestFunction: useCallback(async (pid: string) => await getPropertyConceptWithPid(pid), [
-      getPropertyConceptWithPid,
+    requestFunction: useCallback(async (id: number) => await getPropertyConceptWithId(id), [
+      getPropertyConceptWithId,
     ]),
     requestName: 'retrievePropertyConcept',
     onSuccess: useCallback(() => toast.success('Property information retrieved'), []),

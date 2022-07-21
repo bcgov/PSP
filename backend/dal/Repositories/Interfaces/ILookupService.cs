@@ -46,6 +46,8 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsPropertyAdjacentLandType> GetPropertyAdjacentLandTypes();
         IEnumerable<PimsVolumetricType> GetPropertyVolumetricTypes();
         IEnumerable<PimsPphStatusType> GetPPHStatusType();
+        IEnumerable<PimsDocumentStatusType> GetDocumentStatusTypes();
+        IEnumerable<PimsDocumentTyp> GetDocumentTypes();
     }
 }
 

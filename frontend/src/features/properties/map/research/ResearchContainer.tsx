@@ -2,9 +2,11 @@ import { Button } from 'components/common/buttons/Button';
 import GenericModal from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { Claims } from 'constants/claims';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
 import { FormikProps } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useState } from 'react';
@@ -12,7 +14,7 @@ import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils';
 
-import ResearchFooter from './common/ResearchFooter';
+import SidebarFooter from '../shared/SidebarFooter';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
 import { useGetResearch } from './hooks/useGetResearch';
@@ -40,6 +42,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const { search } = useMapSearch();
+  const { hasClaim } = useKeycloakWrapper();
 
   const menuItems = researchFile?.researchProperties?.map(x => getPropertyName(x)) || [];
   menuItems.unshift('RFile Summary');
@@ -154,7 +157,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         header={<ResearchHeader researchFile={researchFile} />}
         footer={
           isEditing && (
-            <ResearchFooter
+            <SidebarFooter
               isOkDisabled={formikRef?.current?.isSubmitting}
               onSave={handleSaveClick}
               onCancel={handleCancelClick}
@@ -167,12 +170,12 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         <ResearchFileLayout
           leftComponent={
             <>
-              {selectedMenuIndex === 0 && (
+              {selectedMenuIndex === 0 && hasClaim(Claims.RESEARCH_ADD) ? (
                 <Button variant="success" onClick={showPropertiesSelector}>
                   <MdLocationPin size={'2.5rem'} />
                   Edit properties
                 </Button>
-              )}
+              ) : null}
 
               <ResearchMenu
                 items={menuItems}

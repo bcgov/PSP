@@ -3,6 +3,7 @@ import { Breadcrumb as BsBreadcrumb, Row } from 'react-bootstrap';
 import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
+import { Button } from './buttons';
 import { Form } from './form';
 import GenericModal from './GenericModal';
 
@@ -141,4 +142,11 @@ export const H3 = styled.h3`
 export const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
+`;
+
+export const StyledAddButton = styled(Button)`
+  &.btn.btn-primary,
+  &.btn.btn-primary:active {
+    background-color: ${props => props.theme.css.completedColor};
+  }
 `;

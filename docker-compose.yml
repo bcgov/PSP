@@ -90,6 +90,22 @@ services:
     networks:
       - psp
 
+  ####################### Clam AV #######################
+  # example av test file here: https://serverfault.com/questions/484082/how-should-i-test-clam-anti-virus
+  clamav:
+    image: mkodockx/docker-clamav:alpine-idb-amd64
+    ports:
+      - 3310:3310
+    restart: on-failure
+    container_name: psp-clamav
+    healthcheck:
+      test: [ "CMD", "./check.sh" ]
+      interval: 60s
+      retries: 3
+      start_period: 120s
+    networks:
+      - psp
+
 ####################### Networks Definition #######################
 networks:
   psp:

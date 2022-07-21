@@ -78,17 +78,17 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
-        /// Get the property associations for the specified unique 'pid'.
+        /// Get the property associations for the specified unique 'id'.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{pid}/associations")]
+        [HttpGet("{id}/associations")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyAssociationModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult GetPropertyAssociationsWithPid(string pid)
+        public IActionResult GetPropertyAssociationsWithId(long id)
         {
-            var property = _pimsRepository.Property.GetAssociations(pid);
+            var property = _pimsRepository.Property.GetAssociations(id);
 
             return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
         }
@@ -96,17 +96,17 @@ namespace Pims.Api.Areas.Property.Controllers
 
         #region Concept Endpoints
         /// <summary>
-        /// Get the property for the specified unique 'pid'.
+        /// Get the property for the specified unique 'id'.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("concept/{pid}")]
+        [HttpGet("concept/{id}")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Pims.Api.Models.Concepts.PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult GetConceptPropertyWithPid(string pid)
+        public IActionResult GetConceptPropertyWithId(long id)
         {
-            var property = _pimsService.PropertyService.GetByPid(pid);
+            var property = _pimsService.PropertyService.GetById(id);
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
         }
 
@@ -114,7 +114,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// Update the specified property, and attached properties.
         /// </summary>
         /// <returns></returns>
-        [HttpPut("concept/{pid}")]
+        [HttpPut("concept/{id}")]
         [HasPermission(Permissions.PropertyEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]

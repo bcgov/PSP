@@ -1,37 +1,31 @@
-import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { NoteTypes } from 'constants/index';
+import { FormikProps } from 'formik';
 
-import { useAddNote } from '../hooks/useAddNote';
-import { AddNotesForm } from './AddNotesForm';
+import { useAddNotesFormManagement } from '../hooks/useAddNotesFormManagement';
+import { AddNotesFormModal } from './AddNotesFormModal';
 import { EntityNoteForm } from './models';
 
 export interface IAddNotesContainerProps {
   /** The parent entity type for adding notes - e.g. 'activity' */
-  parentType: string;
+  type: NoteTypes;
   /** The parent's ID */
   parentId: number;
   /** Whether to show the notes modal. Default: false */
-  showNotes: boolean;
-  /** set the value of the externally tracked 'showNotes' prop above. */
-  setShowNotes: (show: boolean) => void;
+  isOpened: boolean;
+  /** set the value of the externally tracked 'isOpened' prop above. */
+  openModal: () => void;
+  /** set the value of the externally tracked 'isOpened' prop above. */
+  closeModal: () => void;
+  /** Optional - callback to execute after note has been added to the datastore */
+  onSuccess?: () => void;
 }
 
 export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
-  const history = useHistory();
-  const { addNote } = useAddNote();
-
-  // save handler
-  const saveNote = async (values: EntityNoteForm, formikHelpers: FormikHelpers<EntityNoteForm>) => {
-    const apiNote = values.toApi();
-    const response = await addNote(props.parentType, apiNote);
-    formikHelpers?.setSubmitting(false);
-
-    if (!!response?.id) {
-      formikHelpers?.resetForm();
-      // TODO: navigate to Notes LIST VIEW
-      history.replace(`/mapview`);
-    }
-  };
+  const { handleSubmit, initialValues, validationSchema } = useAddNotesFormManagement({
+    type: props.type,
+    parentId: props.parentId,
+    onSuccess: props.onSuccess,
+  });
 
   const onSaveClick = (noteForm: EntityNoteForm, formikProps: FormikProps<EntityNoteForm>) => {
     formikProps?.setSubmitting(true);
@@ -42,19 +36,16 @@ export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
     formikProps?.resetForm();
   };
 
-  const noteForm = new EntityNoteForm();
-  noteForm.parentId = props.parentId;
-
   return (
-    <Formik<EntityNoteForm> enableReinitialize initialValues={noteForm} onSubmit={saveNote}>
-      {() => (
-        <AddNotesForm
-          showNotes={props.showNotes}
-          setShowNotes={props.setShowNotes}
-          onSave={onSaveClick}
-          onCancel={onCancelClick}
-        />
-      )}
-    </Formik>
+    <AddNotesFormModal
+      isOpened={props.isOpened}
+      openModal={props.openModal}
+      closeModal={props.closeModal}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+      onSaveClick={onSaveClick}
+      onCancelClick={onCancelClick}
+    />
   );
 };

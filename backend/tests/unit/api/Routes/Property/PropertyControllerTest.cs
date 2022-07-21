@@ -40,15 +40,15 @@ namespace Pims.Api.Test.Routes
         }
 
         [Fact]
-        public void GetConceptPropertyWithPid_Route()
+        public void GetConceptPropertyWithId_Route()
         {
             // Arrange
-            var endpoint = typeof(PropertyController).FindMethod(nameof(PropertyController.GetConceptPropertyWithPid), typeof(string));
+            var endpoint = typeof(PropertyController).FindMethod(nameof(PropertyController.GetConceptPropertyWithId), typeof(long));
 
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("concept/{pid}");
+            endpoint.HasGet("concept/{id}");
             endpoint.HasPermissions(Permissions.PropertyView);
         }
 
@@ -61,7 +61,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPut("concept/{pid}");
+            endpoint.HasPut("concept/{id}");
             endpoint.HasPermissions(Permissions.PropertyEdit);
         }
         #endregion

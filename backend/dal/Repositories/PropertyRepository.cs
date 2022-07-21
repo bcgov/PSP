@@ -193,14 +193,12 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the property for the specified PID value.
+        /// Get the property for the specified id value.
         /// </summary>
-        /// <param name="pid"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public PimsProperty GetAssociations(string pid)
+        public PimsProperty GetAssociations(long id)
         {
-            int parsedPid = pid.ConvertPID();
-
             PimsProperty property = this.Context.PimsProperties
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(pl => pl.Lease)
@@ -208,7 +206,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropertyResearchFiles)
                     .ThenInclude(pr => pr.ResearchFile)
                     .ThenInclude(r => r.ResearchFileStatusTypeCodeNavigation)
-                .FirstOrDefault(p => p.Pid == parsedPid);
+                .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
         }

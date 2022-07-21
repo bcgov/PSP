@@ -8,11 +8,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c9 button.close {
-  font-size: 2.4rem;
-}
-
-.c13.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -145,6 +141,44 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c14.c14.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c14.c14.btn .text {
+  display: none;
+}
+
+.c14.c14.btn:hover,
+.c14.c14.btn:active,
+.c14.c14.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c14.c14.btn:hover .text,
+.c14.c14.btn:active .text,
+.c14.c14.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c9 button.close {
+  font-size: 2.4rem;
+}
+
 .c6 {
   border-radius: 1rem;
   width: 100%;
@@ -210,40 +244,6 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c14.c14.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c14.c14.btn .text {
-  display: none;
-}
-
-.c14.c14.btn:hover,
-.c14.c14.btn:active,
-.c14.c14.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c14.c14.btn:hover .text,
-.c14.c14.btn:active .text,
-.c14.c14.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c2 {

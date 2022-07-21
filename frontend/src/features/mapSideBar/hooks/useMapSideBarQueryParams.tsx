@@ -4,6 +4,7 @@ import AddResearchContainer from 'features/properties/map/research/add/AddResear
 import ResearchContainer from 'features/properties/map/research/ResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
+import queryString from 'query-string';
 import React, { useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -25,7 +26,6 @@ export enum MapViewState {
   RESEARCH_ADD = 'research_add',
   RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
-  PROPERTY_INFORMATION_EDIT = 'property_information_edit',
   ACQUISITION_ADD = 'acquisition_add',
 }
 
@@ -54,8 +54,9 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
 
     var parts = location.pathname.split('/');
     var currentState: MapViewState = MapViewState.MAP_ONLY;
-    var researchId = 0;
-    var propertyId = '';
+    var researchId: number = 0;
+    var propertyId: number | undefined = 0;
+    var pid = '';
     if (parts.length === 2) {
       currentState = MapViewState.MAP_ONLY;
     } else if (parts.length > 2) {
@@ -69,12 +70,12 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
           currentState = MapViewState.MAP_ONLY;
         }
       } else if (parts.length > 3 && parts[2] === 'property') {
-        propertyId = parts[3];
-        if (parts.length === 5 && parts[4] === 'edit') {
-          currentState = MapViewState.PROPERTY_INFORMATION_EDIT;
-        } else {
-          currentState = MapViewState.PROPERTY_INFORMATION;
-        }
+        pid = queryString.parse(location.search).pid?.toString() ?? '';
+        propertyId = !!parts[3] ? +parts[3] : undefined;
+        currentState = MapViewState.PROPERTY_INFORMATION;
+      } else if (parts.length > 3 && parts[2] === 'non-inventory-property') {
+        pid = parts[3];
+        currentState = MapViewState.PROPERTY_INFORMATION;
       } else if (parts[2] === 'acquisition') {
         if (parts.length === 4 && parts[3] === 'new') {
           currentState = MapViewState.ACQUISITION_ADD;
@@ -104,17 +105,11 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
       case MapViewState.PROPERTY_INFORMATION:
         setSidebarComponent(
           <MotiInventoryContainer
-            readOnly
             onClose={handleClose}
-            pid={propertyId}
+            id={propertyId}
+            pid={pid}
             onZoom={onZoom}
           />,
-        );
-        setShowSideBar(true);
-        break;
-      case MapViewState.PROPERTY_INFORMATION_EDIT:
-        setSidebarComponent(
-          <MotiInventoryContainer onClose={handleClose} pid={propertyId} onZoom={onZoom} />,
         );
         setShowSideBar(true);
         break;

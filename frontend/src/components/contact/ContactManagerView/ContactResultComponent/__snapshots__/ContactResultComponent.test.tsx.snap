@@ -141,6 +141,29 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c6.c6.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c6.c6.btn:hover,
+.c6.c6.btn:focus,
+.c6.c6.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c6.c6.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c6.c6.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
 .c3 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -178,29 +201,6 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
 .c1 {
   width: 1.6rem;
   height: 1.6rem;
-}
-
-.c6.c6.btn {
-  background-color: unset;
-  border: none;
-}
-
-.c6.c6.btn:hover,
-.c6.c6.btn:focus,
-.c6.c6.btn:active {
-  background-color: unset;
-  outline: none;
-  box-shadow: none;
-}
-
-.c6.c6.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c6.c6.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
 }
 
 .c4 {
