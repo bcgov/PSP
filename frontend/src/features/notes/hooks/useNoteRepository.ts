@@ -44,7 +44,7 @@ export const useNoteRepository = () => {
       [putNote],
     ),
     requestName: 'UpdateNote',
-    onSuccess: useAxiosSuccessHandler(),
+    onSuccess: useAxiosSuccessHandler('Note saved'),
     onError: useAxiosErrorHandler(),
   });
 
