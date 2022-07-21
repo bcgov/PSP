@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +11,9 @@ using Pims.Api.Services;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Controllers
 {
@@ -27,6 +30,7 @@ namespace Pims.Api.Controllers
         #region Variables
         private readonly IDocumentService _documentService;
         private readonly IDocumentSyncService _documentSyncService;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
@@ -35,10 +39,12 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="documentService"></param>
         /// <param name="documentSyncService"></param>
-        public DocumentController(IDocumentService documentService, IDocumentSyncService documentSyncService)
+        /// <param name="mapper"></param>
+        public DocumentController(IDocumentService documentService, IDocumentSyncService documentSyncService, IMapper mapper)
         {
             _documentService = documentService;
             _documentSyncService = documentSyncService;
+            _mapper = mapper;
         }
         #endregion
 
@@ -134,6 +140,22 @@ namespace Pims.Api.Controllers
         {
             var result = await _documentSyncService.SyncBackendDocumentTypes();
             return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Get the document types.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("document-types")]
+        [HasPermission(Permissions.DocumentView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<Concepts.DocumentTypeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "document-types" })]
+        public IActionResult GetDocumentTypeItems()
+        {
+            var documentTypes = _documentService.GetPimsDocumentTypes();
+            var mappedDocumentTypes = _mapper.Map<List<Concepts.DocumentTypeModel>>(documentTypes);
+            return new JsonResult(mappedDocumentTypes);
         }
 
         #endregion

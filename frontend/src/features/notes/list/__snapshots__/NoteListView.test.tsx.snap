@@ -8,7 +8,25 @@ exports[`Note List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c4 {
+  .c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c5 {
+  float: right;
+  cursor: pointer;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -27,12 +45,12 @@ exports[`Note List View renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c6 {
+.c8 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c5 {
+.c7 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -68,174 +86,222 @@ exports[`Note List View renders as expected 1`] = `
   width: 100%;
 }
 
-.c3 {
-  text-align: left;
-}
-
 <div
     class="c0"
   >
     <div
       class="c1 c2"
     >
-      <h3
+      <div
         class="c3"
       >
-        Notes
-      </h3>
-      <div
-        class="table"
-        data-testid="notesTable"
-        role="table"
-      >
-        <div
-          class="thead thead-light"
+        <h2
+          class="c4"
         >
           <div
-            class="tr"
-            role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 190px;"
+            class="row"
           >
             <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              class="col"
             >
               <div
-                class="sortable-column"
+                class="no-gutters justify-content-between row"
               >
-                Note
+                <div
+                  class="px-2 my-1 col-auto"
+                >
+                  Notes
+                </div>
+                <div
+                  class="my-1 col-auto"
+                />
               </div>
             </div>
             <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+              class="col-1"
+            >
+              <svg
+                class="c5"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="table"
+            data-testid="notesTable"
+            role="table"
+          >
+            <div
+              class="thead thead-light"
             >
               <div
-                class="sortable-column"
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 190px;"
               >
-                Created date
                 <div
-                  class="c4"
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 >
-                  <svg
-                    class="c5"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="sortable-column"
                   >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c6"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                    Note
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
                   >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
+                    Created date
+                    <div
+                      class="c6"
+                    >
+                      <svg
+                        class="c7"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="margin-bottom: -8px;"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 320l128-128 128 128z"
+                        />
+                      </svg>
+                      <svg
+                        class="c8"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 192l128 128 128-128z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Last updated by
+                    <div
+                      class="c6"
+                    >
+                      <svg
+                        class="c7"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="margin-bottom: -8px;"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 320l128-128 128 128z"
+                        />
+                      </svg>
+                      <svg
+                        class="c8"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 192l128 128 128-128z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  />
                 </div>
               </div>
             </div>
             <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+              class="table-loading"
             >
               <div
-                class="sortable-column"
-              >
-                Last updated by
-                <div
-                  class="c4"
-                >
-                  <svg
-                    class="c5"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c6"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
+                class="spinner-border"
+                role="status"
+                title="table-loading"
               />
             </div>
           </div>
-        </div>
-        <div
-          class="table-loading"
-        >
           <div
-            class="spinner-border"
-            role="status"
-            title="table-loading"
+            class="row"
+          >
+            <div
+              class="align-self-center col-auto"
+            />
+            <div
+              class="ml-auto align-self-center col-auto"
+            />
+            <div
+              class="align-self-center col-auto"
+            />
+          </div>
+          <div
+            class="container"
+          />
+          <div
+            class="container"
           />
         </div>
       </div>
-      <div
-        class="row"
-      >
-        <div
-          class="align-self-center col-auto"
-        />
-        <div
-          class="ml-auto align-self-center col-auto"
-        />
-        <div
-          class="align-self-center col-auto"
-        />
-      </div>
-      <div
-        class="container"
-      />
     </div>
   </div>
 </DocumentFragment>

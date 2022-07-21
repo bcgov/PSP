@@ -2387,4 +2387,20 @@ export const mockLookups: Partial<ILookupCode>[] = [
     type: 'PimsPphStatusType',
     rowVersion: 0,
   },
+  {
+    id: '1',
+    name: 'Draft',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsDocumentStatusType',
+    rowVersion: 0,
+  },
+  {
+    id: '2',
+    name: 'Sent',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsDocumentStatusType',
+    rowVersion: 0,
+  },
 ];

@@ -62,7 +62,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("{type}/{entityId}");
+            endpoint.HasGet("{type}/owner/{entityId:long}");
             endpoint.HasPermissions(Permissions.NoteView);
         }
 
@@ -75,7 +75,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasDelete("{type}/{noteId}");
+            endpoint.HasDelete("{type}/{noteId:long}");
             endpoint.HasPermissions(Permissions.NoteDelete);
         }
         #endregion

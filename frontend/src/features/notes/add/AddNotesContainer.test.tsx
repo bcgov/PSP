@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { NoteTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockEntityNote } from 'mocks/mockNoteResponses';
@@ -15,13 +16,15 @@ const mockAxios = new MockAdapter(axios);
 
 const openModal = jest.fn();
 const closeModal = jest.fn();
+const onSuccess = jest.fn();
 
 const BASIC_PROPS: IAddNotesContainerProps = {
   isOpened: true,
   openModal,
   closeModal,
   parentId: 1,
-  parentType: 'activity',
+  type: NoteTypes.Activity,
+  onSuccess,
 };
 
 describe('AddNotesContainer component', () => {
@@ -93,9 +96,6 @@ describe('AddNotesContainer component', () => {
 
     expect(closeModal).toBeCalled();
 
-    // TODO: navigate to Notes LIST VIEW - route not implemented yet
-    await waitFor(() => expect(history.location.pathname).toBe('/mapview'));
-
     await waitFor(() => {
       const axiosData: Api_EntityNote = JSON.parse(mockAxios.history.post[0].data);
       const expectedValues = formValues.toApi();
@@ -105,6 +105,8 @@ describe('AddNotesContainer component', () => {
       expect({ ...axiosData.note, id: undefined, rowVersion: undefined }).toEqual(
         expectedValues.note,
       );
+
+      expect(onSuccess).toBeCalled();
     });
   });
 
@@ -113,7 +115,7 @@ describe('AddNotesContainer component', () => {
     formValues.parentId = BASIC_PROPS.parentId;
     formValues.note.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, parentType: 'file' });
+    const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, type: NoteTypes.File });
 
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.type(textarea, formValues.note.note);
@@ -123,10 +125,9 @@ describe('AddNotesContainer component', () => {
 
     expect(closeModal).toBeCalled();
 
-    // TODO: navigate to Notes LIST VIEW - route not implemented yet
     await waitFor(() => {
-      expect(history.location.pathname).toBe('/mapview');
       expect(mockAxios.history.post[0].url).toBe('/notes/file');
+      expect(onSuccess).toBeCalled();
     });
   });
 });
