@@ -71,7 +71,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         }
       } else if (parts.length > 3 && parts[2] === 'property') {
         pid = queryString.parse(location.search).pid?.toString() ?? '';
-        propertyId = !!parts[3] ? +propertyId : undefined;
+        propertyId = !!parts[3] ? +parts[3] : undefined;
         currentState = MapViewState.PROPERTY_INFORMATION;
       } else if (parts.length > 3 && parts[2] === 'non-inventory-property') {
         pid = parts[3];
