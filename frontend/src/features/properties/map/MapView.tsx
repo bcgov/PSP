@@ -10,6 +10,7 @@ import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQue
 import { IProperty } from 'interfaces';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { pidParser } from 'utils';
 
@@ -34,16 +35,16 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const { sidebarComponent, showSideBar } = useMapSideBarQueryParams(mapInstance);
 
   const onMarkerClicked = (property: IProperty) => {
-    const parsedPid = pidParser(property.pid);
-    history.push(`/mapview/property/${parsedPid}`);
+    history.push(`/mapview/property/${property.id}?pid=${property.pid}`);
   };
 
   const onPropertyViewClicked = (pid?: string | null) => {
     if (pid !== undefined && pid !== null) {
       const parsedPid = pidParser(pid);
-      history.push(`/mapview/property/${parsedPid}`);
+      history.push(`/mapview/non-inventory-property/${parsedPid}`);
     } else {
-      console.warn('Invalid pin when trying to see property information');
+      console.warn('Invalid marker when trying to see property information');
+      toast.warn('A map parcel must have a PID in order to view detailed information');
     }
   };
 

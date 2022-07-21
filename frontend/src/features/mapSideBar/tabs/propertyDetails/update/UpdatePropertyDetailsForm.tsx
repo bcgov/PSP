@@ -74,24 +74,25 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
 
+  const setFieldValue = formikProps.setFieldValue;
   // clear related fields when volumetric parcel radio changes
   useEffect(() => {
     if (!isVolumetricParcel) {
-      formikProps.setFieldValue('volumetricMeasurement', 0);
-      formikProps.setFieldValue('volumetricUnitTypeCode', undefined);
-      formikProps.setFieldValue('volumetricParcelTypeCode', undefined);
+      setFieldValue('volumetricMeasurement', 0);
+      setFieldValue('volumetricUnitTypeCode', undefined);
+      setFieldValue('volumetricParcelTypeCode', undefined);
     }
-  }, [isVolumetricParcel, formikProps, formikProps.setFieldValue]);
+  }, [isVolumetricParcel, setFieldValue]);
 
   // clear related fields when tenure status changes
   useEffect(() => {
     if (!isHighwayRoad) {
-      formikProps.setFieldValue('roadTypes', []);
+      setFieldValue('roadTypes', []);
     }
     if (!isAdjacentLand) {
-      formikProps.setFieldValue('adjacentLands', []);
+      setFieldValue('adjacentLands', []);
     }
-  }, [isAdjacentLand, isHighwayRoad, formikProps, formikProps.setFieldValue]);
+  }, [isAdjacentLand, isHighwayRoad, setFieldValue]);
 
   const cannotDetermineInfoText =
     'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';

@@ -38,15 +38,16 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
 
   const pid = props.researchFileProperty?.property?.pid?.toString();
+  const id = props.researchFileProperty?.property?.id;
 
   // First, fetch property information from PSP API
-  const { getPropertyWithPid, getPropertyWithPidLoading: propertyLoading } = useProperties();
+  const { getProperty, getPropertyLoading: propertyLoading } = useProperties();
   useEffect(() => {
     const func = async () => {
       try {
-        if (!!pid) {
-          const propInfo = await getPropertyWithPid(pid);
-          if (isMounted() && propInfo.pid === pidFormatter(pid)) {
+        if (!!id) {
+          const propInfo = await getProperty(id);
+          if (isMounted() && propInfo?.id === id) {
             setApiProperty(propInfo);
             setShowPropertyInfoTab(true);
           }
@@ -64,7 +65,7 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     };
 
     func();
-  }, [getPropertyWithPid, isMounted, pid]);
+  }, [getProperty, id, isMounted]);
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
@@ -95,8 +96,8 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
 
   useEffect(() => {
     const func = async () => {
-      if (pid !== undefined) {
-        const response = await getPropertyAssociations(pid);
+      if (id !== undefined) {
+        const response = await getPropertyAssociations(id);
         if (response?.id !== undefined) {
           setPropertyAssociations(response);
         }
@@ -104,7 +105,7 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     };
 
     func();
-  }, [getPropertyAssociations, pid]);
+  }, [getPropertyAssociations, id]);
 
   const tabViews: TabInventoryView[] = [];
 

@@ -13,7 +13,7 @@ import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
-  pid: string;
+  id: number;
   setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
   onSuccess: () => void;
 }
@@ -32,8 +32,8 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
 
   useEffect(() => {
     async function fetchProperty() {
-      if (!!props.pid) {
-        const retrieved = await retrieveProperty(props.pid);
+      if (!!props.id) {
+        const retrieved = await retrieveProperty(props.id);
         if (retrieved !== undefined && isMounted()) {
           const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
 
@@ -52,7 +52,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
       }
     }
     fetchProperty();
-  }, [isMounted, props.pid, queryAll, retrieveProperty]);
+  }, [isMounted, props.id, queryAll, retrieveProperty]);
 
   // save handler - sends updated property information to backend
   const savePropertyInformation = async (
@@ -64,15 +64,11 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
 
     formikHelpers.setSubmitting(false);
 
-    if (!!response?.pid) {
+    if (!!response?.id) {
       formikHelpers.resetForm();
       props.onSuccess();
     }
   };
-
-  if (retrievePropertyLoading) {
-    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
-  }
 
   return (
     <Formik<UpdatePropertyDetailsFormModel>
@@ -84,6 +80,10 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
     >
       {formikProps => (
         <StyledFormWrapper>
+          <LoadingBackdrop
+            show={retrievePropertyLoading || !initialForm}
+            parentScreen={true}
+          ></LoadingBackdrop>
           <UpdatePropertyDetailsForm formikProps={formikProps} />
         </StyledFormWrapper>
       )}
