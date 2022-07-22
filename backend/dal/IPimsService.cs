@@ -13,6 +13,7 @@ namespace Pims.Dal.Services
         IOrganizationService OrganizationService { get; }
         ILeaseReportsService LeaseReportsService { get; }
         IResearchFileService ResearchFileService { get; }
+        IActivityService ActivityService { get; }
         IPropertyService PropertyService { get; }
         #endregion
     }

@@ -1,6 +1,7 @@
 import { IResearchFilter } from 'features/research/interfaces';
 import { IPagedItems } from 'interfaces';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
+import { Api_Activity, Api_ActivityTemplate } from 'models/api/Activity';
 import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import queryString from 'query-string';
@@ -23,6 +24,12 @@ export const useApiResearchFile = () => {
         ),
       getResearchFile: (researchFileId: number) =>
         api.get<Api_ResearchFile>(`/researchFiles/${researchFileId}`),
+      getResearchActivities: (researchFileId: number) =>
+        api.get<Api_Activity[]>(`/researchFiles/${researchFileId}/activities`),
+      getActivityTemplates: () =>
+        api.get<Api_ActivityTemplate[]>(`/researchFiles/activity-templates`),
+      postActivity: (activity: Api_Activity) =>
+        api.post<Api_Activity>(`/researchFiles/activity`, activity),
       postResearchFile: (researchFile: Api_ResearchFile) =>
         api.post<Api_ResearchFile>(`/researchFiles`, researchFile),
       putResearchFile: (researchFile: Api_ResearchFile) =>

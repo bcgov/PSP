@@ -8,6 +8,7 @@ using Pims.Api.Policies;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace Pims.Api.Areas.ResearchFile.Controllers
 {
@@ -56,6 +57,106 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         {
             var researchFile = _pimsService.ResearchFileService.GetById(id);
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
+        /// <summary>
+        /// Gets the activities for specified research file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{researchFileId:long}/activities")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ActivityInstanceModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetActivitiesForResearchFile(long researchFileId)
+        {
+            //TODO: Fetch actual activity from
+            //var researchFile = _pimsService.ActivityService.GetAllByResearchFileId(researchFileId);
+            List<ActivityInstanceModel> activities = new List<ActivityInstanceModel>();
+            activities.Add(new ActivityInstanceModel()
+            {
+                Id = 1,
+                Description = "GENERAL Activity",
+                ActivityTemplateId = 1,
+                ActivityTemplateTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "GENERAL",
+                    Description = "General Visit ",
+                },
+                ActivityStatusTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "Draft",
+                    Description = "Draft",
+                },
+            });
+            activities.Add(new ActivityInstanceModel()
+            {
+                Id = 2,
+                Description = "Site Visit Activity",
+                ActivityTemplateId = 2,
+                ActivityTemplateTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "SITEVIS",
+                    Description = "Site Visit ",
+                },
+                ActivityStatusTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "Draft",
+                    Description = "Draft",
+                },
+            });
+            activities.Add(new ActivityInstanceModel()
+            {
+                Id = 3,
+                Description = "Survey Activity",
+                ActivityTemplateId = 3,
+                ActivityTemplateTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "SURVEY",
+                    Description = "Site Visit ",
+
+                },
+                ActivityStatusTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "Draft",
+                    Description = "Draft",
+                },
+            });
+            return new JsonResult(activities);
+        }
+
+
+        /// <summary>
+        /// Get the document types.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("activity-templates")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ActivityTemplateModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "activity-templates" })]
+        public IActionResult GetActivityTemplateTypes()
+        {
+            var activityTemplates = _pimsService.ActivityService.GetAllActivityTemplates();
+            var mappedActivityTemplates = _mapper.Map<List<ActivityTemplateModel>>(activityTemplates);
+            return new JsonResult(mappedActivityTemplates);
+        }
+
+        /// <summary>
+        /// Add the specified research file activity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("activity")]
+        [HasPermission(Permissions.ResearchFileAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
+        [SwaggerOperation(Tags = new[] { "activityInstance" })]
+        public IActionResult AddActivityInstance(ActivityInstanceModel activityInstanceModel)
+        {
+            var activityInstanceEntity = _mapper.Map<Dal.Entities.PimsActivityInstance>(activityInstanceModel);
+            var activityInstance = _pimsService.ActivityService.Add(activityInstanceEntity);
+
+            return new JsonResult(_mapper.Map<ActivityInstanceModel>(activityInstance));
         }
 
         /// <summary>

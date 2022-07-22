@@ -1,25 +1,23 @@
-import { Claims } from 'constants/claims';
-import { noop } from 'lodash';
-import { mockNotesResponse } from 'mocks/mockNoteResponses';
-import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+import { mockActivitiesResponse } from 'mocks/mockActivities';
+import { render, RenderOptions } from 'utils/test-utils';
 
-import { INoteResultProps, NoteResults } from './NoteResults';
+import { ActivityResults, IActivityResultProps } from './ActivityResults';
 
 const setSort = jest.fn();
-
 // mock auth library
 jest.mock('@react-keycloak/web');
 
 // render component under test
-const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { results: [] }) => {
+const setup = (renderOptions: RenderOptions & Partial<IActivityResultProps> = { results: [] }) => {
   const { results, ...rest } = renderOptions;
+
   const utils = render(
-    <NoteResults
-      onShowDetails={jest.fn()}
+    <ActivityResults
       sort={{}}
       results={results ?? []}
       setSort={setSort}
-      onDelete={noop}
+      onShowActivity={jest.fn()}
+      onDelete={jest.fn()}
     />,
     {
       ...rest,
@@ -37,14 +35,13 @@ const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { resu
   };
 };
 
-describe('Note Results Table', () => {
+describe('Activity Results Table', () => {
   beforeEach(() => {
-    mockKeycloak({ claims: [Claims.NOTE_DELETE] });
     setSort.mockClear();
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup({ results: mockNotesResponse() });
+    const { asFragment } = setup({ results: mockActivitiesResponse() });
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -52,7 +49,7 @@ describe('Note Results Table', () => {
     const { tableRows, findAllByText } = setup({ results: [] });
 
     expect(tableRows.length).toBe(0);
-    const toasts = await findAllByText('No matching Notes found');
+    const toasts = await findAllByText('No matching Activity found');
     expect(toasts[0]).toBeVisible();
   });
 });
