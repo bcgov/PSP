@@ -1,11 +1,9 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNoteResponse } from 'mocks/mockNoteResponses';
-import { Api_Note } from 'models/api/Note';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
@@ -66,6 +64,12 @@ describe('UpdateNoteFormModal component', () => {
   it('renders as expected', () => {
     setup({ initialValues });
     expect(document.body).toMatchSnapshot();
+  });
+
+  it('renders a spinner while loading', () => {
+    const { getByTestId } = setup({ initialValues, loading: true });
+    const spinner = getByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
   });
 
   it('renders the form fields', () => {

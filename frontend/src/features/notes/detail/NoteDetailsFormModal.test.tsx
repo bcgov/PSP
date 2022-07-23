@@ -59,6 +59,12 @@ describe('NoteDetailsFormModal component', () => {
     expect(document.body).toMatchSnapshot();
   });
 
+  it('renders a spinner while loading', () => {
+    const { getByTestId } = setup({ ...BASIC_PROPS, loading: true });
+    const spinner = getByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
+  });
+
   it('renders the Note field', () => {
     const { getByTitle } = setup();
     const textarea = getByTitle(/Note/i);

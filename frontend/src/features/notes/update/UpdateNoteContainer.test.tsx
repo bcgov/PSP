@@ -63,6 +63,12 @@ describe('UpdateNoteContainer component', () => {
     expect(document.body).toMatchSnapshot();
   });
 
+  it('renders a spinner while loading', () => {
+    const { getByTestId } = setup({ ...BASIC_PROPS, loading: true });
+    const spinner = getByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
+  });
+
   it('renders the underlying form', () => {
     const { getByLabelText, getByText } = setup();
 
