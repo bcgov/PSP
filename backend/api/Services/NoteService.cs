@@ -71,10 +71,11 @@ namespace Pims.Api.Services
 
         public NoteModel Update(NoteModel model)
         {
-            this.Logger.LogInformation("Updating note with id {id}", model.Id);
-
             model.ThrowIfNull(nameof(model));
+
+            this.Logger.LogInformation("Updating note with id {id}", model.Id);
             this.User.ThrowIfNotAuthorized(Permissions.NoteEdit);
+
             ValidateVersion(model.Id, model.RowVersion);
 
             var pimsEntity = _mapper.Map<PimsNote>(model);
@@ -93,6 +94,7 @@ namespace Pims.Api.Services
         public void DeleteNote(NoteType type, long noteId)
         {
             this.Logger.LogInformation("Deleting note with type {type} and id {noteId}", type, noteId);
+            this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
 
             switch (type)
             {
@@ -117,6 +119,7 @@ namespace Pims.Api.Services
         public IEnumerable<PimsNote> GetNotes(NoteType type, long entityId)
         {
             this.Logger.LogInformation("Getting all notes with type {type} and parent id {entityId}", type, entityId);
+            this.User.ThrowIfNotAuthorized(Permissions.NoteView);
 
             switch (type)
             {
