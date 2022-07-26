@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +13,6 @@ using Pims.Api.Services;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Controllers
@@ -20,7 +20,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentController class, provides endpoints to handle document requests.
     /// </summary>
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]
@@ -59,7 +59,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult GetDocumentTypes()
         {
-            var result = _documentService.GetDocumentTypes();
+            var result = _documentService.GetStorageDocumentTypes();
             return new JsonResult(result);
         }
 
@@ -73,20 +73,33 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult GetDocumentList()
         {
-            var result = _documentService.GetDocumentList();
+            var result = _documentService.GetStorageDocumentList();
             return new JsonResult(result);
         }
 
         /// <summary>
-        /// Downloads the file for the correspoding file and document id.
+        /// Downloads the file for the corresponding file and document id.
         /// </summary>
         [HttpGet("{documentId}/files/{fileId}/download")]
-        [HasPermission(Permissions.PropertyAdd)]
+        //[HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public IActionResult DownloadFile(int documentId, int fileId)
+        public async Task<IActionResult> DownloadFile(int documentId, int fileId)
         {
-            var result = _documentService.DownloadFile(documentId, fileId);
+            var result = await _documentService.DownloadFileAsync(documentId, fileId);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Downloads the latest file for the corresponding document id.
+        /// </summary>
+        [HttpGet("{documentId}/download")]
+        //[HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public async Task<IActionResult> DownloadFile(int documentId)
+        {
+            var result = await _documentService.DownloadFileLatestAsync(documentId);
             return new JsonResult(result);
         }
 
@@ -100,6 +113,19 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> UploadDocument([FromForm] int documentType, [FromForm] IFormFile file)
         {
             var result = await _documentService.UploadDocumentAsync(documentType, file);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Retrieves a external document metadata.
+        /// </summary>
+        [HttpGet("{documentId}/metadata")]
+        //[HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentMetadata>>), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public IActionResult GetDocumentMetadata(int documentId)
+        {
+            var result = _documentService.GetStorageDocumentMetadata(documentId);
             return new JsonResult(result);
         }
 

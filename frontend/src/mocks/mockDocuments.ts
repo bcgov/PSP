@@ -1,9 +1,9 @@
-import { Api_Document, Api_Document_Type } from 'models/api/Document';
+import { Api_Document, Api_DocumentType } from 'models/api/Document';
 
 export const mockDocumentsResponse = (): Api_Document[] => [
   {
-    documentTypeId: 1,
-    documentType: 'Survey',
+    mayanDocumentId: 13,
+    documentType: { documentType: 'Survey', id: 1 },
     fileName: 'Survey.pdf',
     id: 1,
     statusTypeCode: {
@@ -14,8 +14,8 @@ export const mockDocumentsResponse = (): Api_Document[] => [
     appCreateTimestamp: '10-Jan-2022',
   },
   {
-    documentTypeId: 2,
-    documentType: 'Photo',
+    mayanDocumentId: 13,
+    documentType: { documentType: 'Photo', id: 2 },
     fileName: 'Photo_Rest.pdf',
     id: 1,
     statusTypeCode: {
@@ -26,8 +26,8 @@ export const mockDocumentsResponse = (): Api_Document[] => [
     appCreateTimestamp: '11-Jan-2022',
   },
   {
-    documentTypeId: 3,
-    documentType: 'Correspondence',
+    mayanDocumentId: 13,
+    documentType: { documentType: 'Correspondence', id: 3 },
     fileName: 'Test Correspondence.pdf',
     id: 1,
     statusTypeCode: {
@@ -38,8 +38,8 @@ export const mockDocumentsResponse = (): Api_Document[] => [
     appCreateTimestamp: '13-Jan-2022',
   },
   {
-    documentTypeId: 3,
-    documentType: 'Correspondence',
+    mayanDocumentId: 13,
+    documentType: { documentType: 'Correspondence', id: 3 },
     fileName: 'New Correspondence.pdf',
     id: 1,
     statusTypeCode: {
@@ -51,7 +51,7 @@ export const mockDocumentsResponse = (): Api_Document[] => [
   },
 ];
 
-export const mockDocumentTypesResponse = (): Api_Document_Type[] => [
+export const mockDocumentTypesResponse = (): Api_DocumentType[] => [
   {
     documentType: 'Survey',
     id: 1,

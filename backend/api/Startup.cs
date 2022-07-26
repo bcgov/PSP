@@ -39,16 +39,15 @@ using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
+using Pims.Av;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Dal;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
-using Pims.Av;
 using Prometheus;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using nClam;
 
 namespace Pims.Api
 {

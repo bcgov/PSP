@@ -3,13 +3,21 @@ export interface DocumentQueryResult<T> {
   results: T[];
 }
 
-export interface DocumentDetail {
+export interface Mayan_DocumentDetail {
   id: number;
   label: string;
   datetime_created: string;
   description: string;
   file_latest: FileLatest;
   document_type: Mayan_DocumentType;
+}
+
+export interface Mayan_DocumentMetadata {
+  document: Mayan_DocumentDetail;
+  id: number;
+  metadata_type: Mayan_DocumentType;
+  url: string;
+  value: string;
 }
 
 export interface FileLatest {

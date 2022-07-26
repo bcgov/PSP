@@ -1,24 +1,26 @@
 import { DocumentTypes } from 'constants/documentTypes';
+import { DocumentDetailContainer } from 'features/documents/documentDetail/DocumentDetailContainer';
 import DocumentListView from 'features/documents/list/DocumentListView';
 import { useAxiosApi } from 'hooks/pims-api';
 import { mockDocumentsResponse } from 'mocks/mockDocuments';
 import {
-  DocumentDetail,
   DocumentQueryResult,
   FileDownload,
+  Mayan_DocumentDetail,
   Mayan_DocumentType,
 } from 'models/api/DocumentManagement';
 import { ExternalResult } from 'models/api/ExternalResult';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { FaDownload, FaUpload } from 'react-icons/fa';
+import styled from 'styled-components';
 import { formatApiDateTime } from 'utils';
 
 export const TestFileManagement: React.FunctionComponent = () => {
   const api = useAxiosApi();
 
   const [documentList, setDocumentList] = useState<
-    DocumentQueryResult<DocumentDetail> | undefined
+    DocumentQueryResult<Mayan_DocumentDetail> | undefined
   >();
 
   const [documentTypes, setDocumentTypes] = useState<
@@ -29,7 +31,9 @@ export const TestFileManagement: React.FunctionComponent = () => {
   const [selectedType, setSelectedType] = useState<number>(1);
 
   const retrieveDocumentList = useCallback(async () => {
-    var { data } = await api.get<ExternalResult<DocumentQueryResult<DocumentDetail>>>(`/documents`);
+    var { data } = await api.get<ExternalResult<DocumentQueryResult<Mayan_DocumentDetail>>>(
+      `/documents`,
+    );
     setDocumentList(data.payload);
   }, [api]);
 
@@ -40,7 +44,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
     setDocumentTypes(data.payload);
   }, [api]);
 
-  async function DownloadFile(documentId: number, fileId: number) {
+  async function downloadFile(documentId: number, fileId: number) {
     var { data } = await api.get<ExternalResult<FileDownload>>(
       `/documents/${documentId}/files/${fileId}/download`,
     );
@@ -94,17 +98,17 @@ export const TestFileManagement: React.FunctionComponent = () => {
   };
 
   return (
-    <Container>
-      <Row>
+    <StyledBody>
+      <Row className="no-gutters">
         <Col>
           <h1>File Management test page</h1>
         </Col>
       </Row>
-      <Row className="py-5">
+      <Row className="py-5 no-gutters">
         <Col className="border">
           <h2>Upload</h2>
           <form>
-            <Row>
+            <Row className="no-gutters">
               <Col>
                 <input id="uploadInput" type="file" name="myFiles" onChange={handleFileInput} />
               </Col>
@@ -130,24 +134,12 @@ export const TestFileManagement: React.FunctionComponent = () => {
           </form>
         </Col>
       </Row>
-
-      <Row className="py-5">
-        <Col>
-          <DocumentListView
-            isLoading={false}
-            documentResults={mockDocumentsResponse()}
-            entityId={1}
-            documentType={DocumentTypes.ACTIVITY}
-            hideFilters={false}
-          />
-        </Col>
-      </Row>
-      <Row className="py-5">
+      <Row className="py-5 no-gutters">
         <Col className="border">
           <h2>File List</h2>
-          <Row>
+          <Row className="no-gutters">
             <Col>
-              <Row className="border">
+              <Row className="border no-gutters">
                 <Col>
                   <strong>Label</strong>
                 </Col>
@@ -161,17 +153,17 @@ export const TestFileManagement: React.FunctionComponent = () => {
               </Row>
             </Col>
           </Row>
-          <Row>
+          <Row className="no-gutters">
             <Col>
-              {documentList?.results.map((documentItem: DocumentDetail, index: number) => (
-                <Row className="border" key={'document-' + index}>
+              {documentList?.results.map((documentItem: Mayan_DocumentDetail, index: number) => (
+                <Row className="border no-gutters" key={'document-' + index}>
                   <Col>{documentItem.label}</Col>
                   <Col>{documentItem.document_type.label}</Col>
                   <Col>{formatApiDateTime(documentItem.datetime_created)}</Col>
                   <Col xs="1">
                     <Button
                       onClick={() => {
-                        DownloadFile(documentItem.id, documentItem.file_latest.id);
+                        downloadFile(documentItem.id, documentItem.file_latest.id);
                       }}
                     >
                       <FaDownload></FaDownload>
@@ -183,6 +175,32 @@ export const TestFileManagement: React.FunctionComponent = () => {
           </Row>
         </Col>
       </Row>
-    </Container>
+      <Row className="py-5 no-gutters">
+        <Col>
+          <DocumentListView
+            isLoading={false}
+            documentResults={mockDocumentsResponse()}
+            entityId={1}
+            documentType={DocumentTypes.ACTIVITY}
+            hideFilters={false}
+          />
+        </Col>
+      </Row>
+      <Row className="no-gutters border">
+        <Col>
+          <DocumentDetailContainer pimsDocument={{ id: 1, mayanDocumentId: 13 }} />
+        </Col>
+      </Row>
+      {
+        //<DocumentDetailModal pimsDocument={{ id: 1, mayanDocumentId: 13 }} />
+      }
+    </StyledBody>
   );
 };
+
+const StyledBody = styled.div`
+  padding: 10rem;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+`;

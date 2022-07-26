@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
@@ -15,7 +14,7 @@ namespace Pims.Api.Models.Concepts
         public int Id { get; set; }
 
         /// <summary>
-        /// get/set - Document Type.
+        /// get/set - The document Type description.
         /// </summary>
         public string DocumentType { get; set; }
 

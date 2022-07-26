@@ -5,9 +5,9 @@ using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;
+using Pims.Av;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Av;
 
 namespace Pims.Api.Services
 {
@@ -18,7 +18,7 @@ namespace Pims.Api.Services
     {
         private readonly IEdmsDocumentRepository documentRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
-        
+
         private readonly IAvService avService;
 
         public DocumentService(IEdmsDocumentRepository documentRepository, IDocumentTypeRepository documentTypeRepository, IAvService avService)
@@ -28,25 +28,38 @@ namespace Pims.Api.Services
             this.avService = avService;
         }
 
-        public ExternalResult<QueryResult<DocumentType>> GetDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
+        public ExternalResult<QueryResult<DocumentType>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
         {
             Task<ExternalResult<QueryResult<DocumentType>>> task = documentRepository.GetDocumentTypesAsync(ordering, page, pageSize);
             task.Wait();
             return task.Result;
         }
 
-        public ExternalResult<QueryResult<DocumentDetail>> GetDocumentList(string ordering = "", int? page = null, int? pageSize = null)
+        public ExternalResult<QueryResult<DocumentDetail>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null)
         {
             Task<ExternalResult<QueryResult<DocumentDetail>>> task = documentRepository.GetDocumentsListAsync(ordering, page, pageSize);
             task.Wait();
             return task.Result;
         }
 
-        public ExternalResult<FileDownload> DownloadFile(int documentId, int fileId)
+        public ExternalResult<QueryResult<DocumentMetadata>> GetStorageDocumentMetadata(int documentId, string ordering = "", int? page = null, int? pageSize = null)
         {
-            Task<ExternalResult<FileDownload>> task = documentRepository.DownloadFileAsync(documentId, fileId);
+            Task<ExternalResult<QueryResult<DocumentMetadata>>> task = documentRepository.GetDocumentMetadataAsync(documentId, ordering, page, pageSize);
             task.Wait();
             return task.Result;
+        }
+
+        public async Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId)
+        {
+            ExternalResult<FileDownload> downloadResult = await documentRepository.DownloadFileAsync(documentId, fileId);
+            return downloadResult;
+        }
+
+        public async Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(int documentId)
+        {
+            ExternalResult<DocumentDetail> documentResult = await documentRepository.GetDocumentAsync(documentId);
+            ExternalResult<FileDownload> downloadResult = await documentRepository.DownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
+            return downloadResult;
         }
 
         public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw)

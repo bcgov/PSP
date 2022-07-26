@@ -1,6 +1,6 @@
 import * as Styled from 'components/common/styles';
 import { Table } from 'components/Table';
-import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { IGeocoderResponse } from 'hooks/useApi';
 import * as React from 'react';
 
@@ -33,7 +33,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
 }) => {
   return (
     <>
-      <StyledFormSection>
+      <Section header={undefined}>
         <Styled.H3>Search for a property</Styled.H3>
         <LayerFilter
           setFilter={onSearch}
@@ -42,8 +42,8 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
           onAddressChange={onAddressChange}
           onAddressSelect={onAddressSelect}
         />
-      </StyledFormSection>
-      <StyledFormSection>
+      </Section>
+      <Section header={undefined}>
         <Table<IMapProperty>
           manualPagination={false}
           name="map-properties"
@@ -61,7 +61,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
           }
           pageSize={5}
         />
-      </StyledFormSection>
+      </Section>
     </>
   );
 };

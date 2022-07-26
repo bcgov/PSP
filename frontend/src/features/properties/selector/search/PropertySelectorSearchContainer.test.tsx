@@ -148,7 +148,6 @@ describe('PropertySelectorSearchContainer component', () => {
     userEvent.click(searchButton);
 
     await waitFor(() => {
-      console.log();
       expect(mockAxios.history.get).toHaveLength(4);
       expect(mockAxios.history.get[0].url).toBe(
         'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PLAN_NUMBER+ilike+%27%25PRP4520%25%27',

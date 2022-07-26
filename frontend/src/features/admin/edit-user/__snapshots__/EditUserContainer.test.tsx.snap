@@ -171,7 +171,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -180,7 +180,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -202,7 +202,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -211,7 +211,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -233,7 +233,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -242,7 +242,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -264,7 +264,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -273,7 +273,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -295,7 +295,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -304,7 +304,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -326,7 +326,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -335,7 +335,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 required col"
+        class="c1 required text-left col"
       >
         <div
           class="form-group"
@@ -459,7 +459,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -468,7 +468,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 required col"
+        class="c1 required text-left col"
       >
         <div
           class="form-group"
@@ -525,7 +525,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -534,7 +534,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -555,7 +555,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="d-flex row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -564,7 +564,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="form-group"

@@ -15,7 +15,7 @@ import { prettyFormatDate } from 'utils';
 import * as Styled from '../../../../styles';
 import * as PaymentStyles from '../../styles';
 import { PaymentsForm } from '../payments/PaymentsForm';
-import { getColumns } from './columns';
+import { getLeaseTermColumns } from './columns';
 
 export interface ITermsFormProps {
   onEdit: (values: IFormLeaseTerm) => void;
@@ -35,7 +35,10 @@ export const TermsForm: React.FunctionComponent<ITermsFormProps> = ({
   isReceivable,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
-  const columns = useMemo(() => getColumns({ onEdit, onDelete: onDelete }), [onEdit, onDelete]);
+  const columns = useMemo(() => getLeaseTermColumns({ onEdit, onDelete: onDelete }), [
+    onEdit,
+    onDelete,
+  ]);
   const { hasClaim } = useKeycloakWrapper();
 
   //Get the most recent payment for display, if one exists.

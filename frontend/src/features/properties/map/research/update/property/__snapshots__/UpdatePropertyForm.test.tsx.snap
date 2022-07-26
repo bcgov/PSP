@@ -8,17 +8,17 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   <div
     class="Toastify"
   />
-  .c0 {
+  .c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
 }
 
 .c3.required::before {
@@ -61,7 +61,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -70,7 +70,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -89,7 +89,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -98,7 +98,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div>
               <div
@@ -141,7 +141,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -150,7 +150,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -186,7 +186,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -195,7 +195,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -231,7 +231,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -240,7 +240,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -282,7 +282,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -291,7 +291,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           />
         </div>
         <div

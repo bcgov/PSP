@@ -141,6 +141,15 @@ exports[`Document List View renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -178,13 +187,10 @@ exports[`Document List View renders as expected 1`] = `
   border-left: 0.2rem solid white;
 }
 
-.c1 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
+.c10 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
+  margin-left: 1rem;
 }
 
 .c0 {
@@ -357,7 +363,7 @@ exports[`Document List View renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 150px;"
+            style="display: flex; flex: 1 0 auto; min-width: 180px;"
           >
             <div
               class="th"
@@ -584,6 +590,18 @@ exports[`Document List View renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
+              </div>
+            </div>
           </div>
         </div>
         <div
@@ -596,7 +614,7 @@ exports[`Document List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="td"
@@ -638,6 +656,16 @@ exports[`Document List View renders as expected 1`] = `
               >
                 Draft
               </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c10 no-gutters row"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -646,7 +674,7 @@ exports[`Document List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="td"
@@ -688,6 +716,16 @@ exports[`Document List View renders as expected 1`] = `
               >
                 Amended
               </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c10 no-gutters row"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -696,7 +734,7 @@ exports[`Document List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="td"
@@ -738,6 +776,16 @@ exports[`Document List View renders as expected 1`] = `
               >
                 Registered
               </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c10 no-gutters row"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -746,7 +794,7 @@ exports[`Document List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              style="display: flex; flex: 1 0 auto; min-width: 180px;"
             >
               <div
                 class="td"
@@ -787,6 +835,16 @@ exports[`Document List View renders as expected 1`] = `
                 title=""
               >
                 Sent
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="c10 no-gutters row"
+                />
               </div>
             </div>
           </div>
@@ -856,6 +914,9 @@ exports[`Document List View renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <div
+      class="container"
+    />
   </div>
 </DocumentFragment>
 `;
