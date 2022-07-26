@@ -1,12 +1,11 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
 import { DocumentTypes } from 'constants/documentTypes';
 import { mockLookups } from 'mocks';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
 
