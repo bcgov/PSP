@@ -14,6 +14,7 @@ namespace Pims.Dal.Services
         ILeaseReportsService LeaseReportsService { get; }
         IResearchFileService ResearchFileService { get; }
         IPropertyService PropertyService { get; }
+        IAcquisitionFileService AcquisitionFileService { get; }
         #endregion
     }
 }

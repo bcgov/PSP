@@ -59,6 +59,10 @@ namespace Pims.Dal
         /// get - The property service.
         /// </summary>
         public IPropertyService PropertyService { get { return _serviceProvider.GetService<IPropertyService>(); } }
+        /// <summary>
+        /// get - The research file service.
+        /// </summary>
+        public IAcquisitionFileService AcquisitionFileService { get { return _serviceProvider.GetService<IAcquisitionFileService>(); } }
         #endregion
 
         #region Constructors
