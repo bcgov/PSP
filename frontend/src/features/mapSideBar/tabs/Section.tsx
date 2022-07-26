@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { Col, Collapse, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
-import {
-  ArrowDropDownIcon,
-  ArrowDropUpIcon,
-  StyledFormSection,
-  StyledSectionHeader,
-} from './SectionStyles';
+import { ArrowDropDownIcon, ArrowDropUpIcon } from './SectionStyles';
 
 interface SectionProps {
-  header: React.ReactNode;
+  header?: React.ReactNode;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
 }
@@ -23,27 +19,29 @@ export const Section: React.FC<SectionProps> = ({
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
     <StyledFormSection>
-      <StyledSectionHeader>
-        <Row>
-          <Col>{header}</Col>
-          <Col xs="1">
-            {isCollapsable && isCollapsed && (
-              <ArrowDropDownIcon
-                onClick={() => {
-                  setIsCollapsed(!isCollapsed);
-                }}
-              />
-            )}
-            {isCollapsable && !isCollapsed && (
-              <ArrowDropUpIcon
-                onClick={() => {
-                  setIsCollapsed(!isCollapsed);
-                }}
-              />
-            )}
-          </Col>
-        </Row>
-      </StyledSectionHeader>
+      {header && (
+        <StyledSectionHeader>
+          <Row>
+            <Col>{header}</Col>
+            <Col xs="1">
+              {isCollapsable && isCollapsed && (
+                <ArrowDropDownIcon
+                  onClick={() => {
+                    setIsCollapsed(!isCollapsed);
+                  }}
+                />
+              )}
+              {isCollapsable && !isCollapsed && (
+                <ArrowDropUpIcon
+                  onClick={() => {
+                    setIsCollapsed(!isCollapsed);
+                  }}
+                />
+              )}
+            </Col>
+          </Row>
+        </StyledSectionHeader>
+      )}
 
       <Collapse in={!isCollapsable || !isCollapsed}>
         <div>{children}</div>
@@ -51,3 +49,17 @@ export const Section: React.FC<SectionProps> = ({
     </StyledFormSection>
   );
 };
+
+const StyledSectionHeader = styled.h2`
+  font-weight: bold;
+  color: ${props => props.theme.css.primaryColor};
+  border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
+  margin-bottom: 2rem;
+`;
+
+const StyledFormSection = styled.div`
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+`;

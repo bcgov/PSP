@@ -46,7 +46,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
     >
       {formikProps => (
         <Form className="userInfo">
-          <SectionField label="IDIR/BCeID" wideScreen>
+          <SectionField label="IDIR/BCeID" labelWidth="2">
             <Input
               data-testid="businessIdentifier"
               field="businessIdentifier"
@@ -55,7 +55,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
               type="text"
             />
           </SectionField>
-          <SectionField label="First name" wideScreen>
+          <SectionField label="First name" labelWidth="2">
             <Input
               data-testid="firstName"
               field="firstName"
@@ -63,7 +63,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
               type="text"
             />
           </SectionField>
-          <SectionField label="Last name" wideScreen>
+          <SectionField label="Last name" labelWidth="2">
             <Input
               data-testid="surname"
               field="surname"
@@ -72,7 +72,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
             />
           </SectionField>
 
-          <SectionField label="Email" wideScreen>
+          <SectionField label="Email" labelWidth="2">
             <Input
               data-testid="email"
               field="email"
@@ -81,7 +81,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
             />
           </SectionField>
 
-          <SectionField label="Position" wideScreen>
+          <SectionField label="Position" labelWidth="2">
             <Input
               field="position"
               placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
@@ -89,7 +89,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
               data-testid="position"
             />
           </SectionField>
-          <SectionField label="Role(s)" required wideScreen>
+          <SectionField label="Role(s)" required labelWidth="2">
             <Multiselect placeholder="" field="roles" options={roles} displayValue="name" />
             <TooltipWrapper
               toolTipId="role description tooltip icon"
@@ -101,7 +101,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
             </TooltipWrapper>
           </SectionField>
 
-          <SectionField label="MoTI Region(s)" required wideScreen>
+          <SectionField label="MoTI Region(s)" required labelWidth="2">
             <Multiselect<ILookupCode, Api_TypeCode<number>>
               placeholder=""
               field="regions"
@@ -115,7 +115,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
             />
           </SectionField>
 
-          <SectionField label="Notes" wideScreen>
+          <SectionField label="Notes" labelWidth="2">
             <Input
               as="textarea"
               field="note"
@@ -125,7 +125,7 @@ const EditUserForm: React.FunctionComponent<IEditUserFormProps> = ({
             />
           </SectionField>
 
-          <SectionField className="d-flex" label="Disable account?" wideScreen>
+          <SectionField className="d-flex" label="Disable account?" labelWidth="2">
             <TooltipWrapper
               toolTipId="is-disabled-tooltip"
               toolTip={'Click to change account status then click Save.'}

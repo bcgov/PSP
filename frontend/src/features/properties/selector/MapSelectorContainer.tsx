@@ -1,7 +1,7 @@
 import { Button } from 'components/common/buttons';
 import * as Styled from 'components/common/styles';
 import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
-import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -71,7 +71,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
           Add to selection
         </Button>
       ) : null}
-      <StyledFormSection>
+      <Section header={undefined}>
         <Styled.H3>Selected properties</Styled.H3>
         <SelectedPropertyHeaderRow />
         {existingProperties.map((property, index) => (
@@ -83,9 +83,8 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
             property={property}
           />
         ))}
-
         {existingProperties.length === 0 && <span>No Properties selected</span>}
-      </StyledFormSection>
+      </Section>
     </>
   );
 };

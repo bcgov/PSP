@@ -142,7 +142,7 @@ export interface IPaymentColumnProps {
   gstConstant?: ISystemConstant;
 }
 
-export const getColumns = ({
+export const getLeaseTermColumns = ({
   onEdit,
   onDelete,
 }: IPaymentColumnProps): ColumnWithProps<IFormLeaseTerm>[] => {
