@@ -28,7 +28,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
         setDocumentTypes(
           data.map(dt => {
             return {
-              label: dt.documentType,
+              label: dt.documentType || '',
               value: dt.id ? dt.id.toString() : '',
             };
           }),

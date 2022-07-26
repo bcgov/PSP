@@ -3,8 +3,9 @@ import { DocumentTypes } from 'constants/documentTypes';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
 import { Api_Document } from 'models/api/Document';
-import React from 'react';
+import React, { useState } from 'react';
 
+import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 import * as Styled from './styles';
@@ -38,8 +39,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         documentItems = documentItems.filter(document => {
           return (
             (!filters.documentTypeId ||
-              document.documentTypeId === Number(filters.documentTypeId)) &&
-            (!filters.status || document.statusTypeCode?.id === filters.status)
+              document?.documentType?.id === Number(filters.documentTypeId)) &&
+            (!filters.status || document?.statusTypeCode?.id === filters.status)
           );
         });
       }
@@ -59,6 +60,17 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     return [];
   }, [documentResults, sort, filters]);
 
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
+
+  const handleViewDetails = (values: Api_Document) => {
+    setIsDetailsVisible(true);
+    setSelectedDocument(values);
+  };
+  const handleDelete = (values: Api_Document) => {
+    // Todo: need to have the parent entity in context
+  };
+
   return (
     <Styled.ListPage>
       <Styled.Scrollable vertical={true}>
@@ -69,8 +81,15 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           loading={isLoading}
           sort={sort}
           setSort={setSort}
+          onViewDetails={handleViewDetails}
+          onDelete={handleDelete}
         />
       </Styled.Scrollable>
+      <DocumentDetailModal
+        display={isDetailsVisible}
+        setDisplay={setIsDetailsVisible}
+        pimsDocument={selectedDocument}
+      />
     </Styled.ListPage>
   );
 };

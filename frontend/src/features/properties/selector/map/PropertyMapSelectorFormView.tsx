@@ -3,7 +3,7 @@ import {
   MapCursors,
   SelectedPropertyContext,
 } from 'components/maps/providers/SelectedPropertyContext';
-import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
 
 import MapClickMonitor from '../components/MapClickMonitor';
@@ -37,7 +37,7 @@ const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorF
   };
   return (
     <>
-      <StyledFormSection>
+      <Section header={undefined}>
         <Styled.H3>Select a property</Styled.H3>
         <PropertyMapSelectorSubForm
           onClickDraftMarker={onClickDraftMarker}
@@ -45,7 +45,7 @@ const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorF
           selectedProperty={selectedProperty}
         />
         <MapClickMonitor addProperty={addProperty} />
-      </StyledFormSection>
+      </Section>
     </>
   );
 };

@@ -93,14 +93,14 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document type metadata types...");
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
 
-            string endpointString = $"{this._config.BaseUri}/document_types/{documentId}/metadata_types/";
+            string endpointString = $"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/";
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResult<DocumentTypeMetadataType>>(endpoint, authenticationToken).ConfigureAwait(true);
 
@@ -121,6 +121,35 @@ namespace Pims.Api.Repositories.Mayan
             var response = await GetAsync<QueryResult<DocumentDetail>>(endpoint, authenticationToken).ConfigureAwait(true);
 
             _logger.LogDebug("Finished retrieving document list");
+            return response;
+        }
+
+        public async Task<ExternalResult<DocumentDetail>> GetDocumentAsync(long documentId)
+        {
+            _logger.LogDebug("Retrieving document...");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/");
+            var response = await GetAsync<DocumentDetail>(endpoint, authenticationToken).ConfigureAwait(true);
+
+            _logger.LogDebug("Finished retrieving document");
+            return response;
+        }
+
+        public async Task<ExternalResult<QueryResult<DocumentMetadata>>> GetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
+        {
+            _logger.LogDebug("Retrieving document metadata...");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            var queryParams = GenerateQueryParams(ordering, page, pageSize);
+
+            string endpointString = $"{_config.BaseUri}/documents/{documentId}/metadata/";
+            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            var response = await GetAsync<QueryResult<DocumentMetadata>>(endpoint, authenticationToken).ConfigureAwait(true);
+
+            _logger.LogDebug("Finished retrieving document metadata");
             return response;
         }
 

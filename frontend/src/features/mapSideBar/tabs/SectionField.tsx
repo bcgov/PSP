@@ -5,17 +5,23 @@ import styled from 'styled-components';
 interface ISectionFieldProps {
   label: string;
   className?: string;
-  wideScreen?: boolean;
   required?: boolean;
+  labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
 }
 
 export const SectionField: React.FunctionComponent<ISectionFieldProps> = props => {
   return (
     <Row className={props.className ?? 'pb-2'}>
-      <Col xs={props.wideScreen ? 2 : 4}>
+      <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">
         <StyledFieldLabel>{props.label}:</StyledFieldLabel>
       </Col>
-      <StyledCol className={clsx({ required: props.required })}>{props.children}</StyledCol>
+      <StyledCol
+        xs={props.contentWidth ?? true}
+        className={clsx({ required: props.required }) + ' text-left'}
+      >
+        {props.children}
+      </StyledCol>
     </Row>
   );
 };
