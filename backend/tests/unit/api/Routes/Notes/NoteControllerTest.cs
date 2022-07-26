@@ -67,6 +67,32 @@ namespace Pims.Api.Test.Routes
         }
 
         [Fact]
+        public void GetNoteById_Route()
+        {
+            // Arrange
+            var endpoint = typeof(NoteController).FindMethod(nameof(NoteController.GetNoteById), typeof(NoteType), typeof(long));
+
+            // Act
+            // Assert
+            Assert.NotNull(endpoint);
+            endpoint.HasGet("{type}/{noteId:long}");
+            endpoint.HasPermissions(Permissions.NoteView);
+        }
+
+        [Fact]
+        public void UpdateNote_Route()
+        {
+            // Arrange
+            var endpoint = typeof(NoteController).FindMethod(nameof(NoteController.UpdateNote), typeof(NoteType), typeof(long), typeof(NoteModel));
+
+            // Act
+            // Assert
+            Assert.NotNull(endpoint);
+            endpoint.HasPut("{type}/{noteId:long}");
+            endpoint.HasPermissions(Permissions.NoteEdit);
+        }
+
+        [Fact]
         public void DeleteNote_Route()
         {
             // Arrange
