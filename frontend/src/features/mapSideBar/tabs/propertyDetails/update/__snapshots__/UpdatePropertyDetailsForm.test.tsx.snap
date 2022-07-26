@@ -75,19 +75,6 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
 .c8 {
   border-left: 1px solid #8c8c8c;
 }
@@ -98,6 +85,19 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   padding-bottom: 0.7rem;
   margin-bottom: 0;
   border-bottom: 2px solid #8c8c8c;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c3.required::before {
@@ -199,7 +199,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -208,7 +208,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -244,7 +244,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -253,7 +253,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -276,7 +276,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -285,7 +285,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <span
               class=""
@@ -296,7 +296,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -305,7 +305,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <span
               class=""
@@ -318,7 +318,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -327,7 +327,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -360,7 +360,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -369,7 +369,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -447,7 +447,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -456,7 +456,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="input form-group"
@@ -475,7 +475,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -484,7 +484,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -603,7 +603,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -612,7 +612,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -712,7 +712,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -721,7 +721,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -780,7 +780,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -789,7 +789,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -884,7 +884,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -893,7 +893,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <div
               class="form-group"
@@ -988,7 +988,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -997,7 +997,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <span
               class=""
@@ -1008,7 +1008,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -1017,7 +1017,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3  text-left col"
           >
             <span
               class=""
@@ -1257,7 +1257,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               class="pb-2 row"
             >
               <div
-                class="col-4"
+                class="pr-0 text-left col-4"
               >
                 <label
                   class="c2"
@@ -1266,7 +1266,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="c3 col"
+                class="c3  text-left col"
               >
                 <div
                   class="form-group"

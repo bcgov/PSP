@@ -19,17 +19,17 @@ exports[`PropertyResearchTabView component renders as expected when provided val
   font-weight: bold;
 }
 
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
 .c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c2 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
 }
 
 .c0 {
@@ -87,7 +87,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -96,7 +96,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4  text-left col"
           >
             The Research Property name
           </div>
@@ -105,7 +105,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -114,7 +114,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4  text-left col"
           >
             Type A, Type B
           </div>
@@ -123,7 +123,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -132,7 +132,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4  text-left col"
           >
             Yes
           </div>
@@ -141,7 +141,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -150,7 +150,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4  text-left col"
           >
             Yes
           </div>
@@ -159,7 +159,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -168,7 +168,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4  text-left col"
           >
             A document reference
           </div>
@@ -201,7 +201,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -210,7 +210,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4  text-left col"
           />
         </div>
         Research summary notes

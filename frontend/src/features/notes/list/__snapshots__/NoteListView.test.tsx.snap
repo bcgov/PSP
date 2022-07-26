@@ -8,11 +8,9 @@ exports[`Note List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
+  .c5 {
+  float: right;
+  cursor: pointer;
 }
 
 .c4 {
@@ -21,9 +19,11 @@ exports[`Note List View renders as expected 1`] = `
   margin-bottom: 2rem;
 }
 
-.c5 {
-  float: right;
-  cursor: pointer;
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c6 {
