@@ -181,7 +181,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -212,7 +212,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -243,7 +243,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -274,7 +274,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -305,7 +305,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -443,7 +443,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="textarea input form-group"
@@ -702,7 +702,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -733,7 +733,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -764,7 +764,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -795,7 +795,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -826,7 +826,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -964,7 +964,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="textarea input form-group"

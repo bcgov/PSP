@@ -208,7 +208,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -253,7 +253,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -285,7 +285,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -305,7 +305,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -327,7 +327,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -369,7 +369,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -456,7 +456,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -484,7 +484,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -612,7 +612,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -721,7 +721,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -789,7 +789,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -893,7 +893,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -997,7 +997,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -1017,7 +1017,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -1266,7 +1266,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="c3  text-left col"
+                class="c3 text-left col"
               >
                 <div
                   class="form-group"

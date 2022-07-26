@@ -18,7 +18,6 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
     const fetch = async () => {
       if (props.pimsDocument.mayanDocumentId !== undefined) {
         const axiosResponse = await retrieveDocumentMetadata(props.pimsDocument.mayanDocumentId);
-        console.log(axiosResponse?.status, ExternalResultStatus.Success);
         if (axiosResponse?.status === ExternalResultStatus.Success) {
           let results = axiosResponse.payload.results;
           setDocument(document => ({

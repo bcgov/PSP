@@ -96,7 +96,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             The Research Property name
           </div>
@@ -114,7 +114,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Type A, Type B
           </div>
@@ -132,7 +132,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Yes
           </div>
@@ -150,7 +150,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Yes
           </div>
@@ -168,7 +168,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             A document reference
           </div>
@@ -210,7 +210,7 @@ exports[`PropertyResearchTabView component renders as expected when provided val
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           />
         </div>
         Research summary notes

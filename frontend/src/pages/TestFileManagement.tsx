@@ -44,7 +44,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
     setDocumentTypes(data.payload);
   }, [api]);
 
-  async function DownloadFile(documentId: number, fileId: number) {
+  async function downloadFile(documentId: number, fileId: number) {
     var { data } = await api.get<ExternalResult<FileDownload>>(
       `/documents/${documentId}/files/${fileId}/download`,
     );
@@ -163,7 +163,7 @@ export const TestFileManagement: React.FunctionComponent = () => {
                   <Col xs="1">
                     <Button
                       onClick={() => {
-                        DownloadFile(documentItem.id, documentItem.file_latest.id);
+                        downloadFile(documentItem.id, documentItem.file_latest.id);
                       }}
                     >
                       <FaDownload></FaDownload>

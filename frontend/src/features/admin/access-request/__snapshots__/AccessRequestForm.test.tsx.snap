@@ -175,7 +175,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -206,7 +206,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -237,7 +237,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -268,7 +268,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -299,7 +299,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -437,7 +437,7 @@ exports[`AccessRequestForm component renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1  text-left col"
+        class="c1 text-left col"
       >
         <div
           class="textarea input form-group"

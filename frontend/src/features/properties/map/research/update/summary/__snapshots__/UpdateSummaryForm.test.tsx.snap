@@ -337,7 +337,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="required form-group"
@@ -390,7 +390,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -528,7 +528,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -556,7 +556,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -608,7 +608,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div>
               <div
@@ -680,7 +680,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c9 form-group"
@@ -718,7 +718,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="required form-group"
@@ -807,7 +807,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -908,7 +908,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           />
         </div>
         <div
@@ -960,7 +960,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c9 form-group"
@@ -998,7 +998,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           />
         </div>
         <div
@@ -1050,7 +1050,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c13 form-group"
@@ -1118,7 +1118,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3  text-left col"
+            class="c3 text-left col"
           />
         </div>
         <div

@@ -78,7 +78,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Downloads the file for the correspoding file and document id.
+        /// Downloads the file for the corresponding file and document id.
         /// </summary>
         [HttpGet("{documentId}/files/{fileId}/download")]
         //[HasPermission(Permissions.PropertyAdd)]
@@ -91,7 +91,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Downloads the latest file for the correspoding document id.
+        /// Downloads the latest file for the corresponding document id.
         /// </summary>
         [HttpGet("{documentId}/download")]
         //[HasPermission(Permissions.PropertyAdd)]

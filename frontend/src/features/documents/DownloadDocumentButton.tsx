@@ -13,21 +13,21 @@ export interface IDownloadDocumentButtonProps {
 const DownloadDocumentButton: React.FunctionComponent<IDownloadDocumentButtonProps> = props => {
   let provider = useDocumentProvider();
 
-  async function DownloadFile(mayanDocumentId: number, mayanFileId?: number) {
+  async function downloadFile(mayanDocumentId: number, mayanFileId?: number) {
     if (mayanFileId !== undefined) {
       const data = await provider.downloadDocumentFile(mayanDocumentId, mayanFileId);
       if (data) {
-        showFIle(data.payload);
+        showFile(data.payload);
       }
     } else {
       const data = await provider.downloadDocumentFileLatest(mayanDocumentId);
       if (data) {
-        showFIle(data.payload);
+        showFile(data.payload);
       }
     }
   }
 
-  const showFIle = (file: FileDownload) => {
+  const showFile = (file: FileDownload) => {
     const aElement = document.createElement('a');
     aElement.href = `data:${file.mimetype};base64,` + file.filePayload;
     aElement.download = file.fileName;
@@ -41,7 +41,7 @@ const DownloadDocumentButton: React.FunctionComponent<IDownloadDocumentButtonPro
       <LinkButton
         disabled={provider.downloadDocumentFileLoading}
         onClick={() => {
-          DownloadFile(props.mayanDocumentId, props.mayanFileId);
+          downloadFile(props.mayanDocumentId, props.mayanFileId);
         }}
       >
         <FaDownload />

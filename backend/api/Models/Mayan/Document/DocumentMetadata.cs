@@ -33,7 +33,7 @@ namespace Pims.Api.Models.Mayan.Document
         public string Url { get; set; }
 
         /// <summary>
-        /// get/set - Metada value.
+        /// get/set - Metadata value.
         /// </summary>
         [JsonPropertyName("value")]
         public string Value { get; set; }

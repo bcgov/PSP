@@ -237,7 +237,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               </label>
             </div>
             <div
-              class="c3  text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="input form-group"
@@ -268,7 +268,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               </label>
             </div>
             <div
-              class="c3  text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="input form-group"
@@ -299,7 +299,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               </label>
             </div>
             <div
-              class="c3  text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="input form-group"
@@ -330,7 +330,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               </label>
             </div>
             <div
-              class="c3  text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="input form-group"
@@ -361,7 +361,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               </label>
             </div>
             <div
-              class="c3  text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="input form-group"
@@ -475,7 +475,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
               </label>
             </div>
             <div
-              class="c3  text-left col"
+              class="c3 text-left col"
             >
               <div
                 class="textarea input form-group"

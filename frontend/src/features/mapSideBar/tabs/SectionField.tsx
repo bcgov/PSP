@@ -18,7 +18,7 @@ export const SectionField: React.FunctionComponent<ISectionFieldProps> = props =
       </Col>
       <StyledCol
         xs={props.contentWidth ?? true}
-        className={clsx({ required: props.required }) + ' text-left'}
+        className={clsx({ required: props.required, 'text-left': true })}
       >
         {props.children}
       </StyledCol>

@@ -77,7 +77,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Test road name
           </div>
@@ -95,7 +95,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Test road alias
           </div>
@@ -137,7 +137,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           />
         </div>
         <div
@@ -153,7 +153,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
              Apr 14, 2022
           </div>
@@ -171,7 +171,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Headquarters (HQ)
           </div>
@@ -189,7 +189,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Dairy Queen Forever! Property Management
           </div>
@@ -207,7 +207,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           />
         </div>
         a request description
@@ -248,7 +248,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             Mar 30, 2022
           </div>
@@ -266,7 +266,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           />
         </div>
         A research result
@@ -307,7 +307,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           >
             No
           </div>
@@ -325,7 +325,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
             </label>
           </div>
           <div
-            class="c4  text-left col"
+            class="c4 text-left col"
           />
         </div>
         An expropriation note

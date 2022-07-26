@@ -573,7 +573,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                         </label>
                       </div>
                       <div
-                        class="c9  text-left col"
+                        class="c9 text-left col"
                       />
                     </div>
                     <div
@@ -589,7 +589,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                         </label>
                       </div>
                       <div
-                        class="c9  text-left col"
+                        class="c9 text-left col"
                       />
                     </div>
                     <div
@@ -605,7 +605,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                         </label>
                       </div>
                       <div
-                        class="c9  text-left col"
+                        class="c9 text-left col"
                       />
                     </div>
                     <div
@@ -621,7 +621,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                         </label>
                       </div>
                       <div
-                        class="c9  text-left col"
+                        class="c9 text-left col"
                       />
                     </div>
                     <div
@@ -637,7 +637,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                         </label>
                       </div>
                       <div
-                        class="c9  text-left col"
+                        class="c9 text-left col"
                       />
                     </div>
                     <div

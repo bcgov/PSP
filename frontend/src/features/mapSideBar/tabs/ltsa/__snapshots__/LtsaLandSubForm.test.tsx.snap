@@ -32,7 +32,7 @@ exports[`LtsaLandSubForm component renders charge sub form 1`] = `
       </label>
     </div>
     <div
-      class="c1  text-left col"
+      class="c1 text-left col"
     >
       <div
         class="input form-group"
@@ -71,7 +71,7 @@ exports[`LtsaLandSubForm component renders charge sub form 1`] = `
       </label>
     </div>
     <div
-      class="c1  text-left col"
+      class="c1 text-left col"
     >
       <p>
         LOT 4 EXCEPT: FIRSTLY: PART ON STATUTORY RIGHT OF WAY PLAN 30557;
