@@ -13,9 +13,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Name, src => src.FileName)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
                 .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.AcquisitionFileStatusType, src => src.AcquisitionFileStatusTypeCodeNavigation)
-                .Map(dest => dest.AcquisitionPhysFileStatusType, src => src.AcqPhysFileStatusTypeCodeNavigation)
-                .Map(dest => dest.AcquisitionType, src => src.AcquisitionTypeCodeNavigation)
+                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
+                .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
+                .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCodeNavigation)
                 // TODO: Region needs to be fixed in the DB schema
                 // .Map(dest => dest.Region, src => src.RegionCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
@@ -25,9 +25,9 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.FileName, src => src.Name)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
                 .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusType.Id)
-                .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusType.Id)
-                .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionType.Id)
+                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCode.Id)
+                .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
+                .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
                 // TODO: Region needs to be fixed in the DB schema
                 // .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();

@@ -28,22 +28,22 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The acquisition file status type.
         /// </summary>
-        public TypeModel<string> AcquisitionFileStatusType { get; set; }
+        public TypeModel<string> AcquisitionFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The acquisition physical file status type.
         /// </summary>
-        public TypeModel<string> AcquisitionPhysFileStatusType { get; set; }
+        public TypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The acquisition type.
         /// </summary>
-        public TypeModel<string> AcquisitionType { get; set; }
+        public TypeModel<string> AcquisitionTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The MOTI region that this acquisition file falls under.
         /// </summary>
-        public TypeModel<short> Region { get; set; }
+        public TypeModel<short> RegionCode { get; set; }
         #endregion
     }
 }
