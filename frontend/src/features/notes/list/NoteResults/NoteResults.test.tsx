@@ -14,7 +14,13 @@ jest.mock('@react-keycloak/web');
 const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { results: [] }) => {
   const { results, ...rest } = renderOptions;
   const utils = render(
-    <NoteResults sort={{}} results={results ?? []} setSort={setSort} onDelete={noop} />,
+    <NoteResults
+      sort={{}}
+      results={results ?? []}
+      setSort={setSort}
+      onDelete={noop}
+      onShowDetails={noop}
+    />,
     {
       ...rest,
     },

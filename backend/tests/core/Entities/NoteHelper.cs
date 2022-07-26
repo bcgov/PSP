@@ -45,10 +45,11 @@ namespace Pims.Core.Test
         /// <param name="firstName"></param>
         /// <param name="address"></param>
         /// <returns></returns>
-        public static Entity.PimsNote CreateNote(string note)
+        public static Entity.PimsNote CreateNote(string note = "Test Note", long id = 1)
         {
             return new Entity.PimsNote()
             {
+                Id = id,
                 NoteTxt = note,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",
