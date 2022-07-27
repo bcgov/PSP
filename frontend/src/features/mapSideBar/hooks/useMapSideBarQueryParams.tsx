@@ -1,5 +1,6 @@
 import { MAP_MAX_ZOOM } from 'constants/strings';
-import AddAcquisitionContainer from 'features/properties/map/acquisition/add/AddAcquisitionContainer';
+import { AcquisitionContainer } from 'features/properties/map/acquisition/AcquisitionContainer';
+import { AddAcquisitionContainer } from 'features/properties/map/acquisition/add/AddAcquisitionContainer';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
 import ResearchContainer from 'features/properties/map/research/ResearchContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
@@ -27,6 +28,7 @@ export enum MapViewState {
   RESEARCH_VIEW = 'research_view',
   PROPERTY_INFORMATION = 'property_information',
   ACQUISITION_ADD = 'acquisition_add',
+  ACQUISITION_VIEW = 'acquisition_view',
 }
 
 /** control the state of the side bar via the route. */
@@ -55,6 +57,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
     var parts = location.pathname.split('/');
     var currentState: MapViewState = MapViewState.MAP_ONLY;
     var researchId: number = 0;
+    var acquisitionId: number = 0;
     var propertyId: number | undefined = 0;
     var pid = '';
     if (parts.length === 2) {
@@ -79,6 +82,11 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
       } else if (parts[2] === 'acquisition') {
         if (parts.length === 4 && parts[3] === 'new') {
           currentState = MapViewState.ACQUISITION_ADD;
+        } else if (parts.length >= 4 && isNumber(Number(parts[3]))) {
+          acquisitionId = Number(parts[3]);
+          currentState = MapViewState.ACQUISITION_VIEW;
+        } else {
+          currentState = MapViewState.MAP_ONLY;
         }
       } else {
         currentState = MapViewState.MAP_ONLY;
@@ -114,7 +122,13 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         setShowSideBar(true);
         break;
       case MapViewState.ACQUISITION_ADD:
-        setSidebarComponent(<AddAcquisitionContainer />);
+        setSidebarComponent(<AddAcquisitionContainer onClose={handleClose} />);
+        setShowSideBar(true);
+        break;
+      case MapViewState.ACQUISITION_VIEW:
+        setSidebarComponent(
+          <AcquisitionContainer acquisitionFileId={acquisitionId} onClose={handleClose} />,
+        );
         setShowSideBar(true);
         break;
       default:
