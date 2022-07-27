@@ -2031,6 +2031,12 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.AcquisitionTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQTYP_PIM_ACQNFL_FK");
+
+                entity.HasOne(d => d.RegionCodeNavigation)
+                    .WithMany(p => p.PimsAcquisitionFiles)
+                    .HasForeignKey(d => d.RegionCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_REGION_PIM_ACQNFL_FK");
             });
 
             modelBuilder.Entity<PimsAcquisitionFileHist>(entity =>
