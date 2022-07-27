@@ -9,9 +9,7 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Concepts = Pims.Api.Models.Concepts;
 
