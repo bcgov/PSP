@@ -25,7 +25,7 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResult<DocumentDetail>> GetDocumentAsync(long documentId);
 
-        Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId);
+        Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId);
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file);
 

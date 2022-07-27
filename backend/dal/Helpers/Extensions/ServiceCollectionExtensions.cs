@@ -47,6 +47,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentTypeRepository, Repositories.DocumentTypeRepository>();
             repositories.AddScoped<Repositories.INoteRepository, Repositories.NoteRepository>();
             repositories.AddScoped<Repositories.IEntityNoteRepository, Repositories.EntityNoteRepository>();
+            repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 
@@ -57,6 +58,7 @@ namespace Pims.Dal
         /// <returns></returns>
         public static IServiceCollection AddPimsDalServices(this IServiceCollection services)
         {
+            // Todo: move services to the API project
             services.AddScoped<IPimsService, PimsService>();
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseReportsService, LeaseReportsService>();

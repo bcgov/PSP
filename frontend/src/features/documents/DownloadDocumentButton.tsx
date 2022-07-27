@@ -3,7 +3,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { FileDownload } from 'models/api/DocumentManagement';
 import { FaDownload } from 'react-icons/fa';
 
-import { useDocumentProvider } from './documentDetail/hooks/useDocumentProvider';
+import { useDocumentProvider } from './hooks/useDocumentProvider';
 
 export interface IDownloadDocumentButtonProps {
   mayanDocumentId: number;

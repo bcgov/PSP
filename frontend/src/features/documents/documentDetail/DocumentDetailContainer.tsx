@@ -2,9 +2,9 @@ import { Api_Document } from 'models/api/Document';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useEffect, useState } from 'react';
 
+import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { ComposedDocument } from './ComposedDocument';
 import DocumentDetailView from './DocumentDetailView';
-import { useDocumentProvider } from './hooks/useDocumentProvider';
 
 export interface IDocumentDetailContainerProps {
   pimsDocument: Api_Document;

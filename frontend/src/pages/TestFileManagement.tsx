@@ -1,8 +1,7 @@
-import { DocumentTypes } from 'constants/documentTypes';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { DocumentDetailContainer } from 'features/documents/documentDetail/DocumentDetailContainer';
-import DocumentListView from 'features/documents/list/DocumentListView';
+import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { useAxiosApi } from 'hooks/pims-api';
-import { mockDocumentsResponse } from 'mocks/mockDocuments';
 import {
   DocumentQueryResult,
   FileDownload,
@@ -177,12 +176,9 @@ export const TestFileManagement: React.FunctionComponent = () => {
       </Row>
       <Row className="py-5 no-gutters">
         <Col>
-          <DocumentListView
-            isLoading={false}
-            documentResults={mockDocumentsResponse()}
-            entityId={1}
-            documentType={DocumentTypes.ACTIVITY}
-            hideFilters={false}
+          <DocumentListContainer
+            parentId={1}
+            relationshipType={DocumentRelationshipType.ACTIVITIES}
           />
         </Col>
       </Row>

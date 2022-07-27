@@ -1,7 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { DocumentTypes } from 'constants/documentTypes';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { mockLookups } from 'mocks';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -31,8 +31,8 @@ describe('Document List View', () => {
     const component = render(
       <DocumentListView
         isLoading={false}
-        documentType={DocumentTypes.FILE}
-        entityId={0}
+        parentId={0}
+        relationshipType={DocumentRelationshipType.FILES}
         documentResults={mockDocumentsResponse()}
       />,
       {
@@ -48,7 +48,7 @@ describe('Document List View', () => {
 
   beforeEach(() => {
     mockAxios.reset();
-    mockAxios.onGet(`documents/document-types`).reply(200, mockDocumentTypesResponse());
+    mockAxios.onGet(`documents/types`).reply(200, mockDocumentTypesResponse());
   });
   afterEach(() => {
     mockAxios.reset();
@@ -68,8 +68,9 @@ describe('Document List View', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      documentType: DocumentTypes.FILE,
-      entityId: 0,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.FILES,
+
       documentResults: mockDocumentsResponse(),
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
@@ -79,8 +80,8 @@ describe('Document List View', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
-      documentType: DocumentTypes.FILE,
-      entityId: 0,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.FILES,
       documentResults: mockDocumentsResponse(),
     });
     expect(getByTestId('document-type')).toBeInTheDocument();

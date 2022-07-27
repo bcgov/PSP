@@ -1,8 +1,8 @@
 import { TableSort } from 'components/Table/TableSort';
-import { DocumentTypes } from 'constants/documentTypes';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document } from 'models/api/Document';
+import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import React, { useState } from 'react';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
@@ -11,10 +11,10 @@ import { DocumentResults } from './DocumentResults/DocumentResults';
 import * as Styled from './styles';
 
 export interface IDocumentListViewProps {
-  entityId: number;
-  documentType: DocumentTypes;
+  parentId: number;
+  relationshipType: DocumentRelationshipType;
   isLoading: boolean;
-  documentResults: Api_Document[];
+  documentResults: Api_DocumentRelationship[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
 }
@@ -33,7 +33,9 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const sortedFilteredDocuments = React.useMemo(() => {
     if (documentResults?.length > 0) {
-      let documentItems = [...documentResults];
+      let documentItems: Api_Document[] = [
+        ...documentResults.map(x => x.document).filter((x): x is Api_Document => !!x),
+      ];
 
       if (filters) {
         documentItems = documentItems.filter(document => {
