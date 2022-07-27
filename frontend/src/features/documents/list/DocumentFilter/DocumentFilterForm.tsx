@@ -25,14 +25,13 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
   React.useEffect(() => {
     getDocumentTypes().then(({ data }) => {
       if (data && isMounted()) {
-        setDocumentTypes(
-          data.map(dt => {
-            return {
-              label: dt.documentType || '',
-              value: dt.id ? dt.id.toString() : '',
-            };
-          }),
-        );
+        const options: SelectOption[] = data.map(dt => {
+          return {
+            label: dt.documentType || '',
+            value: dt.id ? dt.id.toString() : '',
+          };
+        });
+        setDocumentTypes(options);
       }
     });
   }, [isMounted, getDocumentTypes]);

@@ -622,7 +622,7 @@ exports[`Document List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Survey
+                Gazette
               </div>
               <div
                 class="td"
@@ -630,7 +630,7 @@ exports[`Document List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Survey.pdf
+                DocTest.docx
               </div>
               <div
                 class="td"
@@ -638,203 +638,21 @@ exports[`Document List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Jan 10, 2022
+                Jan 1, 0001
               </div>
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                James Bond
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Draft
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                <div
-                  class="c10 no-gutters row"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            class="tr-wrapper"
-          >
-            <div
-              class="tr"
-              role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 180px;"
-            >
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Photo
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Photo_Rest.pdf
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Jan 11, 2022
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Amelia Bond
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Amended
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                <div
-                  class="c10 no-gutters row"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            class="tr-wrapper"
-          >
-            <div
-              class="tr"
-              role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 180px;"
-            >
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Correspondence
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Test Correspondence.pdf
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Jan 13, 2022
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Jerry J
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Registered
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                <div
-                  class="c10 no-gutters row"
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            class="tr-wrapper"
-          >
-            <div
-              class="tr"
-              role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 180px;"
-            >
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Correspondence
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                New Correspondence.pdf
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Jan 14, 2022
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Tom Hank
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Sent
+                Signed
               </div>
               <div
                 class="td"
@@ -857,7 +675,7 @@ exports[`Document List View renders as expected 1`] = `
           class="align-self-center col-auto"
         >
           <span>
-            1 - 4 of  4
+            1 - 1 of  1
           </span>
         </div>
         <div

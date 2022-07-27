@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -13,18 +14,20 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentService
     {
-        ExternalResult<QueryResult<DocumentType>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
 
-        ExternalResult<QueryResult<DocumentDetail>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentDetail>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null);
 
-        ExternalResult<QueryResult<DocumentMetadata>> GetStorageDocumentMetadata(int documentId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentMetadata>>> GetStorageDocumentMetadata(long mayanDocumentId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId);
+        Task<ExternalResult<FileDownload>> DownloadFileAsync(long mayanDocumentId, long mayanFileId);
 
-        Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(int documentId);
+        Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId);
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw);
 
-        IEnumerable<PimsDocumentTyp> GetPimsDocumentTypes();
+        IList<PimsDocumentTyp> GetPimsDocumentTypes();
+
+        IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
     }
 }

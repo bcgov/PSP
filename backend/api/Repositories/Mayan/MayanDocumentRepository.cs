@@ -154,7 +154,7 @@ namespace Pims.Api.Repositories.Mayan
         }
 
 
-        public async Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId)
+        public async Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId)
         {
             _logger.LogDebug("Downloading file...");
             string authenticationToken = await _authRepository.GetTokenAsync();
