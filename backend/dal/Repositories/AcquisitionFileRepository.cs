@@ -38,7 +38,7 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.AcquisitionFileStatusTypeCodeNavigation)
                 .Include(r => r.AcqPhysFileStatusTypeCodeNavigation)
                 .Include(r => r.AcquisitionTypeCodeNavigation)
-                // TODO: Region relationship is missing from current DB schema!!
+                .Include(r => r.RegionCodeNavigation)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 

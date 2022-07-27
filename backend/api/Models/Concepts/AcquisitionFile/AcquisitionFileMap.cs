@@ -16,8 +16,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCodeNavigation)
-                // TODO: Region needs to be fixed in the DB schema
-                // .Map(dest => dest.Region, src => src.RegionCodeNavigation)
+                .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<AcquisitionFileModel, Entity.PimsAcquisitionFile>()
@@ -28,8 +27,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCode.Id)
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
-                // TODO: Region needs to be fixed in the DB schema
-                // .Map(dest => dest.RegionCode, src => src.Region.Id)
+                .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
