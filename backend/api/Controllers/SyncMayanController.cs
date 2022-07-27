@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Controllers
 {
     /// <summary>
-    /// SyncMayanController class, provides endpoints to handle document requests.
+    /// SyncMayanController class, provides endpoints to handle syncronization between mayan and pims.
     /// </summary>
     //[Authorize]
     [ApiController]

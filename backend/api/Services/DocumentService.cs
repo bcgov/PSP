@@ -66,8 +66,31 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId)
         {
             ExternalResult<DocumentDetail> documentResult = await documentStorageRepository.GetDocumentAsync(mayanDocumentId);
-            ExternalResult<FileDownload> downloadResult = await documentStorageRepository.DownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
-            return downloadResult;
+            if (documentResult.Status == ExternalResultStatus.Success)
+            {
+                if (documentResult.Payload != null)
+                {
+                    ExternalResult<FileDownload> downloadResult = await documentStorageRepository.DownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
+                    return downloadResult;
+                }
+                else
+                {
+                    return new ExternalResult<FileDownload>()
+                    {
+                        Status = ExternalResultStatus.Error,
+                        Message = $"No document with id ${mayanDocumentId} found in the storage",
+                    };
+                }
+            }
+            else
+            {
+                return new ExternalResult<FileDownload>()
+                {
+                    Status = documentResult.Status,
+                    Message = documentResult.Message,
+                    HttpStatusCode = documentResult.HttpStatusCode,
+                };
+            }
         }
 
         public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw)

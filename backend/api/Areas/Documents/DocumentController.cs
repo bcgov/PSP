@@ -55,7 +55,7 @@ namespace Pims.Api.Controllers
         //[HasPermission(Permissions.DocumentView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<Concepts.DocumentTypeModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "types" })]
+        [SwaggerOperation(Tags = new[] { "document-types" })]
         public IActionResult GetDocumentTypes()
         {
             var documentTypes = _documentService.GetPimsDocumentTypes();
@@ -80,8 +80,8 @@ namespace Pims.Api.Controllers
             {
                 case DocumentRelationType.Activities:
                     var documents = _documentService.GetActivityDocuments(parentId);
-                    var mapedDocuments = _mapper.Map<List<DocumentRelationshipModel>>(documents);
-                    return new JsonResult(mapedDocuments);
+                    var mappedDocuments = _mapper.Map<List<DocumentRelationshipModel>>(documents);
+                    return new JsonResult(mappedDocuments);
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -104,7 +104,7 @@ namespace Pims.Api.Controllers
         /// Retrieves a list of documents.
         /// </summary>
         [HttpGet("storage")]
-        [HasPermission(Permissions.PropertyAdd)]
+        //[HasPermission(Permissions.PropertyAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentDetail>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
@@ -118,7 +118,7 @@ namespace Pims.Api.Controllers
         /// Retrieves the list of document types.
         /// </summary>
         [HttpGet("storage/types")]
-        [HasPermission(Permissions.PropertyAdd)]
+        //[HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentType>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public IActionResult GetDocumentStorageTypes()
@@ -144,7 +144,7 @@ namespace Pims.Api.Controllers
         /// Uploads the passed document.
         /// </summary>
         [HttpPost("storage")]
-        [HasPermission(Permissions.PropertyAdd)]
+        //[HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(ExternalResult<DocumentDetail>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> UploadDocument([FromForm] int documentType, [FromForm] IFormFile file)
