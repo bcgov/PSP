@@ -1,4 +1,5 @@
-import { Api_DocumentType } from 'models/api/Document';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import {
   DocumentQueryResult,
   FileDownload,
@@ -19,19 +20,28 @@ export const useApiDocuments = () => {
 
   return React.useMemo(
     () => ({
-      getDocumentTypes: () => api.get<Api_DocumentType[]>(`/documents/document-types`),
+      getDocumentTypes: () => api.get<Api_DocumentType[]>(`/documents/types`),
+
+      getDocumentRelationship: (relationshipType: DocumentRelationshipType, parentId: number) =>
+        api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
+
+      deleteDocumentRelationshipApiCall: (
+        relationshipType: DocumentRelationshipType,
+        parentId: number,
+      ) => api.delete<boolean>(`/documents/${relationshipType}/${parentId}`),
+
       getDocumentMetada: (mayanDocumentId: number) =>
         api.get<ExternalResult<DocumentQueryResult<Mayan_DocumentMetadata>>>(
-          `/documents/${mayanDocumentId}/metadata`,
+          `/documents/storage/${mayanDocumentId}/metadata`,
         ),
+
       downloadDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
         api.get<ExternalResult<FileDownload>>(
-          `/documents/${mayanDocumentId}/files/${mayanFileId}/download`,
+          `/documents/storage/${mayanDocumentId}/files/${mayanFileId}/download`,
         ),
+
       downloadDocumentFileLatestApiCall: (mayanDocumentId: number) =>
-        api.get<ExternalResult<FileDownload>>(`/documents/${mayanDocumentId}/download`),
-      deleteDocumentActivityApiCall: (documentId: number, activityId: number) =>
-        api.delete<boolean>(`/documents/${documentId}/activity/${activityId}`),
+        api.get<ExternalResult<FileDownload>>(`/documents/storage/${mayanDocumentId}/download`),
     }),
     [api],
   );

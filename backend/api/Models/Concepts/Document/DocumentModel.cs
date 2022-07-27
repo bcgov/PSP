@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The document id on the external storage.
         /// </summary>
-        public int MayanId { get; set; }
+        public int MayanDocumentId { get; set; }
 
         /// <summary>
         /// get/set - Document Type.

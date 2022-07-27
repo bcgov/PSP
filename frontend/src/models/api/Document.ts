@@ -1,3 +1,5 @@
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
@@ -13,4 +15,12 @@ export interface Api_Document extends Api_ConcurrentVersion, Api_AuditFields {
 export interface Api_DocumentType extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   documentType?: string;
+}
+
+export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  parentId?: number;
+  isDisabled?: boolean;
+  document?: Api_Document;
+  relationshipType?: DocumentRelationshipType;
 }

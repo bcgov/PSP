@@ -19,7 +19,6 @@ export const useDocumentProvider = () => {
     getDocumentMetada,
     downloadDocumentFileApiCall,
     downloadDocumentFileLatestApiCall,
-    deleteDocumentActivityApiCall,
   } = useApiDocuments();
 
   // Provides functionality to retrieve document metadata information
@@ -94,29 +93,6 @@ export const useDocumentProvider = () => {
     }, []),
   });
 
-  // Provides functionality for deleting a document
-  const {
-    execute: deleteActivityDocument,
-    loading: deleteActivityDocumentLoading,
-  } = useApiRequestWrapper<
-    (documendId: number, activityId: number) => Promise<AxiosResponse<boolean, any>>
-  >({
-    requestFunction: useCallback(
-      async (documentId: number, activityId: number) =>
-        await deleteDocumentActivityApiCall(documentId, activityId),
-      [deleteDocumentActivityApiCall],
-    ),
-    requestName: 'deleteActivityDocument',
-    onSuccess: useCallback(() => toast.success('Delete activity document'), []),
-    onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
-      } else {
-        toast.error('Delete activity document error. Check responses and try again.');
-      }
-    }, []),
-  });
-
   return {
     retrieveDocumentMetadata,
     retrieveDocumentMetadataLoading,
@@ -124,7 +100,5 @@ export const useDocumentProvider = () => {
     downloadDocumentFileLoading,
     downloadDocumentFileLatest,
     downloadDocumentFileLatestLoading,
-    deleteActivityDocument,
-    deleteActivityDocumentLoading,
   };
 };
