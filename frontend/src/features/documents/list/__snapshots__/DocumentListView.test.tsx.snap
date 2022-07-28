@@ -190,7 +190,7 @@ exports[`Document List View renders as expected 1`] = `
 .c10 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .c0 {
@@ -732,6 +732,9 @@ exports[`Document List View renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <div
+      class="container"
+    />
     <div
       class="container"
     />

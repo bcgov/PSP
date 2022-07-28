@@ -8,7 +8,7 @@ import DownloadDocumentButton from '../DownloadDocumentButton';
 import { ComposedDocument } from './ComposedDocument';
 
 interface IDocumentDetailsViewProps {
-  metadata: ComposedDocument;
+  document: ComposedDocument;
   isLoading: boolean;
 }
 
@@ -22,8 +22,8 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
   let mayanDocumentId = -1;
   let mayanFileId = -1;
 
-  if (props.metadata.mayanMetadata !== undefined && props.metadata.mayanMetadata?.length > 0) {
-    const document = props.metadata.mayanMetadata[0].document;
+  if (props.document.mayanMetadata !== undefined && props.document.mayanMetadata?.length > 0) {
+    const document = props.document.mayanMetadata[0].document;
     documentTypeLabel = document.document_type.label;
     documentFileName = document.label;
     mayanDocumentId = document.id;
@@ -52,10 +52,15 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
           </Col>
           <Col xs="2">Edit</Col>
         </Row>
+        <SectionField label="Status" labelWidth="6">
+          {props.document.pimsDocument?.statusTypeCode?.description}
+        </SectionField>
+
+        <StyledH3>Aditional information</StyledH3>
         <StyledScrollable>
-          {props.metadata.mayanMetadata?.map(value => (
+          {props.document.mayanMetadata?.map(value => (
             <SectionField
-              labelWidth="5"
+              labelWidth="6"
               key={`document-${value.document.id}-metadata-${value.id}`}
               label={value.metadata_type.label}
             >
@@ -82,6 +87,15 @@ const StyledGreySection = styled.div`
 const StyledH2 = styled.h2`
   font-weight: 700;
   color: ${props => props.theme.css.primaryColor};
+`;
+const StyledH3 = styled.h3`
+  font-weight: 700;
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding-top: 1rem;
+  color: ${props => props.theme.css.primaryColor};
+  border-bottom: solid 0.1rem ${props => props.theme.css.primaryColor};
 `;
 
 const StyledScrollable = styled(Scrollable)`
