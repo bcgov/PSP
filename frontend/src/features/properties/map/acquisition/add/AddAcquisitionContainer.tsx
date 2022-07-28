@@ -3,7 +3,7 @@ import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -27,11 +27,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formikRef.current?.submitForm();
   };
 
-  const handleCancel = () => {
-    // TODO: show confirmation popup if changes have been made
-    close();
-  };
-
   // navigate to read-only view after file has been created
   const onSuccess = (acqFile: Api_AcquisitionFile) => {
     history.replace(`/mapview/acquisition/${acqFile.id}`);
@@ -49,7 +44,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         <SidebarFooter
           isOkDisabled={formikRef.current?.isSubmitting}
           onSave={handleSave}
-          onCancel={handleCancel}
+          onCancel={close}
         />
       }
     >
@@ -59,6 +54,11 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           initialValues={helper.initialValues}
           onSubmit={helper.handleSubmit}
           validationSchema={helper.validationSchema}
+        />
+
+        <Prompt
+          when={formikRef.current?.dirty && formikRef.current?.submitCount === 0}
+          message="You have made changes on this form. Do you wish to leave without saving?"
         />
       </StyledFormWrapper>
     </MapSideBarLayout>

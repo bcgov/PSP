@@ -29,6 +29,7 @@ export const AddAcquisitionForm = React.forwardRef<
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
+  const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
 
   return (
     <Formik<AcquisitionForm>
@@ -41,10 +42,10 @@ export const AddAcquisitionForm = React.forwardRef<
       {formikProps => (
         <>
           <Section header="Schedule">
-            <SectionField label="Assigned date:">
+            <SectionField label="Assigned date">
               <FastDatePicker field="assignedDate" formikProps={formikProps} />
             </SectionField>
-            <SectionField label="Delivery date:">
+            <SectionField label="Delivery date">
               <FastDatePicker field="deliveryDate" formikProps={formikProps} />
             </SectionField>
           </Section>
@@ -53,9 +54,16 @@ export const AddAcquisitionForm = React.forwardRef<
             <SectionField label="Acquisition file name:">
               <LargeInput field="name" />
             </SectionField>
-            <SectionField label="Physical file status:"></SectionField>
-            <SectionField label="Acquisition type:"></SectionField>
-            <SectionField label="Ministry region:">
+            <SectionField label="Physical file status"></SectionField>
+            <SectionField label="Acquisition type">
+              <Select
+                field="acquisitionTypeId"
+                options={acquisitionTypes}
+                placeholder="Select..."
+                required
+              />
+            </SectionField>
+            <SectionField label="Ministry region">
               <Select
                 field="regionId"
                 options={regionTypes}
