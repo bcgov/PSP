@@ -8,11 +8,11 @@ export class AcquisitionForm {
   deliveryDate?: string;
   rowVersion?: number;
   // Code Tables
-  acquisitionFileStatusTypeId?: string;
-  acquisitionPhysFileStatusTypeId?: string;
-  acquisitionTypeId?: string;
+  acquisitionFileStatusType?: string;
+  acquisitionPhysFileStatusType?: string;
+  acquisitionType?: string;
   // MOTI region
-  regionId?: number;
+  region?: number;
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -21,10 +21,10 @@ export class AcquisitionForm {
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
-      acquisitionFileStatusTypeCode: toTypeCode(this.acquisitionFileStatusTypeId),
-      acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusTypeId),
-      acquisitionTypeCode: toTypeCode(this.acquisitionTypeId),
-      regionCode: toTypeCode(this.regionId),
+      acquisitionFileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
+      acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
+      acquisitionTypeCode: toTypeCode(this.acquisitionType),
+      regionCode: toTypeCode(this.region),
     };
   }
 
@@ -35,10 +35,10 @@ export class AcquisitionForm {
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
-    newForm.acquisitionFileStatusTypeId = fromTypeCode(model.acquisitionFileStatusTypeCode);
-    newForm.acquisitionPhysFileStatusTypeId = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
-    newForm.acquisitionTypeId = fromTypeCode(model.acquisitionTypeCode);
-    newForm.regionId = fromTypeCode(model.regionCode);
+    newForm.acquisitionFileStatusType = fromTypeCode(model.acquisitionFileStatusTypeCode);
+    newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
+    newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
+    newForm.region = fromTypeCode(model.regionCode);
 
     return newForm;
   }

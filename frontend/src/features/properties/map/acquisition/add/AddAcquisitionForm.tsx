@@ -30,11 +30,12 @@ export const AddAcquisitionForm = React.forwardRef<
   const { getOptionsByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
+  const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
 
   return (
     <Formik<AcquisitionForm>
-      innerRef={ref}
       enableReinitialize
+      innerRef={ref}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -51,13 +52,19 @@ export const AddAcquisitionForm = React.forwardRef<
           </Section>
 
           <Section header="Acquisition Details">
-            <SectionField label="Acquisition file name:">
+            <SectionField label="Acquisition file name">
               <LargeInput field="name" />
             </SectionField>
-            <SectionField label="Physical file status"></SectionField>
+            <SectionField label="Physical file status">
+              <Select
+                field="acquisitionPhysFileStatusType"
+                options={acquisitionPhysFileTypes}
+                placeholder="Select..."
+              />
+            </SectionField>
             <SectionField label="Acquisition type">
               <Select
-                field="acquisitionTypeId"
+                field="acquisitionType"
                 options={acquisitionTypes}
                 placeholder="Select..."
                 required
@@ -65,7 +72,7 @@ export const AddAcquisitionForm = React.forwardRef<
             </SectionField>
             <SectionField label="Ministry region">
               <Select
-                field="regionId"
+                field="region"
                 options={regionTypes}
                 placeholder="Select region..."
                 required
