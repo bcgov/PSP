@@ -34,6 +34,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyResearchFiles
                 .Where(x => x.ResearchFileId == researchFileId)
                 .Include(rp => rp.Property)
+                .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
                 .AsNoTracking()
                 .ToList();
         }
@@ -65,6 +66,9 @@ namespace Pims.Dal.Repositories
             {
                 Context.Entry(propertyResearchFile.Property).State = EntityState.Unchanged;
             }
+
+            // Delete any Property research purpose type associations
+            propertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(purposeType));
 
             Context.PimsPropertyResearchFiles.Remove(propertyResearchFile);
         }
