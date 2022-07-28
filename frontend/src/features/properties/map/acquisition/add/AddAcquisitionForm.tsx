@@ -1,9 +1,10 @@
-import { Input } from 'components/common/form/';
+import { FastDatePicker, Input, Select } from 'components/common/form/';
+import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
+import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { AcquisitionForm } from './models';
@@ -18,17 +19,20 @@ export interface IAddAcquisitionFormProps {
     values: AcquisitionForm,
     formikHelpers: FormikHelpers<AcquisitionForm>,
   ) => void | Promise<any>;
-  /** Optional - callback to notify when save button is pressed. */
-  onSaveClick?: (noteForm: AcquisitionForm, formikProps: FormikProps<AcquisitionForm>) => void;
-  /** Optional - callback to notify when cancel button is pressed. */
-  onCancelClick?: (formikProps: FormikProps<AcquisitionForm>) => void;
 }
 
-export const AddAcquisitionForm: React.FC<IAddAcquisitionFormProps> = props => {
-  const { initialValues, validationSchema, onSubmit, onSaveClick, onCancelClick } = props;
+export const AddAcquisitionForm = React.forwardRef<
+  FormikProps<AcquisitionForm>,
+  IAddAcquisitionFormProps
+>((props, ref) => {
+  const { initialValues, validationSchema, onSubmit } = props;
+
+  const { getOptionsByType } = useLookupCodeHelpers();
+  const regionTypes = getOptionsByType(API.REGION_TYPES);
 
   return (
     <Formik<AcquisitionForm>
+      innerRef={ref}
       enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -37,8 +41,12 @@ export const AddAcquisitionForm: React.FC<IAddAcquisitionFormProps> = props => {
       {formikProps => (
         <>
           <Section header="Schedule">
-            <SectionField label="Assigned date:"></SectionField>
-            <SectionField label="Delivery date:"></SectionField>
+            <SectionField label="Assigned date:">
+              <FastDatePicker field="assignedDate" formikProps={formikProps} />
+            </SectionField>
+            <SectionField label="Delivery date:">
+              <FastDatePicker field="deliveryDate" formikProps={formikProps} />
+            </SectionField>
           </Section>
 
           <Section header="Acquisition Details">
@@ -47,13 +55,20 @@ export const AddAcquisitionForm: React.FC<IAddAcquisitionFormProps> = props => {
             </SectionField>
             <SectionField label="Physical file status:"></SectionField>
             <SectionField label="Acquisition type:"></SectionField>
-            <SectionField label="Ministry region::"></SectionField>
+            <SectionField label="Ministry region:">
+              <Select
+                field="regionId"
+                options={regionTypes}
+                placeholder="Select region..."
+                required
+              />
+            </SectionField>
           </Section>
         </>
       )}
     </Formik>
   );
-};
+});
 
 export default AddAcquisitionForm;
 
