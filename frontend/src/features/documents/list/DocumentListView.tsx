@@ -1,12 +1,19 @@
 import GenericModal from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
+import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
 import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import React, { useState } from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
+import { FaPlus, FaUpload } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
+import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 import * as Styled from './styles';
@@ -29,6 +36,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   const { documentResults, isLoading, defaultFilters, hideFilters } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
+
+  const { hasClaim } = useKeycloakWrapper();
 
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
@@ -68,17 +77,23 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   }, [documentResults, sort, filters]);
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
+
+  const handleModalUploadClose = () => {
+    setIsUploadVisible(false);
+  };
 
   const handleViewDetails = (document: Api_Document) => {
     setIsDetailsVisible(true);
     setSelectedDocument(document);
   };
 
-  const handleViewDetailsClose = () => {
+  const handleModalDetailsClose = () => {
     setIsDetailsVisible(false);
     setSelectedDocument(undefined);
   };
+
   const handleDeleteClick = (document: Api_Document) => {
     setShowDeleteConfirmModal(true);
     setSelectedDocument(document);
@@ -102,8 +117,23 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   return (
     <Styled.ListPage>
-      <Styled.Scrollable vertical={true}>
-        <Styled.PageHeader>Documents</Styled.PageHeader>
+      <Section
+        header={
+          <Row>
+            <Col xs="2">Documents</Col>
+
+            {hasClaim(Claims.RESEARCH_ADD) && (
+              <Col>
+                <StyledAddButton onClick={() => setIsUploadVisible(true)}>
+                  <FaUpload />
+                  &nbsp;Add a Document
+                </StyledAddButton>
+              </Col>
+            )}
+          </Row>
+        }
+        isCollapsable
+      >
         {!hideFilters && <DocumentFilterForm onSetFilter={setFilters} documentFilter={filters} />}
         <DocumentResults
           results={sortedFilteredDocuments}
@@ -113,12 +143,17 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           onViewDetails={handleViewDetails}
           onDelete={handleDeleteClick}
         />
-      </Styled.Scrollable>
+      </Section>
       <DocumentDetailModal
         display={isDetailsVisible}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
-        handleClose={handleViewDetailsClose}
+        handleClose={handleModalDetailsClose}
+      />
+      <DocumentUploadModal
+        display={isUploadVisible}
+        setDisplay={setIsUploadVisible}
+        handleClose={handleModalUploadClose}
       />
       <GenericModal
         display={showDeleteConfirmModal}
@@ -146,3 +181,12 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 };
 
 export default DocumentListView;
+
+const StyledAddButton = styled(Button)`
+  &.btn.btn-primary {
+    font-weight: bold;
+    font-size: 1.3rem;
+    background-color: ${props => props.theme.css.completedColor};
+    margin-bottom: 0.2rem;
+  }
+`;
