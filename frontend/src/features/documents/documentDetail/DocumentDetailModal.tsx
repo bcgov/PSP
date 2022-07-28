@@ -8,6 +8,7 @@ export interface IDocumentDetailModalProps {
   display?: boolean;
   setDisplay?: (display: boolean) => void;
   pimsDocument?: Api_Document;
+  handleClose?: () => void;
 }
 
 export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalProps> = props => {
@@ -27,6 +28,7 @@ export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalPr
         )
       }
       modalSize={ModalSize.MEDIUM}
+      handleCancel={props.handleClose}
       closeButton
       hideFooter
     ></GenericModal>

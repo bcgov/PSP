@@ -214,6 +214,21 @@ namespace Pims.Api.Repositories.Mayan
             return retVal;
         }
 
+        public async Task<ExternalResult<string>> DeleteDocument(long documentId)
+        {
+            _logger.LogDebug("Deleting document...");
+            _logger.LogTrace("Document id {documentId}", documentId);
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/");
+
+            var response = await DeleteAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug($"Finished deleting document");
+            return response;
+        }
+
         public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file)
         {
             _logger.LogDebug("Uploading document...");

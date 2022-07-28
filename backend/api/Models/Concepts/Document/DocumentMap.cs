@@ -14,7 +14,15 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentType, src => src.DocumentType)
                 .Map(dest => dest.StatusTypeCode, src => src.DocumentStatusTypeCodeNavigation)
                 .Map(dest => dest.FileName, src => src.FileName)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber);
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            config.NewConfig<DocumentModel, Entity.PimsDocument>()
+                .Map(dest => dest.DocumentId, src => src.Id)
+                .Map(dest => dest.MayanId, src => src.MayanDocumentId)
+                .Map(dest => dest.DocumentTypeId, src => src.DocumentType.Id)
+                .Map(dest => dest.DocumentStatusTypeCode, src => src.StatusTypeCode.Id)
+                .Map(dest => dest.FileName, src => src.FileName)
+                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
 }

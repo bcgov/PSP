@@ -14,6 +14,8 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+const deleteMock = jest.fn().mockResolvedValue(true);
+
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
@@ -34,6 +36,7 @@ describe('Document List View', () => {
         parentId={0}
         relationshipType={DocumentRelationshipType.FILES}
         documentResults={mockDocumentsResponse()}
+        onDelete={renderOptions?.onDelete || deleteMock}
       />,
       {
         ...renderOptions,
@@ -70,19 +73,8 @@ describe('Document List View', () => {
       isLoading: false,
       parentId: 0,
       relationshipType: DocumentRelationshipType.FILES,
-
       documentResults: mockDocumentsResponse(),
-    });
-    expect(getByTestId('document-type')).toBeInTheDocument();
-  });
-
-  it('should not have the Documents status in the component', () => {
-    const { getByTestId } = setup({
-      hideFilters: false,
-      isLoading: false,
-      parentId: 0,
-      relationshipType: DocumentRelationshipType.FILES,
-      documentResults: mockDocumentsResponse(),
+      onDelete: deleteMock,
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
   });

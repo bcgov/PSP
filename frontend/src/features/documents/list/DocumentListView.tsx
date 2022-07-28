@@ -1,3 +1,4 @@
+import GenericModal from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
@@ -17,6 +18,7 @@ export interface IDocumentListViewProps {
   documentResults: Api_DocumentRelationship[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
+  onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
 }
 /**
  * Page that displays documents information.
@@ -25,6 +27,9 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   props: IDocumentListViewProps,
 ) => {
   const { documentResults, isLoading, defaultFilters, hideFilters } = props;
+
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
+
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
   const [filters, setFilters] = React.useState<IDocumentFilter>(
@@ -65,12 +70,34 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
 
-  const handleViewDetails = (values: Api_Document) => {
+  const handleViewDetails = (document: Api_Document) => {
     setIsDetailsVisible(true);
-    setSelectedDocument(values);
+    setSelectedDocument(document);
   };
-  const handleDelete = (values: Api_Document) => {
-    // Todo: need to have the parent entity in context
+
+  const handleViewDetailsClose = () => {
+    setIsDetailsVisible(false);
+    setSelectedDocument(undefined);
+  };
+  const handleDeleteClick = (document: Api_Document) => {
+    setShowDeleteConfirmModal(true);
+    setSelectedDocument(document);
+  };
+
+  const onDeleteConfirm = async () => {
+    if (selectedDocument) {
+      const documentRelationship = documentResults.find(
+        x => x.document?.id === selectedDocument.id,
+      );
+
+      if (documentRelationship !== undefined) {
+        let result = await props.onDelete(documentRelationship);
+        if (result) {
+          setShowDeleteConfirmModal(false);
+          setSelectedDocument(undefined);
+        }
+      }
+    }
   };
 
   return (
@@ -84,13 +111,35 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           sort={sort}
           setSort={setSort}
           onViewDetails={handleViewDetails}
-          onDelete={handleDelete}
+          onDelete={handleDeleteClick}
         />
       </Styled.Scrollable>
       <DocumentDetailModal
         display={isDetailsVisible}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
+        handleClose={handleViewDetailsClose}
+      />
+      <GenericModal
+        display={showDeleteConfirmModal}
+        title={'Delete a document'}
+        message={
+          <>
+            <div>You have chosen to delete this document. </div>
+            <br />
+            <div>
+              If the document is linked to other files or entities in PIMS it will still be
+              accessible from there, however if this the only instance then the file will be removed
+              from the document store completely.
+            </div>
+            <br />
+            <strong>Do you wish to continue deleting this document?</strong>
+          </>
+        }
+        handleOk={onDeleteConfirm}
+        handleCancel={() => setShowDeleteConfirmModal(false)}
+        okButtonText="Continue"
+        cancelButtonText="Cancel"
       />
     </Styled.ListPage>
   );

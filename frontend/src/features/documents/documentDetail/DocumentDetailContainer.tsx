@@ -30,5 +30,5 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
 
     fetch();
   }, [props.pimsDocument.mayanDocumentId, retrieveDocumentMetadata]);
-  return <DocumentDetailView metadata={document} isLoading={retrieveDocumentMetadataLoading} />;
+  return <DocumentDetailView document={document} isLoading={retrieveDocumentMetadataLoading} />;
 };

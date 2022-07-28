@@ -27,8 +27,8 @@ export const useApiDocuments = () => {
 
       deleteDocumentRelationshipApiCall: (
         relationshipType: DocumentRelationshipType,
-        parentId: number,
-      ) => api.delete<boolean>(`/documents/${relationshipType}/${parentId}`),
+        documentRelationship: Api_DocumentRelationship,
+      ) => api.delete<boolean>(`/documents/${relationshipType}`, { data: documentRelationship }),
 
       getDocumentMetada: (mayanDocumentId: number) =>
         api.get<ExternalResult<DocumentQueryResult<Mayan_DocumentMetadata>>>(

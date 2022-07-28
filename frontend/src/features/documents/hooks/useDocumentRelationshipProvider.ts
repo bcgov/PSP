@@ -46,16 +46,24 @@ export const useDocumentRelationshipProvider = () => {
   } = useApiRequestWrapper<
     (
       relationshipType: DocumentRelationshipType,
-      parentId: number,
+      documentRelationship: Api_DocumentRelationship,
     ) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
-      async (relationshipType: DocumentRelationshipType, parentId: number) =>
-        await deleteDocumentRelationshipApiCall(relationshipType, parentId),
+      async (
+        relationshipType: DocumentRelationshipType,
+        documentRelationship: Api_DocumentRelationship,
+      ) => await deleteDocumentRelationshipApiCall(relationshipType, documentRelationship),
       [deleteDocumentRelationshipApiCall],
     ),
     requestName: 'deleteDocumentRelationship',
-    onSuccess: useCallback(() => toast.success('Delete document relationship'), []),
+    onSuccess: useCallback((response?: boolean) => {
+      if (response !== undefined && response) {
+        toast.success('Deleted document relationship');
+      } else {
+        toast.error('Delete document relationship error. Check responses and try again.');
+      }
+    }, []),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

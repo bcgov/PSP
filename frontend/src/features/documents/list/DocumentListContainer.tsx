@@ -1,6 +1,7 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentRelationship } from 'models/api/Document';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
@@ -11,22 +12,37 @@ interface IDocumentListContainerProps {
 }
 
 const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
+  const isMounted = useIsMounted();
+
   const [documentResults, setDocumentResults] = useState<Api_DocumentRelationship[]>([]);
 
   const {
     retrieveDocumentRelationship,
     retrieveDocumentRelationshipLoading,
+    deleteDocumentRelationship,
   } = useDocumentRelationshipProvider();
-  useEffect(() => {
-    const fetch = async () => {
-      const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
-      if (documents !== undefined) {
-        setDocumentResults(documents);
-      }
-    };
 
-    fetch();
-  }, [props.parentId, props.relationshipType, retrieveDocumentRelationship]);
+  const retrieveDocuments = useCallback(async () => {
+    const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
+    if (documents !== undefined && isMounted()) {
+      setDocumentResults(documents);
+    }
+  }, [isMounted, retrieveDocumentRelationship, props.relationshipType, props.parentId]);
+
+  useEffect(() => {
+    retrieveDocuments();
+  }, [retrieveDocuments]);
+
+  const onDelete = async (
+    documentRelationship: Api_DocumentRelationship,
+  ): Promise<boolean | undefined> => {
+    let result = await deleteDocumentRelationship(props.relationshipType, documentRelationship);
+    if (result && isMounted()) {
+      retrieveDocuments();
+    }
+
+    return result;
+  };
 
   return (
     <DocumentListView
@@ -34,6 +50,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       relationshipType={props.relationshipType}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
+      onDelete={onDelete}
     />
   );
 };
