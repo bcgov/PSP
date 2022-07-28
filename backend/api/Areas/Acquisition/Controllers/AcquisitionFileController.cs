@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
+using Pims.Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Acquisition.Controllers
@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     public class AcquisitionFileController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IAcquisitionFileService _acquisitionService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -30,12 +30,12 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// <summary>
         /// Creates a new instance of a AcquisitionFileController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="acquisitionService"></param>
         /// <param name="mapper"></param>
         ///
-        public AcquisitionFileController(IPimsService pimsService, IMapper mapper)
+        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _acquisitionService = acquisitionService;
             _mapper = mapper;
         }
         #endregion
@@ -53,7 +53,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [SwaggerOperation(Tags = new[] {"acquisitionfile" })]
         public IActionResult GetAcquisitionFile(long id)
         {
-            var acqFile = _pimsService.AcquisitionFileService.GetById(id);
+            var acqFile = _acquisitionService.GetById(id);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acqFile));
         }
 
@@ -69,7 +69,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult AddAcquisitionFile([FromBody] AcquisitionFileModel model)
         {
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-            var acquisitionFile = _pimsService.AcquisitionFileService.Add(acqFileEntity);
+            var acquisitionFile = _acquisitionService.Add(acqFileEntity);
 
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
