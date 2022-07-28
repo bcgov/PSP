@@ -16,6 +16,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
   const {
     retrieveDocumentRelationship,
     retrieveDocumentRelationshipLoading,
+    deleteDocumentRelationship,
   } = useDocumentRelationshipProvider();
   useEffect(() => {
     const fetch = async () => {
@@ -28,12 +29,17 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     fetch();
   }, [props.parentId, props.relationshipType, retrieveDocumentRelationship]);
 
+  const deleteHandle = (documentRelationship: Api_DocumentRelationship) => {
+    deleteDocumentRelationship(props.relationshipType, documentRelationship);
+  };
+
   return (
     <DocumentListView
       parentId={props.parentId}
       relationshipType={props.relationshipType}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
+      deleteHandle={deleteHandle}
     />
   );
 };

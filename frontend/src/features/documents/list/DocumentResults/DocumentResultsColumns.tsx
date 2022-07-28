@@ -121,6 +121,6 @@ const StyledIcons = styled(Row)`
   .btn.btn-primary {
     background-color: transparent;
     padding: 0;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
   }
 `;

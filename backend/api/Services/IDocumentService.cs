@@ -29,5 +29,9 @@ namespace Pims.Api.Services
         IList<PimsDocumentTyp> GetPimsDocumentTypes();
 
         IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
+
+        Task<bool> DeleteDocumentAsync(PimsDocument document);
+
+        Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument);
     }
 }

@@ -45,7 +45,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
         </Row>
       </SectionField>
 
-      <Greyed>
+      <StyledGreySection>
         <Row className="pb-3">
           <Col className="text-left">
             <StyledH2>Document information</StyledH2>
@@ -63,7 +63,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
             </SectionField>
           ))}
         </StyledScrollable>
-      </Greyed>
+      </StyledGreySection>
     </StyledContainer>
   );
 };
@@ -74,7 +74,7 @@ const StyledContainer = styled.div`
   padding: 1rem;
 `;
 
-const Greyed = styled.div`
+const StyledGreySection = styled.div`
   padding: 1rem;
   background-color: ${({ theme }) => theme.css.filterBackgroundColor};
 `;

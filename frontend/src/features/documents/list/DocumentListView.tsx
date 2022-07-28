@@ -17,6 +17,7 @@ export interface IDocumentListViewProps {
   documentResults: Api_DocumentRelationship[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
+  deleteHandle: (relationship: Api_DocumentRelationship) => void;
 }
 /**
  * Page that displays documents information.
@@ -65,12 +66,15 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
 
-  const handleViewDetails = (values: Api_Document) => {
+  const handleViewDetails = (document: Api_Document) => {
     setIsDetailsVisible(true);
-    setSelectedDocument(values);
+    setSelectedDocument(document);
   };
-  const handleDelete = (values: Api_Document) => {
-    // Todo: need to have the parent entity in context
+  const handleDelete = (document: Api_Document) => {
+    const documentRelationship = documentResults.find(x => x.document?.id === document.id);
+    if (documentRelationship !== undefined) {
+      props.deleteHandle(documentRelationship);
+    }
   };
 
   return (

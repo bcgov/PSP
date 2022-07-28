@@ -1,0 +1,65 @@
+
+using System;
+using System.Linq;
+using System.Security.Claims;
+using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Pims.Dal.Entities;
+
+namespace Pims.Dal.Repositories
+{
+    /// <summary>
+    /// DocumentRepository class, provides a repository to interact with documents within the datasource.
+    /// </summary>
+    public class DocumentRepository : BaseRepository<PimsDocument>, IDocumentRepository
+    {
+        #region Constructors
+        /// <summary>
+        /// Creates a new instance of a DocumentActivityRepository, and initializes it with the specified arguments.
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="user"></param>
+        /// <param name="service"></param>
+        /// <param name="logger"></param>
+        public DocumentRepository(
+            PimsContext dbContext,
+            ClaimsPrincipal user,
+            IPimsRepository service,
+            ILogger<DocumentRepository> logger,
+            IMapper mapper)
+            : base(dbContext, user, service, logger, mapper) { }
+        #endregion
+
+        #region Methods
+
+        public int GetTotalRelationCount(long documentId)
+        {
+            var document = this.Context.PimsDocuments
+                .Include(d => d.PimsActivityInstanceDocuments)
+                .FirstOrDefault(d => d.DocumentId == documentId);
+
+            // Add all document relationships
+            return document.PimsActivityInstanceDocuments.Count;
+        }
+
+        /// <summary>
+        /// Deletes the passed document from the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public bool Delete(PimsDocument document)
+        {
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document), "document cannot be null.");
+            }
+
+            this.Context.PimsDocuments.Remove(document);
+            return true;
+        }
+
+
+        #endregion
+    }
+}

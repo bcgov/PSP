@@ -47,17 +47,33 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Adds the passed document activity to the database.
         /// </summary>
-        /// <param name="documentActivity"></param>
+        /// <param name="activityDocument"></param>
         /// <returns></returns>
-        public PimsActivityInstanceDocument Add(PimsActivityInstanceDocument documentActivity)
+        public PimsActivityInstanceDocument Add(PimsActivityInstanceDocument activityDocument)
         {
-            if (documentActivity == null)
+            if (activityDocument == null)
             {
-                throw new ArgumentNullException(nameof(documentActivity), "documentActivity cannot be null.");
+                throw new ArgumentNullException(nameof(activityDocument), "documentActivity cannot be null.");
             }
 
-            var newEntry = this.Context.PimsActivityInstanceDocuments.Add(documentActivity);
+            var newEntry = this.Context.PimsActivityInstanceDocuments.Add(activityDocument);
             return newEntry.Entity;
+        }
+
+        /// <summary>
+        /// Deletes the passed document activity to the database.
+        /// </summary>
+        /// <param name="activityDocument"></param>
+        /// <returns></returns>
+        public bool Delete(PimsActivityInstanceDocument activityDocument)
+        {
+            if (activityDocument == null)
+            {
+                throw new ArgumentNullException(nameof(activityDocument), "activityDocument cannot be null.");
+            }
+
+            this.Context.PimsActivityInstanceDocuments.Remove(activityDocument);
+            return true;
         }
 
 

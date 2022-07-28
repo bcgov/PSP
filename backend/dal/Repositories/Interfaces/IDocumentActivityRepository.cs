@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsActivityInstanceDocument> GetAll(long activityId);
 
-        PimsActivityInstanceDocument Add(PimsActivityInstanceDocument documentActivity);
+        PimsActivityInstanceDocument Add(PimsActivityInstanceDocument activityDocument);
+
+        bool Delete(PimsActivityInstanceDocument activityDocument);
     }
 }

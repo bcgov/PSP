@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -16,15 +17,23 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentService : IDocumentService
     {
+        private readonly IDocumentRepository documentRepository;
         private readonly IDocumentActivityRepository documentActivityRespostory;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
 
-        public DocumentService(IDocumentActivityRepository documentActivityRespostory, IEdmsDocumentRepository documentRepository, IDocumentTypeRepository documentTypeRepository, IAvService avService)
+        public DocumentService(
+            IDocumentRepository documentRepository,
+            IDocumentActivityRepository documentActivityRespostory,
+            IEdmsDocumentRepository documentStorageRepository,
+            IDocumentTypeRepository documentTypeRepository,
+            IAvService avService)
         {
+            this.documentRepository = documentRepository;
             this.documentActivityRespostory = documentActivityRespostory;
-            this.documentStorageRepository = documentRepository;
+            this.documentActivityRespostory = documentActivityRespostory;
+            this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
         }
@@ -37,6 +46,44 @@ namespace Pims.Api.Services
         public IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId)
         {
             return documentActivityRespostory.GetAll(activityId);
+        }
+
+        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument)
+        {
+            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespostory.GetAll(activityDocument.ActivityInstanceId);
+            if (existingActivityDocuments.Count == 1)
+            {
+                return await DeleteDocumentAsync(activityDocument.Document);
+            }
+            else
+            {
+                documentActivityRespostory.Delete(activityDocument);
+                documentActivityRespostory.CommitTransaction();
+                return true;
+            }
+        }
+
+        public async Task<bool> DeleteDocumentAsync(PimsDocument document)
+        {
+            int count = documentRepository.GetTotalRelationCount(document.DocumentId);
+            if (count > 1)
+            {
+                throw new InvalidOperationException("Documents can only be removed if there is one or less relationships");
+            }
+            else
+            {
+                ExternalResult<string> result = await documentStorageRepository.DeleteDocument(document.MayanId);
+                if (result.Status == ExternalResultStatus.Success)
+                {
+                    documentRepository.Delete(document);
+                    documentRepository.CommitTransaction();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public async Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
