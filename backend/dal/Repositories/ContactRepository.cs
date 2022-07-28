@@ -115,7 +115,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.Municipality))
             {
-                query = query.Where(c => EF.Functions.Like(c.MunicipalityName, $"%{filter.Municipality}%"));
+                query = query.Where(c => c.MunicipalityName.Contains(filter.Municipality));
             }
 
             var summary = filter.Summary?.Trim() ?? string.Empty;
@@ -201,18 +201,49 @@ namespace Pims.Dal.Repositories
                 .ToArray();
 
             // Unable to use includes on PersonOrganization as scaffolded views in EF are keyless entities.
-            var joinOrganizationQuery = from c in this.Context.Set<PimsContactMgrVw>()
+            var joinOrganizationQuery = from c in this.Context.PimsContactMgrVws
                                         where contacts.Select(c => c.Id).Contains(c.Id)
-                                        join o in this.Context.Set<PimsOrganization>()
-                                            on c.OrganizationId equals o.OrganizationId into contactOrganization
+                                        join o in this.Context.PimsOrganizations
+                                            on c.Organization equals o into contactOrganization
                                         from co in contactOrganization.DefaultIfEmpty()
-                                        join po in this.Context.Set<PimsPersonOrganization>()
-                                            on co.OrganizationId equals po.OrganizationId into contactPersonOrganization
+                                        join po in this.Context.PimsPersonOrganizations
+                                            on co equals po.Organization into contactPersonOrganization
                                         from copo in contactPersonOrganization.DefaultIfEmpty()
-                                        join p in this.Context.Set<PimsPerson>()
-                                            on copo.PersonId equals p.PersonId into contactPersonOrganizationPerson
+                                        join p in this.Context.PimsPeople
+                                            on new { person = copo != null ? copo.Person : null } equals new { person = p } into contactPersonOrganizationPerson
                                         from copop in contactPersonOrganizationPerson.DefaultIfEmpty()
-                                        select new { Contact = c, Organization = co, PersonOrganization = copo, Person = copop };
+                                        select new { Contact = c, Organization = co, PersonOrganization = copo };
+
+            // TODO refactor this into a shared method.
+            if (filter.Sort?.Any() == true)
+            {
+                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
+                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
+                if (field == "Surname")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.Surname) : joinOrganizationQuery.OrderByDescending(c => c.Contact.Surname);
+                }
+                else if (field == "FirstName")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.FirstName) : joinOrganizationQuery.OrderByDescending(c => c.Contact.FirstName);
+                }
+                else if (field == "OrganizationName")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.OrganizationName) : joinOrganizationQuery.OrderByDescending(c => c.Contact.OrganizationName);
+                }
+                else if (field == "MunicipalityName")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.MunicipalityName) : joinOrganizationQuery.OrderByDescending(c => c.Contact.MunicipalityName);
+                }
+                else
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.Summary) : joinOrganizationQuery.OrderByDescending(c => c.Contact.Summary);
+                }
+            }
+            else
+            {
+                joinOrganizationQuery = joinOrganizationQuery.OrderBy(c => c.Contact.Summary);
+            }
 
             var contactsWithOrganizations = joinOrganizationQuery.ToArray();
 
@@ -226,7 +257,6 @@ namespace Pims.Dal.Repositories
                         .Where(copop => copop.Contact.Id == contactGroup.Key && copop.PersonOrganization != null)
                         .Select(copop =>
                         {
-                            copop.PersonOrganization.Person = copop.Person;
                             return copop.PersonOrganization;
                         });
 
