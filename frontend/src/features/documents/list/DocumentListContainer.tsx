@@ -1,6 +1,6 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { Api_DocumentRelationship } from 'models/api/Document';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
@@ -18,19 +18,27 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     retrieveDocumentRelationshipLoading,
     deleteDocumentRelationship,
   } = useDocumentRelationshipProvider();
+
+  const retrieveDocuments = useCallback(async () => {
+    const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
+    if (documents !== undefined) {
+      setDocumentResults(documents);
+    }
+  }, [retrieveDocumentRelationship, props.relationshipType, props.parentId]);
+
   useEffect(() => {
-    const fetch = async () => {
-      const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
-      if (documents !== undefined) {
-        setDocumentResults(documents);
-      }
-    };
+    retrieveDocuments();
+  }, [retrieveDocuments]);
 
-    fetch();
-  }, [props.parentId, props.relationshipType, retrieveDocumentRelationship]);
-
-  const deleteHandle = (documentRelationship: Api_DocumentRelationship) => {
-    deleteDocumentRelationship(props.relationshipType, documentRelationship);
+  const deleteHandle = (documentRelationship: Api_DocumentRelationship): Promise<boolean> => {
+    return new Promise<boolean>((resolve, reject) => {
+      deleteDocumentRelationship(props.relationshipType, documentRelationship).then(result => {
+        if (result) {
+          retrieveDocuments();
+        }
+        resolve(!!result);
+      });
+    });
   };
 
   return (

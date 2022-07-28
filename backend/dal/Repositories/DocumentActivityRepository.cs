@@ -41,6 +41,7 @@ namespace Pims.Dal.Repositories
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
                 .Where(ad => ad.ActivityInstanceId == activityId)
+                .AsNoTracking()
                 .ToList();
         }
 

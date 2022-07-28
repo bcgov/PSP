@@ -1,4 +1,3 @@
-
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -35,9 +34,11 @@ namespace Pims.Dal.Repositories
 
         public int GetTotalRelationCount(long documentId)
         {
-            var document = this.Context.PimsDocuments
+            var document = this.Context.PimsDocuments.AsNoTracking()
                 .Include(d => d.PimsActivityInstanceDocuments)
-                .FirstOrDefault(d => d.DocumentId == documentId);
+                .Where(d => d.DocumentId == documentId)
+                .AsNoTracking()
+                .FirstOrDefault();
 
             // Add all document relationships
             return document.PimsActivityInstanceDocuments.Count;

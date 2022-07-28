@@ -1,3 +1,4 @@
+import GenericModal from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
@@ -17,7 +18,7 @@ export interface IDocumentListViewProps {
   documentResults: Api_DocumentRelationship[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
-  deleteHandle: (relationship: Api_DocumentRelationship) => void;
+  deleteHandle: (relationship: Api_DocumentRelationship) => Promise<boolean>;
 }
 /**
  * Page that displays documents information.
@@ -26,6 +27,9 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   props: IDocumentListViewProps,
 ) => {
   const { documentResults, isLoading, defaultFilters, hideFilters } = props;
+
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
+
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
   const [filters, setFilters] = React.useState<IDocumentFilter>(
@@ -70,10 +74,31 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     setIsDetailsVisible(true);
     setSelectedDocument(document);
   };
-  const handleDelete = (document: Api_Document) => {
-    const documentRelationship = documentResults.find(x => x.document?.id === document.id);
-    if (documentRelationship !== undefined) {
-      props.deleteHandle(documentRelationship);
+
+  const handleViewDetailsClose = () => {
+    setIsDetailsVisible(false);
+    setSelectedDocument(undefined);
+  };
+  const handleDeleteClicked = (document: Api_Document) => {
+    setShowDeleteConfirmModal(true);
+    setSelectedDocument(document);
+  };
+
+  const onDeleteConfirm = async () => {
+    if (selectedDocument) {
+      const documentRelationship = documentResults.find(
+        x => x.document?.id === selectedDocument.id,
+      );
+
+      if (documentRelationship !== undefined) {
+        props.deleteHandle(documentRelationship).then(result => {
+          console.log(result);
+          if (result) {
+            setShowDeleteConfirmModal(false);
+            setSelectedDocument(undefined);
+          }
+        });
+      }
     }
   };
 
@@ -88,13 +113,36 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           sort={sort}
           setSort={setSort}
           onViewDetails={handleViewDetails}
-          onDelete={handleDelete}
+          onDelete={handleDeleteClicked}
         />
       </Styled.Scrollable>
       <DocumentDetailModal
         display={isDetailsVisible}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
+        handleClose={handleViewDetailsClose}
+      />
+      <GenericModal
+        display={showDeleteConfirmModal}
+        title={'Delete a document'}
+        message={
+          <>
+            <div>You have chosen to delete this document. </div>
+            <br />
+            <div>
+              If the document is linked to other files or entities in PIMS it will still be
+              accessible from there, however if this the only instance then the file will be removed
+              from the document store completely.
+            </div>
+            <br />
+            <strong>Do you wish to continue deleting this document?</strong>
+          </>
+        }
+        handleOk={onDeleteConfirm}
+        handleCancel={() => setShowDeleteConfirmModal(false)}
+        okButtonText="Continue"
+        cancelButtonText="Cancel"
+        show
       />
     </Styled.ListPage>
   );

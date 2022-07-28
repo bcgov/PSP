@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
@@ -53,6 +54,7 @@ namespace Pims.Api.Services
             IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespostory.GetAll(activityDocument.ActivityInstanceId);
             if (existingActivityDocuments.Count == 1)
             {
+                documentActivityRespostory.Delete(activityDocument);
                 return await DeleteDocumentAsync(activityDocument.Document);
             }
             else
@@ -65,15 +67,15 @@ namespace Pims.Api.Services
 
         public async Task<bool> DeleteDocumentAsync(PimsDocument document)
         {
-            int count = documentRepository.GetTotalRelationCount(document.DocumentId);
-            if (count > 1)
+            int relationCount = documentRepository.GetTotalRelationCount(document.DocumentId);
+            if (relationCount > 1)
             {
                 throw new InvalidOperationException("Documents can only be removed if there is one or less relationships");
             }
             else
             {
                 ExternalResult<string> result = await documentStorageRepository.DeleteDocument(document.MayanId);
-                if (result.Status == ExternalResultStatus.Success)
+                if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
                 {
                     documentRepository.Delete(document);
                     documentRepository.CommitTransaction();
