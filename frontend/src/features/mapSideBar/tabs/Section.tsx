@@ -18,7 +18,7 @@ export const Section: React.FC<SectionProps> = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
-    <StyledFormSection>
+    <StyledFormSection className="form-section">
       {header && (
         <StyledSectionHeader>
           <Row>
