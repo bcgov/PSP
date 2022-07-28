@@ -1,4 +1,6 @@
-import React from 'react';
+import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
+import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import React, { useCallback } from 'react';
 
 interface IAcquisitionContainerProps {
   acquisitionFileId: number;
@@ -6,8 +8,21 @@ interface IAcquisitionContainerProps {
 }
 
 export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
+  const { onClose } = props;
+  const close = useCallback(() => onClose && onClose(), [onClose]);
+
   // TODO: Placeholder UI until details view gets implemented
-  return <></>;
+  return (
+    <MapSideBarLayout
+      showCloseButton
+      title="Acquisition File"
+      icon={<RealEstateAgent title="User Profile" width="2.5rem" className="mr-2" />}
+      onClose={close}
+      footer={null}
+    >
+      <></>
+    </MapSideBarLayout>
+  );
 };
 
 export default AcquisitionContainer;
