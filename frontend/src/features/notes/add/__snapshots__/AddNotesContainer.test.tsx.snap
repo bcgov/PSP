@@ -255,6 +255,7 @@ exports[`AddNotesContainer component renders as expected 1`] = `
         >
           <button
             class="c2 Button btn btn-secondary"
+            title="cancel-modal"
             type="button"
           >
             <div
@@ -265,6 +266,7 @@ exports[`AddNotesContainer component renders as expected 1`] = `
           </button>
           <button
             class="c2 Button btn btn-primary"
+            title="ok-modal"
             type="button"
           >
             <div

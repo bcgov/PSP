@@ -88,7 +88,7 @@ export class FormTenant {
       );
       this.mobile = getPreferredContactMethodValue(
         tenant?.contactMethods,
-        ContactMethodTypes.PersonalPhone,
+        ContactMethodTypes.WorkMobile,
       );
       this.lessorTypeCode = apiModel.lessorType;
       this.primaryContactId = apiModel.primaryContactId;
@@ -125,7 +125,8 @@ export interface ITenantProps {
  */
 export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => {
   const { values: lease } = useFormikContext<ILease>();
-  const tenants: Api_LeaseTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
+  const tenants: FormTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
+  console.log(tenants);
   return (
     <FormSectionOne>
       <Formik initialValues={lease} onSubmit={() => {}} enableReinitialize>
@@ -133,12 +134,12 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
           name={withNameSpace(nameSpace, 'properties')}
           render={renderProps => (
             <>
-              {tenants.map((tenant: Api_LeaseTenant, index) => (
+              {tenants.map((tenant: FormTenant, index) => (
                 <Styled.SpacedInlineListItem key={`tenants-${index}`}>
                   <FormSection>
                     <Row>
                       <Col>
-                        {!!tenant.personId ? (
+                        {tenant.lessorTypeCode?.id === 'PER' ? (
                           <TenantPersonContactInfo
                             disabled={true}
                             nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}

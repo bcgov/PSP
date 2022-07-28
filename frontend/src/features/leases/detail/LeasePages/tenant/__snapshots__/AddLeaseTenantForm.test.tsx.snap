@@ -161,38 +161,6 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c15 {
-  margin-top: 3rem;
-  font-size: 1.4rem;
-}
-
-.c15 .table .tr .td:first-of-type,
-.c15 .table .tr .td:nth-of-type(2),
-.c15 .table .tr .th:first-of-type,
-.c15 .table .tr .th:nth-of-type(2) {
-  border-left: 0;
-  border-right: 0;
-  padding: 0;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c6 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
 .c5 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -234,6 +202,38 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
 .c12 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c15 {
+  margin-top: 3rem;
+  font-size: 1.4rem;
+}
+
+.c15 .table .tr .td:first-of-type,
+.c15 .table .tr .td:nth-of-type(2),
+.c15 .table .tr .th:first-of-type,
+.c15 .table .tr .th:nth-of-type(2) {
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .c16 {
@@ -1007,13 +1007,9 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="table-loading"
+                class="no-rows-message"
               >
-                <div
-                  class="spinner-border"
-                  role="status"
-                  title="table-loading"
-                />
+                No Contacts match the search criteria
               </div>
             </div>
             <div

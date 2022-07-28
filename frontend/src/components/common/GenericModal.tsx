@@ -136,6 +136,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
       <Modal.Footer>
         {cancelButtonText && (
           <Button
+            title="cancel-modal"
             variant={cancelButtonVariant ?? 'secondary'}
             onClick={close}
             style={{ width: 'unset' }}
@@ -143,7 +144,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
             {cancelButtonText}
           </Button>
         )}
-        <Button variant={okButtonVariant ?? 'primary'} onClick={ok}>
+        <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
           {okButtonText ?? 'Ok'}
         </Button>
       </Modal.Footer>

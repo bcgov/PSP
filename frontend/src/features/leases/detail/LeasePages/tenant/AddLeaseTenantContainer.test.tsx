@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -7,6 +8,7 @@ import { createMemoryHistory } from 'history';
 import { defaultLease, ILease } from 'interfaces';
 import { getMockLease } from 'mocks/mockLease';
 import {
+  fillInput,
   getAllByRole as getAllByRoleBase,
   mockKeycloak,
   renderAsync,
@@ -111,18 +113,86 @@ describe('AddLeaseTenantContainer component', () => {
     userEvent.click(addButton);
 
     await waitFor(async () => {
-      expect(await findAllByText('Bob Billy Smith')).toHaveLength(2);
+      expect(await findAllByText('Bob Billy Smith')).toHaveLength(3);
     });
 
-    expect(await findByText('Admin User')).toBeVisible();
-    expect(await findByText('Achieve Properties Ltd.')).toBeVisible();
-    expect(await findByText('Accounting Dept.')).toBeVisible();
+    expect(await findByText('French Mouse Property Management')).toBeVisible();
+    expect(await findByText('Dairy Queen Forever! Property Management')).toBeVisible();
+    expect(await findByText('Pussycat Property Management')).toBeVisible();
+  });
+
+  describe('displays modal warning when a tenant organization with persons has no primary contact', () => {
+    it('shows the modal with expected text', async () => {
+      mockAxios.onPut().reply(200);
+      mockAxios.onGet().reply(200, {
+        items: [],
+      });
+
+      const {
+        component: { container, getByText },
+      } = await setup({ lease: getMockLease() });
+      // Remove the primary contact
+      await fillInput(container, 'tenants.0.primaryContactId', '', 'select');
+
+      const saveButton = getByText('Save');
+      userEvent.click(saveButton);
+
+      const modalText = await screen.findByText('Confirm save');
+      expect(modalText).toBeVisible();
+    });
+
+    it('does not save when modal is cancelled', async () => {
+      mockAxios.onPut().reply(200);
+      mockAxios.onGet().reply(200, {
+        items: [],
+      });
+
+      const {
+        component: { container, getByText },
+      } = await setup({ lease: getMockLease() });
+      // Remove the primary contact
+      await fillInput(container, 'tenants.0.primaryContactId', '', 'select');
+
+      const saveButton = getByText('Save');
+      userEvent.click(saveButton);
+
+      const cancelButton = await screen.findByTitle('cancel-modal');
+      userEvent.click(cancelButton);
+
+      await waitFor(() => {
+        expect(mockAxios.history.put).toHaveLength(0);
+      });
+    });
+
+    it('saves the form when modal confirmed', async () => {
+      mockAxios.onPut().reply(200);
+      mockAxios.onGet().reply(200, {
+        items: [],
+      });
+
+      const {
+        component: { container, getByText },
+      } = await setup({ lease: getMockLease() });
+      // Remove the primary contact
+      await fillInput(container, 'tenants.0.primaryContactId', '', 'select');
+
+      const saveButton = getByText('Save');
+      userEvent.click(saveButton);
+
+      const modalSaveButton = await screen.findByTitle('ok-modal');
+      userEvent.click(modalSaveButton);
+
+      await waitFor(() => {
+        expect(mockAxios.history.put[0].data).toEqual(expectedTenantWithPrimaryContactRequestData);
+      });
+    });
   });
 });
 
 const expectedTenantRequestData =
   '{"organizations":[],"persons":[],"properties":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"startDate":"2020-01-01","lFileNo":"","tfaFileNo":0,"psFileNo":"","programName":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"tenantNotes":[],"insurances":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","terms":[],"tenants":[{"leaseId":1,"personId":2}],"hasDigitalLicense":null,"hasPhysicalLicense":null,"statusType":{"id":"ACTIVE","description":"Active","isDisabled":false},"region":{"regionCode":1,"regionName":"South Coast Region"},"programType":{"id":"OTHER","description":"Other","isDisabled":false},"paymentReceivableType":{"id":"RCVBL","description":"Receivable","isDisabled":false},"categoryType":{"id":"COMM","description":"Commercial","isDisabled":false},"purposeType":{"id":"BCFERRIES","description":"BC Ferries","isDisabled":false},"responsibilityType":{"id":"HQ","description":"Headquarters","isDisabled":false},"initiatorType":{"id":"PROJECT","description":"Project","isDisabled":false},"type":{"id":"LSREG","description":"Lease - Registered","isDisabled":false},"id":1}';
-
+const expectedTenantWithPrimaryContactRequestData =
+  '{"organizations":[],"persons":[],"properties":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"startDate":"","lFileNo":"","tfaFileNo":0,"psFileNo":"","programName":"","motiName":"","amount":0,"renewalCount":0,"tenantNotes":["a note","",""],"insurances":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","terms":[],"tenants":[{"leaseId":1,"organizationId":2,"note":"a note"},{"leaseId":1,"organizationId":3,"note":""},{"leaseId":1,"organizationId":4,"note":""}],"hasDigitalLicense":null,"hasPhysicalLicense":null,"id":1,"rowVersion":2}';
 const sampleContactResponse = [
   {
     id: 'P2',
