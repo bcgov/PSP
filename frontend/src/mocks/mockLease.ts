@@ -1,5 +1,3 @@
-import { ILease } from 'interfaces';
-
 export const getMockLease = () =>
   ({
     id: 1,
