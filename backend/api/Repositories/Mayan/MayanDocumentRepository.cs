@@ -217,6 +217,7 @@ namespace Pims.Api.Repositories.Mayan
         public async Task<ExternalResult<string>> DeleteDocument(long documentId)
         {
             _logger.LogDebug("Deleting document...");
+            _logger.LogTrace("Document id {documentId}", documentId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 

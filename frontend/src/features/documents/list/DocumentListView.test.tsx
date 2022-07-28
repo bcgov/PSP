@@ -36,7 +36,7 @@ describe('Document List View', () => {
         parentId={0}
         relationshipType={DocumentRelationshipType.FILES}
         documentResults={mockDocumentsResponse()}
-        deleteHandle={deleteMock}
+        onDelete={renderOptions?.onDelete || deleteMock}
       />,
       {
         ...renderOptions,
@@ -74,19 +74,7 @@ describe('Document List View', () => {
       parentId: 0,
       relationshipType: DocumentRelationshipType.FILES,
       documentResults: mockDocumentsResponse(),
-      deleteHandle: deleteMock,
-    });
-    expect(getByTestId('document-type')).toBeInTheDocument();
-  });
-
-  it('should not have the Documents status in the component', () => {
-    const { getByTestId } = setup({
-      hideFilters: false,
-      isLoading: false,
-      parentId: 0,
-      relationshipType: DocumentRelationshipType.FILES,
-      documentResults: mockDocumentsResponse(),
-      deleteHandle: deleteMock,
+      onDelete: deleteMock,
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
   });

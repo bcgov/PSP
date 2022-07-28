@@ -4,6 +4,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -51,10 +52,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public bool Delete(PimsDocument document)
         {
-            if (document == null)
-            {
-                throw new ArgumentNullException(nameof(document), "document cannot be null.");
-            }
+            document.ThrowIfNull(nameof(document));
 
             this.Context.PimsDocuments.Remove(document);
             return true;

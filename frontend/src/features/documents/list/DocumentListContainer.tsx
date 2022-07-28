@@ -1,4 +1,5 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentRelationship } from 'models/api/Document';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -11,6 +12,8 @@ interface IDocumentListContainerProps {
 }
 
 const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
+  const isMounted = useIsMounted();
+
   const [documentResults, setDocumentResults] = useState<Api_DocumentRelationship[]>([]);
 
   const {
@@ -21,24 +24,24 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
 
   const retrieveDocuments = useCallback(async () => {
     const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
-    if (documents !== undefined) {
+    if (documents !== undefined && isMounted()) {
       setDocumentResults(documents);
     }
-  }, [retrieveDocumentRelationship, props.relationshipType, props.parentId]);
+  }, [isMounted, retrieveDocumentRelationship, props.relationshipType, props.parentId]);
 
   useEffect(() => {
     retrieveDocuments();
   }, [retrieveDocuments]);
 
-  const deleteHandle = (documentRelationship: Api_DocumentRelationship): Promise<boolean> => {
-    return new Promise<boolean>((resolve, reject) => {
-      deleteDocumentRelationship(props.relationshipType, documentRelationship).then(result => {
-        if (result) {
-          retrieveDocuments();
-        }
-        resolve(!!result);
-      });
-    });
+  const onDelete = async (
+    documentRelationship: Api_DocumentRelationship,
+  ): Promise<boolean | undefined> => {
+    let result = await deleteDocumentRelationship(props.relationshipType, documentRelationship);
+    if (result && isMounted()) {
+      retrieveDocuments();
+    }
+
+    return result;
   };
 
   return (
@@ -47,7 +50,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       relationshipType={props.relationshipType}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
-      deleteHandle={deleteHandle}
+      onDelete={onDelete}
     />
   );
 };

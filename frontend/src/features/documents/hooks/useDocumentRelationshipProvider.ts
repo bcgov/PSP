@@ -59,7 +59,7 @@ export const useDocumentRelationshipProvider = () => {
     requestName: 'deleteDocumentRelationship',
     onSuccess: useCallback((response?: boolean) => {
       if (response !== undefined && response) {
-        toast.success('Delete document relationship');
+        toast.success('Deleted document relationship');
       } else {
         toast.error('Delete document relationship error. Check responses and try again.');
       }

@@ -19,21 +19,21 @@ namespace Pims.Api.Services
     public class DocumentService : IDocumentService
     {
         private readonly IDocumentRepository documentRepository;
-        private readonly IDocumentActivityRepository documentActivityRespostory;
+        private readonly IDocumentActivityRepository documentActivityRespository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
 
         public DocumentService(
             IDocumentRepository documentRepository,
-            IDocumentActivityRepository documentActivityRespostory,
+            IDocumentActivityRepository documentActivityRespository,
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService)
         {
             this.documentRepository = documentRepository;
-            this.documentActivityRespostory = documentActivityRespostory;
-            this.documentActivityRespostory = documentActivityRespostory;
+            this.documentActivityRespository = documentActivityRespository;
+            this.documentActivityRespository = documentActivityRespository;
             this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
@@ -46,21 +46,21 @@ namespace Pims.Api.Services
 
         public IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId)
         {
-            return documentActivityRespostory.GetAll(activityId);
+            return documentActivityRespository.GetAllByActivity(activityId);
         }
 
         public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument)
         {
-            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespostory.GetAll(activityDocument.ActivityInstanceId);
+            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespository.GetAllByDocument(activityDocument.DocumentId);
             if (existingActivityDocuments.Count == 1)
             {
-                documentActivityRespostory.Delete(activityDocument);
+                documentActivityRespository.Delete(activityDocument);
                 return await DeleteDocumentAsync(activityDocument.Document);
             }
             else
             {
-                documentActivityRespostory.Delete(activityDocument);
-                documentActivityRespostory.CommitTransaction();
+                documentActivityRespository.Delete(activityDocument);
+                documentActivityRespository.CommitTransaction();
                 return true;
             }
         }
@@ -74,6 +74,7 @@ namespace Pims.Api.Services
             }
             else
             {
+                // If the storage deletion was successfull or the id was not found on the storage (already deleted) delete the pims reference.
                 ExternalResult<string> result = await documentStorageRepository.DeleteDocument(document.MayanId);
                 if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
                 {

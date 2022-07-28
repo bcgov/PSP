@@ -8,7 +8,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IDocumentActivityRepository : IRepository<PimsActivityInstanceDocument>
     {
-        IList<PimsActivityInstanceDocument> GetAll(long activityId);
+        IList<PimsActivityInstanceDocument> GetAllByDocument(long documentId);
+
+        IList<PimsActivityInstanceDocument> GetAllByActivity(long activityId);
 
         PimsActivityInstanceDocument Add(PimsActivityInstanceDocument activityDocument);
 

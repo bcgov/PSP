@@ -87,7 +87,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Gets a collection of documents for the specified type and owner id.
+        /// Deletes the specific document relationship for the given type.
         /// </summary>
         /// <param name="type">Used to identify document type.</param>
         /// <param name="entityId">Used to identify document's parent entity.</param>

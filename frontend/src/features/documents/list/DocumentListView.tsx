@@ -18,7 +18,7 @@ export interface IDocumentListViewProps {
   documentResults: Api_DocumentRelationship[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
-  deleteHandle: (relationship: Api_DocumentRelationship) => Promise<boolean>;
+  onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
 }
 /**
  * Page that displays documents information.
@@ -79,7 +79,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     setIsDetailsVisible(false);
     setSelectedDocument(undefined);
   };
-  const handleDeleteClicked = (document: Api_Document) => {
+  const handleDeleteClick = (document: Api_Document) => {
     setShowDeleteConfirmModal(true);
     setSelectedDocument(document);
   };
@@ -91,13 +91,11 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       );
 
       if (documentRelationship !== undefined) {
-        props.deleteHandle(documentRelationship).then(result => {
-          console.log(result);
-          if (result) {
-            setShowDeleteConfirmModal(false);
-            setSelectedDocument(undefined);
-          }
-        });
+        let result = await props.onDelete(documentRelationship);
+        if (result) {
+          setShowDeleteConfirmModal(false);
+          setSelectedDocument(undefined);
+        }
       }
     }
   };
@@ -113,7 +111,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           sort={sort}
           setSort={setSort}
           onViewDetails={handleViewDetails}
-          onDelete={handleDeleteClicked}
+          onDelete={handleDeleteClick}
         />
       </Styled.Scrollable>
       <DocumentDetailModal
@@ -142,7 +140,6 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         handleCancel={() => setShowDeleteConfirmModal(false)}
         okButtonText="Continue"
         cancelButtonText="Cancel"
-        show
       />
     </Styled.ListPage>
   );
