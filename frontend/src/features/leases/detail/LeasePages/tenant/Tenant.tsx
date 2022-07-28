@@ -67,9 +67,7 @@ export class FormTenant {
       const tenant = apiModel.person ?? apiModel.organization;
       const address = !!tenant ? getApiPersonOrOrgMailingAddress(tenant) : undefined;
       this.id =
-        apiModel.lessorTypeCode?.id === 'PER'
-          ? `P${apiModel.personId}`
-          : `O${apiModel.organizationId}`;
+        apiModel.lessorType?.id === 'PER' ? `P${apiModel.personId}` : `O${apiModel.organizationId}`;
       this.personId = apiModel.personId;
       this.summary = apiModel.person ? formatApiPersonNames(tenant) : apiModel.organization?.name;
       this.leaseId = apiModel.leaseId;
@@ -92,7 +90,7 @@ export class FormTenant {
         tenant?.contactMethods,
         ContactMethodTypes.PersonalPhone,
       );
-      this.lessorTypeCode = apiModel.lessorTypeCode;
+      this.lessorTypeCode = apiModel.lessorType;
       this.primaryContactId = apiModel.primaryContactId;
       this.initialPrimaryContact = apiModel.primaryContact;
     } else if (!!selectedContactModel) {

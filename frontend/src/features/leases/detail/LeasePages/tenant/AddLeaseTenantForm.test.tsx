@@ -16,6 +16,7 @@ import {
 } from 'utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
+import { FormTenant } from './Tenant';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -23,7 +24,7 @@ jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-xdescribe('AddLeaseTenantForm component', () => {
+describe('AddLeaseTenantForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<IAddLeaseTenantFormProps> & {
@@ -101,7 +102,9 @@ xdescribe('AddLeaseTenantForm component', () => {
 
     const checkBox = await findByTestId('selectrow-O5');
     userEvent.click(checkBox);
-    expect(setSelectedTenants).toHaveBeenCalledWith([sampleContactResponse[1]]);
+    expect(setSelectedTenants).toHaveBeenCalledWith([
+      new FormTenant(undefined, sampleContactResponse[1]),
+    ]);
   });
 
   it('items from the contact list view can be added', async () => {
@@ -124,8 +127,7 @@ xdescribe('AddLeaseTenantForm component', () => {
     const dataRow = findFirstRowTableTwo() as HTMLElement;
     expect(dataRow).not.toBeNull();
     expect(findCell(dataRow, 3)?.textContent).toBe('Bob Billy Smith');
-    expect(findCell(dataRow, 4)?.textContent).toBe('Smith');
-    expect(findCell(dataRow, 5)?.textContent).toBe('Bob');
+    expect(findCell(dataRow, 4)?.textContent).toBe('Not applicable');
     const saveButton = getByText('Save');
     expect(saveButton).not.toBeDisabled();
   });
@@ -173,7 +175,6 @@ xdescribe('AddLeaseTenantForm component', () => {
 
     dataRow = findFirstRowTableTwo() as HTMLElement;
     expect(findCell(dataRow, 3)?.textContent).toBe('Bob Billy Smith');
-    expect(findCell(dataRow, 5)?.textContent).toBe('Bob');
   });
 });
 

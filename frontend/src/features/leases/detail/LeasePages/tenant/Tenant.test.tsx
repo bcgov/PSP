@@ -9,7 +9,7 @@ import Tenant, { ITenantProps } from './Tenant';
 
 const history = createMemoryHistory();
 
-xdescribe('Tenant component', () => {
+describe('Tenant component', () => {
   const setup = (renderOptions: RenderOptions & ITenantProps & { lease?: IFormLease } = {}) => {
     // render component under test
     const component = render(
