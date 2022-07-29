@@ -24,7 +24,7 @@ export class AcquisitionForm {
       acquisitionFileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
-      regionCode: toTypeCode(this.region),
+      regionCode: toTypeCode(Number(this.region)),
     };
   }
 

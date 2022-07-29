@@ -11,7 +11,7 @@ import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormM
 import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
-interface IAddAcquisitionContainerProps {
+export interface IAddAcquisitionContainerProps {
   onClose?: () => void;
 }
 
