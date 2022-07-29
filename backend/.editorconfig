@@ -67,8 +67,6 @@ dotnet_diagnostic.S1006.severity = error
 dotnet_diagnostic.S3928.severity = error
 # S1481 Remove the unused local variable
 dotnet_diagnostic.S1481.severity = warning
-# S1135 Complete the task associated to this 'TODO' comment
-dotnet_diagnostic.S1135.severity = none
 # S1116 Remove empty statement
 dotnet_diagnostic.S1116.severity = warning
 # S1118 Utility classes should not have public constructors
@@ -119,31 +117,36 @@ dotnet_diagnostic.SA1139.severity = none
 # SA1501 Statement should not be on a single line.
 dotnet_diagnostic.SA1501.severity = none
 
+# TODO: Fix these
+# SA1622 Generic type parameter documentation should have text. // TODO: This should get added
+dotnet_diagnostic.SA1622.severity = none 
+# SA1618 The documentation for type parameter 'T' is missing. // TODO: This should be an error
+dotnet_diagnostic.SA1618.severity = none 
+# SA1402 File may only contain a single type. // TODO: This should be enabled
+dotnet_diagnostic.SA1402.severity = none
+# SA1649 File name should match first type name. // TODO: This should be an error || LTSA needs to be skiped
+dotnet_diagnostic.SA1649.severity = none 
 # CA2254 The logging message template should not vary between calls. // TODO: requires code changes
 dotnet_diagnostic.CA2254.severity = none
-# SA1611: The documentation for parameter X is missing. // TODO: Is this necessary?
+# SA1129 Do not use default value type constructor.
+dotnet_diagnostic.SA1129.severity = none 
+# S1135 Complete the task associated to this 'TODO' comment
+dotnet_diagnostic.S1135.severity = none
+##
+
+# SA1611: The documentation for parameter X is missing. // Not necessary unless it proves value
 dotnet_diagnostic.SA1611.severity = none
-# SA1615 Element return value should be documented // TODO: Is this necessary?
+# SA1615 Element return value should be documented // Not necessary unless it proves value
 dotnet_diagnostic.SA1615.severity = none
 # SA1201 A constructor should not follow a property
 dotnet_diagnostic.SA1201.severity = none
-# SA1622 Generic type parameter documentation should have text. // TODO: This should get added
-dotnet_diagnostic.SA1622.severity = none 
-# SA1402 File may only contain a single type. // TODO: This should be enabled
-dotnet_diagnostic.SA1402.severity = none 
-# SA1618 The documentation for type parameter 'T' is missing. // TODO: This should be an error
-dotnet_diagnostic.SA1618.severity = none 
-# SA1649 File name should match first type name. // TODO: This should be an error
-dotnet_diagnostic.SA1649.severity = none 
-# SA1602 Enumeration items should be documented. . // TODO: This should be enabled
-dotnet_diagnostic.SA1602.severity = none 
-# SA1515 Single-line comment should be preceded by blank line.
-dotnet_diagnostic.SA1515.severity = none 
-# SA1129 Do not use default value type constructor.
-dotnet_diagnostic.SA1129.severity = none 
+# SA1602 Enumeration items should be documented.  // Not necessary unless it proves value
+dotnet_diagnostic.SA1602.severity = none
 
 # --- Set to error before running formatter ---
 # dotnet format --severity error --exclude entities/ef/** --exclude entities/PimsBaseContext.cs
+# SA1515 Single-line comment should be preceded by blank line.
+dotnet_diagnostic.SA1515.severity = warning
 # SA1516 Elements should be separated by blank line 
 dotnet_diagnostic.SA1516.severity = warning
 # SA1208 Using directive for 'X' should appear before directive 'Y'
