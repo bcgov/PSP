@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsVolumetricType class, provides an entity for the datamodel to manage a list of volumetric types.
+    /// PimsActivityTemplate class, provides an entity for the datamodel to manage a list of activity template types.
     /// </summary>
     public partial class PimsActivityTemplate : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
 
         #region Constructors
         /// <summary>
-        /// Create a new instance of a PimsVolumetricType class.
+        /// Create a new instance of a PimsActivityTemplate class.
         /// </summary>
         /// <param name="id"></param>
         public PimsActivityTemplate(long id,string activityTemplateTypeCode, PimsActivityTemplateType pimsActivityTemplateType ) : this()

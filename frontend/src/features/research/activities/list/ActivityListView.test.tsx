@@ -2,6 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mockLookups } from 'mocks';
 import { mockActivitiesResponse } from 'mocks/mockActivities';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from 'utils/test-utils';
 
@@ -18,7 +19,7 @@ const mockTemplateTypes = [
 describe('Activity List View', () => {
   const setup = (renderOptions?: RenderOptions & IActivityListViewProps) => {
     // render component under test
-    const component = render(<ActivityListView researchFileId={1} />, {
+    const component = render(<ActivityListView fileId={1} />, {
       ...renderOptions,
       store: storeState,
     });
@@ -41,7 +42,7 @@ describe('Activity List View', () => {
   });
 
   it('should have the Activity type in the component', () => {
-    const { getByTestId } = setup({});
+    const { getByTestId } = setup();
     expect(getByTestId('add-activity-type')).toBeInTheDocument();
   });
 });

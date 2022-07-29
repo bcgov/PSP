@@ -1,4 +1,5 @@
 import { mockActivitiesResponse } from 'mocks/mockActivities';
+import React from 'react';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { ActivityResults, IActivityResultProps } from './ActivityResults';

@@ -38,10 +38,10 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsActivityInstance GetById(long id)
         {
-            return this.Context.PimsActivityInstances.AsNoTracking()
-                .Where(x => x.ActivityInstanceId == id)
-                .Include(r => r.ActivityTemplate).ThenInclude(y=>y.ActivityTemplateTypeCodeNavigation)
-                .FirstOrDefault();
+            return this.Context.PimsActivityInstances
+                .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
+                .AsNoTracking()
+                .FirstOrDefault(x => x.ActivityInstanceId == id);
         }
 
         /// <summary>
@@ -59,30 +59,11 @@ namespace Pims.Dal.Repositories
 
         public PimsActivityInstance Add(PimsActivityInstance instance)
         {
-            instance.ThrowIfNull(nameof(instance));
-            long nextActivityInstanceId = this.GetNextActivityInstanceSequenceValue();
-            instance.ActivityInstanceId = nextActivityInstanceId;
+            instance.ThrowIfNull(nameof(instance));           
             this.Context.PimsActivityInstances.Add(instance);
             return instance;
         }
 
-        #endregion
-
-        #region Private Methods
-        /// <summary>
-        /// Get the next available id from the PIMS_RESEARCH_FILE_ID_SEQ.
-        /// </summary>
-        /// <param name="context"></param>
-        private long GetNextActivityInstanceSequenceValue()
-        {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output,
-            };
-            this.Context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_ACTIVITY_INSTANCE_ID_SEQ;", result);
-
-            return (long)result.Value;
-        }
         #endregion
     }
 }

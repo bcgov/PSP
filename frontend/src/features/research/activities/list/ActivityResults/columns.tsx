@@ -38,7 +38,6 @@ export function createActivityTableColumns(
     },
     {
       Header: 'Actions',
-      accessor: 'controls' as any, // this column is not part of the data model
       align: 'right',
       sortable: false,
       width: 40,

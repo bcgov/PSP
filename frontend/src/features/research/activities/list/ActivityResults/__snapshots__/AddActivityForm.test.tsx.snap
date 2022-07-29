@@ -161,6 +161,12 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
           >
             Add activity
           </option>
+          <option
+            class="option"
+            value="1"
+          >
+            General
+          </option>
         </select>
       </div>
     </div>
@@ -355,6 +361,12 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
             value=""
           >
             Add activity
+          </option>
+          <option
+            class="option"
+            value="1"
+          >
+            General
           </option>
         </select>
       </div>

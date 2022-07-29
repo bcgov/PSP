@@ -38,7 +38,7 @@ namespace Pims.Dal.Services
 
         public PimsActivityInstance GetById(long id)
         {
-            _logger.LogInformation("Getting activity with id {id}", id);
+            _logger.LogInformation("Getting activity {id}", id);
             //_user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             var activityInstance = _activityRepository.GetById(id);
@@ -68,8 +68,6 @@ namespace Pims.Dal.Services
         {
             _logger.LogInformation("Adding activity instance ...");
             //_user.ThrowIfNotAuthorized(Permissions.ResearchFileAdd);
-
-        
 
             var newActivityInstance = _activityRepository.Add(instance);
             _activityRepository.CommitTransaction();

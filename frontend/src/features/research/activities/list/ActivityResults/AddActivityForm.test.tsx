@@ -5,6 +5,7 @@ import { createMemoryHistory } from 'history';
 import { defaultActivityFilter } from 'interfaces/IActivityResults';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
@@ -15,9 +16,7 @@ const mockAxios = new MockAdapter(axios);
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const mockTemplateTypes = [
-  { id: 1, activityTemplateTypeCode: { id: 'GENERAL', description: 'General' } },
-];
+const mockTemplateTypes = [{ value: 1, code: 'GENERAL', label: 'General' }];
 describe('ActivityFilterForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
@@ -28,7 +27,7 @@ describe('ActivityFilterForm component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <AddActivityForm onAddActivity={jest.fn()} />
+        <AddActivityForm onAddActivity={jest.fn()} templateTypes={mockTemplateTypes} />
       </Formik>,
       {
         ...renderOptions,

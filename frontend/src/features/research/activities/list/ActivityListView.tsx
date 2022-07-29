@@ -1,9 +1,10 @@
+import { SelectOption } from 'components/common/form/Select';
 import { TableSort } from 'components/Table/TableSort';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import useIsMounted from 'hooks/useIsMounted';
 import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';
 import { orderBy } from 'lodash';
-import { Api_Activity } from 'models/api/Activity';
+import { Api_Activity, Api_ActivityTemplate } from 'models/api/Activity';
 import React, { useCallback } from 'react';
 
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
@@ -12,8 +13,7 @@ import { AddActivityForm } from './ActivityResults/AddActivityForm';
 import * as Styled from './styles';
 
 export interface IActivityListViewProps {
-  researchFileId?: number;
-  hideFilters?: boolean;
+  fileId: number;
   defaultFilters?: IActivityFilter;
 }
 /**
@@ -22,23 +22,21 @@ export interface IActivityListViewProps {
 export const ActivityListView: React.FunctionComponent<IActivityListViewProps> = (
   props: IActivityListViewProps,
 ) => {
-  const { researchFileId, defaultFilters, hideFilters } = props;
+  const { fileId, defaultFilters } = props;
   const isMounted = useIsMounted();
-  const { getResearchActivities, postActivity } = useApiResearchFile();
+  const { getActivityTemplates, getResearchActivities, postActivity } = useApiResearchFile();
   const [sort, setSort] = React.useState<TableSort<Api_Activity>>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [activityResults, setActivityResults] = React.useState<Api_Activity[]>([]);
-
+  const [templateTypes, setTemplateTypes] = React.useState<SelectOption[]>([]);
   const [filters, setFilters] = React.useState<IActivityFilter>(
     defaultFilters ?? defaultActivityFilter,
   );
 
-  const fetchActivities = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      // const data = mockActivitiesResponse();
-      // TODO Call actual api endpoint
-      await getResearchActivities(researchFileId || 0).then(response => {
+      await getResearchActivities(fileId || 0).then(response => {
         setActivityResults(response.data);
         if (response.data && isMounted()) {
           setActivityResults(response.data);
@@ -47,11 +45,25 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
     } finally {
       setIsLoading(false);
     }
-  }, [getResearchActivities, researchFileId, isMounted]);
+    await getActivityTemplates().then(response => {
+      let options = response.data.map(
+        (template: Api_ActivityTemplate) =>
+          ({
+            value: template.id,
+            label: template.activityTemplateTypeCode?.description,
+            code: template.activityTemplateTypeCode?.id,
+          } as SelectOption),
+      );
+      setTemplateTypes(options);
+      if (options && isMounted()) {
+        setTemplateTypes(options);
+      }
+    });
+  }, [getActivityTemplates, getResearchActivities, fileId, isMounted]);
 
   React.useEffect(() => {
-    fetchActivities();
-  }, [fetchActivities]);
+    fetchData();
+  }, [fetchData]);
 
   const sortedFilteredActivities = React.useMemo(() => {
     if (activityResults?.length > 0) {
@@ -69,7 +81,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
       if (sort) {
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
-          const keyName = (sort as any)[sortFields[0]];
+          const keyName = sort[sortFields[0] as keyof Api_Activity];
           return orderBy(
             activityItems,
             sortFields[0] === 'activityTemplateTypeCode'
@@ -84,9 +96,9 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
     return [];
   }, [activityResults, sort, filters]);
 
-  const saveActivity = (activity: Api_Activity) => {
+  const saveActivity = (activityTypeId: number) => {
     setIsLoading(true);
-
+    const activity = { activityTemplateId: activityTypeId } as Api_Activity;
     postActivity(activity).then(response => {
       const newResults = [...activityResults, response.data];
       setActivityResults(newResults);
@@ -100,24 +112,20 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
         <Styled.PageHeader>Activities</Styled.PageHeader>
         {
           <AddActivityForm
-            onAddActivity={(activity: Api_Activity) => {
-              console.log(activity);
-              saveActivity(activity);
+            onAddActivity={(activityTypeId: number) => {
+              saveActivity(activityTypeId);
             }}
+            templateTypes={templateTypes}
           ></AddActivityForm>
         }
-        {!hideFilters && <ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />}
+        {<ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />}
         <ActivityResults
           results={sortedFilteredActivities}
           loading={isLoading}
           sort={sort}
           setSort={setSort}
-          onShowActivity={(activity: Api_Activity) => {
-            console.log('Trying to view activity', activity);
-          }}
-          onDelete={(activity: Api_Activity) => {
-            console.log('Trying to delete activity', activity);
-          }}
+          onShowActivity={(activity: Api_Activity) => {}}
+          onDelete={(activity: Api_Activity) => {}}
         />
       </Styled.Scrollable>
     </Styled.ListPage>

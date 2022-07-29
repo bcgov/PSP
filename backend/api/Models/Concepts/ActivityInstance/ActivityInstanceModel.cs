@@ -41,10 +41,6 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Activity Status Type Code .
         /// </summary>
         public TypeModel<string> ActivityStatusTypeCode { get; set; }
-
-
-
-
         #endregion
     }
 }

@@ -31,7 +31,6 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
     } else {
       return (
         <ResearchTabsContainer researchFile={props.researchFile} setEditMode={props.setEditMode} />
-        // <ResearchSummaryView researchFile={props.researchFile} setEditMode={props.setEditMode} />
       );
     }
   } else {

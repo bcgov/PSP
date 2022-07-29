@@ -29,13 +29,13 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
     name: 'Research Details',
   });
 
-  tabViews.push({
-    content: (
-      <ActivityListView researchFileId={researchFile.id} hideFilters={false}></ActivityListView>
-    ),
-    key: ResearchTabNames.activities,
-    name: 'Activities',
-  });
+  if (researchFile?.id) {
+    tabViews.push({
+      content: <ActivityListView fileId={researchFile.id}></ActivityListView>,
+      key: ResearchTabNames.activities,
+      name: 'Activities',
+    });
+  }
 
   var defaultTab = ResearchTabNames.researchDetails;
 

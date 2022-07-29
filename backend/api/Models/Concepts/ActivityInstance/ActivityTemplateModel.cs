@@ -16,7 +16,5 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Activity Template Code.
         /// </summary>
         public TypeModel<string> ActivityTemplateTypeCode { get; set; }
-
-     
     }
 }
