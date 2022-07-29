@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { createRef } from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
+import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { AddAcquisitionForm, IAddAcquisitionFormProps } from './AddAcquisitionForm';
