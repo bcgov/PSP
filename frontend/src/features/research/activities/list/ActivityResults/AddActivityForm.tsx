@@ -8,22 +8,22 @@ export interface IAddActivityFormProps {
   templateTypes: SelectOption[];
 }
 
-export interface IAddActivity {
+export interface IAddActivityForm {
   activityTypeId: number;
 }
 
 export function AddActivityForm(props: IAddActivityFormProps) {
   const { onAddActivity, templateTypes } = props;
 
-  const addActivity = (values: IAddActivity) => {
+  const addActivity = (values: IAddActivityForm) => {
     onAddActivity(values.activityTypeId);
   };
 
   return (
-    <Formik<IAddActivity>
+    <Formik<IAddActivityForm>
       enableReinitialize
       initialValues={{ activityTypeId: 0 }}
-      onSubmit={(values: IAddActivity, { setSubmitting }: any) => {
+      onSubmit={(values: IAddActivityForm, { setSubmitting }: any) => {
         addActivity(values);
         setSubmitting(false);
       }}

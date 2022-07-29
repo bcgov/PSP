@@ -51,10 +51,58 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId)
         {
-            return this.Context.PimsActivityInstances.AsNoTracking()
-                // TODO : mapping of research file and activity
-                .Where(x => x.ActivityInstanceId == researchFileId)
-                .ToList();
+
+            List<PimsActivityInstance> instances = new List<PimsActivityInstance>();
+            instances.Add(new PimsActivityInstance()
+            {
+                ActivityInstanceId = 1,
+                ActivityTemplateId = 1,
+                ActivityTemplate = new PimsActivityTemplate()
+                {
+                    ActivityTemplateId = 1,
+                    ActivityTemplateTypeCodeNavigation = new PimsActivityTemplateType()
+                    {
+                        Id = "GENERAL",
+                        ActivityTemplateTypeCode = "GENERAL",
+                        Description = "General",
+                    },
+                },
+            });
+            instances.Add(new PimsActivityInstance()
+            {
+                ActivityInstanceId = 2,
+                ActivityTemplateId = 2,
+                ActivityTemplate = new PimsActivityTemplate()
+                {
+                    ActivityTemplateId = 2,
+                    ActivityTemplateTypeCodeNavigation = new PimsActivityTemplateType()
+                    {
+                        Id = "SITEVIS",
+                        ActivityTemplateTypeCode = "SITEVIS",
+                        Description = "Site Visit",
+                    },
+                },
+            });
+            instances.Add(new PimsActivityInstance()
+            {
+                ActivityInstanceId = 3,
+                ActivityTemplateId = 3,
+                ActivityTemplate = new PimsActivityTemplate()
+                {
+                    ActivityTemplateId = 3,
+                    ActivityTemplateTypeCodeNavigation = new PimsActivityTemplateType()
+                    {
+                        Id = "SURVEY",
+                        ActivityTemplateTypeCode = "SURVEY",
+                        Description = "Survey",
+                    },
+                },
+            });
+            return instances;
+            // TODO Call actual table data
+            //return this.Context.PimsActivityInstances.AsNoTracking()                
+            //    .Where(x => x.ActivityInstanceId == researchFileId)
+            //    .ToList();
         }
 
         public PimsActivityInstance Add(PimsActivityInstance instance)

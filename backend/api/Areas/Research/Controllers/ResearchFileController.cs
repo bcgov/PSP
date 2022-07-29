@@ -70,59 +70,19 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [SwaggerOperation(Tags = new[] { "researchfile" })]
         public IActionResult GetActivitiesForResearchFile(long researchFileId)
         {
-            //TODO: Fetch actual activity from
-            //var researchFile = _pimsService.ActivityService.GetAllByResearchFileId(researchFileId);
-            List<ActivityInstanceModel> activities = new List<ActivityInstanceModel>();
-            activities.Add(new ActivityInstanceModel()
+            var activityInstances = _pimsService.ActivityService.GetAllByResearchFileId(researchFileId);
+            List<ActivityInstanceModel> models = _mapper.Map<List<ActivityInstanceModel>>(activityInstances);
+            // TODO remove below once mapping complete
+            foreach (ActivityInstanceModel model in models)
             {
-                Id = 1,
-                Description = "GENERAL Activity",
-                ActivityTemplateId = 1,
-                ActivityTemplateTypeCode = new Models.TypeModel<string>()
-                {
-                    Id = "GENERAL",
-                    Description = "General Visit ",
-                },
-                ActivityStatusTypeCode = new Models.TypeModel<string>()
+                model.Description = model.ActivityTemplateTypeCode.Description + " Activity";
+                model.ActivityStatusTypeCode = new Models.TypeModel<string>()
                 {
                     Id = "Draft",
                     Description = "Draft",
-                },
-            });
-            activities.Add(new ActivityInstanceModel()
-            {
-                Id = 2,
-                Description = "Site Visit Activity",
-                ActivityTemplateId = 2,
-                ActivityTemplateTypeCode = new Models.TypeModel<string>()
-                {
-                    Id = "SITEVIS",
-                    Description = "Site Visit ",
-                },
-                ActivityStatusTypeCode = new Models.TypeModel<string>()
-                {
-                    Id = "Draft",
-                    Description = "Draft",
-                },
-            });
-            activities.Add(new ActivityInstanceModel()
-            {
-                Id = 3,
-                Description = "Survey Activity",
-                ActivityTemplateId = 3,
-                ActivityTemplateTypeCode = new Models.TypeModel<string>()
-                {
-                    Id = "SURVEY",
-                    Description = "Site Visit ",
-
-                },
-                ActivityStatusTypeCode = new Models.TypeModel<string>()
-                {
-                    Id = "Draft",
-                    Description = "Draft",
-                },
-            });
-            return new JsonResult(activities);
+                };
+            };
+            return new JsonResult(models);
         }
 
 
