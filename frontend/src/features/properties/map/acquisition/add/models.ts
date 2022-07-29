@@ -12,7 +12,7 @@ export class AcquisitionForm {
   acquisitionPhysFileStatusType?: string;
   acquisitionType?: string;
   // MOTI region
-  region?: number;
+  region?: string;
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -38,7 +38,7 @@ export class AcquisitionForm {
     newForm.acquisitionFileStatusType = fromTypeCode(model.acquisitionFileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
-    newForm.region = fromTypeCode(model.regionCode);
+    newForm.region = fromTypeCode(model.regionCode)?.toString();
 
     return newForm;
   }
