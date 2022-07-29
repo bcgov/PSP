@@ -16,7 +16,15 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     <MapSideBarLayout
       showCloseButton
       title="Acquisition File"
-      icon={<RealEstateAgent title="User Profile" width="2.5rem" className="mr-2" />}
+      icon={
+        <RealEstateAgent
+          title="Acquisition file Icon"
+          width="2.6rem"
+          height="2.6rem"
+          fill="currentColor"
+          className="mr-2"
+        />
+      }
       onClose={close}
       footer={null}
     >

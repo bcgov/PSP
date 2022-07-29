@@ -3,7 +3,7 @@ import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback, useRef } from 'react';
-import { Prompt, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -38,7 +38,15 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     <MapSideBarLayout
       showCloseButton
       title="Create Acquisition File"
-      icon={<RealEstateAgent title="User Profile" width="2.5rem" className="mr-2" />}
+      icon={
+        <RealEstateAgent
+          title="Acquisition file Icon"
+          width="2.6rem"
+          height="2.6rem"
+          fill="currentColor"
+          className="mr-2"
+        />
+      }
       onClose={close}
       footer={
         <SidebarFooter
@@ -54,11 +62,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           initialValues={helper.initialValues}
           onSubmit={helper.handleSubmit}
           validationSchema={helper.validationSchema}
-        />
-
-        <Prompt
-          when={formikRef.current?.dirty && formikRef.current?.submitCount === 0}
-          message="You have made changes on this form. Do you wish to leave without saving?"
         />
       </StyledFormWrapper>
     </MapSideBarLayout>
