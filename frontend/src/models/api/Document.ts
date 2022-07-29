@@ -2,6 +2,8 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { Api_Storage_DocumentDetail } from './DocumentStorage';
+import { ExternalResult } from './ExternalResult';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Document extends Api_ConcurrentVersion, Api_AuditFields {
@@ -15,6 +17,7 @@ export interface Api_Document extends Api_ConcurrentVersion, Api_AuditFields {
 export interface Api_DocumentType extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   documentType?: string;
+  mayanId?: number;
 }
 
 export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_AuditFields {
@@ -23,4 +26,15 @@ export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_Aud
   isDisabled?: boolean;
   document?: Api_Document;
   relationshipType?: DocumentRelationshipType;
+}
+
+export interface Api_UploadRequest {
+  documentType: Api_DocumentType;
+  documentStatusCode: string;
+  file: File;
+}
+
+export interface Api_UploadResponse {
+  documentRelationship?: Api_DocumentRelationship;
+  externalResult?: ExternalResult<Api_Storage_DocumentDetail>;
 }

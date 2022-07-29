@@ -9,6 +9,8 @@ namespace Pims.Dal.Repositories
     {
         int GetTotalRelationCount(long documentId);
 
+        PimsDocument Add(PimsDocument document);
+
         bool Delete(PimsDocument document);
     }
 }

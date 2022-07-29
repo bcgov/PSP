@@ -1,6 +1,6 @@
 import GenericModal, { ModalSize } from 'components/common/GenericModal';
 import { Api_Document } from 'models/api/Document';
-import { FaFile } from 'react-icons/fa';
+import { FaArchive, FaEye, FaFile, FaFileArchive } from 'react-icons/fa';
 
 import { DocumentDetailContainer } from './DocumentDetailContainer';
 
@@ -8,7 +8,7 @@ export interface IDocumentDetailModalProps {
   display?: boolean;
   setDisplay?: (display: boolean) => void;
   pimsDocument?: Api_Document;
-  handleClose?: () => void;
+  onClose?: () => void;
 }
 
 export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalProps> = props => {
@@ -18,7 +18,7 @@ export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalPr
       setDisplay={props.setDisplay}
       title={
         <>
-          <FaFile />
+          <FaEye />
           <span> View Document Information</span>
         </>
       }
@@ -27,8 +27,8 @@ export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalPr
           <DocumentDetailContainer pimsDocument={props.pimsDocument} />
         )
       }
-      modalSize={ModalSize.MEDIUM}
-      handleCancel={props.handleClose}
+      modalSize={ModalSize.LARGE}
+      handleCancel={props.onClose}
       closeButton
       hideFooter
     ></GenericModal>

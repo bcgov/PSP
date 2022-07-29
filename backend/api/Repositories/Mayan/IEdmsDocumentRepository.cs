@@ -29,7 +29,7 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResult<string>> DeleteDocument(long documentId);
 
-        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file);
+        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file);
 
         Task<ExternalResult<DocumentTypeMetadataType>> CreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
 

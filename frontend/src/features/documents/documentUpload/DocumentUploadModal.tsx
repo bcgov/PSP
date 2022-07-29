@@ -1,12 +1,16 @@
 import GenericModal, { ModalSize } from 'components/common/GenericModal';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FaFile, FaUpload } from 'react-icons/fa';
 
 import { DocumentUploadContainer } from './DocumentUploadContainer';
 
 export interface IDocumentUploadModalProps {
+  parentId: number;
+  relationshipType: DocumentRelationshipType;
   display?: boolean;
   setDisplay?: (display: boolean) => void;
-  handleClose?: () => void;
+  onClose?: () => void;
+  onUploadSuccess: () => void;
 }
 
 export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalProps> = props => {
@@ -20,11 +24,17 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
           <span> Add a Document</span>
         </>
       }
-      message={<DocumentUploadContainer />}
-      modalSize={ModalSize.MEDIUM}
+      message={
+        <DocumentUploadContainer
+          parentId={props.parentId}
+          relationshipType={props.relationshipType}
+          onUploadSuccess={props.onUploadSuccess}
+        />
+      }
+      modalSize={ModalSize.LARGE}
       okButtonText="Save"
       cancelButtonText="Cancel"
-      handleCancel={props.handleClose}
+      handleCancel={props.onClose}
     ></GenericModal>
   );
 };
