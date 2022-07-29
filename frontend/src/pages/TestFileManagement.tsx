@@ -3,11 +3,11 @@ import { DocumentDetailContainer } from 'features/documents/documentDetail/Docum
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { useAxiosApi } from 'hooks/pims-api';
 import {
+  Api_Storage_DocumentDetail,
+  Api_Storage_DocumentType,
   DocumentQueryResult,
   FileDownload,
-  Mayan_DocumentDetail,
-  Mayan_DocumentType,
-} from 'models/api/DocumentManagement';
+} from 'models/api/DocumentStorage';
 import { ExternalResult } from 'models/api/ExternalResult';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
@@ -19,25 +19,25 @@ export const TestFileManagement: React.FunctionComponent = () => {
   const api = useAxiosApi();
 
   const [documentList, setDocumentList] = useState<
-    DocumentQueryResult<Mayan_DocumentDetail> | undefined
+    DocumentQueryResult<Api_Storage_DocumentDetail> | undefined
   >();
 
   const [documentTypes, setDocumentTypes] = useState<
-    DocumentQueryResult<Mayan_DocumentType> | undefined
+    DocumentQueryResult<Api_Storage_DocumentType> | undefined
   >();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedType, setSelectedType] = useState<number>(1);
 
   const retrieveDocumentList = useCallback(async () => {
-    var { data } = await api.get<ExternalResult<DocumentQueryResult<Mayan_DocumentDetail>>>(
+    var { data } = await api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentDetail>>>(
       `/documents`,
     );
     setDocumentList(data.payload);
   }, [api]);
 
   const retrieveDocumentTypes = useCallback(async () => {
-    var { data } = await api.get<ExternalResult<DocumentQueryResult<Mayan_DocumentType>>>(
+    var { data } = await api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentType>>>(
       `/documents/types`,
     );
     setDocumentTypes(data.payload);
@@ -116,11 +116,13 @@ export const TestFileManagement: React.FunctionComponent = () => {
                   <strong>File type:</strong>
                 </label>
                 <select id="type" name="fileType" onChange={handleTypeSelect}>
-                  {documentTypes?.results.map((docType: Mayan_DocumentType, index: number) => (
-                    <option value={docType.id} key={`doc-type-${index}`}>
-                      {docType.label}
-                    </option>
-                  ))}
+                  {documentTypes?.results.map(
+                    (docType: Api_Storage_DocumentType, index: number) => (
+                      <option value={docType.id} key={`doc-type-${index}`}>
+                        {docType.label}
+                      </option>
+                    ),
+                  )}
                 </select>
               </Col>
               <Col xs="2">
@@ -154,22 +156,24 @@ export const TestFileManagement: React.FunctionComponent = () => {
           </Row>
           <Row className="no-gutters">
             <Col>
-              {documentList?.results.map((documentItem: Mayan_DocumentDetail, index: number) => (
-                <Row className="border no-gutters" key={'document-' + index}>
-                  <Col>{documentItem.label}</Col>
-                  <Col>{documentItem.document_type.label}</Col>
-                  <Col>{formatApiDateTime(documentItem.datetime_created)}</Col>
-                  <Col xs="1">
-                    <Button
-                      onClick={() => {
-                        downloadFile(documentItem.id, documentItem.file_latest.id);
-                      }}
-                    >
-                      <FaDownload></FaDownload>
-                    </Button>
-                  </Col>
-                </Row>
-              ))}
+              {documentList?.results.map(
+                (documentItem: Api_Storage_DocumentDetail, index: number) => (
+                  <Row className="border no-gutters" key={'document-' + index}>
+                    <Col>{documentItem.label}</Col>
+                    <Col>{documentItem.document_type.label}</Col>
+                    <Col>{formatApiDateTime(documentItem.datetime_created)}</Col>
+                    <Col xs="1">
+                      <Button
+                        onClick={() => {
+                          downloadFile(documentItem.id, documentItem.file_latest.id);
+                        }}
+                      >
+                        <FaDownload></FaDownload>
+                      </Button>
+                    </Col>
+                  </Row>
+                ),
+              )}
             </Col>
           </Row>
         </Col>

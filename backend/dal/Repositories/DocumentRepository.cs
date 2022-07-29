@@ -46,6 +46,26 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Adds the passed document from the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public PimsDocument Add(PimsDocument document)
+        {
+            document.ThrowIfNull(nameof(document));
+
+            var newDocument = this.Context.PimsDocuments.Add(document);
+            if (newDocument.State == EntityState.Added)
+            {
+                return newDocument.Entity;
+            }
+            else
+            {
+                throw new InvalidOperationException("Could not create document");
+            }
+        }
+
+        /// <summary>
         /// Deletes the passed document from the database.
         /// </summary>
         /// <param name="document"></param>

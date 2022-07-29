@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;
@@ -23,13 +25,15 @@ namespace Pims.Api.Services
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
+        private readonly IMapper mapper;
 
         public DocumentService(
             IDocumentRepository documentRepository,
             IDocumentActivityRepository documentActivityRespository,
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
-            IAvService avService)
+            IAvService avService,
+            IMapper mapper)
         {
             this.documentRepository = documentRepository;
             this.documentActivityRespository = documentActivityRespository;
@@ -37,6 +41,7 @@ namespace Pims.Api.Services
             this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
+            this.mapper = mapper;
         }
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes()
@@ -63,6 +68,35 @@ namespace Pims.Api.Services
                 documentActivityRespository.CommitTransaction();
                 return true;
             }
+        }
+
+        public async Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest)
+        {
+            ExternalResult<DocumentDetail> externalResult = await UploadDocumentAsync(uploadRequest.DocumentType.MayanId, uploadRequest.File);
+            DocumentUploadResponse response = new DocumentUploadResponse() { ExternalResult = externalResult };
+            if (externalResult.Status == ExternalResultStatus.Success)
+            {
+                // Create the pims document
+                var externalDocument = externalResult.Payload;
+                PimsDocument newPimsDocument = new PimsDocument()
+                {
+                    FileName = externalDocument.FileLatest.FileName,
+                    DocumentTypeId = uploadRequest.DocumentType.Id,
+                    DocumentStatusTypeCode = uploadRequest.DocumentStatusCode,
+                };
+                newPimsDocument = documentRepository.Add(newPimsDocument);
+
+                // Create the pims document activity relationship
+                PimsActivityInstanceDocument newActivityDocument = new PimsActivityInstanceDocument()
+                {
+                    ActivityInstanceId = activityId,
+                    DocumentId = newPimsDocument.Id,
+                };
+                newActivityDocument = documentActivityRespository.Add(newActivityDocument);
+
+                response.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newActivityDocument);
+            }
+            return response;
         }
 
         public async Task<bool> DeleteDocumentAsync(PimsDocument document)
@@ -143,7 +177,7 @@ namespace Pims.Api.Services
             }
         }
 
-        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw)
+        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
         {
             await this.avService.ScanAsync(fileRaw);
             ExternalResult<DocumentDetail> result = await documentStorageRepository.UploadDocumentAsync(documentType, fileRaw);

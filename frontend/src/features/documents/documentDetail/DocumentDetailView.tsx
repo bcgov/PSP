@@ -24,7 +24,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
 
   if (props.document.mayanMetadata !== undefined && props.document.mayanMetadata?.length > 0) {
     const document = props.document.mayanMetadata[0].document;
-    documentTypeLabel = document.document_type.label;
+    documentTypeLabel = document.document_type.label || '';
     documentFileName = document.label;
     mayanDocumentId = document.id;
     mayanFileId = document.file_latest.id;
@@ -38,7 +38,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
       </SectionField>
       <SectionField label={'File name'} labelWidth="4" className="pb-3">
         <Row>
-          <Col>{documentFileName}</Col>
+          <Col xs="auto">{documentFileName}</Col>
           <Col xs="auto">
             <DownloadDocumentButton mayanDocumentId={mayanDocumentId} mayanFileId={mayanFileId} />
           </Col>
@@ -52,17 +52,17 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
           </Col>
           <Col xs="2">Edit</Col>
         </Row>
-        <SectionField label="Status" labelWidth="6">
+        <SectionField label="Status" labelWidth="4">
           {props.document.pimsDocument?.statusTypeCode?.description}
         </SectionField>
 
-        <StyledH3>Aditional information</StyledH3>
+        <StyledH3>Details</StyledH3>
         <StyledScrollable>
           {props.document.mayanMetadata?.map(value => (
             <SectionField
-              labelWidth="6"
+              labelWidth="4"
               key={`document-${value.document.id}-metadata-${value.id}`}
-              label={value.metadata_type.label}
+              label={value.metadata_type.label || ''}
             >
               {value.value}
             </SectionField>

@@ -1,7 +1,7 @@
 import { Api_Document } from 'models/api/Document';
-import { Mayan_DocumentMetadata } from 'models/api/DocumentManagement';
+import { Api_Storage_DocumentMetadata } from 'models/api/DocumentStorage';
 
 export interface ComposedDocument {
-  mayanMetadata?: Mayan_DocumentMetadata[];
+  mayanMetadata?: Api_Storage_DocumentMetadata[];
   pimsDocument?: Api_Document;
 }

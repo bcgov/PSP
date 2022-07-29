@@ -120,8 +120,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       <Section
         header={
           <Row>
-            <Col xs="2">Documents</Col>
-
+            <Col xs="auto">Documents</Col>
             {hasClaim(Claims.RESEARCH_ADD) && (
               <Col>
                 <StyledAddButton onClick={() => setIsUploadVisible(true)}>
@@ -148,18 +147,23 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         display={isDetailsVisible}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
-        handleClose={handleModalDetailsClose}
+        onClose={handleModalDetailsClose}
       />
       <DocumentUploadModal
+        parentId={props.parentId}
+        relationshipType={props.relationshipType}
         display={isUploadVisible}
         setDisplay={setIsUploadVisible}
-        handleClose={handleModalUploadClose}
+        onUploadSuccess={() => {
+          console.log('Sucesss!');
+        }}
+        onClose={handleModalUploadClose}
       />
       <GenericModal
         display={showDeleteConfirmModal}
         title={'Delete a document'}
         message={
-          <>
+          <div className="p-3">
             <div>You have chosen to delete this document. </div>
             <br />
             <div>
@@ -169,7 +173,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             </div>
             <br />
             <strong>Do you wish to continue deleting this document?</strong>
-          </>
+          </div>
         }
         handleOk={onDeleteConfirm}
         handleCancel={() => setShowDeleteConfirmModal(false)}

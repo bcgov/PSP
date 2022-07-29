@@ -72,7 +72,14 @@ namespace Pims.Dal.Repositories
             activityDocument.ThrowIfNull(nameof(activityDocument));
 
             var newEntry = this.Context.PimsActivityInstanceDocuments.Add(activityDocument);
-            return newEntry.Entity;
+            if (newEntry.State == EntityState.Added)
+            {
+                return newEntry.Entity;
+            }
+            else
+            {
+                throw new InvalidOperationException("Could not create document");
+            }
         }
 
         /// <summary>

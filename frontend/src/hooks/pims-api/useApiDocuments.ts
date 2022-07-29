@@ -1,10 +1,15 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
-import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
 import {
+  Api_DocumentRelationship,
+  Api_DocumentType,
+  Api_UploadRequest,
+  Api_UploadResponse,
+} from 'models/api/Document';
+import {
+  Api_Storage_DocumentMetadata,
   DocumentQueryResult,
   FileDownload,
-  Mayan_DocumentMetadata,
-} from 'models/api/DocumentManagement';
+} from 'models/api/DocumentStorage';
 import { ExternalResult } from 'models/api/ExternalResult';
 import React from 'react';
 
@@ -31,7 +36,7 @@ export const useApiDocuments = () => {
       ) => api.delete<boolean>(`/documents/${relationshipType}`, { data: documentRelationship }),
 
       getDocumentMetada: (mayanDocumentId: number) =>
-        api.get<ExternalResult<DocumentQueryResult<Mayan_DocumentMetadata>>>(
+        api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>>(
           `/documents/storage/${mayanDocumentId}/metadata`,
         ),
 
@@ -42,6 +47,16 @@ export const useApiDocuments = () => {
 
       downloadDocumentFileLatestApiCall: (mayanDocumentId: number) =>
         api.get<ExternalResult<FileDownload>>(`/documents/storage/${mayanDocumentId}/download`),
+
+      uploadDocumentRelationshipApiCall: (
+        relationshipType: DocumentRelationshipType,
+        parentId: number,
+        uploadRequest: Api_UploadRequest,
+      ) =>
+        api.post<Api_UploadResponse>(
+          `/documents/upload/${relationshipType}/${parentId}`,
+          uploadRequest,
+        ),
     }),
     [api],
   );
