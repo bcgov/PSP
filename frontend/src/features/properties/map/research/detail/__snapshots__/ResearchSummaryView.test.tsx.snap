@@ -43,7 +43,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       class="c0 mr-3 my-1"
     />
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -103,7 +103,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -214,7 +214,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -273,7 +273,7 @@ exports[`ResearchSummaryView component renders as expected when provided no rese
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"

@@ -314,7 +314,7 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
         role="tabpanel"
       >
         <div
-          class="c3"
+          class="c3 form-section"
         >
           <div
             class="collapse show"
@@ -472,7 +472,7 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
         role="tabpanel"
       >
         <div
-          class="c3"
+          class="c3 form-section"
         >
           <div
             class="collapse show"
@@ -632,7 +632,7 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
           </div>
         </div>
         <div
-          class="c3"
+          class="c3 form-section"
         >
           <div
             class="collapse show"
@@ -795,7 +795,7 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
     <div
       class="collapse show"

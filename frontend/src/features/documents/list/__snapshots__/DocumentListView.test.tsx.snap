@@ -283,15 +283,63 @@ exports[`Document List View renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  value="1"
+                  value="AMENDD"
+                >
+                  Amended
+                </option>
+                <option
+                  class="option"
+                  value="APPROVD"
+                >
+                  Approved
+                </option>
+                <option
+                  class="option"
+                  value="CNCLD"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  value="DRAFT"
                 >
                   Draft
                 </option>
                 <option
                   class="option"
-                  value="2"
+                  value="FINAL"
+                >
+                  Final
+                </option>
+                <option
+                  class="option"
+                  value="NONE"
+                >
+                  None
+                </option>
+                <option
+                  class="option"
+                  value="RGSTRD"
+                >
+                  Registered
+                </option>
+                <option
+                  class="option"
+                  value="SENT"
                 >
                   Sent
+                </option>
+                <option
+                  class="option"
+                  value="SIGND"
+                >
+                  Signed
+                </option>
+                <option
+                  class="option"
+                  value="UNREGD"
+                >
+                  Unregistered
                 </option>
               </select>
             </div>

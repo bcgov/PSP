@@ -346,15 +346,27 @@ exports[`AccessRequestForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
-              value="5"
+              value="6"
             >
-              Real Estate Analyst
+              Finance
             </option>
             <option
               class="option"
-              value="4"
+              value="7"
             >
-              Real Estate Manager
+              Functional
+            </option>
+            <option
+              class="option"
+              value="8"
+            >
+              Functional (Restricted)
+            </option>
+            <option
+              class="option"
+              value="9"
+            >
+              Read Only
             </option>
           </select>
         </div>

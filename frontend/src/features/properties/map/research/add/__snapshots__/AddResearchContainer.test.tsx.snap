@@ -632,7 +632,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class="c13"
+                    class="c13 form-section"
                   >
                     <div
                       class="collapse show"
@@ -790,7 +790,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                   role="tabpanel"
                 >
                   <div
-                    class="c13"
+                    class="c13 form-section"
                   >
                     <div
                       class="collapse show"
@@ -950,7 +950,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c13"
+                    class="c13 form-section"
                   >
                     <div
                       class="collapse show"
@@ -1081,7 +1081,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c13"
+              class="c13 form-section"
             >
               <div
                 class="collapse show"

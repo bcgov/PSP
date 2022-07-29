@@ -189,7 +189,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
     <div
       class="collapse show"
@@ -360,7 +360,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
     <div
       class="collapse show"
