@@ -12,7 +12,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Xunit;
 
-namespace Pims.Api.Test.Controllers.Acquisition
+namespace Pims.Api.Test.Controllers
 {
     [Trait("category", "unit")]
     [Trait("category", "api")]

@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -35,7 +36,9 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
         {
-            _logger.LogInformation("Adding acquisition file...");
+            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+
+            _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
@@ -47,7 +50,9 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile)
         {
-            _logger.LogInformation("Updating acquisition file...");
+            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+
+            _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
             ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
