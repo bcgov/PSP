@@ -83,7 +83,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] {"acquisitionfile" })]
-        public IActionResult UpdateResearchFile([FromBody] AcquisitionFileModel model)
+        public IActionResult UpdateResearchFile(long id, [FromBody] AcquisitionFileModel model)
         {
             // TODO: Implementation pending
             throw new System.NotImplementedException();
