@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
-        /// Adds the specified research file.
+        /// Adds the specified acquisition file.
         /// </summary>
         /// <returns></returns>
         [HttpPost]
