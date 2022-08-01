@@ -95,7 +95,7 @@ describe('AddAcquisitionContainer component', () => {
     const formValues = new AcquisitionForm();
     formValues.name = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     formValues.acquisitionType = 'CONSEN';
-    formValues.region = 1;
+    formValues.region = '1';
 
     const { getSaveButton, getNameTextbox, getAcquisitionTypeDropdown, getRegionDropdown } = setup(
       DEFAULT_PROPS,
@@ -103,7 +103,7 @@ describe('AddAcquisitionContainer component', () => {
 
     await waitFor(() => userEvent.paste(getNameTextbox(), formValues.name as string));
     await userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType);
-    await userEvent.selectOptions(getRegionDropdown(), formValues.region.toString());
+    await userEvent.selectOptions(getRegionDropdown(), formValues.region);
 
     mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.name));
     userEvent.click(getSaveButton());

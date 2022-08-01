@@ -83,7 +83,7 @@ namespace Pims.Api.Test.Controllers
         /// Make a successful request to update a note.
         /// </summary>
         [Fact]
-        public void UpdateNote_Success()
+        public void UpdateResearchFile_Success()
         {
             // Arrange
             var helper = new TestHelper();
