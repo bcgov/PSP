@@ -16,29 +16,25 @@ interface IDocumentDetailsViewProps {
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
 const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
-  let documentTypeLabel = '';
-  let documentFileName = '';
+  const documentTypeLabel = props.document.pimsDocument?.documentType?.documentType;
+  const documentFileName = props.document.pimsDocument?.fileName;
+  const mayanDocumentId = props.document.pimsDocument?.mayanDocumentId || -1;
 
-  let mayanDocumentId = -1;
-  let mayanFileId = -1;
-
+  let mayanFileId = undefined;
   if (props.document.mayanMetadata !== undefined && props.document.mayanMetadata?.length > 0) {
-    const document = props.document.mayanMetadata[0].document;
-    documentTypeLabel = document.document_type.label;
-    documentFileName = document.label;
-    mayanDocumentId = document.id;
+    const document = props.document.mayanMetadata[0]?.document;
     mayanFileId = document.file_latest.id;
   }
 
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
-      <SectionField label={'Document type'} labelWidth="4" className="pb-2">
+      <SectionField label="Document type" labelWidth="4" className="pb-2">
         {documentTypeLabel}
       </SectionField>
       <SectionField label={'File name'} labelWidth="4" className="pb-3">
         <Row>
-          <Col>{documentFileName}</Col>
+          <Col xs="auto">{documentFileName}</Col>
           <Col xs="auto">
             <DownloadDocumentButton mayanDocumentId={mayanDocumentId} mayanFileId={mayanFileId} />
           </Col>
@@ -52,17 +48,20 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
           </Col>
           <Col xs="2">Edit</Col>
         </Row>
-        <SectionField label="Status" labelWidth="6">
+        <SectionField label="Status" labelWidth="4">
           {props.document.pimsDocument?.statusTypeCode?.description}
         </SectionField>
 
-        <StyledH3>Aditional information</StyledH3>
+        <StyledH3>Details</StyledH3>
         <StyledScrollable>
+          {props.document.mayanMetadata?.length === 0 && (
+            <StyledNoData>No additional data</StyledNoData>
+          )}
           {props.document.mayanMetadata?.map(value => (
             <SectionField
-              labelWidth="6"
+              labelWidth="4"
               key={`document-${value.document.id}-metadata-${value.id}`}
-              label={value.metadata_type.label}
+              label={value.metadata_type.label || ''}
             >
               {value.value}
             </SectionField>
@@ -101,4 +100,9 @@ const StyledH3 = styled.h3`
 const StyledScrollable = styled(Scrollable)`
   overflow-x: hidden;
   max-height: 50rem;
+`;
+
+const StyledNoData = styled.div`
+  text-align: center;
+  font-style: italic;
 `;

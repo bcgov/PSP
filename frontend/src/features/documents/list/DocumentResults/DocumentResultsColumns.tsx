@@ -24,7 +24,7 @@ export const getDocumentColumns = ({
       accessor: 'documentType',
       align: 'left',
       sortable: true,
-      minWidth: 30,
+      minWidth: 40,
       maxWidth: 40,
       Cell: renderDocumentType,
     },
@@ -32,14 +32,14 @@ export const getDocumentColumns = ({
       Header: 'File name',
       accessor: 'fileName',
       sortable: true,
-      width: 50,
-      maxWidth: 100,
+      width: 40,
+      maxWidth: 40,
     },
     {
       Header: 'Upload date',
       accessor: 'appCreateTimestamp',
       sortable: true,
-      width: 10,
+      width: 20,
       maxWidth: 20,
       Cell: DateCell,
     },
@@ -47,21 +47,21 @@ export const getDocumentColumns = ({
       Header: 'Uploaded by',
       accessor: 'appCreateUserid',
       sortable: true,
-      width: 10,
+      width: 20,
       maxWidth: 20,
     },
     {
       Header: 'Status',
       accessor: 'statusTypeCode',
       sortable: true,
-      width: 10,
+      width: 20,
       maxWidth: 20,
       Cell: renderTypeCode,
     },
     {
       Header: 'Actions',
-      width: 20,
-      maxWidth: 20,
+      minWidth: 17,
+      maxWidth: 17,
       Cell: renderActions(onViewDetails, onDelete),
     },
   ];
@@ -78,7 +78,7 @@ const renderActions = (
   return function({ row: { original, index } }: CellProps<Api_Document, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
-      <StyledIcons className="no-gutters">
+      <StyledIconsRow className="no-gutters">
         {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_ADD) &&
           original?.mayanDocumentId !== undefined && (
             <Col>
@@ -103,12 +103,12 @@ const renderActions = (
             ></Button>
           </Col>
         )}
-      </StyledIcons>
+      </StyledIconsRow>
     );
   };
 };
 
-const StyledIcons = styled(Row)`
+const StyledIconsRow = styled(Row)`
   [id^='document-view'] {
     color: ${props => props.theme.css.slideOutBlue};
   }

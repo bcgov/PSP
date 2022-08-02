@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -24,9 +22,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ContactRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ContactRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public ContactRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ContactRepository> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods
@@ -211,7 +208,8 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
-            return contactsWithOrganizations.GroupBy(copop => copop.Contact.Id).Select(contactGroup => {
+            return contactsWithOrganizations.GroupBy(copop => copop.Contact.Id).Select(contactGroup =>
+            {
                 PimsContactMgrVw contact = contactGroup.FirstOrDefault().Contact;
                 PimsOrganization organization = contactGroup.FirstOrDefault().Organization;
                 if (organization != null)

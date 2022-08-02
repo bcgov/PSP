@@ -54,13 +54,13 @@ exports[`Document Results Table matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 180px;"
+        style="display: flex; flex: 1 0 auto; min-width: 177px;"
       >
         <div
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -105,7 +105,7 @@ exports[`Document Results Table matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -285,7 +285,7 @@ exports[`Document Results Table matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -305,18 +305,18 @@ exports[`Document Results Table matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 180px;"
+          style="display: flex; flex: 1 0 auto; min-width: 177px;"
         >
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           />
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           />
           <div
@@ -344,7 +344,7 @@ exports[`Document Results Table matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div

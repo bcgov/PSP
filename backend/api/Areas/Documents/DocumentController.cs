@@ -87,10 +87,37 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Deletes the specific document relationship for the given type.
+        /// Uploads a document for the given relationship.
         /// </summary>
         /// <param name="type">Used to identify document type.</param>
         /// <param name="entityId">Used to identify document's parent entity.</param>
+        /// <returns></returns>
+        [HttpPost("upload/{relationshipType}/{parentId:long}")]
+        [Produces("application/json")]
+        //[HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(DocumentUploadResponse), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public async Task<IActionResult> UploadDocumentWithParent(
+            DocumentRelationType relationshipType,
+            long parentId,
+            [FromForm] DocumentUploadRequest uploadRequest
+            )
+        {
+            switch (relationshipType)
+            {
+                case DocumentRelationType.Activities:
+                    var response = await _documentService.UploadActivityDocumentAsync(parentId, uploadRequest);
+                    return new JsonResult(response);
+                default:
+                    throw new BadRequestException("Relationship type not valid.");
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specific document relationship for the given type.
+        /// </summary>
+        /// <param name="relationshipType">Used to identify document type.</param>
+        /// <param name="model">Model representing the relationship to delete.</param>
         /// <returns></returns>
         [HttpDelete("{relationshipType}")]
         [Produces("application/json")]

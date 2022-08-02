@@ -1,15 +1,21 @@
 import GenericModal from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
+import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { Section } from 'features/mapSideBar/tabs/Section';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
 import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import React, { useState } from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
+import { FaUpload } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
+import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
-import * as Styled from './styles';
 
 export interface IDocumentListViewProps {
   parentId: number;
@@ -19,9 +25,10 @@ export interface IDocumentListViewProps {
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
+  refreshDocumentList: () => void;
 }
 /**
- * Page that displays documents information.
+ * Page that displays document information as a list.
  */
 export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> = (
   props: IDocumentListViewProps,
@@ -29,6 +36,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   const { documentResults, isLoading, defaultFilters, hideFilters } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
+
+  const { hasClaim } = useKeycloakWrapper();
 
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
@@ -68,17 +77,23 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   }, [documentResults, sort, filters]);
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<Api_Document | undefined>(undefined);
+
+  const handleModalUploadClose = () => {
+    setIsUploadVisible(false);
+  };
 
   const handleViewDetails = (document: Api_Document) => {
     setIsDetailsVisible(true);
     setSelectedDocument(document);
   };
 
-  const handleViewDetailsClose = () => {
+  const handleModalDetailsClose = () => {
     setIsDetailsVisible(false);
     setSelectedDocument(undefined);
   };
+
   const handleDeleteClick = (document: Api_Document) => {
     setShowDeleteConfirmModal(true);
     setSelectedDocument(document);
@@ -100,10 +115,29 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     }
   };
 
+  const onUploadSuccess = () => {
+    handleModalUploadClose();
+    props.refreshDocumentList();
+  };
+
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable vertical={true}>
-        <Styled.PageHeader>Documents</Styled.PageHeader>
+    <div>
+      <Section
+        header={
+          <Row>
+            <Col xs="auto">Documents</Col>
+            {hasClaim(Claims.RESEARCH_ADD) && (
+              <Col>
+                <StyledAddButton onClick={() => setIsUploadVisible(true)}>
+                  <FaUpload />
+                  &nbsp;Add a Document
+                </StyledAddButton>
+              </Col>
+            )}
+          </Row>
+        }
+        isCollapsable
+      >
         {!hideFilters && <DocumentFilterForm onSetFilter={setFilters} documentFilter={filters} />}
         <DocumentResults
           results={sortedFilteredDocuments}
@@ -113,18 +147,26 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           onViewDetails={handleViewDetails}
           onDelete={handleDeleteClick}
         />
-      </Styled.Scrollable>
+      </Section>
       <DocumentDetailModal
         display={isDetailsVisible}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
-        handleClose={handleViewDetailsClose}
+        onClose={handleModalDetailsClose}
+      />
+      <DocumentUploadModal
+        parentId={props.parentId}
+        relationshipType={props.relationshipType}
+        display={isUploadVisible}
+        setDisplay={setIsUploadVisible}
+        onUploadSuccess={onUploadSuccess}
+        onClose={handleModalUploadClose}
       />
       <GenericModal
         display={showDeleteConfirmModal}
         title={'Delete a document'}
         message={
-          <>
+          <div className="p-3">
             <div>You have chosen to delete this document. </div>
             <br />
             <div>
@@ -134,15 +176,22 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             </div>
             <br />
             <strong>Do you wish to continue deleting this document?</strong>
-          </>
+          </div>
         }
         handleOk={onDeleteConfirm}
         handleCancel={() => setShowDeleteConfirmModal(false)}
         okButtonText="Continue"
         cancelButtonText="Cancel"
       />
-    </Styled.ListPage>
+    </div>
   );
 };
 
 export default DocumentListView;
+
+const StyledAddButton = styled(Button)`
+  font-weight: bold;
+  font-size: 1.3rem;
+  background-color: ${props => props.theme.css.completedColor};
+  margin-bottom: 0.2rem;
+`;

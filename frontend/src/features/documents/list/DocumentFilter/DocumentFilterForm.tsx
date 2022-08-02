@@ -48,10 +48,10 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col md={2}>
+            <Col lg={2}>
               <label>Filter by:</label>
             </Col>
-            <Col md={4}>
+            <Col lg={4}>
               <Select
                 data-testid="document-type"
                 field="documentTypeId"
@@ -59,7 +59,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                 options={documentTypes}
               />
             </Col>
-            <Col md={4}>
+            <Col lg={4}>
               <Select
                 field="status"
                 data-testid="document-status"
@@ -67,16 +67,21 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                 options={documentStatusTypeOptions}
               />
             </Col>
-            <ColButtons md={2}>
-              <SearchButton disabled={formikProps.isSubmitting} />
-
-              <ResetButton
-                disabled={formikProps.isSubmitting}
-                onClick={() => {
-                  formikProps.resetForm();
-                  props.onSetFilter(defaultDocumentFilter);
-                }}
-              />
+            <ColButtons xl={2}>
+              <Row>
+                <Col xs="auto" className="pr-0">
+                  <SearchButton disabled={formikProps.isSubmitting} />
+                </Col>
+                <Col xs="auto">
+                  <ResetButton
+                    disabled={formikProps.isSubmitting}
+                    onClick={() => {
+                      formikProps.resetForm();
+                      props.onSetFilter(defaultDocumentFilter);
+                    }}
+                  />
+                </Col>
+              </Row>
             </ColButtons>
           </Row>
         </FilterBoxForm>

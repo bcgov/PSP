@@ -19,10 +19,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public DocumentTypeRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<DocumentTypeRepository> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper)
+        public DocumentTypeRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DocumentTypeRepository> logger)
+            : base(dbContext, user, logger)
         { }
         #endregion
 

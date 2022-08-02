@@ -3,7 +3,11 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { IApiError } from 'interfaces/IApiError';
-import { Api_DocumentRelationship } from 'models/api/Document';
+import {
+  Api_DocumentRelationship,
+  Api_UploadRequest,
+  Api_UploadResponse,
+} from 'models/api/Document';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
@@ -11,7 +15,11 @@ import { toast } from 'react-toastify';
  * hook that retrieves document relationship information.
  */
 export const useDocumentRelationshipProvider = () => {
-  const { getDocumentRelationship, deleteDocumentRelationshipApiCall } = useApiDocuments();
+  const {
+    getDocumentRelationship,
+    deleteDocumentRelationshipApiCall,
+    uploadDocumentRelationshipApiCall,
+  } = useApiDocuments();
 
   // Provides functionality to retrieve document relationship
   const {
@@ -73,10 +81,41 @@ export const useDocumentRelationshipProvider = () => {
     }, []),
   });
 
+  // Provides functionality for uploading a document for a given relationship
+  const { execute: uploadDocument, loading: uploadDocumentLoading } = useApiRequestWrapper<
+    (
+      relationshipType: DocumentRelationshipType,
+      parentId: number,
+      uploadRequest: Api_UploadRequest,
+    ) => Promise<AxiosResponse<Api_UploadResponse, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        relationshipType: DocumentRelationshipType,
+        parentId: number,
+        uploadRequest: Api_UploadRequest,
+      ) => await uploadDocumentRelationshipApiCall(relationshipType, parentId, uploadRequest),
+      [uploadDocumentRelationshipApiCall],
+    ),
+    requestName: 'uploadDocumentRelationshipApiCall',
+    onSuccess: useCallback(() => {
+      toast.success('Uploaded document relationship');
+    }, []),
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+      } else {
+        toast.error('Upload document relationship error. Check responses and try again.');
+      }
+    }, []),
+  });
+
   return {
     retrieveDocumentRelationship,
     retrieveDocumentRelationshipLoading,
     deleteDocumentRelationship,
     deleteDocumentRelationshipLoading,
+    uploadDocument,
+    uploadDocumentLoading,
   };
 };
