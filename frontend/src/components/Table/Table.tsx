@@ -778,7 +778,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             </ColBootstrap>
           )}
           <ColBootstrap xs="auto" className="align-self-center">
-            {props.pageSize !== -1 && <TablePagination<T> instance={instance} />}
+            {props.pageSize !== props.data.length && <TablePagination<T> instance={instance} />}
           </ColBootstrap>
         </RowBootstrap>
       )}

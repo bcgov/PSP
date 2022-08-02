@@ -57,7 +57,7 @@ export const TableSelect = <T extends { id?: string | number }>({
   addLabel,
 }: TableSelectProps<T>) => {
   const { values, setFieldValue } = useFormikContext<any>();
-  const existingItems: T[] = getIn(values, field);
+  const existingItems: T[] = getIn(values, field) ?? [];
   const columnsWithRemove = useMemo(
     () => getColumnsWithRemove<T>((rows: T[]) => setFieldValue(field, rows), [...columns]),
     [columns, field, setFieldValue],
@@ -82,13 +82,13 @@ export const TableSelect = <T extends { id?: string | number }>({
         </div>
       )}
       <Styled.SaveTableWrapper>
-        <SelectedTableHeader selectedCount={existingItems?.length} />
+        <SelectedTableHeader selectedCount={existingItems.length} />
         <Table<T>
           name="selected-items"
           columns={columnsWithRemove}
-          data={existingItems ?? []}
+          data={existingItems}
           lockPageSize
-          pageSize={-1}
+          pageSize={existingItems.length}
           footer
         />
       </Styled.SaveTableWrapper>
