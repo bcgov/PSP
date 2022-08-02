@@ -15,11 +15,11 @@ const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { resu
   const { results, ...rest } = renderOptions;
   const utils = render(
     <NoteResults
-      onShowDetails={jest.fn()}
       sort={{}}
       results={results ?? []}
       setSort={setSort}
       onDelete={noop}
+      onShowDetails={noop}
     />,
     {
       ...rest,
