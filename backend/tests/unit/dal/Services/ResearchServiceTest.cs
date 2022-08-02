@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Moq;
 using Pims.Core.Test;
+using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -58,8 +61,41 @@ namespace Pims.Dal.Test.Services
             Assert.Throws<NotAuthorizedException>(() => service.GetPage(new ResearchFilter()));
             researchRepository.Verify(x => x.GetPage(It.IsAny<ResearchFilter>()), Times.Never);
         }
-        
+
         #endregion
-        #endregion
+
+        #region UpdateProperties
+        [Fact]
+        public void UpdateProperties_Delete()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileEdit);
+
+            var researchFile = EntityHelper.CreateResearchFile(1);
+            var pimsPropertyResearchFile = new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } };
+            pimsPropertyResearchFile.PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } };
+            researchFile.PimsPropertyResearchFiles.Add(pimsPropertyResearchFile);
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(researchFile);
+
+            var service = helper.Create<ResearchFileService>();
+            var researchRepository = helper.GetService<Mock<IResearchFileRepository>>();
+            researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
+            researchRepository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
+            var researchFilePropertyRepository = helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            researchFilePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
+            researchFilePropertyRepository.Setup(x => x.GetByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+
+            // Act
+            researchFile.PimsPropertyResearchFiles.Clear();
+            var updatedLease = service.UpdateProperties(researchFile);
+
+            // Assert
+            researchFilePropertyRepository.Verify(x => x.GetByResearchFileId(It.IsAny<long>()), Times.Once);
+            researchFilePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
+
+            #endregion
+            #endregion
+        }
     }
 }
