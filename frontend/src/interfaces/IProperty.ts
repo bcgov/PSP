@@ -18,7 +18,7 @@ import ITypeCode from './ITypeCode';
 export interface IProperty {
   id?: number;
   pid: string;
-  pin?: number | '';
+  pin?: string | number;
   statusId?: PropertyStatusTypes;
   status?: string;
   dataSourceId?: PropertyDataSourceTypes;
@@ -45,7 +45,7 @@ export interface IProperty {
   areaUnit?: string;
   areaUnitType?: ITypeCode<string>;
   landArea?: number;
-  landLegalDescription: string;
+  landLegalDescription?: string;
   encumbranceReason?: string;
   isSensitive?: boolean;
   isOwned?: boolean;

@@ -11,7 +11,7 @@ export interface Api_LeaseTenant extends Api_ConcurrentVersion {
   person?: Api_Person;
   organizationId?: number;
   organization?: Api_Organization;
-  lessorTypeCode?: ITypeCode<string>;
+  lessorType?: ITypeCode<string>;
   primaryContactId?: number;
   primaryContact?: Api_Person;
   note?: string;
