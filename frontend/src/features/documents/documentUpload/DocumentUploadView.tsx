@@ -41,9 +41,9 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
 
   const initialFormState: DocumentUploadForm = {
-    documentTypeId: documentTypes.length > 0 ? documentTypes[0].value.toString() || '' : '',
+    documentTypeId: documentTypes.length > 0 ? documentTypes[0]?.value?.toString() || '' : '',
     documentStatusCode:
-      documentStatusTypes.length > 0 ? documentStatusTypes[0].value.toString() || '' : '',
+      documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
   };
 
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +89,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
               Choose the document type and select "Browse" to choose the file to upload from your
               computer or network to PIMS.
             </div>
-            <SectionField label={'Document type'} labelWidth="3" className="pb-2">
+            <SectionField label="Document type" labelWidth="3" className="pb-2">
               <Select
                 field="documentTypeId"
                 options={documentTypes}

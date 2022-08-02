@@ -22,14 +22,14 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
 
   let mayanFileId = undefined;
   if (props.document.mayanMetadata !== undefined && props.document.mayanMetadata?.length > 0) {
-    const document = props.document.mayanMetadata[0].document;
+    const document = props.document.mayanMetadata[0]?.document;
     mayanFileId = document.file_latest.id;
   }
 
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
-      <SectionField label={'Document type'} labelWidth="4" className="pb-2">
+      <SectionField label="Document type" labelWidth="4" className="pb-2">
         {documentTypeLabel}
       </SectionField>
       <SectionField label={'File name'} labelWidth="4" className="pb-3">

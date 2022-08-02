@@ -18,7 +18,7 @@ export interface IDocumentUploadContainerProps {
 export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadContainerProps> = props => {
   const isMounted = useIsMounted();
   const { getDocumentTypes } = useApiDocuments();
-  const { retrieveDocumentMetadata, retrieveDocumentMetadataLoading } = useDocumentProvider();
+  const { retrieveDocumentMetadataLoading } = useDocumentProvider();
 
   const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
 
@@ -33,7 +33,7 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
     };
 
     fetch();
-  }, [getDocumentTypes, isMounted, retrieveDocumentMetadata]);
+  }, [getDocumentTypes, isMounted]);
 
   const onDocumentTypeChange = (param: any) => {
     // Todo: This will guide the retrieval of the metadata types
