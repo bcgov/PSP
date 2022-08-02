@@ -29,10 +29,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="accessRequest"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, IPimsRepository service, ILogger<AccessRequestRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, ILogger<AccessRequestRepository> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods

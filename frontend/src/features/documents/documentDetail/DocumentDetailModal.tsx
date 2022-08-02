@@ -1,6 +1,6 @@
 import GenericModal, { ModalSize } from 'components/common/GenericModal';
 import { Api_Document } from 'models/api/Document';
-import { FaArchive, FaEye, FaFile, FaFileArchive } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 
 import { DocumentDetailContainer } from './DocumentDetailContainer';
 

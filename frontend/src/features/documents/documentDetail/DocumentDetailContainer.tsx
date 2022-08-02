@@ -1,4 +1,3 @@
-import { result } from 'lodash';
 import { Api_Document } from 'models/api/Document';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useEffect, useState } from 'react';
@@ -21,9 +20,6 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
         const axiosResponse = await retrieveDocumentMetadata(props.pimsDocument.mayanDocumentId);
         if (axiosResponse?.status === ExternalResultStatus.Success) {
           let results = axiosResponse.payload.results;
-          results = results.concat(results);
-          results = results.concat(results);
-          results = results.concat(results);
           setDocument(document => ({
             ...document,
             mayanMetadata: results,

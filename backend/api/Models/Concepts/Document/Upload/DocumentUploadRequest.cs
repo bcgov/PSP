@@ -10,9 +10,14 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
+        /// get/set - The mayan document type for the document to be uploaded.
+        /// </summary>
+        public long DocumentTypeMayanId { get; set; }
+
+        /// <summary>
         /// get/set - The type for the document to be uploaded.
         /// </summary>
-        public DocumentTypeModel DocumentType { get; set; }
+        public long DocumentTypeId { get; set; }
 
         /// <summary>
         /// get/set - Initial status code of the document.

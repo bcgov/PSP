@@ -9,14 +9,13 @@ import { orderBy } from 'lodash';
 import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import React, { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
-import { FaPlus, FaUpload } from 'react-icons/fa';
+import { FaUpload } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
-import * as Styled from './styles';
 
 export interface IDocumentListViewProps {
   parentId: number;
@@ -26,9 +25,10 @@ export interface IDocumentListViewProps {
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
+  refreshDocumentList: () => void;
 }
 /**
- * Page that displays documents information.
+ * Page that displays document information as a list.
  */
 export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> = (
   props: IDocumentListViewProps,
@@ -115,8 +115,13 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     }
   };
 
+  const onUploadSuccess = () => {
+    handleModalUploadClose();
+    props.refreshDocumentList();
+  };
+
   return (
-    <Styled.ListPage>
+    <div>
       <Section
         header={
           <Row>
@@ -154,9 +159,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         relationshipType={props.relationshipType}
         display={isUploadVisible}
         setDisplay={setIsUploadVisible}
-        onUploadSuccess={() => {
-          console.log('Sucesss!');
-        }}
+        onUploadSuccess={onUploadSuccess}
         onClose={handleModalUploadClose}
       />
       <GenericModal
@@ -180,17 +183,15 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         okButtonText="Continue"
         cancelButtonText="Cancel"
       />
-    </Styled.ListPage>
+    </div>
   );
 };
 
 export default DocumentListView;
 
 const StyledAddButton = styled(Button)`
-  &.btn.btn-primary {
-    font-weight: bold;
-    font-size: 1.3rem;
-    background-color: ${props => props.theme.css.completedColor};
-    margin-bottom: 0.2rem;
-  }
+  font-weight: bold;
+  font-size: 1.3rem;
+  background-color: ${props => props.theme.css.completedColor};
+  margin-bottom: 0.2rem;
 `;
