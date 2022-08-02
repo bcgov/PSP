@@ -49,6 +49,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IEntityNoteRepository, Repositories.EntityNoteRepository>();
             repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
+            repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 

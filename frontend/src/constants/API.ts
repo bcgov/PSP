@@ -84,6 +84,9 @@ export const PROPERTY_RESEARCH_PURPOSE_TYPES = 'PimsPropResearchPurposeType';
 export const PROPERTY_LAND_PARCEL_TYPES = 'PimsPropertyType';
 export const PPH_STATUS_TYPES = 'PimsPphStatusType';
 export const DOCUMENT_STATUS_TYPES = 'PimsDocumentStatusType';
+export const ACQUISITION_FILE_STATUS_TYPES = 'PimsAcquisitionFileStatusType';
+export const ACQUISITION_PHYSICAL_FILE_STATUS_TYPES = 'PimsAcqPhysFileStatusType';
+export const ACQUISITION_TYPES = 'PimsAcquisitionType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

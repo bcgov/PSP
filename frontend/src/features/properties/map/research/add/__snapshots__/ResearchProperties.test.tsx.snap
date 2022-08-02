@@ -407,7 +407,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             role="tabpanel"
           >
             <div
-              class="c3"
+              class="c3 form-section"
             >
               <div
                 class="collapse show"
@@ -565,7 +565,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             role="tabpanel"
           >
             <div
-              class="c3"
+              class="c3 form-section"
             >
               <div
                 class="collapse show"
@@ -725,7 +725,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
               </div>
             </div>
             <div
-              class="c3"
+              class="c3 form-section"
             >
               <div
                 class="collapse show"
@@ -856,7 +856,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
         </div>
       </div>
       <div
-        class="c3"
+        class="c3 form-section"
       >
         <div
           class="collapse show"

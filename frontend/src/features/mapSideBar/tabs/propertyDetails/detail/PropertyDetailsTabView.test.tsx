@@ -94,11 +94,11 @@ describe('PropertyDetailsTabView component', () => {
   it('shows Provincial public hwy field', () => {
     const property: IPropertyApiModel = {
       ...mockPropertyInfo,
-      pphStatusTypeCode: 'Non-PPH',
+      pphStatusTypeCode: 'NONPPH',
     };
 
     const { getByText } = setup({ property });
-    expect(getByText(/Non- Provincial Public Highway/i)).toBeVisible();
+    expect(getByText(/Non-Provincial Public Highway/i)).toBeVisible();
   });
 
   it('does not show shows additional volume measurements for non-volumetric parcels', () => {

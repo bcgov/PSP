@@ -93,7 +93,7 @@ exports[`Note List View renders as expected 1`] = `
       class="c1 c2"
     >
       <div
-        class="c3"
+        class="c3 form-section"
       >
         <h2
           class="c4"

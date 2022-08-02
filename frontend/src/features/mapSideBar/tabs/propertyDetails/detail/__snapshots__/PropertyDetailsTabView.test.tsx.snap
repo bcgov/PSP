@@ -84,7 +84,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       class="c0 mr-3 my-1"
     />
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -293,7 +293,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -394,7 +394,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -643,7 +643,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"

@@ -114,6 +114,9 @@ namespace Pims.Api.Controllers
             var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumetricTypes());
             var pphStatusType = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPPHStatusType());
             var documentStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetDocumentStatusTypes());
+            var acquisitionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionFileStatusTypes());
+            var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionPhysFileStatusTypes());
+            var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -153,6 +156,9 @@ namespace Pims.Api.Controllers
             codes.AddRange(propertyVolumetricTypes);
             codes.AddRange(pphStatusType);
             codes.AddRange(documentStatusTypes);
+            codes.AddRange(acquisitionFileStatusTypes);
+            codes.AddRange(acquisitionPhysFileStatusTypes);
+            codes.AddRange(acquisitionTypes);
 
             return new JsonResult(codes);
         }
