@@ -10,7 +10,6 @@ import {
 } from 'models/api/Document';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
-import { number } from 'yup';
 
 /**
  * hook that retrieves document relationship information.

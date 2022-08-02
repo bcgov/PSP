@@ -20,15 +20,12 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
         public DocumentRepository(
             PimsContext dbContext,
             ClaimsPrincipal user,
-            IPimsRepository service,
-            ILogger<DocumentRepository> logger,
-            IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+            ILogger<DocumentRepository> logger)
+            : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods
@@ -43,26 +40,6 @@ namespace Pims.Dal.Repositories
 
             // Add all document relationships
             return document.PimsActivityInstanceDocuments.Count;
-        }
-
-        /// <summary>
-        /// Adds the passed document from the database.
-        /// </summary>
-        /// <param name="document"></param>
-        /// <returns></returns>
-        public PimsDocument Add(PimsDocument document)
-        {
-            document.ThrowIfNull(nameof(document));
-
-            var newDocument = this.Context.PimsDocuments.Add(document);
-            if (newDocument.State == EntityState.Added)
-            {
-                return newDocument.Entity;
-            }
-            else
-            {
-                throw new InvalidOperationException("Could not create document");
-            }
         }
 
         /// <summary>

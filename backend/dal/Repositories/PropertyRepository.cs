@@ -24,10 +24,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public PropertyRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PropertyRepository> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+        public PropertyRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PropertyRepository> logger)
+            : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods

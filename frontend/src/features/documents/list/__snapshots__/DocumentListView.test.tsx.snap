@@ -8,7 +8,7 @@ exports[`Document List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c6.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +38,49 @@ exports[`Document List View renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c5.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c5.btn.btn-primary {
   border: none;
 }
 
-.c6.btn.btn-secondary {
+.c5.btn.btn-secondary {
   background: none;
 }
 
-.c6.btn.btn-info {
+.c5.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   background: none;
 }
 
-.c6.btn.btn-light {
+.c5.btn.btn-light {
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c5.btn.btn-dark {
   border: none;
 }
 
-.c6.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`Document List View renders as expected 1`] = `
   padding: 0;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`Document List View renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,28 +129,37 @@ exports[`Document List View renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c1 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
+.c2 {
+  float: right;
+  cursor: pointer;
 }
 
-.c7 {
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -169,617 +178,598 @@ exports[`Document List View renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c9 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
 .c8 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c4 {
+.c7 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c3 {
   border-radius: 0.5rem;
 }
 
-.c5 {
+.c4 {
   border-left: 0.2rem solid white;
 }
 
-.c10 .btn.btn-primary {
+.c9 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
   margin-left: 0.5rem;
 }
 
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
-}
-
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
-}
-
-.c3 {
-  text-align: left;
-}
-
-<div
-    class="c0"
-  >
+<div>
     <div
-      class="c1 c2"
+      class="c0"
     >
-      <h3
-        class="c3"
-      >
-        Documents
-      </h3>
-      <form
-        class="c4 p-3"
-        novalidate=""
+      <h2
+        class="c1"
       >
         <div
           class="row"
         >
           <div
-            class="col-md-2"
-          >
-            <label>
-              Filter by:
-            </label>
-          </div>
-          <div
-            class="col-md-4"
+            class="col"
           >
             <div
-              class="form-group"
+              class="row"
             >
-              <select
-                class="form-select form-control"
-                data-testid="document-type"
-                id="input-documentTypeId"
-                name="documentTypeId"
+              <div
+                class="col-auto"
               >
-                <option
-                  value=""
-                >
-                  All document types
-                </option>
-              </select>
+                Documents
+              </div>
             </div>
           </div>
           <div
-            class="col-md-4"
+            class="col-1"
           >
-            <div
-              class="form-group"
+            <svg
+              class="c2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <select
-                class="form-select form-control"
-                data-testid="document-status"
-                id="input-status"
-                name="status"
-              >
-                <option
-                  value=""
-                >
-                  All statuses
-                </option>
-                <option
-                  class="option"
-                  value="AMENDD"
-                >
-                  Amended
-                </option>
-                <option
-                  class="option"
-                  value="APPROVD"
-                >
-                  Approved
-                </option>
-                <option
-                  class="option"
-                  value="CNCLD"
-                >
-                  Cancelled
-                </option>
-                <option
-                  class="option"
-                  value="DRAFT"
-                >
-                  Draft
-                </option>
-                <option
-                  class="option"
-                  value="FINAL"
-                >
-                  Final
-                </option>
-                <option
-                  class="option"
-                  value="NONE"
-                >
-                  None
-                </option>
-                <option
-                  class="option"
-                  value="RGSTRD"
-                >
-                  Registered
-                </option>
-                <option
-                  class="option"
-                  value="SENT"
-                >
-                  Sent
-                </option>
-                <option
-                  class="option"
-                  value="SIGND"
-                >
-                  Signed
-                </option>
-                <option
-                  class="option"
-                  value="UNREGD"
-                >
-                  Unregistered
-                </option>
-              </select>
-            </div>
-          </div>
-          <div
-            class="c5 col-md-2"
-          >
-            <button
-              class="c6 Button Button--icon-only primary btn btn-primary"
-              data-testid="search"
-              id="search-button"
-              title="search"
-              type="submit"
-            >
-              <div
-                class="Button__icon"
-              >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                  />
-                </svg>
-              </div>
-            </button>
-            <button
-              class="c6 Button Button--icon-only btn btn-info"
-              data-testid="reset-button"
-              id="reset-button"
-              title="reset-button"
-              type="reset"
-            >
-              <div
-                class="Button__icon"
-              >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
-                  />
-                </svg>
-              </div>
-            </button>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
           </div>
         </div>
-      </form>
+      </h2>
       <div
-        class="table"
-        data-testid="documentsTable"
-        role="table"
+        class="collapse"
       >
-        <div
-          class="thead thead-light"
+        <form
+          class="c3 p-3"
+          novalidate=""
         >
           <div
-            class="tr"
-            role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 180px;"
+            class="row"
           >
             <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              class="col-lg-2"
+            >
+              <label>
+                Filter by:
+              </label>
+            </div>
+            <div
+              class="col-lg-4"
             >
               <div
-                class="sortable-column"
+                class="form-group"
               >
-                Document type
-                <div
-                  class="c7"
+                <select
+                  class="form-select form-control"
+                  data-testid="document-type"
+                  id="input-documentTypeId"
+                  name="documentTypeId"
                 >
-                  <svg
-                    class="c8"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <option
+                    value=""
                   >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c9"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
-                </div>
+                    All document types
+                  </option>
+                </select>
               </div>
             </div>
             <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              class="col-lg-4"
             >
               <div
-                class="sortable-column"
+                class="form-group"
               >
-                File name
-                <div
-                  class="c7"
+                <select
+                  class="form-select form-control"
+                  data-testid="document-status"
+                  id="input-status"
+                  name="status"
                 >
-                  <svg
-                    class="c8"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <option
+                    value=""
                   >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c9"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                    All statuses
+                  </option>
+                  <option
+                    class="option"
+                    value="1"
                   >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
-                </div>
+                    Draft
+                  </option>
+                  <option
+                    class="option"
+                    value="2"
+                  >
+                    Sent
+                  </option>
+                </select>
               </div>
             </div>
             <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              class="c4 col-xl-2"
             >
               <div
-                class="sortable-column"
+                class="row"
               >
-                Upload date
                 <div
-                  class="c7"
+                  class="pr-0 col-auto"
                 >
-                  <svg
-                    class="c8"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <button
+                    class="c5 Button Button--icon-only primary btn btn-primary"
+                    data-testid="search"
+                    id="search-button"
+                    title="search"
+                    type="submit"
                   >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c9"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Uploaded by
                 <div
-                  class="c7"
+                  class="col-auto"
                 >
-                  <svg
-                    class="c8"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <button
+                    class="c5 Button Button--icon-only btn btn-info"
+                    data-testid="reset-button"
+                    id="reset-button"
+                    title="reset-button"
+                    type="reset"
                   >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c9"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Status
-                <div
-                  class="c7"
-                >
-                  <svg
-                    class="c8"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c9"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Actions
               </div>
             </div>
           </div>
-        </div>
+        </form>
         <div
-          class="tbody"
-          role="rowgroup"
+          class="table"
+          data-testid="documentsTable"
+          role="table"
         >
           <div
-            class="tr-wrapper"
+            class="thead thead-light"
           >
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 180px;"
+              style="display: flex; flex: 1 0 auto; min-width: 177px;"
             >
               <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Gazette
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                DocTest.docx
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Jan 1, 0001
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              />
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Signed
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
-                  class="c10 no-gutters row"
+                  class="sortable-column"
+                >
+                  Document type
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  File name
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Upload date
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Uploaded by
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Status
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Actions
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tbody"
+            role="rowgroup"
+          >
+            <div
+              class="tr-wrapper"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 177px;"
+              >
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Gazette
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  DocTest.docx
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Jan 1, 0001
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
                 />
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Signed
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <div
+                    class="c9 no-gutters row"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="row"
-      >
         <div
-          class="align-self-center col-auto"
+          class="row"
         >
-          <span>
-            1 - 1 of  1
-          </span>
-        </div>
-        <div
-          class="ml-auto align-self-center col-auto"
-        />
-        <div
-          class="align-self-center col-auto"
-        >
-          <ul
-            class="pagination"
+          <div
+            class="align-self-center col-auto"
           >
-            <li
-              class="page-item disabled"
+            <span>
+              1 - 1 of  1
+            </span>
+          </div>
+          <div
+            class="ml-auto align-self-center col-auto"
+          />
+          <div
+            class="align-self-center col-auto"
+          >
+            <ul
+              class="pagination"
             >
-              <a
-                aria-disabled="true"
-                aria-label="Previous page"
-                class="page-link"
-                rel="prev"
-                role="button"
-                tabindex="0"
+              <li
+                class="page-item disabled"
               >
-                &lt;
-              </a>
-            </li>
-            <li
-              class="page-item active"
-            >
-              <a
-                aria-current="page"
-                aria-label="Page 1 is your current page"
-                class="page-link"
-                role="button"
-                tabindex="0"
+                <a
+                  aria-disabled="true"
+                  aria-label="Previous page"
+                  class="page-link"
+                  rel="prev"
+                  role="button"
+                  tabindex="0"
+                >
+                  &lt;
+                </a>
+              </li>
+              <li
+                class="page-item active"
               >
-                1
-              </a>
-            </li>
-            <li
-              class="page-item disabled"
-            >
-              <a
-                aria-disabled="true"
-                aria-label="Next page"
-                class="page-link"
-                rel="next"
-                role="button"
-                tabindex="0"
+                <a
+                  aria-current="page"
+                  aria-label="Page 1 is your current page"
+                  class="page-link"
+                  role="button"
+                  tabindex="0"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                class="page-item disabled"
               >
-                &gt;
-              </a>
-            </li>
-          </ul>
+                <a
+                  aria-disabled="true"
+                  aria-label="Next page"
+                  class="page-link"
+                  rel="next"
+                  role="button"
+                  tabindex="0"
+                >
+                  &gt;
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+    <div
+      class="container"
+    />
     <div
       class="container"
     />

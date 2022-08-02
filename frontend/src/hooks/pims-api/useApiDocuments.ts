@@ -52,11 +52,21 @@ export const useApiDocuments = () => {
         relationshipType: DocumentRelationshipType,
         parentId: number,
         uploadRequest: Api_UploadRequest,
-      ) =>
-        api.post<Api_UploadResponse>(
+      ) => {
+        const formData = new FormData();
+        formData.append('file', uploadRequest.file);
+        formData.append(
+          'documentTypeMayanId',
+          uploadRequest.documentType.mayanId?.toString() || '',
+        );
+        formData.append('documentTypeId', uploadRequest.documentType.id?.toString() || '');
+        formData.append('documentStatusCode', uploadRequest.documentStatusCode || '');
+
+        return api.post<Api_UploadResponse>(
           `/documents/upload/${relationshipType}/${parentId}`,
-          uploadRequest,
-        ),
+          formData,
+        );
+      },
     }),
     [api],
   );

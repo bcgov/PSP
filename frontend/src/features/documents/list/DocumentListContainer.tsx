@@ -51,6 +51,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
       onDelete={onDelete}
+      refreshDocumentList={retrieveDocuments}
     />
   );
 };

@@ -87,7 +87,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Deletes the specific document relationship for the given type.
+        /// Uploads a document for the given relationship.
         /// </summary>
         /// <param name="type">Used to identify document type.</param>
         /// <param name="entityId">Used to identify document's parent entity.</param>
@@ -97,13 +97,41 @@ namespace Pims.Api.Controllers
         //[HasPermission(Permissions.PropertyAdd)]
         [ProducesResponseType(typeof(DocumentUploadResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
-        public async Task<IActionResult> UploadDocumentWithParent(DocumentRelationType relationshipType, long parentId, [FromForm] DocumentUploadRequest uploadRequest)
+        public async Task<IActionResult> UploadDocumentWithParent(
+            DocumentRelationType relationshipType,
+            long parentId,
+            [FromForm] DocumentUploadRequest uploadRequest
+            )
         {
             switch (relationshipType)
             {
                 case DocumentRelationType.Activities:
                     var response = await _documentService.UploadActivityDocumentAsync(parentId, uploadRequest);
                     return new JsonResult(response);
+                default:
+                    throw new BadRequestException("Relationship type not valid.");
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specific document relationship for the given type.
+        /// </summary>
+        /// <param name="relationshipType">Used to identify document type.</param>
+        /// <param name="model">Model representing the relationship to delete.</param>
+        /// <returns></returns>
+        [HttpDelete("{relationshipType}")]
+        [Produces("application/json")]
+        //[HasPermission(Permissions.NoteView)]
+        [ProducesResponseType(typeof(bool), 200)]
+        [SwaggerOperation(Tags = new[] { "document" })]
+        public async Task<IActionResult> DeleteDocumentRelationship(DocumentRelationType relationshipType, [FromBody] DocumentRelationshipModel model)
+        {
+            switch (relationshipType)
+            {
+                case DocumentRelationType.Activities:
+                    var activityRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);
+                    var result = await _documentService.DeleteActivityDocumentAsync(activityRelationship);
+                    return new JsonResult(result);
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }

@@ -20,10 +20,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ResearchFilePropertyRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFilePropertyRepository> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+        public ResearchFilePropertyRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFilePropertyRepository> logger)
+            : base(dbContext, user, logger) { }
 
         #endregion
 

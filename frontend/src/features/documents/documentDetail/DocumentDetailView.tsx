@@ -16,17 +16,13 @@ interface IDocumentDetailsViewProps {
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
 const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
-  let documentTypeLabel = '';
-  let documentFileName = '';
+  const documentTypeLabel = props.document.pimsDocument?.documentType?.documentType;
+  const documentFileName = props.document.pimsDocument?.fileName;
+  const mayanDocumentId = props.document.pimsDocument?.mayanDocumentId || -1;
 
-  let mayanDocumentId = -1;
-  let mayanFileId = -1;
-
+  let mayanFileId = undefined;
   if (props.document.mayanMetadata !== undefined && props.document.mayanMetadata?.length > 0) {
     const document = props.document.mayanMetadata[0].document;
-    documentTypeLabel = document.document_type.label || '';
-    documentFileName = document.label;
-    mayanDocumentId = document.id;
     mayanFileId = document.file_latest.id;
   }
 
@@ -58,6 +54,9 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
 
         <StyledH3>Details</StyledH3>
         <StyledScrollable>
+          {props.document.mayanMetadata?.length === 0 && (
+            <StyledNoData>No additional data</StyledNoData>
+          )}
           {props.document.mayanMetadata?.map(value => (
             <SectionField
               labelWidth="4"
@@ -101,4 +100,9 @@ const StyledH3 = styled.h3`
 const StyledScrollable = styled(Scrollable)`
   overflow-x: hidden;
   max-height: 50rem;
+`;
+
+const StyledNoData = styled.div`
+  text-align: center;
+  font-style: italic;
 `;

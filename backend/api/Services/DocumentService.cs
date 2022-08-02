@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using AutoMapper;
+using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
@@ -72,7 +72,7 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest)
         {
-            ExternalResult<DocumentDetail> externalResult = await UploadDocumentAsync(uploadRequest.DocumentType.MayanId, uploadRequest.File);
+            ExternalResult<DocumentDetail> externalResult = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
             DocumentUploadResponse response = new DocumentUploadResponse() { ExternalResult = externalResult };
             if (externalResult.Status == ExternalResultStatus.Success)
             {
@@ -80,19 +80,20 @@ namespace Pims.Api.Services
                 var externalDocument = externalResult.Payload;
                 PimsDocument newPimsDocument = new PimsDocument()
                 {
-                    FileName = externalDocument.FileLatest.FileName,
-                    DocumentTypeId = uploadRequest.DocumentType.Id,
+                    FileName = externalDocument.Label,
+                    DocumentTypeId = uploadRequest.DocumentTypeId,
                     DocumentStatusTypeCode = uploadRequest.DocumentStatusCode,
+                    MayanId = externalDocument.Id,
                 };
-                newPimsDocument = documentRepository.Add(newPimsDocument);
 
                 // Create the pims document activity relationship
                 PimsActivityInstanceDocument newActivityDocument = new PimsActivityInstanceDocument()
                 {
                     ActivityInstanceId = activityId,
-                    DocumentId = newPimsDocument.Id,
+                    Document = newPimsDocument,
                 };
                 newActivityDocument = documentActivityRespository.Add(newActivityDocument);
+                documentActivityRespository.CommitTransaction();
 
                 response.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newActivityDocument);
             }
