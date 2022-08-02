@@ -78,7 +78,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
               await props.onUploadDocument(request);
               setSubmitting(false);
             } else {
-              console.error('Sekected document type is not valid');
+              console.error('Selected document type is not valid');
             }
           }
         }}
