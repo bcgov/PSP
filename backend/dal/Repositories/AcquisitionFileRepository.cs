@@ -20,9 +20,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<AcquisitionFileRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, IMapper mapper) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods
