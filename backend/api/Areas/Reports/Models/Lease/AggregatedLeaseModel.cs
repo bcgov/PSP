@@ -16,7 +16,7 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         public Decimal[] ActualsByMonth { get; set; }
         public AggregatedLeaseModel(IEnumerable<PimsLease> leases, int fiscalYear, string region = null, string program = null)
         {
-            
+
             DateTime fiscalYearStartDate = fiscalYear.ToFiscalYearDate();
             DateTime fiscalYearEndDate = fiscalYearStartDate.AddYears(1);
             var terms = leases.SelectMany(l => l.PimsLeaseTerms).Where(t => t.TermStartDate <= fiscalYearEndDate

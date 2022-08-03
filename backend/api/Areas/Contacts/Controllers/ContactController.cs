@@ -59,7 +59,7 @@ namespace Pims.Api.Areas.Contact.Controllers
                 var mappedPerson = _mapper.Map<Models.Contact.ContactModel>(person);
                 mappedPerson.Id = contactView.Id;
                 return new JsonResult(mappedPerson);
-                
+
             }
             else
             {

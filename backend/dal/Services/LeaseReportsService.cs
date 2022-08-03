@@ -12,8 +12,8 @@ namespace Pims.Dal.Services
 {
     public class LeaseReportsService : ILeaseReportsService
     {
-        readonly ILeaseRepository _leaseRepository;
-        readonly ClaimsPrincipal _user;
+        private readonly ILeaseRepository _leaseRepository;
+        private readonly ClaimsPrincipal _user;
 
         public LeaseReportsService(ILeaseRepository leaseRepository, ClaimsPrincipal user)
         {
