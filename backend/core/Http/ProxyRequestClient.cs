@@ -57,18 +57,6 @@ namespace Pims.Core.Http
         }
 
         /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Proxy a GET request to the specified 'url'.
         /// This will use the original requests Authorization token in the server request.
         /// </summary>
@@ -114,6 +102,18 @@ namespace Pims.Core.Http
         public async Task<HttpResponseMessage> ProxyDeleteAsync(HttpRequest request, string url, HttpContent content = null)
         {
             return await ProxySendAsync(request, url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>

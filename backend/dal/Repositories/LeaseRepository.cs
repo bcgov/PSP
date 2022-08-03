@@ -235,6 +235,51 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Update the passed lease in the database assuming the user has the require claims.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public PimsLease Update(PimsLease lease, bool commitTransaction = true)
+        {
+            if (lease == null)
+            {
+                throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            }
+
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            var existingLease = this.Context.PimsLeases.Where(l => l.LeaseId == lease.LeaseId).FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            Context.Entry(existingLease).CurrentValues.SetValues(lease);
+            if (commitTransaction)
+            {
+                this.Context.CommitTransaction();
+            }
+            return existingLease;
+        }
+
+        /// <summary>
+        /// update the tenants on the lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="pimsLeaseTenants"></param>
+        /// <returns></returns>
+        public PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseTenants).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
+
+            this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
+            this.Context.CommitTransaction();
+
+            return Get(existingLease.LeaseId);
+        }
+
+        /// <summary>
         /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
         /// Do not attempt to update any preexisiting properties, simply refer to them by id.
         ///
@@ -281,51 +326,6 @@ namespace Pims.Dal.Repositories
                 return this.Context.GenerateLFileNo(lease);
             }
             return lease;
-        }
-
-        /// <summary>
-        /// Update the passed lease in the database assuming the user has the require claims.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public PimsLease Update(PimsLease lease, bool commitTransaction = true)
-        {
-            if (lease == null)
-            {
-                throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
-            }
-
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var existingLease = this.Context.PimsLeases.Where(l => l.LeaseId == lease.LeaseId).FirstOrDefault()
-                 ?? throw new KeyNotFoundException();
-            Context.Entry(existingLease).CurrentValues.SetValues(lease);
-            if (commitTransaction)
-            {
-                this.Context.CommitTransaction();
-            }
-            return existingLease;
-        }
-
-        /// <summary>
-        /// update the tenants on the lease.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="pimsLeaseTenants"></param>
-        /// <returns></returns>
-        public PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants)
-        {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseTenants).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
-                 ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion)
-            {
-                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
-            }
-
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
-            this.Context.CommitTransaction();
-
-            return Get(existingLease.LeaseId);
         }
 
         /// <summary>

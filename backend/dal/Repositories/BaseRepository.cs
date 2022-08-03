@@ -44,6 +44,7 @@ namespace Pims.Dal.Repositories
             this.User = user;
             this.Logger = logger;
         }
+
         /// <summary>
         /// Get the original value of the specified 'propertyName'.
         /// </summary>
@@ -66,6 +67,14 @@ namespace Pims.Dal.Repositories
             return (T)this.Context.Entry(entity).OriginalValues[propertyName];
         }
 
+        /// <summary>
+        /// Commit all saved changes as a single transaction.
+        /// </summary>
+        public void CommitTransaction()
+        {
+            this.Context.CommitTransaction();
+        }
+
         #endregion
 
         #region Methods
@@ -86,14 +95,6 @@ namespace Pims.Dal.Repositories
         internal ClaimsPrincipal GetUser()
         {
             return this.User;
-        }
-
-        /// <summary>
-        /// Commit all saved changes as a single transaction.
-        /// </summary>
-        public void CommitTransaction()
-        {
-            this.Context.CommitTransaction();
         }
         #endregion
     }

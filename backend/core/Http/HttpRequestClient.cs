@@ -87,18 +87,6 @@ namespace Pims.Core.Http
             throw new HttpClientRequestException(response, $"Response must contain JSON but was '{contentType.MediaType}'.");
         }
 
-        /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
-        }
-
         #region HttpResponseMessage Methods
 
         /// <summary>
@@ -694,6 +682,18 @@ namespace Pims.Core.Http
         public async Task<TModel> DeleteAsync<TModel>(Uri url, HttpContent content = null)
         {
             return await SendAsync<TModel>(url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>

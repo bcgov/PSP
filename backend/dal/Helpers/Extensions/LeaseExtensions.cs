@@ -31,6 +31,33 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
+        /// Get the next available id from the PIMS_LEASE_ID_SEQ.
+        /// </summary>
+        /// <param name="context"></param>
+        public static long GetNextLeaseSequenceValue(this PimsContext context)
+        {
+            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
+            {
+                Direction = System.Data.ParameterDirection.Output,
+            };
+            context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
+
+            return (long)result.Value;
+        }
+
+        /// <summary>
+        /// Generate a new L File in format L-XXX-YYY using the lease id. Add the lease id and lfileno to the passed lease.
+        /// </summary>
+        /// <param name="context"></param>
+        public static PimsLease GenerateLFileNo(this PimsContext context, PimsLease lease)
+        {
+            long leaseId = GetNextLeaseSequenceValue(context);
+            lease.LeaseId = leaseId;
+            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
+            return lease;
+        }
+
+        /// <summary>
         /// Generate an SQL statement for the specified 'user' and 'filter'.
         /// </summary>
         /// <param name="query"></param>
@@ -176,33 +203,6 @@ namespace Pims.Dal.Helpers.Extensions
                     sortDef[sortFieldIndex] = sortField.Replace(sourceField, targetField);
                 }
             }
-        }
-
-        /// <summary>
-        /// Get the next available id from the PIMS_LEASE_ID_SEQ.
-        /// </summary>
-        /// <param name="context"></param>
-        public static long GetNextLeaseSequenceValue(this PimsContext context)
-        {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output,
-            };
-            context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
-
-            return (long)result.Value;
-        }
-
-        /// <summary>
-        /// Generate a new L File in format L-XXX-YYY using the lease id. Add the lease id and lfileno to the passed lease.
-        /// </summary>
-        /// <param name="context"></param>
-        public static PimsLease GenerateLFileNo(this PimsContext context, PimsLease lease)
-        {
-            long leaseId = GetNextLeaseSequenceValue(context);
-            lease.LeaseId = leaseId;
-            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
-            return lease;
         }
 
         /// <summary>
