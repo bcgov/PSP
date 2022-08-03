@@ -11,17 +11,22 @@ namespace Pims.Dal.Entities
     public partial class PimsOrganization : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify organization.
         /// </summary>
         [NotMapped]
         public override long Id { get => OrganizationId; set => OrganizationId = value; }
+
         [NotMapped]
         public string Name { get => OrganizationName; set => OrganizationName = value; }
+
         [NotMapped]
         public string Description { get => OrganizationAlias; set => OrganizationAlias = value; }
 
-        public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(po => po.Person).Select(p => { p.PimsPersonOrganizations = null; return p; }).ToArray();
+        public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(po => po.Person).Select(p => { p.PimsPersonOrganizations = null;
+            return p; }).ToArray();
+
         public ICollection<PimsUser> GetUsers() => PimsUserOrganizations?.Select(p => p.User).ToArray();
         #endregion
 
@@ -34,7 +39,8 @@ namespace Pims.Dal.Entities
         /// <param name="type"></param>
         /// <param name="identifierType"></param>
         /// <param name="address"></param>
-        public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address) : this()
+        public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address)
+            : this()
         {
             if (string.IsNullOrWhiteSpace(name))
             {

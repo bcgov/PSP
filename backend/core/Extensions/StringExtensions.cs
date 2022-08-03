@@ -40,11 +40,11 @@ namespace Pims.Core.Extensions
         /// <summary>
         /// Formats the specified postal value.
         /// </summary>
-        /// <param name="postal">The specified postal value</param>
+        /// <param name="postal">The specified postal value.</param>
         /// <returns>Postal with format XXX XXX.</returns>
         public static string FormatAsPostal(this string postal)
         {
-            if (postal?.Length == 6 && (!postal?.Contains(" ") ?? false))
+            if (postal?.Length == 6 && (!postal?.Contains(' ') ?? false))
             {
                 return postal?.ToUpper().Insert(3, " ");
             }
@@ -59,7 +59,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string LowercaseFirstCharacter(this string word)
         {
-            if (!String.IsNullOrWhiteSpace(word) && char.IsUpper(word[0]))
+            if (!string.IsNullOrWhiteSpace(word) && char.IsUpper(word[0]))
             {
                 return char.ToLower(word[0]) + (word.Length > 1 ? word.Substring(1) : null);
             }
@@ -73,11 +73,11 @@ namespace Pims.Core.Extensions
         /// <return></return>
         public static HttpMethod GetHttpMethod(this string method)
         {
-            return (method?.ToLower()) switch
+            return method?.ToLower() switch
             {
-                ("get") => HttpMethod.Get,
-                ("delete") => HttpMethod.Delete,
-                ("put") => HttpMethod.Put,
+                "get" => HttpMethod.Get,
+                "delete" => HttpMethod.Delete,
+                "put" => HttpMethod.Put,
                 _ => HttpMethod.Post,
             };
         }

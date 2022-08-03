@@ -9,6 +9,7 @@ namespace Pims.Core.Extensions
     public static class EnumExtensions
     {
         #region Methods
+
         /// <summary>
         /// Returns to name of the enum in lowercase.
         /// </summary>
@@ -26,7 +27,8 @@ namespace Pims.Core.Extensions
         /// <param name="val"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        public static bool In<T>(this T val, params T[] values) where T : struct
+        public static bool In<T>(this T val, params T[] values)
+            where T : struct
         {
             return values.Contains(val);
         }

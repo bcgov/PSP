@@ -13,6 +13,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The current user accessing the service.
         /// </summary>
@@ -30,6 +31,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a BaseService class, and initializes it with the specified arguments.
         /// </summary>
@@ -42,9 +44,32 @@ namespace Pims.Dal.Repositories
             this.User = user;
             this.Logger = logger;
         }
+        /// <summary>
+        /// Get the original value of the specified 'propertyName'.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public T OriginalValue<T>(object entity, string propertyName)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.");
+            }
+
+            return (T)this.Context.Entry(entity).OriginalValues[propertyName];
+        }
+
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Provides a way to fetch the context within the assembly.
         /// </summary>
@@ -61,28 +86,6 @@ namespace Pims.Dal.Repositories
         internal ClaimsPrincipal GetUser()
         {
             return this.User;
-        }
-
-        /// <summary>
-        /// Get the original value of the specified 'propertyName'.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public T OriginalValue<T>(object entity, string propertyName)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (String.IsNullOrWhiteSpace(propertyName))
-            {
-                throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.");
-            }
-
-            return (T)this.Context.Entry(entity).OriginalValues[propertyName];
         }
 
         /// <summary>

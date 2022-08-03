@@ -55,6 +55,31 @@ namespace Pims.Dal.Services
             return _leaseService.GetById(leaseId);
         }
 
+        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
+        {
+            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
+            if (payment.PaymentAmountTotal == 0)
+            {
+                return PimsLeasePaymentStatusTypes.UNPAID;
+            }
+            else if (payment.PaymentAmountTotal < expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.PARTIAL;
+            }
+            else if (payment.PaymentAmountTotal == expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.PAID;
+            }
+            else if (payment.PaymentAmountTotal > expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.OVERPAID;
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid payment value provided");
+            }
+        }
+
         /// <summary>
         /// For a payment service call to be valid, the user must have the lease edit claim and the lease being edited must be up to date.
         /// </summary>
@@ -86,31 +111,6 @@ namespace Pims.Dal.Services
             }
 
             payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leaseTerm);
-        }
-
-        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
-        {
-            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
-            if (payment.PaymentAmountTotal == 0)
-            {
-                return PimsLeasePaymentStatusTypes.UNPAID;
-            }
-            else if (payment.PaymentAmountTotal < expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.PARTIAL;
-            }
-            else if (payment.PaymentAmountTotal == expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.PAID;
-            }
-            else if (payment.PaymentAmountTotal > expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.OVERPAID;
-            }
-            else
-            {
-                throw new InvalidOperationException("Invalid payment value provided");
-            }
         }
     }
 }

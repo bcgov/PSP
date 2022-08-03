@@ -14,14 +14,17 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
-        public PimsPersonOrganization() { }
+        public PimsPersonOrganization()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsPersonOrganization class.
         /// </summary>
         /// <param name="person"></param>
         /// <param name="organization"></param>
-        public PimsPersonOrganization(PimsPerson person, PimsOrganization organization) : this()
+        public PimsPersonOrganization(PimsPerson person, PimsOrganization organization)
+            : this()
         {
             this.Person = person ?? throw new ArgumentNullException(nameof(person));
             this.PersonId = person.PersonId;

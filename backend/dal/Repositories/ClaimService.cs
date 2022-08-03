@@ -20,16 +20,21 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ClaimService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ILogger<ClaimService> logger) : base(dbContext, user, logger) { }
+        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ILogger<ClaimService> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get a page of users from the datasource.
         /// </summary>
@@ -43,7 +48,7 @@ namespace Pims.Dal.Repositories
 
             var query = this.Context.PimsClaims.AsNoTracking();
 
-            if (!String.IsNullOrWhiteSpace(name))
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
             }

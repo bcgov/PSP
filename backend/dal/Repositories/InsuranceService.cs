@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -16,13 +15,17 @@ namespace Pims.Dal.Repositories
     public class InsuranceRepository : BaseRepository<PimsInsurance>, IInsuranceRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a InsuranceService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public InsuranceRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<InsuranceRepository> logger) : base(dbContext, user, logger) { }
+        public InsuranceRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<InsuranceRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
@@ -32,7 +35,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsInsurances
                 .FirstOrDefault(i => i.InsuranceId == id) ?? throw new KeyNotFoundException();
         }
-
 
         /// <summary>
         /// Add the passed lease to the database assuming the user has the require claims.

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -20,16 +19,21 @@ namespace Pims.Dal.Repositories
     public class LeaseRepository : BaseRepository<PimsLease>, ILeaseRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger) : base(dbContext, user, logger) { }
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Returns the total number of leases in the database.
         /// </summary>
@@ -66,6 +70,7 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
+
         public PimsLease Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
@@ -204,10 +209,30 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
-
             return new Paged<PimsLease>(items, filter.Page, filter.Quantity, query.Count());
         }
 
+        /// <summary>
+        /// Add the passed lease to the database assuming the user has the require claims.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <param name="userOverride"></param>
+        /// <returns></returns>
+        public PimsLease Add(PimsLease lease, bool userOverride = false)
+        {
+            if (lease == null)
+            {
+                throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            }
+
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
+
+            lease = AssociatePropertyLeases(lease, userOverride);
+
+            this.Context.PimsLeases.Add(lease);
+            this.Context.CommitTransaction();
+            return Get(lease.LeaseId);
+        }
 
         /// <summary>
         /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
@@ -249,35 +274,13 @@ namespace Pims.Dal.Repositories
                     throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
                 }
                 propertyLease.PropertyId = property.PropertyId;
-                propertyLease.Property = null; //Do not attempt to update the associated property, just refer to it by id.
+                propertyLease.Property = null; // Do not attempt to update the associated property, just refer to it by id.
             });
             if (lease.LeaseId == 0)
             {
                 return this.Context.GenerateLFileNo(lease);
             }
             return lease;
-        }
-
-        /// <summary>
-        /// Add the passed lease to the database assuming the user has the require claims.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <param name="userOverride"></param>
-        /// <returns></returns>
-        public PimsLease Add(PimsLease lease, bool userOverride = false)
-        {
-            if (lease == null)
-            {
-                throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
-            }
-
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
-
-            lease = AssociatePropertyLeases(lease, userOverride);
-
-            this.Context.PimsLeases.Add(lease);
-            this.Context.CommitTransaction();
-            return Get(lease.LeaseId);
         }
 
         /// <summary>
@@ -304,7 +307,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// update the tenants on the lease
+        /// update the tenants on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <param name="pimsLeaseTenants"></param>
@@ -326,7 +329,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// update the tenants on the lease
+        /// update the tenants on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <param name="pimsPropertyImprovements"></param>
@@ -348,7 +351,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// update the properties on the lease
+        /// update the properties on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <param name="pimsPropertyLeases"></param>

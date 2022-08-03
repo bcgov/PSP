@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -20,16 +18,21 @@ namespace Pims.Dal.Repositories
     public class PersonRepository : BaseRepository<PimsPerson>, IPersonRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PersonService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PersonRepository> logger) : base(dbContext, user, logger) { }
+        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PersonRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get a page of persons from the datasource.
         /// </summary>
@@ -86,8 +89,8 @@ namespace Pims.Dal.Repositories
             {
                 List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
                     p => EF.Functions.Collate(p.FirstName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.FirstName &&
-                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname
-                ).Include(p => p.PimsContactMethods).ToList();
+                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname)
+                .Include(p => p.PimsContactMethods).ToList();
 
                 var isDuplicate = existingPersons.Any(
                                 p => p.PimsContactMethods.Any(
@@ -127,7 +130,6 @@ namespace Pims.Dal.Repositories
             var existingPerson = this.Context.PimsPeople.FirstOrDefault(p => p.PersonId == personId)
                  ?? throw new KeyNotFoundException();
 
-
             // update main entity - PimsPerson
             this.Context.Entry(existingPerson).CurrentValues.SetValues(person);
 
@@ -141,9 +143,9 @@ namespace Pims.Dal.Repositories
                 pa => pa.Address,
                 personId,
                 person.PimsPersonAddresses.ToArray(),
+
                 // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
-                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false
-            );
+                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false);
 
             return existingPerson;
         }

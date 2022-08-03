@@ -232,7 +232,7 @@ namespace Pims.Core.Test
             //create FormFile with desired data
             IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
             return file;
-        } 
+        }
         #endregion
     }
 }

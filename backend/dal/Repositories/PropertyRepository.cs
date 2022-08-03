@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -19,6 +18,7 @@ namespace Pims.Dal.Repositories
     public class PropertyRepository : BaseRepository<PimsProperty>, IPropertyRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PropertyRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -26,10 +26,13 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="logger"></param>
         public PropertyRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PropertyRepository> logger)
-            : base(dbContext, user, logger) { }
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Returns the total number of properties in the database.
         /// </summary>
@@ -59,7 +62,6 @@ namespace Pims.Dal.Repositories
             var properties = query.ToArray();
 
             // TODO: Add optional paging ability to query.
-
             return properties;
         }
 
@@ -210,7 +212,6 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
-
         /// <summary>
         /// Update the passed property in the database assuming the user has the required claims.
         /// </summary>
@@ -245,7 +246,6 @@ namespace Pims.Dal.Repositories
                 property.PphStatusUpdateUserid = User.GetUsername();
                 property.PphStatusUpdateUserGuid = User.GetUserKey();
             }
-
             else
             {
                 property.PphStatusUpdateTimestamp = existingProperty.PphStatusUpdateTimestamp;

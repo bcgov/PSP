@@ -18,6 +18,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a TenantService, and initializes it with the specified arguments.
         /// </summary>
@@ -25,7 +26,10 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public TenantRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<TenantRepository> logger) : base(dbContext, user, logger) { }
+        public TenantRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<TenantRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods

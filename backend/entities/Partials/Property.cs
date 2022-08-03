@@ -14,17 +14,23 @@ namespace Pims.Dal.Entities
         #region Properties
         [NotMapped]
         public override long Id { get => this.PropertyId; set => this.PropertyId = value; }
+
         /// <summary>
         /// get - The friendly formated Parcel Id.
         /// </summary>
         [NotMapped]
-        public string ParcelIdentity { get { return this.Pid > 0 ? $"{this.Pid:000-000-000}" : null; } }
+        public string ParcelIdentity
+        {
+            get { return this.Pid > 0 ? $"{this.Pid:000-000-000}" : null; }
+        }
 
         public ICollection<PimsOrganization> GetOrganizations() => PimsPropertyOrganizations?.Select(o => o.Organization).ToArray();
+
         public ICollection<PimsLease> GetLeases() => PimsPropertyLeases?.Select(l => l.Lease).ToArray();
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a Property class.
         /// </summary>
@@ -36,7 +42,8 @@ namespace Pims.Dal.Entities
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <param name="dataSourceEffectiveDate"></param>
-        public PimsProperty(int pid, PimsPropertyType type, PimsPropertyClassificationType classification, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status) : this()
+        public PimsProperty(int pid, PimsPropertyType type, PimsPropertyClassificationType classification, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
+            : this()
         {
             this.Pid = pid;
             this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));

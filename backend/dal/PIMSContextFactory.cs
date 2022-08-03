@@ -1,13 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Pims.Core.Extensions;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal
 {
@@ -22,6 +22,7 @@ namespace Pims.Dal
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PimsContextFactory class.
         /// </summary>
@@ -40,6 +41,7 @@ namespace Pims.Dal
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Create the database context so that the design time tools can connect to it.
         /// </summary>
@@ -76,7 +78,7 @@ namespace Pims.Dal
             var cs = config.GetConnectionString("PIMS");
             var sqlBuilder = new SqlConnectionStringBuilder(cs)
             {
-                Password = config["DB_PASSWORD"]
+                Password = config["DB_PASSWORD"],
             };
 
             var optionsBuilder = new DbContextOptionsBuilder<PimsContext>();
@@ -90,7 +92,7 @@ namespace Pims.Dal
             {
                 IgnoreNullValues = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
+                WriteIndented = true,
             };
             var optionsSerializer = Microsoft.Extensions.Options.Options.Create(serializerOptions);
             return new PimsContext(optionsBuilder.Options, null, optionsSerializer);

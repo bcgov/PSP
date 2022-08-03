@@ -28,7 +28,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, string role, string message = null) where T : class, IBaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, string role, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(role, message);
@@ -49,7 +50,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions permission, string message = null) where T : class, IBaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions permission, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -71,7 +73,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null) where T : class, IBaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             if (requireAll)
@@ -91,7 +94,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="source"></param>
         /// <param name="context"></param>
-        public static void SetOriginalConcurrencyControlNumber<T>(this T source, DbContext context) where T : class, IBaseEntity
+        public static void SetOriginalConcurrencyControlNumber<T>(this T source, DbContext context)
+            where T : class, IBaseEntity
         {
             context.SetOriginalConcurrencyControlNumber(source);
         }
@@ -125,7 +129,9 @@ namespace Pims.Dal.Helpers.Extensions
             foreach (var item in children)
             {
                 if (!dbItemsMap.TryGetValue(item.Id, out var oldItem))
+                {
                     accessor.Add(dbEntity, item, false);
+                }
                 else
                 {
                     context.Entry(oldItem).CurrentValues.SetValues(item);
@@ -152,13 +158,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
-        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation</param>
+        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
         public static void UpdateGrandchild<T, I, C>(
             this PimsContext context,
             Expression<Func<T, object>> childNavigation,
             Expression<Func<C, object>> grandchildNavigation,
             I parentId,
-            C[] childrenWithGrandchildren) where T : IdentityBaseAppEntity<I> where C : IdentityBaseAppEntity<I>
+            C[] childrenWithGrandchildren)
+            where T : IdentityBaseAppEntity<I>
+            where C : IdentityBaseAppEntity<I>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
         }
@@ -175,7 +183,57 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
-        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation</param>
+        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
+        /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
+        public static void UpdateGrandchild<T, I, C>(
+            this PimsContext context,
+            Expression<Func<T, object>> childNavigation,
+            Expression<Func<C, object>> grandchildNavigation,
+            I parentId,
+            C[] childrenWithGrandchildren) where T : IdentityBaseAppEntity<I>
+            where C : IdentityBaseAppEntity<I>
+        {
+            UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
+        }
+
+        /// <summary>
+        /// Update a single grandchild navigation property on a parent entity specified by T and parentId.
+        /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
+        /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
+        /// </summary>
+        /// <typeparam name="T">The parent entity type.</typeparam>
+        /// <typeparam name="I">The type of the id property.</typeparam>
+        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <param name="context"></param>
+        /// <param name="childNavigation"></param>
+        /// <param name="grandchildNavigation"></param>
+        /// <param name="parentId"></param>
+        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
+        /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
+        public static void UpdateGrandchild<T, I, C>(
+            this PimsContext context,
+            Expression<Func<T, object>> childNavigation,
+            Expression<Func<C, object>> grandchildNavigation,
+            I parentId,
+            C[] childrenWithGrandchildren,
+            Func<PimsContext, C, bool> canDeleteGrandchild) where T : IdentityBaseAppEntity<I> where C : IdentityBaseAppEntity<I>
+        {
+            UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
+        }
+
+        /// <summary>
+        /// Update a single grandchild navigation property on a parent entity specified by T and parentId.
+        /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
+        /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
+        /// </summary>
+        /// <typeparam name="T">The parent entity type.</typeparam>
+        /// <typeparam name="I">The type of the id property.</typeparam>
+        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <param name="context"></param>
+        /// <param name="childNavigation"></param>
+        /// <param name="grandchildNavigation"></param>
+        /// <param name="parentId"></param>
+        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
         /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
         public static void UpdateGrandchild<T, I, C>(
             this PimsContext context,
@@ -202,7 +260,9 @@ namespace Pims.Dal.Helpers.Extensions
             foreach (var child in childrenWithGrandchildren)
             {
                 if (!existingChildren.TryGetValue(child.Id, out var existingChild))
+                {
                     childAccessor.Add(dbEntity, child, false);
+                }
                 else
                 {
                     var dbChildEntry = context.Entry(existingChild);

@@ -21,16 +21,21 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a RoleService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public RoleService(PimsContext dbContext, ClaimsPrincipal user, ILogger<RoleService> logger) : base(dbContext, user, logger) { }
+        public RoleService(PimsContext dbContext, ClaimsPrincipal user, ILogger<RoleService> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get a page of roles from the datasource.
         /// </summary>
@@ -44,7 +49,7 @@ namespace Pims.Dal.Repositories
 
             var query = this.Context.PimsRoles.AsNoTracking();
 
-            if (!String.IsNullOrWhiteSpace(name))
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
             }

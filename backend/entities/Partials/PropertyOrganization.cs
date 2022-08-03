@@ -8,13 +8,17 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyOrganization : IDisableBaseAppEntity
     {
         #region Constructors
-        public PimsPropertyOrganization() {}
+        public PimsPropertyOrganization()
+        {
+        }
+
         /// <summary>
         /// Create a new instance of a PropertyOrganization class.
         /// </summary>
         /// <param name="property"></param>
         /// <param name="organization"></param>
-        public PimsPropertyOrganization(PimsProperty property, PimsOrganization organization) : this()
+        public PimsPropertyOrganization(PimsProperty property, PimsOrganization organization)
+            : this()
         {
             this.Property = property ?? throw new ArgumentNullException(nameof(property));
             this.PropertyId = property.PropertyId;

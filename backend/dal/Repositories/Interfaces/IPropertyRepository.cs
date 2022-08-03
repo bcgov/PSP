@@ -10,13 +10,21 @@ namespace Pims.Dal.Repositories
     public interface IPropertyRepository : IRepository<PimsProperty>
     {
         int Count();
+
         IEnumerable<PimsProperty> Get(PropertyFilter filter);
+
         Paged<PimsProperty> GetPage(PropertyFilter filter);
+
         PimsProperty Get(long id);
+
         PimsProperty GetByPid(string pid);
+
         PimsProperty GetByPid(int pid);
+
         PimsProperty GetAssociations(long id);
+
         PimsProperty Update(PimsProperty property);
+
         void Delete(PimsProperty property);
     }
 }

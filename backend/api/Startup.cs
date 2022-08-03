@@ -270,7 +270,7 @@ namespace Pims.Api
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
+                                Id = "Bearer",
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",

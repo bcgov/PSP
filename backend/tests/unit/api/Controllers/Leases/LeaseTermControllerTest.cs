@@ -32,7 +32,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var controller = helper.CreateController<LeaseTermController>(Permissions.LeaseEdit);
 
             var lease = EntityHelper.CreateLease(1);
-            var leaseTerm = new Dal.Entities.PimsLeaseTerm() { LeaseTermId = 1};
+            var leaseTerm = new Dal.Entities.PimsLeaseTerm() { LeaseTermId = 1 };
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();

@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -19,6 +15,7 @@ namespace Pims.Dal.Repositories
     public class ActivityRepository : BaseRepository<PimsActivityInstance>, IActivityRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFileRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -26,7 +23,10 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ActivityRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFileRepository> logger, IMapper mapper) : base(dbContext, user,  logger) { }
+        public ActivityRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFileRepository> logger, IMapper mapper)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
@@ -99,15 +99,16 @@ namespace Pims.Dal.Repositories
                 },
             });
             return instances;
+
             // TODO Call actual table data
-            //return this.Context.PimsActivityInstances.AsNoTracking()                
+            // return this.Context.PimsActivityInstances.AsNoTracking()
             //    .Where(x => x.ActivityInstanceId == researchFileId)
             //    .ToList();
         }
 
         public PimsActivityInstance Add(PimsActivityInstance instance)
         {
-            instance.ThrowIfNull(nameof(instance));           
+            instance.ThrowIfNull(nameof(instance));
             this.Context.PimsActivityInstances.Add(instance);
             return instance;
         }

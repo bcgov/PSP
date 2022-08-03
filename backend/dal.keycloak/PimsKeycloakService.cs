@@ -1,7 +1,7 @@
+using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Keycloak;
-using System.Security.Claims;
 
 namespace Pims.Dal.Keycloak
 {
@@ -19,6 +19,7 @@ namespace Pims.Dal.Keycloak
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PimsKeycloakService object, initializes with the specified arguments.
         /// </summary>

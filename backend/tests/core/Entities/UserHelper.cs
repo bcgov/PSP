@@ -43,7 +43,7 @@ namespace Pims.Core.Test
                 IssueDate = DateTime.UtcNow,
                 ConcurrencyControlNumber = 1,
             };
-            user.PimsUserRoles.Add(new Entity.PimsUserRole() { Role = role, RoleId = role.Id, User = user, UserId = user.Id});
+            user.PimsUserRoles.Add(new Entity.PimsUserRole() { Role = role, RoleId = role.Id, User = user, UserId = user.Id });
             user.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { Organization = organization, OrganizationId = organization.Id, User = user, UserId = user.Id });
 
             return user;

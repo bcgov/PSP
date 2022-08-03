@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities
     public class MotiTableAttribute : TableAttribute
     {
         #region Properties
+
         /// <summary>
         /// get - The abbreviated table name.
         /// </summary>
@@ -17,14 +18,16 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an MotiTableAttribute, initializes with specified arguments.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="abbreviation"></param>
-        public MotiTableAttribute(string name, string abbreviation) : base(name)
+        public MotiTableAttribute(string name, string abbreviation)
+            : base(name)
         {
-            if (String.IsNullOrWhiteSpace(abbreviation))
+            if (string.IsNullOrWhiteSpace(abbreviation))
             {
                 throw new ArgumentException("Abbreviation cannot be null, empty, or whitespace.", nameof(abbreviation));
             }

@@ -6,6 +6,7 @@ namespace Pims.Dal
     public class AccessRequestOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The notification template name that will be used when sending an email to administrators.
         /// </summary>

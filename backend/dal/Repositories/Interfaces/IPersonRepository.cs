@@ -9,9 +9,13 @@ namespace Pims.Dal.Repositories
     public interface IPersonRepository : IRepository<PimsPerson>
     {
         IEnumerable<PimsPerson> GetAll();
+
         long GetRowVersion(long id);
+
         PimsPerson Get(long id);
+
         PimsPerson Add(PimsPerson person, bool userOverride);
+
         PimsPerson Update(PimsPerson person);
     }
 }
