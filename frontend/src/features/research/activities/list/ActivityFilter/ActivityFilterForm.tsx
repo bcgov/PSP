@@ -31,7 +31,7 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col md={2}>
+            <Col md={1}>
               <label>Filter by:</label>
             </Col>
             <Col md={4}>
@@ -50,9 +50,10 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
                 options={activityStatusTypeOptions}
               />
             </Col>
-            <ColButtons md={2}>
+            <Col md={1}>
               <SearchButton disabled={formikProps.isSubmitting} />
-
+            </Col>
+            <Col md={1}>
               <ResetButton
                 disabled={formikProps.isSubmitting}
                 onClick={() => {
@@ -60,7 +61,7 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
                   props.onSetFilter(defaultActivityFilter);
                 }}
               />
-            </ColButtons>
+            </Col>
           </Row>
         </FilterBoxForm>
       )}
@@ -71,8 +72,4 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
 const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
-`;
-
-const ColButtons = styled(Col)`
-  border-left: 0.2rem solid white;
 `;

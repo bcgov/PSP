@@ -98,7 +98,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
 
   const saveActivity = (activityTypeId: number) => {
     setIsLoading(true);
-    const activity = { activityTemplateId: activityTypeId } as Api_Activity;
+    const activity: Api_Activity = { activityTemplateId: activityTypeId, description: '' };
     postActivity(activity).then(response => {
       const newResults = [...activityResults, response.data];
       setActivityResults(newResults);

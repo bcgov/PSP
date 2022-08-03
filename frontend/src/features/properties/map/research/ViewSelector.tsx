@@ -3,7 +3,6 @@ import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 
 import PropertyResearchContainer from './detail/PropertyResearchContainer';
-// import ResearchSummaryView from './detail/ResearchSummaryView';
 import ResearchTabsContainer from './ResearchTabsContainer';
 import UpdatePropertyView from './update/property/UpdatePropertyView';
 import UpdateSummaryView from './update/summary/UpdateSummaryView';
