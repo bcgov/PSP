@@ -112,7 +112,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="childNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="children"></param>
-        public static void UpdateChild<T, I, C>(this PimsContext context, Expression<Func<T, object>> childNavigation, I parentId, C[] children) where T : IdentityBaseAppEntity<I> where C : IdentityBaseAppEntity<I>
+        public static void UpdateChild<T, I, C>(this PimsContext context, Expression<Func<T, object>> childNavigation, I parentId, C[] children)
+            where T : IdentityBaseAppEntity<I>
+            where C : IdentityBaseAppEntity<I>
         {
             var dbEntity = context.Find<T>(parentId);
 
@@ -190,7 +192,8 @@ namespace Pims.Dal.Helpers.Extensions
             Expression<Func<T, object>> childNavigation,
             Expression<Func<C, object>> grandchildNavigation,
             I parentId,
-            C[] childrenWithGrandchildren) where T : IdentityBaseAppEntity<I>
+            C[] childrenWithGrandchildren)
+            where T : IdentityBaseAppEntity<I>
             where C : IdentityBaseAppEntity<I>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
@@ -216,7 +219,9 @@ namespace Pims.Dal.Helpers.Extensions
             Expression<Func<C, object>> grandchildNavigation,
             I parentId,
             C[] childrenWithGrandchildren,
-            Func<PimsContext, C, bool> canDeleteGrandchild) where T : IdentityBaseAppEntity<I> where C : IdentityBaseAppEntity<I>
+            Func<PimsContext, C, bool> canDeleteGrandchild)
+            where T : IdentityBaseAppEntity<I>
+            where C : IdentityBaseAppEntity<I>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
         }
@@ -241,7 +246,9 @@ namespace Pims.Dal.Helpers.Extensions
             Expression<Func<C, object>> grandchildNavigation,
             I parentId,
             C[] childrenWithGrandchildren,
-            Func<PimsContext, C, bool> canDeleteGrandchild) where T : IdentityBaseAppEntity<I> where C : IdentityBaseAppEntity<I>
+            Func<PimsContext, C, bool> canDeleteGrandchild)
+            where T : IdentityBaseAppEntity<I>
+            where C : IdentityBaseAppEntity<I>
         {
             var dbEntity = context.Find<T>(parentId);
             var dbEntry = context.Entry(dbEntity);

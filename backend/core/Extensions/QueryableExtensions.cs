@@ -15,6 +15,7 @@ namespace Pims.Core.Extensions
         private static readonly MethodInfo OrderByMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderBy" && method.GetParameters().Length == 2);
         private static readonly MethodInfo OrderByDescendingMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderByDescending" && method.GetParameters().Length == 2);
         private static readonly MethodInfo GeneratePropertyPathLambdaMethod = typeof(QueryableExtensions).GetMethod(nameof(GeneratePropertyPathLambda), BindingFlags.NonPublic | BindingFlags.Static);
+
         /// <summary>
         /// Order the query results by the specified property names.
         /// Each property can also specify the direction of the sort (i.e. "Name asc", "Name ascending", "Name desc", "Name descending").
@@ -72,19 +73,6 @@ namespace Pims.Core.Extensions
             return query;
         }
 
-        #endregion
-
-        /// <summary>
-        /// Check if the specified property exists in the specified type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        private static bool PropertyExists<T>(string propertyName)
-        {
-            return typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
-        }
-
         /// <summary>
         /// Order the query results by the specified property names.
         /// Any property name that doesn't exist will be ignored.
@@ -128,6 +116,8 @@ namespace Pims.Core.Extensions
             return query;
         }
 
+        #endregion
+
         /// <summary>
         /// Generates a LambdaExpression for the specified 'Type' and 'path'.
         /// </summary>
@@ -139,6 +129,17 @@ namespace Pims.Core.Extensions
             var parameter = Expression.Parameter(objectType, "x");
             var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
             return Expression.Lambda(body, parameter);
+        }
+
+        /// <summary>
+        /// Check if the specified property exists in the specified type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        private static bool PropertyExists<T>(string propertyName)
+        {
+            return typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
         }
 
         /// <summary>

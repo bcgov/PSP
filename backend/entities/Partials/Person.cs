@@ -22,8 +22,11 @@ namespace Pims.Dal.Entities
 
         public long? GetPersonOrganizationRowVersion() => PimsPersonOrganizations?.FirstOrDefault(t => t != null)?.ConcurrencyControlNumber;
 
-        public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o => { o.PimsPersonOrganizations = null;
-            return o; }).ToArray();
+        public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o =>
+        {
+            o.PimsPersonOrganizations = null;
+            return o;
+        }).ToArray();
 
         public ICollection<PimsAddress> GetAddresses() => PimsPersonAddresses?.Select(pa => pa.Address).ToArray();
 

@@ -38,6 +38,7 @@ namespace Pims.Geocoder
                 client.Client.DefaultRequestHeaders.Add("apikey", this.Options.Key);
             }
         }
+
         /// <summary>
         /// Sends an HTTP request to Geocoder for addresses that match the specified 'address'.
         /// </summary>
@@ -51,22 +52,6 @@ namespace Pims.Geocoder
                 AddressString = WebUtility.UrlEncode(address),
             };
             return await GetSiteAddressesAsync(parameters, outputFormat);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Generates the full URL including the host.
-        /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="outputFormat"></param>
-        /// <returns></returns>
-        private string GenerateUrl(string endpoint, string outputFormat = "json")
-        {
-            var host = this.Options.HostUri;
-            return $"{host}{endpoint.Replace("{outputFormat}", outputFormat)}";
         }
 
         /// <summary>
@@ -95,6 +80,10 @@ namespace Pims.Geocoder
             return await this.Client.GetAsync<FeatureModel>(url);
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Sends an HTTP request to Geocoder for x addresses that are the closest matches for the specified lat/lng.
         /// </summary>
@@ -121,6 +110,18 @@ namespace Pims.Geocoder
             var endpoint = this.Options.Parcels.PidsUrl.Replace("{siteId}", siteId.ToString());
             var uri = new Uri(GenerateUrl(endpoint, outputFormat));
             return await this.Client.GetAsync<SitePidsResponseModel>(uri);
+        }
+
+        /// <summary>
+        /// Generates the full URL including the host.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="outputFormat"></param>
+        /// <returns></returns>
+        private string GenerateUrl(string endpoint, string outputFormat = "json")
+        {
+            var host = this.Options.HostUri;
+            return $"{host}{endpoint.Replace("{outputFormat}", outputFormat)}";
         }
         #endregion
     }
