@@ -51,6 +51,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcquisitionFileStatusType> GetAcquisitionFileStatusTypes();
         IEnumerable<PimsAcqPhysFileStatusType> GetAcquisitionPhysFileStatusTypes();
         IEnumerable<PimsAcquisitionType> GetAcquisitionTypes();
+        IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes();
     }
 }
 
