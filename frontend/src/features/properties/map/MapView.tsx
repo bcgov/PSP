@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { pidParser } from 'utils';
 
 import Map from '../../../components/maps/leaflet/Map';
+import MapActionWindow from './MapActionWindow';
 import MapSideBar from './MapSideBar';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
@@ -32,7 +33,12 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const history = useHistory();
   const [loadedProperties, setLoadedProperties] = useState(false);
   const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
-  const { sidebarComponent, showSideBar } = useMapSideBarQueryParams(mapInstance);
+  const {
+    sidebarComponent,
+    showSideBar,
+    showWindow,
+    actionWindowComponent,
+  } = useMapSideBarQueryParams(mapInstance);
 
   const onMarkerClicked = (property: IProperty) => {
     history.push(`/mapview/property/${property.id}?pid=${property.pid}`);
@@ -72,6 +78,9 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
                   whenCreated={setMapInstance}
                 />
               </FilterProvider>
+              {showWindow && (
+                <MapActionWindow showWindow={showWindow}>{actionWindowComponent}</MapActionWindow>
+              )}
             </StyleMapView>
           </PropertyContextProvider>
         )}
