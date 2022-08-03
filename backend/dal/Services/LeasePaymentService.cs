@@ -1,19 +1,20 @@
+using System;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Security.Claims;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
 namespace Pims.Dal.Services
 {
     public class LeasePaymentService : ILeasePaymentService
     {
-        readonly Repositories.ILeaseTermRepository _leaseTermRepository;
-        readonly Repositories.ILeasePaymentRepository _leasePaymentRepository;
-        readonly ILeaseService _leaseService;
-        readonly ClaimsPrincipal _user;
+        private readonly Repositories.ILeaseTermRepository _leaseTermRepository;
+        private readonly Repositories.ILeasePaymentRepository _leasePaymentRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ClaimsPrincipal _user;
+
         public LeasePaymentService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeasePaymentRepository leasePaymentRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;
@@ -93,7 +94,8 @@ namespace Pims.Dal.Services
             if (payment.PaymentAmountTotal == 0)
             {
                 return PimsLeasePaymentStatusTypes.UNPAID;
-            } else if (payment.PaymentAmountTotal < expectedTotal)
+            }
+            else if (payment.PaymentAmountTotal < expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PARTIAL;
             }
@@ -104,7 +106,8 @@ namespace Pims.Dal.Services
             else if (payment.PaymentAmountTotal > expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.OVERPAID;
-            } else
+            }
+            else
             {
                 throw new InvalidOperationException("Invalid payment value provided");
             }

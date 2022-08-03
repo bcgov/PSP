@@ -10,7 +10,7 @@ namespace Pims.Dal.Services
 {
     public class PersonService : BaseService, IPersonService
     {
-        readonly Repositories.IPersonRepository _personRepository;
+        private readonly Repositories.IPersonRepository _personRepository;
 
         /// <summary>
         /// Creates a new instance of a PersonService, and initializes it with the specified arguments.

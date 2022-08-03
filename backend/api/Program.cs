@@ -45,7 +45,7 @@ namespace Pims.Api
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
+        private static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
         {
             var args = options.ToArgs();
             DotNetEnv.Env.Load();
