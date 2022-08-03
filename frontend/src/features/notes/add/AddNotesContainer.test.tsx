@@ -72,11 +72,13 @@ describe('AddNotesContainer component', () => {
     expect(textarea.tagName).toBe('TEXTAREA');
   });
 
-  it('should cancel form when Cancel button is clicked', () => {
+  it('should cancel form when Cancel button is clicked', async () => {
     const { getCancelButton, getByText } = setup();
 
     expect(getByText(/Notes/i)).toBeVisible();
-    userEvent.click(getCancelButton());
+    await waitFor(() => {
+      userEvent.click(getCancelButton());
+    });
 
     expect(closeModal).toBeCalled();
   });
@@ -92,22 +94,21 @@ describe('AddNotesContainer component', () => {
     userEvent.type(textarea, formValues.note.note);
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    userEvent.click(getSaveButton());
+    await waitFor(() => {
+      userEvent.click(getSaveButton());
+    });
 
     expect(closeModal).toBeCalled();
+    expect(onSuccess).toBeCalled();
 
-    await waitFor(() => {
-      const axiosData: Api_EntityNote = JSON.parse(mockAxios.history.post[0].data);
-      const expectedValues = formValues.toApi();
+    const axiosData: Api_EntityNote = JSON.parse(mockAxios.history.post[0].data);
+    const expectedValues = formValues.toApi();
 
-      expect(mockAxios.history.post[0].url).toBe('/notes/activity');
-      expect(axiosData.parent).toEqual(expectedValues.parent);
-      expect({ ...axiosData.note, id: undefined, rowVersion: undefined }).toEqual(
-        expectedValues.note,
-      );
-
-      expect(onSuccess).toBeCalled();
-    });
+    expect(mockAxios.history.post[0].url).toBe('/notes/activity');
+    expect(axiosData.parent).toEqual(expectedValues.parent);
+    expect({ ...axiosData.note, id: undefined, rowVersion: undefined }).toEqual(
+      expectedValues.note,
+    );
   });
 
   it('should support adding notes to other entity types', async () => {
@@ -121,13 +122,12 @@ describe('AddNotesContainer component', () => {
     userEvent.type(textarea, formValues.note.note);
 
     mockAxios.onPost().reply(200, mockEntityNote(1));
-    userEvent.click(getSaveButton());
+    await waitFor(() => {
+      userEvent.click(getSaveButton());
+    });
 
     expect(closeModal).toBeCalled();
-
-    await waitFor(() => {
-      expect(mockAxios.history.post[0].url).toBe('/notes/file');
-      expect(onSuccess).toBeCalled();
-    });
+    expect(onSuccess).toBeCalled();
+    expect(mockAxios.history.post[0].url).toBe('/notes/file');
   });
 });
