@@ -27,7 +27,8 @@ namespace Pims.Api.Services
         /// <param name="mapper"></param>
         /// <param name="noteRepository"></param>
         /// <param name="entityNoteRepository"></param>
-        public NoteService(ClaimsPrincipal user, ILogger<NoteService> logger, IMapper mapper, INoteRepository noteRepository, IEntityNoteRepository entityNoteRepository) : base(user, logger)
+        public NoteService(ClaimsPrincipal user, ILogger<NoteService> logger, IMapper mapper, INoteRepository noteRepository, IEntityNoteRepository entityNoteRepository)
+            : base(user, logger)
         {
             _mapper = mapper;
             _noteRepository = noteRepository;
@@ -87,10 +88,10 @@ namespace Pims.Api.Services
         }
 
         /// <summary>
-        /// Find and delete the note
+        /// Find and delete the note.
         /// </summary>
         /// <param name="type">Note type to determine the type of note to delete.</param>
-        /// <param name="noteId">Note id to identify the note to delete</param>
+        /// <param name="noteId">Note id to identify the note to delete.</param>
         public void DeleteNote(NoteType type, long noteId)
         {
             this.Logger.LogInformation("Deleting note with type {type} and id {noteId}", type, noteId);

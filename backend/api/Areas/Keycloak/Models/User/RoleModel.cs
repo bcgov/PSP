@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     public class RoleModel : Api.Models.BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify the role.
         /// </summary>

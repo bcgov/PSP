@@ -1,8 +1,8 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System.Linq;
 
 namespace Pims.Api.Policies
 {
@@ -16,6 +16,7 @@ namespace Pims.Api.Policies
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PermissionFilter class, initializes it with the specified permission.
         /// This will ensure the user has the specified permission.
@@ -38,6 +39,7 @@ namespace Pims.Api.Policies
         #endregion
 
         #region Methods
+
         /// <summary>
         /// On the authorization trigger validated that the user has the specified claim permissions.
         /// If they do not return an HTTP 403.

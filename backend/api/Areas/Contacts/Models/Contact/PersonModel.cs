@@ -5,6 +5,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
     public class PersonModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The person's id.
         /// </summary>

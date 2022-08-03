@@ -6,6 +6,7 @@ namespace Pims.Api.Models.Concepts
     public class AddressModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>
@@ -50,6 +51,7 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The address's region.
         /// </summary>
         public CodeTypeModel Region { get; set; }
+
         /// <summary>
         /// get/set - The free-form value of country when country code is "Other".
         /// </summary>

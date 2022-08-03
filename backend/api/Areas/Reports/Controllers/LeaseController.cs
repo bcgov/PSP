@@ -1,25 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using ClosedXML.Report;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Areas.Reports.Models.Lease;
 using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
 using Pims.Dal;
+using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Pims.Dal.Entities;
-using Pims.Api.Areas.Reports.Models.Lease;
-using ClosedXML.Report;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
 using Pims.Dal.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Reports.Controllers
 {
@@ -42,6 +42,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
@@ -60,10 +61,11 @@ namespace Pims.Api.Areas.Reports.Controllers
 
         #region Endpoints
         #region Export Leases
+
         /// <summary>
         /// Exports leases as CSV or Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
+        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
         /// </summary>
         /// <param name="all"></param>
         /// <returns></returns>
@@ -82,7 +84,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports leases as CSV or Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
+        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="all"></param>
@@ -118,7 +120,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
         /// <summary>
         /// Exports leases aggregated by program and region as an Excel file, only including leases that are part of the passed fiscal year.
-        /// 
+        ///
         /// </summary>
         /// <param name="fiscalYearStart"></param>
         /// <returns></returns>

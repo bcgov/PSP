@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     public class PropertyImprovementModel
     {
         #region PropertyImprovement
+
         /// <summary>
         /// get/set - The primary key to identify the property improvement.
         /// </summary>
@@ -19,7 +20,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
         public long RowVersion { get; set; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string StructureSize { get; set; }
 
         /// <summary>
-        /// get/set - Notes related to any address within the improvement
+        /// get/set - Notes related to any address within the improvement.
         /// </summary>
         public string Address { get; set; }
         #endregion

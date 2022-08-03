@@ -5,6 +5,7 @@ namespace Pims.Api.Areas.Reports.Models.Property
     public class PropertyModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The type of property.
         /// </summary>
@@ -70,6 +71,7 @@ namespace Pims.Api.Areas.Reports.Models.Property
         public bool IsSensitive { get; set; }
 
         #region Parcel Properties
+
         /// <summary>
         /// get/set - The parcel PID.
         /// </summary>

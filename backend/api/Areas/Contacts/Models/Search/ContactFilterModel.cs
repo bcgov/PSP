@@ -1,34 +1,32 @@
-using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Areas.Contact.Models.Search
 {
     public class ContactFilterModel : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - a string represented the type of filter to search for.
         /// </summary>
         public string SearchBy { get; set; }
 
         /// <summary>
-        /// get/set - Either the person or organization name
+        /// get/set - Either the person or organization name.
         /// </summary>
-        /// <value></value>
         public string Summary { get; set; }
 
         /// <summary>
         /// get/set - The Municipality of one of a Contact's addresses.
         /// </summary>
-        /// <value></value>
         public string Municipality { get; set; }
 
         /// <summary>
         /// get/set - Whether inactive contacts should be displayed.
         /// </summary>
-        /// <value></value>
         public bool ActiveContactsOnly { get; set; }
         #endregion
 
@@ -37,13 +35,16 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// <summary>
         /// Creates a new instance of a ContactFilterModel class.
         /// </summary>
-        public ContactFilterModel() { }
+        public ContactFilterModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a ContactFilterModel class, initializes with the specified arguments.
         /// </summary>
         /// <param name="query"></param>
-        public ContactFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query) : base(query)
+        public ContactFilterModel(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
+            : base(query)
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
@@ -57,6 +58,7 @@ namespace Pims.Api.Areas.Contact.Models.Search
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Convert to a ContactFilter.
         /// </summary>
@@ -73,7 +75,7 @@ namespace Pims.Api.Areas.Contact.Models.Search
                 Municipality = model.Municipality,
                 ActiveContactsOnly = model.ActiveContactsOnly,
 
-                Sort = model.Sort
+                Sort = model.Sort,
             };
 
             return filter;
@@ -86,9 +88,9 @@ namespace Pims.Api.Areas.Contact.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.SearchBy)
-                || !String.IsNullOrWhiteSpace(this.Summary)
-                || !String.IsNullOrWhiteSpace(this.Municipality);
+                || !string.IsNullOrWhiteSpace(this.SearchBy)
+                || !string.IsNullOrWhiteSpace(this.Summary)
+                || !string.IsNullOrWhiteSpace(this.Municipality);
         }
         #endregion
     }

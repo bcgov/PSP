@@ -1,7 +1,7 @@
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Models
 {
@@ -12,6 +12,7 @@ namespace Pims.Api.Models
     public class PageModel<T>
     {
         #region Properties
+
         /// <summary>
         /// get/set - The items on the page.
         /// </summary>
@@ -34,10 +35,13 @@ namespace Pims.Api.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PageModel of type 'T'.
         /// </summary>
-        public PageModel() { }
+        public PageModel()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PageModel of type 'T', initialize with specified arguments.

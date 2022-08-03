@@ -5,6 +5,7 @@ namespace Pims.Api.Models.Concepts
     public class PersonModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The person's id.
         /// </summary>

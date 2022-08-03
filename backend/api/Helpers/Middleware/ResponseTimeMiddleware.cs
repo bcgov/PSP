@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Pims.Api.Helpers.Middleware
 {
@@ -16,6 +16,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an ResponseTimeMiddleware class, and initializes it with the specified arguments.
         /// </summary>
@@ -27,6 +28,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Add a log message for the request.
         /// </summary>

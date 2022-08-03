@@ -22,6 +22,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an LogResponseMiddleware class, and initializes it with the specified arguments.
         /// </summary>
@@ -36,6 +37,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Add a log message for the request.
         /// </summary>
