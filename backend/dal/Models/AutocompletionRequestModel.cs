@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using Pims.Core.Extensions;
@@ -20,7 +19,9 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a AutocompletionRequestModel class.
         /// </summary>
-        public AutocompletionRequestModel() { }
+        public AutocompletionRequestModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a AutocompletionRequestModel class, initializes with the specified arguments.
@@ -33,13 +34,14 @@ namespace Pims.Dal.Entities.Models
             this.Search = filter.GetStringValue(nameof(this.Search));
             this.Top = filter.GetIntValue(nameof(this.Top), 5);
         }
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
         /// <returns></returns>
         public bool IsValid()
         {
-            return !String.IsNullOrWhiteSpace(this.Search)
+            return !string.IsNullOrWhiteSpace(this.Search)
                 && (this.Top >= 1 && this.Top <= 100);
         }
     }

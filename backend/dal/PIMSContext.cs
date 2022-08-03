@@ -35,28 +35,12 @@ namespace Pims.Dal
         /// <param name="httpContextAccessor"></param>
         /// <param name="serializerOptions"></param>
         /// <returns></returns>
-        public PimsContext(DbContextOptions<PimsContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null) : base(options)
+        public PimsContext(DbContextOptions<PimsContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null)
+            : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
             _serializerOptions = serializerOptions.Value;
         }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// Configures the DbContext with the specified options.
-        /// </summary>
-        /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.EnableSensitiveDataLogging();
-            }
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
         /// <summary>
         /// Save the entities with who created them or updated them.
         /// </summary>
@@ -70,13 +54,31 @@ namespace Pims.Dal
             // Default values are provided because depending on the claim source it may or may not have these values.
             var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "service";
             var key = _httpContextAccessor.HttpContext.User.GetUserKey();
-            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? "";
+            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? string.Empty;
             foreach (var entry in modifiedEntries)
             {
                 entry.UpdateAppAuditProperties(username, key, directory);
             }
 
             return base.SaveChanges();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Configures the DbContext with the specified options.
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.EnableSensitiveDataLogging();
+            }
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         /// <summary>

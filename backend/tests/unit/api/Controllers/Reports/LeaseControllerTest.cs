@@ -172,7 +172,7 @@ namespace Pims.Api.Test.Controllers.Reports
             leaseTerm.TermStartDate = DateTime.Now;
             leaseTerm.TermRenewalDate = DateTime.Now.AddDays(1);
             leaseTerm.TermExpiryDate = DateTime.Now.AddDays(2);
-            leaseTerm.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() {LeasePmtFreqTypeCode = "PMT", Description="pmt" };
+            leaseTerm.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() { LeasePmtFreqTypeCode = "PMT", Description = "pmt" };
             leaseTerm.PaymentAmount = 1000;
             lease.PimsLeaseTerms.Add(leaseTerm);
 

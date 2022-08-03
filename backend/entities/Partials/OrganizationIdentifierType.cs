@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -7,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsOrgIdentifierType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify organization type.
         /// </summary>
@@ -15,12 +17,14 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a OrganizationIdentifierType class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public PimsOrgIdentifierType(string id) : this()
+        public PimsOrgIdentifierType(string id)
+            : this()
         {
             Id = id;
         }

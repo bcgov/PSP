@@ -23,7 +23,8 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="lease"></param>
         /// <param name="property"></param>
-        public PimsPropertyLease(PimsLease lease, PimsProperty property) : this()
+        public PimsPropertyLease(PimsLease lease, PimsProperty property)
+            : this()
         {
             this.LeaseId = lease?.LeaseId ?? throw new ArgumentNullException(nameof(lease));
             this.Lease = lease;

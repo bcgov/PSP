@@ -13,6 +13,7 @@ namespace Pims.Core.Http.Models
         public TokenModel()
         {
         }
+
         public TokenModel(string jwtToken, string refreshToken)
         {
             var handler = new JwtSecurityTokenHandler();
@@ -27,6 +28,7 @@ namespace Pims.Core.Http.Models
         }
 
         #region Properties
+
         /// <summary>
         /// get/set - The access token.
         /// </summary>

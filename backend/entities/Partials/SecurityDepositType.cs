@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -7,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsSecurityDepositType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify security deposit type.
         /// </summary>
@@ -20,7 +22,8 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a SecurityDepositType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsSecurityDepositType(string id) : this()
+        public PimsSecurityDepositType(string id)
+            : this()
         {
             Id = id;
         }

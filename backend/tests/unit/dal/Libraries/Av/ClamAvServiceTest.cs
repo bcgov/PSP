@@ -95,7 +95,7 @@ namespace Pims.Dal.Test.Libraries.Av
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var options = Options.Create(new ClamAvOptions() {});
+            var options = Options.Create(new ClamAvOptions() { });
             var service = helper.Create<ClamAvService>(options, user);
 
             var client = helper.GetService<Mock<IClamClient>>();

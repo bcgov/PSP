@@ -9,10 +9,15 @@ namespace Pims.Dal.Repositories
     public interface IAccessRequestRepository : IRepository<PimsAccessRequest>
     {
         Paged<PimsAccessRequest> Get(AccessRequestFilter filter);
+
         PimsAccessRequest Get();
+
         PimsAccessRequest Get(long id);
+
         PimsAccessRequest Add(PimsAccessRequest addRequest);
+
         PimsAccessRequest Update(PimsAccessRequest updateRequest);
+
         PimsAccessRequest Delete(PimsAccessRequest deleteRequest);
     }
 }

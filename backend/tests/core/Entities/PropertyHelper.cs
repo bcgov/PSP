@@ -32,7 +32,7 @@ namespace Pims.Core.Test
             areaUnit ??= EntityHelper.CreatePropertyAreaUnitType("Sqft");
             dataSource ??= EntityHelper.CreateDataSourceType("LIS");
             status ??= EntityHelper.CreatePropertyStatusType("Status");
-            var property = new Entity.PimsProperty(pid, type, classification, address, new Entity.PimsPropPropTenureType {PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
+            var property = new Entity.PimsProperty(pid, type, classification, address, new Entity.PimsPropPropTenureType { PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
             {
                 PropertyId = pid,
                 Pin = pin,

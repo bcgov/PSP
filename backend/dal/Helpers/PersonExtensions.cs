@@ -53,7 +53,7 @@ namespace Pims.Dal.Entities
         }
 
         /// <summary>
-        /// Get the concatenated full name of this person
+        /// Get the concatenated full name of this person.
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>

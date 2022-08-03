@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 
@@ -14,6 +13,7 @@ namespace Pims.Dal.Repositories
     public class DocumentTypeRepository : BaseRepository<PimsDocumentTyp>, IDocumentTypeRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a DocumentTypeRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -22,7 +22,8 @@ namespace Pims.Dal.Repositories
         /// <param name="logger"></param>
         public DocumentTypeRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DocumentTypeRepository> logger)
             : base(dbContext, user, logger)
-        { }
+        {
+        }
         #endregion
 
         #region Methods

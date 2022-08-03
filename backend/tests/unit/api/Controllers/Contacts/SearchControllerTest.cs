@@ -26,7 +26,7 @@ namespace Pims.Api.Test.Controllers.Contact
     {
         #region Variables
         public readonly static IEnumerable<object[]> ContactFilters = new List<object[]>()
-        { 
+        {
             new object [] { new SModel.ContactFilterModel() { SearchBy = "persons" } },
             new object [] { new SModel.ContactFilterModel() { SearchBy = "organizations" } },
             new object [] { new SModel.ContactFilterModel() { SearchBy = "all" } },

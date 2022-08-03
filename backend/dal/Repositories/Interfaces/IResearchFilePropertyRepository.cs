@@ -6,10 +6,13 @@ namespace Pims.Dal.Repositories
     public interface IResearchFilePropertyRepository : IRepository
     {
         List<PimsPropertyResearchFile> GetByResearchFileId(long researchFileId);
-        int GetResearchFilePropertyRelatedCount(long propertyId);
-        PimsPropertyResearchFile Add(PimsPropertyResearchFile propertyResearchFile);
-        PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile);
-        void Delete(PimsPropertyResearchFile propertyResearchFile);
 
+        int GetResearchFilePropertyRelatedCount(long propertyId);
+
+        PimsPropertyResearchFile Add(PimsPropertyResearchFile propertyResearchFile);
+
+        PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile);
+
+        void Delete(PimsPropertyResearchFile propertyResearchFile);
     }
 }

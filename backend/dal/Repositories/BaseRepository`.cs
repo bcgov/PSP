@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.Extensions.Logging;
 
 namespace Pims.Dal.Repositories
@@ -18,16 +17,21 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a BaseService class, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        protected BaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger) : base(dbContext, user, logger) { }
+        protected BaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Find the entity for the specified 'keyValues'.
         /// </summary>

@@ -21,6 +21,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The HttpClient use to make requests.
         /// </summary>
@@ -28,6 +29,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a HttpRequestClient class, initializes it with the specified arguments.
         /// </summary>
@@ -41,13 +43,14 @@ namespace Pims.Core.Http
             {
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                IgnoreNullValues = true
+                IgnoreNullValues = true,
             };
             _logger = logger;
         }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Dispose managed resources.
         /// </summary>
@@ -55,18 +58,6 @@ namespace Pims.Core.Http
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
         }
 
         /// <summary>
@@ -96,7 +87,20 @@ namespace Pims.Core.Http
             throw new HttpClientRequestException(response, $"Response must contain JSON but was '{contentType.MediaType}'.");
         }
 
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
+        }
+
         #region HttpResponseMessage Methods
+
         /// <summary>
         /// Send an HTTP request to the specified 'url'.
         /// </summary>
@@ -155,7 +159,7 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public virtual Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url))
+            if (string.IsNullOrWhiteSpace(url))
             {
                 throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
             }
@@ -375,6 +379,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Serialization Methods
+
         /// <summary>
         /// Send an HTTP request to the specified 'url'.
         /// </summary>

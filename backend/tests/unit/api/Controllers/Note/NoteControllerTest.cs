@@ -140,7 +140,7 @@ namespace Pims.Api.Test.Controllers.Note
             service.Setup(m => m.Update(It.IsAny<NoteModel>())).Returns(noteModel);
 
             // Act
-            var result = controller.UpdateNote(Constants.NoteType.Activity, 1, noteModel) ;
+            var result = controller.UpdateNote(Constants.NoteType.Activity, 1, noteModel);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
