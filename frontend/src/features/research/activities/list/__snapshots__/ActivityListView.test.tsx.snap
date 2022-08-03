@@ -141,7 +141,7 @@ exports[`Activity List View renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c7 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -160,22 +160,18 @@ exports[`Activity List View renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c9 {
+.c8 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c8 {
+.c7 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
 .c5 {
   border-radius: 0.5rem;
-}
-
-.c6 {
-  border-left: 0.2rem solid white;
 }
 
 .c1 {
@@ -283,7 +279,7 @@ exports[`Activity List View renders as expected 1`] = `
           class="row"
         >
           <div
-            class="col-md-2"
+            class="col-md-1"
           >
             <label>
               Filter by:
@@ -328,21 +324,69 @@ exports[`Activity List View renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  value="1"
+                  value="AMENDD"
+                >
+                  Amended
+                </option>
+                <option
+                  class="option"
+                  value="APPROVD"
+                >
+                  Approved
+                </option>
+                <option
+                  class="option"
+                  value="CNCLD"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  value="DRAFT"
                 >
                   Draft
                 </option>
                 <option
                   class="option"
-                  value="2"
+                  value="FINAL"
+                >
+                  Final
+                </option>
+                <option
+                  class="option"
+                  value="NONE"
+                >
+                  None
+                </option>
+                <option
+                  class="option"
+                  value="RGSTRD"
+                >
+                  Registered
+                </option>
+                <option
+                  class="option"
+                  value="SENT"
                 >
                   Sent
+                </option>
+                <option
+                  class="option"
+                  value="SIGND"
+                >
+                  Signed
+                </option>
+                <option
+                  class="option"
+                  value="UNREGD"
+                >
+                  Unregistered
                 </option>
               </select>
             </div>
           </div>
           <div
-            class="c6 col-md-2"
+            class="col-md-1"
           >
             <button
               class="c4 Button Button--icon-only primary btn btn-primary"
@@ -369,6 +413,10 @@ exports[`Activity List View renders as expected 1`] = `
                 </svg>
               </div>
             </button>
+          </div>
+          <div
+            class="col-md-1"
+          >
             <button
               class="c4 Button Button--icon-only btn btn-info"
               data-testid="reset-button"
@@ -421,10 +469,10 @@ exports[`Activity List View renders as expected 1`] = `
               >
                 Activity type
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   <svg
-                    class="c8"
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -439,7 +487,7 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -466,10 +514,10 @@ exports[`Activity List View renders as expected 1`] = `
               >
                 Description
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   <svg
-                    class="c8"
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -484,7 +532,7 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -511,10 +559,10 @@ exports[`Activity List View renders as expected 1`] = `
               >
                 Status
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   <svg
-                    class="c8"
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -529,7 +577,7 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

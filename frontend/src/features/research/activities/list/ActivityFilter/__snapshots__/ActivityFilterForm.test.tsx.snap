@@ -8,7 +8,7 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c2.btn {
+  .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -38,49 +38,49 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c2.btn:hover {
+.c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c2.btn:focus {
+.c1.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
+.c1.btn.btn-primary {
   border: none;
 }
 
-.c2.btn.btn-secondary {
+.c1.btn.btn-secondary {
   background: none;
 }
 
-.c2.btn.btn-info {
+.c1.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
   background: none;
 }
 
-.c2.btn.btn-light {
+.c1.btn.btn-light {
   border: none;
 }
 
-.c2.btn.btn-dark {
+.c1.btn.btn-dark {
   border: none;
 }
 
-.c2.btn.btn-link {
+.c1.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,24 +129,20 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c2.Button .Button__icon {
+.c1.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c2.Button--icon-only:focus {
+.c1.Button--icon-only:focus {
   outline: none;
 }
 
-.c2.Button--icon-only .Button__icon {
+.c1.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
 .c0 {
   border-radius: 0.5rem;
-}
-
-.c1 {
-  border-left: 0.2rem solid white;
 }
 
 <form
@@ -157,7 +153,7 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
       class="row"
     >
       <div
-        class="col-md-2"
+        class="col-md-1"
       >
         <label>
           Filter by:
@@ -202,24 +198,72 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
-              value="1"
+              value="AMENDD"
+            >
+              Amended
+            </option>
+            <option
+              class="option"
+              value="APPROVD"
+            >
+              Approved
+            </option>
+            <option
+              class="option"
+              value="CNCLD"
+            >
+              Cancelled
+            </option>
+            <option
+              class="option"
+              value="DRAFT"
             >
               Draft
             </option>
             <option
               class="option"
-              value="2"
+              value="FINAL"
+            >
+              Final
+            </option>
+            <option
+              class="option"
+              value="NONE"
+            >
+              None
+            </option>
+            <option
+              class="option"
+              value="RGSTRD"
+            >
+              Registered
+            </option>
+            <option
+              class="option"
+              value="SENT"
             >
               Sent
+            </option>
+            <option
+              class="option"
+              value="SIGND"
+            >
+              Signed
+            </option>
+            <option
+              class="option"
+              value="UNREGD"
+            >
+              Unregistered
             </option>
           </select>
         </div>
       </div>
       <div
-        class="c1 col-md-2"
+        class="col-md-1"
       >
         <button
-          class="c2 Button Button--icon-only primary btn btn-primary"
+          class="c1 Button Button--icon-only primary btn btn-primary"
           data-testid="search"
           id="search-button"
           title="search"
@@ -243,8 +287,12 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
             </svg>
           </div>
         </button>
+      </div>
+      <div
+        class="col-md-1"
+      >
         <button
-          class="c2 Button Button--icon-only btn btn-info"
+          class="c1 Button Button--icon-only btn btn-info"
           data-testid="reset-button"
           id="reset-button"
           title="reset-button"
@@ -282,7 +330,7 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c2.btn {
+  .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -312,49 +360,49 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c2.btn:hover {
+.c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c2.btn:focus {
+.c1.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
+.c1.btn.btn-primary {
   border: none;
 }
 
-.c2.btn.btn-secondary {
+.c1.btn.btn-secondary {
   background: none;
 }
 
-.c2.btn.btn-info {
+.c1.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
   background: none;
 }
 
-.c2.btn.btn-light {
+.c1.btn.btn-light {
   border: none;
 }
 
-.c2.btn.btn-dark {
+.c1.btn.btn-dark {
   border: none;
 }
 
-.c2.btn.btn-link {
+.c1.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -374,9 +422,9 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
   padding: 0;
 }
 
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -385,14 +433,14 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
   outline: none;
 }
 
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -403,24 +451,20 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
   opacity: 0.65;
 }
 
-.c2.Button .Button__icon {
+.c1.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c2.Button--icon-only:focus {
+.c1.Button--icon-only:focus {
   outline: none;
 }
 
-.c2.Button--icon-only .Button__icon {
+.c1.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
 .c0 {
   border-radius: 0.5rem;
-}
-
-.c1 {
-  border-left: 0.2rem solid white;
 }
 
 <form
@@ -431,7 +475,7 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
       class="row"
     >
       <div
-        class="col-md-2"
+        class="col-md-1"
       >
         <label>
           Filter by:
@@ -476,24 +520,72 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
             </option>
             <option
               class="option"
-              value="1"
+              value="AMENDD"
+            >
+              Amended
+            </option>
+            <option
+              class="option"
+              value="APPROVD"
+            >
+              Approved
+            </option>
+            <option
+              class="option"
+              value="CNCLD"
+            >
+              Cancelled
+            </option>
+            <option
+              class="option"
+              value="DRAFT"
             >
               Draft
             </option>
             <option
               class="option"
-              value="2"
+              value="FINAL"
+            >
+              Final
+            </option>
+            <option
+              class="option"
+              value="NONE"
+            >
+              None
+            </option>
+            <option
+              class="option"
+              value="RGSTRD"
+            >
+              Registered
+            </option>
+            <option
+              class="option"
+              value="SENT"
             >
               Sent
+            </option>
+            <option
+              class="option"
+              value="SIGND"
+            >
+              Signed
+            </option>
+            <option
+              class="option"
+              value="UNREGD"
+            >
+              Unregistered
             </option>
           </select>
         </div>
       </div>
       <div
-        class="c1 col-md-2"
+        class="col-md-1"
       >
         <button
-          class="c2 Button Button--icon-only primary btn btn-primary"
+          class="c1 Button Button--icon-only primary btn btn-primary"
           data-testid="search"
           id="search-button"
           title="search"
@@ -517,8 +609,12 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
             </svg>
           </div>
         </button>
+      </div>
+      <div
+        class="col-md-1"
+      >
         <button
-          class="c2 Button Button--icon-only btn btn-info"
+          class="c1 Button Button--icon-only btn btn-info"
           data-testid="reset-button"
           id="reset-button"
           title="reset-button"
