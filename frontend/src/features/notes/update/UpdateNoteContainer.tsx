@@ -3,6 +3,7 @@ import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
 import { useModalManagement } from 'hooks/useModalManagement';
 import { Api_Note } from 'models/api/Note';
+import { useRef } from 'react';
 
 import { useUpdateNotesFormManagement } from '../hooks/useUpdateNotesFormManagement';
 import { NoteForm } from '../models';
@@ -20,13 +21,14 @@ export interface IUpdateNoteContainerProps {
   /** Whether to show the notes modal. Default: false */
   isOpened: boolean;
   /** Optional - callback to notify when save button is pressed. */
-  onSaveClick?: (noteForm: NoteForm, formikProps: FormikProps<NoteForm>) => void;
+  onSaveClick?: () => void;
   /** Optional - callback to notify when cancel button is pressed. */
-  onCancelClick?: (formikProps: FormikProps<NoteForm>) => void;
+  onCancelClick?: () => void;
 }
 
 export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props => {
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
+  const formikRef = useRef<FormikProps<NoteForm>>(null);
 
   const { handleSubmit, initialValues, validationSchema } = useUpdateNotesFormManagement({
     type: props.type,
@@ -34,29 +36,34 @@ export const UpdateNoteContainer: React.FC<IUpdateNoteContainerProps> = props =>
     onSuccess: props.onSuccess,
   });
 
-  const handleSaveClick = async (values: NoteForm, formikProps: FormikProps<NoteForm>) => {
-    formikProps?.setSubmitting(true);
-    await formikProps?.submitForm();
-    props.onSaveClick && props.onSaveClick(values, formikProps);
-  };
-
-  const handleCancelClick = (formikProps: FormikProps<NoteForm>) => {
-    if (formikProps?.dirty && formikProps.submitCount === 0) {
-      openConfirmModal();
-    } else {
-      handleCancelConfirm(formikProps);
+  const handleSaveClick = async () => {
+    if (formikRef.current !== null) {
+      formikRef.current.setSubmitting(true);
+      await formikRef.current.submitForm();
+      if (formikRef.current.isValid) {
+        props.onSaveClick && props.onSaveClick();
+      }
     }
   };
 
-  const handleCancelConfirm = (formikProps: FormikProps<NoteForm>) => {
+  const handleCancelClick = () => {
+    if (formikRef.current?.dirty) {
+      openConfirmModal();
+    } else {
+      handleCancelConfirm();
+    }
+  };
+
+  const handleCancelConfirm = () => {
     closeConfirmModal();
-    formikProps?.resetForm();
-    props.onCancelClick && props.onCancelClick(formikProps);
+    formikRef.current?.resetForm();
+    props.onCancelClick && props.onCancelClick();
   };
 
   return (
     <>
       <UpdateNoteFormModal
+        ref={formikRef}
         isOpened={props.isOpened}
         loading={props.loading}
         initialValues={initialValues}
