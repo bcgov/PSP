@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Hosting;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Pims.Api.Models.Health
 {
@@ -9,36 +9,36 @@ namespace Pims.Api.Models.Health
     public class EnvModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The environment name.
         /// </summary>
-        /// <value></value>
         public string Environment { get; set; }
 
         /// <summary>
         /// get/set - The version.
         /// </summary>
-        /// <value></value>
         public string Version { get; set; }
 
         /// <summary>
         /// get/set - The file version.
         /// </summary>
-        /// <value></value>
         public string FileVersion { get; set; }
 
         /// <summary>
         /// get/set - The information version.
         /// </summary>
-        /// <value></value>
         public string InformationalVersion { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a EnvModel object.
         /// </summary>
-        public EnvModel() { }
+        public EnvModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a EnvModel object, initializes it with specified arguments.

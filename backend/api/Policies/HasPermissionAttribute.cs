@@ -1,6 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Dal.Security;
-using System;
 
 namespace Pims.Api.Policies
 {
@@ -11,13 +11,15 @@ namespace Pims.Api.Policies
     public class HasPermissionAttribute : TypeFilterAttribute
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a HasPermissionAttribute, initializes it with the specified permission.
         /// This will ensure the user has the specified permission.
         /// </summary>
         /// <param name="permission"></param>
         /// <returns></returns>
-        public HasPermissionAttribute(Permissions permission) : base(typeof(PermissionFilter))
+        public HasPermissionAttribute(Permissions permission)
+            : base(typeof(PermissionFilter))
         {
             this.Arguments = new object[] { permission };
         }
@@ -28,7 +30,8 @@ namespace Pims.Api.Policies
         /// </summary>
         /// <param name="permissions"></param>
         /// <returns></returns>
-        public HasPermissionAttribute(params Permissions[] permissions) : base(typeof(PermissionFilter))
+        public HasPermissionAttribute(params Permissions[] permissions)
+            : base(typeof(PermissionFilter))
         {
             this.Arguments = new object[] { permissions };
         }

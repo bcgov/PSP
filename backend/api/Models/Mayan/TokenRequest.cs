@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Mayan
         public string Username { get; set; }
 
         /// <summary>
-        /// get/set - The user password
+        /// get/set - The user password.
         /// </summary>
         [JsonPropertyName("password")]
         public string Password { get; set; }

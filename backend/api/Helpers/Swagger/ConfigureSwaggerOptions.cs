@@ -1,9 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
 
 namespace Pims.Api.Helpers.Swagger
 {
@@ -42,7 +42,7 @@ namespace Pims.Api.Helpers.Swagger
                 Version = description.ApiVersion.ToString(),
                 Description = "Property Inventory Management System", // TODO: From configuration
                 Contact = new OpenApiContact() { Name = "Support", Email = "support@pims.gov.bc.ca" }, // TODO: From configuration
-                License = new OpenApiLicense() { Name = "APACHE", Url = new Uri("https://github.com/bcgov/PSP/blob/dev/LICENSE") } // TODO: From configuration
+                License = new OpenApiLicense() { Name = "APACHE", Url = new Uri("https://github.com/bcgov/PSP/blob/dev/LICENSE") }, // TODO: From configuration
             };
 
             if (description.IsDeprecated)

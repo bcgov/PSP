@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
     public class UserModel : Api.Models.BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>

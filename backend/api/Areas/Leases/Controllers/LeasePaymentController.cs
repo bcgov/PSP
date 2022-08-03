@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Lease.Controllers
 {
@@ -27,6 +27,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeasePaymentController class, initializes it with the specified arguments.
         /// </summary>
@@ -41,6 +42,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Update the specified payment on the passed lease.
         /// </summary>

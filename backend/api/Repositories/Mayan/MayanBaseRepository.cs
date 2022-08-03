@@ -18,8 +18,8 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public abstract class MayanBaseRepository
     {
-        private const string MayanConfigSectionKey = "Mayan";
         protected readonly MayanConfig _config;
+        private const string MayanConfigSectionKey = "Mayan";
         protected readonly IHttpClientFactory _httpClientFactory;
         protected readonly ILogger _logger;
 
@@ -117,7 +117,6 @@ namespace Pims.Api.Repositories.Mayan
                     Status = ExternalResultStatus.Error,
                     Message = "Exception during Put",
                 };
-
             }
         }
 
@@ -181,7 +180,7 @@ namespace Pims.Api.Repositories.Mayan
 
         protected Dictionary<string, string> GenerateQueryParams(string ordering = "", int? page = null, int? pageSize = null)
         {
-            Dictionary<string, string> queryParams = new();
+            Dictionary<string, string> queryParams = new ();
 
             if (!string.IsNullOrEmpty(ordering))
             {

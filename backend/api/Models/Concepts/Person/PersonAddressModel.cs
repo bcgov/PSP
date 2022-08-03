@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class PersonAddressModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The relationship id.
         /// </summary>

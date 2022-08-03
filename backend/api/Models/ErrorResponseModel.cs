@@ -1,7 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Pims.Core.Extensions;
-using System;
 
 namespace Pims.Api.Models
 {
@@ -11,36 +11,36 @@ namespace Pims.Api.Models
     public class ErrorResponseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The error message.
         /// </summary>
-        /// <value></value>
         public string Error { get; set; }
 
         /// <summary>
         /// get/set - The exception type that threw thew exception.
         /// </summary>
-        /// <value></value>
         public string Type { get; set; }
 
         /// <summary>
         /// get/set - The details of the error (all the inner exceptions.)
         /// </summary>
-        /// <value></value>
         public string Details { get; set; }
 
         /// <summary>
         /// get/set - The stack trace.
         /// </summary>
-        /// <value></value>
         public string StackTrace { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an ErrorResponseModel object.
         /// </summary>
-        public ErrorResponseModel() { }
+        public ErrorResponseModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of an ErrorResponseModel object, initializes with specified arguments.

@@ -26,6 +26,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a TenantController class, initializes it with the specified arguments.
         /// </summary>
@@ -41,6 +42,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Provides tenant settings that are configured for the environment.
         /// </summary>
@@ -61,7 +63,6 @@ namespace Pims.Api.Controllers
 
             return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
         }
-
 
         /// <summary>
         /// Updates the tenant for the specified 'code'.

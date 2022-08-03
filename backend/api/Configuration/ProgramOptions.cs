@@ -1,6 +1,6 @@
+using System.Linq;
 using CommandLine;
 using Pims.Core.Extensions;
-using System.Linq;
 
 namespace Pims.Api.Configuration
 {
@@ -10,6 +10,7 @@ namespace Pims.Api.Configuration
     public class ProgramOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - ASP NET Core environment.
         /// </summary>
@@ -30,6 +31,7 @@ namespace Pims.Api.Configuration
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Return an array of arguments of valid option values.
         /// </summary>
@@ -40,7 +42,7 @@ namespace Pims.Api.Configuration
             {
                 this.Urls,
                 this.Environment,
-                this.HttpsPort?.ToString()
+                this.HttpsPort?.ToString(),
             }.NotNull().ToArray();
         }
         #endregion

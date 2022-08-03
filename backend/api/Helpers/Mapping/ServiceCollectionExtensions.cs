@@ -1,13 +1,13 @@
-using Mapster;
-using MapsterMapper;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Pims.Dal;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using Mapster;
+using MapsterMapper;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Pims.Dal;
 
 namespace Pims.Api.Helpers.Mapping
 {
@@ -73,10 +73,10 @@ namespace Pims.Api.Helpers.Mapping
                         {
                             return (IRegister)Activator.CreateInstance(registerType, new object[] { optionsSerializer, optionsPims });
                         }
+
                         // Default to providing serializer options.
                         return (IRegister)Activator.CreateInstance(registerType, new[] { optionsSerializer });
-                    }
-                        )).ToList();
+                    })).ToList();
 
             config.Apply(registers);
 

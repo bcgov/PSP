@@ -1,10 +1,9 @@
 namespace Pims.Api.Areas.Property.Mapping.Search
 {
+    using System.Linq;
     using Mapster;
     using Entity = Pims.Dal.Entities;
     using Model = Pims.Api.Areas.Property.Models.Search;
-    using System.Linq;
-    using System;
 
     public class PropertyMap : IRegister
     {
@@ -24,7 +23,7 @@ namespace Pims.Api.Areas.Property.Mapping.Search
                 .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
                 .Map(dest => dest.ClassificationId, src => src.PropertyClassificationTypeCode)
                 .Map(dest => dest.Classification, src => src.PropertyClassificationTypeCodeNavigation.Description)
-                .Map(dest => dest.Tenure, src => String.Join(", ", src.PimsPropPropTenureTypes.Select(tt => tt.PropertyTenureTypeCodeNavigation.Description)))
+                .Map(dest => dest.Tenure, src => string.Join(", ", src.PimsPropPropTenureTypes.Select(tt => tt.PropertyTenureTypeCodeNavigation.Description)))
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)

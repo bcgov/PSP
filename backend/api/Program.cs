@@ -40,6 +40,17 @@ namespace Pims.Api
                 });
         }
 
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            DotNetEnv.Env.Load();
+            return Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                config.AddEnvironmentVariables();
+                config.AddCommandLine(args);
+            });
+        }
+
         /// <summary>
         /// Create a default configuration and setup for a web application.
         /// </summary>
@@ -74,17 +85,6 @@ namespace Pims.Api
                 .UseSerilog()
                 .UseUrls(config.GetValue<string>("ASPNETCORE_URLS"))
                 .UseStartup<Startup>();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            DotNetEnv.Env.Load();
-            return Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                config.AddEnvironmentVariables();
-                config.AddCommandLine(args);
-            });
         }
     }
 }

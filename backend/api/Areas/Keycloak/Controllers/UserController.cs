@@ -1,15 +1,13 @@
+using System;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Model = Pims.Api.Models.Concepts;
 using Entity = Pims.Dal.Entities;
-using KModel = Pims.Api.Areas.Keycloak.Models.User;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Keycloak.Controllers
 {
@@ -30,6 +28,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>

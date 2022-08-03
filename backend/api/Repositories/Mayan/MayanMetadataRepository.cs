@@ -44,7 +44,7 @@ namespace Pims.Api.Repositories.Mayan
 
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
             string endpointString = $"{_config.BaseUri}/metadata_types/";
-            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            Uri endpoint = new (QueryHelpers.AddQueryString(endpointString, queryParams));
 
             var response = await GetAsync<QueryResult<MetadataType>>(endpoint, authenticationToken).ConfigureAwait(true);
 
@@ -58,7 +58,7 @@ namespace Pims.Api.Repositories.Mayan
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            JsonSerializerOptions serializerOptions = new()
+            JsonSerializerOptions serializerOptions = new ()
             {
                 IgnoreNullValues = true,
             };
@@ -66,7 +66,7 @@ namespace Pims.Api.Repositories.Mayan
             using HttpContent content = new StringContent(serializedMetadataType);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Uri endpoint = new($"{this._config.BaseUri}/metadata_types/");
+            Uri endpoint = new ($"{this._config.BaseUri}/metadata_types/");
 
             var response = await PostAsync<MetadataType>(endpoint, content, authenticationToken).ConfigureAwait(true);
 
@@ -80,7 +80,7 @@ namespace Pims.Api.Repositories.Mayan
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            Uri endpoint = new($"{this._config.BaseUri}/metadata_types/{metadataTypeId}/");
+            Uri endpoint = new ($"{this._config.BaseUri}/metadata_types/{metadataTypeId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
 
