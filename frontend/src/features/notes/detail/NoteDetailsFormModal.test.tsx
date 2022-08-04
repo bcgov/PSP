@@ -41,7 +41,7 @@ describe('NoteDetailsFormModal component', () => {
     return {
       ...utils,
       getEditButton: () => utils.getByRole('button', { name: /edit/i }),
-      getCloseButton: () => utils.getAllByRole('button', { name: /close/i })[1],
+      getModalCloseButton: () => utils.getByTitle('ok-modal'),
     };
   };
 
@@ -74,9 +74,9 @@ describe('NoteDetailsFormModal component', () => {
     expect(textarea).toHaveAttribute('readonly');
   });
 
-  it('should execute callback when Close button is clicked', () => {
-    const { getCloseButton } = setup();
-    userEvent.click(getCloseButton());
+  it('should execute callback when Close button is clicked', async () => {
+    const { getModalCloseButton } = setup();
+    userEvent.click(getModalCloseButton());
 
     expect(onClose).toBeCalled();
   });
