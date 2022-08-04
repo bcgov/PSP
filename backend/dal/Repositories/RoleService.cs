@@ -120,7 +120,6 @@ namespace Pims.Dal.Repositories
         /// Add the specified role to the datasource.
         /// </summary>
         /// <param name="add"></param>
-        /// <returns></returns>
         public void AddWithoutSave(PimsRole add)
         {
             add.ThrowIfNull(nameof(add));

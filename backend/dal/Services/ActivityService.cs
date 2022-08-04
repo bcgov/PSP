@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
@@ -8,20 +7,15 @@ namespace Pims.Dal.Services
 {
     public class ActivityService : IActivityService
     {
-        private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
 
         public ActivityService(
-            ClaimsPrincipal user,
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
-             IActivityTemplateRepository activityTemplateRepository,
-        IPropertyRepository propertyRepository,
-            ICoordinateTransformService coordinateService)
+            IActivityTemplateRepository activityTemplateRepository)
         {
-            _user = user;
             _logger = logger;
             _activityRepository = activityRepository;
             _activityTemplateRepository = activityTemplateRepository;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -137,15 +138,16 @@ namespace Pims.Dal.Repositories
             this.Context.UpdateChild<PimsPerson, long, PimsContactMethod>(p => p.PimsContactMethods, personId, person.PimsContactMethods.ToArray());
             this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
 
+            // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
+            Func<PimsContext, PimsPersonAddress, bool> canDeleteGrandchild = (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false;
+
             // update addresses via UpdateGrandchild method
             this.Context.UpdateGrandchild<PimsPerson, long, PimsPersonAddress>(
                 p => p.PimsPersonAddresses,
                 pa => pa.Address,
                 personId,
                 person.PimsPersonAddresses.ToArray(),
-
-                // Can only delete an associated address if not shared with an organization. Only applies to MAILING address.
-                (context, pa) => context.PimsOrganizationAddresses.Any(o => o.AddressId == pa.AddressId) == false);
+                canDeleteGrandchild);
 
             return existingPerson;
         }
