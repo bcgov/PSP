@@ -3,6 +3,7 @@ import { GenericModal } from 'components/common/GenericModal';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
@@ -26,7 +27,10 @@ export interface IUpdateNoteFormModalProps {
   onCancelClick?: (formikProps: FormikProps<NoteForm>) => void;
 }
 
-export const UpdateNoteFormModal: React.FC<IUpdateNoteFormModalProps> = props => {
+export const UpdateNoteFormModal = React.forwardRef<
+  FormikProps<NoteForm>,
+  IUpdateNoteFormModalProps
+>((props, ref) => {
   const {
     loading,
     isOpened,
@@ -42,6 +46,7 @@ export const UpdateNoteFormModal: React.FC<IUpdateNoteFormModalProps> = props =>
   return (
     <Formik<NoteForm>
       enableReinitialize
+      innerRef={ref}
       validationSchema={validationSchema}
       initialValues={initialValues}
       onSubmit={onSubmit}
@@ -64,7 +69,7 @@ export const UpdateNoteFormModal: React.FC<IUpdateNoteFormModalProps> = props =>
       )}
     </Formik>
   );
-};
+});
 
 const FormBody: React.FC<FormikProps<NoteForm>> = ({ values }) => {
   return (

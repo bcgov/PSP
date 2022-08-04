@@ -338,6 +338,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
         >
           <button
             class="c3 Button btn btn-secondary"
+            title="cancel-modal"
             type="button"
           >
             <div
@@ -348,6 +349,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
           </button>
           <button
             class="c3 Button btn btn-primary"
+            title="ok-modal"
             type="button"
           >
             <div

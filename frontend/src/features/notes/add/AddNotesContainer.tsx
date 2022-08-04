@@ -1,5 +1,8 @@
+import { CancelConfirmationModal } from 'components/common/CancelConfirmationModal';
 import { NoteTypes } from 'constants/index';
 import { FormikProps } from 'formik';
+import { useModalManagement } from 'hooks/useModalManagement';
+import { useRef } from 'react';
 
 import { useAddNotesFormManagement } from '../hooks/useAddNotesFormManagement';
 import { AddNotesFormModal } from './AddNotesFormModal';
@@ -21,31 +24,56 @@ export interface IAddNotesContainerProps {
 }
 
 export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
+  const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
+  const formikRef = useRef<FormikProps<EntityNoteForm>>(null);
+
   const { handleSubmit, initialValues, validationSchema } = useAddNotesFormManagement({
     type: props.type,
     parentId: props.parentId,
     onSuccess: props.onSuccess,
   });
 
-  const onSaveClick = (noteForm: EntityNoteForm, formikProps: FormikProps<EntityNoteForm>) => {
-    formikProps?.setSubmitting(true);
-    formikProps?.submitForm();
+  const handleSaveClick = async () => {
+    if (formikRef.current !== null) {
+      formikRef.current.setSubmitting(true);
+      await formikRef.current.submitForm();
+      if (formikRef.current.isValid) {
+        props.closeModal && props.closeModal();
+      }
+    }
   };
 
-  const onCancelClick = (formikProps: FormikProps<EntityNoteForm>) => {
-    formikProps?.resetForm();
+  const handleCancelClick = () => {
+    if (formikRef.current?.dirty) {
+      openConfirmModal();
+    } else {
+      handleCancelConfirm();
+    }
+  };
+
+  const handleCancelConfirm = () => {
+    closeConfirmModal();
+    formikRef.current?.resetForm();
+    props.closeModal && props.closeModal();
   };
 
   return (
-    <AddNotesFormModal
-      isOpened={props.isOpened}
-      openModal={props.openModal}
-      closeModal={props.closeModal}
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      onSaveClick={onSaveClick}
-      onCancelClick={onCancelClick}
-    />
+    <>
+      <AddNotesFormModal
+        ref={formikRef}
+        isOpened={props.isOpened}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        onSaveClick={handleSaveClick}
+        onCancelClick={handleCancelClick}
+      />
+
+      <CancelConfirmationModal
+        display={showConfirmModal}
+        handleOk={handleCancelConfirm}
+        handleCancel={closeConfirmModal}
+      />
+    </>
   );
 };

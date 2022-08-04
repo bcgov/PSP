@@ -55,11 +55,12 @@ const columns = [
     minWidth: 200,
     width: 300,
     Cell: (props: CellProps<FormTenant>) => {
-      const persons = props.row.original?.organizationPersons?.map(op => op.person);
-      let primaryContact = props.row.original.initialPrimaryContact;
-      if (props.row.original.primaryContactId !== props.row.original.initialPrimaryContact?.id) {
-        primaryContact = props.row.original.primaryContactId
-          ? getPrimaryContact(props.row.original.primaryContactId, props.row.original)
+      const original = props.row.original;
+      const persons = original?.organizationPersons?.map(op => op.person);
+      let primaryContact = original.initialPrimaryContact;
+      if (original.primaryContactId !== original.initialPrimaryContact?.id) {
+        primaryContact = original.primaryContactId
+          ? getPrimaryContact(original.primaryContactId, original)
           : undefined;
       }
       const primaryContactOptions: SelectOption[] =
@@ -79,7 +80,7 @@ const columns = [
           ></Select>
         );
       } else if (persons?.length === 1) {
-        return <p>{formatApiPersonNames(primaryContact)}</p>;
+        return <p>{formatApiPersonNames(primaryContact ?? persons[0])}</p>;
       } else {
         return <p>No contacts available</p>;
       }
