@@ -37,7 +37,7 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = null,
                 PimsLeaseTerms = new List<PimsLeaseTerm>() {
-                new PimsLeaseTerm() { TermExpiryDate = now } },
+                new PimsLeaseTerm() { TermExpiryDate = now }, },
             };
             Assert.Equal(now, lease.GetExpiryDate());
         }
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = later,
                 PimsLeaseTerms = new List<PimsLeaseTerm>() {
-                new PimsLeaseTerm() { TermExpiryDate = now } },
+                new PimsLeaseTerm() { TermExpiryDate = now }, },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
@@ -81,7 +81,7 @@ namespace Pims.Dal.Test.Core.Extensions
                 OrigExpiryDate = now,
                 PimsLeaseTerms =
                 new List<PimsLeaseTerm>() { new PimsLeaseTerm() { TermExpiryDate = later },
-                    new PimsLeaseTerm() { TermExpiryDate = before } },
+                    new PimsLeaseTerm() { TermExpiryDate = before }, },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }

@@ -142,7 +142,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
+                    },
                 },
             };
 
@@ -187,7 +187,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
+                    },
                 },
             };
 
@@ -201,8 +201,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             // Act
             // Assert
-            await service.GetTitleSummariesAsync(123456789); //the first call will use the regular token
-            await service.GetTitleSummariesAsync(123456789); //the second call will use the refresh token
+            await service.GetTitleSummariesAsync(123456789); // the first call will use the regular token
+            await service.GetTitleSummariesAsync(123456789); // the second call will use the refresh token
 
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Once);
@@ -233,7 +233,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
+                    },
                 },
             };
 
@@ -247,8 +247,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             // Act
             // Assert
-            await service.GetTitleSummariesAsync(123456789); //the first call will use the regular token
-            await service.GetTitleSummariesAsync(123456789); //the second call will use the refresh token
+            await service.GetTitleSummariesAsync(123456789); // the first call will use the regular token
+            await service.GetTitleSummariesAsync(123456789); // the second call will use the refresh token
 
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Exactly(2));
@@ -284,7 +284,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
+                    },
                 },
             };
 
@@ -298,8 +298,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             // Act
             // Assert
-            var response = await service.GetTitleSummariesAsync(123456789); //the first call will use the regular token
-            await Assert.ThrowsAsync<LtsaException>(async () => await service.GetTitleSummariesAsync(123456789)); //the second call will use the refresh token
+            var response = await service.GetTitleSummariesAsync(123456789); // the first call will use the regular token
+            await Assert.ThrowsAsync<LtsaException>(async () => await service.GetTitleSummariesAsync(123456789)); // the second call will use the refresh token
 
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Once);
@@ -604,7 +604,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
+                    },
                 },
             };
 
@@ -655,7 +655,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
                     {
                         TitleNumber = "titleNumber",
                         LandTitleDistrictCode = LandTitleDistrictCode.VA,
-                    }
+                    },
                 },
             };
 

@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Helpers
                 new object[]
                 {
                     new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") },
-                    "PropertyTypeCode,Description,IsDisabled,DisplayOrder,ConcurrencyControlNumber,DbCreateTimestamp,DbCreateUserid,DbLastUpdateTimestamp,DbLastUpdateUserid,Id\r\ntest1,,,,0,01/01/0001 00:00:00,,01/01/0001 00:00:00,,test1\r\ntest2,,,,0,01/01/0001 00:00:00,,01/01/0001 00:00:00,,test2\r\n"
+                    "PropertyTypeCode,Description,IsDisabled,DisplayOrder,ConcurrencyControlNumber,DbCreateTimestamp,DbCreateUserid,DbLastUpdateTimestamp,DbLastUpdateUserid,Id\r\ntest1,,,,0,01/01/0001 00:00:00,,01/01/0001 00:00:00,,test1\r\ntest2,,,,0,01/01/0001 00:00:00,,01/01/0001 00:00:00,,test2\r\n",
                 },
             };
 
@@ -37,7 +37,7 @@ namespace Pims.Api.Test.Helpers
                 {
                     new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") },
                     "-",
-                    "PropertyTypeCode-Description-IsDisabled-DisplayOrder-ConcurrencyControlNumber-DbCreateTimestamp-DbCreateUserid-DbLastUpdateTimestamp-DbLastUpdateUserid-Id\r\ntest1----0-01/01/0001 00:00:00--01/01/0001 00:00:00--test1\r\ntest2----0-01/01/0001 00:00:00--01/01/0001 00:00:00--test2\r\n"
+                    "PropertyTypeCode-Description-IsDisabled-DisplayOrder-ConcurrencyControlNumber-DbCreateTimestamp-DbCreateUserid-DbLastUpdateTimestamp-DbLastUpdateUserid-Id\r\ntest1----0-01/01/0001 00:00:00--01/01/0001 00:00:00--test1\r\ntest2----0-01/01/0001 00:00:00--01/01/0001 00:00:00--test2\r\n",
                 },
             };
         #endregion

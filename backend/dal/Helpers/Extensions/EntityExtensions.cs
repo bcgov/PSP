@@ -105,18 +105,18 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type.</typeparam>
-        /// <typeparam name="I">The type of the id property.</typeparam>
-        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <typeparam name="T_Entity">The parent entity type.</typeparam>
+        /// <typeparam name="T_Id">The type of the id property.</typeparam>
+        /// <typeparam name="T_ChildEntity">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="children"></param>
-        public static void UpdateChild<T, I, C>(this PimsContext context, Expression<Func<T, object>> childNavigation, I parentId, C[] children)
-            where T : IdentityBaseAppEntity<I>
-            where C : IdentityBaseAppEntity<I>
+        public static void UpdateChild<T_Entity, T_Id, T_ChildEntity>(this PimsContext context, Expression<Func<T_Entity, object>> childNavigation, T_Id parentId, T_ChildEntity[] children)
+            where T_Entity : IdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {
-            var dbEntity = context.Find<T>(parentId);
+            var dbEntity = context.Find<T_Entity>(parentId);
 
             var dbEntry = context.Entry(dbEntity);
 
@@ -125,7 +125,7 @@ namespace Pims.Dal.Helpers.Extensions
             var accessor = dbItemsEntry.Metadata.GetCollectionAccessor();
 
             dbItemsEntry.Load();
-            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<IdentityBaseAppEntity<I>>()
+            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>()
                 .ToDictionary(e => e.Id);
 
             foreach (var item in children)
@@ -153,22 +153,22 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type.</typeparam>
-        /// <typeparam name="I">The type of the id property.</typeparam>
-        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <typeparam name="T_Entity">The parent entity type.</typeparam>
+        /// <typeparam name="T_Id">The type of the id property.</typeparam>
+        /// <typeparam name="T_ChildEntity">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
-        public static void UpdateGrandchild<T, I, C>(
+        public static void UpdateGrandchild<T_Entity, T_Id, T_ChildEntity>(
             this PimsContext context,
-            Expression<Func<T, object>> childNavigation,
-            Expression<Func<C, object>> grandchildNavigation,
-            I parentId,
-            C[] childrenWithGrandchildren)
-            where T : IdentityBaseAppEntity<I>
-            where C : IdentityBaseAppEntity<I>
+            Expression<Func<T_Entity, object>> childNavigation,
+            Expression<Func<T_ChildEntity, object>> grandchildNavigation,
+            T_Id parentId,
+            T_ChildEntity[] childrenWithGrandchildren)
+            where T_Entity : IdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {
             UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
         }
@@ -178,26 +178,26 @@ namespace Pims.Dal.Helpers.Extensions
         /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
         /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
         /// </summary>
-        /// <typeparam name="T">The parent entity type.</typeparam>
-        /// <typeparam name="I">The type of the id property.</typeparam>
-        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <typeparam name="T_Entity">The parent entity type.</typeparam>
+        /// <typeparam name="T_Id">The type of the id property.</typeparam>
+        /// <typeparam name="T_ChildEntity">The type of the child navigation property being targeted for updates.</typeparam>
         /// <param name="context"></param>
         /// <param name="childNavigation"></param>
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
         /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
-        public static void UpdateGrandchild<T, I, C>(
+        public static void UpdateGrandchild<T_Entity, T_Id, T_ChildEntity>(
             this PimsContext context,
-            Expression<Func<T, object>> childNavigation,
-            Expression<Func<C, object>> grandchildNavigation,
-            I parentId,
-            C[] childrenWithGrandchildren,
-            Func<PimsContext, C, bool> canDeleteGrandchild)
-            where T : IdentityBaseAppEntity<I>
-            where C : IdentityBaseAppEntity<I>
+            Expression<Func<T_Entity, object>> childNavigation,
+            Expression<Func<T_ChildEntity, object>> grandchildNavigation,
+            T_Id parentId,
+            T_ChildEntity[] childrenWithGrandchildren,
+            Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild)
+            where T_Entity : IdentityBaseAppEntity<T_Id>
+            where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {
-            var dbEntity = context.Find<T>(parentId);
+            var dbEntity = context.Find<T_Entity>(parentId);
             var dbEntry = context.Entry(dbEntity);
 
             var childPropertyName = childNavigation.GetPropertyAccess().Name;
@@ -205,7 +205,7 @@ namespace Pims.Dal.Helpers.Extensions
             var childAccessor = childCollection.Metadata.GetCollectionAccessor();
 
             childCollection.Load();
-            var existingChildren = childCollection.CurrentValue.Cast<IdentityBaseAppEntity<I>>().ToDictionary(e => e.Id);
+            var existingChildren = childCollection.CurrentValue.Cast<IdentityBaseAppEntity<T_Id>>().ToDictionary(e => e.Id);
 
             // Compile the grandchildNavigation lambda expression so we can extract the value from the passed in array of children
             var grandchildPropertyName = grandchildNavigation.GetPropertyAccess().Name;
@@ -242,7 +242,7 @@ namespace Pims.Dal.Helpers.Extensions
                 context.Remove(existingChild);
 
                 // Also remove the grandchild referenced by the child being removed
-                if (canDeleteGrandchild(context, existingChild as C))
+                if (canDeleteGrandchild(context, existingChild as T_ChildEntity))
                 {
                     // load grandchild navigation property
                     var grandchildReference = dbChildEntry.Reference(grandchildPropertyName);

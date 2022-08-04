@@ -224,7 +224,7 @@ namespace Pims.Core.Test
 
         public IFormFile GetFormFile(string text)
         {
-            //Setup mock file using a memory stream
+            // Setup mock file using a memory stream
             var fileName = "test.pdf";
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
@@ -232,7 +232,7 @@ namespace Pims.Core.Test
             writer.Flush();
             stream.Position = 0;
 
-            //create FormFile with desired data
+            // create FormFile with desired data
             IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
             return file;
         }

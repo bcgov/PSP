@@ -67,8 +67,8 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Gets a collection of documents for the specified type and owner id.
         /// </summary>
-        /// <param name="type">Used to identify document type.</param>
-        /// <param name="entityId">Used to identify document's parent entity.</param>
+        /// <param name="relationshipType">Used to identify document type.</param>
+        /// <param name="parentId">Used to identify document's parent entity.</param>
         /// <returns></returns>
         [HttpGet("{relationshipType}/{parentId:long}")]
         [Produces("application/json")]
@@ -92,8 +92,9 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Uploads a document for the given relationship.
         /// </summary>
-        /// <param name="type">Used to identify document type.</param>
-        /// <param name="entityId">Used to identify document's parent entity.</param>
+        /// <param name="relationshipType">Used to identify document type.</param>
+        /// <param name="parentId">Used to identify document's parent entity.</param>
+        /// <param name="uploadRequest">Contains information about the file to upload.</param>
         /// <returns></returns>
         [HttpPost("upload/{relationshipType}/{parentId:long}")]
         [Produces("application/json")]
