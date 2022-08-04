@@ -21,14 +21,14 @@ namespace Pims.Core.Test
             return new Entity.PimsPerson(surname, firstName, address ?? EntityHelper.CreateAddress(id))
             {
                 PersonId = id,
-                AppCreateUserDirectory = "",
-                AppCreateUserid = "",
-                AppLastUpdateUserDirectory = "",
-                AppLastUpdateUserid = "",
-                DbCreateUserid = "",
-                DbLastUpdateUserid = "",
+                AppCreateUserDirectory = string.Empty,
+                AppCreateUserid = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
                 IsDisabled = false,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
 
@@ -47,15 +47,14 @@ namespace Pims.Core.Test
             {
                 PersonId = id,
                 ConcurrencyControlNumber = 1,
-                AppCreateUserDirectory = "",
-                AppCreateUserid = "",
-                AppLastUpdateUserDirectory = "",
-                AppLastUpdateUserid = "",
-                DbCreateUserid = "",
-                DbLastUpdateUserid = "",
-                IsDisabled = false
+                AppCreateUserDirectory = string.Empty,
+                AppCreateUserid = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                IsDisabled = false,
             };
         }
     }
 }
-

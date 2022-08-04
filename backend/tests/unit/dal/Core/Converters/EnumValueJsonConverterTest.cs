@@ -1,10 +1,10 @@
-using Pims.Core.Converters;
-using Pims.Core.Json;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Pims.Core.Converters;
+using Pims.Core.Json;
 using Xunit;
 
 namespace Pims.Dal.Test.Core.Converters
@@ -25,13 +25,13 @@ namespace Pims.Dal.Test.Core.Converters
             [EnumValue("hex")]
             Hex,
             [EnumValue("base64")]
-            Base64
+            Base64,
         }
 
         public static IEnumerable<object[]> WriteData = new List<object[]>()
         {
             new object[] { TestEnum.Utf8, "{\"test\":\"utf-8\"}" },
-            new object[] { TestEnum.Base64, "{\"test\":\"base64\"}" }
+            new object[] { TestEnum.Base64, "{\"test\":\"base64\"}" },
         };
 
         public static IEnumerable<object[]> ReadData = new List<object[]>()

@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Api.Configuration;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Api.Test.Exceptions
@@ -35,7 +35,7 @@ namespace Pims.Api.Test.Exceptions
             {
                 Environment = "Development",
                 Urls = "https://test.com",
-                HttpsPort = 443
+                HttpsPort = 443,
             };
 
             // Assert

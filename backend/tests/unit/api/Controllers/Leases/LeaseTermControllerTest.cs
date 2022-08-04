@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -5,12 +8,9 @@ using Pims.Api.Areas.Lease.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System.Diagnostics.CodeAnalysis;
-using Xunit;
-using System.Collections.Generic;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
 using Pims.Dal.Services;
-using FluentAssertions;
+using Xunit;
+using Model = Pims.Api.Areas.Lease.Models.Lease;
 
 namespace Pims.Api.Test.Controllers.Lease
 {

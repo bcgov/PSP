@@ -28,7 +28,7 @@ namespace Pims.Core.Test
             {
                 new Entity.PimsAcquisitionFileStatusType("ACTIVE") { ConcurrencyControlNumber = 1 },
                 new Entity.PimsAcquisitionFileStatusType("ARCHIV") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAcquisitionFileStatusType("CLOSED") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsAcquisitionFileStatusType("CLOSED") { ConcurrencyControlNumber = 1 },
             };
         }
     }

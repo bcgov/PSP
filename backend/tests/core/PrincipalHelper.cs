@@ -1,9 +1,9 @@
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Core.Test
 {
@@ -24,7 +24,7 @@ namespace Pims.Core.Test
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+                new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
             };
 
             foreach (var claim in role)
@@ -62,7 +62,7 @@ namespace Pims.Core.Test
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Email, "test@test.com")
+                new Claim(ClaimTypes.Email, "test@test.com"),
             };
 
             foreach (var claim in permission)
@@ -112,7 +112,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static ClaimsPrincipal AddOrganization(this ClaimsPrincipal user, params int[] organizationId)
         {
-            var organizations = String.Join(",", organizationId);
+            var organizations = string.Join(",", organizationId);
             return user.AddClaim("organizations", organizations);
         }
 
@@ -124,7 +124,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static ClaimsPrincipal AddOrganization(this ClaimsPrincipal user, IEnumerable<int> organizationIds)
         {
-            return user.AddClaim("organizations", String.Join(",", organizationIds));
+            return user.AddClaim("organizations", string.Join(",", organizationIds));
         }
     }
 }

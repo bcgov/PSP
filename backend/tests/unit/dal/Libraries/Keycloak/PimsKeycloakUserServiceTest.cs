@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Pims.Core.Test;
@@ -6,10 +10,6 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -43,13 +43,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { removeRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
-                    Id = new Guid(g)
+                    Id = new Guid(g),
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
@@ -134,13 +134,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = "keycloak username",
-                Groups = new[] { euser.GuidIdentifierValue.Value.ToString() }
+                Groups = new[] { euser.GuidIdentifierValue.Value.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
-                    Id = new Guid(g)
+                    Id = new Guid(g),
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
@@ -183,13 +183,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { removeRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
-                    Id = new Guid(g)
+                    Id = new Guid(g),
                 }).ToArray());
 
             var pimsServiceMock = helper.GetMock<IPimsRepository>();
@@ -228,13 +228,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { removeRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
-                    Id = new Guid(g)
+                    Id = new Guid(g),
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
@@ -274,13 +274,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
-                    Id = new Guid(g)
+                    Id = new Guid(g),
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
@@ -329,13 +329,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
             keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.GuidIdentifierValue.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
-                    Id = new Guid(g)
+                    Id = new Guid(g),
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
@@ -376,7 +376,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
 
@@ -411,7 +411,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = euser.GuidIdentifierValue.Value,
                 Username = euser.BusinessIdentifierValue,
-                Groups = new string[] { existingRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { existingRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
 
@@ -446,7 +446,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = eAccessRequest.User.GuidIdentifierValue.Value,
                 Username = eAccessRequest.User.BusinessIdentifierValue,
-                Groups = new string[] { eRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { eRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
 
@@ -494,7 +494,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 Id = eAccessRequest.User.GuidIdentifierValue.Value,
                 Username = eAccessRequest.User.BusinessIdentifierValue,
-                Groups = new string[] { eRole.KeycloakGroupId.ToString() }
+                Groups = new string[] { eRole.KeycloakGroupId.ToString() },
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
 
