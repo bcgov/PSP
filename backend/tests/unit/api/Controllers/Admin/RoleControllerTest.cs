@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -5,12 +8,9 @@ using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
-using FluentAssertions;
 
 namespace Pims.Api.Test.Admin.Controllers
 {

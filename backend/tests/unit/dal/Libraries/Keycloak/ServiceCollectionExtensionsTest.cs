@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,6 @@ using Pims.Core.Test;
 using Pims.Dal.Keycloak;
 using Pims.Keycloak;
 using Pims.Keycloak.Configuration;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
@@ -36,18 +36,18 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions
                 {
                     Authority = "test",
-                    Users = "test"
+                    Users = "test",
                 },
                 OpenIdConnect = new OpenIdConnectOptions
                 {
                     Token = "test",
-                    UserInfo = "test"
+                    UserInfo = "test",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
                     Secret = "test"
-                }
+                },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
             services.AddScoped((s) => mockConfig.Object);
@@ -92,18 +92,18 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions
                 {
                     Authority = "test",
-                    Users = "test"
+                    Users = "test",
                 },
                 OpenIdConnect = new OpenIdConnectOptions
                 {
                     Token = "test",
-                    UserInfo = "test"
+                    UserInfo = "test",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
                     Secret = "test"
-                }
+                },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
             services.AddScoped((s) => mockConfig.Object);

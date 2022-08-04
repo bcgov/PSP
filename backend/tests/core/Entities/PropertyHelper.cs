@@ -37,7 +37,7 @@ namespace Pims.Core.Test
                 PropertyId = pid,
                 Pin = pin,
                 ConcurrencyControlNumber = 1,
-                Location = new NetTopologySuite.Geometries.Point(0, 0)
+                Location = new NetTopologySuite.Geometries.Point(0, 0),
             };
             if (lease != null)
             {

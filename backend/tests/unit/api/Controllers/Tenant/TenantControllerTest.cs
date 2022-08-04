@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,6 @@ using Pims.Api.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Tenant;
@@ -34,7 +34,7 @@ namespace Pims.Api.Test.Controllers
             var mockOptions = new Mock<IOptionsMonitor<PimsOptions>>();
             var options = new PimsOptions()
             {
-                Tenant = "TEST"
+                Tenant = "TEST",
             };
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
             var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
@@ -64,7 +64,7 @@ namespace Pims.Api.Test.Controllers
             var mockOptions = new Mock<IOptionsMonitor<PimsOptions>>();
             var options = new PimsOptions()
             {
-                Tenant = "TEST"
+                Tenant = "TEST",
             };
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
             var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
@@ -81,7 +81,6 @@ namespace Pims.Api.Test.Controllers
             actionResult.StatusCode.Should().Be(204);
             service.Verify(m => m.Tenant.GetTenant(tenant.Code), Times.Once());
         }
-
 
         [Fact]
         public void Settings_TenantOptions_204Response()

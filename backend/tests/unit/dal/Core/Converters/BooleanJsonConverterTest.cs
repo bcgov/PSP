@@ -1,9 +1,9 @@
-using Pims.Core.Converters;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Pims.Core.Converters;
 using Xunit;
 
 namespace Pims.Dal.Test.Core.Converters
@@ -18,7 +18,7 @@ namespace Pims.Dal.Test.Core.Converters
         public static IEnumerable<object[]> WriteData = new List<object[]>()
         {
             new object[] { true, "{\"test\":\"true\"}" },
-            new object[] { false, "{\"test\":\"false\"}" }
+            new object[] { false, "{\"test\":\"false\"}" },
         };
 
         public static IEnumerable<object[]> ReadData = new List<object[]>()
@@ -28,7 +28,7 @@ namespace Pims.Dal.Test.Core.Converters
             new object[] { "TRUE", true },
             new object[] { "false", false },
             new object[] { "False", false },
-            new object[] { "FALSE", false }
+            new object[] { "FALSE", false },
         };
         #endregion
 

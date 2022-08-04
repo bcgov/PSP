@@ -45,7 +45,6 @@ namespace Pims.Dal.Test.Services
                 new object[] { new ResearchFilter() { AppCreateUserid = "invalid" }, 0 },
                 new object[] { new ResearchFilter() { AppLastUpdateUserid = "service" }, 1 },
                 new object[] { new ResearchFilter() { AppLastUpdateUserid = "invalid" }, 0 },
-
             };
         #endregion
 
