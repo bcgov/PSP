@@ -12,196 +12,11 @@
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="524"
-  DTS:VersionGUID="{43ECFB74-5F06-4A96-A763-2E0EFC84855B}">
+  DTS:VersionBuild="528"
+  DTS:VersionGUID="{9910D918-22AC-4746-938D-CD1AC7E38BE6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
-      DTS:CreationName="FLATFILE"
-      DTS:DTSID="{AAD924BD-6B9A-479F-BF71-7A308B32D1BD}"
-      DTS:ObjectName="Flat File Connection Manager">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:Format="Delimited"
-          DTS:LocaleID="1033"
-          DTS:HeaderRowDelimiter="_x000D__x000A_"
-          DTS:RowDelimiter=""
-          DTS:TextQualifier="_x003C_none_x003E_"
-          DTS:CodePage="1252"
-          DTS:ConnectionString="C:\git\PSP\etl\PAIMS_PIMS_LEASE\New Text Document (2).txt">
-          <DTS:FlatFileColumns>
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="200"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="PARSED_NAME"
-              DTS:DTSID="{C9BB1E52-54DE-49D1-A436-4E407DCB1B41}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:DataType="3"
-              DTS:TextQualified="True"
-              DTS:ObjectName="FileSubLookup_Id"
-              DTS:DTSID="{9BE69672-774F-4078-AE7D-D02034C0A06F}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="150"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="Property_Mgmt_Company"
-              DTS:DTSID="{7010D5F2-7386-4ECF-8F5C-9E202DE240B8}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="30"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="PM_CONTACT_PHONE"
-              DTS:DTSID="{1F36C0C2-EFDE-4AC4-9EDD-DD41ACC08485}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="50"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="FIRST_NAME"
-              DTS:DTSID="{D8A59FD7-7D16-4FB4-8267-F75528A395A5}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="50"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="MIDDLE_NAMES"
-              DTS:DTSID="{EBBB8B06-52A2-4441-B798-61E87BEE47A6}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="50"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="SURNAME"
-              DTS:DTSID="{C2E92231-CA81-47B2-868D-7D4C25AAB0B7}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="200"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="COMMENT"
-              DTS:DTSID="{A88694D7-D73A-4D45-B686-9B2202F61627}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="200"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="ORGANIZATION_NAME"
-              DTS:DTSID="{03C26DA8-153D-434D-8BC0-B64BE1217B3E}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="14"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="APP_CREATE_USERID"
-              DTS:DTSID="{6CE00B6B-9B64-4467-9D43-CBCF1B26E232}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:DataType="135"
-              DTS:TextQualified="True"
-              DTS:ObjectName="APP_CREATE_TIMESTAMP"
-              DTS:DTSID="{6B173B40-5F53-4E20-816C-19363426CD3D}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="14"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="APP_LAST_UPDATE_USERID"
-              DTS:DTSID="{085D6ABF-3DEC-4AF8-9A22-50FE92DECF8A}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:DataType="135"
-              DTS:TextQualified="True"
-              DTS:ObjectName="APP_LAST_UPDATE_TIMESTAMP"
-              DTS:DTSID="{B139C2C2-5CD5-4846-B6E4-3CC01860C46B}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="14"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="DB_CREATE_USERID"
-              DTS:DTSID="{E6E9B592-6012-4E82-B87A-D43914773325}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:DataType="135"
-              DTS:TextQualified="True"
-              DTS:ObjectName="DB_CREATE_TIMESTAMP"
-              DTS:DTSID="{2A6BB9FB-A025-464C-82B7-B7ECE298EFF5}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="14"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="DB_LAST_UPDATE_USERID"
-              DTS:DTSID="{D7C77F86-4917-49C5-82BE-DBC1A40A36EA}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:DataType="135"
-              DTS:TextQualified="True"
-              DTS:ObjectName="DB_LAST_UPDATE_TIMESTAMP"
-              DTS:DTSID="{9D1D8BDC-790C-451F-A332-E23530FBD202}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x007C_"
-              DTS:MaximumWidth="30"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="APP_CREATE_USER_DIRECTORY"
-              DTS:DTSID="{9EA063AF-C7B7-4F0F-AFCB-8644E4AB5B58}"
-              DTS:CreationName="" />
-            <DTS:FlatFileColumn
-              DTS:ColumnType="Delimited"
-              DTS:ColumnDelimiter="_x000D__x000A_"
-              DTS:MaximumWidth="30"
-              DTS:DataType="130"
-              DTS:TextQualified="True"
-              DTS:ObjectName="APP_LAST_UPDATE_USER_DIRECTORY"
-              DTS:DTSID="{AB2D87D0-B032-485D-A7CF-A51FB44F790B}"
-              DTS:CreationName="" />
-          </DTS:FlatFileColumns>
-        </DTS:ConnectionManager>
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LISDB]"
       DTS:CreationName="OLEDB"
@@ -283,7 +98,7 @@
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}"
-              SQLTask:SqlStatementSource="DELETE FROM PIMS_INSURANCE WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PROPERTY_LEASE WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_CONTACT_METHOD WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PROPERTY WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_ADDRESS WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PERSON_ORGANIZATION WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PERSON WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_ORGANIZATION WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_LEASE WHERE APP_CREATE_USERID = 'LIS_DB_ETL_USER';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="DELETE FROM PIMS_INSURANCE WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PROPERTY_LEASE WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PROPERTY_LEASE WHERE PROPERTY_ID IN (SELECT PROPERTY_ID FROM PIMS_PROPERTY WHERE APP_CREATE_USERID = 'LISDB_ETL_USER')&#xA;&#xA;DELETE FROM PIMS_CONTACT_METHOD WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PROPERTY WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_ADDRESS WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PERSON_ORGANIZATION WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_PERSON WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_ORGANIZATION WHERE APP_CREATE_USERID = 'LISDB_ETL_USER';&#xA;&#xA;DELETE FROM PIMS_LEASE WHERE APP_CREATE_USERID = 'LIS_DB_ETL_USER';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -10202,109 +10017,109 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Amount to Currency.Outputs[Data Conversion Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output12]"
-                  endId="Package\Main Flow 1\LOAD LEASES\OLE DB Destination.Inputs[OLE DB Destination Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Get PID.Inputs[Derived Column Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
-                  endId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Inputs[Lookup Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PMT_FRQ_TP, PRGRM_TP, LS_NTS.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
-                  endId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Inputs[Lookup Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME LOOKUP TAG.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Force Size of Caterogy and Purpose Codes.Inputs[Data Conversion Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
-                  endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Get PID.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Amount to Currency.Inputs[Data Conversion Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Inputs[Derived Column Input]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No_Null.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Handle &quot;Nominal&quot;.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 3]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 2]"
-                  name="Derived Column Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 3]"
                   name="Derived Column Output"
                   startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match 2.Outputs[Derived Column Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 3]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\OTHER for no match.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Handle &quot;Nominal&quot;.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 2]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No_Null.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Inputs[Derived Column Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 2]"
                   name="Derived Column Output"
                   startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null.Outputs[Derived Column Output]" />
                 <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
+                  endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Get PID.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Force Size of Caterogy and Purpose Codes.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
+                  endId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Inputs[Lookup Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME LOOKUP TAG.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
+                  endId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Inputs[Lookup Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PMT_FRQ_TP, PRGRM_TP, LS_NTS.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Get PID.Inputs[Derived Column Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
+                  endId="Package\Main Flow 1\LOAD LEASES\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Amount to Currency.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\Set expired bit.Outputs[Derived Column Output]" />
+                <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup No Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Inputs[Derived Column Input]"
@@ -10347,19 +10162,19 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\t_leasing + PID.Outputs[OLE DB Source Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
+                  name="Union All Output 1"
+                  startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
                   endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 1.Outputs[Union All Output 1]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
-                  name="Union All Output 1"
-                  startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
                   endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
@@ -22742,266 +22557,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               </outputs>
             </component>
             <component
-              refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination"
-              componentClassID="Microsoft.FlatFileDestination"
-              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
-              description="Flat File Destination"
-              localeId="1033"
-              name="Flat File Destination">
-              <properties>
-                <property
-                  dataType="System.Boolean"
-                  description="Specifies whether the data will overwrite or append to the destination file."
-                  name="Overwrite">true</property>
-                <property
-                  dataType="System.Null"
-                  description="Specifies the text to write to the destination file before any data is written."
-                  expressionType="Notify"
-                  name="Header" />
-                <property
-                  dataType="System.Boolean"
-                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
-                  name="EscapeQualifier">false</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Connections[FlatFileConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
-                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
-                  name="FlatFileConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input]"
-                  hasSideEffects="true"
-                  name="Flat File Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[PARSED_NAME]"
-                      cachedDataType="wstr"
-                      cachedLength="200"
-                      cachedName="PARSED_NAME"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[PARSED_NAME]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Split PM_Contact_Full_Name.Outputs[Output 0].Columns[PARSED_NAME]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[FileSubLookup_Id]"
-                      cachedDataType="i4"
-                      cachedName="FileSubLookup_Id"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[FileSubLookup_Id]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Split PM_Contact_Full_Name.Outputs[Output 0].Columns[FileSubLookup_Id]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[Property_Mgmt_Company]"
-                      cachedDataType="wstr"
-                      cachedLength="150"
-                      cachedName="Property_Mgmt_Company"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Property_Mgmt_Company]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Split PM_Contact_Full_Name.Outputs[Output 0].Columns[Property_Mgmt_Company]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[PM_CONTACT_PHONE]"
-                      cachedDataType="wstr"
-                      cachedLength="30"
-                      cachedName="PM_CONTACT_PHONE"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[PM_CONTACT_PHONE]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Split PM_Contact_Full_Name.Outputs[Output 0].Columns[PM_CONTACT_PHONE]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[FIRST_NAME]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="FIRST_NAME"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[FIRST_NAME]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Person defaults.Outputs[Derived Column Output].Columns[FIRST_NAME]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[MIDDLE_NAMES]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="MIDDLE_NAMES"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[MIDDLE_NAMES]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Person defaults.Outputs[Derived Column Output].Columns[MIDDLE_NAMES]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[SURNAME]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="SURNAME"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[SURNAME]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Person defaults.Outputs[Derived Column Output].Columns[SURNAME]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[COMMENT]"
-                      cachedDataType="wstr"
-                      cachedLength="200"
-                      cachedName="COMMENT"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[COMMENT]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Person defaults.Outputs[Derived Column Output].Columns[COMMENT]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[ORGANIZATION_NAME]"
-                      cachedDataType="wstr"
-                      cachedLength="200"
-                      cachedName="ORGANIZATION_NAME"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ORGANIZATION_NAME]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Organization defaults.Outputs[Derived Column Output].Columns[ORGANIZATION_NAME]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[APP_CREATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="14"
-                      cachedName="APP_CREATE_USERID"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_CREATE_USERID]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[APP_CREATE_TIMESTAMP]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="APP_CREATE_TIMESTAMP"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[APP_LAST_UPDATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="14"
-                      cachedName="APP_LAST_UPDATE_USERID"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[APP_LAST_UPDATE_TIMESTAMP]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="APP_LAST_UPDATE_TIMESTAMP"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[DB_CREATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="14"
-                      cachedName="DB_CREATE_USERID"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_CREATE_USERID]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[DB_CREATE_USERID]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[DB_CREATE_TIMESTAMP]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="DB_CREATE_TIMESTAMP"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[DB_CREATE_TIMESTAMP]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[DB_LAST_UPDATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="14"
-                      cachedName="DB_LAST_UPDATE_USERID"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[DB_LAST_UPDATE_USERID]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[DB_LAST_UPDATE_TIMESTAMP]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="DB_LAST_UPDATE_TIMESTAMP"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[DB_LAST_UPDATE_TIMESTAMP]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[APP_CREATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="30"
-                      cachedName="APP_CREATE_USER_DIRECTORY"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]" />
-                    <inputColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="30"
-                      cachedName="APP_LAST_UPDATE_USER_DIRECTORY"
-                      externalMetadataColumnId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      lineageId="Package\PIMS_PERSON_ORGANIZATION\Audit fields.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[PARSED_NAME]"
-                      dataType="wstr"
-                      length="200"
-                      name="PARSED_NAME" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[FileSubLookup_Id]"
-                      dataType="i4"
-                      name="FileSubLookup_Id" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Property_Mgmt_Company]"
-                      dataType="wstr"
-                      length="150"
-                      name="Property_Mgmt_Company" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[PM_CONTACT_PHONE]"
-                      dataType="wstr"
-                      length="30"
-                      name="PM_CONTACT_PHONE" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[FIRST_NAME]"
-                      dataType="wstr"
-                      length="50"
-                      name="FIRST_NAME" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[MIDDLE_NAMES]"
-                      dataType="wstr"
-                      length="50"
-                      name="MIDDLE_NAMES" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[SURNAME]"
-                      dataType="wstr"
-                      length="50"
-                      name="SURNAME" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[COMMENT]"
-                      dataType="wstr"
-                      length="200"
-                      name="COMMENT" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ORGANIZATION_NAME]"
-                      dataType="wstr"
-                      length="200"
-                      name="ORGANIZATION_NAME" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_CREATE_USERID]"
-                      dataType="wstr"
-                      length="14"
-                      name="APP_CREATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="APP_CREATE_TIMESTAMP" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
-                      dataType="wstr"
-                      length="14"
-                      name="APP_LAST_UPDATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="APP_LAST_UPDATE_TIMESTAMP" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_CREATE_USERID]"
-                      dataType="wstr"
-                      length="14"
-                      name="DB_CREATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="DB_CREATE_TIMESTAMP" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
-                      dataType="wstr"
-                      length="14"
-                      name="DB_LAST_UPDATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="DB_LAST_UPDATE_TIMESTAMP" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="30"
-                      name="APP_CREATE_USER_DIRECTORY" />
-                    <externalMetadataColumn
-                      refId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="30"
-                      name="APP_LAST_UPDATE_USER_DIRECTORY" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-            </component>
-            <component
               refId="Package\PIMS_PERSON_ORGANIZATION\LISDB t_fileSub"
               componentClassID="Microsoft.OLEDBSource"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
@@ -25862,11 +25417,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]]></arrayElement>
               endId="Package\PIMS_PERSON_ORGANIZATION\Lookup ORGANIZATION_ID.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\PIMS_PERSON_ORGANIZATION\Lookup PERSON_ID.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\PIMS_PERSON_ORGANIZATION.Paths[Lookup No Match Output]"
-              endId="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination.Inputs[Flat File Destination Input]"
-              name="Lookup No Match Output"
-              startId="Package\PIMS_PERSON_ORGANIZATION\Lookup PERSON_ID.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\PIMS_PERSON_ORGANIZATION.Paths[OLE DB Source Output]"
               endId="Package\PIMS_PERSON_ORGANIZATION\Split PM_Contact_Full_Name.Inputs[Input 0]"
@@ -32623,7 +32173,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
           TopLeft="482.25,523">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -32645,7 +32195,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
           TopLeft="1356.25,1554">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -32667,7 +32217,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
           TopLeft="695,748">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -32891,7 +32441,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
           TopLeft="842,1264">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -32927,7 +32477,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
           TopLeft="485,654">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -32963,7 +32513,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
           TopLeft="1214,1067">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -32999,7 +32549,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
           TopLeft="770.642857142857,847">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33023,7 +32573,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
           TopLeft="482.5,412">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33047,7 +32597,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
           TopLeft="1464.42857142857,1809.60714285714">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33071,7 +32621,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
           TopLeft="1111.5,1401.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33107,7 +32657,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
           TopLeft="732.714285714286,1694">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33129,7 +32679,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output12]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
           TopLeft="2152.25,1660">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33151,7 +32701,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
           TopLeft="1822.28571428572,1810.82142857143">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33173,7 +32723,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
           TopLeft="482.25,330">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33195,7 +32745,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
           TopLeft="1112.42857142857,1812.57142857143">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33217,7 +32767,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
           TopLeft="1294,1616.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33239,7 +32789,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
           TopLeft="2016,1812.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33261,7 +32811,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output6]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output13]"
           TopLeft="848,405">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33295,7 +32845,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output5]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output7]"
           TopLeft="806,1624.66666666667">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33329,7 +32879,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output4]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output8]"
           TopLeft="820.5,655">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33363,7 +32913,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output3]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output9]"
           TopLeft="1317.5,983">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33397,7 +32947,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output2]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output10]"
           TopLeft="1476.64285714286,849">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33431,7 +32981,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output11]"
           TopLeft="1160.11111111111,1531.83333333333">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -33453,7 +33003,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Derived Column Output12]"
           TopLeft="1373.83333333333,1262">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -34681,29 +34231,6 @@ where [refTable].[PID] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\PIMS_CONTACT_METHOD\Lookup PERSON_ID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">true</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\PIMS_CONTACT_METHOD\PIMS_CONTACT_METHOD">
     <Properties>
       <Property>
@@ -34713,6 +34240,29 @@ where [refTable].[PID] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS_CONTACT_METHOD\Lookup PERSON_ID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">true</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -35133,7 +34683,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -35143,7 +34693,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -35164,41 +34714,41 @@ where [refTable].[PID] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="248,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\PIMS_PERSON_ORGANIZATION"
-          TopLeft="5.50000000000009,719.5" />
-        <NodeLayout
-          Size="219,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Lookup ORGANIZATION_ID"
-          TopLeft="20.0000000000001,515.5" />
-        <NodeLayout
-          Size="155,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Person defaults"
-          TopLeft="47,119" />
-        <NodeLayout
-          Size="99,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Sort"
-          TopLeft="80.0000000000001,617.5" />
+          Size="182,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\Lookup PERSON_ID"
+          TopLeft="38.5,413.5" />
         <NodeLayout
           Size="157,42"
           Id="Package\PIMS_PERSON_ORGANIZATION\LISDB t_fileSub"
           TopLeft="51,5.5" />
         <NodeLayout
-          Size="182,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Lookup PERSON_ID"
-          TopLeft="38.5,413.5" />
+          Size="183,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\Organization defaults"
+          TopLeft="38,209.5" />
         <NodeLayout
-          Size="133,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Audit fields"
-          TopLeft="63,311.5" />
+          Size="248,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\PIMS_PERSON_ORGANIZATION"
+          TopLeft="5.50000000000009,719.5" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\Person defaults"
+          TopLeft="47,119" />
+        <NodeLayout
+          Size="219,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\Lookup ORGANIZATION_ID"
+          TopLeft="20.0000000000001,515.5" />
+        <NodeLayout
+          Size="99,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\Sort"
+          TopLeft="80.0000000000001,617.5" />
         <NodeLayout
           Size="223,42"
           Id="Package\PIMS_PERSON_ORGANIZATION\Split PM_Contact_Full_Name"
           TopLeft="300,71" />
         <NodeLayout
-          Size="183,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Organization defaults"
-          TopLeft="38,209.5" />
+          Size="133,42"
+          Id="Package\PIMS_PERSON_ORGANIZATION\Audit fields"
+          TopLeft="63,311.5" />
         <EdgeLayout
           Id="Package\PIMS_PERSON_ORGANIZATION.Paths[Sort Output]"
           TopLeft="129.5,659.5">
@@ -35403,49 +34953,40 @@ where [refTable].[PID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="176,42"
-          Id="Package\PIMS_PERSON_ORGANIZATION\Flat File Destination"
-          TopLeft="383,478" />
-        <EdgeLayout
-          Id="Package\PIMS_PERSON_ORGANIZATION.Paths[Lookup No Match Output]"
-          TopLeft="220.5,434.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="162.5,64.5"
-              Start="0,0"
-              End="155,64.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="77.25,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="77.25,0"
-                    Point2="81.25,0"
-                    Point3="81.25,4" />
-                  <mssgle:LineSegment
-                    End="81.25,60.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="81.25,60.5"
-                    Point2="81.25,64.5"
-                    Point3="85.25,64.5" />
-                  <mssgle:LineSegment
-                    End="155,64.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="25.44361328125,-17.609375,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS_PERSON_ORGANIZATION\Lookup PERSON_ID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">true</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS_PERSON_ORGANIZATION\LISDB t_fileSub">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\PIMS_PERSON_ORGANIZATION\PIMS_PERSON_ORGANIZATION">
     <Properties>
@@ -35482,62 +35023,19 @@ where [refTable].[PID] = ?</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\PIMS_PERSON_ORGANIZATION\LISDB t_fileSub">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\PIMS_PERSON_ORGANIZATION\Lookup PERSON_ID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">true</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\PIMS_PROPERTY">
     <LayoutInfo>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="257,42"
-          Id="Package\PIMS_PROPERTY\Lookup PROPERTY_MANAGER_ID"
-          TopLeft="0.500000000000085,691.5" />
-        <NodeLayout
-          Size="203,42"
-          Id="Package\PIMS_PROPERTY\Get DISTRICT from WFS"
-          TopLeft="563,415" />
-        <NodeLayout
           Size="237,42"
           Id="Package\PIMS_PROPERTY\Lookup PROP_MGMT_ORG_ID"
           TopLeft="10.5000000000001,793.5" />
         <NodeLayout
-          Size="172,42"
-          Id="Package\PIMS_PROPERTY\PIMS_PROPERTY"
-          TopLeft="43.0000000000001,895.5" />
-        <NodeLayout
-          Size="123,42"
-          Id="Package\PIMS_PROPERTY\Union All"
-          TopLeft="242,428" />
+          Size="204,42"
+          Id="Package\PIMS_PROPERTY\Lookup PIMS_ADDRESS"
+          TopLeft="27.0000000000001,589.5" />
         <NodeLayout
           Size="162,42"
           Id="Package\PIMS_PROPERTY\Property defaults"
@@ -35547,47 +35045,37 @@ where [refTable].[PID] = ?</property>
           Id="Package\PIMS_PROPERTY\Split multi-persons, get first"
           TopLeft="45,193" />
         <NodeLayout
+          Size="133,42"
+          Id="Package\PIMS_PROPERTY\Audit fields"
+          TopLeft="62.5000000000001,487.5" />
+        <NodeLayout
           Size="182,42"
           Id="Package\PIMS_PROPERTY\Lookup spatial by pid"
           TopLeft="283,326" />
+        <NodeLayout
+          Size="203,42"
+          Id="Package\PIMS_PROPERTY\Get DISTRICT from WFS"
+          TopLeft="563,415" />
         <NodeLayout
           Size="157,42"
           Id="Package\PIMS_PROPERTY\LISDB t_fileSub"
           TopLeft="56.5,5.5" />
         <NodeLayout
-          Size="204,42"
-          Id="Package\PIMS_PROPERTY\Lookup PIMS_ADDRESS"
-          TopLeft="27.0000000000001,589.5" />
-        <NodeLayout
           Size="155,42"
           Id="Package\PIMS_PROPERTY\Person defaults"
           TopLeft="51.5,283.5" />
         <NodeLayout
-          Size="133,42"
-          Id="Package\PIMS_PROPERTY\Audit fields"
-          TopLeft="62.5000000000001,487.5" />
-        <EdgeLayout
-          Id="Package\PIMS_PROPERTY.Paths[Derived Column Output]"
-          TopLeft="129,529.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="123,42"
+          Id="Package\PIMS_PROPERTY\Union All"
+          TopLeft="242,428" />
+        <NodeLayout
+          Size="257,42"
+          Id="Package\PIMS_PROPERTY\Lookup PROPERTY_MANAGER_ID"
+          TopLeft="0.500000000000085,691.5" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\PIMS_PROPERTY\PIMS_PROPERTY"
+          TopLeft="43.0000000000001,895.5" />
         <EdgeLayout
           Id="Package\PIMS_PROPERTY.Paths[Union All Output 1]"
           TopLeft="242,449">
@@ -35924,55 +35412,31 @@ where [refTable].[PID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\PIMS_PROPERTY.Paths[Derived Column Output]"
+          TopLeft="129,529.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\PIMS_PROPERTY\Lookup PROPERTY_MANAGER_ID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\PIMS_PROPERTY\Lookup PROP_MGMT_ORG_ID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_ORGANIZATION]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\PIMS_PROPERTY\Lookup PIMS_ADDRESS">
     <Properties>
@@ -36020,14 +35484,6 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\PIMS_PROPERTY\LISDB t_fileSub">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\PIMS_PROPERTY\PIMS_PROPERTY">
     <Properties>
       <Property>
@@ -36037,6 +35493,60 @@ where [refTable].[PID] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS_PROPERTY\Lookup PROP_MGMT_ORG_ID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_ORGANIZATION]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS_PROPERTY\LISDB t_fileSub">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\PIMS_PROPERTY\Lookup PROPERTY_MANAGER_ID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
