@@ -64,14 +64,14 @@ function depositActions(
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
-        {hasClaim(Claims.LEASE_DELETE) && original.depositReturnCount === 0 && (
+        {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount === 0 && (
           <Button
             title="delete deposit"
             icon={<FaTrash size={24} id={`delete-deposit-${index}`} title="delete deposit" />}
             onClick={() => original.id && onDelete(original.id)}
           ></Button>
         )}
-        {hasClaim(Claims.LEASE_DELETE) && original.depositReturnCount > 0 && (
+        {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount > 0 && (
           <TooltipIcon
             toolTipId={`no-delete-tooltip-${original.id}`}
             toolTip="A deposit with associated return(s) cannot be deleted. To delete this deposit first delete any associated return(s)."
