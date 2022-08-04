@@ -98,6 +98,17 @@ namespace Pims.Dal
             return JsonSerializer.Deserialize<T>(json, _serializerOptions);
         }
 
+        /// <summary>
+        /// Serialize the specified 'item'.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public string Serialize<T>(T item)
+        {
+            return JsonSerializer.Serialize(item, _serializerOptions);
+        }
+
         #endregion
 
         #region Methods
@@ -114,17 +125,6 @@ namespace Pims.Dal
             }
 
             base.OnConfiguring(optionsBuilder);
-        }
-
-        /// <summary>
-        /// Serialize the specified 'item'.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public string Serialize<T>(T item)
-        {
-            return JsonSerializer.Serialize(item, _serializerOptions);
         }
         #endregion
     }

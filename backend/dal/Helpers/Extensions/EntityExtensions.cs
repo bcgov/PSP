@@ -192,59 +192,6 @@ namespace Pims.Dal.Helpers.Extensions
             Expression<Func<T, object>> childNavigation,
             Expression<Func<C, object>> grandchildNavigation,
             I parentId,
-            C[] childrenWithGrandchildren)
-            where T : IdentityBaseAppEntity<I>
-            where C : IdentityBaseAppEntity<I>
-        {
-            UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
-        }
-
-        /// <summary>
-        /// Update a single grandchild navigation property on a parent entity specified by T and parentId.
-        /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
-        /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
-        /// </summary>
-        /// <typeparam name="T">The parent entity type.</typeparam>
-        /// <typeparam name="I">The type of the id property.</typeparam>
-        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
-        /// <param name="context"></param>
-        /// <param name="childNavigation"></param>
-        /// <param name="grandchildNavigation"></param>
-        /// <param name="parentId"></param>
-        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
-        /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
-        public static void UpdateGrandchild<T, I, C>(
-            this PimsContext context,
-            Expression<Func<T, object>> childNavigation,
-            Expression<Func<C, object>> grandchildNavigation,
-            I parentId,
-            C[] childrenWithGrandchildren,
-            Func<PimsContext, C, bool> canDeleteGrandchild)
-            where T : IdentityBaseAppEntity<I>
-            where C : IdentityBaseAppEntity<I>
-        {
-            UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
-        }
-
-        /// <summary>
-        /// Update a single grandchild navigation property on a parent entity specified by T and parentId.
-        /// Expects to be passed a complete list of child and grandchild entities for the targeted navigation property.
-        /// This method will update the database such that the navigation property for the parent contains the exact list of children and grandchildren passed to this method.
-        /// </summary>
-        /// <typeparam name="T">The parent entity type.</typeparam>
-        /// <typeparam name="I">The type of the id property.</typeparam>
-        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
-        /// <param name="context"></param>
-        /// <param name="childNavigation"></param>
-        /// <param name="grandchildNavigation"></param>
-        /// <param name="parentId"></param>
-        /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
-        /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
-        public static void UpdateGrandchild<T, I, C>(
-            this PimsContext context,
-            Expression<Func<T, object>> childNavigation,
-            Expression<Func<C, object>> grandchildNavigation,
-            I parentId,
             C[] childrenWithGrandchildren,
             Func<PimsContext, C, bool> canDeleteGrandchild)
             where T : IdentityBaseAppEntity<I>

@@ -280,6 +280,54 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// update the tenants on the lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="pimsPropertyImprovements"></param>
+        /// <returns></returns>
+        public PimsLease UpdateLeaseImprovements(long leaseId, long rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyImprovements).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
+
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
+            this.Context.CommitTransaction();
+
+            return Get(existingLease.LeaseId);
+        }
+
+        /// <summary>
+        /// update the properties on the lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="pimsPropertyLeases"></param>
+        /// <returns></returns>
+        public PimsLease UpdatePropertyLeases(long leaseId, long rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyLeases).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
+                 ?? throw new KeyNotFoundException();
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
+
+            bool newLeaseProperties = pimsPropertyLeases.Any(p => !existingLease.PimsPropertyLeases.Any(xp => xp.PropertyId == p.PropertyId));
+            existingLease.PimsPropertyLeases = pimsPropertyLeases;
+            var leaseWithAssociatedProperties = AssociatePropertyLeases(existingLease, userOverride, newLeaseProperties);
+
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease>(l => l.PimsPropertyLeases, leaseId, leaseWithAssociatedProperties.PimsPropertyLeases.ToArray());
+            this.Context.CommitTransaction();
+
+            return Get(existingLease.LeaseId);
+        }
+
+        /// <summary>
         /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
         /// Do not attempt to update any preexisiting properties, simply refer to them by id.
         ///
@@ -326,54 +374,6 @@ namespace Pims.Dal.Repositories
                 return this.Context.GenerateLFileNo(lease);
             }
             return lease;
-        }
-
-        /// <summary>
-        /// update the tenants on the lease.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="pimsPropertyImprovements"></param>
-        /// <returns></returns>
-        public PimsLease UpdateLeaseImprovements(long leaseId, long rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements)
-        {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyImprovements).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
-                 ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion)
-            {
-                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
-            }
-
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
-            this.Context.CommitTransaction();
-
-            return Get(existingLease.LeaseId);
-        }
-
-        /// <summary>
-        /// update the properties on the lease.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="pimsPropertyLeases"></param>
-        /// <returns></returns>
-        public PimsLease UpdatePropertyLeases(long leaseId, long rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false)
-        {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyLeases).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
-                 ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion)
-            {
-                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
-            }
-
-            bool newLeaseProperties = pimsPropertyLeases.Any(p => !existingLease.PimsPropertyLeases.Any(xp => xp.PropertyId == p.PropertyId));
-            existingLease.PimsPropertyLeases = pimsPropertyLeases;
-            var leaseWithAssociatedProperties = AssociatePropertyLeases(existingLease, userOverride, newLeaseProperties);
-
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease>(l => l.PimsPropertyLeases, leaseId, leaseWithAssociatedProperties.PimsPropertyLeases.ToArray());
-            this.Context.CommitTransaction();
-
-            return Get(existingLease.LeaseId);
         }
         #endregion
     }
