@@ -264,6 +264,10 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsAcquisitionTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+        public IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes()
+        {
+            return this.Context.PimsActivityTemplateTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }

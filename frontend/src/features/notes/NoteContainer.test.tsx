@@ -56,7 +56,7 @@ describe('NoteContainer component', () => {
       getSaveButton: () => utils.getByText(/Save/i),
       getCancelButton: () => utils.getByText(/Cancel/i),
       getEditButton: () => utils.getByRole('button', { name: /edit/i }),
-      getCloseButton: () => utils.getAllByRole('button', { name: /close/i })[1],
+      getCloseButton: () => utils.getByTitle('ok-modal'),
     };
   };
 
@@ -70,15 +70,21 @@ describe('NoteContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    setup();
+  it('renders as expected', async () => {
+    const { getByTestId } = setup();
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
     expect(document.body).toMatchSnapshot();
   });
 
-  it('renders a spinner while loading', () => {
+  it('renders a spinner while loading', async () => {
     const { getByTestId } = setup({ ...BASIC_PROPS });
+
     const spinner = getByTestId('filter-backdrop-loading');
     expect(spinner).toBeVisible();
+    await waitForElementToBeRemoved(spinner);
   });
 
   it('renders read-only note details by default', async () => {
@@ -101,7 +107,11 @@ describe('NoteContainer component', () => {
 
   describe('When in Read-only mode', () => {
     it('closes the modal when Close button is clicked', async () => {
-      const { getCloseButton, getByText } = setup();
+      const { getCloseButton, getByText, getByTestId } = setup();
+
+      const spinner = getByTestId('filter-backdrop-loading');
+      await waitForElementToBeRemoved(spinner);
+
       const modalTitle = getByText(/Notes/i);
       expect(modalTitle).toBeVisible();
 
@@ -164,7 +174,11 @@ describe('NoteContainer component', () => {
     });
 
     it('closes the modal when Cancel button is clicked', async () => {
-      const { getCancelButton, getByText } = setup({ ...BASIC_PROPS, editMode: true });
+      const { getCancelButton, getByText, getByTestId } = setup({ ...BASIC_PROPS, editMode: true });
+
+      const spinner = getByTestId('filter-backdrop-loading');
+      await waitForElementToBeRemoved(spinner);
+
       const modalTitle = getByText(/Notes/i);
       expect(modalTitle).toBeVisible();
 
@@ -173,7 +187,13 @@ describe('NoteContainer component', () => {
     });
 
     it('closes the modal and submits form when Save button is clicked', async () => {
-      const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS, editMode: true });
+      const { getSaveButton, findByLabelText, getByTestId } = setup({
+        ...BASIC_PROPS,
+        editMode: true,
+      });
+
+      const spinner = getByTestId('filter-backdrop-loading');
+      await waitForElementToBeRemoved(spinner);
 
       const textarea = await findByLabelText(/Type a note/i);
       userEvent.clear(textarea);

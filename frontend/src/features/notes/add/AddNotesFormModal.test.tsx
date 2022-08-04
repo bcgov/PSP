@@ -10,8 +10,6 @@ import { EntityNoteForm } from './models';
 
 const history = createMemoryHistory();
 
-const openModal = jest.fn();
-const closeModal = jest.fn();
 const handleSubmit = jest.fn();
 const validationSchema = jest.fn().mockReturnValue(AddNotesYupSchema);
 const handleSaveClick = jest.fn();
@@ -23,8 +21,6 @@ describe('AddNotesFormModal component', () => {
     const utils = render(
       <AddNotesFormModal
         isOpened={true}
-        openModal={openModal}
-        closeModal={closeModal}
         initialValues={renderOptions.initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -98,12 +94,11 @@ describe('AddNotesFormModal component', () => {
     userEvent.click(getCancelButton());
 
     expect(handleCancelClick).toBeCalled();
-    expect(closeModal).toBeCalled();
     expect(validationSchema).not.toBeCalled();
     expect(handleSubmit).not.toBeCalled();
   });
 
-  it('should submit form and close the modal when Submit button is clicked', async () => {
+  it('should submit form when Submit button is clicked', async () => {
     // submit form upon save click
     handleSaveClick.mockImplementation(
       (values: EntityNoteForm, formikProps: FormikProps<EntityNoteForm>) =>
@@ -117,7 +112,6 @@ describe('AddNotesFormModal component', () => {
 
     expect(validationSchema).toBeCalled();
     expect(handleSubmit).toBeCalledWith(initialValues, expect.anything());
-    expect(closeModal).toBeCalled();
     expect(handleCancelClick).not.toBeCalled();
   });
 });

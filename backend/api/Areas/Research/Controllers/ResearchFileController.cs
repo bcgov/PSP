@@ -8,6 +8,7 @@ using Pims.Api.Policies;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace Pims.Api.Areas.ResearchFile.Controllers
 {
@@ -56,6 +57,66 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         {
             var researchFile = _pimsService.ResearchFileService.GetById(id);
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
+        }
+
+        /// <summary>
+        /// Gets the activities for specified research file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{researchFileId:long}/activities")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ActivityInstanceModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        public IActionResult GetActivitiesForResearchFile(long researchFileId)
+        {
+            var activityInstances = _pimsService.ActivityService.GetAllByResearchFileId(researchFileId);
+            List<ActivityInstanceModel> models = _mapper.Map<List<ActivityInstanceModel>>(activityInstances);
+            // TODO remove below once mapping complete
+            foreach (ActivityInstanceModel model in models)
+            {
+                model.Description = model.ActivityTemplateTypeCode.Description + " Activity";
+                model.ActivityStatusTypeCode = new Models.TypeModel<string>()
+                {
+                    Id = "Draft",
+                    Description = "Draft",
+                };
+            };
+            return new JsonResult(models);
+        }
+
+
+        /// <summary>
+        /// Get the document types.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("activity-templates")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ActivityTemplateModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "activity-templates" })]
+        public IActionResult GetActivityTemplateTypes()
+        {
+            var activityTemplates = _pimsService.ActivityService.GetAllActivityTemplates();
+            var mappedActivityTemplates = _mapper.Map<List<ActivityTemplateModel>>(activityTemplates);
+            return new JsonResult(mappedActivityTemplates);
+        }
+
+        /// <summary>
+        /// Add the specified research file activity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("activity")]
+        [HasPermission(Permissions.ResearchFileAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
+        [SwaggerOperation(Tags = new[] { "activityInstance" })]
+        public IActionResult AddActivityInstance(ActivityInstanceModel activityInstanceModel)
+        {
+            var activityInstanceEntity = _mapper.Map<Dal.Entities.PimsActivityInstance>(activityInstanceModel);
+            var activityInstance = _pimsService.ActivityService.Add(activityInstanceEntity);
+
+            return new JsonResult(_mapper.Map<ActivityInstanceModel>(activityInstance));
         }
 
         /// <summary>
