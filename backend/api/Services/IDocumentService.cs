@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Pims.Api.Constants;
 using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Dal.Entities;
-using System.Collections.Generic;
 
 namespace Pims.Api.Services
 {
@@ -13,14 +15,26 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentService
     {
-        ExternalResult<QueryResult<DocumentType>> GetDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
 
-        ExternalResult<QueryResult<DocumentDetail>> GetDocumentList(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentDetail>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null);
 
-        ExternalResult<FileDownload> DownloadFile(int documentId, int fileId);
+        Task<ExternalResult<QueryResult<DocumentMetadata>>> GetStorageDocumentMetadata(long mayanDocumentId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile fileRaw);
+        Task<ExternalResult<FileDownload>> DownloadFileAsync(long mayanDocumentId, long mayanFileId);
 
-        IEnumerable<PimsDocumentTyp> GetPimsDocumentTypes();
+        Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId);
+
+        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw);
+
+        IList<PimsDocumentTyp> GetPimsDocumentTypes();
+
+        IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
+
+        Task<bool> DeleteDocumentAsync(PimsDocument document);
+
+        Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument);
+
+        Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest);
     }
 }

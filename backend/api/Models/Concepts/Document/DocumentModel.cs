@@ -15,6 +15,11 @@ namespace Pims.Api.Models.Concepts
         public int Id { get; set; }
 
         /// <summary>
+        /// get/set - The document id on the external storage.
+        /// </summary>
+        public int MayanDocumentId { get; set; }
+
+        /// <summary>
         /// get/set - Document Type.
         /// </summary>
         public DocumentTypeModel DocumentType { get; set; }
@@ -22,7 +27,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The document status type.
         /// </summary>
-        public TypeModel<string> DocumentStatusTypeCode { get; set; }
+        public TypeModel<string> StatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Document/File Name.

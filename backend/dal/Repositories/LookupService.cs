@@ -19,9 +19,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LookupService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LookupService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public LookupService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods
@@ -252,6 +251,22 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsDocumentTyp> GetDocumentTypes()
         {
             return this.Context.PimsDocumentTyps.AsNoTracking().ToArray();
+        }
+        public IEnumerable<PimsAcquisitionFileStatusType> GetAcquisitionFileStatusTypes()
+        {
+            return this.Context.PimsAcquisitionFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+        public IEnumerable<PimsAcqPhysFileStatusType> GetAcquisitionPhysFileStatusTypes()
+        {
+            return this.Context.PimsAcqPhysFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+        public IEnumerable<PimsAcquisitionType> GetAcquisitionTypes()
+        {
+            return this.Context.PimsAcquisitionTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
+        }
+        public IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes()
+        {
+            return this.Context.PimsActivityTemplateTypes.AsNoTracking().ToArray();
         }
         #endregion
     }

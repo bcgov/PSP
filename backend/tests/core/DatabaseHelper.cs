@@ -156,6 +156,8 @@ namespace Pims.Core.Test
             context.AddRange(EntityHelper.CreateDefaultPropertyAreaUnitTypes());
             context.AddRange(EntityHelper.CreateDefaultDataSourceTypes());
             context.AddRange(EntityHelper.CreateDefaultContactMethodTypes());
+            context.AddRange(EntityHelper.CreateDefaultAcquisitionFileStatusTypes());
+            context.AddRange(EntityHelper.CreateDefaultAcquisitionTypes());
             context.AddRange(EntityHelper.CreateDefaultProvinces(countries.First()));
             context.AddRange(EntityHelper.CreateDefaultDistricts(regions.First()));
             context.AddRange(EntityHelper.CreateDefaultOrganizations(organizationTypes.First(), organizationIdentifierTypes.First()));

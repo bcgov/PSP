@@ -171,7 +171,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -180,7 +180,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -202,7 +202,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -211,7 +211,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -233,7 +233,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -242,7 +242,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -264,7 +264,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -273,7 +273,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -295,7 +295,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -304,7 +304,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -326,7 +326,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -335,7 +335,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 required col"
+        class="c1 required text-left col"
       >
         <div
           class="form-group"
@@ -417,22 +417,17 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
                   <li
                     class="option  highlightOption highlight  "
                   >
-                    Organization Administrator
+                    Finance
                   </li>
                   <li
                     class="option    "
                   >
-                    Real Estate Analyst
+                    Functional (Restricted)
                   </li>
                   <li
                     class="option    "
                   >
-                    Real Estate Manager
-                  </li>
-                  <li
-                    class="option    "
-                  >
-                    Undetermined
+                    Read Only
                   </li>
                 </ul>
               </div>
@@ -459,7 +454,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -468,7 +463,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 required col"
+        class="c1 required text-left col"
       >
         <div
           class="form-group"
@@ -483,6 +478,30 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
                 class="search-wrapper searchWrapper "
                 style="background: white; border: 1px solid #606060;"
               >
+                <span
+                  class="chip  false false"
+                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                >
+                  South Coast Region
+                  <i
+                    class="custom-close"
+                  >
+                    <svg
+                      class="c2"
+                      fill="currentColor"
+                      height="16"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                      />
+                    </svg>
+                  </i>
+                </span>
                 <input
                   autocomplete="off"
                   class="searchBox "
@@ -502,11 +521,6 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
                   <li
                     class="option  highlightOption highlight  "
                   >
-                    South Coast Region
-                  </li>
-                  <li
-                    class="option    "
-                  >
                     Southern Interior Region
                   </li>
                   <li
@@ -525,7 +539,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="pb-2 row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -534,7 +548,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="input form-group"
@@ -555,7 +569,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
       class="d-flex row"
     >
       <div
-        class="col-2"
+        class="pr-0 text-left col-2"
       >
         <label
           class="c0"
@@ -564,7 +578,7 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
         </label>
       </div>
       <div
-        class="c1 col"
+        class="c1 text-left col"
       >
         <div
           class="form-group"

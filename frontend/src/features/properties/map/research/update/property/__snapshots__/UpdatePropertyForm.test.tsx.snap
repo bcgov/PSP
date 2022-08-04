@@ -8,17 +8,17 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   <div
     class="Toastify"
   />
-  .c0 {
+  .c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
 }
 
 .c3.required::before {
@@ -36,7 +36,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
     class=""
   >
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"
@@ -61,7 +61,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -70,7 +70,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -89,7 +89,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -98,7 +98,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div>
               <div
@@ -110,12 +110,60 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
                   class="search-wrapper searchWrapper "
                   style="background: white; border: 1px solid #606060;"
                 >
+                  <span
+                    class="chip  false false"
+                    style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    District Other
+                    <i
+                      class="custom-close"
+                    >
+                      <svg
+                        class="ml-3"
+                        fill="currentColor"
+                        height="18px"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 352 512"
+                        width="18px"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <span
+                    class="chip  false false"
+                    style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  >
+                    Form 12
+                    <i
+                      class="custom-close"
+                    >
+                      <svg
+                        class="ml-3"
+                        fill="currentColor"
+                        height="18px"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 352 512"
+                        width="18px"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
                   <input
                     autocomplete="off"
                     class="searchBox "
                     id="purpose-selector_input"
                     name="search_name_input"
-                    placeholder="Select Property Purpose"
+                    placeholder=""
                     type="text"
                     value=""
                   />
@@ -126,11 +174,106 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
                   <ul
                     class="optionContainer"
                   >
-                    <span
-                      class="notFound"
+                    <li
+                      class="option  highlightOption highlight  "
                     >
-                      No Options Available
-                    </span>
+                      Acquisition
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Classification
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Disposition
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      FN/Treaty
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      FOI
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Highway
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Inquiry
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Issue
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Legal
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      License/Lease
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Land Issue
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Land Exchange
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      MoTI Owned
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Other
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Road Closure
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Registered Interest
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Research
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      TAC
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Unknown
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Unregistered Interest
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -141,7 +284,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -150,7 +293,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -186,7 +329,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -195,7 +338,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -231,7 +374,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -240,7 +383,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -257,7 +400,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
       </div>
     </div>
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"
@@ -282,7 +425,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -291,7 +434,7 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           />
         </div>
         <div

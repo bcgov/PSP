@@ -16,13 +16,10 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
         public SecurityDepositRepository(PimsContext dbContext,
             ClaimsPrincipal user,
-            IPimsRepository service,
-            ILogger<LeaseRepository> logger,
-            IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+            ILogger<LeaseRepository> logger) : base(dbContext, user, logger) { }
 
         #endregion
 

@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "2.1.0-32.25",
+  "version": "2.2.0-33.19",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -141,6 +141,7 @@
     "start": "react-app-rewired start",
     "build": "cross-env CI=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",
     "test": "tsc && react-app-rewired test --ci --watchAll=false",
+    "test-u": "tsc && react-app-rewired test --ci --watchAll=false -u",
     "test:watch": "react-app-rewired test",
     "test:clear-cache": "jest --clearCache",
     "coverage": "react-app-rewired test --ci --coverage --testResultsProcessor jest-sonar-reporter --watchAll=false",

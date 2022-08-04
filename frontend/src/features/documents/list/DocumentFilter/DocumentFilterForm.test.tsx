@@ -7,7 +7,7 @@ import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
 import { mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { DocumentFilterForm, IDocumentFilterFormProps } from './DocumentFilterForm';
 
@@ -44,7 +44,7 @@ describe('DocumentFilterForm component', () => {
 
   beforeEach(() => {
     mockAxios.reset();
-    mockAxios.onGet(`documents/document-types`).reply(200, mockDocumentTypesResponse());
+    mockAxios.onGet(`documents/types`).reply(200, mockDocumentTypesResponse());
   });
 
   it('renders as expected', async () => {
@@ -68,7 +68,9 @@ describe('DocumentFilterForm component', () => {
       initialValues: { ...defaultDocumentFilter },
     });
 
-    await fillInput(container, 'documentType', 'Registered', 'select');
+    act(() => {
+      fillInput(container, 'documentType', 'Registered', 'select');
+    });
 
     expect(getByTestId('document-type')).not.toBeNull();
   });
@@ -80,7 +82,9 @@ describe('DocumentFilterForm component', () => {
       initialValues: { ...defaultDocumentFilter },
     });
 
-    await fillInput(container, 'documentStatus', 'Draft', 'select');
+    act(() => {
+      fillInput(container, 'documentStatus', 'Draft', 'select');
+    });
 
     expect(getByTestId('document-status')).not.toBeNull();
   });

@@ -23,34 +23,35 @@ export interface INotesDetailContainerProps {
 }
 
 export const NoteContainer: React.FC<INotesDetailContainerProps> = props => {
-  const [isEditMode, setEditMode] = useState<boolean>(!!props.editMode);
+  const { type, noteId, editMode, isOpened, onSuccess, closeModal } = props;
+  const [isEditMode, setEditMode] = useState<boolean>(!!editMode);
   const {
     getNote: { execute, loading, response },
   } = useNoteRepository();
 
   useEffect(() => {
-    execute(props.type, props.noteId);
-  }, [execute, props.noteId, props.type]);
+    execute(type, noteId);
+  }, [execute, noteId, type]);
 
   // re-fetch note from API after update
-  const onSuccess = () => {
-    execute(props.type, props.noteId);
-    props.onSuccess && props.onSuccess();
+  const onSuccessHandler = () => {
+    execute(type, noteId);
+    onSuccess && onSuccess();
   };
 
   const close = () => {
-    props.closeModal();
+    closeModal();
     setEditMode(false);
   };
 
   if (isEditMode) {
     return (
       <UpdateNoteContainer
-        type={props.type}
-        isOpened={props.isOpened}
+        type={type}
+        isOpened={isOpened}
         loading={loading}
         note={response}
-        onSuccess={onSuccess}
+        onSuccess={onSuccessHandler}
         onSaveClick={close}
         onCancelClick={close}
       ></UpdateNoteContainer>
@@ -60,7 +61,7 @@ export const NoteContainer: React.FC<INotesDetailContainerProps> = props => {
       <NoteDetailsFormModal
         loading={loading}
         note={response}
-        isOpened={props.isOpened}
+        isOpened={isOpened}
         onCloseClick={close}
         onEdit={() => setEditMode(true)}
       ></NoteDetailsFormModal>

@@ -1,12 +1,11 @@
-using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
+using Microsoft.Extensions.Logging;
+using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -24,11 +23,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
-        /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public TenantRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<TenantRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public TenantRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<TenantRepository> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods

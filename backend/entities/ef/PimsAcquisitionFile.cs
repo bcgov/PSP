@@ -13,6 +13,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(AcquisitionFundingTypeCode), Name = "ACQNFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
     [Index(nameof(AcquisitionTypeCode), Name = "ACQNFL_ACQUISITION_TYPE_CODE_IDX")]
     [Index(nameof(AcqPhysFileStatusTypeCode), Name = "ACQNFL_ACQ_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
+    [Index(nameof(RegionCode), Name = "ACQNFL_REGION_CODE_IDX")]
     public partial class PimsAcquisitionFile
     {
         public PimsAcquisitionFile()
@@ -40,6 +41,8 @@ namespace Pims.Dal.Entities
         [Column("ACQ_PHYS_FILE_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string AcqPhysFileStatusTypeCode { get; set; }
+        [Column("REGION_CODE")]
+        public short RegionCode { get; set; }
         [Column("MINISTRY_PROJECT_NUMBER")]
         [StringLength(20)]
         public string MinistryProjectNumber { get; set; }
@@ -56,8 +59,6 @@ namespace Pims.Dal.Entities
         [Column("FILE_NUMBER")]
         [StringLength(18)]
         public string FileNumber { get; set; }
-        [Column("REGION_CODE")]
-        public short RegionCode { get; set; }
         [Column("FUNDING_OTHER")]
         [StringLength(200)]
         public string FundingOther { get; set; }
@@ -116,6 +117,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionTypeCode))]
         [InverseProperty(nameof(PimsAcquisitionType.PimsAcquisitionFiles))]
         public virtual PimsAcquisitionType AcquisitionTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(RegionCode))]
+        [InverseProperty(nameof(PimsRegion.PimsAcquisitionFiles))]
+        public virtual PimsRegion RegionCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsAcquisitionActivityInstance.AcquisitionFile))]
         public virtual ICollection<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
         [InverseProperty(nameof(PimsAcquisitionFilePerson.AcquisitionFile))]

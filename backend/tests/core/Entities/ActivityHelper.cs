@@ -14,7 +14,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote note = null)
+        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote[] notes = null)
         {
             var activity = new Entity.PimsActivityInstance()
             {
@@ -29,9 +29,19 @@ namespace Pims.Core.Test
                 ConcurrencyControlNumber = 1
             };
 
-            if (note != null)
+            if (notes != null)
             {
-                activity.PimsActivityInstanceNotes.Add(new Entity.PimsActivityInstanceNote() { ActivityInstance = activity, Note = note });
+                foreach (var n in notes)
+                {
+                    activity.PimsActivityInstanceNotes.Add(new Entity.PimsActivityInstanceNote()
+                    {
+                        ActivityInstance = activity,
+                        ActivityInstanceId = activity.ActivityInstanceId,
+                        Note = n,
+                        NoteId = n.NoteId,
+                        IsDisabled = false
+                    });
+                }
             }
 
             return activity;

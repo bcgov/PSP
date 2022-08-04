@@ -5,6 +5,6 @@ export interface ExternalResult<T> {
 }
 
 export enum ExternalResultStatus {
-  Success,
-  Error,
+  Success = 'Success',
+  Error = 'Error',
 }
