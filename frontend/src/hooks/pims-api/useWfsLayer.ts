@@ -18,7 +18,7 @@ export interface IUseWfsLayerOptions {
 export interface IWfsGetAllFeaturesOptions {
   maxCount?: number;
   timeout?: number;
-  pidOverride?: boolean;
+  forceSimplePid?: boolean;
 }
 
 /**
@@ -28,7 +28,7 @@ export interface IWfsGetAllFeaturesOptions {
 export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = useApiRequestWrapper({
     requestFunction: useDeepCompareCallback(
-      async (filter: Record<string, any> = {}, options?: IWfsGetAllFeaturesOptions) => {
+      async (filter: Record<string, string> = {}, options?: IWfsGetAllFeaturesOptions) => {
         const urlObj = buildUrl(url, getUrlParams(layerOptions));
 
         // add extra WFS params
@@ -36,7 +36,7 @@ export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
         if (options?.maxCount !== undefined) {
           urlObj.searchParams.set('count', options.maxCount.toString());
         }
-        const cqlFilter = toCqlFilterValue(filter, options?.pidOverride);
+        const cqlFilter = toCqlFilterValue(filter, options?.forceSimplePid);
         if (cqlFilter) {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }

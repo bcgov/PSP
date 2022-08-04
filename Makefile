@@ -185,7 +185,11 @@ start-infra: ## Starts infrastructure containers (e.g. keycloak, database, geose
 	@echo "$(P) Starting up infrastructure containers..."
 	@"$(MAKE)" start n="keycloak database geoserver"
 
-start up: ## Runs the local containers (n=service name)
+start: ## Starts the local containers (n=service name)
+	@echo "$(P) Starting client and server containers..."
+	@docker-compose start $(n)
+
+up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
 	@docker-compose up -d --no-recreate $(n)
 

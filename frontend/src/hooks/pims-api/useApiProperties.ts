@@ -22,8 +22,8 @@ export const useApiProperties = () => {
         ),
       getPropertyWithPid: (pid: string) => api.get<IPropertyApiModel>(`/properties/${pid}`),
       getProperty: (id: number) => api.get<IPropertyApiModel>(`/properties/${id}`),
-      getPropertyAssociations: (pid: string) =>
-        api.get<Api_PropertyAssociations>(`/properties/${pid}/associations`),
+      getPropertyAssociations: (id: number) =>
+        api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
       exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
         api.get(
           `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
@@ -34,10 +34,9 @@ export const useApiProperties = () => {
             },
           },
         ),
-      getPropertyConceptWithPid: (pid: string) =>
-        api.get<Api_Property>(`/properties/concept/${pid}`),
+      getPropertyConceptWithId: (id: number) => api.get<Api_Property>(`/properties/concept/${id}`),
       putPropertyConcept: (property: Api_Property) =>
-        api.put<Api_Property>(`/properties/concept/${property.pid}`, property),
+        api.put<Api_Property>(`/properties/concept/${property.id}`, property),
     }),
     [api],
   );

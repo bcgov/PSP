@@ -245,6 +245,14 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsPphStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+        public IEnumerable<PimsDocumentStatusType> GetDocumentStatusTypes()
+        {
+            return this.Context.PimsDocumentStatusTypes.AsNoTracking().ToArray();
+        }
+        public IEnumerable<PimsDocumentTyp> GetDocumentTypes()
+        {
+            return this.Context.PimsDocumentTyps.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }

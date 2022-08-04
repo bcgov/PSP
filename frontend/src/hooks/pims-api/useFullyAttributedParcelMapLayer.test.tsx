@@ -33,14 +33,14 @@ describe('useFullyAttributedParcelMapLayer hook', () => {
   });
 
   it('searches map layer by legal description', async () => {
-    const { findByLegalDescription, findByLegalDescriptionLoading } = setup();
+    const { findByLegalDescription, loadingIndicator } = setup();
 
     await act(async () => {
       const response = await findByLegalDescription('some legal description');
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(findByLegalDescriptionLoading).toBe(false);
+    expect(loadingIndicator).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
       'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25some+legal+description%25%27',

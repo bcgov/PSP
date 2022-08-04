@@ -8,65 +8,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   <div
     class="Toastify"
   />
-  .c10 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c9.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 0;
-}
-
-.c9.form-group .radio-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  row-gap: unset;
-  -webkit-column-gap: 0.4rem;
-  column-gap: 0.4rem;
-}
-
-.c9.form-group .radio-group .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c9.form-group .radio-group .form-check .form-check-input {
-  margin-left: 0;
-}
-
-.c9.form-group .radio-group .form-check-label {
-  margin-left: 1rem;
-}
-
-.c9 .form-label {
-  margin-bottom: unset;
-}
-
-.c1 {
+  .c1 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -77,26 +19,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
-}
-
-.c0 {
-  position: relative;
-}
-
-.c0.c0.c0 input,
-.c0.c0.c0 select,
-.c0.c0.c0 textarea {
-  background: none;
-  border: none;
-  resize: none;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  padding: 0;
-}
-
-.c0.c0.c0 .form-label {
-  font-weight: bold;
 }
 
 .c5 {
@@ -151,10 +73,16 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   min-height: 3.6rem;
 }
 
-<form
-    action="#"
-    class="c0"
+.c0 {
+  text-align: right;
+}
+
+<div
+    class=""
   >
+    <div
+      class="c0 mr-3 my-1"
+    />
     <div
       class="c1"
     >
@@ -191,11 +119,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           </div>
           <div
             class="c4 col"
-          >
-            <span
-              class=""
-            />
-          </div>
+          />
         </div>
         <div
           class="pb-2 row"
@@ -215,13 +139,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             <div
               class="c5"
             >
-              <span
-                class=""
-              />
-               -
-              <span
-                class=""
-              />
+              -
             </div>
           </div>
         </div>
@@ -239,11 +157,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           </div>
           <div
             class="c4 col"
-          >
-            <span
-              class=""
-            />
-          </div>
+          />
         </div>
         <div
           class="pb-2 row"
@@ -260,11 +174,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <div
             class="c4 col"
           >
-            <span
-              class=""
-            >
-              No
-            </span>
+            No
           </div>
         </div>
         <div
@@ -282,11 +192,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <div
             class="c4 col"
           >
-            <span
-              class=""
-            >
-              Unknown
-            </span>
+            Unknown
           </div>
         </div>
         <div
@@ -304,11 +210,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <div
             class="c4 col"
           >
-            <span
-              class=""
-            >
-              Titled
-            </span>
+            Titled
           </div>
         </div>
         <div
@@ -326,11 +228,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <div
             class="c4 col"
           >
-            <span
-              class=""
-            >
-              Some municipal zoning comments
-            </span>
+            Some municipal zoning comments
           </div>
         </div>
         <div
@@ -490,11 +388,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <div
             class="c4 col"
           >
-            <span
-              class=""
-            >
-              Unknown
-            </span>
+            Unknown
           </div>
         </div>
       </div>
@@ -699,52 +593,45 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
               Is this a volumetric parcel?
             </label>
             <div
-              class="c9 form-group"
+              class="pb-3 row"
             >
               <div
-                class="radio-group"
+                class="col"
               >
                 <div
-                  class="c10 pb-3"
+                  class="form-check form-check-inline"
                 >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      class="form-check-input position-static"
-                      disabled=""
-                      id="input-true"
-                      name="isVolumetricParcel"
-                      type="radio"
-                      value="true"
-                    />
-                  </div>
+                  <input
+                    class="form-check-input"
+                    disabled=""
+                    id="inline-isVolumetric-yes"
+                    name="is-volumetric-radio"
+                    type="radio"
+                  />
                   <label
-                    class="form-check-label form-label"
-                    for="input-isVolumetricParcel"
+                    class="form-check-label"
+                    for="inline-isVolumetric-yes"
+                    title=""
                   >
                     Yes
                   </label>
                 </div>
                 <div
-                  class="c10 pb-3"
+                  class="form-check form-check-inline"
                 >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      checked=""
-                      class="form-check-input position-static"
-                      disabled=""
-                      id="input-false"
-                      name="isVolumetricParcel"
-                      type="radio"
-                      value="false"
-                    />
-                  </div>
+                  <input
+                    checked=""
+                    class="form-check-input"
+                    disabled=""
+                    id="inline-isVolumetric-no"
+                    name="is-volumetric-radio"
+                    type="radio"
+                    value="yes"
+                  />
                   <label
-                    class="form-check-label form-label"
-                    for="input-isVolumetricParcel"
+                    class="form-check-label"
+                    for="inline-isVolumetric-no"
+                    title=""
                   >
                     No
                   </label>
@@ -782,6 +669,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
         </p>
       </div>
     </div>
-  </form>
+  </div>
 </DocumentFragment>
 `;

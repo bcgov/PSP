@@ -409,7 +409,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
           class="c4"
         >
           <div
-            class="c5 row"
+            class="c5 no-gutters row"
           >
             <div
               class="col"

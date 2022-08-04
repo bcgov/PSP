@@ -95,5 +95,9 @@ namespace Pims.Dal.Security
 
         [Display(GroupName = "note", Name = "note-delete", Description = "Can delete existing notes.")]
         NoteDelete = 30,
+
+
+        [Display(GroupName = "document", Name = "document-view", Description = "Can view documents.")]
+        DocumentView = 31,
     }
 }

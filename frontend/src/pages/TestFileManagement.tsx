@@ -1,4 +1,7 @@
+import { DocumentTypes } from 'constants/documentTypes';
+import DocumentListView from 'features/documents/list/DocumentListView';
 import { useAxiosApi } from 'hooks/pims-api';
+import { mockDocumentsResponse } from 'mocks/mockDocuments';
 import {
   DocumentDetail,
   DocumentQueryResult,
@@ -125,6 +128,18 @@ export const TestFileManagement: React.FunctionComponent = () => {
               </Col>
             </Row>
           </form>
+        </Col>
+      </Row>
+
+      <Row className="py-5">
+        <Col>
+          <DocumentListView
+            isLoading={false}
+            documentResults={mockDocumentsResponse()}
+            entityId={1}
+            documentType={DocumentTypes.ACTIVITY}
+            hideFilters={false}
+          />
         </Col>
       </Row>
       <Row className="py-5">

@@ -32,6 +32,7 @@ namespace Pims.Dal.Entities
             PimsPropPropAnomalyTypes = new HashSet<PimsPropPropAnomalyType>();
             PimsPropPropRoadTypes = new HashSet<PimsPropPropRoadType>();
             PimsPropPropTenureTypes = new HashSet<PimsPropPropTenureType>();
+            PimsPropertyAcquisitionFiles = new HashSet<PimsPropertyAcquisitionFile>();
             PimsPropertyEvaluations = new HashSet<PimsPropertyEvaluation>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
             PimsPropertyOrganizations = new HashSet<PimsPropertyOrganization>();
@@ -245,6 +246,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
         [InverseProperty(nameof(PimsPropPropTenureType.Property))]
         public virtual ICollection<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
+        [InverseProperty(nameof(PimsPropertyAcquisitionFile.Property))]
+        public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; }
         [InverseProperty(nameof(PimsPropertyEvaluation.Property))]
         public virtual ICollection<PimsPropertyEvaluation> PimsPropertyEvaluations { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.Property))]
