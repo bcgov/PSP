@@ -1,12 +1,13 @@
 namespace Pims.Dal.Entities
 {
-    public interface IBaseTypeEntity<KeyType, DisplayKeyType>
+    public interface IBaseTypeEntity<T_Id, T_DisplayOrder>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key of the type record.
         /// </summary>
-        KeyType Id { get; set; }
+        T_Id Id { get; set; }
 
         /// <summary>
         /// get/set - A description of the type.
@@ -21,11 +22,11 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The sort order of the lookup item.
         /// </summary>
-        DisplayKeyType DisplayOrder { get; set; }
+        T_DisplayOrder DisplayOrder { get; set; }
         #endregion
     }
 
-    public interface ITypeEntity<KeyType> : IBaseTypeEntity<KeyType, int?>
+    public interface ITypeEntity<T_Id> : IBaseTypeEntity<T_Id, int?>
     {
     }
 }

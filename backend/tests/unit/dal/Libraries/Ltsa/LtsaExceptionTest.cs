@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Http;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -7,10 +11,6 @@ using Pims.Core.Test;
 using Pims.Ltsa;
 using Pims.Ltsa.Configuration;
 using Pims.Ltsa.Models;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
@@ -84,7 +84,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             ltsaException.StatusCode.Should().Be(status);
         }
 
-
         [Fact]
         public void LtsaExceptionResponse_Success()
         {
@@ -92,7 +91,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var status = HttpStatusCode.OK;
             var response = new HttpResponseMessage(status)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
             };
             var exception = new LtsaException(response);
 
@@ -112,7 +111,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var innerException = new HttpClientRequestException(message, status);
             var response = new HttpResponseMessage(status)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
             };
             var ltsaException = new LtsaException(response, innerException);
 

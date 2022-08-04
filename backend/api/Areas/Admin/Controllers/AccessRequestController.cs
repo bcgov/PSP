@@ -44,7 +44,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get a list of access requests
+        /// Get a list of access requests.
         /// </summary>
         /// <param name="page"></param>
         /// <param name="quantity"></param>
@@ -100,7 +100,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Delete an access requests
+        /// Delete an access requests.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>

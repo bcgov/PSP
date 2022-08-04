@@ -27,7 +27,7 @@ namespace Pims.Core.Test
             return new List<Entity.PimsAreaUnitType>()
             {
                 new Entity.PimsAreaUnitType("Land") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAreaUnitType("Building") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsAreaUnitType("Building") { ConcurrencyControlNumber = 1 },
             };
         }
     }

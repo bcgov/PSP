@@ -1,10 +1,10 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
-using System;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Helpers.Extensions
 {
@@ -194,7 +194,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null) where T : class, IBaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -215,7 +216,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null) where T : class, IBaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);

@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     public class OrganizationModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify organization.
         /// </summary>

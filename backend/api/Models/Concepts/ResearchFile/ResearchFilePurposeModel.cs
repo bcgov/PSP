@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class ResearchFilePurposeModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Research file purpose id.
         /// </summary>

@@ -9,11 +9,12 @@ namespace Pims.Keycloak
 {
     /// <summary>
     /// KeycloakAdmin class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview
+    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
         #region Methods
+
         /// <summary>
         /// Get the total number of users.
         /// </summary>

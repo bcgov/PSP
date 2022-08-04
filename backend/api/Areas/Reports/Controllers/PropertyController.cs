@@ -1,3 +1,4 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -11,7 +12,6 @@ using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 
 namespace Pims.Api.Areas.Reports.Controllers
 {
@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
@@ -46,10 +47,11 @@ namespace Pims.Api.Areas.Reports.Controllers
 
         #region Endpoints
         #region Export Properties
+
         /// <summary>
         /// Exports properties as CSV or Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
+        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
         /// </summary>
         /// <param name="all"></param>
         /// <returns></returns>
@@ -68,7 +70,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports properties as CSV or Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
+        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="all"></param>
@@ -102,7 +104,6 @@ namespace Pims.Api.Areas.Reports.Controllers
                 ContentTypes.CONTENT_TYPE_CSV => ReportHelper.GenerateCsv(report.Items),
                 _ => ReportHelper.GenerateExcel(report.Items, "PIMS")
             };
-
         }
 
         #endregion

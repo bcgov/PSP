@@ -3,7 +3,7 @@ using System.Linq;
 
 public static class SolutionProvider
 {
-    //Find the root directory containing the sln file.
+    // Find the root directory containing the sln file.
     public static DirectoryInfo TryGetSolutionDirectoryInfo(string currentPath = null)
     {
         var directory = new DirectoryInfo(

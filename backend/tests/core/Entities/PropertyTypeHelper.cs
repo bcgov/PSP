@@ -27,7 +27,7 @@ namespace Pims.Core.Test
             return new List<Entity.PimsPropertyType>()
             {
                 new Entity.PimsPropertyType("Land") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyType("Building") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsPropertyType("Building") { ConcurrencyControlNumber = 1 },
             };
         }
     }

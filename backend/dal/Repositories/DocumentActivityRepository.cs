@@ -15,6 +15,7 @@ namespace Pims.Dal.Repositories
     public class DocumentActivityRepository : BaseRepository<PimsActivityInstanceDocument>, IDocumentActivityRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a DocumentActivityRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -22,11 +23,12 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="logger"></param>
         public DocumentActivityRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DocumentActivityRepository> logger)
-            : base(dbContext, user, logger) { }
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
-
 
         /// <summary>
         /// Get a list of all the document relationships for a given document.
@@ -95,7 +97,6 @@ namespace Pims.Dal.Repositories
             this.Context.PimsActivityInstanceDocuments.Remove(activityDocument);
             return true;
         }
-
 
         #endregion
     }

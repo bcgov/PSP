@@ -9,6 +9,7 @@ namespace Pims.Keycloak.Models
     public class RoleModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>

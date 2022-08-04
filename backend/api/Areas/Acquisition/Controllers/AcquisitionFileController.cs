@@ -1,11 +1,10 @@
-
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
-using Pims.Dal.Security;
 using Pims.Api.Services;
+using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Acquisition.Controllers
@@ -27,6 +26,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AcquisitionFileController class, initializes it with the specified arguments.
         /// </summary>
@@ -50,7 +50,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
-        [SwaggerOperation(Tags = new[] {"acquisitionfile" })]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult GetAcquisitionFile(long id)
         {
             var acqFile = _acquisitionService.GetById(id);
@@ -65,7 +65,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
-        [SwaggerOperation(Tags = new[] {"acquisitionfile" })]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult AddAcquisitionFile([FromBody] AcquisitionFileModel model)
         {
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
@@ -82,7 +82,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
-        [SwaggerOperation(Tags = new[] {"acquisitionfile" })]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult UpdateResearchFile(long id, [FromBody] AcquisitionFileModel model)
         {
             // TODO: Implementation pending

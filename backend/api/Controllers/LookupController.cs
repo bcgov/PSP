@@ -25,6 +25,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LookupController class.
         /// </summary>
@@ -40,7 +41,7 @@ namespace Pims.Api.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get all of the role code values
+        /// Get all of the role code values.
         /// </summary>
         /// <returns></returns>
         [HttpGet("roles")]
@@ -54,7 +55,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Get all of the property classification code values
+        /// Get all of the property classification code values.
         /// </summary>
         /// <returns></returns>
         [HttpGet("property/classifications")]
@@ -68,7 +69,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Get all of the code values
+        /// Get all of the code values.
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
@@ -161,7 +162,6 @@ namespace Pims.Api.Controllers
             codes.AddRange(acquisitionPhysFileStatusTypes);
             codes.AddRange(acquisitionTypes);
             codes.AddRange(activityTemplateTypes);
-
 
             return new JsonResult(codes);
         }

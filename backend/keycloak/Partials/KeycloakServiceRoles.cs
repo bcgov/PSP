@@ -9,12 +9,13 @@ namespace Pims.Keycloak
 {
     /// <summary>
     /// KeycloakAdmin class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview
+    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
         #region Methods
         #region By ID
+
         /// <summary>
         /// Get the role for the specified 'key'.
         /// </summary>
@@ -122,6 +123,7 @@ namespace Pims.Keycloak
         #endregion
 
         #region Realm
+
         /// <summary>
         /// Get an array of realm roles.
         /// </summary>
@@ -270,6 +272,7 @@ namespace Pims.Keycloak
         #endregion
 
         #region Client
+
         /// <summary>
         /// Get an array of roles for the client specified by the 'clientKey'.
         /// </summary>
@@ -283,7 +286,7 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get the role specified by the 'name', within the client specified by the 'clientKey'
+        /// Get the role specified by the 'name', within the client specified by the 'clientKey'.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="name"></param>
@@ -355,7 +358,7 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get an array of composite roles
+        /// Get an array of composite roles.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
@@ -384,7 +387,7 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'
+        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
@@ -398,7 +401,7 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'
+        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="parentName"></param>

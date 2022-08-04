@@ -1,7 +1,7 @@
-using Pims.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Helpers;
 using Xunit;
 
 namespace Pims.Api.Test.Helpers
@@ -17,7 +17,7 @@ namespace Pims.Api.Test.Helpers
             new List<object[]>
             {
                 new object[] { 10 },
-                new object[] { 15 }
+                new object[] { 15 },
             };
         #endregion
 

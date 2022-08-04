@@ -3,6 +3,7 @@ namespace Pims.Geocoder.Configuration
     public class IntersectionOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The URL to the intersection addresses endpoint.
         /// </summary>

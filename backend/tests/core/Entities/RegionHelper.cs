@@ -29,7 +29,7 @@ namespace Pims.Core.Test
             {
                 new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1 },
                 new Entity.PimsRegion("Southern Interior") { RegionCode = 2,  ConcurrencyControlNumber = 1 },
-                new Entity.PimsRegion("South Coast") { RegionCode = 3,  ConcurrencyControlNumber = 1 }
+                new Entity.PimsRegion("South Coast") { RegionCode = 3,  ConcurrencyControlNumber = 1 },
             };
         }
     }

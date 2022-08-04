@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,6 +22,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an LogRequestMiddleware class, and initializes it with the specified arguments.
         /// </summary>
@@ -37,6 +37,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Add a log message for the request.
         /// </summary>
@@ -66,12 +67,10 @@ namespace Pims.Api.Helpers.Middleware
                 _logger.LogTrace(string.IsNullOrEmpty(body) ? string.Empty : $"{System.Environment.NewLine}Body: {body}");
             }
 
-
             context.Request.Body.Position = 0;
 
             await _next(context);
         }
-
 
         #endregion
     }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -11,15 +10,20 @@ namespace Pims.Dal.Repositories
     public class SecurityDepositRepository : BaseRepository<PimsSecurityDeposit>, ISecurityDepositRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SecurityDepositRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public SecurityDepositRepository(PimsContext dbContext,
+        public SecurityDepositRepository(
+            PimsContext dbContext,
             ClaimsPrincipal user,
-            ILogger<LeaseRepository> logger) : base(dbContext, user, logger) { }
+            ILogger<LeaseRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
 
         #endregion
 
@@ -44,7 +48,6 @@ namespace Pims.Dal.Repositories
             this.Context.Add(securityDeposit);
             return securityDeposit;
         }
-
 
         public PimsSecurityDeposit Update(PimsSecurityDeposit securityDeposit)
         {

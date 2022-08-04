@@ -1,6 +1,3 @@
-using CsvHelper;
-using CsvHelper.Configuration;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +6,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using CsvHelper;
+using CsvHelper.Configuration;
+using Pims.Core.Extensions;
 
 namespace Pims.Core.Helpers
 {
@@ -48,16 +48,17 @@ namespace Pims.Core.Helpers
         {
             var dt = new DataTable()
             {
-                TableName = tableName
+                TableName = tableName,
             };
             var columns = new Dictionary<int, ExportColumn>();
             var index = 0;
-            var type = typeof(T) == typeof(Object) ? data.GetType().GetItemType() : typeof(T);
+            var type = typeof(T) == typeof(object) ? data.GetType().GetItemType() : typeof(T);
             var properties = type.GetCachedProperties();
             properties.ForEach(p =>
             {
                 var pType = p.PropertyType;
                 var isNullable = pType.IsGenericType && pType.GetGenericTypeDefinition() == typeof(Nullable<>);
+
                 // Only include simple data types.
                 if (pType.IsPrimitive || pType == typeof(string) || (!pType.IsEnumerable() && !pType.IsClass))
                 {
@@ -96,9 +97,10 @@ namespace Pims.Core.Helpers
     /// ExportColumn private class, provides an object to maintain the original property and the column information.
     /// This is only used in the CsvHelper.
     /// </summary>
-    class ExportColumn
+    internal class ExportColumn
     {
         #region Properties
+
         /// <summary>
         /// get/set - The original object property information.
         /// </summary>
@@ -111,6 +113,7 @@ namespace Pims.Core.Helpers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ExportColumn object, initializes it with specified arguments.
         /// </summary>

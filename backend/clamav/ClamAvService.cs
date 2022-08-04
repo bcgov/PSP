@@ -36,6 +36,7 @@ namespace Pims.Av
 
         #region Properties
         public ClamAvOptions Options { get; }
+
         protected IClamClient Client { get; }
         #endregion
 

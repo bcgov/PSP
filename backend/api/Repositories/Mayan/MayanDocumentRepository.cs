@@ -48,7 +48,7 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
             JsonSerializerOptions serializerOptions = new()
             {
-                IgnoreNullValues = true
+                IgnoreNullValues = true,
             };
             string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
             using HttpContent content = new StringContent(serializedDocumentType);
@@ -152,7 +152,6 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Finished retrieving document metadata");
             return response;
         }
-
 
         public async Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId)
         {
@@ -325,7 +324,7 @@ namespace Pims.Api.Repositories.Mayan
             const string fileNameFlag = "filename";
             string[] parts = contentDisposition.Split(" ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
+            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
     }
 }

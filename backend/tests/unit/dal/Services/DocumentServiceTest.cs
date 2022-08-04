@@ -39,7 +39,7 @@ namespace Pims.Dal.Test.Services
             avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>()));
 
             // Act
-            var updatedLease = service.UploadDocumentAsync(1, helper.GetFormFile(""));
+            var updatedLease = service.UploadDocumentAsync(1, helper.GetFormFile(string.Empty));
 
             // Assert
             documentRepository.Verify(x => x.UploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()), Times.Once);

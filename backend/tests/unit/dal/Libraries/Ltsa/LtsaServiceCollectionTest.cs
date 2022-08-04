@@ -1,3 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -7,12 +13,6 @@ using Pims.Core.Http;
 using Pims.Core.Test;
 using Pims.Ltsa;
 using Pims.Ltsa.Configuration;
-using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa

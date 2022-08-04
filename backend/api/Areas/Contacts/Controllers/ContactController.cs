@@ -26,6 +26,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ContactController class, initializes it with the specified arguments.
         /// </summary>
@@ -40,6 +41,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the contact for the specified primary key 'id'.
         /// </summary>
@@ -59,7 +61,6 @@ namespace Pims.Api.Areas.Contact.Controllers
                 var mappedPerson = _mapper.Map<Models.Contact.ContactModel>(person);
                 mappedPerson.Id = contactView.Id;
                 return new JsonResult(mappedPerson);
-                
             }
             else
             {

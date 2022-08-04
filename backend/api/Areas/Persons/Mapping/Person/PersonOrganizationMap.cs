@@ -7,11 +7,6 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
 {
     public class PersonOrganizationMap : IRegister
     {
-        private static long? GetLinkedOrganizationId(PersonModel src)
-        {
-            return src != null && src.Organization != null ? src.Organization.Id : null;
-        }
-
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Model.PersonModel, Entity.PimsPersonOrganization>()
@@ -20,6 +15,11 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                 .Map(dest => dest.PersonId, src => src.Id)
                 .Map(dest => dest.OrganizationId, src => GetLinkedOrganizationId(src))
                 .IgnoreNullValues(true);
+        }
+
+        private static long? GetLinkedOrganizationId(PersonModel src)
+        {
+            return src != null && src.Organization != null ? src.Organization.Id : null;
         }
     }
 }

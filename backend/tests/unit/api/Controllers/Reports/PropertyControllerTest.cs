@@ -48,7 +48,7 @@ namespace Pims.Api.Test.Controllers.Reports
             new object [] { new Uri("http://host/api/properties?FloorCount=1") },
             new object [] { new Uri("http://host/api/properties?Tenancy=Tenancy") },
             new object [] { new Uri("http://host/api/properties?MinRentableArea=1") },
-            new object [] { new Uri("http://host/api/properties?MaxRentableArea=1") }
+            new object [] { new Uri("http://host/api/properties?MaxRentableArea=1") },
         };
         #endregion
 

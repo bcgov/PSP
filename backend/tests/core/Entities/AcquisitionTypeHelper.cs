@@ -28,7 +28,7 @@ namespace Pims.Core.Test
             {
                 new Entity.PimsAcquisitionType("CONSEN") { ConcurrencyControlNumber = 1 },
                 new Entity.PimsAcquisitionType("SECTN3") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsAcquisitionType("SECTN6") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsAcquisitionType("SECTN6") { ConcurrencyControlNumber = 1 },
             };
         }
     }

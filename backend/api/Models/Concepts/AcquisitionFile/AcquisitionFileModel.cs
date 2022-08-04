@@ -5,6 +5,7 @@ namespace Pims.Api.Models.Concepts
     public class AcquisitionFileModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The model id.
         /// </summary>

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -10,8 +12,6 @@ using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Contact.Controllers
 {
@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SearchController(Contacts) class, initializes it with the specified arguments.
         /// </summary>
@@ -47,10 +48,11 @@ namespace Pims.Api.Areas.Contact.Controllers
 
         #region Endpoints
         #region Paged Contact Endpoints
+
         /// <summary>
         /// Get all the contacts that satisfy the filter parameters.
         /// </summary>
-        /// <returns>An array of contacts matching the filter</returns>
+        /// <returns>An array of contacts matching the filter.</returns>
         [HttpGet]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
@@ -68,7 +70,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         /// Get all the contacts that satisfy the filter parameters.
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns>An array of contacts matching the filter</returns>
+        /// <returns>An array of contacts matching the filter.</returns>
         [HttpPost("filter")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]

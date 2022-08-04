@@ -1,3 +1,6 @@
+using System;
+using System.Net;
+using System.Net.Http;
 using FluentAssertions;
 using Moq;
 using Pims.Core.Exceptions;
@@ -5,9 +8,6 @@ using Pims.Core.Http;
 using Pims.Core.Test;
 using Pims.Keycloak;
 using Pims.Keycloak.Models;
-using System;
-using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -38,7 +38,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -66,7 +66,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -91,7 +91,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -99,7 +99,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PutAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -122,7 +122,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -130,7 +130,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PutAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -180,7 +180,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -207,8 +207,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -216,7 +216,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -241,8 +241,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -250,7 +250,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -277,8 +277,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -286,7 +286,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -312,7 +312,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -339,8 +339,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -348,7 +348,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -373,8 +373,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -382,7 +382,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -409,8 +409,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -418,7 +418,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -445,7 +445,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -473,8 +473,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -482,7 +482,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -508,7 +508,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -537,8 +537,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -546,7 +546,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -571,7 +571,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -599,7 +599,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Name = "name",
                 Description = "description",
                 Composite = false,
-                ContainerId = "container"
+                ContainerId = "container",
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -607,7 +607,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -632,7 +632,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -665,7 +665,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -696,7 +696,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -722,7 +722,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var role = new RoleModel()
             {
                 Id = Guid.NewGuid(),
-                Name = "name"
+                Name = "name",
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -730,7 +730,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PutAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -754,7 +754,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var role = new RoleModel()
             {
                 Id = Guid.NewGuid(),
-                Name = "name"
+                Name = "name",
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -762,7 +762,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PutAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -812,7 +812,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -837,7 +837,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -845,7 +845,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(role)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -868,7 +868,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -876,7 +876,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -903,8 +903,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -912,7 +912,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -937,8 +937,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -946,7 +946,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<StringContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -973,8 +973,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -982,7 +982,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -1009,7 +1009,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -1037,8 +1037,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -1046,7 +1046,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -1072,7 +1072,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -1099,8 +1099,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
-                }
+                    Id = Guid.NewGuid(),
+                },
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -1108,7 +1108,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles))
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(roles)),
             });
             helper.AddSingleton(openIdConnect.Object);
 
@@ -1136,7 +1136,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.GetAsync(It.IsAny<string>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 
