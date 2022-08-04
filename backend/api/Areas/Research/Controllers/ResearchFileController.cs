@@ -82,7 +82,8 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
                     Id = "Draft",
                     Description = "Draft",
                 };
-            };
+            }
+
             return new JsonResult(models);
         }
 
