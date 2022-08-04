@@ -4,6 +4,7 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -57,7 +58,6 @@ namespace Pims.Api.Services
             switch (type)
             {
                 case NoteType.Activity:
-                default:
                     var pimsEntity = _mapper.Map<PimsActivityInstanceNote>(model);
 
                     var createdEntity = _entityNoteRepository.Add<PimsActivityInstanceNote>(pimsEntity);
@@ -65,6 +65,8 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdEntity);
                     break;
+                default:
+                    throw new BadRequestException("Relationship type not valid.");
             }
 
             return result;
