@@ -58,8 +58,8 @@
     <ProjectReference Include="..\keycloak\Pims.Keycloak.csproj" />
   </ItemGroup>
   <ItemGroup>
-  <Content Include="Resources\**">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-</ItemGroup>
+    <Content Include="Resources\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

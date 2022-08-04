@@ -180,7 +180,7 @@ namespace Pims.Api.Repositories.Mayan
 
         protected Dictionary<string, string> GenerateQueryParams(string ordering = "", int? page = null, int? pageSize = null)
         {
-            Dictionary<string, string> queryParams = new ();
+            Dictionary<string, string> queryParams = new();
 
             if (!string.IsNullOrEmpty(ordering))
             {

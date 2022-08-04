@@ -117,9 +117,10 @@ dotnet_diagnostic.SA1513.severity = none
 dotnet_diagnostic.SA1124.severity = none
 # SA1139 Use literal suffix notation  
 dotnet_diagnostic.SA1139.severity = none
-
 # SA1501 Statement should not be on a single line.
 dotnet_diagnostic.SA1501.severity = none
+# SA1000 The keyword 'new' should be followed by a space
+dotnet_diagnostic.SA1000.severity = none
 
 # TODO: Fix these
 # SA1622 Generic type parameter documentation should have text. // TODO: This should get added
@@ -182,8 +183,6 @@ dotnet_diagnostic.SA1517.severity = warning
 dotnet_diagnostic.S1128.severity = warning
 # SA1508 A closing brace should not be preceded by a blank line.
 dotnet_diagnostic.SA1508.severity = warning
-# SA1000 The keyword 'new' should be followed by a space
-dotnet_diagnostic.SA1000.severity = warning
 # SA1009 Closing parenthesis should be followed by a space
 dotnet_diagnostic.SA1009.severity = warning
 # SA1210 Using directives should be ordered alphabetically by the namespaces
