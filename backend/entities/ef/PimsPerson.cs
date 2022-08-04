@@ -13,6 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsPerson()
         {
+            PimsAcquisitionFilePeople = new HashSet<PimsAcquisitionFilePerson>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
             PimsLeaseTenantPeople = new HashSet<PimsLeaseTenant>();
             PimsLeaseTenantPrimaryContacts = new HashSet<PimsLeaseTenant>();
@@ -97,6 +98,8 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [InverseProperty(nameof(PimsAcquisitionFilePerson.Person))]
+        public virtual ICollection<PimsAcquisitionFilePerson> PimsAcquisitionFilePeople { get; set; }
         [InverseProperty(nameof(PimsContactMethod.Person))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Person))]

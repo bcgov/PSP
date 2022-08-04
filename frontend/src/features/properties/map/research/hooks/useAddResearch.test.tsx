@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import find from 'lodash/find';
@@ -25,13 +25,6 @@ const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
 const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
-beforeEach(() => {
-  mockAxios.reset();
-  dispatch.mockClear();
-  requestSpy.mockClear();
-  successSpy.mockClear();
-  errorSpy.mockClear();
-});
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
 const getStore = (values?: any) => {
@@ -42,34 +35,47 @@ const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>{children}</Provider>
 );
 
-const setup = (values?: any) => {
-  const { result } = renderHook(useAddResearch, { wrapper: getWrapper(getStore(values)) });
-  return result.current;
-};
-
 describe('useAddResearch functions', () => {
+  const setup = (values?: any) => {
+    const { result } = renderHook(useAddResearch, { wrapper: getWrapper(getStore(values)) });
+    return result.current;
+  };
+
+  beforeEach(() => {
+    mockAxios.reset();
+    dispatch.mockClear();
+    requestSpy.mockClear();
+    successSpy.mockClear();
+    errorSpy.mockClear();
+  });
+
   afterAll(() => {
     jest.restoreAllMocks();
   });
+
   describe('addResearch', () => {
     const url = `/researchFiles`;
     it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPost(url).reply(200, testResearchFile);
-
       const { addResearchFile } = setup();
-      const response = await addResearchFile(testResearchFile);
+
+      await act(async () => {
+        const response = await addResearchFile(testResearchFile);
+        expect(response).toEqual(testResearchFile);
+      });
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(response).toEqual(testResearchFile);
       expect(toastSuccessSpy).toHaveBeenCalled();
     });
 
     it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
-
       const { addResearchFile } = setup();
-      await addResearchFile(testResearchFile);
+
+      await act(async () => {
+        await addResearchFile(testResearchFile);
+      });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
       expect(toastErrorSpy).toHaveBeenCalled();

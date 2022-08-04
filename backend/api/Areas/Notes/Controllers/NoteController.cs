@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +9,6 @@ using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Security;
-using System.Collections.Generic;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Notes.Controllers
@@ -64,12 +64,12 @@ namespace Pims.Api.Areas.Notes.Controllers
         }
 
         /// <summary>
-        /// Get the notes for the specified type and entity id.
+        /// Gets a collection of notes for the specified type and owner id.
         /// </summary>
         /// <param name="type">Used to identify note type.</param>
         /// <param name="entityId">Used to identify note's parent entity.</param>
         /// <returns></returns>
-        [HttpGet("{type}/{entityId}")]
+        [HttpGet("{type}/owner/{entityId:long}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
@@ -82,17 +82,52 @@ namespace Pims.Api.Areas.Notes.Controllers
         }
 
         /// <summary>
+        /// Retrieves the note with the specified id.
+        /// </summary>
+        /// <param name="type">Used to identify note type.</param>
+        /// <param name="noteId">Used to identify the note.</param>
+        /// <returns></returns>
+        [HttpGet("{type}/{noteId:long}")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.NoteView)]
+        [ProducesResponseType(typeof(NoteModel), 200)]
+        [SwaggerOperation(Tags = new[] { "note" })]
+        public IActionResult GetNoteById(NoteType type, long noteId)
+        {
+            var note = _noteService.GetById(noteId);
+            return new JsonResult(note);
+        }
+
+        /// <summary>
+        /// Updates the note with the specified id.
+        /// </summary>
+        /// <param name="type">Used to identify note type.</param>
+        /// <param name="noteId">Used to identify the note.</param>
+        /// <param name="noteModel">The updated note values.</param>
+        /// <returns></returns>
+        [HttpPut("{type}/{noteId:long}")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.NoteEdit)]
+        [ProducesResponseType(typeof(NoteModel), 200)]
+        [SwaggerOperation(Tags = new[] { "note" })]
+        public IActionResult UpdateNote(NoteType type, long noteId, [FromBody] NoteModel noteModel)
+        {
+            var updatedNote = _noteService.Update(noteModel);
+            return new JsonResult(updatedNote);
+        }
+
+        /// <summary>
         /// Deletes the note for the specified type.
         /// </summary>
         /// <param name="type">Used to identify note type.</param>
         /// <param name="noteId">Used to identify the note and delete it.</param>
         /// <returns></returns>
-        [HttpDelete("{type}/{noteId}")]
+        [HttpDelete("{type}/{noteId:long}")]
         [Produces("application/json")]
         [HasPermission(Permissions.NoteDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
-        public IActionResult DeleteNote(NoteType type, int noteId)
+        public IActionResult DeleteNote(NoteType type, long noteId)
         {
             _noteService.DeleteNote(type, noteId);
             return new JsonResult(true);

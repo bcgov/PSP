@@ -86,9 +86,9 @@ pr: | needs-rebase test local-build ## Runs various checks before a pull request
 # Docker Development
 ##############################################################################
 
-docker: | build run rebuild-all-local-friendly-message ## Builds and runs the docker containers
+docker: | build up rebuild-all-local-friendly-message ## Builds and runs the docker containers
 
-restart: | stop build run rebuild-all-local-friendly-message ## Rebuilds the docker containers
+restart: | stop build up rebuild-all-local-friendly-message ## Rebuilds the docker containers
 
 build-all: ## Rebuilds all docker containers for this project
 	@echo -e "\n$(P) Building images..."
@@ -98,13 +98,21 @@ build: ## Builds the frontend container
 	@echo -e "\n$(P) Building images..."
 	@docker-compose build --force-rm --no-cache frontend
 
-run: ## Runs the frontend docker container
+up: ## Runs the frontend docker container
 	@echo -e "\n$(P) Running client and server..."
 	@docker-compose up -d
 
-stop: ## Tears down the docker development containers
+down: ## Tears down the docker development containers
 	@echo -e "\n$(P) Stopping client and server..."
 	@docker-compose down
+
+start: ## Starts the local containers (n=service name)
+	@echo "$(P) Starting client and server containers..."
+	@docker-compose start $(n)
+
+stop: ## Stops the local containers (n=service name)
+	@echo "$(P) Stopping client and server..."
+	@docker-compose stop $(n)
 
 clean: ## Removes local docker containers, images, volumes, etc
 	@echo -e "\n$(P) Removing containers, images, volumes etc..."
@@ -118,4 +126,4 @@ rebuild-all-local-friendly-message:
 	@echo "$(P) pims_database will be available at http://localhost:5433"
 	@echo "$(P) pims_keycloak will be available at http://keycloak:8080"
 
-.PHONY: docker restart build run stop clean
+.PHONY: docker restart build up down start stop clean

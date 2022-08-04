@@ -7,14 +7,12 @@ import { FormTenant } from './Tenant';
 
 interface IPrimaryContactWarningModalProps {
   saveCallback?: Function;
-  setSaveCallback: (display: Function | undefined) => void;
   lease: IFormLease | undefined;
   onCancel?: Function;
 }
 
 const PrimaryContactWarningModal: React.FunctionComponent<IPrimaryContactWarningModalProps> = ({
   saveCallback,
-  setSaveCallback,
   lease,
   onCancel,
 }) => {
@@ -23,7 +21,6 @@ const PrimaryContactWarningModal: React.FunctionComponent<IPrimaryContactWarning
   return (
     <GenericModal
       display={!!saveCallback}
-      setDisplay={() => setSaveCallback(undefined)}
       title="Confirm save"
       message={
         <>

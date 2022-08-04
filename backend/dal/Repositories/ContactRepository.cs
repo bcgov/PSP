@@ -111,45 +111,35 @@ namespace Pims.Dal.Repositories
         {
             filter.ThrowIfNull(nameof(filter));
 
-            var query = from c in this.Context.PimsContactMgrVws
-                        join o in this.Context.PimsOrganizations
-                            on c.Organization equals o into contactOrganization
-                        from co in contactOrganization.DefaultIfEmpty()
-                        join po in this.Context.PimsPersonOrganizations
-                            on co equals po.Organization into contactPersonOrganization
-                        from copo in contactPersonOrganization.DefaultIfEmpty()
-                        join p in this.Context.PimsPeople
-                            on new { person = copo != null ? copo.Person : null } equals new { person = p } into contactPersonOrganizationPerson
-                        from copop in contactPersonOrganizationPerson.DefaultIfEmpty()
-                        select new { Contact = c, Organization = co, PersonOrganization = copo, Person = copop };
+            var query = Context.PimsContactMgrVws.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(filter.Municipality))
             {
-                query = query.Where(c => c.Contact.MunicipalityName != null && c.Contact.MunicipalityName.Contains(filter.Municipality));
+                query = query.Where(c => c.MunicipalityName.Contains(filter.Municipality));
             }
 
             var summary = filter.Summary?.Trim() ?? string.Empty;
 
             if (filter.SearchBy == "persons")
             {
-                query = query.Where(c => c.Contact.PersonId != null && c.Contact.Id.StartsWith("P"));
+                query = query.Where(c => c.PersonId != null && c.Id.StartsWith("P"));
                 string[] nameParts = summary.Split(' ');
                 if (!string.IsNullOrWhiteSpace(summary))
                 {
                     foreach (string namePart in nameParts)
                     {
-                        query = query.Where(c => (c.Contact.FirstName != null && c.Contact.FirstName.Contains(namePart)) ||
-                        (c.Contact.Surname != null && c.Contact.Surname.Contains(namePart)) ||
-                        (c.Contact.MiddleNames != null && c.Contact.MiddleNames.Contains(namePart)));
+                        query = query.Where(c => (c.FirstName != null && c.FirstName.Contains(namePart)) ||
+                        (c.Surname != null && c.Surname.Contains(namePart)) ||
+                        (c.MiddleNames != null && c.MiddleNames.Contains(namePart)));
                     }
                 }
             }
             else if (filter.SearchBy == "organizations")
             {
-                query = query.Where(c => c.Contact.OrganizationId != null && c.Contact.Id.StartsWith("O"));
+                query = query.Where(c => c.OrganizationId != null && c.Id.StartsWith("O"));
                 if (!string.IsNullOrWhiteSpace(summary))
                 {
-                    query = query.Where(c => c.Contact.Summary != null && c.Contact.Summary.Contains(summary));
+                    query = query.Where(c => c.Summary != null && c.Summary.Contains(summary));
                 }
             }
             else
@@ -159,17 +149,17 @@ namespace Pims.Dal.Repositories
                 {
                     foreach (string namePart in nameParts)
                     {
-                        query = query.Where(c => (c.Contact.FirstName != null && c.Contact.FirstName.Contains(namePart)) ||
-                        (c.Contact.Surname != null && c.Contact.Surname.Contains(namePart)) ||
-                        (c.Contact.MiddleNames != null && c.Contact.MiddleNames.Contains(namePart)) ||
-                        (c.Contact.OrganizationName != null && c.Contact.OrganizationName.Contains(summary)));
+                        query = query.Where(c => (c.FirstName != null && c.FirstName.Contains(namePart)) ||
+                        (c.Surname != null && c.Surname.Contains(namePart)) ||
+                        (c.MiddleNames != null && c.MiddleNames.Contains(namePart)) ||
+                        (c.OrganizationName != null && c.OrganizationName.Contains(summary)));
                     }
                 }
             }
 
             if (filter.ActiveContactsOnly)
             {
-                query = query.Where(c => !c.Contact.IsDisabled);
+                query = query.Where(c => !c.IsDisabled);
             }
 
             if (filter.Sort?.Any() == true)
@@ -178,39 +168,86 @@ namespace Pims.Dal.Repositories
                 var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
                 if (field == "Surname")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.Contact.Surname) : query.OrderByDescending(c => c.Contact.Surname);
+                    query = direction == "asc" ? query.OrderBy(c => c.Surname) : query.OrderByDescending(c => c.Surname);
                 }
                 else if (field == "FirstName")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.Contact.FirstName) : query.OrderByDescending(c => c.Contact.FirstName);
+                    query = direction == "asc" ? query.OrderBy(c => c.FirstName) : query.OrderByDescending(c => c.FirstName);
                 }
                 else if (field == "OrganizationName")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.Contact.OrganizationName) : query.OrderByDescending(c => c.Contact.OrganizationName);
+                    query = direction == "asc" ? query.OrderBy(c => c.OrganizationName) : query.OrderByDescending(c => c.OrganizationName);
                 }
                 else if (field == "MunicipalityName")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.Contact.MunicipalityName) : query.OrderByDescending(c => c.Contact.MunicipalityName);
+                    query = direction == "asc" ? query.OrderBy(c => c.MunicipalityName) : query.OrderByDescending(c => c.MunicipalityName);
                 }
                 else
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.Contact.Summary) : query.OrderByDescending(c => c.Contact.Summary);
+                    query = direction == "asc" ? query.OrderBy(c => c.Summary) : query.OrderByDescending(c => c.Summary);
                 }
             }
             else
             {
-                query = query.OrderBy(c => c.Contact.Summary);
+                query = query.OrderBy(c => c.Summary);
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
 
             totalItems = query.Count();
 
-            var contactsWithOrganizations = query
-                .Skip(skip)
+            var contacts = query.Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();
 
+            // Unable to use includes on PersonOrganization as scaffolded views in EF are keyless entities.
+            var joinOrganizationQuery = from c in this.Context.PimsContactMgrVws
+                                        where contacts.Select(c => c.Id).Contains(c.Id)
+                                        join o in this.Context.PimsOrganizations
+                                            on c.Organization equals o into contactOrganization
+                                        from co in contactOrganization.DefaultIfEmpty()
+                                        join po in this.Context.PimsPersonOrganizations
+                                            on co equals po.Organization into contactPersonOrganization
+                                        from copo in contactPersonOrganization.DefaultIfEmpty()
+                                        join p in this.Context.PimsPeople
+                                            on new { person = copo != null ? copo.Person : null } equals new { person = p } into contactPersonOrganizationPerson
+                                        from copop in contactPersonOrganizationPerson.DefaultIfEmpty()
+                                        select new { Contact = c, Organization = co, PersonOrganization = copo };
+
+            // TODO refactor this into a shared method.
+            if (filter.Sort?.Any() == true)
+            {
+                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
+                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
+                if (field == "Surname")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.Surname) : joinOrganizationQuery.OrderByDescending(c => c.Contact.Surname);
+                }
+                else if (field == "FirstName")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.FirstName) : joinOrganizationQuery.OrderByDescending(c => c.Contact.FirstName);
+                }
+                else if (field == "OrganizationName")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.OrganizationName) : joinOrganizationQuery.OrderByDescending(c => c.Contact.OrganizationName);
+                }
+                else if (field == "MunicipalityName")
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.MunicipalityName) : joinOrganizationQuery.OrderByDescending(c => c.Contact.MunicipalityName);
+                }
+                else
+                {
+                    joinOrganizationQuery = direction == "asc" ? joinOrganizationQuery.OrderBy(c => c.Contact.Summary) : joinOrganizationQuery.OrderByDescending(c => c.Contact.Summary);
+                }
+            }
+            else
+            {
+                joinOrganizationQuery = joinOrganizationQuery.OrderBy(c => c.Contact.Summary);
+            }
+
+            var contactsWithOrganizations = joinOrganizationQuery.ToArray();
+
+            // The joinOrganizationQuery returns a cartesion product, this creates a unique list of contacts with attached Organization and list of PersonOrganizations.
             return contactsWithOrganizations.GroupBy(copop => copop.Contact.Id).Select(contactGroup => {
                 PimsContactMgrVw contact = contactGroup.FirstOrDefault().Contact;
                 PimsOrganization organization = contactGroup.FirstOrDefault().Organization;
@@ -220,7 +257,6 @@ namespace Pims.Dal.Repositories
                         .Where(copop => copop.Contact.Id == contactGroup.Key && copop.PersonOrganization != null)
                         .Select(copop =>
                         {
-                            copop.PersonOrganization.Person = copop.Person;
                             return copop.PersonOrganization;
                         });
 

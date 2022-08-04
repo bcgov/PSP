@@ -1,4 +1,5 @@
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
+import { StyledAddButton } from 'components/common/styles';
 import styled from 'styled-components';
 
 export const ListPage = styled.div`
@@ -17,10 +18,22 @@ export const Scrollable = styled(ScrollableBase)`
 
 export const PageHeader = styled.h3`
   text-align: left;
+  font-family: BcSans-Bold;
+  font-size: 2.6rem;
+  color: ${props => props.theme.css.primaryColor};
+  border-bottom: 0.2rem solid ${props => props.theme.css.primaryLightColor};
 `;
 
 export const PageToolbar = styled.div`
   align-items: center;
   padding: 0;
   padding-bottom: 2rem;
+`;
+
+export const AddNoteButton = styled(StyledAddButton)`
+  && {
+    display: inline-block;
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
 `;

@@ -338,7 +338,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               position={[latitude, longitude]}
               icon={getMarkerIcon(cluster)}
               eventHandlers={{
-                click: () => {
+                click: e => {
                   const convertedProperty = convertToProperty(
                     cluster.properties,
                     latitude,

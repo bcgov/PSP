@@ -1,4 +1,4 @@
-import { Api_Note } from 'models/api/Note';
+import { Api_EntityNote, Api_Note } from 'models/api/Note';
 
 export const mockNotesResponse = (): Api_Note[] => {
   return [
@@ -8,3 +8,19 @@ export const mockNotesResponse = (): Api_Note[] => {
     { note: 'Note 4', appCreateTimestamp: '20-Jan-2022', appLastUpdateUserid: 'test user2', id: 4 },
   ];
 };
+
+export const mockEntityNote = (
+  id: number | undefined = undefined,
+  parentId = 1,
+  note = 'Test Note',
+): Api_EntityNote => ({
+  id,
+  parent: {
+    id: parentId,
+  },
+  note: {
+    note,
+    appCreateTimestamp: '10-Jan-2022',
+    appLastUpdateUserid: 'test user1',
+  },
+});

@@ -38,10 +38,12 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<ITenantOrgan
         <Styled.LeaseH3>Tenant Information</Styled.LeaseH3>
         <Form.Label>Tenant organization:</Form.Label>
         <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'summary')} />
-        <Form.Label>Primary Contact:</Form.Label>
-        <Form.Group className="input">
-          <StyledLink to={`/contact/P${primaryContact?.id}`}>{primaryContactName}</StyledLink>
-        </Form.Group>
+        <Form.Label>Primary contact:</Form.Label>
+        {primaryContact?.id ? (
+          <Form.Group className="input">
+            <StyledLink to={`/contact/P${primaryContact?.id}`}>{primaryContactName}</StyledLink>
+          </Form.Group>
+        ) : null}
         <br />
         <AddressSubForm
           nameSpace={withNameSpace(nameSpace, 'mailingAddress')}

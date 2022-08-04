@@ -144,6 +144,40 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c10.c10.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c10.c10.btn .text {
+  display: none;
+}
+
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c10.c10.btn:hover .text,
+.c10.c10.btn:active .text,
+.c10.c10.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -191,40 +225,6 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
-}
-
-.c10.c10.btn {
-  color: #aaaaaa;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c10.c10.btn .text {
-  display: none;
-}
-
-.c10.c10.btn:hover,
-.c10.c10.btn:active,
-.c10.c10.btn:focus {
-  color: #d8292f;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c10.c10.btn:hover .text,
-.c10.c10.btn:active .text,
-.c10.c10.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c8 {

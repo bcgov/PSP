@@ -19,7 +19,6 @@ import { useApiProperties } from 'hooks/pims-api';
 import { useLtsa } from 'hooks/useLtsa';
 import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
 import { IProperty } from 'interfaces';
-import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -64,30 +63,30 @@ const ltsaMock = {
 }));
 
 const largeMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672 },
-  { id: 3, latitude: 53.917065, longitude: -122.749672 },
-  { id: 4, latitude: 53.917065, longitude: -122.749672 },
+  { id: 1, latitude: 53.917061, longitude: -122.749672 },
+  { id: 2, latitude: 53.917062, longitude: -122.749672 },
+  { id: 3, latitude: 53.917063, longitude: -122.749672 },
+  { id: 4, latitude: 53.917064, longitude: -122.749672 },
   { id: 5, latitude: 53.917065, longitude: -122.749672 },
-  { id: 6, latitude: 53.917065, longitude: -122.749672 },
-  { id: 7, latitude: 53.917065, longitude: -122.749672 },
-  { id: 8, latitude: 53.917065, longitude: -122.749672 },
-  { id: 9, latitude: 53.917065, longitude: -122.749672 },
-  { id: 10, latitude: 53.917065, longitude: -122.749672 },
-  { id: 11, latitude: 53.918165, longitude: -122.749772 },
+  { id: 6, latitude: 53.917066, longitude: -122.749672 },
+  { id: 7, latitude: 53.917067, longitude: -122.749672 },
+  { id: 8, latitude: 53.917068, longitude: -122.749672 },
+  { id: 9, latitude: 53.917069, longitude: -122.749672 },
+  { id: 10, latitude: 53.917071, longitude: -122.749672 },
+  { id: 11, latitude: 53.918172, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const smallMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672 },
-  { id: 3, latitude: 53.918165, longitude: -122.749772 },
+  { id: 1, latitude: 54.917061, longitude: -122.749672 },
+  { id: 3, latitude: 54.918162, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672 },
-  { id: 3, latitude: 53.917065, longitude: -122.749772 },
+  { id: 1, latitude: 55.917061, longitude: -122.749672, pid: '7771' },
+  { id: 2, latitude: 55.917062, longitude: -122.749672, pid: '7772' },
+  { id: 3, latitude: 55.917063, longitude: -122.749772, pid: '7773' },
 ] as IProperty[];
 
 const useLayerQueryMock = {
@@ -188,9 +187,10 @@ describe('MapView', () => {
 
   const getMap = () => {
     process.env.REACT_APP_TENANT = 'MOTI';
+    const onMarkerPopupClosed = jest.fn();
     return (
       <TestCommonWrapper store={store} history={history}>
-        <MapView showParcelBoundaries={true} onMarkerPopupClosed={noop} />
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
       </TestCommonWrapper>
     );
   };
