@@ -336,6 +336,7 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
         >
           <button
             class="c4 Button btn btn-primary"
+            title="ok-modal"
             type="button"
           >
             <div

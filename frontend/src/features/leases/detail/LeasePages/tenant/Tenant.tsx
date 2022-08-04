@@ -67,9 +67,7 @@ export class FormTenant {
       const tenant = apiModel.person ?? apiModel.organization;
       const address = !!tenant ? getApiPersonOrOrgMailingAddress(tenant) : undefined;
       this.id =
-        apiModel.lessorTypeCode?.id === 'PER'
-          ? `P${apiModel.personId}`
-          : `O${apiModel.organizationId}`;
+        apiModel.lessorType?.id === 'PER' ? `P${apiModel.personId}` : `O${apiModel.organizationId}`;
       this.personId = apiModel.personId;
       this.summary = apiModel.person ? formatApiPersonNames(tenant) : apiModel.organization?.name;
       this.leaseId = apiModel.leaseId;
@@ -90,9 +88,9 @@ export class FormTenant {
       );
       this.mobile = getPreferredContactMethodValue(
         tenant?.contactMethods,
-        ContactMethodTypes.PersonalPhone,
+        ContactMethodTypes.WorkMobile,
       );
-      this.lessorTypeCode = apiModel.lessorTypeCode;
+      this.lessorTypeCode = apiModel.lessorType;
       this.primaryContactId = apiModel.primaryContactId;
       this.initialPrimaryContact = apiModel.primaryContact;
     } else if (!!selectedContactModel) {
@@ -127,7 +125,8 @@ export interface ITenantProps {
  */
 export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => {
   const { values: lease } = useFormikContext<ILease>();
-  const tenants: Api_LeaseTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
+  const tenants: FormTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
+  console.log(tenants);
   return (
     <FormSectionOne>
       <Formik initialValues={lease} onSubmit={() => {}} enableReinitialize>
@@ -135,12 +134,12 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
           name={withNameSpace(nameSpace, 'properties')}
           render={renderProps => (
             <>
-              {tenants.map((tenant: Api_LeaseTenant, index) => (
+              {tenants.map((tenant: FormTenant, index) => (
                 <Styled.SpacedInlineListItem key={`tenants-${index}`}>
                   <FormSection>
                     <Row>
                       <Col>
-                        {!!tenant.personId ? (
+                        {tenant.lessorTypeCode?.id === 'PER' ? (
                           <TenantPersonContactInfo
                             disabled={true}
                             nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
