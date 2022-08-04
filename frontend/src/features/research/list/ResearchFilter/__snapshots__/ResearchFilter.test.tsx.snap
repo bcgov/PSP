@@ -253,6 +253,12 @@ exports[`Research Filter matches snapshot 1`] = `
                     >
                       Northern Region
                     </option>
+                    <option
+                      class="option"
+                      value="4"
+                    >
+                      Cannot determine
+                    </option>
                   </select>
                 </div>
               </div>

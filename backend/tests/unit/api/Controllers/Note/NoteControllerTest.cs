@@ -35,7 +35,6 @@ namespace Pims.Api.Test.Controllers.Note
         #endregion
 
         #region Tests
-        #region GetNotes
         /// <summary>
         /// Make a successful request to add a note to a parent entity.
         /// </summary>
@@ -93,8 +92,66 @@ namespace Pims.Api.Test.Controllers.Note
             service.Verify(m => m.GetNotes(It.IsAny<NoteType>(), It.IsAny<long>()), Times.Once());
         }
 
+        /// <summary>
+        /// Make a successful request to get a note by id.
+        /// </summary>
         [Fact]
-        public void Delete_Note_All_Success()
+        public void GetNoteById_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<NoteController>(Permissions.NoteView);
+
+            var service = helper.GetService<Mock<INoteService>>();
+            var mapper = helper.GetService<IMapper>();
+
+            var note = EntityHelper.CreateNote("Note 1");
+            var noteModel = mapper.Map<NoteModel>(note);
+
+            service.Setup(m => m.GetById(It.IsAny<long>())).Returns(noteModel);
+
+            // Act
+            var result = controller.GetNoteById(Constants.NoteType.Activity, 1);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<NoteModel>(actionResult.Value);
+            var expectedResult = mapper.Map<NoteModel>(note);
+            expectedResult.Should().BeEquivalentTo(actualResult);
+            service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a successful request to update a note.
+        /// </summary>
+        [Fact]
+        public void UpdateNote_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<NoteController>(Permissions.NoteEdit);
+
+            var service = helper.GetService<Mock<INoteService>>();
+            var mapper = helper.GetService<IMapper>();
+
+            var note = EntityHelper.CreateNote("Note 1");
+            var noteModel = mapper.Map<NoteModel>(note);
+
+            service.Setup(m => m.Update(It.IsAny<NoteModel>())).Returns(noteModel);
+
+            // Act
+            var result = controller.UpdateNote(Constants.NoteType.Activity, 1, noteModel) ;
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<NoteModel>(actionResult.Value);
+            var expectedResult = mapper.Map<NoteModel>(note);
+            expectedResult.Should().BeEquivalentTo(actualResult);
+            service.Verify(m => m.Update(It.IsAny<NoteModel>()), Times.Once());
+        }
+
+        [Fact]
+        public void Delete_Note_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -113,7 +170,6 @@ namespace Pims.Api.Test.Controllers.Note
             Assert.Equal(true, actionResult.Value);
             service.Verify(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>()), Times.Once());
         }
-        #endregion
         #endregion
     }
 }

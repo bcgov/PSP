@@ -35,6 +35,8 @@ namespace Pims.Dal.Entities
         [Column("ACQ_PHYS_FILE_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string AcqPhysFileStatusTypeCode { get; set; }
+        [Column("REGION_CODE")]
+        public short RegionCode { get; set; }
         [Column("MINISTRY_PROJECT_NUMBER")]
         [StringLength(20)]
         public string MinistryProjectNumber { get; set; }
@@ -51,8 +53,6 @@ namespace Pims.Dal.Entities
         [Column("FILE_NUMBER")]
         [StringLength(18)]
         public string FileNumber { get; set; }
-        [Column("REGION_CODE")]
-        public short RegionCode { get; set; }
         [Column("FUNDING_OTHER")]
         [StringLength(200)]
         public string FundingOther { get; set; }

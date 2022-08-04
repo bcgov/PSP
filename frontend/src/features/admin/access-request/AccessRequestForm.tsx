@@ -47,7 +47,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
       }}
     >
       <Form className="userInfo">
-        <SectionField label="IDIR/BCeID" wideScreen>
+        <SectionField label="IDIR/BCeID" labelWidth="2">
           <Input
             field="businessIdentifierValue"
             placeholder={initialValues?.businessIdentifierValue}
@@ -56,7 +56,7 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
           />
         </SectionField>
 
-        <SectionField label="First name" wideScreen>
+        <SectionField label="First name" labelWidth="2">
           <Input
             field="firstName"
             placeholder={initialValues?.firstName}
@@ -64,20 +64,20 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
             type="text"
           />
         </SectionField>
-        <SectionField label="Last name" wideScreen>
+        <SectionField label="Last name" labelWidth="2">
           <Input field="surname" placeholder={initialValues?.surname} readOnly={true} type="text" />
         </SectionField>
-        <SectionField label="Email" wideScreen>
+        <SectionField label="Email" labelWidth="2">
           <Input field="email" placeholder={initialValues?.email} readOnly={true} type="email" />
         </SectionField>
-        <SectionField label="Position" wideScreen>
+        <SectionField label="Position" labelWidth="2">
           <Input
             field="position"
             placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
             type="text"
           />
         </SectionField>
-        <SectionField label="Role" wideScreen required>
+        <SectionField label="Role" labelWidth="2" required>
           <Select field="roleId" options={selectRoles} placeholder="Select..." />
           <TooltipWrapper
             toolTipId="role description tooltip icon"
@@ -88,10 +88,10 @@ export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps>
             <StyledTooltipIcon className="tooltip-icon" />
           </TooltipWrapper>
         </SectionField>
-        <SectionField label="Region" wideScreen required>
+        <SectionField label="Region" labelWidth="2" required>
           <Select field="regionCodeId" options={selectRegions} placeholder="Select MotI Region" />
         </SectionField>
-        <SectionField label="Notes" wideScreen>
+        <SectionField label="Notes" labelWidth="2">
           <TextArea
             field="note"
             placeholder="Please specify why you need access to PIMS and include your manager's name."

@@ -93,14 +93,14 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
+        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document type metadata types...");
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
 
-            string endpointString = $"{this._config.BaseUri}/document_types/{documentId}/metadata_types/";
+            string endpointString = $"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/";
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResult<DocumentTypeMetadataType>>(endpoint, authenticationToken).ConfigureAwait(true);
 
@@ -124,8 +124,37 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<DocumentDetail>> GetDocumentAsync(long documentId)
+        {
+            _logger.LogDebug("Retrieving document...");
 
-        public async Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId)
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/");
+            var response = await GetAsync<DocumentDetail>(endpoint, authenticationToken).ConfigureAwait(true);
+
+            _logger.LogDebug("Finished retrieving document");
+            return response;
+        }
+
+        public async Task<ExternalResult<QueryResult<DocumentMetadata>>> GetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
+        {
+            _logger.LogDebug("Retrieving document metadata...");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            var queryParams = GenerateQueryParams(ordering, page, pageSize);
+
+            string endpointString = $"{_config.BaseUri}/documents/{documentId}/metadata/";
+            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+            var response = await GetAsync<QueryResult<DocumentMetadata>>(endpoint, authenticationToken).ConfigureAwait(true);
+
+            _logger.LogDebug("Finished retrieving document metadata");
+            return response;
+        }
+
+
+        public async Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId)
         {
             _logger.LogDebug("Downloading file...");
             string authenticationToken = await _authRepository.GetTokenAsync();
@@ -185,7 +214,22 @@ namespace Pims.Api.Repositories.Mayan
             return retVal;
         }
 
-        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file)
+        public async Task<ExternalResult<string>> DeleteDocument(long documentId)
+        {
+            _logger.LogDebug("Deleting document...");
+            _logger.LogTrace("Document id {documentId}", documentId);
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/");
+
+            var response = await DeleteAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug($"Finished deleting document");
+            return response;
+        }
+
+        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file)
         {
             _logger.LogDebug("Uploading document...");
             string authenticationToken = await _authRepository.GetTokenAsync();

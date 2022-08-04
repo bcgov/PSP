@@ -17,13 +17,19 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResult<QueryResult<DocumentType>>> GetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null);
 
         Task<ExternalResult<QueryResult<DocumentDetail>>> GetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<FileDownload>> DownloadFileAsync(int documentId, int fileId);
+        Task<ExternalResult<QueryResult<DocumentMetadata>>> GetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file);
+        Task<ExternalResult<DocumentDetail>> GetDocumentAsync(long documentId);
+
+        Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId);
+
+        Task<ExternalResult<string>> DeleteDocument(long documentId);
+
+        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file);
 
         Task<ExternalResult<DocumentTypeMetadataType>> CreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
 

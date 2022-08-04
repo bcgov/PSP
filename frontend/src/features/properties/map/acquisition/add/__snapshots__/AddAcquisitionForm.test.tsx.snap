@@ -1,0 +1,376 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddAcquisitionForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c5.c5.form-control.is-valid {
+  background-image: none;
+}
+
+.c5.c5.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c6 input.form-control {
+  min-width: 50rem;
+  max-width: 100%;
+}
+
+.c0 .form-section {
+  margin: 0;
+  padding-left: 0;
+}
+
+.c0 .react-datepicker-wrapper {
+  max-width: 14rem;
+}
+
+.c0 [name='region'] {
+  max-width: 25rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Schedule
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Assigned date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c5 form-control date-picker"
+                    id="datepicker-assignedDate"
+                    name="assignedDate"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Delivery date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    autocomplete="off"
+                    class="c5 form-control date-picker"
+                    id="datepicker-deliveryDate"
+                    name="deliveryDate"
+                    placeholder="--/--/----"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Acquisition Details
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Acquisition file name:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c6 input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-name"
+                name="name"
+                title=""
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Physical file status:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-acquisitionPhysFileStatusType"
+                name="acquisitionPhysFileStatusType"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  value="ACTIVE"
+                >
+                  Active
+                </option>
+                <option
+                  class="option"
+                  value="ARCHIVE"
+                >
+                  Archive - Offsite
+                </option>
+                <option
+                  class="option"
+                  value="PENDING"
+                >
+                  Pending Litigation
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Acquisition type:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-acquisitionType"
+                name="acquisitionType"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  value="CONSEN"
+                >
+                  Consensual Agreement
+                </option>
+                <option
+                  class="option"
+                  value="SECTN3"
+                >
+                  Section 3 Agreement
+                </option>
+                <option
+                  class="option"
+                  value="SECTN6"
+                >
+                  Section 6 Expropriation
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Ministry region:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-region"
+                name="region"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select region...
+                </option>
+                <option
+                  class="option"
+                  value="1"
+                >
+                  South Coast Region
+                </option>
+                <option
+                  class="option"
+                  value="2"
+                >
+                  Southern Interior Region
+                </option>
+                <option
+                  class="option"
+                  value="3"
+                >
+                  Northern Region
+                </option>
+                <option
+                  class="option"
+                  value="4"
+                >
+                  Cannot determine
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

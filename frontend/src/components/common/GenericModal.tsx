@@ -59,7 +59,7 @@ export interface ModalProps {
     | 'outline-dark'
     | 'outline-light';
   /** Optional title to display - no default. */
-  title?: string;
+  title?: string | React.ReactNode;
   /** Optional message to display - no default. */
   message?: string | React.ReactNode;
   /** allows the parent component to control the display of this modal.
@@ -75,6 +75,8 @@ export interface ModalProps {
   /** display this modal as a popup instead of as a modal, allowing the user to click on underlying elements */
   asPopup?: boolean;
   show?: boolean;
+  /** optional override to hide the footer of the modal modal. Default is to show. */
+  hideFooter?: boolean;
 }
 
 /**
@@ -94,6 +96,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
     cancelButtonVariant,
     cancelButtonText,
     closeButton,
+    hideFooter,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -127,27 +130,29 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
 
   return (
     <ModalContainer {...rest} show={showState}>
-      <Modal.Header closeButton={closeButton}>
+      <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>{message}</Modal.Body>
 
-      <Modal.Footer>
-        {cancelButtonText && (
-          <Button
-            title="cancel-modal"
-            variant={cancelButtonVariant ?? 'secondary'}
-            onClick={close}
-            style={{ width: 'unset' }}
-          >
-            {cancelButtonText}
+      {!hideFooter && (
+        <Modal.Footer>
+          {cancelButtonText && (
+            <Button
+              title="cancel-modal"
+              variant={cancelButtonVariant ?? 'secondary'}
+              onClick={close}
+              style={{ width: 'unset' }}
+            >
+              {cancelButtonText}
+            </Button>
+          )}
+          <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
+            {okButtonText ?? 'Ok'}
           </Button>
-        )}
-        <Button title="ok-modal" variant={okButtonVariant ?? 'primary'} onClick={ok}>
-          {okButtonText ?? 'Ok'}
-        </Button>
-      </Modal.Footer>
+        </Modal.Footer>
+      )}
     </ModalContainer>
   );
 };

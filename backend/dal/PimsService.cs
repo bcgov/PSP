@@ -59,6 +59,11 @@ namespace Pims.Dal
         /// get - The property service.
         /// </summary>
         public IPropertyService PropertyService { get { return _serviceProvider.GetService<IPropertyService>(); } }
+
+        /// <summary>
+        /// get - The activity service.
+        /// </summary>
+        public IActivityService ActivityService { get { return _serviceProvider.GetService<IActivityService>(); } }
         #endregion
 
         #region Constructors
