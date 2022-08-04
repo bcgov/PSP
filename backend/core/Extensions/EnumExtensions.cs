@@ -36,15 +36,15 @@ namespace Pims.Core.Extensions
         /// <summary>
         /// Convert the enum value to the destination enum value with the same name.
         /// </summary>
-        /// <typeparam name="SourceT"></typeparam>
-        /// <typeparam name="DestinationT"></typeparam>
+        /// <typeparam name="T_Source"></typeparam>
+        /// <typeparam name="T_Destination"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static DestinationT ConvertTo<SourceT, DestinationT>(this SourceT value)
-            where SourceT : struct, IConvertible
-            where DestinationT : struct, IConvertible
+        public static T_Destination ConvertTo<T_Source, T_Destination>(this T_Source value)
+            where T_Source : struct, IConvertible
+            where T_Destination : struct, IConvertible
         {
-            return Enum.TryParse(typeof(DestinationT), value.ToString(), out object result) ? (DestinationT)result : default;
+            return Enum.TryParse(typeof(T_Destination), value.ToString(), out object result) ? (T_Destination)result : default;
         }
         #endregion
     }

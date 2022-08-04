@@ -23,9 +23,9 @@ namespace Pims.Api.Test.Helpers
                 {
                     new[] {
                         new Entity.PimsPropertyType("test1"),
-                        new Entity.PimsPropertyType("test2")
+                        new Entity.PimsPropertyType("test2"),
                     },
-                    10
+                    10,
                 },
             };
         #endregion

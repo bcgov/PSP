@@ -46,7 +46,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
-                    Secret = "test"
+                    Secret = "test",
                 },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
@@ -102,7 +102,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
-                    Secret = "test"
+                    Secret = "test",
                 },
             };
             mockConfig.Setup(m => m.Value).Returns(options);

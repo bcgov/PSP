@@ -90,13 +90,13 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Path = "path",
                     Attributes = new System.Collections.Generic.Dictionary<string, string[]>()
                     {
-                        { "attr1", new [] { "attribute" } }
+                        { "attr1", new [] { "attribute" } },
                     },
                     ClientRoles = new System.Collections.Generic.Dictionary<string, string[]>()
                     {
-                        { "attr1", new [] { "clientRole" } }
+                        { "attr1", new [] { "clientRole" } },
                     },
-                    RealmRoles = new[] { "role" }
+                    RealmRoles = new[] { "role" },
                 },
             };
 
@@ -523,7 +523,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Username = "user",
                     Attributes = new System.Collections.Generic.Dictionary<string, string[]>()
                     {
-                        { "attr1", new [] { "attribute" } }
+                        { "attr1", new [] { "attribute" } },
                     },
                     RealmRoles = new[] { "role" },
                     Groups = new[] { "group" },

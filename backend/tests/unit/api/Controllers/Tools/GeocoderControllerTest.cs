@@ -54,10 +54,10 @@ namespace Pims.Api.Test.Controllers.Tools
                             CivicNumber = "test",
                             StreetName = "test",
                             LocalityName = "test",
-                            LocalityType = "City"
+                            LocalityType = "City",
                         },
-                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } }
-                    }
+                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } },
+                    },
                 },
             };
 
@@ -148,10 +148,10 @@ namespace Pims.Api.Test.Controllers.Tools
                             CivicNumber = "test",
                             StreetName = "test",
                             LocalityName = "test",
-                            LocalityType = "City"
+                            LocalityType = "City",
                         },
-                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } }
-                    }
+                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } },
+                    },
                 },
             };
 

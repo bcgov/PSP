@@ -118,7 +118,7 @@ namespace Pims.Core.Test
                 {
                     Uri = new Uri("http://localhost:3000"),
                     Name = "Testing",
-                    Title = "Property Inventory Management System"
+                    Title = "Property Inventory Management System",
                 },
             });
         }

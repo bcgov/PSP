@@ -28,7 +28,7 @@ namespace Pims.Api.Areas.Dummy.Controllers
         /// <summary>
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id"></param>
         [HttpGet("dummy/person/{id:long}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PersonModel), 200)]
@@ -38,11 +38,10 @@ namespace Pims.Api.Areas.Dummy.Controllers
             return new JsonResult(id);
         }
 
-        // <summary>
-
+        /// <summary>
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id"></param>
         [HttpGet("dummy/research/{id:long}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Pims.Api.Models.Concepts.ResearchFileModel), 200)]

@@ -6,9 +6,9 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// BaseService abstract class, provides a generic service layer to perform CRUD operations on the datasource.
     /// </summary>
-    /// <typeparam name="ET"></typeparam>
-    public abstract class BaseRepository<ET> : BaseRepository
-        where ET : class
+    /// <typeparam name="T_Entity"></typeparam>
+    public abstract class BaseRepository<T_Entity> : BaseRepository
+        where T_Entity : class
     {
         #region Variables
         #endregion
@@ -37,9 +37,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="keyValues"></param>
         /// <returns></returns>
-        public ET Find(params object[] keyValues)
+        public T_Entity Find(params object[] keyValues)
         {
-            return this.Context.Find<ET>(keyValues);
+            return this.Context.Find<T_Entity>(keyValues);
         }
 
         public void SaveChanges()

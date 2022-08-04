@@ -128,7 +128,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Client = "pims",
                 Admin = new KeycloakAdminOptions()
                 {
-                    Authority = "https://keycloak/admin"
+                    Authority = "https://keycloak/admin",
                 },
             });
 
@@ -268,7 +268,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
-                    Client = "pims-service-account"
+                    Client = "pims-service-account",
                 },
             });
 

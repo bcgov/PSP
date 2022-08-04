@@ -207,7 +207,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -241,7 +241,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -277,7 +277,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -339,7 +339,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -373,7 +373,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -409,7 +409,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -473,7 +473,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -537,7 +537,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -903,7 +903,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -937,7 +937,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -973,7 +973,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -1037,7 +1037,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 
@@ -1099,7 +1099,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             {
                 new RoleModel()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
                 },
             };
 

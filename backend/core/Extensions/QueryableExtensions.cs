@@ -164,12 +164,11 @@ namespace Pims.Core.Extensions
         /// <summary>
         /// Generates an Expression for the specified 'path'.
         /// </summary>
-        /// <param name="entity"></param>
         /// <param name="path"></param>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="RT"></typeparam>
+        /// <typeparam name="TR"></typeparam>
         /// <returns></returns>
-        private static Expression<Func<T, RT>> GeneratePropertyPathLambda<T, RT>(string path)
+        private static Expression<Func<T, TR>> GeneratePropertyPathLambda<T, TR>(string path)
             where T : class
         {
             if (!path.Contains('.'))
@@ -178,7 +177,7 @@ namespace Pims.Core.Extensions
             }
 
             var parameter = Expression.Parameter(typeof(T), "x");
-            return Expression.Lambda<Func<T, RT>>(path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField), parameter);
+            return Expression.Lambda<Func<T, TR>>(path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField), parameter);
         }
     }
 }
