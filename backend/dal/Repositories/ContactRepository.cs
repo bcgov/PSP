@@ -251,7 +251,8 @@ namespace Pims.Dal.Repositories
             var contactsWithOrganizations = joinOrganizationQuery.ToArray();
 
             // The joinOrganizationQuery returns a cartesion product, this creates a unique list of contacts with attached Organization and list of PersonOrganizations.
-            return contactsWithOrganizations.GroupBy(copop => copop.Contact.Id).Select(contactGroup => {
+            return contactsWithOrganizations.GroupBy(copop => copop.Contact.Id).Select(contactGroup =>
+            {
                 PimsContactMgrVw contact = contactGroup.FirstOrDefault().Contact;
                 PimsOrganization organization = contactGroup.FirstOrDefault().Organization;
                 if (organization != null)
