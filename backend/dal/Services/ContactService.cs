@@ -14,14 +14,12 @@ namespace Pims.Dal.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IContactRepository _contactRepository;
-        private readonly IOrganizationRepository _organizationRepository;
 
-        public ContactService(ClaimsPrincipal user, ILogger<ContactService> logger, IContactRepository contactRepository, IOrganizationRepository organizationRepository)
+        public ContactService(ClaimsPrincipal user, ILogger<ContactService> logger, IContactRepository contactRepository)
         {
             _user = user;
             _logger = logger;
             _contactRepository = contactRepository;
-            _organizationRepository = organizationRepository;
         }
 
         public PimsContactMgrVw GetById(string id)
