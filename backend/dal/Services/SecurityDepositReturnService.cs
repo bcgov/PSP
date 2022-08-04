@@ -49,7 +49,7 @@ namespace Pims.Dal.Services
 
         public PimsLease DeleteLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit)
         {
-            _user.ThrowIfNotAuthorized(Permissions.LeaseDelete);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateServiceCall(leaseId, leaseRowVersion);
             _securityDepositReturnRepository.Delete(deposit.SecurityDepositReturnId);
             _securityDepositReturnRepository.CommitTransaction();

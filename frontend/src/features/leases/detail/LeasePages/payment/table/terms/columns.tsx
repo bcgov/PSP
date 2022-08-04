@@ -114,7 +114,7 @@ const termActions = (
             onClick={() => onEdit(original)}
           ></Button>
         )}
-        {hasClaim(Claims.LEASE_DELETE) &&
+        {hasClaim(Claims.LEASE_EDIT) &&
           original.payments.length <= 0 &&
           original.statusTypeCode?.id !== LeaseTermStatusTypes.EXERCISED && (
             <Button
@@ -123,7 +123,7 @@ const termActions = (
               onClick={() => original.id && onDelete(original)}
             ></Button>
           )}
-        {hasClaim(Claims.LEASE_DELETE) &&
+        {hasClaim(Claims.LEASE_EDIT) &&
           (original.payments.length > 0 ||
             original.statusTypeCode?.id === LeaseTermStatusTypes.EXERCISED) && (
             <TooltipIcon

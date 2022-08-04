@@ -65,7 +65,7 @@ namespace Pims.Dal.Services
 
         public PimsLease DeleteLeaseDeposit(long leaseId, long leaseRowVersion, PimsSecurityDeposit deposit)
         {
-            _user.ThrowIfNotAuthorized(Permissions.LeaseDelete);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateServiceCall(leaseId, leaseRowVersion);
             ValidateDeletionRules(deposit);
 
