@@ -70,8 +70,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="role"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public UserFilter(int page, int quantity, string businessIdentifierValue,
-            string email, bool? activeOnly, long? role, short? region, string[] sort)
+        public UserFilter(int page, int quantity, string businessIdentifierValue, string email, bool? activeOnly, long? role, short? region, string[] sort)
             : base(page, quantity, sort)
         {
             this.BusinessIdentifierValue = businessIdentifierValue;

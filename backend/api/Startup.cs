@@ -366,7 +366,6 @@ namespace Pims.Api
         /// Add PimsService objects to the dependency injection service collection.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
         private static void AddPimsApiServices(IServiceCollection services)
         {
             services.AddScoped<IDocumentService, DocumentService>();

@@ -328,7 +328,6 @@ namespace Pims.Dal.Repositories
         /// Add the specified user to the datasource.
         /// </summary>
         /// <param name="add"></param>
-        /// <returns></returns>
         public void AddWithoutSave(PimsUser add)
         {
             add.ThrowIfNull(nameof(add));

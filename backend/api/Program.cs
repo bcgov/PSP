@@ -32,10 +32,10 @@ namespace Pims.Api
                 })
                 .WithNotParsed((errors) =>
                 {
-                    var helpText = HelpText.AutoBuild(results, h =>
-                    {
-                        return HelpText.DefaultParsingErrorsHandler(results, h);
-                    }, e => e);
+                    var helpText = HelpText.AutoBuild(
+                    results,
+                    h => { return HelpText.DefaultParsingErrorsHandler(results, h); },
+                    e => e);
                     Console.WriteLine(helpText);
                 });
         }
