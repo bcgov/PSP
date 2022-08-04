@@ -3,10 +3,10 @@ import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { IApiError } from 'interfaces/IApiError';
 import {
+  Api_Storage_DocumentMetadata,
   DocumentQueryResult,
   FileDownload,
-  Mayan_DocumentMetadata,
-} from 'models/api/DocumentManagement';
+} from 'models/api/DocumentStorage';
 import { ExternalResult } from 'models/api/ExternalResult';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -28,7 +28,9 @@ export const useDocumentProvider = () => {
   } = useApiRequestWrapper<
     (
       mayanDocumentId: number,
-    ) => Promise<AxiosResponse<ExternalResult<DocumentQueryResult<Mayan_DocumentMetadata>>, any>>
+    ) => Promise<
+      AxiosResponse<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>, any>
+    >
   >({
     requestFunction: useCallback(
       async (mayanDocumentId: number) => await getDocumentMetada(mayanDocumentId),

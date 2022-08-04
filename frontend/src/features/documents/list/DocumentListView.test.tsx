@@ -2,6 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -33,10 +34,11 @@ describe('Document List View', () => {
     const component = render(
       <DocumentListView
         isLoading={false}
-        parentId={0}
-        relationshipType={DocumentRelationshipType.FILES}
-        documentResults={mockDocumentsResponse()}
+        parentId={renderOptions?.parentId || 0}
+        relationshipType={renderOptions?.relationshipType || DocumentRelationshipType.FILES}
+        documentResults={renderOptions?.documentResults || mockDocumentsResponse()}
         onDelete={renderOptions?.onDelete || deleteMock}
+        refreshDocumentList={renderOptions?.refreshDocumentList || noop}
       />,
       {
         ...renderOptions,
@@ -75,6 +77,7 @@ describe('Document List View', () => {
       relationshipType: DocumentRelationshipType.FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
+      refreshDocumentList: noop,
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
   });

@@ -229,7 +229,7 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(int documentType, IFormFile file)
+        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file)
         {
             _logger.LogDebug("Uploading document...");
             string authenticationToken = await _authRepository.GetTokenAsync();

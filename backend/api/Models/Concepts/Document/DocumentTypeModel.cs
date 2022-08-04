@@ -9,14 +9,19 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
-        /// get/set - Document Type Id.
+        /// get/set - Document type Id.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// get/set - The document Type description.
+        /// get/set - The document type description.
         /// </summary>
         public string DocumentType { get; set; }
+
+        /// <summary>
+        /// get/set - The document type id in mayan.
+        /// </summary>
+        public long MayanId { get; set; }
 
         #endregion
     }

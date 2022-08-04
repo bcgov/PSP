@@ -1,7 +1,6 @@
-using MapsterMapper;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace Pims.Dal.Repositories
 {
@@ -28,16 +27,6 @@ namespace Pims.Dal.Repositories
         /// get - The logger.
         /// </summary>
         protected ILogger<BaseRepository> Logger { get; }
-
-        /// <summary>
-        /// get - The property mapping provider
-        /// </summary>
-        protected IMapper Mapper { get; }
-
-        /// <summary>
-        /// get - References to wrapping service.
-        /// </summary>
-        protected IPimsRepository Self { get; }
         #endregion
 
         #region Constructors
@@ -46,16 +35,12 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        /// <param name="mapper"></param>
-        protected BaseRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<BaseRepository> logger, IMapper mapper)
+        protected BaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger)
         {
             this.Context = dbContext;
             this.User = user;
             this.Logger = logger;
-            this.Self = service;
-            this.Mapper = mapper;
         }
         #endregion
 

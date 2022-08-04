@@ -1,6 +1,6 @@
 import { LinkButton } from 'components/common/buttons';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { FileDownload } from 'models/api/DocumentManagement';
+import { FileDownload } from 'models/api/DocumentStorage';
 import { FaDownload } from 'react-icons/fa';
 
 import { useDocumentProvider } from './hooks/useDocumentProvider';

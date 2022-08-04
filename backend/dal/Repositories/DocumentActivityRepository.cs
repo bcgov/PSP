@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -21,10 +20,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public DocumentActivityRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<DocumentActivityRepository> logger, IMapper mapper)
-            : base(dbContext, user, service, logger, mapper) { }
+        public DocumentActivityRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DocumentActivityRepository> logger)
+            : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods
@@ -72,7 +70,14 @@ namespace Pims.Dal.Repositories
             activityDocument.ThrowIfNull(nameof(activityDocument));
 
             var newEntry = this.Context.PimsActivityInstanceDocuments.Add(activityDocument);
-            return newEntry.Entity;
+            if (newEntry.State == EntityState.Added)
+            {
+                return newEntry.Entity;
+            }
+            else
+            {
+                throw new InvalidOperationException("Could not create document");
+            }
         }
 
         /// <summary>

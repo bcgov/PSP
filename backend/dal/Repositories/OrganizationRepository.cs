@@ -24,9 +24,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<OrganizationRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<OrganizationRepository> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods
