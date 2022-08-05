@@ -85,11 +85,12 @@ export const TableSelect = <T extends { id?: string | number }>({
         <SelectedTableHeader selectedCount={existingItems.length} />
         <Table<T>
           name="selected-items"
+          lockPageSize
+          hidePagination
+          footer
           columns={columnsWithRemove}
           data={existingItems}
-          lockPageSize
           pageSize={existingItems.length}
-          footer
         />
       </Styled.SaveTableWrapper>
       <DisplayError field={field} />

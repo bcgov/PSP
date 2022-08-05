@@ -141,6 +141,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   lockPageSize?: boolean;
   detailsPanel?: DetailsOptions<T>;
   footer?: boolean;
+  hidePagination?: boolean;
   hideToolbar?: boolean;
   tableToolbarText?: string;
   manualPagination?: boolean;
@@ -778,7 +779,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             </ColBootstrap>
           )}
           <ColBootstrap xs="auto" className="align-self-center">
-            {props.pageSize !== props.data.length && <TablePagination<T> instance={instance} />}
+            {!props.hidePagination && <TablePagination<T> instance={instance} />}
           </ColBootstrap>
         </RowBootstrap>
       )}
