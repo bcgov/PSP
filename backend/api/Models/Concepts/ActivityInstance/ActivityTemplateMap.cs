@@ -11,7 +11,6 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ActivityTemplateId)
                 .Map(dest => dest.ActivityTemplateTypeCode, src => src.ActivityTemplateTypeCodeNavigation);
-               
         }
     }
 }

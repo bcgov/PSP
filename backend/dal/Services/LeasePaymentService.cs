@@ -1,19 +1,20 @@
+using System;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Security.Claims;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
 namespace Pims.Dal.Services
 {
     public class LeasePaymentService : ILeasePaymentService
     {
-        readonly Repositories.ILeaseTermRepository _leaseTermRepository;
-        readonly Repositories.ILeasePaymentRepository _leasePaymentRepository;
-        readonly ILeaseService _leaseService;
-        readonly ClaimsPrincipal _user;
+        private readonly Repositories.ILeaseTermRepository _leaseTermRepository;
+        private readonly Repositories.ILeasePaymentRepository _leasePaymentRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ClaimsPrincipal _user;
+
         public LeasePaymentService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeasePaymentRepository leasePaymentRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;
@@ -54,6 +55,31 @@ namespace Pims.Dal.Services
             return _leaseService.GetById(leaseId);
         }
 
+        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
+        {
+            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
+            if (payment.PaymentAmountTotal == 0)
+            {
+                return PimsLeasePaymentStatusTypes.UNPAID;
+            }
+            else if (payment.PaymentAmountTotal < expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.PARTIAL;
+            }
+            else if (payment.PaymentAmountTotal == expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.PAID;
+            }
+            else if (payment.PaymentAmountTotal > expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.OVERPAID;
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid payment value provided");
+            }
+        }
+
         /// <summary>
         /// For a payment service call to be valid, the user must have the lease edit claim and the lease being edited must be up to date.
         /// </summary>
@@ -85,29 +111,6 @@ namespace Pims.Dal.Services
             }
 
             payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leaseTerm);
-        }
-
-        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
-        {
-            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
-            if (payment.PaymentAmountTotal == 0)
-            {
-                return PimsLeasePaymentStatusTypes.UNPAID;
-            } else if (payment.PaymentAmountTotal < expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.PARTIAL;
-            }
-            else if (payment.PaymentAmountTotal == expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.PAID;
-            }
-            else if (payment.PaymentAmountTotal > expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.OVERPAID;
-            } else
-            {
-                throw new InvalidOperationException("Invalid payment value provided");
-            }
         }
     }
 }

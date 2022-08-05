@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class PropertyAdjacentLandModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Property adjacent land id.
         /// </summary>

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -7,10 +11,6 @@ using Pims.Dal.Security;
 using Pims.Geocoder;
 using Pims.Geocoder.Models;
 using Pims.Geocoder.Parameters;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
@@ -54,11 +54,11 @@ namespace Pims.Api.Test.Controllers.Tools
                             CivicNumber = "test",
                             StreetName = "test",
                             LocalityName = "test",
-                            LocalityType = "City"
+                            LocalityType = "City",
                         },
-                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } }
-                    }
-                }
+                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } },
+                    },
+                },
             };
 
             var service = helper.GetService<Mock<IGeocoderService>>();
@@ -101,9 +101,9 @@ namespace Pims.Api.Test.Controllers.Tools
                     CivicNumber = "test",
                     StreetName = "test",
                     LocalityName = "test",
-                    LocalityType = "City"
+                    LocalityType = "City",
                 },
-                Geometry = new GeometryModel() { Coordinates = new[] { 2d, 1d } }
+                Geometry = new GeometryModel() { Coordinates = new[] { 2d, 1d } },
             };
 
             var service = helper.GetService<Mock<IGeocoderService>>();
@@ -148,11 +148,11 @@ namespace Pims.Api.Test.Controllers.Tools
                             CivicNumber = "test",
                             StreetName = "test",
                             LocalityName = "test",
-                            LocalityType = "City"
+                            LocalityType = "City",
                         },
-                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } }
-                    }
-                }
+                        Geometry = new GeometryModel() { Coordinates = new [] { 2d, 1d } },
+                    },
+                },
             };
 
             var service = helper.GetService<Mock<IGeocoderService>>();
@@ -188,7 +188,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var response = new SitePidsResponseModel()
             {
                 SiteID = testSiteId,
-                Pids = "test1,test2"
+                Pids = "test1,test2",
             };
 
             var service = helper.GetService<Mock<IGeocoderService>>();

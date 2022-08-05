@@ -13,6 +13,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The current user accessing the service.
         /// </summary>
@@ -30,6 +31,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a BaseService class, and initializes it with the specified arguments.
         /// </summary>
@@ -41,26 +43,6 @@ namespace Pims.Dal.Repositories
             this.Context = dbContext;
             this.User = user;
             this.Logger = logger;
-        }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// Provides a way to fetch the context within the assembly.
-        /// </summary>
-        /// <returns></returns>
-        internal PimsContext GetContext()
-        {
-            return this.Context;
-        }
-
-        /// <summary>
-        /// Provides a way to fetch the user within the assembly.
-        /// </summary>
-        /// <returns></returns>
-        internal ClaimsPrincipal GetUser()
-        {
-            return this.User;
         }
 
         /// <summary>
@@ -77,7 +59,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            if (String.IsNullOrWhiteSpace(propertyName))
+            if (string.IsNullOrWhiteSpace(propertyName))
             {
                 throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.");
             }
@@ -91,6 +73,28 @@ namespace Pims.Dal.Repositories
         public void CommitTransaction()
         {
             this.Context.CommitTransaction();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Provides a way to fetch the context within the assembly.
+        /// </summary>
+        /// <returns></returns>
+        internal PimsContext GetContext()
+        {
+            return this.Context;
+        }
+
+        /// <summary>
+        /// Provides a way to fetch the user within the assembly.
+        /// </summary>
+        /// <returns></returns>
+        internal ClaimsPrincipal GetUser()
+        {
+            return this.User;
         }
         #endregion
     }

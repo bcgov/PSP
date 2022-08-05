@@ -7,12 +7,19 @@ namespace Pims.Api.Models.Concepts
     {
         #region Properties
         public long Id { get; set; }
+
         public TypeModel<string> AccessRequestStatusTypeCode { get; set; }
+
         public TypeModel<short> RegionCode { get; set; }
+
         public string Note { get; set; }
+
         public UserModel User { get; set; }
+
         public long? UserId { get; set; }
+
         public RoleModel Role { get; set; }
+
         public long? RoleId { get; set; }
         #endregion
     }

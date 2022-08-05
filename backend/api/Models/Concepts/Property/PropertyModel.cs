@@ -10,6 +10,7 @@ namespace Pims.Api.Models.Concepts
     {
         #region Properties
         #region Identification
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>
@@ -61,7 +62,7 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<short> District { get; set; }
 
         /// <summary>
-        /// get/set - The data source effective date
+        /// get/set - The data source effective date.
         /// </summary>
         public DateTime DataSourceEffectiveDate { get; set; }
 
@@ -130,6 +131,7 @@ namespace Pims.Api.Models.Concepts
         #endregion
 
         #region Parcel Properties
+
         /// <summary>
         /// get/set - A unique identifier for the titled parcel.
         /// </summary>
@@ -166,7 +168,7 @@ namespace Pims.Api.Models.Concepts
         public TypeModel<string> VolumetricUnit { get; set; }
 
         /// <summary>
-        /// get/set - Volumetric parcel type. e.g. airspace / sub-surface
+        /// get/set - Volumetric parcel type. e.g. airspace / sub-surface.
         /// </summary>
         public TypeModel<string> VolumetricType { get; set; }
 

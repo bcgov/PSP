@@ -1,9 +1,9 @@
 namespace Pims.Dal
 {
-    public interface IRepository<EntityType> : IRepository
+    public interface IRepository<T_Entity> : IRepository
     {
         #region Methods
-        EntityType Find(params object[] keyValues);
+        T_Entity Find(params object[] keyValues);
         #endregion
     }
 }

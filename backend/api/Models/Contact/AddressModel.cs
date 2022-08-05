@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Models.Contact
 {
     /// <summary>
@@ -7,6 +6,7 @@ namespace Pims.Api.Models.Contact
     public class AddressModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>

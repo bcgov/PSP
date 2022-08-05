@@ -6,6 +6,7 @@ namespace Pims.Geocoder.Parameters
     public class AddressesParameters : BaseParameters
     {
         #region Properties
+
         /// <summary>
         /// get/set - The API version.
         /// </summary>
@@ -128,7 +129,7 @@ namespace Pims.Geocoder.Parameters
         public string ProvinceCode { get; set; }
 
         /// <summary>
-        /// get/set - A comma separated list of locality names that matched addresses must belong to. For example, setting localities to Nanaimo only returns addresses in Nanaimo
+        /// get/set - A comma separated list of locality names that matched addresses must belong to. For example, setting localities to Nanaimo only returns addresses in Nanaimo.
         /// </summary>
         public string Localities { get; set; }
 
@@ -143,12 +144,12 @@ namespace Pims.Geocoder.Parameters
         public string Bbox { get; set; }
 
         /// <summary>
-        /// get/set - Example: -124.0165926,49.2296251 . The coordinates of a centre point (x,y) used to define a bounding circle that will limit the search area. This parameter must be specified together with 'maxDistance'. 
+        /// get/set - Example: -124.0165926,49.2296251 . The coordinates of a centre point (x,y) used to define a bounding circle that will limit the search area. This parameter must be specified together with 'maxDistance'.
         /// </summary>
         public string Center { get; set; }
 
         /// <summary>
-        /// get/set - If true, uses supplied parcelPoint to derive an appropriate accessPoint. 
+        /// get/set - If true, uses supplied parcelPoint to derive an appropriate accessPoint.
         /// </summary>
         public bool Extrapolate { get; set; }
 

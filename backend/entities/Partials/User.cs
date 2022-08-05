@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     public partial class PimsUser : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>
@@ -36,9 +37,10 @@ namespace Pims.Dal.Entities
         /// <param name="keycloakUserId"></param>
         /// <param name="username"></param>
         /// <param name="person"></param>
-        public PimsUser(Guid keycloakUserId, string username, PimsPerson person) : this()
+        public PimsUser(Guid keycloakUserId, string username, PimsPerson person)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(username))
             {
                 throw new ArgumentException($"Argument '{nameof(username)}' is required.", nameof(username));
             }

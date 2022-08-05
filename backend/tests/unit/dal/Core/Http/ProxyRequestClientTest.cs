@@ -1,7 +1,7 @@
-using Pims.Core.Http;
-using Pims.Core.Test;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using Pims.Core.Http;
+using Pims.Core.Test;
 using Xunit;
 
 namespace Pims.Api.Test.Helpers

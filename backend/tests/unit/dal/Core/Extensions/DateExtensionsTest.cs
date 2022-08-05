@@ -1,8 +1,8 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
@@ -19,13 +19,13 @@ namespace Pims.Api.Test.Core.Extensions
             new object[] { new DateTime(2019, 12, 31), 2020 },
             new object[] { new DateTime(2020, 1, 1), 2020 },
             new object[] { new DateTime(2020, 3, 30), 2020 },
-            new object[] { new DateTime(2020, 4, 1), 2021 }
+            new object[] { new DateTime(2020, 4, 1), 2021 },
         };
 
         public static IEnumerable<object[]> YearData = new List<object[]>()
         {
             new object[] { 2020, "20/21" },
-            new object[] { 2021, "21/22" }
+            new object[] { 2021, "21/22" },
         };
         #endregion
 

@@ -15,6 +15,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ErrorController class.
         /// </summary>
@@ -26,6 +27,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Returns a json result with the error details.
         /// </summary>

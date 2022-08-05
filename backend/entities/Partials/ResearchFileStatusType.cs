@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -7,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsResearchFileStatusType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify research file status type.
         /// </summary>
@@ -15,11 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PimsResearchFileStatusType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsResearchFileStatusType(string id) : this()
+        public PimsResearchFileStatusType(string id)
+            : this()
         {
             Id = id;
         }

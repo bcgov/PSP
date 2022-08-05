@@ -20,11 +20,10 @@ namespace Pims.Core.Test
             {
                 Code = code,
                 Name = name,
-                TenantId = id
+                TenantId = id,
             };
 
             return tenant;
         }
     }
 }
-

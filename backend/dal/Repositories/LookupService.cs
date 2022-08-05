@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -14,18 +13,23 @@ namespace Pims.Dal.Repositories
     public class LookupService : BaseRepository, ILookupService
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LookService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LookupService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger) : base(dbContext, user, logger) { }
+        public LookupService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
-        /// Get all organizations sorted by Name
+        /// Get all organizations sorted by Name.
         /// </summary>
         public IEnumerable<PimsOrganization> GetOrganizations()
         {
@@ -33,7 +37,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all organization types sorted by DisplayOrder and Id
+        /// Get all organization types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsOrganizationType> GetOrganizationTypes()
         {
@@ -41,7 +45,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all countries sorted by DisplayOrder and Code
+        /// Get all countries sorted by DisplayOrder and Code.
         /// </summary>
         public IEnumerable<PimsCountry> GetCountries()
         {
@@ -49,7 +53,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all provinces sorted by DisplayOrder and Code
+        /// Get all provinces sorted by DisplayOrder and Code.
         /// </summary>
         public IEnumerable<PimsProvinceState> GetProvinces()
         {
@@ -57,7 +61,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all regions sorted by DisplayOrder and Name
+        /// Get all regions sorted by DisplayOrder and Name.
         /// </summary>
         public IEnumerable<PimsRegion> GetRegions()
         {
@@ -65,7 +69,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all districts sorted by DisplayOrder and Name
+        /// Get all districts sorted by DisplayOrder and Name.
         /// </summary>
         public IEnumerable<PimsDistrict> GetDistricts()
         {
@@ -73,7 +77,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property classification types sorted by DisplayOrder and Id
+        /// Get all property classification types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyClassificationType> GetPropertyClassificationTypes()
         {
@@ -81,7 +85,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property types sorted by DisplayOrder and Id
+        /// Get all property types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyType> GetPropertyTypes()
         {
@@ -89,7 +93,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property tenure types sorted by DisplayOrder and Id
+        /// Get all property tenure types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes()
         {
@@ -97,7 +101,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property area unit types sorted by DisplayOrder and Id
+        /// Get all property area unit types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsAreaUnitType> GetPropertyAreaUnitTypes()
         {
@@ -105,7 +109,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property volume unit types sorted by DisplayOrder and Id
+        /// Get all property volume unit types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsVolumeUnitType> GetPropertyVolumeUnitTypes()
         {
@@ -113,7 +117,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all roles sorted by Name
+        /// Get all roles sorted by Name.
         /// </summary>
         public IEnumerable<PimsRole> GetRoles()
         {
@@ -244,26 +248,32 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsPphStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+
         public IEnumerable<PimsDocumentStatusType> GetDocumentStatusTypes()
         {
             return this.Context.PimsDocumentStatusTypes.AsNoTracking().ToArray();
         }
+
         public IEnumerable<PimsDocumentTyp> GetDocumentTypes()
         {
             return this.Context.PimsDocumentTyps.AsNoTracking().ToArray();
         }
+
         public IEnumerable<PimsAcquisitionFileStatusType> GetAcquisitionFileStatusTypes()
         {
             return this.Context.PimsAcquisitionFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+
         public IEnumerable<PimsAcqPhysFileStatusType> GetAcquisitionPhysFileStatusTypes()
         {
             return this.Context.PimsAcqPhysFileStatusTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+
         public IEnumerable<PimsAcquisitionType> GetAcquisitionTypes()
         {
             return this.Context.PimsAcquisitionTypes.AsNoTracking().OrderBy(r => r.DisplayOrder).ToArray();
         }
+
         public IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes()
         {
             return this.Context.PimsActivityTemplateTypes.AsNoTracking().ToArray();
@@ -271,4 +281,3 @@ namespace Pims.Dal.Repositories
         #endregion
     }
 }
-

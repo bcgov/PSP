@@ -15,7 +15,6 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.Value, src => src.ContactMethodValue)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
-
             config.NewConfig<Pims.Api.Models.Contact.ContactMethodModel, Entity.PimsContactMethod>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)

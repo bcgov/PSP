@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Primitives;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
+using Pims.Core.Extensions;
 
 namespace Pims.Geocoder.Extensions
 {
@@ -28,7 +28,7 @@ namespace Pims.Geocoder.Extensions
         {
             return typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .ToDictionary(p => p.Name.LowercaseFirstCharacter(), p => p.PropertyType == typeof(bool) ? $"{p.GetValue(obj, null)}".ToLower() : $"{p.GetValue(obj, null)}")
-                .Where(p => !String.IsNullOrWhiteSpace(p.Value))
+                .Where(p => !string.IsNullOrWhiteSpace(p.Value))
                 .ToDictionary(p => p.Key, p => p.Value);
         }
 
@@ -62,7 +62,7 @@ namespace Pims.Geocoder.Extensions
                 {
                     if (props[key].PropertyType == typeof(int))
                     {
-                        props[key].SetValue(result, Int32.Parse(p.Value));
+                        props[key].SetValue(result, int.Parse(p.Value));
                     }
                     else if (props[key].PropertyType == typeof(long))
                     {
@@ -70,11 +70,11 @@ namespace Pims.Geocoder.Extensions
                     }
                     else if (props[key].PropertyType == typeof(bool))
                     {
-                        props[key].SetValue(result, Boolean.Parse(p.Value));
+                        props[key].SetValue(result, bool.Parse(p.Value));
                     }
                     else if (props[key].PropertyType == typeof(double) || props[key].PropertyType == typeof(double?))
                     {
-                        props[key].SetValue(result, Double.Parse(p.Value));
+                        props[key].SetValue(result, double.Parse(p.Value));
                     }
                     else
                     {

@@ -8,6 +8,7 @@ namespace Pims.Core.Http
     public class ProxyRequestClient : IProxyRequestClient
     {
         #region Properties
+
         /// <summary>
         /// get/set - The HttpClient use to make requests.
         /// </summary>
@@ -15,6 +16,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ProxyRequestClient class, initializes it with the specified arguments.
         /// </summary>
@@ -26,6 +28,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Dispose managed resources.
         /// </summary>
@@ -35,19 +38,8 @@ namespace Pims.Core.Http
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
-        }
-
         #region Proxy Methods
+
         /// <summary>
         /// Proxy the request on behalf of the original requestor to the specified 'url'.
         /// </summary>
@@ -59,7 +51,7 @@ namespace Pims.Core.Http
         public virtual Task<HttpResponseMessage> ProxySendAsync(HttpRequest request, string url, HttpMethod method = null, HttpContent content = null)
         {
             if (request == null) { throw new ArgumentNullException(nameof(request)); }
-            if (String.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
+            if (string.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
 
             return this.ProxySendInternalAsync(request, url, method, content);
         }
@@ -110,6 +102,18 @@ namespace Pims.Core.Http
         public async Task<HttpResponseMessage> ProxyDeleteAsync(HttpRequest request, string url, HttpContent content = null)
         {
             return await ProxySendAsync(request, url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>

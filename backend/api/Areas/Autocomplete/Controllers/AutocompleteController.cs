@@ -31,6 +31,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AutocompleteController class, initializes it with the specified arguments.
         /// </summary>
@@ -49,7 +50,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
         /// <summary>
         /// Retrieves autocomplete predictions based on the supplied autocomplete request.
         /// </summary>
-        /// <returns>An array of contacts matching the filter</returns>
+        /// <returns>An array of contacts matching the filter.</returns>
         [HttpGet("organizations")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
@@ -67,7 +68,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
         /// Retrieves autocomplete predictions based on the supplied autocomplete request.
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns>An array of contacts matching the filter</returns>
+        /// <returns>An array of contacts matching the filter.</returns>
         [HttpPost("organizations")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]

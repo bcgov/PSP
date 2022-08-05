@@ -13,6 +13,7 @@ namespace Pims.Core.Helpers
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Generate a random set of characters to the specified 'length'.
         /// The longer the length, the more random the value.
@@ -32,10 +33,10 @@ namespace Pims.Core.Helpers
             var symbols = new[] { "_", "+", "-", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "?" };
             var all = constonants.Concat(vowels).Concat(numbers).Concat(symbols).ToArray();
 
-            string value = "";
+            string value = string.Empty;
             value += constonants[rand.Next(constonants.Length)].ToUpper();
             value += vowels[rand.Next(vowels.Length)];
-            int b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
+            int b = 2; // b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
             while (b < length)
             {
                 value += all[rand.Next(all.Length)];

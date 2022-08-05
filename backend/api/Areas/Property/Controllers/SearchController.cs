@@ -1,3 +1,4 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -10,7 +11,6 @@ using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using BModel = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Controllers
@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SearchController class, initializes it with the specified arguments.
         /// </summary>
@@ -47,6 +48,7 @@ namespace Pims.Api.Areas.Property.Controllers
 
         #region Endpoints
         #region Property Paging Endpoints (for list view)
+
         /// <summary>
         /// Get all the properties that satisfy the filter parameters.
         /// </summary>

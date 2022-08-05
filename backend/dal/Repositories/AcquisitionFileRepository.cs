@@ -15,13 +15,17 @@ namespace Pims.Dal.Repositories
     public class AcquisitionFileRepository : BaseRepository<PimsAcquisitionFile>, IAcquisitionFileRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AcquisitionFileRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, IMapper mapper) : base(dbContext, user, logger) { }
+        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, IMapper mapper)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods

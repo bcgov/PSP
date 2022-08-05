@@ -6,6 +6,7 @@ namespace Pims.Api.Models.User
     public class UserModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>

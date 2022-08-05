@@ -26,6 +26,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseController class, initializes it with the specified arguments.
         /// </summary>
@@ -40,6 +41,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
@@ -60,7 +62,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPost()]
+        [HttpPost]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]

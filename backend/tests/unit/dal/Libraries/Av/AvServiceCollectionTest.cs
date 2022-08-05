@@ -1,3 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -7,12 +13,6 @@ using Pims.Av;
 using Pims.Av.Configuration;
 using Pims.Core.Http;
 using Pims.Core.Test;
-using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Av
@@ -40,7 +40,7 @@ namespace Pims.Dal.Test.Libraries.Av
             {
                 DisableScan = true,
                 HostUri = "testuri",
-                Port = 1234
+                Port = 1234,
             };
             var avJson = JsonSerializer.Serialize(new { Av = options });
             IConfigurationRoot avConfig;

@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -5,11 +10,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Pims.Api.Policies;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
 using Xunit;
 
 namespace Pims.Core.Test
@@ -231,7 +231,6 @@ namespace Pims.Core.Test
             var total = (int)totalProp.GetValue(obj);
 
             return new Paged<T>(items, page, quantity, total);
-
         }
     }
 }

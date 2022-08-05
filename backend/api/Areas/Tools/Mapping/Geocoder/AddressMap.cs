@@ -1,6 +1,5 @@
-using Mapster;
-using System;
 using System.Text;
+using Mapster;
 using GModel = Pims.Geocoder.Models;
 using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
@@ -32,37 +31,37 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         private static string GetAddress1(GModel.PropertyModel properties)
         {
             var address = new StringBuilder();
-            if (!String.IsNullOrWhiteSpace($"{ properties.CivicNumber}"))
+            if (!string.IsNullOrWhiteSpace($"{properties.CivicNumber}"))
             {
                 address.Append($"{properties.CivicNumber} ");
             }
 
-            if (properties.IsStreetTypePrefix && !String.IsNullOrWhiteSpace(properties.StreetType))
+            if (properties.IsStreetTypePrefix && !string.IsNullOrWhiteSpace(properties.StreetType))
             {
                 address.Append($"{properties.StreetType} ");
             }
 
-            if (properties.IsStreetDirectionPrefix && !String.IsNullOrWhiteSpace(properties.StreetDirection))
+            if (properties.IsStreetDirectionPrefix && !string.IsNullOrWhiteSpace(properties.StreetDirection))
             {
                 address.Append($"{properties.StreetDirection} ");
             }
 
-            if (!String.IsNullOrWhiteSpace(properties.StreetName))
+            if (!string.IsNullOrWhiteSpace(properties.StreetName))
             {
                 address.Append(properties.StreetName);
             }
 
-            if (!String.IsNullOrWhiteSpace(properties.StreetQualifier))
+            if (!string.IsNullOrWhiteSpace(properties.StreetQualifier))
             {
                 address.Append($" {properties.StreetQualifier}");
             }
 
-            if (!properties.IsStreetDirectionPrefix && !String.IsNullOrWhiteSpace(properties.StreetDirection))
+            if (!properties.IsStreetDirectionPrefix && !string.IsNullOrWhiteSpace(properties.StreetDirection))
             {
                 address.Append($" {properties.StreetDirection}");
             }
 
-            if (!properties.IsStreetTypePrefix && !String.IsNullOrWhiteSpace(properties.StreetType))
+            if (!properties.IsStreetTypePrefix && !string.IsNullOrWhiteSpace(properties.StreetType))
             {
                 address.Append($" {properties.StreetType}");
             }

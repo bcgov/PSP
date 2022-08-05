@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -17,16 +16,21 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ProvinceService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProvinceService> logger) : base(dbContext, user, logger) { }
+        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProvinceService> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get all of provinces from the datasource.
         /// </summary>

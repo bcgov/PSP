@@ -8,10 +8,13 @@ namespace Pims.Dal.Entities
     public partial class PimsAccessRequestOrganization : IDisableBaseAppEntity
     {
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a AccessRequestOrganization class.
         /// </summary>
-        public PimsAccessRequestOrganization() { }
+        public PimsAccessRequestOrganization()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a AccessRequestOrganization class.
@@ -29,7 +32,8 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="accessRequest"></param>
         /// <param name="organization"></param>
-        public PimsAccessRequestOrganization(PimsAccessRequest accessRequest, PimsOrganization organization) : this()
+        public PimsAccessRequestOrganization(PimsAccessRequest accessRequest, PimsOrganization organization)
+            : this()
         {
             this.AccessRequest = accessRequest;
             this.AccessRequestId = accessRequest?.AccessRequestId ??

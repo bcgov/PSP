@@ -10,20 +10,21 @@ namespace Pims.Core.Extensions
     public static class JsonSerializerExtensions
     {
         #region Variables
+
         /// <summary>
         /// JSON formatting options.
         /// </summary>
-        /// <value></value>
         private static readonly JsonSerializerOptions _jsonFormatOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             IgnoreNullValues = true,
-            WriteIndented = true
+            WriteIndented = true,
         };
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Deserialize the specified string into the specified object of type 'T'.
         /// </summary>

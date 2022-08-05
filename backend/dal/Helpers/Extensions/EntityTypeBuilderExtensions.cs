@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pims.Dal.Entities;
 
 namespace Pims.Dal.Extensions
 {
@@ -26,7 +25,7 @@ namespace Pims.Dal.Extensions
             where T : class
         {
             // Generate a sequence name based on the column name.
-            if (String.IsNullOrWhiteSpace(sequenceName))
+            if (string.IsNullOrWhiteSpace(sequenceName))
             {
                 var propInfo = GetPropertyInfo(propertyExpression);
                 var type = typeof(T);
@@ -64,16 +63,20 @@ namespace Pims.Dal.Extensions
 
             var propInfo = member.Member as PropertyInfo;
             if (propInfo == null)
+            {
                 throw new ArgumentException(string.Format(
                     "Expression '{0}' refers to a field, not a property.",
                     propertyLambda.ToString()));
+            }
 
             if (type != propInfo.ReflectedType &&
                 !type.IsSubclassOf(propInfo.ReflectedType))
+            {
                 throw new ArgumentException(string.Format(
                     "Expression '{0}' refers to a property that is not from type {1}.",
                     propertyLambda.ToString(),
                     type));
+            }
 
             return propInfo;
         }

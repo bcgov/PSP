@@ -5,6 +5,7 @@ namespace Pims.Api.Models.Lookup
     public class RoleModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify the role.
         /// </summary>

@@ -12,22 +12,20 @@ namespace Pims.Dal.Entities.Models
     public class Paged<TModel> : ICollection<TModel>
     {
         #region Properties
+
         /// <summary>
         /// get/set - The page number.
         /// </summary>
-        /// <value></value>
         public int Page { get; set; } = 1;
 
         /// <summary>
         /// get/set - The quantity that was requested in the query.  This is not the number of items in this page.
         /// </summary>
-        /// <value></value>
         public int Quantity { get; set; } = 10;
 
         /// <summary>
         /// get/set - The total number of items in the datasource that match the query.  This is not the number of items in this page.
         /// </summary>
-        /// <value></value>
         public int Total { get; set; }
 
         /// <summary>
@@ -49,10 +47,13 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a Paged class.
         /// </summary>
-        public Paged() { }
+        public Paged()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a Paged class, and initializes it with the specified data.
@@ -120,6 +121,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Convert the items in the page to another type via the specified 'converter'.
         /// </summary>

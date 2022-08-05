@@ -21,12 +21,12 @@ namespace Pims.Core.Test
                 ActivityInstanceId = id,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = "admin",
-                AppCreateUserDirectory = "",
-                AppLastUpdateUserDirectory = "",
-                AppLastUpdateUserid = "",
-                DbCreateUserid = "",
-                DbLastUpdateUserid = "",
-                ConcurrencyControlNumber = 1
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                ConcurrencyControlNumber = 1,
             };
 
             if (notes != null)
@@ -39,7 +39,7 @@ namespace Pims.Core.Test
                         ActivityInstanceId = activity.ActivityInstanceId,
                         Note = n,
                         NoteId = n.NoteId,
-                        IsDisabled = false
+                        IsDisabled = false,
                     });
                 }
             }
@@ -48,4 +48,3 @@ namespace Pims.Core.Test
         }
     }
 }
-

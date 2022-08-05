@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,6 @@ using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Lease.Controllers
 {
@@ -26,6 +26,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PropertyImprovementController class, initializes it with the specified arguments.
         /// </summary>

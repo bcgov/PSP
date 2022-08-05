@@ -1,7 +1,7 @@
-using Pims.Dal;
-using Pims.Dal.Entities;
 using System;
 using System.Linq;
+using Pims.Dal;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -20,7 +20,7 @@ namespace Pims.Core.Test
         {
             var lease = new Entity.PimsLease()
             {
-                LeaseId = pid, 
+                LeaseId = pid,
                 LFileNo = lFileNo,
                 ConcurrencyControlNumber = 1,
             };
@@ -66,7 +66,7 @@ namespace Pims.Core.Test
             var leaseInitiatorType = context.PimsLeaseInitiatorTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease initiator type.");
             var leaseResponsibilityType = context.PimsLeaseResponsibilityTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease reponsibility type.");
             var leaseLicenseType = context.PimsLeaseLicenseTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease license type.");
-            
+
             var lease = EntityHelper.CreateLease(pid, lFileNo, tenantFirstName, tenantLastName, motiFirstName, motiLastName, address, addTenant, addProperty, programType, leasePurposeType, leaseStatusType, leasePayRvblType, leaseCategoryType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
             context.PimsLeases.Add(lease);
             return lease;

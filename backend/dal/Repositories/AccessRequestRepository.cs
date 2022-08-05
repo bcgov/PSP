@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -31,10 +30,14 @@ namespace Pims.Dal.Repositories
         /// <param name="accessRequest"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, ILogger<AccessRequestRepository> logger) : base(dbContext, user, logger) { }
+        public AccessRequestRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ClaimsPrincipal accessRequest, ILogger<AccessRequestRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get the most recent access request that has submitted.
         /// </summary>
@@ -126,9 +129,9 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Delete an access request
+        /// Delete an access request.
         /// </summary>
-        /// <param name="deleteRequest">The item to be deleted</param>
+        /// <param name="deleteRequest">The item to be deleted.</param>
         /// <returns></returns>
         public PimsAccessRequest Delete(PimsAccessRequest deleteRequest)
         {

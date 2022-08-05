@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +20,6 @@ using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using FluentAssertions;
-using System.Linq;
 
 namespace Pims.Api.Test.Controllers.Reports
 {
@@ -172,7 +172,7 @@ namespace Pims.Api.Test.Controllers.Reports
             leaseTerm.TermStartDate = DateTime.Now;
             leaseTerm.TermRenewalDate = DateTime.Now.AddDays(1);
             leaseTerm.TermExpiryDate = DateTime.Now.AddDays(2);
-            leaseTerm.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() {LeasePmtFreqTypeCode = "PMT", Description="pmt" };
+            leaseTerm.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() { LeasePmtFreqTypeCode = "PMT", Description = "pmt" };
             leaseTerm.PaymentAmount = 1000;
             lease.PimsLeaseTerms.Add(leaseTerm);
 
@@ -215,7 +215,6 @@ namespace Pims.Api.Test.Controllers.Reports
             var leasePersonTenant = new PimsLeaseTenant();
             leasePersonTenant.Person = new PimsPerson() { FirstName = "first", MiddleNames = "middle", Surname = "last" };
             lease.PimsLeaseTenants.Add(leasePersonTenant);
-
 
             var leases = new[] { lease };
 

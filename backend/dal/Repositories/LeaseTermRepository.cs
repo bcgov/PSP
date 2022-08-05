@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -11,13 +10,17 @@ namespace Pims.Dal.Repositories
     public class LeaseTermRepository : BaseRepository<PimsLeaseTerm>, ILeaseTermRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseTermRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger) : base(dbContext, user, logger) { }
+        public LeaseTermRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         public void Delete(long leaseTermId)

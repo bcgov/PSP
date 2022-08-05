@@ -1,9 +1,9 @@
-using NetTopologySuite.Geometries;
-using Pims.Core.Extensions;
 using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using NetTopologySuite.Geometries;
+using Pims.Core.Extensions;
 
 namespace Pims.Core.Converters
 {
@@ -13,6 +13,7 @@ namespace Pims.Core.Converters
     public class GeometryJsonConverter : JsonConverter<Geometry>
     {
         #region Methods
+
         /// <summary>
         /// Deserialize a geometry object.
         /// </summary>
@@ -70,7 +71,7 @@ namespace Pims.Core.Converters
         /// <returns></returns>
         private static Geometry Create(Type type, string value)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return null;
             }

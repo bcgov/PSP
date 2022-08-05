@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -8,24 +9,29 @@ namespace Pims.Dal.Entities
     public partial class PimsDistrict : ICodeEntity<short>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify district.
         /// </summary>
         [NotMapped]
         public short Id { get => DistrictCode; set => DistrictCode = value; }
+
         [NotMapped]
         public short Code { get => DistrictCode; set => DistrictCode = value; }
+
         [NotMapped]
         public string Description { get => DistrictName; set => DistrictName = value; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a District class.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="region"></param>
-        public PimsDistrict(string name, PimsRegion region) : this()
+        public PimsDistrict(string name, PimsRegion region)
+            : this()
         {
             if (string.IsNullOrWhiteSpace(name))
             {

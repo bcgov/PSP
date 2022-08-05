@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Core.Exceptions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
+using FluentAssertions;
+using Pims.Core.Exceptions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Exceptions
@@ -89,7 +89,7 @@ namespace Pims.Api.Test.Core.Exceptions
             // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com"),
             };
 
             // Act
@@ -110,7 +110,7 @@ namespace Pims.Api.Test.Core.Exceptions
             var inner = new Exception(msg);
             var response = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com"),
             };
 
             // Act

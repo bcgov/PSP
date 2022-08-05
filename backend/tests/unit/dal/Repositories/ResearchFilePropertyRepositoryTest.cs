@@ -31,7 +31,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileView);
-            var pimsPropertyResearchFile =  new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } };
+            var pimsPropertyResearchFile = new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } };
             pimsPropertyResearchFile.PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } };
 
             var context = helper.CreatePimsContext(user, true);

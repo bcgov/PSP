@@ -121,7 +121,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static IEnumerable<T> NotNullOrWhiteSpace<T>(this IEnumerable<T> items)
         {
-            return items.Where(v => v != null && !String.IsNullOrWhiteSpace($"{v}"));
+            return items.Where(v => v != null && !string.IsNullOrWhiteSpace($"{v}"));
         }
 
         /// <summary>

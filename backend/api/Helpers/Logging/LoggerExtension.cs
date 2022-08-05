@@ -10,8 +10,7 @@ namespace Pims.Api.Helpers.Logging
     public static class LoggerExtensions
     {
         public static IServiceCollection AddSerilogging(
-            this IServiceCollection services, IConfiguration configuration
-        )
+            this IServiceCollection services, IConfiguration configuration)
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (environment != null)

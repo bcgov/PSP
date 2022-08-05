@@ -27,7 +27,7 @@ namespace Pims.Core.Test
             return new List<Entity.PimsDataSourceType>()
             {
                 new Entity.PimsDataSourceType("LIS") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsDataSourceType("PAIMS") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsDataSourceType("PAIMS") { ConcurrencyControlNumber = 1 },
             };
         }
     }
