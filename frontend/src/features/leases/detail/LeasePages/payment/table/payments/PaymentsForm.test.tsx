@@ -146,12 +146,12 @@ describe('PaymentsForm component', () => {
       expect(editButton[0]).toBeVisible();
     });
 
-    it('Does not display delete payment if missing claim ', async () => {
+    it('Does not display delete payment if missing claim', async () => {
       const {
         component: { queryByTitle },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
-        claims: [Claims.LEASE_EDIT],
+        claims: [],
       });
 
       const deleteButton = await queryByTitle('delete actual');
@@ -163,7 +163,7 @@ describe('PaymentsForm component', () => {
         component: { findAllByTitle },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
       const deleteButton = await findAllByTitle('delete actual');
       expect(deleteButton[0]).toBeVisible();
@@ -311,7 +311,7 @@ describe('PaymentsForm component', () => {
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
         isReceivable: false,
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
       const deleteButton = await findAllByTitle('delete actual');
       userEvent.click(deleteButton[0]);
