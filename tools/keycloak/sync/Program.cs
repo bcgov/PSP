@@ -98,7 +98,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private static IConfigurationBuilder Configure(string[] args)
         {
-            DotNetEnv.Env.Load();
+            DotNetEnv.Env.TraversePath().Load();
             string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").ToLower();
 
             return new ConfigurationBuilder()
