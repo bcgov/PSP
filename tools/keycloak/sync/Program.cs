@@ -2,6 +2,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,6 +50,7 @@ namespace Pims.Tools.Keycloak.Sync
                         options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     if (Boolean.TryParse(config["Serialization:Json:WriteIndented"], out bool writeIndented))
                         options.WriteIndented = writeIndented;
+                    options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 })
                 .AddSingleton<IConfiguration>(config)
                 .AddLogging(options =>
