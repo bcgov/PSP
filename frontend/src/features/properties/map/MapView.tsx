@@ -59,27 +59,29 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
       <SelectedPropertyContext.Consumer>
         {({ cursor }) => (
           <PropertyContextProvider>
-            <StyleMapView className={clsx(cursor)}>
+            <StyleMapView data-test="map-view" className={clsx(cursor)}>
               <MapSideBar showSideBar={showSideBar}>{sidebarComponent}</MapSideBar>
-              <FilterProvider>
-                <Map
-                  lat={defaultLatLng.lat}
-                  lng={defaultLatLng.lng}
-                  onViewportChanged={() => {
-                    if (!loadedProperties) {
-                      setLoadedProperties(true);
-                    }
-                  }}
-                  showParcelBoundaries={props.showParcelBoundaries ?? true}
-                  zoom={6}
-                  onPropertyMarkerClick={onMarkerClicked}
-                  onViewPropertyClick={onPropertyViewClicked}
-                  showSideBar={showSideBar}
-                  whenCreated={setMapInstance}
-                />
-              </FilterProvider>
               {showWindow && (
                 <MapActionWindow showWindow={showWindow}>{actionWindowComponent}</MapActionWindow>
+              )}
+              {!showWindow && (
+                <FilterProvider>
+                  <Map
+                    lat={defaultLatLng.lat}
+                    lng={defaultLatLng.lng}
+                    onViewportChanged={() => {
+                      if (!loadedProperties) {
+                        setLoadedProperties(true);
+                      }
+                    }}
+                    showParcelBoundaries={props.showParcelBoundaries ?? true}
+                    zoom={6}
+                    onPropertyMarkerClick={onMarkerClicked}
+                    onViewPropertyClick={onPropertyViewClicked}
+                    showSideBar={showSideBar}
+                    whenCreated={setMapInstance}
+                  />
+                </FilterProvider>
               )}
             </StyleMapView>
           </PropertyContextProvider>
@@ -91,8 +93,8 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
 
 const StyleMapView = styled.div`
   display: flex;
+  flex-direction: row;
   width: 100vw;
-
   &.draft-cursor,
   &.draft-cursor .leaflet-grab,
   &.draft-cursor .leaflet-interactive {

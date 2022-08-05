@@ -59,6 +59,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
   React.useEffect(() => {
     const handleClose = () => {
       history.push('/mapview');
+      setShowWindow(false);
     };
 
     var parts = location.pathname.split('/');

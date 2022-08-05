@@ -40,25 +40,13 @@ export const CloseButton = styled.div`
 `;
 
 export const ActivityTray = styled.div`
-  height: inherit;
+  height: 100%;
+  width: 100%
   overflow-y: hidden;
-  position: absolute;
-  top: 8rem;
-  right: 64rem;
   background-color: white;
   z-index: 10000;
-  width: 64rem;
   border-radius: 1rem;
   text-align: left;
   transition: transform 0.5s ease-in-out;
   box-shadow: 0.3rem 0 0.4rem rgba(0, 0, 0, 0.2);
-  &.show {
-    transform: translateX(64rem);
-  }
-  @media (max-width: 1225px) {
-    width: 32rem;
-    &.show {
-      transform: translateX(32rem);
-    }
-  }
 `;
