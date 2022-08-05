@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Pims.Tools.Keycloak.Sync": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "workingDirectory": "C:\\git\\PSP\\tools\\keycloak\\sync"
     }
   }
 }
