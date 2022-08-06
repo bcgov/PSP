@@ -91,7 +91,7 @@ namespace Pims.Tools.Keycloak.Sync
         private async Task<SKModel.RoleModel> AddUpdateRealmRoleAsync(RoleOptions config)
         {
             _logger.LogInformation($"Fetch realm role '{config.Name}'");
-            var role = await _client.HandleGetAsync<SKModel.RoleModel>(_client.AdminRoute($"roles/{config.Name}"), r => true);
+            var role = await _client.HandleGetAsync<SKModel.RoleModel>(_client.AdminRoute($"roles/{config.Name}"));
 
             if (role == null)
             {
@@ -163,7 +163,7 @@ namespace Pims.Tools.Keycloak.Sync
         private async Task<SKModel.GroupModel> AddUpdateGroupAsync(GroupOptions config)
         {
             _logger.LogInformation($"Fetch group '{config.Name}'");
-            var groups = await _client.HandleGetAsync<SKModel.GroupModel[]>(_client.AdminRoute($"groups?search={config.Name}"), r => true);
+            var groups = await _client.HandleGetAsync<SKModel.GroupModel[]>(_client.AdminRoute($"groups?search={config.Name}"));
             var group = groups.FirstOrDefault();
 
             if (group == null)
@@ -176,7 +176,7 @@ namespace Pims.Tools.Keycloak.Sync
                 if (!rRes.IsSuccessStatusCode) throw new HttpClientRequestException(rRes);
 
                 // Have to look for it now that we've added it.
-                groups = await _client.HandleGetAsync<SKModel.GroupModel[]>(_client.AdminRoute($"groups?search={config.Name}"), r => true);
+                groups = await _client.HandleGetAsync<SKModel.GroupModel[]>(_client.AdminRoute($"groups?search={config.Name}"));
                 group = groups.FirstOrDefault();
             }
             else

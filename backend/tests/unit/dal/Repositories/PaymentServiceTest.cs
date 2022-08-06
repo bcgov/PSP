@@ -275,7 +275,7 @@ namespace Pims.Dal.Test.Services
         public void DeletePayment_NotAuthorized()
         {
             // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView, Permissions.LeaseDelete);
 
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
