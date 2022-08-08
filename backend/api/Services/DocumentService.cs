@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using MapsterMapper;
@@ -76,8 +77,17 @@ namespace Pims.Api.Services
             DocumentUploadResponse response = new DocumentUploadResponse() { ExternalResult = externalResult };
             if (externalResult.Status == ExternalResultStatus.Success)
             {
-                // Create the pims document
                 var externalDocument = externalResult.Payload;
+
+                // Save metadata of document
+                IList<Task<ExternalResult<DocumentMetadata>>> metadataTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
+                foreach (var metadata in uploadRequest.DocumentMetadata)
+                {
+                    metadataTasks.Add(documentStorageRepository.CreateDocumentMetadataAsync(externalDocument.Id, metadata.MetadataTypeId, metadata.Value));
+                }
+                Task.WaitAll(metadataTasks.ToArray());
+
+                // Create the pims document
                 PimsDocument newPimsDocument = new PimsDocument()
                 {
                     FileName = externalDocument.Label,
@@ -133,6 +143,12 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<QueryResult<DocumentDetail>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null)
         {
             ExternalResult<QueryResult<DocumentDetail>> result = await documentStorageRepository.GetDocumentsListAsync(ordering, page, pageSize);
+            return result;
+        }
+
+        public async Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataType(long mayanDocumentTypeId, string ordering = "", int? page = null, int? pageSize = null)
+        {
+            ExternalResult<QueryResult<DocumentTypeMetadataType>> result = await documentStorageRepository.GetDocumentTypeMetadataTypesAsync(mayanDocumentTypeId, ordering, page, pageSize);
             return result;
         }
 

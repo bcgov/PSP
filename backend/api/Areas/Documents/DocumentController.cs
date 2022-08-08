@@ -186,6 +186,20 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
+        /// Retrieves the list of document types.
+        /// </summary>
+        [HttpGet("storage/types/{mayanDocumentTypeId}/metadata")]
+
+        // [HasPermission(Permissions.PropertyAdd)]
+        [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentTypeMetadataType>>), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        public async Task<IActionResult> GetDocumentStorageTypeMetadata(long mayanDocumentTypeId)
+        {
+            var result = await _documentService.GetDocumentTypeMetadataType(mayanDocumentTypeId);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
         /// Downloads the latest file for the corresponding document id.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/download")]

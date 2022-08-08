@@ -13,6 +13,8 @@ import { ChangeEvent, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
+
 interface DocumentUploadForm {
   documentTypeId: string;
   documentStatusCode: string;
@@ -22,6 +24,7 @@ interface IDocumentUploadViewProps {
   documentTypes: Api_DocumentType[];
   isLoading: boolean;
   mayanMetadata: Api_Storage_DocumentTypeMetadataType[];
+  documentMetadata: any;
   onDocumentTypeChange: (param: any) => void;
   onUploadDocument: (uploadRequest: Api_UploadRequest) => void;
   onCancel: () => void;
@@ -41,7 +44,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
 
   const initialFormState: DocumentUploadForm = {
-    documentTypeId: documentTypes.length > 0 ? documentTypes[0]?.value?.toString() || '' : '',
+    documentTypeId: '',
     documentStatusCode:
       documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
   };
@@ -62,6 +65,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
       <Formik<DocumentUploadForm>
         enableReinitialize
         initialValues={initialFormState}
+        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
         onSubmit={async (values: DocumentUploadForm, { setSubmitting }) => {
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
@@ -73,6 +77,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                 documentStatusCode: values.documentStatusCode,
                 documentType: selectedDocumentType,
                 file: selectedFile,
+                documentMetadata: props.documentMetadata,
               };
 
               await props.onUploadDocument(request);
@@ -91,6 +96,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             </div>
             <SectionField label="Document type" labelWidth="3" className="pb-2">
               <Select
+                placeholder="Select Document type"
                 field="documentTypeId"
                 options={documentTypes}
                 onChange={props.onDocumentTypeChange}
@@ -137,9 +143,25 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                     <Input
                       field={value.metadata_type?.name || ''}
                       required={value.required === true}
+                      onChange={event => {
+                        if (value.metadata_type?.id) {
+                          props.documentMetadata[value.metadata_type?.id.toString()] =
+                            event.target.value;
+                        }
+                      }}
                     />
                   </SectionField>
                 ))}
+                <div style={{ border: 'solid 1px;', color: 'red' }}>
+                  {Object.values(formikProps.errors).map(msg => {
+                    return (
+                      <>
+                        {msg}
+                        <br />
+                      </>
+                    );
+                  })}
+                </div>
               </StyledScrollable>
             </StyledGreySection>
             <Row className="justify-content-end pt-4">
