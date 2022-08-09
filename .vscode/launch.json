@@ -16,26 +16,6 @@
       "stopAtEntry": false
     },
     {
-      "name": "Tool-Converter",
-      "type": "coreclr",
-      "request": "launch",
-      "console": "internalConsole",
-      "preLaunchTask": "build",
-      "program": "${workspaceRoot}/tools/converters/excel/bin/Debug/net6.0/Pims.Tools.Converters.ExcelConverter.dll",
-      "cwd": "${workspaceRoot}/tools/converters/excel",
-      "stopAtEntry": false
-    },
-    {
-      "name": "Tool-Import",
-      "type": "coreclr",
-      "request": "launch",
-      "console": "internalConsole",
-      "preLaunchTask": "build",
-      "program": "${workspaceRoot}/tools/import/bin/Debug/net6.0/Pims.Tools.Import.dll",
-      "cwd": "${workspaceRoot}/tools/import",
-      "stopAtEntry": false
-    },
-    {
       "name": ".NET 6 Launch (api)",
       "type": "coreclr",
       "request": "launch",
