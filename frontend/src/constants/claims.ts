@@ -29,6 +29,10 @@ export enum Claims {
   NOTE_VIEW = 'note-view',
   NOTE_ADD = 'note-add',
   NOTE_DELETE = 'note-delete',
+  DOCUMENT_EDIT = 'document-edit',
+  DOCUMENT_VIEW = 'document-view',
+  DOCUMENT_ADD = 'document-add',
+  DOCUMENT_DELETE = 'document-delete',
 }
 
 export default Claims;

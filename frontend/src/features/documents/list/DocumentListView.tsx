@@ -126,7 +126,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         header={
           <Row>
             <Col xs="auto">Documents</Col>
-            {hasClaim(Claims.RESEARCH_ADD) && (
+            {hasClaim(Claims.DOCUMENT_ADD) && (
               <Col>
                 <StyledAddButton onClick={() => setIsUploadVisible(true)}>
                   <FaUpload />

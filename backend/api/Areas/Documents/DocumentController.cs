@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Constants;
@@ -9,8 +10,10 @@ using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities;
+using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Concepts = Pims.Api.Models.Concepts;
 
@@ -19,7 +22,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentController class, provides endpoints to handle document requests.
     /// </summary>
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]
@@ -52,8 +55,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("types")]
-
-        // [HasPermission(Permissions.DocumentView)]
+        [HasPermission(Permissions.DocumentView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<Concepts.DocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document-types" })]
@@ -72,8 +74,7 @@ namespace Pims.Api.Controllers
         /// <returns></returns>
         [HttpGet("{relationshipType}/{parentId:long}")]
         [Produces("application/json")]
-
-        // [HasPermission(Permissions.NoteView)]
+        [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(IList<DocumentRelationshipModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
         public IActionResult GetRelationshipDocuments(DocumentRelationType relationshipType, long parentId)
@@ -98,8 +99,7 @@ namespace Pims.Api.Controllers
         /// <returns></returns>
         [HttpPost("upload/{relationshipType}/{parentId:long}")]
         [Produces("application/json")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentAdd)]
         [ProducesResponseType(typeof(DocumentUploadResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public async Task<IActionResult> UploadDocumentWithParent(
@@ -125,8 +125,7 @@ namespace Pims.Api.Controllers
         /// <returns></returns>
         [HttpDelete("{relationshipType}")]
         [Produces("application/json")]
-
-        // [HasPermission(Permissions.NoteView)]
+        [HasPermission(Permissions.DocumentDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
         public async Task<IActionResult> DeleteDocumentRelationship(DocumentRelationType relationshipType, [FromBody] DocumentRelationshipModel model)
@@ -146,8 +145,7 @@ namespace Pims.Api.Controllers
         /// Downloads the file for the corresponding file and document id.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/files/{mayanFileId}/download")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> DownloadFile(long mayanDocumentId, long mayanFileId)
@@ -160,8 +158,7 @@ namespace Pims.Api.Controllers
         /// Retrieves a list of documents.
         /// </summary>
         [HttpGet("storage")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentDetail>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
@@ -175,8 +172,7 @@ namespace Pims.Api.Controllers
         /// Retrieves the list of document types.
         /// </summary>
         [HttpGet("storage/types")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentType>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public IActionResult GetDocumentStorageTypes()
@@ -189,8 +185,7 @@ namespace Pims.Api.Controllers
         /// Downloads the latest file for the corresponding document id.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/download")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> DownloadFile(long mayanDocumentId)
@@ -203,8 +198,7 @@ namespace Pims.Api.Controllers
         /// Uploads the passed document.
         /// </summary>
         [HttpPost("storage")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentAdd)]
         [ProducesResponseType(typeof(ExternalResult<DocumentDetail>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> UploadDocument([FromForm] int documentType, [FromForm] IFormFile file)
@@ -217,8 +211,7 @@ namespace Pims.Api.Controllers
         /// Retrieves a external document metadata.
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/metadata")]
-
-        // [HasPermission(Permissions.PropertyAdd)]
+        [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResult<QueryResult<DocumentMetadata>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         public async Task<IActionResult> GetDocumentMetadata(long mayanDocumentId)
