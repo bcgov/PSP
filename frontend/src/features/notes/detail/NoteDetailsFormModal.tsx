@@ -79,6 +79,7 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
       message={loading ? spinner : body}
       okButtonText="Close"
       handleOk={() => onCloseClick && onCloseClick()}
+      handleCancel={() => onCloseClick && onCloseClick()}
       closeButton
     ></StyledModal>
   );
