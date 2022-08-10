@@ -93,7 +93,7 @@ describe('AddAcquisitionContainer component', () => {
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
     const formValues = new AcquisitionForm();
-    formValues.name = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    formValues.fileName = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     formValues.acquisitionType = 'CONSEN';
     formValues.region = '1';
 
@@ -101,11 +101,11 @@ describe('AddAcquisitionContainer component', () => {
       DEFAULT_PROPS,
     );
 
-    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.name as string));
+    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.fileName as string));
     await userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType);
     await userEvent.selectOptions(getRegionDropdown(), formValues.region);
 
-    mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.name));
+    mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.fileName));
     userEvent.click(getSaveButton());
 
     await waitFor(() => {

@@ -77,7 +77,7 @@ describe('AddAcquisitionForm component', () => {
   });
 
   it('displays existing values if they exist', async () => {
-    initialValues.name = 'foo bar baz';
+    initialValues.fileName = 'foo bar baz';
     const { getNameTextbox } = setup({ initialValues });
     const input = getNameTextbox();
 
