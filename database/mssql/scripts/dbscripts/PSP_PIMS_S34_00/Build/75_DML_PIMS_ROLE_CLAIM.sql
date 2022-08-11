@@ -1,4 +1,4 @@
-DECLARE @dbUserId nvarchar(30) = null;
+DECLARE @dbUserId nvarchar(30) = 'system';
 DECLARE @dbUserGuid uniqueidentifier = null;
 DECLARE @appUserId nvarchar(30) = N'SEED';
 DECLARE @appUserGuid uniqueidentifier = '1b93f614-91da-4b32-b36e-bd2c6ebd12e2';
