@@ -95,7 +95,7 @@ if test -f "./frontend/.env"; then
 else
 echo \
 "NODE_ENV=development
-API_URL=http://backend:8080/
+API_URL=http://localhost:5000/
 CHOKIDAR_USEPOLLING=true" >> ./frontend/.env
 fi
 
