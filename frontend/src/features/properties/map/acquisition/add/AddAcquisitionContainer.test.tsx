@@ -47,7 +47,8 @@ describe('AddAcquisitionContainer component', () => {
       ...utils,
       getSaveButton: () => utils.getByText(/Save/i),
       getCancelButton: () => utils.getByText(/Cancel/i),
-      getNameTextbox: () => utils.container.querySelector(`input[name="name"]`) as HTMLInputElement,
+      getNameTextbox: () =>
+        utils.container.querySelector(`input[name="fileName"]`) as HTMLInputElement,
       getRegionDropdown: () =>
         utils.container.querySelector(`select[name="region"]`) as HTMLSelectElement,
       getAcquisitionTypeDropdown: () =>

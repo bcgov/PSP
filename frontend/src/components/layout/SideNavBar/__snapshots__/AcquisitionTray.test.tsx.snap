@@ -21,5 +21,10 @@ exports[`AcquisitionTray matches snapshot 1`] = `
   >
     Acquisition Files
   </h3>
+  <a
+    href="/acquisition/list"
+  >
+    Manage acquisition files
+  </a>
 </DocumentFragment>
 `;
