@@ -484,6 +484,7 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsUsers
                 .Include(u => u.Person)
+                .Include(u => u.PimsRegionUsers)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }

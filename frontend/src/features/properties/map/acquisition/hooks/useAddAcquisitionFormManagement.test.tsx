@@ -59,12 +59,12 @@ describe('useAddAcquisitionFormManagement hook', () => {
     const { validationSchema } = setup({ onSuccess });
 
     const validForm = new AcquisitionForm();
-    validForm.name = 'Lorem ipsum';
+    validForm.fileName = 'Lorem ipsum';
     validForm.region = '1';
     validForm.acquisitionType = 'CONSEN';
 
     const invalidForm = new AcquisitionForm();
-    invalidForm.name = fakeText(550);
+    invalidForm.fileName = fakeText(550);
 
     expect(validationSchema).toBeDefined();
     await expect(validationSchema.validate(validForm)).resolves.toEqual(validForm);
@@ -75,7 +75,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
     const { handleSubmit } = setup({ onSuccess });
 
     const formValues = new AcquisitionForm();
-    formValues.name = 'Test Note';
+    formValues.fileName = 'Test Note';
 
     const formikHelpers: Partial<FormikHelpers<AcquisitionForm>> = {
       setSubmitting: jest.fn(),

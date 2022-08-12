@@ -80,10 +80,10 @@ namespace Pims.Api.Test.Controllers
         }
 
         /// <summary>
-        /// Make a successful request to update a note.
+        /// Make a successful request to update an acquisition file.
         /// </summary>
         [Fact]
-        public void UpdateResearchFile_Success()
+        public void UpdateAcquisitionFile_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -93,7 +93,7 @@ namespace Pims.Api.Test.Controllers
             var mapper = helper.GetService<IMapper>();
 
             // TODO: Update test when Update gets implemented
-            Action act = () => controller.UpdateResearchFile(1, mapper.Map<AcquisitionFileModel>(acqFile));
+            Action act = () => controller.UpdateAcquisitionFile(1, mapper.Map<AcquisitionFileModel>(acqFile));
             act.Should().Throw<System.NotImplementedException>();
         }
         #endregion
