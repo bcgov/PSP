@@ -18,7 +18,7 @@ const setFilter = jest.fn();
 const setup = (renderOptions: RenderOptions = { store: storeState }) => {
   const utils = render(<ResearchFilter setFilter={setFilter} />, {
     ...renderOptions,
-    claims: [Claims.LEASE_VIEW],
+    claims: [Claims.RESEARCH_VIEW],
   });
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
