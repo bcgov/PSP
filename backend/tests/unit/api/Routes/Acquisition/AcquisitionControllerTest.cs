@@ -67,10 +67,10 @@ namespace Pims.Api.Test.Routes
         }
 
         [Fact]
-        public void UpdateResearchFile_Route()
+        public void UpdateAcquisitionFile_Route()
         {
             // Arrange
-            var endpoint = typeof(AcquisitionFileController).FindMethod(nameof(AcquisitionFileController.UpdateResearchFile), typeof(long), typeof(AcquisitionFileModel));
+            var endpoint = typeof(AcquisitionFileController).FindMethod(nameof(AcquisitionFileController.UpdateAcquisitionFile), typeof(long), typeof(AcquisitionFileModel));
 
             // Act
             // Assert

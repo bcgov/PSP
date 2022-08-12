@@ -6,8 +6,11 @@ export const mockAcquisitionFileResponse = (
   rowVersion = 1,
 ): Api_AcquisitionFile => ({
   id,
-  name,
   rowVersion,
+  fileNumber: '1-12345-01',
+  fileName: name,
+  ministryProjectNumber: '001',
+  ministryProjectName: 'Hwy 14 improvements',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',
   acquisitionFileStatusTypeCode: {
