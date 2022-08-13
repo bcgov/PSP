@@ -1,7 +1,11 @@
+import { IAcquisitionFilter } from 'features/acquisition/list/interfaces';
+import { IPagedItems } from 'interfaces';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
+import queryString from 'query-string';
 import React from 'react';
 
-import { useAxiosApi } from '.';
+import { IPaginateRequest, useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the acquisition file endpoints.
@@ -12,11 +16,17 @@ export const useApiAcquisitionFile = () => {
 
   return React.useMemo(
     () => ({
+      getAcquisitionFiles: (params: IPaginateAcquisition | null) =>
+        api.get<IPagedItems<Api_AcquisitionFile>>(
+          `/acquisitionfiles/search?${params ? queryString.stringify(params) : ''}`,
+        ),
       getAcquisitionFile: (acqFileId: number) =>
-        api.get<Api_ResearchFile>(`/acquisitionfiles/${acqFileId}`),
+        api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
       postAcquisitionFile: (acqFile: Api_ResearchFile) =>
-        api.post<Api_ResearchFile>(`/acquisitionfiles`, acqFile),
+        api.post<Api_AcquisitionFile>(`/acquisitionfiles`, acqFile),
     }),
     [api],
   );
 };
+
+export type IPaginateAcquisition = IPaginateRequest<IAcquisitionFilter>;
