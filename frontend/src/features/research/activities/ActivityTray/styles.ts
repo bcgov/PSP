@@ -1,3 +1,4 @@
+import { Button } from 'components/common/buttons/Button';
 import styled from 'styled-components';
 
 export const TrayHeader = styled.h3`
@@ -9,13 +10,6 @@ export const TrayHeader = styled.h3`
   margin-bottom: 3.2rem;
   background-color: ${props => props.theme.css.primaryColor};
   color: white;
-  font-family: '' BCSans ',Fallback,sans-serif';
-`;
-
-//place high z-index on grandparent so that negative z-index tray still draws over map(but under navbar parent).
-export const ZIndexWrapper = styled.div`
-  z-index: 1000;
-  position: relative;
 `;
 
 export const ActivityTrayPage = styled.div`
@@ -28,7 +22,7 @@ export const ActivityTrayPage = styled.div`
   }
 `;
 
-export const CloseButton = styled.div`
+export const CloseButton = styled(Button)`
   &#close-tray {
     float: right;
     cursor: pointer;
@@ -41,12 +35,7 @@ export const CloseButton = styled.div`
 
 export const ActivityTray = styled.div`
   height: 100%;
-  width: 100%
-  overflow-y: hidden;
-  background-color: white;
-  z-index: 10000;
   border-radius: 1rem;
   text-align: left;
   transition: transform 0.5s ease-in-out;
-  box-shadow: 0.3rem 0 0.4rem rgba(0, 0, 0, 0.2);
 `;

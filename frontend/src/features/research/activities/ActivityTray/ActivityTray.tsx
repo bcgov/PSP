@@ -1,5 +1,6 @@
 import clsx from 'classnames';
 import { useState } from 'react';
+import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
@@ -25,14 +26,13 @@ export const ActivityTray = (props: IActivityTrayProps) => {
           Activity: General
           <Styled.CloseButton
             id="close-tray"
+            icon={<MdClose size={20} />}
             title="close"
             onClick={() => {
               setShow(false);
               onClose();
             }}
-          >
-            X
-          </Styled.CloseButton>
+          ></Styled.CloseButton>
         </Styled.TrayHeader>
         Opened activity {activityId}
         <Styled.ActivityTrayPage>
