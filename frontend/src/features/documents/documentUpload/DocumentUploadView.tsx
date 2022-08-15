@@ -65,6 +65,8 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
       <Formik<DocumentUploadForm>
         enableReinitialize
         initialValues={initialFormState}
+        validateOnBlur={false}
+        validateOnChange={false}
         validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
         onSubmit={async (values: DocumentUploadForm, { setSubmitting }) => {
           if (selectedFile !== null) {
@@ -153,14 +155,9 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                   </SectionField>
                 ))}
                 <div style={{ border: 'solid 1px;', color: 'red' }}>
-                  {Object.values(formikProps.errors).map(msg => {
-                    return (
-                      <>
-                        {msg}
-                        <br />
-                      </>
-                    );
-                  })}
+                  {Object.values(formikProps.errors).length > 0 && (
+                    <>Mandatory fields are required.</>
+                  )}
                 </div>
               </StyledScrollable>
             </StyledGreySection>
