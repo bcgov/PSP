@@ -1,22 +1,27 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Services
 {
     public class ActivityService : IActivityService
     {
+        private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
 
         public ActivityService(
+            ClaimsPrincipal user,
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
-            IActivityTemplateRepository activityTemplateRepository,
-            IPropertyRepository propertyRepository,
+            IActivityTemplateRepository activityTemplateRepository)
         {
+            _user = user;
             _logger = logger;
             _activityRepository = activityRepository;
             _activityTemplateRepository = activityTemplateRepository;
