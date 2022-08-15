@@ -5,6 +5,7 @@ import { IGeocoderResponse } from 'hooks/useApi';
 import * as React from 'react';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
+import { getPropertyName } from '../utils';
 import { LayerFilter } from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
@@ -20,6 +21,10 @@ export interface IPropertySearchSelectorFormViewProps {
   onAddressSelect: (selectedItem: IGeocoderResponse) => void;
 }
 
+interface SelectableProperty extends IMapProperty {
+  id: string;
+}
+
 export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySearchSelectorFormViewProps> = ({
   onSelectedProperties,
   selectedProperties,
@@ -31,6 +36,22 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
   onAddressChange,
   onAddressSelect,
 }) => {
+  const tableData =
+    searchResults?.length <= 15
+      ? searchResults.map<SelectableProperty>(x => {
+          return { ...x, id: generatePropertyId(x) };
+        })
+      : [];
+
+  const selectedData = selectedProperties.map<SelectableProperty>(x => {
+    return { ...x, id: generatePropertyId(x) };
+  });
+
+  function generatePropertyId(mapProperty: IMapProperty): string {
+    const propertyName = getPropertyName(mapProperty);
+    return `${propertyName.label}-${propertyName.value}`;
+  }
+
   return (
     <>
       <Section header={undefined}>
@@ -44,13 +65,13 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
         />
       </Section>
       <Section header={undefined}>
-        <Table<IMapProperty>
+        <Table<SelectableProperty>
           manualPagination={false}
           name="map-properties"
           columns={mapPropertyColumns}
-          data={searchResults?.length <= 15 ? searchResults : []}
+          data={tableData}
           setSelectedRows={onSelectedProperties}
-          selectedRows={selectedProperties}
+          selectedRows={selectedData}
           loading={loading}
           lockPageSize={true}
           showSelectedRowCount={searchResults?.length <= 15}
