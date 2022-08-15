@@ -274,7 +274,7 @@ db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or
 
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
-	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f
+	@cd backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f
 
 keycloak-sync: ## Syncs accounts with Keycloak and PIMS
 	@echo "$(P) Syncing keycloak with PIMS..."
@@ -313,7 +313,7 @@ env: ## Generate env files
 
 mayan-up: ## Calls the docker compose up for the mayan images
 	@echo "$(P) Create or start mayan-edms system"
-	@cd tools/mayan-edms; docker-compose up -d
+	@cd tools/mayan-edms; docker-compose --profile all up -d
 
 .PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-clean db-drop db-seed db-refresh db-script db-scaffold npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test env mayan-up
 

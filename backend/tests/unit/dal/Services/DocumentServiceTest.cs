@@ -28,7 +28,7 @@ namespace Pims.Dal.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentAdd);
 
             helper.CreatePimsContext(user, true);
 
