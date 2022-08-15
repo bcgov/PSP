@@ -14,7 +14,8 @@ namespace Pims.Dal.Services
         public ActivityService(
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
-            IActivityTemplateRepository activityTemplateRepository)
+            IActivityTemplateRepository activityTemplateRepository,
+            IPropertyRepository propertyRepository,
         {
             _logger = logger;
             _activityRepository = activityRepository;
@@ -24,6 +25,7 @@ namespace Pims.Dal.Services
         public PimsActivityInstance GetById(long id)
         {
             _logger.LogInformation("Getting activity {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.ActivityView);
 
             // _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
             var activityInstance = _activityRepository.GetById(id);
@@ -34,6 +36,7 @@ namespace Pims.Dal.Services
         public IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId)
         {
             _logger.LogInformation("Getting activities by research id {researchFileId}", researchFileId);
+            _user.ThrowIfNotAuthorized(Permissions.ActivityView);
 
             // _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
             var activityInstances = _activityRepository.GetAllByResearchFileId(researchFileId);
@@ -44,8 +47,7 @@ namespace Pims.Dal.Services
         public IList<PimsActivityTemplate> GetAllActivityTemplates()
         {
             _logger.LogInformation("Getting activity templates");
-
-            // _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+            _user.ThrowIfNotAuthorized(Permissions.ActivityView);
             var activtyTemplates = _activityTemplateRepository.GetAllActivityTemplates();
             return activtyTemplates;
         }
@@ -53,6 +55,7 @@ namespace Pims.Dal.Services
         public PimsActivityInstance Add(PimsActivityInstance instance)
         {
             _logger.LogInformation("Adding activity instance ...");
+            _user.ThrowIfNotAuthorized(Permissions.ActivityAdd);
 
             // _user.ThrowIfNotAuthorized(Permissions.ResearchFileAdd);
             var newActivityInstance = _activityRepository.Add(instance);
