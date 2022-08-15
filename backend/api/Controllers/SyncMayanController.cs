@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Mayan.Sync;
+using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities;
+using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -10,7 +13,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// SyncMayanController class, provides endpoints to handle syncronization between mayan and pims.
     /// </summary>
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]
@@ -39,8 +42,7 @@ namespace Pims.Api.Controllers
         /// Uploads the passed document.
         /// </summary>
         [HttpPatch("sync/mayan/documenttype")]
-
-        // [HasPermission(Permissions.PropertyAdd)] // TODO: put the correct permission
+        [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(ExternalBatchResult), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult SyncMayanDocumentTypes([FromBody] SyncModel model)
@@ -53,8 +55,7 @@ namespace Pims.Api.Controllers
         /// Uploads the passed document.
         /// </summary>
         [HttpPatch("sync/mayan/metadatatype")]
-
-        // [HasPermission(Permissions.PropertyAdd)] // TODO: put the correct permission
+        [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(ExternalBatchResult), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public IActionResult SyncMayanMetadataTypes([FromBody] SyncModel model)
@@ -67,8 +68,7 @@ namespace Pims.Api.Controllers
         /// Uploads the passed document.
         /// </summary>
         [HttpPatch("sync/backend/documenttype")]
-
-        // [HasPermission(Permissions.PropertyAdd)] // TODO: put the correct permission
+        [HasPermission(Permissions.DocumentAdmin)]
         [ProducesResponseType(typeof(PimsDocumentTyp), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public async Task<IActionResult> SyncDocumentTypes()
