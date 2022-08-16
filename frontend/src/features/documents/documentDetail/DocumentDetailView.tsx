@@ -1,6 +1,8 @@
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import Claims from 'constants/claims';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -16,6 +18,8 @@ interface IDocumentDetailsViewProps {
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
 const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
+  const { hasClaim } = useKeycloakWrapper();
+
   const documentTypeLabel = props.document.pimsDocument?.documentType?.documentType;
   const documentFileName = props.document.pimsDocument?.fileName;
   const mayanDocumentId = props.document.pimsDocument?.mayanDocumentId || -1;
@@ -29,45 +33,52 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
-      <SectionField label="Document type" labelWidth="4" className="pb-2">
-        {documentTypeLabel}
-      </SectionField>
-      <SectionField label={'File name'} labelWidth="4" className="pb-3">
-        <Row>
-          <Col xs="auto">{documentFileName}</Col>
-          <Col xs="auto">
-            <DownloadDocumentButton mayanDocumentId={mayanDocumentId} mayanFileId={mayanFileId} />
-          </Col>
-        </Row>
-      </SectionField>
+      {hasClaim(Claims.DOCUMENT_VIEW) && (
+        <>
+          <SectionField label="Document type" labelWidth="4" className="pb-2">
+            {documentTypeLabel}
+          </SectionField>
+          <SectionField label={'File name'} labelWidth="4" className="pb-3">
+            <Row>
+              <Col xs="auto">{documentFileName}</Col>
+              <Col xs="auto">
+                <DownloadDocumentButton
+                  mayanDocumentId={mayanDocumentId}
+                  mayanFileId={mayanFileId}
+                />
+              </Col>
+            </Row>
+          </SectionField>
 
-      <StyledGreySection>
-        <Row className="pb-3">
-          <Col className="text-left">
-            <StyledH2>Document information</StyledH2>
-          </Col>
-          <Col xs="2">Edit</Col>
-        </Row>
-        <SectionField label="Status" labelWidth="4">
-          {props.document.pimsDocument?.statusTypeCode?.description}
-        </SectionField>
-
-        <StyledH3>Details</StyledH3>
-        <StyledScrollable>
-          {props.document.mayanMetadata?.length === 0 && (
-            <StyledNoData>No additional data</StyledNoData>
-          )}
-          {props.document.mayanMetadata?.map(value => (
-            <SectionField
-              labelWidth="4"
-              key={`document-${value.document.id}-metadata-${value.id}`}
-              label={value.metadata_type.label || ''}
-            >
-              {value.value}
+          <StyledGreySection>
+            <Row className="pb-3">
+              <Col className="text-left">
+                <StyledH2>Document information</StyledH2>
+              </Col>
+              {hasClaim(Claims.DOCUMENT_EDIT) && <Col xs="2">Edit</Col>}
+            </Row>
+            <SectionField label="Status" labelWidth="4">
+              {props.document.pimsDocument?.statusTypeCode?.description}
             </SectionField>
-          ))}
-        </StyledScrollable>
-      </StyledGreySection>
+
+            <StyledH3>Details</StyledH3>
+            <StyledScrollable>
+              {props.document.mayanMetadata?.length === 0 && (
+                <StyledNoData>No additional data</StyledNoData>
+              )}
+              {props.document.mayanMetadata?.map(value => (
+                <SectionField
+                  labelWidth="4"
+                  key={`document-${value.document.id}-metadata-${value.id}`}
+                  label={value.metadata_type.label || ''}
+                >
+                  {value.value}
+                </SectionField>
+              ))}
+            </StyledScrollable>
+          </StyledGreySection>
+        </>
+      )}
     </StyledContainer>
   );
 };
