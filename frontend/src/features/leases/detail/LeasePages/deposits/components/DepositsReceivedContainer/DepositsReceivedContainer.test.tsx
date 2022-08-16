@@ -132,7 +132,7 @@ describe('DepositsReceivedContainer component', () => {
       onEdit: mockCallback,
       onDelete: mockCallback,
       onReturn: mockCallback,
-      claims: [Claims.LEASE_DELETE, Claims.LEASE_VIEW],
+      claims: [Claims.LEASE_EDIT, Claims.LEASE_VIEW],
     });
     const dataRow = findFirstRow() as HTMLElement;
 
@@ -151,7 +151,7 @@ describe('DepositsReceivedContainer component', () => {
       onEdit: mockCallback,
       onDelete: mockCallback,
       onReturn: mockCallback,
-      claims: [Claims.LEASE_DELETE, Claims.LEASE_VIEW],
+      claims: [Claims.LEASE_EDIT, Claims.LEASE_VIEW],
     });
     const dataRow = findFirstRow() as HTMLElement;
 

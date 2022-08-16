@@ -423,10 +423,10 @@ namespace Pims.Tools.Keycloak.Sync
                     // Fetch the group from PIMS.
                     foreach (var kgroup in kgroups)
                     {
-                        var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/name/{kgroup.Name}", r => true);
+                        var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/{kgroup.Id}");
                         if (role != null)
                         {
-                            uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
+                            uRoles = uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
                         }
                     }
 
