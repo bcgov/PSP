@@ -25,18 +25,12 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
-      propertyIdentifier = `${propertyName.label}: ${propertyName.value}`;
-      break;
     case NameSourceType.PIN:
-      propertyIdentifier = `${propertyName.label}: ${propertyName.value}`;
-      break;
     case NameSourceType.PLAN:
       propertyIdentifier = `${propertyName.label}: ${propertyName.value}`;
       break;
     case NameSourceType.LOCATION:
       propertyIdentifier = `${propertyName.value}`;
-      break;
-    case NameSourceType.RESEARCH:
       propertyIdentifier = `${propertyName.value}`;
       break;
     default:

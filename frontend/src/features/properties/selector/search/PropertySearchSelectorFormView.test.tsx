@@ -189,10 +189,9 @@ describe('PropertySearchSelectorFormView component', () => {
 
   describe('selecting results', () => {
     it('search results can be selected', async () => {
-      const { findByTestId, container } = setup({
+      const { findByTestId } = setup({
         searchResults: toMapProperty(mockPropertyLayerSearchResponse.features),
       });
-      console.log(container.outerHTML);
       const checkbox = await findByTestId('selectrow-PID-006-772-331');
       userEvent.click(checkbox);
       expect(checkbox).toBeChecked();
