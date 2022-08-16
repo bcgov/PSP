@@ -13,6 +13,5 @@ INSERT INTO PIMS_ACTIVITY_TEMPLATE_TYPE (ACTIVITY_TEMPLATE_TYPE_CODE, DESCRIPTIO
 VALUES
   (N'GENERAL', N'General'),
   (N'SURVEY',  N'Survey'),
-  (N'SITEVIS', N'Site Visit'),
-  (N'GENLTR',  N'Generate Letter');
+  (N'SITEVIS', N'Site Visit');
 GO
