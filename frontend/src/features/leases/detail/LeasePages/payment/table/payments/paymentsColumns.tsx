@@ -29,7 +29,7 @@ const actualsActions = (
             onClick={() => onEdit(original)}
           ></Button>
         )}
-        {hasClaim(Claims.LEASE_DELETE) && (
+        {hasClaim(Claims.LEASE_EDIT) && (
           <Button
             title="delete actual"
             icon={<FaTrash size={24} id={`delete-actual-${index}`} title="delete actual" />}

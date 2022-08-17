@@ -64,7 +64,7 @@ function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => 
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
-        {hasClaim(Claims.LEASE_DELETE) && (
+        {hasClaim(Claims.LEASE_EDIT) && (
           <Button
             title="delete deposit return"
             icon={
