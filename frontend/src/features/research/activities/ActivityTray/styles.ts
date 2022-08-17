@@ -1,13 +1,12 @@
 import { Button } from 'components/common/buttons/Button';
 import styled from 'styled-components';
 
-export const TrayHeader = styled.h3`
+export const TrayHeader = styled.div`
   font-size: 2rem;
+  font-weight: bold;
   padding: 0.8rem;
   border-bottom: 0.4rem solid ${props => props.theme.css.primaryColor};
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  margin-bottom: 3.2rem;
+  margin-bottom: 1rem;
   background-color: ${props => props.theme.css.primaryColor};
   color: white;
 `;
@@ -25,6 +24,7 @@ export const ActivityTrayPage = styled.div`
 export const CloseButton = styled(Button)`
   &#close-tray {
     float: right;
+    padding: 0rem;
     cursor: pointer;
     fill: ${props => props.theme.css.textColor};
     &:hover {
