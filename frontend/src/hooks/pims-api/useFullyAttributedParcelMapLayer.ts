@@ -25,7 +25,10 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
     async (pid: string) => {
       // Removes dashes to match expectations of the map layer.
       const formattedPid = pid.replace(/-/g, '');
-      const data = await getAllFeatures({ PID: formattedPid }, { forceSimplePid: true });
+      const data = await getAllFeatures(
+        { PID: formattedPid },
+        { forceSimplePid: true, timeout: 10000 },
+      );
 
       return data;
     },
@@ -34,7 +37,7 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
 
   const findByPin = useCallback(
     async (pin: string) => {
-      const data = await getAllFeatures({ PIN: pin });
+      const data = await getAllFeatures({ PIN: pin }, { timeout: 10000 });
       return data;
     },
     [getAllFeatures],
@@ -42,7 +45,7 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
 
   const findByPlanNumber = useCallback(
     async (planNumber: string) => {
-      const data = await getAllFeatures({ PLAN_NUMBER: planNumber });
+      const data = await getAllFeatures({ PLAN_NUMBER: planNumber }, { timeout: 10000 });
       return data;
     },
     [getAllFeatures],
