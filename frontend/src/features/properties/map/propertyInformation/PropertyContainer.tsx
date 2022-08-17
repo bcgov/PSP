@@ -33,6 +33,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         ltsaData={composedProperty.ltsaData}
         ltsaRequestedOn={composedProperty.ltsaDataRequestedOn}
         loading={composedProperty.ltsaLoading}
+        pid={composedProperty?.pid ?? composedProperty?.apiProperty?.pid}
       />
     ),
     key: InventoryTabNames.title,

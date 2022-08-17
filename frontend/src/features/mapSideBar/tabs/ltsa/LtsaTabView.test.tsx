@@ -18,6 +18,7 @@ describe('LtsaTabView component', () => {
         ltsaData={renderOptions.ltsaData}
         ltsaRequestedOn={renderOptions.ltsaRequestedOn}
         loading={renderOptions.loading}
+        pid={renderOptions.pid}
       />,
       {
         ...renderOptions,
@@ -52,7 +53,23 @@ describe('LtsaTabView component', () => {
   it('does not throw an exception for an invalid ltsa data object', () => {
     const {
       component: { getByText },
-    } = setup({ ltsaData: {} as LtsaOrders, ltsaRequestedOn: new Date(), loading: false });
+    } = setup({
+      ltsaData: {} as LtsaOrders,
+      ltsaRequestedOn: new Date(),
+      loading: false,
+      pid: '123',
+    });
     expect(getByText('Title Details')).toBeVisible();
+  });
+
+  it('displays a warning if no pid is provided', () => {
+    const {
+      component: { getByText },
+    } = setup({
+      ltsaData: {} as LtsaOrders,
+      ltsaRequestedOn: new Date(),
+      loading: false,
+    });
+    expect(getByText('This property does not have a valid PID', { exact: false })).toBeVisible();
   });
 });

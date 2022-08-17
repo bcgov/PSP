@@ -22,22 +22,35 @@ export interface ILtsaTabViewProps {
   ltsaData?: LtsaOrders;
   ltsaRequestedOn?: Date;
   loading: boolean;
+  pid?: string;
 }
 
 export const LtsaTabView: React.FunctionComponent<ILtsaTabViewProps> = ({
   ltsaData,
   ltsaRequestedOn,
   loading,
+  pid,
 }) => {
   const titleNameSpace = 'titleOrders.0.orderedProduct.fieldedData';
 
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      {!loading && !ltsaData ? (
+
+      {!pid ? (
+        <FormSection>
+          <b>
+            This property does not have a valid PID.
+            <br />
+            <br /> Only properties that are associated to a valid PID can display corresponding data
+            from LTSA.
+          </b>
+        </FormSection>
+      ) : !loading && !ltsaData ? (
         <FormSection>
           <b>
             Failed to load data from LTSA.
+            <br />
             <br /> Refresh this page to try again, or select a different property.
           </b>
         </FormSection>
