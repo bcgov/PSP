@@ -1,7 +1,10 @@
-PSP_PIMS S35.00 Sprint 34 2022-Aug-12
+PSP_PIMS S35.00 Sprint 34 2022-Aug-17
 - Added tables:
+  - PIMS_ACTIVITY_INSTANCE_STATUS_TYPE
   - PIMS_RESEARCH_ACTIVITY_INSTANCE
   - PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
 - Requires additional metadata to meet standards
 
 PSP_PIMS S33.00 Sprint 33 2022-Jul-26
