@@ -58,18 +58,6 @@ then
   exit
 fi
 
-
-# Check project
-#
-CHECK=$( oc projects | tr -d '*' | grep -v "Using project" | grep "${PROJECT}" | awk '{ print $1 }' || echo )
-if [ "${PROJECT}" != "${CHECK}" ]
-then
-  echo
-  echo "Unable to access project ${PROJECT}"
-  echo
-  exit
-fi
-
 # Action based on parameter
 #
 if [ "${COMMAND}" == "on" ]
