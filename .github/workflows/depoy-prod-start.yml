@@ -1,0 +1,72 @@
+name: PIMS PROD Deployment
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
+  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+
+  APP_PORT: 8080
+  DESTINATION: "prod"
+  OC_JOB_NAME: "master"
+  GIT_URL: "${{github.server_url}}/${{github.repository}}"
+  GIT_BRANCH: "master"
+  APP_NAME: "pims"
+  PROJ_PREFIX: "3cd915"
+  PROJ_TOOLS: "3cd915-tools"
+  PROJ_DEV: "dev"
+  PROJ_TEST: "test"
+  PROJ_PROD: "prod"
+  TAG_DEV: "dev"
+  TAG_TEST: "test"
+  TAG_PROD: "prod"
+
+on:
+  workflow_dispatch:
+    inputs:
+      OVERRIDE_VERSION:
+        description: "Enter the version tag for this release in format v<major>.<minor>.<patch>-<IS>.<build> or enter nothing to use the most recently tagged version"
+        required: false
+
+jobs:
+  ci-cd-start-notification:
+    name: CI-CD Start Notification to Teams Channel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start notification to Teams Channel
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
+          notification-summary: PIMS Deployment to PRODUCTION started.
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
+
+  deploy:
+    name: Deploy frontend and api to OpenShift
+    runs-on: ubuntu-latest
+    needs: ci-cd-start-notification
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Display the maintenance page instead of the app
+        run: |
+          ./maintenance/maintenance.sh prod on
+      - name: "Get Previous tag"
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: call scripts to deploy api and frontend
+        run: |
+          [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
+          RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy app $DESTINATION -apply

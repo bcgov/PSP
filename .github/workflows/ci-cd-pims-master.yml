@@ -81,6 +81,28 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
 
+  tag-images:
+    name: Tag frontend and api images with version number
+    needs: [build-frontend, build-api]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: Fetch Tags
+        run: git fetch --unshallow --tags
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: call script to tag frontend and api images with version number
+        run: |
+          ./openshift/4.0/scripts/oc-tag.sh $OC_JOB_NAME
+
   deploy:
     name: Deploy frontend and api to OpenShift
     needs: [build-frontend, build-api]
