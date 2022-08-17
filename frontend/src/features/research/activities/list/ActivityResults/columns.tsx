@@ -1,9 +1,12 @@
-import { IconButton } from 'components/common/buttons';
+import { IconButton, LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
 import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, renderTypeCode } from 'components/Table';
+import Claims from 'constants/claims';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import ITypeCode from 'interfaces/ITypeCode';
 import { Api_Activity } from 'models/api/Activity';
+import { FaTrash } from 'react-icons/fa';
 import { ImEye } from 'react-icons/im';
-import { MdDelete } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
@@ -19,7 +22,16 @@ export function createActivityTableColumns(
       sortable: true,
       minWidth: 30,
       maxWidth: 40,
-      Cell: renderTypeCode,
+      Cell: (cellProps: CellProps<any, ITypeCode<string>>) => {
+        const { hasClaim } = useKeycloakWrapper();
+        return hasClaim(Claims.NOTE_VIEW) ? (
+          <LinkButton onClick={() => onShowActivity(cellProps.row.original)}>
+            {cellProps.value?.description ?? ''}
+          </LinkButton>
+        ) : (
+          cellProps.value?.description ?? ''
+        );
+      },
     },
     {
       Header: 'Description',
@@ -43,9 +55,10 @@ export function createActivityTableColumns(
       width: 40,
       maxWidth: 40,
       Cell: (cellProps: CellProps<Api_Activity>) => {
+        const { hasClaim } = useKeycloakWrapper();
         return (
           <StyledDiv>
-            {
+            {hasClaim(Claims.NOTE_VIEW) ? (
               <IconButton
                 title="View Activity"
                 variant="light"
@@ -53,17 +66,13 @@ export function createActivityTableColumns(
               >
                 <ImEye size="2rem" />
               </IconButton>
-            }
+            ) : null}
 
-            {
-              <IconButton
-                title="Delete Note"
-                variant="gray"
-                onClick={() => onDelete(cellProps.row.original)}
-              >
-                <MdDelete size="2rem" />
-              </IconButton>
-            }
+            {hasClaim(Claims.NOTE_DELETE) ? (
+              <StyledRemoveLinkButton onClick={() => onDelete(cellProps.row.original)}>
+                <FaTrash title="Delete Activity" size="2rem" />
+              </StyledRemoveLinkButton>
+            ) : null}
           </StyledDiv>
         );
       },

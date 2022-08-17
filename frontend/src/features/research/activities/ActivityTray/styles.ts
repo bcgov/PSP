@@ -9,16 +9,17 @@ export const TrayHeader = styled.div`
   margin-bottom: 1rem;
   background-color: ${props => props.theme.css.primaryColor};
   color: white;
+  position: sticky;
+  left: 0px;
 `;
 
 export const ActivityTrayPage = styled.div`
   display: flex;
-  overflow-y: auto;
   flex-direction: column;
-  height: 100%;
   a {
     font-size: 1.7rem;
   }
+  min-width: 92rem;
 `;
 
 export const CloseButton = styled(Button)`
@@ -34,7 +35,9 @@ export const CloseButton = styled(Button)`
 `;
 
 export const ActivityTray = styled.div`
+  width: 100%;
   height: 100%;
+  overflow: auto;
   border-radius: 1rem;
   text-align: left;
   transition: transform 0.5s ease-in-out;

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
+using Pims.Api.Services;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -24,6 +25,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
     {
         #region Variables
         private readonly IPimsService _pimsService;
+        private readonly IActivityService _activityService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -33,11 +35,13 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// Creates a new instance of a ResearchFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="pimsService"></param>
+        /// <param name="activityService"></param>
         /// <param name="mapper"></param>
         ///
-        public ResearchFileController(IPimsService pimsService, IMapper mapper)
+        public ResearchFileController(IPimsService pimsService, IActivityService activityService, IMapper mapper)
         {
             _pimsService = pimsService;
+            _activityService = activityService;
             _mapper = mapper;
         }
         #endregion
@@ -70,7 +74,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [SwaggerOperation(Tags = new[] { "researchfile" })]
         public IActionResult GetActivitiesForResearchFile(long researchFileId)
         {
-            var activityInstances = _pimsService.ActivityService.GetAllByResearchFileId(researchFileId);
+            var activityInstances = _activityService.GetAllByResearchFileId(researchFileId);
             List<ActivityInstanceModel> models = _mapper.Map<List<ActivityInstanceModel>>(activityInstances);
 
             // TODO remove below once mapping complete
@@ -98,7 +102,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [SwaggerOperation(Tags = new[] { "activity-templates" })]
         public IActionResult GetActivityTemplateTypes()
         {
-            var activityTemplates = _pimsService.ActivityService.GetAllActivityTemplates();
+            var activityTemplates = _activityService.GetAllActivityTemplates();
             var mappedActivityTemplates = _mapper.Map<List<ActivityTemplateModel>>(activityTemplates);
             return new JsonResult(mappedActivityTemplates);
         }
@@ -115,7 +119,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         public IActionResult AddActivityInstance(ActivityInstanceModel activityInstanceModel)
         {
             var activityInstanceEntity = _mapper.Map<Dal.Entities.PimsActivityInstance>(activityInstanceModel);
-            var activityInstance = _pimsService.ActivityService.Add(activityInstanceEntity);
+            var activityInstance = _activityService.Add(activityInstanceEntity);
 
             return new JsonResult(_mapper.Map<ActivityInstanceModel>(activityInstance));
         }

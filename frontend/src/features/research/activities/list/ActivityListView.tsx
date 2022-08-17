@@ -2,12 +2,14 @@ import { SelectOption } from 'components/common/form/Select';
 import { TableSort } from 'components/Table/TableSort';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import useIsMounted from 'hooks/useIsMounted';
+import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';
 import { orderBy } from 'lodash';
 import { Api_Activity, Api_ActivityTemplate } from 'models/api/Activity';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { useActivityRepository } from '../hooks/useActivityRepository';
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
 import { ActivityResults } from './ActivityResults/ActivityResults';
 import { AddActivityForm } from './ActivityResults/AddActivityForm';
@@ -17,6 +19,7 @@ export interface IActivityListViewProps {
   fileId: number;
   defaultFilters?: IActivityFilter;
 }
+
 /**
  * Page that displays Activity information.
  */
@@ -34,6 +37,10 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   const [filters, setFilters] = React.useState<IActivityFilter>(
     defaultFilters ?? defaultActivityFilter,
   );
+  const {
+    deleteActivity: { execute: deleteActivity },
+  } = useActivityRepository();
+  const { setModalProps, setDisplayModal } = useModalContext();
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -121,31 +128,64 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   };
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable vertical={true}>
-        <Styled.PageHeader>Activities</Styled.PageHeader>
-        {
-          <AddActivityForm
-            onAddActivity={(activityTypeId: number) => {
-              saveActivity(activityTypeId);
+    <>
+      <Styled.ListPage>
+        <Styled.Scrollable vertical={true}>
+          <Styled.PageHeader>Activities</Styled.PageHeader>
+          {
+            <AddActivityForm
+              onAddActivity={(activityTypeId: number) => {
+                saveActivity(activityTypeId);
+              }}
+              templateTypes={templateTypes}
+            ></AddActivityForm>
+          }
+          {<ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />}
+          <ActivityResults
+            results={sortedFilteredActivities}
+            loading={isLoading}
+            sort={sort}
+            setSort={setSort}
+            onShowActivity={(activity: Api_Activity) => {
+              history.push(getActivityUrl(activity.id));
             }}
-            templateTypes={templateTypes}
-          ></AddActivityForm>
-        }
-        {<ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />}
-        <ActivityResults
-          results={sortedFilteredActivities}
-          loading={isLoading}
-          sort={sort}
-          setSort={setSort}
-          onShowActivity={(activity: Api_Activity) => {
-            history.push(getActivityUrl(activity.id));
-          }}
-          onDelete={(activity: Api_Activity) => {}}
-        />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+            onDelete={async (activity: Api_Activity) => {
+              setModalProps({
+                ...deleteModalProps,
+                display: true,
+                title: 'Delete Activity',
+                closeButton: true,
+                message: (
+                  <>
+                    <b>You have chosen to delete this activity.</b>
+                    <br />
+                    <br />
+                    <p>
+                      Deleting this activity will also permanently delete any data that has been
+                      associated to the activity.
+                    </p>
+                    <p>
+                      Additionally, any documents specific to this activity (ie: not referenced
+                      elsewhere in the system) will also be permanently deleted from the document
+                      store.
+                    </p>
+                    <br />
+                    <b>Do you wish to continue to remove this activity?</b>
+                  </>
+                ),
+                handleOk: async () => {
+                  await deleteActivity(activity?.id);
+                  setDisplayModal(false);
+                },
+              });
+            }}
+          />
+        </Styled.Scrollable>
+      </Styled.ListPage>
+    </>
   );
 };
+
+const deleteModalProps = getDeleteModalProps();
 
 export default ActivityListView;

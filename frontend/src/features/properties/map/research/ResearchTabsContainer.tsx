@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import ResearchSummaryView from './detail/ResearchSummaryView';
 
 export interface IResearchTabsContainerProps {
-  researchFile: Api_ResearchFile;
+  researchFile?: Api_ResearchFile;
   setEditMode: (isEditing: boolean) => void;
 }
 

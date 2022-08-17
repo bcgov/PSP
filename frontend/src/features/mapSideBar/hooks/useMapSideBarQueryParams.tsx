@@ -3,7 +3,7 @@ import { AcquisitionContainer } from 'features/properties/map/acquisition/Acquis
 import { AddAcquisitionContainer } from 'features/properties/map/acquisition/add/AddAcquisitionContainer';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
 import ResearchContainer from 'features/properties/map/research/ResearchContainer';
-import { ActivityTray } from 'features/research/activities/ActivityTray/ActivityTray';
+import ActivityContainer from 'features/research/activities/activity/ActivityContainer';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
 import queryString from 'query-string';
@@ -83,14 +83,14 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
         if (parts.length === 8 && parts[5] === 'activity') {
           if (parts[7] === 'view' && isNumber(Number(parts[6]))) {
             setActionWindowComponent(
-              <ActivityTray
+              <ActivityContainer
                 activityId={Number(parts[6])}
                 onClose={() => {
                   const backUrl = history.location.pathname.split('activity')[0];
                   setShowWindow(false);
                   history.push(backUrl);
                 }}
-              ></ActivityTray>,
+              ></ActivityContainer>,
             );
             setShowWindow(true);
           }
