@@ -88,11 +88,11 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         }
 
         /// <summary>
-        /// Get the document types.
+        /// Get the activity template types.
         /// </summary>
         /// <returns></returns>
         [HttpGet("activity-templates")]
-        [HasPermission(Permissions.ResearchFileView)]
+        [HasPermission(Permissions.ActivityView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<ActivityTemplateModel>), 200)]
         [SwaggerOperation(Tags = new[] { "activity-templates" })]
@@ -108,7 +108,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("activity")]
-        [HasPermission(Permissions.ResearchFileAdd)]
+        [HasPermission(Permissions.ActivityAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
         [SwaggerOperation(Tags = new[] { "activityInstance" })]

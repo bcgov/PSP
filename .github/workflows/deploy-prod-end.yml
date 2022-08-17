@@ -1,0 +1,47 @@
+name: Hide prod maintenance page after deployment.
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+
+on:
+  workflow_dispatch:
+
+jobs:
+  maintenance-page:
+    name: Hide the maintenance page
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-tools
+      - name: Hide the maintenance page and display the app
+        run: |
+          ./maintenance/maintenance.sh prod off
+
+  ci-cd-end-notification:
+    name: CI-CD End Notification to Teams Channel
+    runs-on: ubuntu-latest
+    needs: maintenance-page
+    steps:
+      - name: check workflow status
+        uses: martialonline/workflow-status@v2
+        id: check
+      - name: End notification to Teams Channel
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
+          notification-summary: PIMS Deployment COMPLETED in PRODUCTION environment with status ${{ steps.check.outputs.status }}
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
