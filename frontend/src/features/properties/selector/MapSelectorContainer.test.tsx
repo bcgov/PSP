@@ -124,7 +124,7 @@ describe('MapSelectorContainer component', () => {
     await fillInput(container, 'pid', '123-456-789');
     const searchButton = getByTitle('search');
     await act(async () => userEvent.click(searchButton));
-    const checkbox = await findByTestId('selectrow-PID: 009-727-493');
+    const checkbox = await findByTestId('selectrow-PID-009-727-493');
     await act(async () => userEvent.click(checkbox));
     const addButton = getByText('Add to selection');
     await act(async () => userEvent.click(addButton));
@@ -133,7 +133,7 @@ describe('MapSelectorContainer component', () => {
       address: '1234 Fake St',
       district: 12,
       districtName: 'Cannot determine',
-      id: 'PID: 009-727-493',
+      id: 'PID-009-727-493',
       latitude: 48.7662,
       legalDescription:
         'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
@@ -163,7 +163,7 @@ describe('MapSelectorContainer component', () => {
 
     await act(async () => userEvent.click(searchButton));
 
-    const checkbox = await findByTestId('selectrow-PID: 009-727-493');
+    const checkbox = await findByTestId('selectrow-PID-009-727-493');
     await act(async () => userEvent.click(checkbox));
     const addButton = getByText('Add to selection');
     await act(async () => userEvent.click(addButton));

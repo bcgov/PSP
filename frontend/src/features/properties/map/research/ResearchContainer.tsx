@@ -5,14 +5,14 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Claims } from 'constants/claims';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
+import { getResearchPropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_ResearchFile, Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useState } from 'react';
 import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
-import { pidFormatter } from 'utils';
 
 import SidebarFooter from '../shared/SidebarFooter';
 import ResearchHeader from './common/ResearchHeader';
@@ -44,7 +44,8 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const { search } = useMapSearch();
   const { hasClaim } = useKeycloakWrapper();
 
-  const menuItems = researchFile?.researchProperties?.map(x => getPropertyName(x)) || [];
+  const menuItems =
+    researchFile?.researchProperties?.map(x => getResearchPropertyName(x).value) || [];
   menuItems.unshift('RFile Summary');
 
   const fetchResearchFile = React.useCallback(async () => {
@@ -62,28 +63,6 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
       </>
     );
-  }
-
-  function getPropertyName(researchProperty?: Api_ResearchFileProperty): string {
-    if (researchProperty === undefined) {
-      return '';
-    }
-
-    if (researchProperty.propertyName !== undefined && researchProperty.propertyName !== '') {
-      return researchProperty.propertyName;
-    } else if (researchProperty.property !== undefined) {
-      const property = researchProperty.property;
-      if (property.pin !== undefined && property.pin !== 0) {
-        return property.pin.toString();
-      } else if (property.pid !== undefined && property.pid !== 0) {
-        return pidFormatter(property.pid.toString());
-      } else if (property.planNumber !== undefined) {
-        return property.planNumber;
-      } else if (property.location !== undefined) {
-        return `${property.location.coordinate?.x} + ${property.location.coordinate?.y}`;
-      }
-    }
-    return 'Property';
   }
 
   const onMenuChange = (selectedIndex: number) => {
