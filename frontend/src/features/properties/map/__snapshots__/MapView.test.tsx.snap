@@ -372,7 +372,9 @@ exports[`MapView Renders the map 1`] = `
   >
     <div
       class="c1"
-    />
+    >
+      Well this sucks*
+    </div>
     <div
       class="c2 px-0 map"
     >

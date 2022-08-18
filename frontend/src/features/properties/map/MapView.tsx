@@ -6,9 +6,10 @@ import {
   SelectedPropertyContext,
   SelectedPropertyContextProvider,
 } from 'components/maps/providers/SelectedPropertyContext';
-import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
+import { MAP_MAX_ZOOM } from 'constants/strings';
 import { IProperty } from 'interfaces';
-import React, { useState } from 'react';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -32,21 +33,35 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const history = useHistory();
   const [loadedProperties, setLoadedProperties] = useState(false);
   const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
-  const { sidebarComponent, showSideBar } = useMapSideBarQueryParams(mapInstance);
+  const [showSideBar, setShowSideBar] = useState(false);
 
   const onMarkerClicked = (property: IProperty) => {
-    history.push(`/mapview/property/${property.id}?pid=${property.pid}`);
+    history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
   };
 
   const onPropertyViewClicked = (pid?: string | null) => {
     if (pid !== undefined && pid !== null) {
       const parsedPid = pidParser(pid);
-      history.push(`/mapview/non-inventory-property/${parsedPid}`);
+      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
     } else {
       console.warn('Invalid marker when trying to see property information');
       toast.warn('A map parcel must have a PID in order to view detailed information');
     }
   };
+
+  const onZoom = useCallback(
+    (apiProperty?: IPropertyApiModel) =>
+      apiProperty?.longitude &&
+      apiProperty?.latitude &&
+      mapInstance?.flyTo(
+        { lat: apiProperty?.latitude, lng: apiProperty?.longitude },
+        MAP_MAX_ZOOM,
+        {
+          animate: false,
+        },
+      ),
+    [mapInstance],
+  );
 
   return (
     <SelectedPropertyContextProvider>
@@ -54,7 +69,11 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
         {({ cursor }) => (
           <PropertyContextProvider>
             <StyleMapView className={clsx(cursor)}>
-              <MapSideBar showSideBar={showSideBar}>{sidebarComponent}</MapSideBar>
+              <MapSideBar
+                showSideBar={showSideBar}
+                setShowSideBar={setShowSideBar}
+                onZoom={onZoom}
+              />
               <FilterProvider>
                 <Map
                   lat={defaultLatLng.lat}
