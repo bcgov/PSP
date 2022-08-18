@@ -100,13 +100,6 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(pr
         key={'PropertyNonInventory'}
         title={'Property Information - Non Inventory'}
       />
-      <AppRoute
-        path="*"
-        customRender={({ match }) => <>Nothing to see here, move along</>}
-        exact
-        key={'Aquisition'}
-        title={'Create Acquisition File'}
-      />
     </Switch>
   );
 });
