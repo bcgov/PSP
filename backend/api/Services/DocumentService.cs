@@ -85,8 +85,7 @@ namespace Pims.Api.Services
                 {
                     metadataTasks.Add(documentStorageRepository.CreateDocumentMetadataAsync(externalDocument.Id, metadata.MetadataTypeId, metadata.Value));
                 }
-                Task.WaitAll(metadataTasks.ToArray());
-
+                await Task.WhenAll(metadataTasks.ToArray());
                 // Create the pims document
                 PimsDocument newPimsDocument = new PimsDocument()
                 {

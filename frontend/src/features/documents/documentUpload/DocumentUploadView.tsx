@@ -18,7 +18,6 @@ import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
 interface DocumentUploadForm {
   documentTypeId: string;
   documentStatusCode: string;
-  mayanDocumentMetadata: { [key: string]: string };
 }
 
 interface IDocumentUploadViewProps {
@@ -46,7 +45,6 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
     documentTypeId: '',
     documentStatusCode:
       documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
-    mayanDocumentMetadata: {},
   };
 
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
@@ -68,17 +66,17 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
         validateOnMount={true}
         validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
         onSubmit={async (values: DocumentUploadForm, { setSubmitting }) => {
+          const { documentStatusCode, documentTypeId, ...rest } = values;
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
-              x => x.id === Number(values.documentTypeId),
+              x => x.id === Number(documentTypeId),
             );
-
             if (selectedDocumentType !== undefined) {
               var request: Api_UploadRequest = {
-                documentStatusCode: values.documentStatusCode,
+                documentStatusCode: documentStatusCode,
                 documentType: selectedDocumentType,
                 file: selectedFile,
-                documentMetadata: values.mayanDocumentMetadata,
+                documentMetadata: rest,
               };
 
               await props.onUploadDocument(request);
@@ -142,15 +140,8 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                     required={value.required === true}
                   >
                     <Input
-                      field={value.metadata_type?.name || ''}
+                      field={value.metadata_type?.id?.toString() || ''}
                       required={value.required === true}
-                      onChange={event => {
-                        if (value.metadata_type?.id) {
-                          formikProps.values.mayanDocumentMetadata[
-                            value.metadata_type?.id.toString()
-                          ] = event.target.value;
-                        }
-                      }}
                     />
                   </SectionField>
                 ))}

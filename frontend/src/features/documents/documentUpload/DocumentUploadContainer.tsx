@@ -42,9 +42,9 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
 
   const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
     const documentTypeId = Number(changeEvent.target.value);
-    const mayanDocumentTypeIdId = documentTypes.find(x => x.id === documentTypeId)?.mayanId;
-    if (mayanDocumentTypeIdId) {
-      const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeIdId);
+    const mayanDocumentTypeId = documentTypes.find(x => x.id === documentTypeId)?.mayanId;
+    if (mayanDocumentTypeId) {
+      const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeId);
       if (axiosResponse?.data.status === ExternalResultStatus.Success) {
         let results = axiosResponse?.data.payload.results;
         setDocumentTypeMetadata(results);
