@@ -93,7 +93,7 @@ namespace Pims.Api.Services
                     createTasks.Add(mayanDocumentRepository.CreateDocumentTypeAsync(new DocumentType() { Label = documentTypeModel.Label }));
                 }
             }
-            await Task.WhenAll(createTasks.ToArray());
+            Task.WhenAll(createTasks.ToArray());
             foreach (var task in createTasks)
             {
                 batchResult.CreatedDocumentType.Add(task.Result);
