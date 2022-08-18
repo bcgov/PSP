@@ -52,9 +52,6 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
-      - name: Display the maintenance page instead of the app
-        run: |
-          ./maintenance/maintenance.sh prod on
       - name: "Get Previous tag"
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
@@ -65,6 +62,9 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Display the maintenance page instead of the app
+        run: |
+          ./maintenance/maintenance.sh prod on
       - name: call scripts to deploy api and frontend
         run: |
           [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
