@@ -82,7 +82,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{leaseId:long}/payment")]
-        [HasPermission(Permissions.LeaseDelete)]
+        [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]

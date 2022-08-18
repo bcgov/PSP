@@ -115,12 +115,12 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
         ltsaData={ltsaData}
         ltsaRequestedOn={ltsaDataRequestedOn}
         loading={ltsaLoading}
+        pid={apiProperty?.pid}
       />
     ),
     key: InventoryTabNames.title,
     name: 'Title',
   });
-
   tabViews.push({
     content: <></>,
     key: InventoryTabNames.value,

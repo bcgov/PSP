@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Constants;
@@ -21,7 +22,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentController class, provides endpoints to handle document requests.
     /// </summary>
-    // [Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documents/")]

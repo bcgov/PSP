@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -48,7 +49,7 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
             JsonSerializerOptions serializerOptions = new()
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
             using HttpContent content = new StringContent(serializedDocumentType);

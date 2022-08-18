@@ -160,7 +160,7 @@ describe('PaymentsContainer component', () => {
             { ...defaultFormLeaseTerm, id: 1 },
           ],
         },
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
 
       const deleteButton = getAllByTitle('delete term')[0];
@@ -177,7 +177,7 @@ describe('PaymentsContainer component', () => {
           ...defaultLease,
           terms: [{ ...defaultFormLeaseTerm, id: 1 }],
         },
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
 
       const deleteButton = getAllByTitle('delete term')[0];
@@ -194,7 +194,7 @@ describe('PaymentsContainer component', () => {
           ...defaultLease,
           terms: [{ ...defaultFormLeaseTerm, id: 1 }],
         },
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
       mockAxios.onDelete().reply(200, { id: 1 });
 
@@ -251,7 +251,7 @@ describe('PaymentsContainer component', () => {
         component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
@@ -265,7 +265,7 @@ describe('PaymentsContainer component', () => {
         component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
-        claims: [Claims.LEASE_DELETE],
+        claims: [Claims.LEASE_EDIT],
       });
       mockAxios.onDelete().reply(200, { id: 1 });
 
