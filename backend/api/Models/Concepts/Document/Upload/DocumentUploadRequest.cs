@@ -33,7 +33,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The metadata associated with document.
         /// </summary>
-        public List<DocumentMetadataModel> DocumentMetadata { get; set; }
+        public List<DocumentMetadataUpdateModel> DocumentMetadata { get; set; }
         #endregion
     }
 }

@@ -18,14 +18,14 @@ import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
 interface DocumentUploadForm {
   documentTypeId: string;
   documentStatusCode: string;
+  mayanDocumentMetadata: { [key: string]: string };
 }
 
 interface IDocumentUploadViewProps {
   documentTypes: Api_DocumentType[];
   isLoading: boolean;
   mayanMetadata: Api_Storage_DocumentTypeMetadataType[];
-  documentMetadata: any;
-  onDocumentTypeChange: (param: any) => void;
+  onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
   onUploadDocument: (uploadRequest: Api_UploadRequest) => void;
   onCancel: () => void;
 }
@@ -35,7 +35,6 @@ interface IDocumentUploadViewProps {
  */
 const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = props => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
   const documentTypes = props.documentTypes.map<SelectOption>(x => {
     return { label: x.documentType || '', value: x.id?.toString() || '' };
   });
@@ -47,6 +46,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
     documentTypeId: '',
     documentStatusCode:
       documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
+    mayanDocumentMetadata: {},
   };
 
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
@@ -65,8 +65,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
       <Formik<DocumentUploadForm>
         enableReinitialize
         initialValues={initialFormState}
-        validateOnBlur={false}
-        validateOnChange={false}
+        validateOnMount={true}
         validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
         onSubmit={async (values: DocumentUploadForm, { setSubmitting }) => {
           if (selectedFile !== null) {
@@ -79,7 +78,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                 documentStatusCode: values.documentStatusCode,
                 documentType: selectedDocumentType,
                 file: selectedFile,
-                documentMetadata: props.documentMetadata,
+                documentMetadata: values.mayanDocumentMetadata,
               };
 
               await props.onUploadDocument(request);
@@ -147,8 +146,9 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                       required={value.required === true}
                       onChange={event => {
                         if (value.metadata_type?.id) {
-                          props.documentMetadata[value.metadata_type?.id.toString()] =
-                            event.target.value;
+                          formikProps.values.mayanDocumentMetadata[
+                            value.metadata_type?.id.toString()
+                          ] = event.target.value;
                         }
                       }}
                     />

@@ -4,7 +4,7 @@ import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentType, Api_UploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
@@ -40,11 +40,11 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
     fetch();
   }, [getDocumentTypes, isMounted]);
 
-  const onDocumentTypeChange = async (param: any) => {
-    const documentId = Number(param.target.value);
-    const mayanId = documentTypes.find(x => x.id === documentId)?.mayanId;
-    if (mayanId) {
-      const axiosResponse = await getDocumentTypeMetadata(mayanId);
+  const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const documentTypeId = Number(changeEvent.target.value);
+    const mayanDocumentTypeIdId = documentTypes.find(x => x.id === documentTypeId)?.mayanId;
+    if (mayanDocumentTypeIdId) {
+      const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeIdId);
       if (axiosResponse?.data.status === ExternalResultStatus.Success) {
         let results = axiosResponse?.data.payload.results;
         setDocumentTypeMetadata(results);
@@ -65,7 +65,6 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
       onDocumentTypeChange={onDocumentTypeChange}
       onUploadDocument={onUploadDocument}
       onCancel={props.onCancel}
-      documentMetadata={[]}
     />
   );
 };
