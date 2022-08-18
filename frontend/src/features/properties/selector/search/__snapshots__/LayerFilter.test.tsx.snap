@@ -6,6 +6,9 @@ exports[`LayerFilter component renders as expected - search by legal description
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c3.btn {
@@ -332,6 +335,9 @@ exports[`LayerFilter component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
+  />
+  <div
+    class="container"
   />
   <div
     class="Toastify"

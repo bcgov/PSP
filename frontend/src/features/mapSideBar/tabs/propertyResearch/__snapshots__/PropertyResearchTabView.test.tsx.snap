@@ -6,6 +6,9 @@ exports[`PropertyResearchTabView component renders as expected when provided val
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c4.required::before {

@@ -6,6 +6,9 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   <div
@@ -44,15 +47,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2.c2.form-control.is-valid {
-  background-image: none;
-}
-
-.c2.c2.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c7.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -183,6 +178,14 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 
 .c7.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c2.c2.form-control.is-valid {
+  background-image: none;
+}
+
+.c2.c2.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c1 {
@@ -564,6 +567,9 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   <div
@@ -602,15 +608,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2.c2.form-control.is-valid {
-  background-image: none;
-}
-
-.c2.c2.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c7.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -741,6 +739,14 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 
 .c7.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c2.c2.form-control.is-valid {
+  background-image: none;
+}
+
+.c2.c2.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c1 {
