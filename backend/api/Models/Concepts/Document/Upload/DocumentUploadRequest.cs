@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -28,6 +29,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The document to be uploaded.
         /// </summary>
         public IFormFile File { get; set; }
+
+        /// <summary>
+        /// get/set - The metadata associated with document.
+        /// </summary>
+        public List<DocumentMetadataUpdateModel> DocumentMetadata { get; set; }
         #endregion
     }
 }
