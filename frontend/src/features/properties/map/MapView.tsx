@@ -16,6 +16,7 @@ import styled from 'styled-components';
 import { pidParser } from 'utils';
 
 import Map from '../../../components/maps/leaflet/Map';
+import ActivityRouter from './ActivityRouter';
 import MapActionWindow from './MapActionWindow';
 import MapSideBar from './MapSideBar';
 
@@ -35,6 +36,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const [loadedProperties, setLoadedProperties] = useState(false);
   const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
   const [showSideBar, setShowSideBar] = useState(false);
+  const [showActionBar, setShowActionBar] = useState(false);
 
   const onMarkerClicked = (property: IProperty) => {
     history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
@@ -75,10 +77,10 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
                 setShowSideBar={setShowSideBar}
                 onZoom={onZoom}
               />
-              {showWindow && (
-                <MapActionWindow showWindow={showWindow}>{actionWindowComponent}</MapActionWindow>
-              )}
-              {!showWindow && (
+              <MapActionWindow showWindow={showActionBar}>
+                <ActivityRouter setShowActionBar={setShowActionBar} />
+              </MapActionWindow>
+              {!showActionBar && (
                 <FilterProvider>
                   <Map
                     lat={defaultLatLng.lat}

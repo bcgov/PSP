@@ -56,9 +56,24 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(pr
           <ResearchContainer researchFileId={Number(match.params.researchId)} onClose={onClose} />
         )}
         claim={Claims.RESEARCH_VIEW}
-        exact
         key={'Research'}
         title={'Research File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/acquisition/new`}
+        customRender={() => <AddAcquisitionContainer onClose={onClose} />}
+        claim={Claims.ACQUISITION_ADD}
+        key={'NewAquisition'}
+        title={'Create Acquisition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/acquisition/:id`}
+        customRender={({ match }) => (
+          <AcquisitionContainer acquisitionFileId={Number(match.params.id)} onClose={onClose} />
+        )}
+        claim={Claims.ACQUISITION_VIEW}
+        key={'Aquisition'}
+        title={'Acquisition File'}
       />
       <AppRoute
         path={`/mapview/sidebar/property/:propertyId`}
@@ -86,26 +101,8 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(pr
         title={'Property Information - Non Inventory'}
       />
       <AppRoute
-        path={`/mapview/sidebar/acquisition/new`}
-        customRender={() => <AddAcquisitionContainer onClose={onClose} />}
-        claim={Claims.ACQUISITION_ADD}
-        exact
-        key={'NewAquisition'}
-        title={'Create Acquisition File'}
-      />
-      <AppRoute
-        path={`/mapview/sidebar/acquisition/:id`}
-        customRender={({ match }) => (
-          <AcquisitionContainer acquisitionFileId={Number(match.params.id)} onClose={onClose} />
-        )}
-        claim={Claims.ACQUISITION_VIEW}
-        exact
-        key={'Aquisition'}
-        title={'Acquisition File'}
-      />
-      <AppRoute
         path="*"
-        customRender={({ match }) => <>Well this sucks{match.path}</>}
+        customRender={({ match }) => <>Nothing to see here, move along</>}
         exact
         key={'Aquisition'}
         title={'Create Acquisition File'}

@@ -52,7 +52,14 @@ const PrivateRoute: React.FC<IPrivateRouteProps> = props => {
         );
       }
     } else {
-      return <Redirect to={{ pathname: '/forbidden', state: { referer: location } }} />;
+      return (
+        <Route
+          {...rest}
+          render={routeProps => (
+            <Redirect to={{ pathname: '/forbidden', state: { referer: routeProps.location } }} />
+          )}
+        />
+      );
     }
   } else {
     if (location.pathname !== '/login') {
