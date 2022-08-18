@@ -1,5 +1,4 @@
 export interface IMapProperty {
-  id?: string;
   pid?: string;
   pin?: string;
   latitude?: number;

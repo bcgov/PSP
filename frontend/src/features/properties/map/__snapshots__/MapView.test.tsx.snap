@@ -336,16 +336,13 @@ exports[`MapView Renders the map 1`] = `
   -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
-  width: 93rem;
   min-width: 93rem;
-  max-width: 93rem;
   margin-left: -93rem;
-  padding: 1.4rem 3.6rem;
+  padding: 1.4rem 1.6rem;
   padding-bottom: 2rem;
   overflow: hidden;
   -webkit-transition: 1s;
   transition: 1s;
-  position: relative;
 }
 
 .c1 h1 {
@@ -358,6 +355,9 @@ exports[`MapView Renders the map 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   width: 100vw;
 }
 
@@ -369,6 +369,7 @@ exports[`MapView Renders the map 1`] = `
 
 <div
     class="c0"
+    data-test="map-view"
   >
     <div
       class="c1"

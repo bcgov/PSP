@@ -45,7 +45,6 @@ export class ResearchForm {
 export class PropertyForm {
   public researchFilePropertyId?: number;
   public apiId?: number;
-  public mapId?: string;
   public pid?: string;
   public pin?: string;
   public latitude?: number;
@@ -60,7 +59,6 @@ export class PropertyForm {
 
   public static fromMapProperty(model: IMapProperty): PropertyForm {
     const newForm = new PropertyForm();
-    newForm.mapId = model.id;
     newForm.pid = model.pid;
     newForm.pin = model.pin;
     newForm.latitude = model.latitude;

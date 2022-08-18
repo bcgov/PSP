@@ -13,7 +13,7 @@ import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
 import { IMapProperty } from './models';
 import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTabsView';
 import PropertySelectorSearchContainer from './search/PropertySelectorSearchContainer';
-import { getPropertyIdentifier } from './utils';
+import { getPropertyName, NameSourceType } from './utils';
 export interface IMapSelectorContainerProps {
   onSelectedProperty: (property: IMapProperty) => void;
   onRemoveProperty: (index: number) => void;
@@ -30,10 +30,6 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
     SelectorTabNames.map,
   );
-  const existingPropertiesWithIds = existingProperties.map(property => ({
-    ...property,
-    id: getPropertyIdentifier(property),
-  }));
   React.useEffect(() => {
     return () => setCursor(undefined);
   }, [setCursor]);
@@ -46,11 +42,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
         MapSelectorView={
           <PropertyMapSelectorFormView
             onSelectedProperty={(property: IMapProperty) =>
-              addProperties(
-                [{ ...property, id: getPropertyIdentifier(property) }],
-                existingPropertiesWithIds,
-                onSelectedProperty,
-              )
+              addProperties([property], existingProperties, onSelectedProperty)
             }
           />
         }
@@ -64,9 +56,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
       {activeSelectorTab === SelectorTabNames.list ? (
         <Button
           variant="secondary"
-          onClick={() =>
-            addProperties(selectedProperties, existingPropertiesWithIds, onSelectedProperty)
-          }
+          onClick={() => addProperties(selectedProperties, existingProperties, onSelectedProperty)}
         >
           Add to selection
         </Button>
@@ -95,7 +85,7 @@ const addProperties = (
   addCallback: (property: IMapProperty) => void,
 ) => {
   newProperties.forEach((property: IMapProperty) => {
-    if (!selectedProperties.some(selectedProperty => selectedProperty.id === property.id)) {
+    if (!selectedProperties.some(selectedProperty => isSameProperty(selectedProperty, property))) {
       addCallback(property);
     } else {
       toast.warn(
@@ -104,6 +94,15 @@ const addProperties = (
       );
     }
   });
+};
+
+const isSameProperty = (lhs: IMapProperty, rhs: IMapProperty) => {
+  const lhsName = getPropertyName(lhs);
+  const rhsName = getPropertyName(rhs);
+  if (lhsName.label === rhsName.label && lhsName.label !== NameSourceType.NONE) {
+    return lhsName.value === rhsName.value;
+  }
+  return false;
 };
 
 export default MapSelectorContainer;
