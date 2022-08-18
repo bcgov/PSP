@@ -22,7 +22,6 @@ import { useTenant } from 'tenants';
 
 import { MapClickMonitor } from '../components/MapClickMonitor';
 import { ILayerSearchCriteria, IMapProperty } from '../models';
-import { getPropertyIdentifier } from '../utils';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
 
 export interface IPropertySelectorSearchContainerProps {
@@ -189,7 +188,6 @@ export const featuresToIdentifiedMapProperty = (
           longitude: boundedCenter[0],
           legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
         };
-        property.id = getPropertyIdentifier(property);
         return property;
       },
     );

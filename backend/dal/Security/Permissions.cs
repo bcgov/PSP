@@ -84,20 +84,40 @@ namespace Pims.Dal.Security
         [Display(GroupName = "researchfile", Name = "researchfile-delete", Description = "Can delete existing research files.")]
         ResearchFileDelete = 26,
 
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-view", Description = "Can view acquisition files.")]
+        AcquisitionFileView = 27,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-add", Description = "Can add new acquisition files.")]
+        AcquisitionFileAdd = 28,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-edit", Description = "Can edit existing acquisition files.")]
+        AcquisitionFileEdit = 29,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-delete", Description = "Can delete existing acquisition files.")]
+        AcquisitionFileDelete = 30,
+
         [Display(GroupName = "note", Name = "note-view", Description = "Can view notes.")]
-        NoteView = 27,
+        NoteView = 31,
 
         [Display(GroupName = "note", Name = "note-add", Description = "Can add new notes.")]
-        NoteAdd = 28,
+        NoteAdd = 32,
 
         [Display(GroupName = "note", Name = "note-edit", Description = "Can update existing notes.")]
-        NoteEdit = 29,
+        NoteEdit = 33,
 
         [Display(GroupName = "note", Name = "note-delete", Description = "Can delete existing notes.")]
-        NoteDelete = 30,
-
+        NoteDelete = 34,
 
         [Display(GroupName = "document", Name = "document-view", Description = "Can view documents.")]
-        DocumentView = 31,
+        DocumentView = 35,
+
+        [Display(GroupName = "document", Name = "document-add", Description = "Can add new documents.")]
+        DocumentAdd = 36,
+
+        [Display(GroupName = "document", Name = "document-edit", Description = "Can update existing  documents.")]
+        DocumentEdit = 37,
+
+        [Display(GroupName = "document", Name = "document-delete", Description = "Can delete existing documents.")]
+        DocumentDelete = 38,
     }
 }

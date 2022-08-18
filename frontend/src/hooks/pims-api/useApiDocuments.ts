@@ -1,4 +1,16 @@
-import { Api_Document_Type } from 'models/api/Document';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import {
+  Api_DocumentRelationship,
+  Api_DocumentType,
+  Api_UploadRequest,
+  Api_UploadResponse,
+} from 'models/api/Document';
+import {
+  Api_Storage_DocumentMetadata,
+  DocumentQueryResult,
+  FileDownload,
+} from 'models/api/DocumentStorage';
+import { ExternalResult } from 'models/api/ExternalResult';
 import React from 'react';
 
 import { useAxiosApi } from '.';
@@ -13,7 +25,48 @@ export const useApiDocuments = () => {
 
   return React.useMemo(
     () => ({
-      getDocumentTypes: () => api.get<Api_Document_Type[]>(`/documents/document-types`),
+      getDocumentTypes: () => api.get<Api_DocumentType[]>(`/documents/types`),
+
+      getDocumentRelationship: (relationshipType: DocumentRelationshipType, parentId: number) =>
+        api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
+
+      deleteDocumentRelationshipApiCall: (
+        relationshipType: DocumentRelationshipType,
+        documentRelationship: Api_DocumentRelationship,
+      ) => api.delete<boolean>(`/documents/${relationshipType}`, { data: documentRelationship }),
+
+      getDocumentMetada: (mayanDocumentId: number) =>
+        api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentMetadata>>>(
+          `/documents/storage/${mayanDocumentId}/metadata`,
+        ),
+
+      downloadDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
+        api.get<ExternalResult<FileDownload>>(
+          `/documents/storage/${mayanDocumentId}/files/${mayanFileId}/download`,
+        ),
+
+      downloadDocumentFileLatestApiCall: (mayanDocumentId: number) =>
+        api.get<ExternalResult<FileDownload>>(`/documents/storage/${mayanDocumentId}/download`),
+
+      uploadDocumentRelationshipApiCall: (
+        relationshipType: DocumentRelationshipType,
+        parentId: number,
+        uploadRequest: Api_UploadRequest,
+      ) => {
+        const formData = new FormData();
+        formData.append('file', uploadRequest.file);
+        formData.append(
+          'documentTypeMayanId',
+          uploadRequest.documentType.mayanId?.toString() || '',
+        );
+        formData.append('documentTypeId', uploadRequest.documentType.id?.toString() || '');
+        formData.append('documentStatusCode', uploadRequest.documentStatusCode || '');
+
+        return api.post<Api_UploadResponse>(
+          `/documents/upload/${relationshipType}/${parentId}`,
+          formData,
+        );
+      },
     }),
     [api],
   );

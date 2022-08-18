@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -31,11 +30,9 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
-        /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper)
+        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger) : base(dbContext, user, logger)
         {
             _options = options.CurrentValue;
         }
@@ -488,6 +485,6 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }
-    #endregion
-}
+        #endregion
+    }
 }

@@ -75,19 +75,6 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
 .c8 {
   border-left: 1px solid #8c8c8c;
 }
@@ -98,6 +85,19 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   padding-bottom: 0.7rem;
   margin-bottom: 0;
   border-bottom: 2px solid #8c8c8c;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c3.required::before {
@@ -174,7 +174,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
     class=""
   >
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"
@@ -199,7 +199,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -208,7 +208,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -236,6 +236,12 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 >
                   Northern Region
                 </option>
+                <option
+                  class="option"
+                  value="4"
+                >
+                  Cannot determine
+                </option>
               </select>
             </div>
           </div>
@@ -244,7 +250,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -253,7 +259,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -268,6 +274,78 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 >
                   Please Select
                 </option>
+                <option
+                  class="option"
+                  value="1"
+                >
+                  Lower Mainland District
+                </option>
+                <option
+                  class="option"
+                  value="2"
+                >
+                  Vancouver Island District
+                </option>
+                <option
+                  class="option"
+                  value="3"
+                >
+                  Rocky Mountain District
+                </option>
+                <option
+                  class="option"
+                  value="4"
+                >
+                  West Kootenay District
+                </option>
+                <option
+                  class="option"
+                  value="5"
+                >
+                  Okanagan-Shuswap District
+                </option>
+                <option
+                  class="option"
+                  value="6"
+                >
+                  Thompson-Nicola District
+                </option>
+                <option
+                  class="option"
+                  value="7"
+                >
+                  Cariboo District
+                </option>
+                <option
+                  class="option"
+                  value="8"
+                >
+                  Peace District
+                </option>
+                <option
+                  class="option"
+                  value="9"
+                >
+                  Fort George District
+                </option>
+                <option
+                  class="option"
+                  value="10"
+                >
+                  Bulkley-Stikine District
+                </option>
+                <option
+                  class="option"
+                  value="11"
+                >
+                  Skeena District
+                </option>
+                <option
+                  class="option"
+                  value="12"
+                >
+                  Cannot determine
+                </option>
               </select>
             </div>
           </div>
@@ -276,7 +354,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -285,7 +363,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -296,7 +374,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -305,7 +383,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -318,7 +396,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -327,7 +405,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -360,7 +438,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -369,7 +447,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -447,7 +525,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -456,7 +534,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -475,7 +553,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -484,7 +562,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -563,11 +641,61 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     <ul
                       class="optionContainer"
                     >
-                      <span
-                        class="notFound"
+                      <li
+                        class="option  highlightOption highlight  "
                       >
-                        No Options Available
-                      </span>
+                        Assignment of rent
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Potential for business loss claims
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Building liens
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Certification of pending litigation
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Charge holders in general
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Charge to the Crown
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Duplicate title
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        E&F clause
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Legal notations
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Mortgage/security interests
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -578,7 +706,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"
@@ -603,7 +731,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -612,7 +740,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -712,7 +840,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -721,7 +849,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -733,27 +861,27 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               >
                 <option
                   class="option"
-                  value="UNKNOWN"
+                  value="COMBO"
                 >
-                  Unknown
+                  Combination (PPH & Non-PPH)
+                </option>
+                <option
+                  class="option"
+                  value="NONPPH"
+                >
+                  Non-Provincial Public Highway (Non-PPH)
                 </option>
                 <option
                   class="option"
                   value="PPH"
                 >
-                  Provincial Public Highway
+                  Provincial Public Highway (PPH)
                 </option>
                 <option
                   class="option"
-                  value="Non-PPH"
+                  value="UNKNOWN"
                 >
-                  Non- Provincial Public Highway
-                </option>
-                <option
-                  class="option"
-                  value="PPH & Non-PPH"
-                >
-                  Combination
+                  Unknown
                 </option>
               </select>
             </div>
@@ -780,7 +908,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -789,7 +917,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -868,11 +996,91 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     <ul
                       class="optionContainer"
                     >
-                      <span
-                        class="notFound"
+                      <li
+                        class="option  highlightOption highlight  "
                       >
-                        No Options Available
-                      </span>
+                        107 Explanatory Plan
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        107 Reference Plan
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Arterial
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Crown grant deletion
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Federal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Forest Service Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted (MoTI Plan)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted (Surveyed)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted (Unsurveyed)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Municipal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Public Road (FLNRORD Juridiction)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        S.42 (Court declared)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        S.56 (2) Highway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        SRW plan (with no gazette)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Subdivision
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Untenured (no dedicated highway)
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -884,7 +1092,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -893,7 +1101,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -948,11 +1156,51 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     <ul
                       class="optionContainer"
                     >
-                      <span
-                        class="notFound"
+                      <li
+                        class="option  highlightOption highlight  "
                       >
-                        No Options Available
-                      </span>
+                        Crown
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Act Reserve (Section 16/17/12/14)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned and leased - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned and leased - HMQ
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned not leases - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned not leases - HMQ
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Private (Fee Simple)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Special Use Permit (SUP)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW)
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -963,7 +1211,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"
@@ -988,7 +1236,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -997,7 +1245,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -1008,7 +1256,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c2"
@@ -1017,7 +1265,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 col"
+            class="c3 text-left col"
           >
             <span
               class=""
@@ -1027,7 +1275,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"
@@ -1257,7 +1505,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               class="pb-2 row"
             >
               <div
-                class="col-4"
+                class="pr-0 text-left col-4"
               >
                 <label
                   class="c2"
@@ -1266,7 +1514,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="c3 col"
+                class="c3 text-left col"
               >
                 <div
                   class="form-group"
@@ -1275,7 +1523,20 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                     class="form-select form-control"
                     id="input-volumetricParcelTypeCode"
                     name="volumetricParcelTypeCode"
-                  />
+                  >
+                    <option
+                      class="option"
+                      value="AIRSPACE"
+                    >
+                      Airspace
+                    </option>
+                    <option
+                      class="option"
+                      value="SUBSURF"
+                    >
+                      Sub-surface
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -1375,7 +1636,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0"
+      class="c0 form-section"
     >
       <h2
         class="c1"

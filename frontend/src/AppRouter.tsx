@@ -228,6 +228,7 @@ const AppRouter: React.FC = () => {
           title={getTitle('Edit User')}
         />
         <AppRoute
+          protected
           path="/testFileManagement"
           title={getTitle('Test')}
           component={TestFileManagement}

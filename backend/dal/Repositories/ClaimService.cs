@@ -1,4 +1,6 @@
-using MapsterMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -6,9 +8,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pims.Dal.Repositories
 {
@@ -26,9 +25,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, IPimsRepository service, ILogger<ClaimService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ILogger<ClaimService> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods

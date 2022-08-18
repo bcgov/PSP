@@ -189,160 +189,164 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
-    <h3
-      class="c1"
+    <div
+      class="collapse show"
     >
-      Search for a property
-    </h3>
-    <form
-      class="c2 p-3"
-      novalidate=""
-    >
-      <div
-        class="row"
+      <h3
+        class="c1"
+      >
+        Search for a property
+      </h3>
+      <form
+        class="c2 p-3"
+        novalidate=""
       >
         <div
-          class="col-xl-6"
+          class="row"
         >
           <div
-            class="flex-nowrap row"
+            class="col-xl-6"
           >
             <div
-              class="c3 col-auto"
+              class="flex-nowrap row"
             >
               <div
-                class="input-group-prepend"
+                class="c3 col-auto"
               >
                 <div
-                  class="form-group"
+                  class="input-group-prepend"
                 >
-                  <select
-                    class="form-select form-control"
-                    id="input-searchBy"
-                    name="searchBy"
+                  <div
+                    class="form-group"
                   >
-                    <option
-                      class="option"
-                      value="pid"
+                    <select
+                      class="form-select form-control"
+                      id="input-searchBy"
+                      name="searchBy"
                     >
-                      PID
-                    </option>
-                    <option
-                      class="option"
-                      value="pin"
-                    >
-                      PIN
-                    </option>
-                    <option
-                      class="option"
-                      value="address"
-                    >
-                      Address
-                    </option>
-                    <option
-                      class="option"
-                      value="planNumber"
-                    >
-                      Plan #
-                    </option>
-                    <option
-                      class="option"
-                      value="legalDescription"
-                    >
-                      Legal Description
-                    </option>
-                  </select>
+                      <option
+                        class="option"
+                        value="pid"
+                      >
+                        PID
+                      </option>
+                      <option
+                        class="option"
+                        value="pin"
+                      >
+                        PIN
+                      </option>
+                      <option
+                        class="option"
+                        value="address"
+                      >
+                        Address
+                      </option>
+                      <option
+                        class="option"
+                        value="planNumber"
+                      >
+                        Plan #
+                      </option>
+                      <option
+                        class="option"
+                        value="legalDescription"
+                      >
+                        Legal Description
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="c4 col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-pid"
+                    name="pid"
+                    placeholder="Enter a PID"
+                    title=""
+                    value=""
+                  />
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            class="pr-0 col-xl-2"
+          >
             <div
-              class="c4 col"
+              class="row"
             >
               <div
-                class="input form-group"
+                class="pr-0 col"
               >
-                <input
-                  class="form-control"
-                  id="input-pid"
-                  name="pid"
-                  placeholder="Enter a PID"
-                  title=""
-                  value=""
-                />
+                <button
+                  class="c5 Button Button--icon-only primary btn btn-primary"
+                  data-testid="search"
+                  id="search-button"
+                  title="search"
+                  type="submit"
+                >
+                  <div
+                    class="Button__icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="20"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+              <div
+                class="pl-0 col"
+              >
+                <button
+                  class="c5 Button Button--icon-only btn btn-info"
+                  data-testid="reset-button"
+                  id="reset-button"
+                  title="reset-button"
+                  type="reset"
+                >
+                  <div
+                    class="Button__icon"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="20"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                      />
+                    </svg>
+                  </div>
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="pr-0 col-xl-2"
-        >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 col"
-            >
-              <button
-                class="c5 Button Button--icon-only primary btn btn-primary"
-                data-testid="search"
-                id="search-button"
-                title="search"
-                type="submit"
-              >
-                <div
-                  class="Button__icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
-            <div
-              class="pl-0 col"
-            >
-              <button
-                class="c5 Button Button--icon-only btn btn-info"
-                data-testid="reset-button"
-                id="reset-button"
-                title="reset-button"
-                type="reset"
-              >
-                <div
-                  class="Button__icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
   .c1 {
   font-size: 1.4rem;
@@ -356,127 +360,131 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
     <div
-      class="table"
-      data-testid="map-properties"
-      role="table"
+      class="collapse show"
     >
       <div
-        class="thead thead-light"
+        class="table"
+        data-testid="map-properties"
+        role="table"
       >
         <div
-          class="tr"
-          role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 150px;"
+          class="thead thead-light"
         >
           <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 150px;"
           >
             <div
-              class="sortable-column"
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
-              <div>
-                <input
-                  data-testid="selectrow-parent"
-                  disabled=""
-                  style="cursor: pointer;"
-                  title="Click to deselect all."
-                  type="checkbox"
-                />
+              <div
+                class="sortable-column"
+              >
+                <div>
+                  <input
+                    data-testid="selectrow-parent"
+                    disabled=""
+                    style="cursor: pointer;"
+                    title="Click to deselect all."
+                    type="checkbox"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                PID
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                PIN
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Plan #
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Address
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Legal Description
               </div>
             </div>
           </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              PID
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              PIN
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Plan #
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Address
-            </div>
-          </div>
-          <div
-            class="th"
-            colspan="1"
-            role="columnheader"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-          >
-            <div
-              class="sortable-column"
-            >
-              Legal Description
-            </div>
-          </div>
+        </div>
+        <div
+          class="no-rows-message"
+        >
+          No results found for your search criteria.
         </div>
       </div>
       <div
-        class="no-rows-message"
+        class="row"
       >
-        No results found for your search criteria.
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="align-self-center col-auto"
-      />
-      <div
-        class="ml-auto align-self-center col-auto"
-      >
-        <p
-          class="c1"
+        <div
+          class="align-self-center col-auto"
+        />
+        <div
+          class="ml-auto align-self-center col-auto"
         >
-          0 selected
-        </p>
+          <p
+            class="c1"
+          >
+            0 selected
+          </p>
+        </div>
+        <div
+          class="align-self-center col-auto"
+        />
       </div>
-      <div
-        class="align-self-center col-auto"
-      />
     </div>
   </div>
 </DocumentFragment>

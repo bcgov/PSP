@@ -1,10 +1,11 @@
 import * as Styled from 'components/common/styles';
 import { Table } from 'components/Table';
-import { StyledFormSection } from 'features/mapSideBar/tabs/SectionStyles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { IGeocoderResponse } from 'hooks/useApi';
 import * as React from 'react';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
+import { getPropertyName } from '../utils';
 import { LayerFilter } from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
@@ -20,6 +21,10 @@ export interface IPropertySearchSelectorFormViewProps {
   onAddressSelect: (selectedItem: IGeocoderResponse) => void;
 }
 
+interface SelectableProperty extends IMapProperty {
+  id: string;
+}
+
 export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySearchSelectorFormViewProps> = ({
   onSelectedProperties,
   selectedProperties,
@@ -31,9 +36,25 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
   onAddressChange,
   onAddressSelect,
 }) => {
+  const tableData =
+    searchResults?.length <= 15
+      ? searchResults.map<SelectableProperty>(x => {
+          return { ...x, id: generatePropertyId(x) };
+        })
+      : [];
+
+  const selectedData = selectedProperties.map<SelectableProperty>(x => {
+    return { ...x, id: generatePropertyId(x) };
+  });
+
+  function generatePropertyId(mapProperty: IMapProperty): string {
+    const propertyName = getPropertyName(mapProperty);
+    return `${propertyName.label}-${propertyName.value}`;
+  }
+
   return (
     <>
-      <StyledFormSection>
+      <Section header={undefined}>
         <Styled.H3>Search for a property</Styled.H3>
         <LayerFilter
           setFilter={onSearch}
@@ -42,15 +63,15 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
           onAddressChange={onAddressChange}
           onAddressSelect={onAddressSelect}
         />
-      </StyledFormSection>
-      <StyledFormSection>
-        <Table<IMapProperty>
+      </Section>
+      <Section header={undefined}>
+        <Table<SelectableProperty>
           manualPagination={false}
           name="map-properties"
           columns={mapPropertyColumns}
-          data={searchResults?.length <= 15 ? searchResults : []}
+          data={tableData}
           setSelectedRows={onSelectedProperties}
-          selectedRows={selectedProperties}
+          selectedRows={selectedData}
           loading={loading}
           lockPageSize={true}
           showSelectedRowCount={searchResults?.length <= 15}
@@ -61,7 +82,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
           }
           pageSize={5}
         />
-      </StyledFormSection>
+      </Section>
     </>
   );
 };

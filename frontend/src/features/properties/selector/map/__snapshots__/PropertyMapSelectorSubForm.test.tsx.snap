@@ -89,7 +89,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         class="pb-2 row"
       >
         <div
-          class="col-4"
+          class="pr-0 text-left col-4"
         >
           <label
             class="c3"
@@ -98,7 +98,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
           </label>
         </div>
         <div
-          class="c4 col"
+          class="c4 text-left col"
         >
           123-456-789
         </div>
@@ -107,7 +107,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         class="pb-2 row"
       >
         <div
-          class="col-4"
+          class="pr-0 text-left col-4"
         >
           <label
             class="c3"
@@ -116,7 +116,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
           </label>
         </div>
         <div
-          class="c4 col"
+          class="c4 text-left col"
         >
           123546
         </div>
@@ -125,7 +125,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         class="pb-2 row"
       >
         <div
-          class="col-4"
+          class="pr-0 text-left col-4"
         >
           <label
             class="c3"
@@ -134,7 +134,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
           </label>
         </div>
         <div
-          class="c4 col"
+          class="c4 text-left col"
         >
           Test address 123
         </div>
@@ -143,7 +143,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         class="pb-2 row"
       >
         <div
-          class="col-4"
+          class="pr-0 text-left col-4"
         >
           <label
             class="c3"
@@ -152,7 +152,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
           </label>
         </div>
         <div
-          class="c4 col"
+          class="c4 text-left col"
         >
           2 - South Coast
         </div>
@@ -161,7 +161,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
         class="pb-2 row"
       >
         <div
-          class="col-4"
+          class="pr-0 text-left col-4"
         >
           <label
             class="c3"
@@ -170,7 +170,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
           </label>
         </div>
         <div
-          class="c4 col"
+          class="c4 text-left col"
         >
           2 - Vancouver Island
         </div>

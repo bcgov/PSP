@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -22,9 +22,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ProvinceService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProvinceService> logger) : base(dbContext, user, logger) { }
         #endregion
 
         #region Methods

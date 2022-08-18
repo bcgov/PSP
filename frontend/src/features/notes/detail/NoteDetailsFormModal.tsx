@@ -31,7 +31,7 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
   const spinner = <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
 
   const editButton = keycloak.hasClaim(Claims.NOTE_EDIT) ? (
-    <Button variant="link" title="Edit note" onClick={() => onEdit && onEdit(note)}>
+    <Button variant="link" aria-label="edit" onClick={() => onEdit && onEdit(note)}>
       <FaEdit size="2rem" />
     </Button>
   ) : null;
@@ -66,7 +66,7 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
       </Row>
       <Row className="no-gutters">
         <Col>
-          <Form.Control as="textarea" readOnly rows={15} value={note?.note} />
+          <Form.Control as="textarea" title="Note" readOnly rows={15} value={note?.note} />
         </Col>
       </Row>
     </Container>
@@ -78,7 +78,8 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
       display={isOpened}
       message={loading ? spinner : body}
       okButtonText="Close"
-      handleOk={() => onCloseClick && onCloseClick()}
+      handleOk={onCloseClick}
+      handleCancel={onCloseClick}
       closeButton
     ></StyledModal>
   );

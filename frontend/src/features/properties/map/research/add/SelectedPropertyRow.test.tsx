@@ -57,40 +57,48 @@ describe('SelectedPropertyRow component', () => {
   });
 
   it('displays pid', async () => {
+    const mapProperties: IMapProperty[] = [
+      { pid: '111111111', pin: '1234', planNumber: 'plan', latitude: 4, longitude: 5 },
+    ];
+
     const {
       component: { getByText },
     } = await setup({
       values: {
-        properties: [
-          { pid: '111111111', pin: 1234, planNumber: 'plan', latitude: 4, longitude: 5 },
-        ],
+        properties: mapProperties,
       },
     } as any);
     expect(getByText('PID: 111-111-111')).toBeVisible();
   });
   it('falls back to pin', async () => {
+    const mapProperties: IMapProperty[] = [
+      { pin: '1234', planNumber: 'plan', latitude: 4, longitude: 5 },
+    ];
+
     const {
       component: { getByText },
     } = await setup({
-      values: { properties: [{ pin: 1234, planNumber: 'plan', latitude: 4, longitude: 5 }] },
-    } as any);
+      values: { properties: mapProperties },
+    });
     expect(getByText('PIN: 1234')).toBeVisible();
   });
 
   it('falls back to plan number', async () => {
+    const mapProperties: IMapProperty[] = [{ planNumber: 'plan', latitude: 4, longitude: 5 }];
     const {
       component: { getByText },
     } = await setup({
-      values: { properties: [{ planNumber: 'plan', latitude: 4, longitude: 5 }] },
+      values: { properties: mapProperties },
     } as any);
     expect(getByText('Plan #: plan')).toBeVisible();
   });
 
   it('falls back to lat/lng', async () => {
+    const mapProperties: IMapProperty[] = [{ latitude: 4, longitude: 5 }];
     const {
       component: { getByText },
     } = await setup({
-      values: { properties: [{ latitude: 4, longitude: 5 }] },
+      values: { properties: mapProperties },
     } as any);
     expect(getByText('4.00000, 5.00000')).toBeVisible();
   });

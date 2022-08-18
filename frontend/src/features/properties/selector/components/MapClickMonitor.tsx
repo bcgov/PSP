@@ -40,7 +40,7 @@ export const mapFeatureToProperty = (
     .getBounds()
     .getCenter();
   return {
-    pid: selectedFeature?.properties?.PID_NUMBER ?? undefined,
+    pid: selectedFeature?.properties?.PID ?? undefined,
     pin: selectedFeature?.properties?.PIN ?? undefined,
     latitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lat ?? latLng.lat ?? undefined,
     longitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? undefined,
@@ -51,7 +51,7 @@ export const mapFeatureToProperty = (
     regionName: selectedFeature?.properties?.REGION_NAME,
     district: selectedFeature?.properties?.DISTRICT_NUMBER,
     districtName: selectedFeature?.properties?.DISTRICT_NAME,
-  } as IMapProperty;
+  };
 };
 
 export default MapClickMonitor;

@@ -8,20 +8,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   <div
     class="Toastify"
   />
-  .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c2 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c5 {
+  .c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -49,6 +36,19 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   padding-bottom: 0.7rem;
   margin-bottom: 0;
   border-bottom: 2px solid #8c8c8c;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c4.required::before {
@@ -84,7 +84,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       class="c0 mr-3 my-1"
     />
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -109,7 +109,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -118,14 +118,14 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           />
         </div>
         <div
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -134,7 +134,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             <div
               class="c5"
@@ -147,7 +147,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -156,14 +156,14 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           />
         </div>
         <div
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -172,7 +172,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             No
           </div>
@@ -181,7 +181,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -190,7 +190,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             Unknown
           </div>
@@ -199,7 +199,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -208,7 +208,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             Titled
           </div>
@@ -217,7 +217,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -226,7 +226,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             Some municipal zoning comments
           </div>
@@ -235,7 +235,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -244,7 +244,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             <div>
               <div
@@ -293,7 +293,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -318,7 +318,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -327,7 +327,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             <div>
               <div
@@ -377,7 +377,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           class="pb-2 row"
         >
           <div
-            class="col-4"
+            class="pr-0 text-left col-4"
           >
             <label
               class="c3"
@@ -386,7 +386,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
             </label>
           </div>
           <div
-            class="c4 col"
+            class="c4 text-left col"
           >
             Unknown
           </div>
@@ -394,7 +394,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
@@ -643,7 +643,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c1"
+      class="c1 form-section"
     >
       <h2
         class="c2"
