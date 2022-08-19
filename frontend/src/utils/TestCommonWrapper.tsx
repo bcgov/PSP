@@ -1,6 +1,9 @@
 import { useKeycloak } from '@react-keycloak/web';
+import ModalContainer from 'components/common/ModalContainer';
+import { ModalContextProvider } from 'contexts/modalContext';
 import { MemoryHistory } from 'history';
 import { IOrganization } from 'interfaces';
+import noop from 'lodash/noop';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -54,15 +57,18 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
           <TestProviderWrapper store={store}>
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css: {} }}>
-                <ToastContainer
-                  autoClose={5000}
-                  hideProgressBar
-                  newestOnTop={false}
-                  closeOnClick={false}
-                  rtl={false}
-                  pauseOnFocusLoss={false}
-                />
-                {children}
+                <ModalContextProvider setModalProps={noop} setDisplayModal={noop}>
+                  <ToastContainer
+                    autoClose={5000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                  />
+                  <ModalContainer />
+                  {children}
+                </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>
           </TestProviderWrapper>
