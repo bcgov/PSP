@@ -21,7 +21,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
         // TODO: Remove icon when file number field is added to CREATE ACQUISITION FILE form.
         // The icon is here so we can open ACQ File details from list
         return (
-          <Link to={`/mapview/acquisition/${props.row.original.id}`}>
+          <Link to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
             {props.row.original.fileNumber} <FaExternalLinkAlt size="2rem" />
           </Link>
         );

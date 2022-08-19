@@ -38,7 +38,7 @@ export const ContactRouter: React.FunctionComponent = () => {
       {Array.from(pages.entries()).map(([pageName, page]) => (
         <AppRoute
           path={`${path}/${pageName}`}
-          component={page.component ?? React.Fragment}
+          customComponent={page.component ?? React.Fragment}
           title={`${page.title}`}
           exact
           key={pageName}

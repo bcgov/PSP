@@ -20,7 +20,7 @@ export const AcquisitionTray = ({ onLinkClick }: ISideTrayPageProps) => {
         </Link>
       )}
       {hasClaim(Claims.ACQUISITION_ADD) && (
-        <Link onClick={onLinkClick} to="/mapview/acquisition/new">
+        <Link onClick={onLinkClick} to="/mapview/sidebar/acquisition/new">
           Create an acquisition file
         </Link>
       )}

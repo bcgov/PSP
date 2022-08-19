@@ -126,7 +126,6 @@ export interface ITenantProps {
 export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => {
   const { values: lease } = useFormikContext<ILease>();
   const tenants: FormTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
-  console.log(tenants);
   return (
     <FormSectionOne>
       <Formik initialValues={lease} onSubmit={() => {}} enableReinitialize>

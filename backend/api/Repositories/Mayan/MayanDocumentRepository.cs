@@ -288,6 +288,24 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<DocumentMetadata>> CreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value)
+        {
+            _logger.LogDebug("Add existing metadata type with value to an existing document");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            var linkModel = new { metadata_type_id = metadataTypeId, value = value };
+            using HttpContent content = new StringContent(JsonSerializer.Serialize(linkModel));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/");
+
+            var response = await PostAsync<DocumentMetadata>(endpoint, content, authenticationToken);
+
+            _logger.LogDebug($"Finished adding existing metadata value to a  document");
+            return response;
+        }
+
         public async Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
         {
             _logger.LogDebug("Updating document type and metadata type...");
