@@ -53,7 +53,7 @@ describe('Activity List View', () => {
   });
   it('renders as expected', async () => {
     const { asFragment, getByTitle } = setup({
-      claims: [Claims.NOTE_VIEW, Claims.NOTE_DELETE],
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const fragment = await waitFor(() => asFragment());
@@ -76,7 +76,7 @@ describe('Activity List View', () => {
 
   it('should allow an activity to be viewed by clicking the icon', async () => {
     const { getByTitle, getAllByTitle } = setup({
-      claims: [Claims.NOTE_VIEW, Claims.NOTE_DELETE],
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const link = getAllByTitle('View Activity')[0];
@@ -86,7 +86,7 @@ describe('Activity List View', () => {
 
   it('should allow an activity to be viewed by clicking the link', async () => {
     const { getByTitle, getByText } = setup({
-      claims: [Claims.NOTE_VIEW, Claims.NOTE_DELETE],
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const link = getByText('Survey');
@@ -105,7 +105,7 @@ describe('Activity List View', () => {
 
   it('should show the delete modal when an activity is deleted', async () => {
     const { getByTitle, getAllByTitle } = setup({
-      claims: [Claims.NOTE_VIEW, Claims.NOTE_DELETE],
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const deleteButton = getAllByTitle('Delete Activity')[0];
@@ -116,7 +116,7 @@ describe('Activity List View', () => {
 
   it('should delete the activity if the delete modal is confirmed', async () => {
     const { getByTitle, getAllByTitle } = setup({
-      claims: [Claims.NOTE_VIEW, Claims.NOTE_DELETE],
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const deleteButton = getAllByTitle('Delete Activity')[0];
@@ -131,7 +131,7 @@ describe('Activity List View', () => {
   });
   it('should close the delete modal if deletion is cancelled', async () => {
     const { getByTitle, getAllByTitle } = setup({
-      claims: [Claims.NOTE_VIEW, Claims.NOTE_DELETE],
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const deleteButton = getAllByTitle('Delete Activity')[0];
