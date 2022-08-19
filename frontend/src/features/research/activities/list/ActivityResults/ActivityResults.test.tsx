@@ -22,6 +22,7 @@ const setup = (renderOptions: RenderOptions & Partial<IActivityResultProps> = { 
     />,
     {
       ...rest,
+      claims: [],
     },
   );
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');

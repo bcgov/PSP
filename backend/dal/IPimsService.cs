@@ -21,8 +21,6 @@ namespace Pims.Dal.Services
 
         IResearchFileService ResearchFileService { get; }
 
-        IActivityService ActivityService { get; }
-
         IPropertyService PropertyService { get; }
         #endregion
     }

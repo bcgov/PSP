@@ -73,7 +73,6 @@ namespace Pims.Dal
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IResearchFileService, ResearchFileService>();
-            services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
 

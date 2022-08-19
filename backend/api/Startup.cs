@@ -371,6 +371,7 @@ namespace Pims.Api
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IDocumentSyncService, DocumentSyncService>();
             services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
         }
         #endregion

@@ -14,7 +14,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote[] notes = null)
+        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote[] notes = null, Entity.PimsActivityTemplate template = null)
         {
             var activity = new Entity.PimsActivityInstance()
             {
@@ -42,6 +42,10 @@ namespace Pims.Core.Test
                         IsDisabled = false,
                     });
                 }
+            }
+            if (template != null)
+            {
+                activity.ActivityTemplate = template;
             }
 
             return activity;

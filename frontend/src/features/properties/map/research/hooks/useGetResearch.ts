@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
  */
 export const useGetResearch = () => {
   const { getResearchFile } = useApiResearchFile();
-  const { execute } = useApiRequestWrapper<
+  const retrieveResearchFile = useApiRequestWrapper<
     (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFile, any>>
   >({
     requestFunction: useCallback(
@@ -28,5 +28,5 @@ export const useGetResearch = () => {
       }
     }, []),
   });
-  return { retrieveResearchFile: execute };
+  return { retrieveResearchFile };
 };

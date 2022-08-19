@@ -1,5 +1,5 @@
 import Claims from 'constants/claims';
-import { ActivityTray } from 'features/research/activities/ActivityTray/ActivityTray';
+import { ActivityContainer } from 'features/research/activities/activity/ActivityContainer';
 import * as React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';
@@ -37,10 +37,10 @@ export const ActivityRouter: React.FunctionComponent<IActivityRouterProps> = Rea
       <AppRoute
         path={`/mapview/sidebar/*/*/activity/:activityId`}
         customRender={({ match }) => (
-          <ActivityTray
+          <ActivityContainer
             activityId={Number(match.params.activityId)}
             onClose={onClose}
-          ></ActivityTray>
+          ></ActivityContainer>
         )}
         claim={Claims.RESEARCH_ADD}
         exact

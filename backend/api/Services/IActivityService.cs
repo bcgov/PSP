@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public interface IActivityService
     {
@@ -12,5 +12,9 @@ namespace Pims.Dal.Services
         IList<PimsActivityTemplate> GetAllActivityTemplates();
 
         PimsActivityInstance Add(PimsActivityInstance instance);
+
+        PimsActivityInstance Update(PimsActivityInstance model);
+
+        void Delete(long activityId);
     }
 }
