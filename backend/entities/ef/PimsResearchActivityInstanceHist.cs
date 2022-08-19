@@ -8,25 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST")]
+    [Index(nameof(ResearchActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_RSCHAI_H_UK", IsUnique = true)]
+    public partial class PimsResearchActivityInstanceHist
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
+        [Column("_RESEARCH_ACTIVITY_INSTANCE_HIST_ID")]
+        public long ResearchActivityInstanceHistId { get; set; }
         [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
         public DateTime EffectiveDateHist { get; set; }
         [Column("END_DATE_HIST", TypeName = "datetime")]
         public DateTime? EndDateHist { get; set; }
+        [Column("RESEARCH_ACTIVITY_INSTANCE_ID")]
+        public long ResearchActivityInstanceId { get; set; }
         [Column("ACTIVITY_INSTANCE_ID")]
         public long ActivityInstanceId { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
-        [Required]
-        [Column("ACTIVITY_INSTANCE_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string ActivityInstanceStatusTypeCode { get; set; }
+        [Column("RESEARCH_FILE_ID")]
+        public long ResearchFileId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
