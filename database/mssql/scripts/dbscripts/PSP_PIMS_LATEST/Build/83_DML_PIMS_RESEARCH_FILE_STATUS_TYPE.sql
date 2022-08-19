@@ -14,5 +14,6 @@ VALUES
   (N'ACTIVE',   N'Active'),
   (N'INACTIVE', N'Inactive'),
   (N'CLOSED',   N'Closed'),
-  (N'ARCHIVED', N'Archived');
+  (N'ARCHIVED', N'Archived'),
+  (N'ANY',      N'Any status');
 GO
