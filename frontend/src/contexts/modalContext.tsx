@@ -18,7 +18,9 @@ export const ModalContext = React.createContext<IModalContext>({
   },
 });
 
-export const ModalContextProvider = (props: IModalContext & { children: React.ReactChildren }) => {
+export const ModalContextProvider = (
+  props: IModalContext & { children: React.ReactChild | React.ReactChild[] | React.ReactNode },
+) => {
   const [modalProps, setModalProps] = useState<ModalProps | undefined>(undefined);
   const displayFunction = React.useCallback(
     (displayModal: boolean) => {
