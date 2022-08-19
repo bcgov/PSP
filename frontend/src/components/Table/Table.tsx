@@ -379,7 +379,6 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                             );
                         } else {
                           setExternalSelectedRows &&
-                            setExternalSelectedRows &&
                             setExternalSelectedRows([...allPreviouslySelected, ...values]);
                         }
                       }}
