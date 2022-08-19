@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Areas.Organizations.Models.Organization
 {
     /// <summary>
@@ -7,6 +6,7 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
     public class OrganizationAddressModel : Pims.Api.Models.Contact.AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the Organization-address relationship.
         /// </summary>
@@ -15,7 +15,6 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
         /// <summary>
         /// get/set - The concurrency row version of the Organization-address relationship.
         /// </summary>
-        /// <value></value>
         public long OrganizationAddressRowVersion { get; set; }
 
         /// <summary>

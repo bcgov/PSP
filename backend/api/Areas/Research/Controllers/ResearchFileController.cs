@@ -1,4 +1,4 @@
-
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,6 @@ using Pims.Api.Policies;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.ResearchFile.Controllers
 {
@@ -29,6 +28,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFileController class, initializes it with the specified arguments.
         /// </summary>
@@ -72,6 +72,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         {
             var activityInstances = _pimsService.ActivityService.GetAllByResearchFileId(researchFileId);
             List<ActivityInstanceModel> models = _mapper.Map<List<ActivityInstanceModel>>(activityInstances);
+
             // TODO remove below once mapping complete
             foreach (ActivityInstanceModel model in models)
             {
@@ -81,17 +82,17 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
                     Id = "Draft",
                     Description = "Draft",
                 };
-            };
+            }
+
             return new JsonResult(models);
         }
 
-
         /// <summary>
-        /// Get the document types.
+        /// Get the activity template types.
         /// </summary>
         /// <returns></returns>
         [HttpGet("activity-templates")]
-        [HasPermission(Permissions.ResearchFileView)]
+        [HasPermission(Permissions.ActivityView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<ActivityTemplateModel>), 200)]
         [SwaggerOperation(Tags = new[] { "activity-templates" })]
@@ -107,7 +108,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("activity")]
-        [HasPermission(Permissions.ResearchFileAdd)]
+        [HasPermission(Permissions.ActivityAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
         [SwaggerOperation(Tags = new[] { "activityInstance" })]
@@ -191,7 +192,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
-
 
         #endregion
     }

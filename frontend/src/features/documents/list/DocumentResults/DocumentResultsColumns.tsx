@@ -79,13 +79,12 @@ const renderActions = (
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIconsRow className="no-gutters">
-        {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_ADD) &&
-          original?.mayanDocumentId !== undefined && (
-            <Col>
-              <DownloadDocumentButton mayanDocumentId={original?.mayanDocumentId} />
-            </Col>
-          )}
-        {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_VIEW) && (
+        {hasClaim(Claims.DOCUMENT_VIEW) && original?.mayanDocumentId !== undefined && (
+          <Col>
+            <DownloadDocumentButton mayanDocumentId={original?.mayanDocumentId} />
+          </Col>
+        )}
+        {hasClaim(Claims.DOCUMENT_VIEW) && (
           <Col>
             <Button
               title="document view details"
@@ -94,7 +93,7 @@ const renderActions = (
             ></Button>
           </Col>
         )}
-        {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_VIEW) && (
+        {hasClaim(Claims.DOCUMENT_DELETE) && (
           <Col>
             <Button
               title="document delete"

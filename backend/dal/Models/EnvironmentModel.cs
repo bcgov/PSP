@@ -8,6 +8,7 @@ namespace Pims.Dal.Entities.Models
     public class EnvironmentModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The application URI.
         /// </summary>
@@ -25,10 +26,13 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a EnvironmentModel.
         /// </summary>
-        public EnvironmentModel() { }
+        public EnvironmentModel()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a EnvironmentModel, initialize with specified arguments.

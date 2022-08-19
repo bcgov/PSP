@@ -27,7 +27,7 @@ namespace Pims.Core.Test
             return new List<Entity.PimsPropertyStatusType>()
             {
                 new Entity.PimsPropertyStatusType("FEESIMP") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyStatusType("CROWNLND") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsPropertyStatusType("CROWNLND") { ConcurrencyControlNumber = 1 },
             };
         }
     }

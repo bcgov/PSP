@@ -32,12 +32,23 @@ namespace Pims.Api
                 })
                 .WithNotParsed((errors) =>
                 {
-                    var helpText = HelpText.AutoBuild(results, h =>
-                    {
-                        return HelpText.DefaultParsingErrorsHandler(results, h);
-                    }, e => e);
+                    var helpText = HelpText.AutoBuild(
+                    results,
+                    h => { return HelpText.DefaultParsingErrorsHandler(results, h); },
+                    e => e);
                     Console.WriteLine(helpText);
                 });
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            DotNetEnv.Env.Load();
+            return Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                config.AddEnvironmentVariables();
+                config.AddCommandLine(args);
+            });
         }
 
         /// <summary>
@@ -45,7 +56,7 @@ namespace Pims.Api
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
+        private static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
         {
             var args = options.ToArgs();
             DotNetEnv.Env.Load();
@@ -74,17 +85,6 @@ namespace Pims.Api
                 .UseSerilog()
                 .UseUrls(config.GetValue<string>("ASPNETCORE_URLS"))
                 .UseStartup<Startup>();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            DotNetEnv.Env.Load();
-            return Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                config.AddEnvironmentVariables();
-                config.AddCommandLine(args);
-            });
         }
     }
 }

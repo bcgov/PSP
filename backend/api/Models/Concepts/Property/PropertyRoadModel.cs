@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class PropertyRoadModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Property road id.
         /// </summary>

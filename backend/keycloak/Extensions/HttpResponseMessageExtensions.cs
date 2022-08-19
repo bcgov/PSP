@@ -1,9 +1,9 @@
-using Pims.Core.Exceptions;
-using Pims.Core.Extensions;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
 
 namespace Pims.Keycloak.Extensions
 {
@@ -50,7 +50,6 @@ namespace Pims.Keycloak.Extensions
                 throw new HttpClientRequestException(response);
             }
         }
-
 
         /// <summary>
         /// Provides a generic way to return the specified restul, or to throw an exception if the request failed.

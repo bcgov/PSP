@@ -3,7 +3,7 @@ import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 export class AcquisitionForm {
   id?: number;
-  name?: string = '';
+  fileName?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
   rowVersion?: number;
@@ -17,7 +17,7 @@ export class AcquisitionForm {
   toApi(): Api_AcquisitionFile {
     return {
       id: this.id,
-      name: this.name,
+      fileName: this.fileName,
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
@@ -31,7 +31,7 @@ export class AcquisitionForm {
   static fromApi(model: Api_AcquisitionFile): AcquisitionForm {
     const newForm = new AcquisitionForm();
     newForm.id = model.id;
-    newForm.name = model.name || '';
+    newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;

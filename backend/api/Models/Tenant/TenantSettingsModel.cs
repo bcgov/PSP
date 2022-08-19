@@ -6,6 +6,7 @@ namespace Pims.Api.Models.Tenant
     public class TenantSettingsModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The help desk email address.
         /// </summary>

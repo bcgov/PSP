@@ -1,9 +1,9 @@
-using Pims.Core.Converters;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Pims.Core.Converters;
 using Xunit;
 
 namespace Pims.Dal.Test.Core.Converters
@@ -18,19 +18,19 @@ namespace Pims.Dal.Test.Core.Converters
         public static IEnumerable<object[]> WriteData = new List<object[]>()
         {
             new object[] { 1, "{\"test\":\"1\"}" },
-            new object[] { null, "{\"test\":null}" }
+            new object[] { null, "{\"test\":null}" },
         };
 
         public static IEnumerable<object[]> ReadData = new List<object[]>()
         {
             new object[] { JsonTokenType.String, "1", "1" },
-            new object[] { JsonTokenType.String, "", "" },
+            new object[] { JsonTokenType.String, string.Empty, string.Empty },
             new object[] { JsonTokenType.String, "test", "test" },
             new object[] { JsonTokenType.String, null, null },
             new object[] { JsonTokenType.Number, null, null },
             new object[] { JsonTokenType.Number, 1, "1" },
-            new object[] { JsonTokenType.Number, 0.34, "" },
-            new object[] { JsonTokenType.Number, "invalid", "" },
+            new object[] { JsonTokenType.Number, 0.34, string.Empty },
+            new object[] { JsonTokenType.Number, "invalid", string.Empty },
             new object[] { JsonTokenType.True, true, null },
             new object[] { JsonTokenType.False, false, null },
         };

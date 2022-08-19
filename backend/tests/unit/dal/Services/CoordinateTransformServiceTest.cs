@@ -1,10 +1,10 @@
-using FluentAssertions;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using NetTopologySuite.Geometries;
 using Pims.Core.Test;
 using Pims.Dal.Services;
 using Xunit;
-using NetTopologySuite.Geometries;
-using System;
 
 namespace Pims.Dal.Test.Services
 {

@@ -8,7 +8,7 @@ Create a .env file and populate it with this.
 
 ```conf
 NODE_ENV=development
-API_URL=http://backend:8080/
+API_URL=http://localhost:5000/
 CHOKIDAR_USEPOLLING=true
 REACT_APP_SITEMINDER_LOGOUT_URL=https://logontest.gov.bc.ca/clp-cgi/logoff.cgi or https://logon7.gov.bc.ca/clp-cgi/logoff.cgi
 ```
@@ -16,7 +16,7 @@ REACT_APP_SITEMINDER_LOGOUT_URL=https://logontest.gov.bc.ca/clp-cgi/logoff.cgi o
 | Key                             | Value                                          | Description                                         |
 | ------------------------------- | ---------------------------------------------- | --------------------------------------------------- |
 | NODE_ENV                        | [development\|production]                      | Node.js environment setting.                        |
-| API_URL                         | [[http://backend:8080/](http://backend:8080/)] | The API root URL; do not include "/api"             |
+| API_URL                         | [[http://localhost:5000/](http://localhost:5000/)] | The API root URL; do not include "/api"             |
 | CHOKIDAR_USEPOLLING             | [true\|false]                                  | Whether to use polling; set to true for containers. |
 | REACT_APP_SITEMINDER_LOGOUT_URL | https://logontest.gov.bc.ca/clp-cgi/logoff.cgi | Siteminder logout URL.                              |
 

@@ -10,35 +10,35 @@ namespace Pims.Dal.Entities.Models
     public class ContactFilter : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - Top level search criteria. Filters all results by person or organization or all.
         /// </summary>
         public string SearchBy { get; set; }
 
         /// <summary>
-        /// get/set - Either the person or organization name
+        /// get/set - Either the person or organization name.
         /// </summary>
-        /// <value></value>
         public string Summary { get; set; }
 
         /// <summary>
         /// get/set - The Municipality of one of a Contact's addresses.
         /// </summary>
-        /// <value></value>
         public string Municipality { get; set; }
 
         /// <summary>
         /// get/set - Whether inactive contacts should be displayed.
         /// </summary>
-        /// <value></value>
         public bool ActiveContactsOnly { get; set; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ContactFilter class.
         /// </summary>
-        public ContactFilter() {
+        public ContactFilter()
+        {
             this.ActiveContactsOnly = true;
         }
 
@@ -65,7 +65,8 @@ namespace Pims.Dal.Entities.Models
         /// Extracts the properties from the query string to generate the filter.
         /// </summary>
         /// <param name="query"></param>
-        public ContactFilter(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query) : base(query)
+        public ContactFilter(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
+            : base(query)
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
@@ -78,6 +79,7 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>

@@ -8,6 +8,7 @@ namespace Pims.Api.Models.Keycloak
     public class ApplicationUserModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>
@@ -24,13 +25,15 @@ namespace Pims.Api.Models.Keycloak
         public string FirstName { get; set; }
 
         /// <summary>
-        /// get/set - User's last name
+        /// get/set - User's last name.
         /// </summary>
         public string LastName { get; set; }
         #endregion
 
         #region Constructors
-        public ApplicationUserModel() { }
+        public ApplicationUserModel()
+        {
+        }
 
         public ApplicationUserModel(int id, Guid key, string firstName, string lastName)
         {

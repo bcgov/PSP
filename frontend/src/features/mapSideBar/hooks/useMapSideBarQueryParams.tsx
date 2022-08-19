@@ -3,6 +3,7 @@ import { AcquisitionContainer } from 'features/properties/map/acquisition/Acquis
 import { AddAcquisitionContainer } from 'features/properties/map/acquisition/add/AddAcquisitionContainer';
 import AddResearchContainer from 'features/properties/map/research/add/AddResearchContainer';
 import ResearchContainer from 'features/properties/map/research/ResearchContainer';
+import { ActivityTray } from 'features/research/activities/ActivityTray/ActivityTray';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { isNumber } from 'lodash';
 import queryString from 'query-string';
@@ -15,6 +16,9 @@ interface IMapSideBar {
   sidebarComponent: React.ReactNode;
   showSideBar: boolean;
   setShowSideBar: (show: boolean) => void;
+  setShowWindow: (show: boolean) => void;
+  actionWindowComponent?: React.ReactNode;
+  showWindow: boolean;
 }
 
 export enum MapSidebarContextType {
@@ -39,6 +43,9 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
   const [sidebarComponent, setSidebarComponent] = useState<React.ReactNode>();
   const [showSideBar, setShowSideBar] = useState(false);
 
+  const [actionWindowComponent, setActionWindowComponent] = useState<React.ReactNode>();
+  const [showWindow, setShowWindow] = useState(false);
+
   const onZoom = useCallback(
     (apiProperty?: IPropertyApiModel) =>
       apiProperty?.longitude &&
@@ -52,6 +59,7 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
   React.useEffect(() => {
     const handleClose = () => {
       history.push('/mapview');
+      setShowWindow(false);
     };
 
     var parts = location.pathname.split('/');
@@ -71,6 +79,21 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
           currentState = MapViewState.RESEARCH_VIEW;
         } else {
           currentState = MapViewState.MAP_ONLY;
+        }
+        if (parts.length === 8 && parts[5] === 'activity') {
+          if (parts[7] === 'view' && isNumber(Number(parts[6]))) {
+            setActionWindowComponent(
+              <ActivityTray
+                activityId={Number(parts[6])}
+                onClose={() => {
+                  const backUrl = history.location.pathname.split('activity')[0];
+                  setShowWindow(false);
+                  history.push(backUrl);
+                }}
+              ></ActivityTray>,
+            );
+            setShowWindow(true);
+          }
         }
       } else if (parts.length > 3 && parts[2] === 'property') {
         pid = queryString.parse(location.search).pid?.toString() ?? '';
@@ -141,6 +164,9 @@ export const useMapSideBarQueryParams = (map?: L.Map): IMapSideBar => {
     sidebarComponent,
     showSideBar,
     setShowSideBar,
+    setShowWindow,
+    showWindow,
+    actionWindowComponent,
   };
 };
 

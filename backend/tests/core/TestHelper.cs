@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.Json;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
@@ -6,13 +13,6 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Dal;
 using Pims.Dal.Configuration.Generators;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text.Json;
 
 namespace Pims.Core.Test
 {
@@ -66,8 +66,7 @@ namespace Pims.Core.Test
                         }
                         // Default to providing serializer options.
                         return (IRegister)Activator.CreateInstance(registerType, new[] { serializerOptions });
-                    }
-                        )).ToList();
+                    })).ToList();
 
             config.Apply(registers);
 
@@ -80,9 +79,9 @@ namespace Pims.Core.Test
                 member.Type.IsGenericType &&
                 member.Type.GetGenericTypeDefinition() == typeof(ICollection<>));
 
-            Services.AddSingleton<IntIdentityGenerator>();
-            Services.AddSingleton(config);
-            Services.AddSingleton<IMapper, ServiceMapper>();
+            this.Services.AddSingleton<IntIdentityGenerator>();
+            this.Services.AddSingleton(config);
+            this.Services.AddSingleton<IMapper, ServiceMapper>();
         }
         #endregion
 
@@ -94,26 +93,27 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public IServiceProvider BuildServiceProvider()
         {
-            if (Provider == null)
+            if (this.Provider == null)
             {
-                Provider = Services.BuildServiceProvider();
+                this.Provider = this.Services.BuildServiceProvider();
             }
-            return Provider;
+            return this.Provider;
         }
 
         /// <summary>
         /// Add a singleton service to the provider, and include the mock.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public Mock<T> AddSingletonWithMock<T>() where T : class
+        public Mock<T> AddSingletonWithMock<T>()
+            where T : class
         {
-            if (Provider != null)
+            if (this.Provider != null)
             {
                 throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
             }
 
             var mock = new Mock<T>();
-            Services.AddSingleton(mock.Object).AddSingleton(mock);
+            this.Services.AddSingleton(mock.Object).AddSingleton(mock);
             return mock;
         }
 
@@ -121,14 +121,15 @@ namespace Pims.Core.Test
         /// Add a singleton service to the provider.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public IServiceCollection AddSingleton<T>() where T : class
+        public IServiceCollection AddSingleton<T>()
+            where T : class
         {
-            if (Provider != null)
+            if (this.Provider != null)
             {
                 throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
             }
 
-            return Services.AddSingleton<T>();
+            return this.Services.AddSingleton<T>();
         }
 
         /// <summary>
@@ -136,14 +137,15 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="item"></param>
         /// <typeparam name="T"></typeparam>
-        public IServiceCollection AddSingleton<T>(T item) where T : class
+        public IServiceCollection AddSingleton<T>(T item)
+            where T : class
         {
-            if (Provider != null)
+            if (this.Provider != null)
             {
                 throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
             }
 
-            return Services.AddSingleton<T>(item);
+            return this.Services.AddSingleton<T>(item);
         }
 
         /// <summary>
@@ -156,12 +158,12 @@ namespace Pims.Core.Test
             where TService : class
             where TImplementation : class, TService
         {
-            if (Provider != null)
+            if (this.Provider != null)
             {
                 throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
             }
 
-            return Services.AddSingleton<TService, TImplementation>((p) => item);
+            return this.Services.AddSingleton<TService, TImplementation>((p) => item);
         }
 
         /// <summary>
@@ -172,12 +174,12 @@ namespace Pims.Core.Test
         /// <typeparam name="T"></typeparam>
         public IServiceCollection AddSingleton(Type type, object item)
         {
-            if (Provider != null)
+            if (this.Provider != null)
             {
                 throw new InvalidOperationException("Cannot add to the service collection once the provider has been built.");
             }
 
-            return Services.AddSingleton(type, item);
+            return this.Services.AddSingleton(type, item);
         }
 
         /// <summary>
@@ -195,7 +197,8 @@ namespace Pims.Core.Test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public Mock<T> GetMock<T>() where T : class
+        public Mock<T> GetMock<T>()
+            where T : class
         {
             return this.BuildServiceProvider().GetService<Mock<T>>();
         }
@@ -216,12 +219,12 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public T CreateInstance<T>()
         {
-            return (T)ActivatorUtilities.CreateInstance(Provider, typeof(T));
+            return (T)ActivatorUtilities.CreateInstance(this.Provider, typeof(T));
         }
 
         public IFormFile GetFormFile(string text)
         {
-            //Setup mock file using a memory stream
+            // Setup mock file using a memory stream
             var fileName = "test.pdf";
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
@@ -229,10 +232,10 @@ namespace Pims.Core.Test
             writer.Flush();
             stream.Position = 0;
 
-            //create FormFile with desired data
+            // create FormFile with desired data
             IFormFile file = new FormFile(stream, 0, stream.Length, "id_from_form", fileName);
             return file;
-        } 
+        }
         #endregion
     }
 }

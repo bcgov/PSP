@@ -28,10 +28,16 @@ export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_Aud
   relationshipType?: DocumentRelationshipType;
 }
 
+export interface Api_DocumentMetadata {
+  metadataTypeId: number;
+  value: string;
+}
+
 export interface Api_UploadRequest {
   documentType: Api_DocumentType;
   documentStatusCode: string;
   file: File;
+  documentMetadata?: any;
 }
 
 export interface Api_UploadResponse {

@@ -9,6 +9,7 @@ namespace Pims.Core.Json
     public class EnumValueAttribute : Attribute
     {
         #region Properties
+
         /// <summary>
         /// get/set - The value that should be used when serialized.
         /// </summary>
@@ -16,6 +17,7 @@ namespace Pims.Core.Json
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an EnumValueAttribute, initializes it with the specified arguments.
         /// </summary>

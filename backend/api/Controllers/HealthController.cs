@@ -19,6 +19,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instances of a HealthController class, initializes it with the specified arguments.
         /// </summary>
@@ -30,6 +31,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Return environment information.
         /// </summary>

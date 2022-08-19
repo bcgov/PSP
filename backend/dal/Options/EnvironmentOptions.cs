@@ -8,6 +8,7 @@ namespace Pims.Dal
     public class EnvironmentOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The application URI.
         /// </summary>

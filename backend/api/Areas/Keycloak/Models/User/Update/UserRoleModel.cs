@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User.Update
     public class UserRoleModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>

@@ -346,7 +346,8 @@ namespace Pims.Core.Extensions
         /// <param name="defaultValue"></param>
         /// <returns></returns>
         public static bool? GetBoolNullValue(
-            this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key,
+            this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict,
+            string key,
             bool? defaultValue = null)
         {
             return dict.GetValue(key, defaultValue);

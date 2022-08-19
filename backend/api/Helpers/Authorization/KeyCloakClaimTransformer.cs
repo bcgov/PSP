@@ -18,11 +18,12 @@ namespace Pims.Api.Helpers.Authorization
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true,
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
         };
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Transform the specified ClaimsPrincipal by extracting claim details from keycloak and creating new claims.
         /// </summary>
@@ -34,7 +35,7 @@ namespace Pims.Api.Helpers.Authorization
             if (principal.HasClaim(c => c.Type == REALM_ACCESS))
             {
                 var realm_access_claim = principal.Claims.First(c => c.Type == REALM_ACCESS);
-                var value = realm_access_claim.Value.Replace("\\", "");
+                var value = realm_access_claim.Value.Replace("\\", string.Empty);
                 var realm_access = JsonSerializer.Deserialize<RealmAccess>(value, _options);
                 var identity = (ClaimsIdentity)principal.Identity;
                 foreach (var role in realm_access.Roles)
@@ -50,7 +51,7 @@ namespace Pims.Api.Helpers.Authorization
     /// <summary>
     /// RealmAccess private class, provides a way to deserialize the realm access.
     /// </summary>
-    class RealmAccess
+    internal class RealmAccess
     {
         public string[] Roles { get; set; }
     }

@@ -1,7 +1,7 @@
-using Pims.Dal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -65,7 +65,7 @@ namespace Pims.Core.Test
                 new Entity.PimsOrganization("Northern Health Authority", type, identifierType, address ?? EntityHelper.CreateAddress(1015)) { Id = 15, PrntOrganizationId = 7, ConcurrencyControlNumber = 1 },
                 new Entity.PimsOrganization("Provincial Health Services Authority", type, identifierType, address ?? EntityHelper.CreateAddress(1016)) { Id = 16, PrntOrganizationId = 7, ConcurrencyControlNumber = 1 },
                 new Entity.PimsOrganization("Vancouver Coastal Health Authority", type, identifierType, address ?? EntityHelper.CreateAddress(1017)) { Id = 17, PrntOrganizationId = 7, ConcurrencyControlNumber = 1 },
-                new Entity.PimsOrganization("Vancouver Island Health Authority", type, identifierType, address ?? EntityHelper.CreateAddress(1018)) { Id = 18, PrntOrganizationId = 7, ConcurrencyControlNumber = 1 }
+                new Entity.PimsOrganization("Vancouver Island Health Authority", type, identifierType, address ?? EntityHelper.CreateAddress(1018)) { Id = 18, PrntOrganizationId = 7, ConcurrencyControlNumber = 1 },
             };
         }
 
@@ -86,10 +86,9 @@ namespace Pims.Core.Test
             var organization = new Entity.PimsOrganization(name, type, identifierType, address)
             {
                 Id = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
             return organization;
         }
     }
 }
-

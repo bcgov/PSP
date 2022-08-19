@@ -68,13 +68,15 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         result = await findByLegalDescription(layerSearch.legalDescription);
       }
 
-      // match the region and district for all found properties
       const foundProperties = featuresToIdentifiedMapProperty(result) ?? [];
-      await Promise.all(
-        foundProperties.map(p => matchRegionAndDistrict(p, regionService, districtService)),
-      );
+      // match the region and district for all found properties
+      if (result?.features?.length !== undefined && result?.features?.length <= 15) {
+        await Promise.all(
+          foundProperties.map(p => matchRegionAndDistrict(p, regionService, districtService)),
+        );
 
-      await Promise.all(foundProperties.map(p => matchAddress(p, getNearestToPoint)));
+        await Promise.all(foundProperties.map(p => matchAddress(p, getNearestToPoint)));
+      }
 
       setSearchResults(foundProperties);
     };
@@ -98,7 +100,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     const pidResults = await getSitePids(selectedItem.siteId);
 
     if (pidResults && pidResults.data?.pids) {
-      if (pidResults.data.pids.length > 50) {
+      if (pidResults.data.pids.length > 15) {
         toast.error('Maximum PID search size exceeded for selected address');
         return;
       }

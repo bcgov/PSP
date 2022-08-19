@@ -5,6 +5,7 @@ namespace Pims.Api.Models.Concepts
     public class ClaimModel : Api.Models.BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>

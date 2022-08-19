@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -7,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsLeaseResponsibilityType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify lease type.
         /// </summary>
@@ -15,11 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a LeaseResponsibilityType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsLeaseResponsibilityType(string id) : this()
+        public PimsLeaseResponsibilityType(string id)
+            : this()
         {
             Id = id;
         }

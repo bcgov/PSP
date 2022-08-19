@@ -1,7 +1,7 @@
 using Mapster;
 using NetTopologySuite.Geometries;
-using Pims.Dal.Helpers;
 using Pims.Dal.Constants;
+using Pims.Dal.Helpers;
 
 namespace Pims.Api.Models.Concepts
 {

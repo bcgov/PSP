@@ -2,7 +2,7 @@ import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
 export interface Api_Activity extends Api_ConcurrentVersion {
-  id?: number;
+  id: number;
   activityTemplateId?: number;
   activityTemplateTypeCode?: Api_TypeCode<string>;
   description: string;

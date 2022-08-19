@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Comparers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Comparers;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities

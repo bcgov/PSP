@@ -5,10 +5,10 @@ namespace Pims.Api.Areas.Reports.Models.AllPropertyFields
     public class AllFieldsPropertyModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The type of property.
         /// </summary>
-        /// <value></value>
         public string PropertyTypeId { get; set; }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Pims.Api.Areas.Reports.Models.AllPropertyFields
         public string Municipality { get; set; }
 
         /// <summary>
-        /// get/set - The province of the property
+        /// get/set - The province of the property.
         /// </summary>
         public string Province { get; set; }
 
@@ -67,6 +67,7 @@ namespace Pims.Api.Areas.Reports.Models.AllPropertyFields
         #endregion
 
         #region Parcel Properties
+
         /// <summary>
         /// get/set - The parcel PID.
         /// </summary>
@@ -97,7 +98,7 @@ namespace Pims.Api.Areas.Reports.Models.AllPropertyFields
         public string Zoning { get; set; }
 
         /// <summary>
-        /// get/set - Potential future Parcel zoning information
+        /// get/set - Potential future Parcel zoning information.
         /// </summary>
         [DisplayName("Zoning Potential")]
         [CsvHelper.Configuration.Attributes.Name("Zoning Potential")]

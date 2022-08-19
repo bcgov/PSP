@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -6,12 +12,6 @@ using Moq;
 using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Json;
 
 namespace Pims.Core.Test
 {
@@ -34,7 +34,6 @@ namespace Pims.Core.Test
         {
             return helper.CreatePimsContext(StringHelper.Generate(10), permission, ensureDeleted);
         }
-
 
         /// <summary>
         /// Creates an instance of a PimsContext and initializes it with the specified 'user'.
@@ -76,7 +75,7 @@ namespace Pims.Core.Test
         public static PimsContext CreatePimsContext(this TestHelper helper, string dbName, ClaimsPrincipal user, bool ensureDeleted = false)
         {
             // Generate a randome database name.
-            if (String.IsNullOrWhiteSpace(dbName))
+            if (string.IsNullOrWhiteSpace(dbName))
             {
                 dbName = StringHelper.Generate(10);
             }

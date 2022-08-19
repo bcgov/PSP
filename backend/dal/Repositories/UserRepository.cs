@@ -25,6 +25,7 @@ namespace Pims.Dal.Repositories
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserService, and initializes it with the specified arguments.
         /// </summary>
@@ -32,7 +33,8 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger) : base(dbContext, user, logger)
+        public UserRepository(PimsContext dbContext, ClaimsPrincipal user, IOptionsMonitor<PimsOptions> options, ILogger<UserRepository> logger)
+            : base(dbContext, user, logger)
         {
             _options = options.CurrentValue;
         }
@@ -110,6 +112,7 @@ namespace Pims.Dal.Repositories
 
             return user;
         }
+
         /// <summary>
         /// Get the total number of user accounts.
         /// </summary>
@@ -325,7 +328,6 @@ namespace Pims.Dal.Repositories
         /// Add the specified user to the datasource.
         /// </summary>
         /// <param name="add"></param>
-        /// <returns></returns>
         public void AddWithoutSave(PimsUser add)
         {
             add.ThrowIfNull(nameof(add));
@@ -482,6 +484,7 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsUsers
                 .Include(u => u.Person)
+                .Include(u => u.PimsRegionUsers)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }

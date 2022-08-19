@@ -57,7 +57,7 @@ jobs:
       - name: SonarQube Scan
         id: scan
         uses: sonarsource/sonarqube-scan-action@master
-        if: ${{ github.event_name == 'push' && github.event.pull_request.head.repo.full_name == github.repository }}
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == 'bcgov/PSP' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}

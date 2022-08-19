@@ -5,15 +5,31 @@ namespace Pims.Api.Models.Concepts
     public class AcquisitionFileModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The model id.
         /// </summary>
         public long Id { get; set; }
 
         /// <summary>
+        /// get/set - The acquisition file number.
+        /// </summary>
+        public string FileNumber { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition file name.
         /// </summary>
-        public string Name { get; set; }
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// get/set - The ministry project number.
+        /// </summary>
+        public string MinistryProjectNumber { get; set; }
+
+        /// <summary>
+        /// get/set - The ministry project name.
+        /// </summary>
+        public string MinistryProjectName { get; set; }
 
         /// <summary>
         /// The assigned date.
