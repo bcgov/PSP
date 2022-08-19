@@ -79,7 +79,7 @@ describe('AddResearchContainer component', () => {
       selectedFeature: null,
       draftProperties: [mapFeatureToProperty(selectedFeature) as any],
     });
-    history.push('/mapview/research/new');
+    history.push('/mapview/sidebar/research/new');
     const pidText = await queryByText('PID: 002-225-255');
     expect(pidText).toBeNull();
   });

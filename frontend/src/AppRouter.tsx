@@ -79,39 +79,39 @@ const AppRouter: React.FC = () => {
         <AppRoute
           path="/login"
           title={getTitle('Login')}
-          component={Login}
+          customComponent={Login}
           layout={PublicLayout}
         ></AppRoute>
         <AppRoute
           path="/ienotsupported"
           title={getTitle('IE Not Supported')}
-          component={IENotSupportedPage}
+          customComponent={IENotSupportedPage}
           layout={PublicLayout}
         ></AppRoute>
-        <AppRoute path="/logout" title={getTitle('Logout')} component={LogoutPage}></AppRoute>
+        <AppRoute path="/logout" title={getTitle('Logout')} customComponent={LogoutPage}></AppRoute>
         <AppRoute
           path="/forbidden"
           title={getTitle('Forbidden')}
-          component={AccessDenied}
+          customComponent={AccessDenied}
           layout={PublicLayout}
         ></AppRoute>
         <AppRoute
           path="/page-not-found"
           title={getTitle('Page Not Found')}
-          component={NotFoundPage}
+          customComponent={NotFoundPage}
           layout={PublicLayout}
         ></AppRoute>
         <AppRoute
           exact
           path="/test"
           title={getTitle('Test')}
-          component={Test}
+          customComponent={Test}
           layout={PublicLayout}
         ></AppRoute>
         <AppRoute
           protected
           path="/admin/users"
-          component={ManageUsers}
+          customComponent={ManageUsers}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
           title={getTitle('Users Management')}
@@ -119,7 +119,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/admin/access/requests"
-          component={ManageAccessRequests}
+          customComponent={ManageAccessRequests}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
           title={getTitle('Access Requests')}
@@ -127,14 +127,14 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/access/request"
-          component={AccessRequestPage}
+          customComponent={AccessRequestPage}
           layout={AuthLayout}
           title={getTitle('Request Access')}
         ></AppRoute>
         <AppRoute
           protected
           path="/admin/access/request/:id"
-          component={AdminAccessRequestPage}
+          customComponent={AdminAccessRequestPage}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
           title={getTitle('Request Access')}
@@ -142,7 +142,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/mapView/:id?"
-          component={MapView}
+          customComponent={MapView}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('Map View')}
@@ -150,7 +150,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/properties/list"
-          component={PropertyListView}
+          customComponent={PropertyListView}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('View Inventory')}
@@ -159,7 +159,7 @@ const AppRouter: React.FC = () => {
           protected
           exact
           path="/lease/list"
-          component={LeaseAndLicenseListView}
+          customComponent={LeaseAndLicenseListView}
           layout={AuthLayout}
           claim={Claims.LEASE_VIEW}
           title={getTitle('View Lease & Licenses')}
@@ -168,7 +168,7 @@ const AppRouter: React.FC = () => {
           protected
           path="/lease/new"
           exact
-          component={AddLeaseContainer}
+          customComponent={AddLeaseContainer}
           layout={AuthLayout}
           claim={Claims.LEASE_ADD}
           title={getTitle('Create/Edit Lease & Licenses')}
@@ -176,7 +176,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/lease/:leaseId"
-          component={LeaseContainerWrapper}
+          customComponent={LeaseContainerWrapper}
           layout={AuthLayout}
           claim={Claims.LEASE_VIEW}
           title={getTitle('Create/Edit Lease & Licenses')}
@@ -184,7 +184,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/list"
-          component={ContactListPage}
+          customComponent={ContactListPage}
           layout={AuthLayout}
           claim={Claims.CONTACT_VIEW}
           title={getTitle('View Contacts')}
@@ -192,7 +192,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/new"
-          component={CreateContactContainer}
+          customComponent={CreateContactContainer}
           layout={AuthLayout}
           claim={[Claims.CONTACT_ADD]}
           title={getTitle('Create Contact')}
@@ -200,7 +200,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/:id?/edit"
-          component={UpdateContactContainer}
+          customComponent={UpdateContactContainer}
           layout={AuthLayout}
           claim={[Claims.CONTACT_EDIT]}
           title={getTitle('Edit Contact')}
@@ -208,7 +208,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/:id?"
-          component={ContactViewContainer}
+          customComponent={ContactViewContainer}
           layout={AuthLayout}
           claim={[Claims.CONTACT_VIEW]}
           title={getTitle('View Contact')}
@@ -217,7 +217,7 @@ const AppRouter: React.FC = () => {
           protected
           exact
           path="/research/list"
-          component={ResearchListView}
+          customComponent={ResearchListView}
           layout={AuthLayout}
           claim={Claims.RESEARCH_VIEW}
           title={getTitle('View Research Files')}
@@ -226,7 +226,7 @@ const AppRouter: React.FC = () => {
           protected
           exact
           path="/acquisition/list"
-          component={AcquisitionListView}
+          customComponent={AcquisitionListView}
           layout={AuthLayout}
           claim={Claims.ACQUISITION_VIEW}
           title={getTitle('View Acquisition Files')}
@@ -234,7 +234,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/admin/user/:key?"
-          component={EditUserPage}
+          customComponent={EditUserPage}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
           title={getTitle('Edit User')}
@@ -243,17 +243,17 @@ const AppRouter: React.FC = () => {
           protected
           path="/testFileManagement"
           title={getTitle('Test')}
-          component={TestFileManagement}
+          customComponent={TestFileManagement}
           layout={AuthLayout}
         />
         <AppRoute
           exact
           path="/test/notes"
           title={getTitle('Test Notes')}
-          component={TestNotes}
+          customComponent={TestNotes}
           layout={AuthLayout}
         />
-        <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
+        <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />
       </Switch>
     </Suspense>
   );
