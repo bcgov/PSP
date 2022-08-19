@@ -8,25 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_INSTANCE_HIST")]
-    [Index(nameof(ActivityInstanceHistId), nameof(EndDateHist), Name = "PIMS_ACTINS_H_UK", IsUnique = true)]
-    public partial class PimsActivityInstanceHist
+    [Table("PIMS_RESEARCH_ACTIVITY_INSTANCE")]
+    [Index(nameof(ActivityInstanceId), Name = "RSCHAI_ACTIVITY_INSTANCE_ID_IDX")]
+    [Index(nameof(ResearchFileId), Name = "RSCHAI_RESEARCH_FILE_ID_IDX")]
+    public partial class PimsResearchActivityInstance
     {
         [Key]
-        [Column("_ACTIVITY_INSTANCE_HIST_ID")]
-        public long ActivityInstanceHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
+        [Column("RESEARCH_ACTIVITY_INSTANCE_ID")]
+        public long ResearchActivityInstanceId { get; set; }
         [Column("ACTIVITY_INSTANCE_ID")]
         public long ActivityInstanceId { get; set; }
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long? ActivityTemplateId { get; set; }
-        [Required]
-        [Column("ACTIVITY_INSTANCE_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string ActivityInstanceStatusTypeCode { get; set; }
+        [Column("RESEARCH_FILE_ID")]
+        public long ResearchFileId { get; set; }
+        [Column("IS_DISABLED")]
+        public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -65,5 +60,12 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(ActivityInstanceId))]
+        [InverseProperty(nameof(PimsActivityInstance.PimsResearchActivityInstances))]
+        public virtual PimsActivityInstance ActivityInstance { get; set; }
+        [ForeignKey(nameof(ResearchFileId))]
+        [InverseProperty(nameof(PimsResearchFile.PimsResearchActivityInstances))]
+        public virtual PimsResearchFile ResearchFile { get; set; }
     }
 }

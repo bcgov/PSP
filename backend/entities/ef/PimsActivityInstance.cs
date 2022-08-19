@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACTIVITY_INSTANCE")]
+    [Index(nameof(ActivityInstanceStatusTypeCode), Name = "ACTINS_ACTIVITY_INSTANCE_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(ActivityTemplateId), Name = "ACTINS_ACTIVITY_TEMPLATE_ID_IDX")]
     public partial class PimsActivityInstance
     {
@@ -17,6 +18,7 @@ namespace Pims.Dal.Entities
             PimsAcquisitionActivityInstances = new HashSet<PimsAcquisitionActivityInstance>();
             PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
             PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
+            PimsResearchActivityInstances = new HashSet<PimsResearchActivityInstance>();
         }
 
         [Key]
@@ -24,6 +26,10 @@ namespace Pims.Dal.Entities
         public long ActivityInstanceId { get; set; }
         [Column("ACTIVITY_TEMPLATE_ID")]
         public long? ActivityTemplateId { get; set; }
+        [Required]
+        [Column("ACTIVITY_INSTANCE_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string ActivityInstanceStatusTypeCode { get; set; }
         [Required]
         [Column("ACTIVITY_DATA_JSON")]
         public string ActivityDataJson { get; set; }
@@ -66,6 +72,9 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
+        [ForeignKey(nameof(ActivityInstanceStatusTypeCode))]
+        [InverseProperty(nameof(PimsActivityInstanceStatusType.PimsActivityInstances))]
+        public virtual PimsActivityInstanceStatusType ActivityInstanceStatusTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(ActivityTemplateId))]
         [InverseProperty(nameof(PimsActivityTemplate.PimsActivityInstances))]
         public virtual PimsActivityTemplate ActivityTemplate { get; set; }
@@ -75,5 +84,7 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceNote.ActivityInstance))]
         public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
+        [InverseProperty(nameof(PimsResearchActivityInstance.ActivityInstance))]
+        public virtual ICollection<PimsResearchActivityInstance> PimsResearchActivityInstances { get; set; }
     }
 }
