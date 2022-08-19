@@ -42,7 +42,7 @@ export const ActivityRouter: React.FunctionComponent<IActivityRouterProps> = Rea
             onClose={onClose}
           ></ActivityContainer>
         )}
-        claim={Claims.RESEARCH_ADD}
+        claim={Claims.ACTIVITY_VIEW}
         exact
         key={'activity'}
         title={'Activity'}

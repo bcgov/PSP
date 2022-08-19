@@ -24,7 +24,7 @@ export function createActivityTableColumns(
       maxWidth: 40,
       Cell: (cellProps: CellProps<any, ITypeCode<string>>) => {
         const { hasClaim } = useKeycloakWrapper();
-        return hasClaim(Claims.NOTE_VIEW) ? (
+        return hasClaim(Claims.ACTIVITY_VIEW) ? (
           <LinkButton onClick={() => onShowActivity(cellProps.row.original)}>
             {cellProps.value?.description ?? ''}
           </LinkButton>
@@ -58,7 +58,7 @@ export function createActivityTableColumns(
         const { hasClaim } = useKeycloakWrapper();
         return (
           <StyledDiv>
-            {hasClaim(Claims.NOTE_VIEW) ? (
+            {hasClaim(Claims.ACTIVITY_VIEW) ? (
               <IconButton
                 title="View Activity"
                 variant="light"
@@ -68,7 +68,7 @@ export function createActivityTableColumns(
               </IconButton>
             ) : null}
 
-            {hasClaim(Claims.NOTE_DELETE) ? (
+            {hasClaim(Claims.ACTIVITY_DELETE) ? (
               <StyledRemoveLinkButton onClick={() => onDelete(cellProps.row.original)}>
                 <FaTrash title="Delete Activity" size="2rem" />
               </StyledRemoveLinkButton>

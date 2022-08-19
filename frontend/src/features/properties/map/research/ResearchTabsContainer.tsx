@@ -1,9 +1,11 @@
+import { Claims } from 'constants/claims';
 import {
   ResearchTabNames,
   ResearchTabs,
   TabResearchView,
 } from 'features/mapSideBar/tabs/ResearchTabs';
 import ActivityListView from 'features/research/activities/list/ActivityListView';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
 
@@ -22,6 +24,7 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
   setEditMode,
 }) => {
   const tabViews: TabResearchView[] = [];
+  const { hasClaim } = useKeycloakWrapper();
 
   tabViews.push({
     content: <ResearchSummaryView researchFile={researchFile} setEditMode={setEditMode} />,
@@ -29,7 +32,7 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
     name: 'Research Details',
   });
 
-  if (researchFile?.id) {
+  if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
     tabViews.push({
       content: <ActivityListView fileId={researchFile.id}></ActivityListView>,
       key: ResearchTabNames.activities,

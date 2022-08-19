@@ -1,7 +1,9 @@
 import { SelectOption } from 'components/common/form/Select';
 import { TableSort } from 'components/Table/TableSort';
+import { Claims } from 'constants/claims';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import useIsMounted from 'hooks/useIsMounted';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';
 import { orderBy } from 'lodash';
@@ -41,6 +43,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
     deleteActivity: { execute: deleteActivity },
   } = useActivityRepository();
   const { setModalProps, setDisplayModal } = useModalContext();
+  const { hasClaim } = useKeycloakWrapper();
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
@@ -132,15 +135,15 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
       <Styled.ListPage>
         <Styled.Scrollable vertical={true}>
           <Styled.PageHeader>Activities</Styled.PageHeader>
-          {
+          {hasClaim(Claims.ACTIVITY_ADD) && (
             <AddActivityForm
               onAddActivity={(activityTypeId: number) => {
                 saveActivity(activityTypeId);
               }}
               templateTypes={templateTypes}
             ></AddActivityForm>
-          }
-          {<ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />}
+          )}
+          <ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />
           <ActivityResults
             results={sortedFilteredActivities}
             loading={isLoading}
