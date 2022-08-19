@@ -385,9 +385,7 @@ exports[`MapView Renders the map 1`] = `
   >
     <div
       class="c1"
-    >
-      Nothing to see here, move along
-    </div>
+    />
     <div
       class="c2"
       data-testid="map-action-window"
