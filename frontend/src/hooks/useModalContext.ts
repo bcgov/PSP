@@ -5,6 +5,7 @@ import { ModalProps } from './../components/common/GenericModal';
 import { ModalContext } from './../contexts/modalContext';
 export const useModalContext = (newModalProps?: ModalProps) => {
   const { modalProps, setModalProps, setDisplayModal } = useContext(ModalContext);
+  // if the modal props were passed in to the hook as a param, set them during hook initialization only. Ignore all future updates to newModalProps.
   useEffect(() => {
     if (newModalProps !== undefined) {
       setModalProps({ ...newModalProps });

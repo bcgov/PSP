@@ -1,5 +1,4 @@
 import { ModalProps } from 'components/common/GenericModal';
-import noop from 'lodash/noop';
 import * as React from 'react';
 import { useState } from 'react';
 
@@ -11,11 +10,15 @@ export interface IModalContext {
 
 export const ModalContext = React.createContext<IModalContext>({
   modalProps: undefined,
-  setModalProps: noop,
-  setDisplayModal: noop,
+  setDisplayModal: (display: boolean) => {
+    throw Error('setDisplayModal function not defined');
+  },
+  setModalProps: (modalProps?: ModalProps) => {
+    throw Error('setModalProps function not defined');
+  },
 });
 
-export const ModalContextProvider = (props: IModalContext & { children: any }) => {
+export const ModalContextProvider = (props: IModalContext & { children: React.ReactChild }) => {
   const [modalProps, setModalProps] = useState<ModalProps | undefined>(undefined);
   const displayFunction = React.useCallback(
     (displayModal: boolean) => {
@@ -37,7 +40,6 @@ export const ModalContextProvider = (props: IModalContext & { children: any }) =
   return (
     <ModalContext.Provider
       value={{
-        // if user info is not available when authenticated, then the auth state is not ready
         modalProps: {
           ...modalProps,
           display: modalProps?.display ?? false,
