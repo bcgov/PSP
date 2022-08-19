@@ -2,7 +2,7 @@
 -- Execute this script on:
 -- 		PSP_PIMS_S35_00/dbo - This database/schema will be modified
 -- to synchronize it with MS SQL Server 2016:
--- 		PSP_PIMS_S33_00/dbo
+-- 		PSP_PIMS_S34_00/dbo
 
 -- We recommend backing up the database prior to executing the script.
 
