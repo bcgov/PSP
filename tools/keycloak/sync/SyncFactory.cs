@@ -423,10 +423,24 @@ namespace Pims.Tools.Keycloak.Sync
                     // Fetch the group from PIMS.
                     foreach (var kgroup in kgroups)
                     {
-                        var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/{kgroup.Id}");
-                        if (role != null)
+                        try
                         {
-                            uRoles = uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
+                            var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/{kgroup.Id}");
+                            if (role != null)
+                            {
+                                uRoles = uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
+                            }
+                        }
+                        catch (HttpClientRequestException ex)
+                        {
+                            if (ex.StatusCode.Value == HttpStatusCode.NotFound)
+                            {
+                                _logger.LogWarning($"Failed to add keycloak group '{kgroup.Name}' to user '{kuser.Username}. That role will be ignored.", ex);
+                            }
+                            else
+                            {
+                                throw ex;
+                            }
                         }
                     }
 
