@@ -2,6 +2,7 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import {
   Api_DocumentRelationship,
   Api_DocumentType,
+  Api_DocumentUpdateRequest,
   Api_UploadRequest,
   Api_UploadResponse,
 } from 'models/api/Document';
@@ -77,6 +78,16 @@ export const useApiDocuments = () => {
         return api.post<Api_UploadResponse>(
           `/documents/upload/${relationshipType}/${parentId}`,
           formData,
+        );
+      },
+      updateDocumentMetadataApiCall: (
+        relationshipType: DocumentRelationshipType,
+        documentId: number,
+        updateRequest: Api_DocumentUpdateRequest,
+      ) => {
+        return api.put<boolean>(
+          `/documents/${documentId}/relationship/${relationshipType}/metadata`,
+          updateRequest,
         );
       },
     }),

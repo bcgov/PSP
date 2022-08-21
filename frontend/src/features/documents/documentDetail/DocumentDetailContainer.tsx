@@ -1,17 +1,23 @@
-import { Api_Document } from 'models/api/Document';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { Api_Document, Api_DocumentUpdateRequest } from 'models/api/Document';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useEffect, useState } from 'react';
 
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
+import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import { ComposedDocument } from './ComposedDocument';
 import DocumentDetailView from './DocumentDetailView';
 
 export interface IDocumentDetailContainerProps {
+  relationshipType: DocumentRelationshipType;
   pimsDocument: Api_Document;
+  onUpdateSuccess: () => void;
+  onCancel?: () => void;
 }
 
 export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailContainerProps> = props => {
   const [document, setDocument] = useState<ComposedDocument>({ pimsDocument: props.pimsDocument });
+  const { updateDocument, updateDocumentLoading } = useDocumentRelationshipProvider();
 
   const { retrieveDocumentMetadata, retrieveDocumentMetadataLoading } = useDocumentProvider();
   useEffect(() => {
@@ -30,5 +36,23 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
 
     fetch();
   }, [props.pimsDocument.mayanDocumentId, retrieveDocumentMetadata]);
-  return <DocumentDetailView document={document} isLoading={retrieveDocumentMetadataLoading} />;
+
+  const onUpdateDocument = async (updateRequest: Api_DocumentUpdateRequest) => {
+    if (props.pimsDocument.id) {
+      let result = await updateDocument(
+        props.relationshipType,
+        props.pimsDocument.id,
+        updateRequest,
+      );
+      result && props.onUpdateSuccess();
+    }
+  };
+  return (
+    <DocumentDetailView
+      document={document}
+      isLoading={retrieveDocumentMetadataLoading || updateDocumentLoading}
+      onUpdate={onUpdateDocument}
+      onCancel={props.onCancel}
+    />
+  );
 };

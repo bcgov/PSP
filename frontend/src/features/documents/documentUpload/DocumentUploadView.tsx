@@ -145,7 +145,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                     />
                   </SectionField>
                 ))}
-                <div style={{ border: 'solid 1px;', color: 'red' }}>
+                <div style={{ border: 'solid 1px', color: 'red' }}>
                   {Object.values(formikProps.errors).length > 0 && (
                     <>Mandatory fields are required.</>
                   )}

@@ -134,7 +134,7 @@ describe('Manage Users Component', () => {
 
     const email = getAllByPlaceholderText('Email')[0];
 
-    expect(email).toHaveValue('');
+    expect(email.textContent).toBe('');
   });
 
   it('each row contains a link to the access request details page', async () => {

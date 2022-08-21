@@ -201,7 +201,7 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
           id="input-parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
           name="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
           title="0"
-          value="0"
+          value=""
         />
       </div>
     </div>
