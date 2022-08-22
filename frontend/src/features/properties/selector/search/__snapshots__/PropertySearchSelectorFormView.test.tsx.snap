@@ -6,6 +6,9 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c5.btn {

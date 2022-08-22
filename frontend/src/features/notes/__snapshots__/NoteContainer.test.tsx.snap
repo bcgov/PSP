@@ -196,6 +196,9 @@ exports[`NoteContainer component renders as expected 1`] = `
       class="Toastify"
     />
     <div
+      class="container"
+    />
+    <div
       class="Toastify"
     />
     <div
