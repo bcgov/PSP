@@ -61,7 +61,7 @@ describe('Activity List View', () => {
   });
 
   it('should have the activity type in the component', () => {
-    const { getByTestId } = setup();
+    const { getByTestId } = setup({ claims: [Claims.ACTIVITY_ADD] });
     expect(getByTestId('add-activity-type')).toBeInTheDocument();
   });
 
