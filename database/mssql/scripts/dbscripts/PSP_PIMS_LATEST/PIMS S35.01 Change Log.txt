@@ -1,3 +1,8 @@
+PSP_PIMS S35.01 Sprint 35 2022-Aug-22
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
+- Requires additional metadata to meet standards
+
 PSP_PIMS S35.00 Sprint 34 2022-Aug-17
 - Added tables:
   - PIMS_ACTIVITY_INSTANCE_STATUS_TYPE

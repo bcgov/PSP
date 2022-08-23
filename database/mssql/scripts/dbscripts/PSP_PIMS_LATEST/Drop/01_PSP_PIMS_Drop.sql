@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.1                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S35.00.dez                                 */
+/* Project file:          PIMS S35.01.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2022-08-17 11:31                                */
+/* Created on:            2022-08-22 16:07                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -901,15 +901,15 @@ DROP TRIGGER [dbo].[PIMS_DOCSTY_I_S_U_TR]
 GO
 
 
+DROP TRIGGER [dbo].[PIMS_ACTINS_I_S_I_TR]
+GO
+
+
 DROP TRIGGER [dbo].[PIMS_ACTINS_I_S_U_TR]
 GO
 
 
 DROP TRIGGER [dbo].[PIMS_ACTINS_A_S_IUD_TR]
-GO
-
-
-DROP TRIGGER [dbo].[PIMS_ACTINS_I_S_I_TR]
 GO
 
 
@@ -1070,6 +1070,18 @@ GO
 
 
 DROP TRIGGER [dbo].[PIMS_LNSRVT_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_RSCHAI_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_RSCHAI_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_RSCHAI_I_S_I_TR]
 GO
 
 
@@ -3178,6 +3190,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE] DROP CONSTRAINT [ACTINS_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACTIVITY_INSTANCE', 'COLUMN', N'DESCRIPTION'
 GO
 
 
@@ -5632,6 +5648,32 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_SERVICE_FILE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST"                  */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [DF__PIMS_RESE___RESE__0B3292B8]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [DF__PIMS_RESE__EFFEC__0C26B6F1]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [PIMS_RSCHAI_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [PIMS_RSCHAI_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST]
 GO
 
 
@@ -11425,6 +11467,14 @@ GO
 /* Drop sequences                                                         */
 /* ---------------------------------------------------------------------- */
 
+DROP SEQUENCE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_H_ID_SEQ]
+GO
+
+
 DROP SEQUENCE [dbo].[PIMS_ACQUISITION_FILE_ID_SEQ]
 GO
 
@@ -12030,9 +12080,5 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE_ID_SEQ]
 GO
 
