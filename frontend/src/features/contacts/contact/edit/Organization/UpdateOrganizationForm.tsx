@@ -61,7 +61,22 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   ]);
 
   const initialValues = !!formOrganization
-    ? { ...defaultCreateOrganization, ...formOrganization }
+    ? {
+        ...defaultCreateOrganization,
+        ...formOrganization,
+        mailingAddress: {
+          ...defaultCreateOrganization.mailingAddress,
+          ...formOrganization.mailingAddress,
+        },
+        propertyAddress: {
+          ...defaultCreateOrganization.propertyAddress,
+          ...formOrganization.propertyAddress,
+        },
+        billingAddress: {
+          ...defaultCreateOrganization.billingAddress,
+          ...formOrganization.billingAddress,
+        },
+      }
     : defaultCreateOrganization;
 
   return (

@@ -68,7 +68,26 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   return (
     <Formik
       component={UpdatePersonComponent}
-      initialValues={!!formPerson ? { ...defaultCreatePerson, ...formPerson } : defaultCreatePerson}
+      initialValues={
+        !!formPerson
+          ? {
+              ...defaultCreatePerson,
+              ...formPerson,
+              mailingAddress: {
+                ...defaultCreatePerson.mailingAddress,
+                ...formPerson.mailingAddress,
+              },
+              propertyAddress: {
+                ...defaultCreatePerson.propertyAddress,
+                ...formPerson.propertyAddress,
+              },
+              billingAddress: {
+                ...defaultCreatePerson.billingAddress,
+                ...formPerson.billingAddress,
+              },
+            }
+          : defaultCreatePerson
+      }
       enableReinitialize
       validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
       onSubmit={onSubmit}
@@ -87,6 +106,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   resetForm,
   submitForm,
   setFieldValue,
+  setFieldTouched,
   initialValues,
 }) => {
   const history = useHistory();
