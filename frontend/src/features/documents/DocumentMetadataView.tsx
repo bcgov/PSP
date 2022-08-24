@@ -28,6 +28,7 @@ export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataView
           required={value.required === true}
         >
           <Input
+            data-testid={`metadata-input-${value.metadata_type?.label}` || ''}
             field={(props.edit ? value?.id?.toString() : value.metadata_type?.id?.toString()) || ''}
             required={value.required === true}
             defaultValue={value.value}

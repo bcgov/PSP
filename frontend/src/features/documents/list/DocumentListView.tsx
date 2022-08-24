@@ -133,7 +133,10 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             <Col xs="auto">Documents</Col>
             {hasClaim(Claims.DOCUMENT_ADD) && (
               <Col>
-                <StyledAddButton onClick={() => setIsUploadVisible(true)}>
+                <StyledAddButton
+                  data-testid="document-add-button"
+                  onClick={() => setIsUploadVisible(true)}
+                >
                   <FaUpload />
                   &nbsp;Add a Document
                 </StyledAddButton>

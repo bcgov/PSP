@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { ComposedDocument } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
-import DocumentDetailView from './DocumentDetailView';
+import { DocumentDetailView } from './DocumentDetailView';
 
 export interface IDocumentDetailContainerProps {
   relationshipType: DocumentRelationshipType;

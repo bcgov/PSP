@@ -39,6 +39,7 @@ const DownloadDocumentButton: React.FunctionComponent<IDownloadDocumentButtonPro
     <div>
       <LoadingBackdrop show={provider.downloadDocumentFileLoading} />
       <LinkButton
+        data-testid="document-download-button"
         disabled={provider.downloadDocumentFileLoading}
         onClick={() => {
           downloadFile(props.mayanDocumentId, props.mayanFileId);
