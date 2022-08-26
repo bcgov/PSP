@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AcquisitionHeader } from './common/AcquisitionHeader';
 import { useAcquisitionProvider } from './hooks/useAcquisitionProvider';
 
-interface IAcquisitionContainerProps {
+export interface IAcquisitionContainerProps {
   acquisitionFileId: number;
   onClose: () => void;
 }
