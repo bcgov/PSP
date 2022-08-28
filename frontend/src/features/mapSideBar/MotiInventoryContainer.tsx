@@ -104,7 +104,11 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
       if (props?.id !== undefined) {
         const response = await getPropertyAssociations(props.id);
         if (response !== undefined) {
-          setComposedProperty(property => ({ ...property, propertyAssociations: response }));
+          setComposedProperty(property => ({
+            ...property,
+            pid: props.id?.toString(),
+            propertyAssociations: response,
+          }));
         }
       }
     };

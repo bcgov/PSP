@@ -253,6 +253,7 @@ const Map: React.FC<MapProps> = ({
           )}
           {!!layerPopup && (
             <LayerPopup
+              propertyInfo={propertyInfo}
               layerPopup={layerPopup}
               onViewPropertyInfo={onViewPropertyClick}
               onClose={() => {

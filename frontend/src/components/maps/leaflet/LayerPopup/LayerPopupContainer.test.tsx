@@ -1,5 +1,6 @@
 import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
+import { IProperty } from 'interfaces/IProperty';
 import { mockLookups } from 'mocks/mockLookups';
 import { useMap } from 'react-leaflet';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -14,6 +15,19 @@ jest.mock('react-leaflet');
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+const mockProperty: IProperty = {
+  id: 52,
+  pid: '009456789',
+  address: {
+    id: 1,
+    streetAddress1: '1234 mock Street',
+    streetAddress2: 'N/A',
+    municipality: 'Victoria',
+    provinceId: 1,
+    province: 'BC',
+    postal: 'V1V1V1',
+  },
+};
 
 const onViewPropertyInfo = jest.fn();
 const onClose = jest.fn();
@@ -25,6 +39,7 @@ describe('LayerPopupContainer component', () => {
     // render component under test
     const component = render(
       <LayerPopupContainer
+        propertyInfo={mockProperty}
         layerPopup={renderOptions.layerPopup}
         onViewPropertyInfo={renderOptions.onViewPropertyInfo}
         onClose={onClose}
@@ -48,6 +63,7 @@ describe('LayerPopupContainer component', () => {
 
   it('renders as expected with layer popup content', async () => {
     const { asFragment } = setup({
+      propertyInfo: mockProperty,
       layerPopup: {} as any,
       onViewPropertyInfo: onViewPropertyInfo,
     });
@@ -56,6 +72,7 @@ describe('LayerPopupContainer component', () => {
   describe('fly out behaviour', () => {
     it('fly out is hidden by default', async () => {
       const { queryByText } = setup({
+        propertyInfo: mockProperty,
         layerPopup: {} as any,
         onViewPropertyInfo: onViewPropertyInfo,
       });
@@ -64,6 +81,7 @@ describe('LayerPopupContainer component', () => {
 
     it('opens fly out when ellipsis is clicked', async () => {
       const { getByTestId, getByText } = setup({
+        propertyInfo: mockProperty,
         layerPopup: {} as any,
         onViewPropertyInfo: onViewPropertyInfo,
       });
@@ -74,6 +92,7 @@ describe('LayerPopupContainer component', () => {
 
     it('handles view property action', async () => {
       const { getByTestId, getByText } = setup({
+        propertyInfo: mockProperty,
         layerPopup: {} as any,
         onViewPropertyInfo: onViewPropertyInfo,
       });
@@ -86,6 +105,7 @@ describe('LayerPopupContainer component', () => {
 
     it('handles create research file action', async () => {
       const { getByTestId, getByText } = setup({
+        propertyInfo: mockProperty,
         layerPopup: {} as any,
         onViewPropertyInfo: onViewPropertyInfo,
         claims: [Claims.RESEARCH_ADD],
@@ -99,6 +119,7 @@ describe('LayerPopupContainer component', () => {
 
     it('handles create acquisition file action', async () => {
       const { getByTestId, getByText } = setup({
+        propertyInfo: mockProperty,
         layerPopup: {} as any,
         onViewPropertyInfo: onViewPropertyInfo,
         claims: [Claims.ACQUISITION_ADD],

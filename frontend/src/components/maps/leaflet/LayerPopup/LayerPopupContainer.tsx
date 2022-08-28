@@ -1,4 +1,5 @@
 import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { IProperty } from 'interfaces/IProperty';
 import React, { useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -9,12 +10,14 @@ import { LayerPopupLinks } from './components/LayerPopupLinks';
 import { LayerPopupTitle } from './styles';
 
 export interface ILayerPopupContainerProps {
+  propertyInfo: IProperty | null;
   layerPopup: LayerPopupInformation;
   onClose?: () => void;
-  onViewPropertyInfo: (pid?: string | null) => void;
+  onViewPropertyInfo: (pid?: string | null, id?: number | null) => void;
 }
 
 export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
+  propertyInfo,
   layerPopup,
   onClose,
   onViewPropertyInfo,
@@ -24,6 +27,8 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
 
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;
+  const id = propertyInfo?.id || null;
+
   // open/close map popup fly-out menu
   const [showFlyout, setShowFlyout] = useState(false);
   const openFlyout = useCallback(() => setShowFlyout(true), []);
@@ -31,7 +36,7 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
 
   // bubble up the non-inventory property - based on their PID
   const handleViewPropertyInfo = () => {
-    onViewPropertyInfo(pid);
+    onViewPropertyInfo(pid, id);
   };
 
   const handleCreateResearchFile = () => {

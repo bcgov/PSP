@@ -1,4 +1,5 @@
 import { Feature, GeoJsonProperties } from 'geojson';
+import { IProperty } from 'interfaces';
 import { LatLng, LatLngBounds } from 'leaflet';
 import React from 'react';
 import { Popup } from 'react-leaflet';
@@ -34,9 +35,10 @@ export type LayerPopupInformation = {
 };
 
 export interface ILayerPopupProps {
+  propertyInfo: IProperty | null;
   layerPopup: LayerPopupInformation;
   onClose?: () => void;
-  onViewPropertyInfo: (pid?: string | null) => void;
+  onViewPropertyInfo: (pid?: string | null, id?: number | null) => void;
 }
 
 export const LayerPopup: React.FC<ILayerPopupProps> = props => {

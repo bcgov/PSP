@@ -42,10 +42,11 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
     history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
   };
 
-  const onPropertyViewClicked = (pid?: string | null) => {
+  const onPropertyViewClicked = (pid?: string | null, id?: number | null) => {
     if (pid !== undefined && pid !== null) {
       const parsedPid = pidParser(pid);
-      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+      // history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+      history.push(`/mapview/sidebar/property/${id}/non-inventory-property/${parsedPid}`);
     } else {
       console.warn('Invalid marker when trying to see property information');
       toast.warn('A map parcel must have a PID in order to view detailed information');
