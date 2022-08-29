@@ -28,7 +28,7 @@ export const mockAcquisitionFileResponse = (
     description: 'South Coast Region',
     isDisabled: false,
   },
-  appCreateTimestamp: '2022-07-28T00:57:37.42',
+  appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
   appLastUpdateUserid: 'admin',
   appCreateUserid: 'admin',

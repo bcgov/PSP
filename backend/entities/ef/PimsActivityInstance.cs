@@ -30,6 +30,9 @@ namespace Pims.Dal.Entities
         [Column("ACTIVITY_INSTANCE_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string ActivityInstanceStatusTypeCode { get; set; }
+        [Column("DESCRIPTION")]
+        [StringLength(500)]
+        public string Description { get; set; }
         [Required]
         [Column("ACTIVITY_DATA_JSON")]
         public string ActivityDataJson { get; set; }

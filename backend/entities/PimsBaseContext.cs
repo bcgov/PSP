@@ -2287,6 +2287,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.Description).HasComment("Description of the activity instance.");
+
                 entity.HasOne(d => d.ActivityInstanceStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsActivityInstances)
                     .HasForeignKey(d => d.ActivityInstanceStatusTypeCode)
