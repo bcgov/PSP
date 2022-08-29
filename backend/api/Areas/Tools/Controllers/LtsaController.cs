@@ -67,7 +67,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.TitleOrder>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostTitleOrderAsync(string titleNumber, string landTitleDistrictCode)
         {
             var result = await _ltsaService.PostTitleOrder(titleNumber, landTitleDistrictCode);
@@ -84,7 +84,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.ParcelInfoOrder>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostParcelInfoOrderAsync(string pid)
         {
             if (!string.IsNullOrEmpty(pid))
@@ -105,7 +105,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.SpcpOrder>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostSpcpOrderAsync(string strataPlanNumber)
         {
             var result = await _ltsaService.PostSpcpOrder(strataPlanNumber);
@@ -122,7 +122,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(IEnumerable<Model.LtsaOrders>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.PropertyEdit)]
+        [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostLtsaFields(string pid)
         {
             var result = await _ltsaService.PostLtsaFields(pid);

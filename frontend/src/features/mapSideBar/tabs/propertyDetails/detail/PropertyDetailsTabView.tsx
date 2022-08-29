@@ -1,6 +1,7 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as API from 'constants/API';
-import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
+import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
@@ -33,6 +34,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   setEditMode,
 }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
+  const { hasClaim } = useKeycloakWrapper();
 
   const pphTypeOptions = getOptionsByType(API.PPH_STATUS_TYPES);
 
@@ -61,7 +63,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
         <StyledEditWrapper className="mr-3 my-1">
-          {setEditMode !== undefined && (
+          {setEditMode !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
             <Button
               variant="link"
               onClick={() => {
