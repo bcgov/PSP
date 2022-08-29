@@ -37,7 +37,7 @@ const DepositsReturnedContainer: React.FC<IDepositsReturnedContainerProps> = ({
         name="securityDepositReturnsTable"
         columns={columns}
         data={dataSource}
-        manualPagination={false}
+        manualPagination={true}
         hideToolbar={true}
         noRowsMessage="There is no corresponding data"
       />
