@@ -350,41 +350,6 @@ const sampleContactResponse = [
   },
 ];
 
-const sampleFormTenant = [
-  {
-    email: undefined,
-    id: 'O5',
-    initialPrimaryContact: undefined,
-    isDisabled: undefined,
-    landline: undefined,
-    leaseId: undefined,
-    leaseTenantId: undefined,
-    lessorTypeCode: {
-      id: 'ORG',
-    },
-    mailingAddress: {
-      streetAddress1: undefined,
-    },
-    mobile: undefined,
-    municipalityName: undefined,
-    note: undefined,
-    organizationId: 5,
-    organizationPersons: undefined,
-    original: {
-      id: 'O5',
-      isDisabled: false,
-      organizationId: 5,
-      organizationName: "Bob's Property Management",
-      rowVersion: 0,
-      summary: "Bob's Property Management",
-    },
-    personId: undefined,
-    primaryContactId: undefined,
-    rowVersion: undefined,
-    summary: "Bob's Property Management",
-  },
-];
-
 const orgWithOnePerson = {
   id: 'O3',
   organizationId: 3,
