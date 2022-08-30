@@ -108,7 +108,16 @@ describe('AddLeaseTenantForm component', () => {
 
     const checkBox = await findByTestId('selectrow-O5');
     userEvent.click(checkBox);
-    expect(setSelectedTenants).toHaveBeenCalledWith([sampleFormTenant[0]]);
+    expect(setSelectedTenants).toHaveBeenCalledWith([
+      {
+        id: 'O5',
+        isDisabled: false,
+        organizationId: 5,
+        organizationName: "Bob's Property Management",
+        rowVersion: 0,
+        summary: "Bob's Property Management",
+      },
+    ]);
   });
 
   it('items from the contact list view can be added', async () => {
