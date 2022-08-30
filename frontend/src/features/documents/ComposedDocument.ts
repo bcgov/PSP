@@ -5,3 +5,8 @@ export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];
   pimsDocument?: Api_Document;
 }
+
+export interface DocumentMetadataForm {
+  documentTypeId: string;
+  documentStatusCode: string;
+}

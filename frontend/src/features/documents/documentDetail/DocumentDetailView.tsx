@@ -1,6 +1,6 @@
 import { LinkButton } from 'components/common/buttons';
 import { Button } from 'components/common/buttons/Button';
-import { Input, Select } from 'components/common/form';
+import { Select } from 'components/common/form';
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
@@ -16,13 +16,9 @@ import { Col, Row } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import { ComposedDocument, DocumentMetadataForm } from '../ComposedDocument';
+import { DocumentMetadataView } from '../DocumentMetadataView';
 import DownloadDocumentButton from '../DownloadDocumentButton';
-import { ComposedDocument } from './ComposedDocument';
-
-interface DocumentDetailForm {
-  documentTypeId: string;
-  documentStatusCode: string;
-}
 
 interface IDocumentDetailsViewProps {
   document: ComposedDocument;
@@ -51,7 +47,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
     mayanFileId = document.file_latest.id;
   }
 
-  const initialFormState: DocumentDetailForm = {
+  const initialFormState: DocumentMetadataForm = {
     documentTypeId: '',
     documentStatusCode: props.document.pimsDocument?.statusTypeCode?.id?.toString() || '',
   };
@@ -87,7 +83,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
                   ></TooltipIcon>
                 </StyledHeader>
               </Col>
-              {hasClaim(Claims.DOCUMENT_EDIT) && (
+              {hasClaim(Claims.DOCUMENT_EDIT) && !editable && (
                 <Col xs="2">
                   {' '}
                   <LinkButton
@@ -106,7 +102,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
                   {props.document.pimsDocument?.statusTypeCode?.description}
                 </SectionField>
                 <StyledScrollable>
-                  {props.document.mayanMetadata?.length === 0 && (
+                  {(props.document.mayanMetadata ?? []).length === 0 && (
                     <StyledNoData>No additional data</StyledNoData>
                   )}
                   {props.document.mayanMetadata?.map(value => (
@@ -123,10 +119,9 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
             )}
             {editable && (
               <StyledScrollable>
-                <Formik<DocumentDetailForm>
-                  enableReinitialize
+                <Formik<DocumentMetadataForm>
                   initialValues={initialFormState}
-                  onSubmit={async (values: DocumentDetailForm, { setSubmitting }) => {
+                  onSubmit={async (values: DocumentMetadataForm, { setSubmitting }) => {
                     const { documentStatusCode, documentTypeId, ...rest } = values;
                     if (props.document?.pimsDocument?.id && documentStatusCode !== undefined) {
                       var request: Api_DocumentUpdateRequest = {
@@ -156,29 +151,10 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
                         <SectionField label="Status" labelWidth="4">
                           <Select field="documentStatusCode" options={documentStatusTypes} />
                         </SectionField>
-                        {props.document.mayanMetadata?.length === 0 && (
-                          <StyledNoData>No additional data</StyledNoData>
-                        )}
-                        {props.document.mayanMetadata?.map(value => (
-                          <SectionField
-                            labelWidth="4"
-                            key={`document-${value.metadata_type?.id}-metadata-${value.id}`}
-                            label={value.metadata_type?.label || ''}
-                            // required={value.required === true}
-                          >
-                            <Input
-                              field={value.id?.toString() || ''}
-                              defaultValue={value.value}
-                              onChange={formikProps.handleChange}
-                              // required={value.required === true}
-                            />
-                          </SectionField>
-                        ))}
-                        <div style={{ border: 'solid 1px;', color: 'red' }}>
-                          {Object.values(formikProps.errors).length > 0 && (
-                            <>Mandatory fields are required.</>
-                          )}
-                        </div>
+                        <DocumentMetadataView
+                          mayanMetadata={props.document.mayanMetadata}
+                          formikProps={formikProps}
+                        ></DocumentMetadataView>
                       </StyledGreySection>
                       <Row className="justify-content-end pt-4">
                         <Col xs="auto">

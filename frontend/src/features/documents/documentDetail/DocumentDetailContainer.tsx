@@ -3,9 +3,9 @@ import { Api_Document, Api_DocumentUpdateRequest } from 'models/api/Document';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { useEffect, useState } from 'react';
 
+import { ComposedDocument } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
-import { ComposedDocument } from './ComposedDocument';
 import DocumentDetailView from './DocumentDetailView';
 
 export interface IDocumentDetailContainerProps {

@@ -122,7 +122,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="relationshipType">Used to identify document type.</param>
         /// <param name="documentId">Used to identify document.</param>
-        /// <param name="updateRequest">Contains information about the document metadat.</param>
+        /// <param name="updateRequest">Contains information about the document metadata.</param>
         /// <returns></returns>
         [HttpPut("{documentId}/relationship/{relationshipType}/metadata")]
         [Produces("application/json")]

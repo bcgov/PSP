@@ -136,7 +136,7 @@ namespace Pims.Api.Services
 
             // update metadata of document
             IList<Task<ExternalResult<DocumentMetadata>>> metadataTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
-            foreach (var metadata in updateRequest.DocumentMetadata)
+            foreach (var metadata in updateRequest.DocumentMetadata ?? new List<DocumentMetadataUpdateModel>())
             {
                 metadataTasks.Add(documentStorageRepository.UpdateDocumentMetadataAsync(updateRequest.MayanDocumentId, metadata.Id, metadata.Value));
             }
