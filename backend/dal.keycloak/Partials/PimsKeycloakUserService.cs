@@ -114,11 +114,14 @@ namespace Pims.Dal.Keycloak
 
             if (resetRoles)
             {
-                // Remove all keycloak groups from user.  // TODO: Only add/remove the ones that should be removed.
                 var userGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
                 foreach (var group in userGroups)
                 {
-                    await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
+                    var matchingPimsRole = _pimsRepository.Role.GetByKeycloakId(group.Id);
+                    if (matchingPimsRole != null)
+                    {
+                        await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
+                    }
                 }
             }
 
