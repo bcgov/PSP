@@ -106,7 +106,6 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   resetForm,
   submitForm,
   setFieldValue,
-  setFieldTouched,
   initialValues,
 }) => {
   const history = useHistory();
@@ -125,6 +124,17 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       history.push(`/contact/P${personId}`);
     }
   };
+
+  const isContactMethodInvalid = useMemo(() => {
+    return (
+      !!touched.phoneContactMethods &&
+      !!touched.emailContactMethods &&
+      (!!touched.mailingAddress?.streetAddress1 ||
+        !!touched.propertyAddress?.streetAddress1 ||
+        !!touched.billingAddress?.streetAddress1) &&
+      getIn(errors, 'needsContactMethod')
+    );
+  }, [touched, errors]);
 
   // update mailing address sub-form when "useOrganizationAddress" checkbox is toggled
   useEffect(() => {
@@ -194,7 +204,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
               </Styled.RowAligned>
             </FormSection>
 
-            <PersonSubForm />
+            <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
           </FlexBox>
         </Styled.Form>
       </Styled.ScrollingFormLayout>
