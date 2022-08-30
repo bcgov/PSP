@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
@@ -60,6 +61,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - The MOTI region that this acquisition file falls under.
         /// </summary>
         public TypeModel<short> RegionCode { get; set; }
+
+        /// <summary>
+        /// get/set - A list of research property relationships.
+        /// </summary>
+        public IList<ResearchFilePropertyModel> AcquisitionProperties { get; set; }
         #endregion
     }
 }

@@ -1,13 +1,17 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Pims.Dal.Services;
 
 namespace Pims.Api.Services
 {
@@ -17,17 +21,23 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly ICoordinateTransformService _coordinateService;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
             IAcquisitionFileRepository acqFileRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IPropertyRepository propertyRepository,
+            ICoordinateTransformService coordinateService)
         {
             _user = user;
             _logger = logger;
             _acqFileRepository = acqFileRepository;
             _userRepository = userRepository;
+            _propertyRepository = propertyRepository;
+            _coordinateService = coordinateService;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -62,6 +72,8 @@ namespace Pims.Api.Services
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
 
+            MatchProperties(acquisitionFile);
+
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
@@ -78,6 +90,55 @@ namespace Pims.Api.Services
 
             // TODO: Implementation pending
             throw new System.NotImplementedException();
+        }
+
+        private void MatchProperties(PimsAcquisitionFile acquisitionFile)
+        {
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                if (acquisitionProperty.Property.Pid.HasValue)
+                {
+                    var pid = acquisitionProperty.Property.Pid.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        acquisitionProperty.PropertyId = foundProperty.Id;
+                        acquisitionProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException e)
+                    {
+                        _logger.LogDebug("Adding new property with pid:{pid}", pid);
+                        PopulateNewProperty(acquisitionProperty.Property);
+                    }
+                }
+                else
+                {
+                    _logger.LogDebug("Adding new property without a pid");
+                    PopulateNewProperty(acquisitionProperty.Property);
+                }
+            }
+        }
+
+        private void PopulateNewProperty(PimsProperty property)
+        {
+            property.PropertyClassificationTypeCode = "UNKNOWN";
+            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
+            property.PropertyDataSourceTypeCode = "PMBC";
+
+            property.PropertyTypeCode = "UNKNOWN";
+
+            property.PropertyStatusTypeCode = "UNKNOWN";
+            property.SurplusDeclarationTypeCode = "UNKNOWN";
+
+            property.IsPropertyOfInterest = true;
+
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = property.Location;
+            if (geom.SRID != SpatialReference.BC_ALBERS)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+            }
         }
 
         private void ValidateVersion(long acqFileId, long acqFileVersion)
