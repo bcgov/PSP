@@ -8,6 +8,11 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
+        /// get/set - Id.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// get/set - MetadataTypeId.
         /// </summary>
         public int MetadataTypeId { get; set; }

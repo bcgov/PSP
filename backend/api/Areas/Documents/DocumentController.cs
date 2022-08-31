@@ -118,6 +118,33 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
+        /// Updates document metadata and status.
+        /// </summary>
+        /// <param name="relationshipType">Used to identify document type.</param>
+        /// <param name="documentId">Used to identify document.</param>
+        /// <param name="updateRequest">Contains information about the document metadata.</param>
+        /// <returns></returns>
+        [HttpPut("{documentId}/relationship/{relationshipType}/metadata")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.DocumentEdit)]
+        [ProducesResponseType(typeof(bool), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public async Task<IActionResult> UpdateDocumentMetadata(
+            long documentId,
+            DocumentRelationType relationshipType,
+            [FromBody] DocumentUpdateMetadataRequest updateRequest)
+        {
+            switch (relationshipType)
+            {
+                case DocumentRelationType.Activities:
+                    var response = await _documentService.UpdateActivityDocumentMetadataAsync(documentId, updateRequest);
+                    return new JsonResult(response);
+                default:
+                    throw new BadRequestException("Relationship type not valid.");
+            }
+        }
+
+        /// <summary>
         /// Deletes the specific document relationship for the given type.
         /// </summary>
         /// <param name="relationshipType">Used to identify document type.</param>
