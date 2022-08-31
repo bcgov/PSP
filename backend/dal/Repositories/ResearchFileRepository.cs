@@ -59,7 +59,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
                 .Include(r => r.PimsResearchFilePurposes)
                     .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
-                .FirstOrDefault();
+                .FirstOrDefault() ?? throw new KeyNotFoundException(); ;
         }
 
         /// <summary>
