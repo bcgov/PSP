@@ -18,7 +18,7 @@ export interface InsuranceEditContainerProps {
   leaseId: number;
   insuranceList: IInsurance[];
   insuranceTypes: ILookupCode[];
-  onCancel: (dirty?: boolean) => void;
+  onCancel: () => void;
   onSuccess: () => void;
 }
 
@@ -56,7 +56,7 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
   };
 
   const handleCancel = () => {
-    onCancel(formikRef?.current?.dirty);
+    onCancel();
   };
 
   const initialInsurances = insuranceTypes.map<FormInsurance>(x => {
@@ -114,6 +114,7 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
           handleSave(updateRequest);
         }
       }}
+      enableReinitialize
       innerRef={formikRef}
     >
       {formikProps => (

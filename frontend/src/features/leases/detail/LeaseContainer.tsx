@@ -26,7 +26,6 @@ import DetailContainer from './LeasePages/details/DetailContainer';
 import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
 import PaymentsContainer from './LeasePages/payment/TermPaymentsContainer';
-import { TermPaymentsYupSchema } from './LeasePages/payment/TermPaymentsYupSchema';
 import Surplus from './LeasePages/surplus/Surplus';
 import TenantContainer from './LeasePages/tenant/TenantContainer';
 
@@ -87,7 +86,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     {
       component: PaymentsContainer,
       title: 'Payments',
-      validation: TermPaymentsYupSchema,
     },
   ],
   [

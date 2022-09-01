@@ -1819,6 +1819,57 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         <div
           class="col"
         >
+          <div
+            class="c19 c20 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-tfaFileNo"
+            >
+              LIS # 
+            </label>
+            <input
+              class="form-control"
+              id="input-tfaFileNo"
+              name="tfaFileNo"
+              title=""
+              type="number"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c19 c20 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-psFileNo"
+            >
+              PS #: 
+            </label>
+            <input
+              class="form-control"
+              id="input-psFileNo"
+              name="psFileNo"
+              title=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
           <h3
             class="c17"
           >

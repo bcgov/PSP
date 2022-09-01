@@ -1429,6 +1429,56 @@ exports[`Update lease container component renders as expected 1`] = `
       <div
         class="col"
       >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-tfaFileNo"
+          >
+            LIS # 
+          </label>
+          <input
+            class="form-control"
+            id="input-tfaFileNo"
+            name="tfaFileNo"
+            type="number"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-psFileNo"
+          >
+            PS #: 
+          </label>
+          <input
+            class="form-control"
+            id="input-psFileNo"
+            name="psFileNo"
+            title=""
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
         <h3
           class="c5"
         >

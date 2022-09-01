@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { isLeaseCategoryVisible } from './AdministrationSubForm';
 
 export const LeaseSchema = Yup.object().shape({
-  statusType: Yup.string().required('Required'),
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
   paymentReceivableType: Yup.string().required('Payment Receivable Type is required'),

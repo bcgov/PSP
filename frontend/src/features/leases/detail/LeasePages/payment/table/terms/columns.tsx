@@ -156,7 +156,7 @@ export const getLeaseTermColumns = ({
     },
     {
       Header: 'Start date - End date',
-      align: 'center',
+      align: 'left',
       minWidth: 60,
       Cell: startAndEndDate,
     },

@@ -9,7 +9,6 @@ using Pims.Dal;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
-using Concepts = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Areas.Persons.Controllers
 {
@@ -62,21 +61,6 @@ namespace Pims.Api.Areas.Persons.Controllers
         {
             var person = _pimsService.PersonService.GetPerson(id);
             return new JsonResult(_mapper.Map<Models.Person.PersonModel>(person));
-        }
-
-        /// <summary>
-        /// Get the person concept for the specified primary key 'id'.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("concept/{id:long}")]
-        [HasPermission(Permissions.ContactView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Concepts.PersonModel), 200)]
-        [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult GetPersonConcept(int id)
-        {
-            var person = _pimsService.PersonService.GetPerson(id);
-            return new JsonResult(_mapper.Map<Concepts.PersonModel>(person));
         }
 
         /// <summary>

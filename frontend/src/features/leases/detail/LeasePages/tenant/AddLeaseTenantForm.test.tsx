@@ -108,16 +108,7 @@ describe('AddLeaseTenantForm component', () => {
 
     const checkBox = await findByTestId('selectrow-O5');
     userEvent.click(checkBox);
-    expect(setSelectedTenants).toHaveBeenCalledWith([
-      {
-        id: 'O5',
-        isDisabled: false,
-        organizationId: 5,
-        organizationName: "Bob's Property Management",
-        rowVersion: 0,
-        summary: "Bob's Property Management",
-      },
-    ]);
+    expect(setSelectedTenants).toHaveBeenCalledWith([sampleFormTenant[0]]);
   });
 
   it('items from the contact list view can be added', async () => {
@@ -347,6 +338,41 @@ const sampleContactResponse = [
     summary: "Bob's Property Management",
     organizationName: "Bob's Property Management",
     isDisabled: false,
+  },
+];
+
+const sampleFormTenant = [
+  {
+    email: undefined,
+    id: 'O5',
+    initialPrimaryContact: undefined,
+    isDisabled: undefined,
+    landline: undefined,
+    leaseId: undefined,
+    leaseTenantId: undefined,
+    lessorTypeCode: {
+      id: 'ORG',
+    },
+    mailingAddress: {
+      streetAddress1: undefined,
+    },
+    mobile: undefined,
+    municipalityName: undefined,
+    note: undefined,
+    organizationId: 5,
+    organizationPersons: undefined,
+    original: {
+      id: 'O5',
+      isDisabled: false,
+      organizationId: 5,
+      organizationName: "Bob's Property Management",
+      rowVersion: 0,
+      summary: "Bob's Property Management",
+    },
+    personId: undefined,
+    primaryContactId: undefined,
+    rowVersion: undefined,
+    summary: "Bob's Property Management",
   },
 ];
 
