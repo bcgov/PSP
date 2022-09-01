@@ -4,8 +4,8 @@ import { Api_DocumentType } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
-import { DocumentMetadataForm } from '../ComposedDocument';
 
+import { DocumentMetadataForm } from '../ComposedDocument';
 import DocumentUploadView from './DocumentUploadView';
 
 const history = createMemoryHistory();
@@ -105,7 +105,7 @@ describe('DocumentUploadView component', () => {
   });
 
   it('displays input for metadata types', async () => {
-    const { getByTestId, getByLabelText } = setup({ initialValues });
+    const { getByTestId } = setup({ initialValues });
     const textarea = await getByTestId('metadata-input-Tag');
 
     expect(textarea).toBeVisible();
