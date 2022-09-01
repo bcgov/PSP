@@ -49,13 +49,19 @@ namespace Pims.Tools.Keycloak.Sync
         public async Task<int> SyncAsync()
         {
             var log = new StringBuilder();
+            var errorLog = new StringBuilder();
 
             await ActivateAccountAsync();
             await SyncClaimsAsync(log);
             await SyncRolesAsync(log);
-            await SyncUsersAsync(log);
+            await SyncUsersAsync(log, errorLog);
 
             _logger.LogInformation($"---------------------{Environment.NewLine}Summary{Environment.NewLine}---------------------{Environment.NewLine}{log}");
+
+            if (errorLog.Length > 0)
+            {
+                _logger.LogError($"---------------------{Environment.NewLine}Summary{Environment.NewLine}---------------------{Environment.NewLine}{errorLog}");
+            }
 
             return 0;
         }
@@ -331,7 +337,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// </summary>
         /// <param name="log"></param>
         /// <returns></returns>
-        private async Task SyncUsersAsync(StringBuilder log)
+        private async Task SyncUsersAsync(StringBuilder log, StringBuilder errorLog)
         {
             // Fetch all users in keycloak so that they can be synced.
             // This is useful when the database has been refreshed.
@@ -360,7 +366,7 @@ namespace Pims.Tools.Keycloak.Sync
                 // Sync user organizations.
                 if (kuser.Attributes == null) kuser.Attributes = new Dictionary<string, string[]>();
                 kuser.Enabled = !user.IsDisabled;
-                if(user.BusinessIdentifierValue == "service-account") {
+                if (user.BusinessIdentifierValue == "service-account") {
                     kuser.Enabled = true;
                 }
                 kuser.FirstName = user.Person?.FirstName ?? string.Empty;
@@ -390,7 +396,9 @@ namespace Pims.Tools.Keycloak.Sync
                 {
                     if (string.IsNullOrWhiteSpace(kuser.Email) || string.IsNullOrWhiteSpace(kuser.FirstName) || string.IsNullOrWhiteSpace(kuser.LastName))
                     {
-                        _logger.LogInformation($"Unable to add user to PIMS '{kuser.Username}'.");
+                        string errorMsg = $"Unable to add user to PIMS '{kuser.Username}' as required information is missing.";
+                        errorLog = errorLog.Append(errorMsg);
+                        _logger.LogInformation(errorMsg);
                         continue;
                     }
 
@@ -423,10 +431,26 @@ namespace Pims.Tools.Keycloak.Sync
                     // Fetch the group from PIMS.
                     foreach (var kgroup in kgroups)
                     {
-                        var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/{kgroup.Id}");
-                        if (role != null)
+                        try
                         {
-                            uRoles = uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
+                            var role = await _client.HandleGetAsync<PModel.RoleModel>($"{_options.Api.Uri}/admin/roles/{kgroup.Id}");
+                            if (role != null)
+                            {
+                                uRoles = uRoles.Append(new PModel.UserRoleModel() { User = user, Role = role });
+                            }
+                        }
+                        catch (HttpClientRequestException ex)
+                        {
+                            if (ex.StatusCode.Value == HttpStatusCode.NotFound)
+                            {
+                                string errorMsg = $"Failed to add keycloak group '{kgroup.Name}' to user '{kuser.Username}. That role will be ignored.";
+                                _logger.LogWarning(errorMsg, ex);
+                                errorLog = errorLog.Append(errorMsg);
+                            }
+                            else
+                            {
+                                throw ex;
+                            }
                         }
                     }
 
@@ -438,7 +462,9 @@ namespace Pims.Tools.Keycloak.Sync
                 }
                 catch (HttpClientRequestException ex)
                 {
-                    _logger.LogError($"Failed to add keycloak user '{kuser.Email}' to PIMS.", ex);
+                    string errorMsg = $"Failed to add keycloak user '{kuser.Email}' to PIMS.";
+                    _logger.LogError(errorMsg, ex);
+                    errorLog = errorLog.Append(errorMsg);
                 }
             }
         }

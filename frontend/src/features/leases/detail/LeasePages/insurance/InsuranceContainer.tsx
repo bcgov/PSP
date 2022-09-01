@@ -1,3 +1,4 @@
+import { CancelConfirmationModal } from 'components/common/CancelConfirmationModal';
 import { INSURANCE_TYPES } from 'constants/API';
 import { Claims } from 'constants/claims';
 import { useLeaseDetail } from 'features/leases';
@@ -6,6 +7,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IInsurance } from 'interfaces';
 import queryString from 'query-string';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import InsuranceDetailsView from './details/Insurance';
@@ -13,6 +15,7 @@ import InsuranceEditContainer from './edit/EditContainer';
 
 const InsuranceContainer: React.FunctionComponent = () => {
   const { hasClaim } = useKeycloakWrapper();
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
   const { refresh, lease } = useLeaseDetail();
   const leaseId: number = getIn(lease, 'id') || -1;
@@ -40,11 +43,20 @@ const InsuranceContainer: React.FunctionComponent = () => {
             await refresh();
             history.push(location.pathname);
           }}
-          onCancel={() => {
-            history.push(location.pathname);
+          onCancel={(dirty?: boolean) => {
+            if (dirty) {
+              setShowCancelModal(true);
+            } else {
+              history.push(location.pathname);
+            }
           }}
         />
       )}
+      <CancelConfirmationModal
+        display={showCancelModal}
+        setDisplay={setShowCancelModal}
+        handleOk={() => history.push(location.pathname)}
+      />
     </>
   );
 };

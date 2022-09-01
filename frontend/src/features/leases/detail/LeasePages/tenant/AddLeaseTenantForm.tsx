@@ -14,7 +14,7 @@ import * as Styled from './styles';
 import { FormTenant } from './Tenant';
 export interface IAddLeaseTenantFormProps {
   selectedTenants: FormTenant[];
-  setSelectedTenants: (selectedTenants: FormTenant[]) => void;
+  setSelectedTenants: (selectedTenants: IContactSearchResult[]) => void;
   onCancel: () => void;
   onSubmit: (lease: IFormLease) => Promise<void>;
   initialValues?: IFormLease;
@@ -58,9 +58,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProp
                 selectedTableHeader={SelectedTableHeader}
               >
                 <AddLeaseTenantListView
-                  setSelectedTenants={(selected: IContactSearchResult[]) => {
-                    setSelectedTenants(selected.map(s => new FormTenant(undefined, s)));
-                  }}
+                  setSelectedTenants={setSelectedTenants}
                   selectedTenants={selectedTenants.map<IContactSearchResult>(selectedTenant => {
                     return selectedTenant.original ?? { id: selectedTenant?.id?.toString() ?? '' };
                   })}

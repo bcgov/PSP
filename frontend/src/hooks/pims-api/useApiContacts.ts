@@ -5,6 +5,7 @@ import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
 
+import { Api_Person } from './../../models/api/Person';
 import { IPaginateRequest, useAxiosApi } from '.';
 
 /**
@@ -24,6 +25,7 @@ export const useApiContacts = () => {
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
       // This is different than getContact above. This endpoints returns person data that can be edited in a form
       getPerson: (id: number) => api.get<IEditablePerson>(`/persons/${id}`),
+      getPersonConcept: (id: number) => api.get<Api_Person>(`/persons/concept/${id}`),
       postPerson: (person: IEditablePerson, userOverride: boolean) =>
         api.post<IEditablePerson>(`/persons?userOverride=${userOverride}`, person),
       putPerson: (person: IEditablePerson) =>

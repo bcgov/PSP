@@ -23,11 +23,12 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
   title,
   field,
 }) => {
-  const { values, setFieldValue } = useFormikContext();
+  const { values, setFieldValue, errors } = useFormikContext();
   const [showNotes, setShowNotes] = useState(false);
   const [currentNote, setCurrentNote] = useState();
   const fieldWithNameSpace = withNameSpace(nameSpace, field ?? 'note');
   const noteValue = getIn(values, fieldWithNameSpace);
+  const error = getIn(errors, fieldWithNameSpace);
 
   useEffect(() => {
     if (showNotes === false) {
@@ -53,8 +54,10 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
         okButtonText="Save"
         cancelButtonText="Cancel"
         handleOk={() => {
-          onSave && onSave(values);
-          setShowNotes(false);
+          if (!error) {
+            onSave && onSave(values);
+            setShowNotes(false);
+          }
         }}
         handleCancel={() => {
           setFieldValue(fieldWithNameSpace, currentNote);
