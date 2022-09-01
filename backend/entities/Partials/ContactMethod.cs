@@ -25,9 +25,10 @@ namespace Pims.Dal.Entities
         /// <param name="organization"></param>
         /// <param name="methodTypeId"></param>
         /// <param name="value"></param>
-        public PimsContactMethod(PimsPerson person, PimsOrganization organization, string methodTypeId, string value) : this()
+        public PimsContactMethod(PimsPerson person, PimsOrganization organization, string methodTypeId, string value)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(value));
             }
@@ -47,9 +48,10 @@ namespace Pims.Dal.Entities
         /// <param name="organization"></param>
         /// <param name="methodType"></param>
         /// <param name="value"></param>
-        public PimsContactMethod(PimsPerson person, PimsOrganization organization, PimsContactMethodType methodType, string value) : this()
+        public PimsContactMethod(PimsPerson person, PimsOrganization organization, PimsContactMethodType methodType, string value)
+            : this()
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(value));
             }

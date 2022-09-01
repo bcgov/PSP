@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -7,6 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyAnomalyType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify anomaly type.
         /// </summary>
@@ -15,11 +17,13 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PimsPropertyAnomalyType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsPropertyAnomalyType(string id) : this()
+        public PimsPropertyAnomalyType(string id)
+            : this()
         {
             Id = id;
         }

@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
@@ -19,7 +19,7 @@ namespace Pims.Api.Test.Core.Extensions
         {
             new object[] { 0, 1 },
             new object[] { 1, 2 },
-            new object[] { 2, 3 }
+            new object[] { 2, 3 },
         };
         #endregion
 

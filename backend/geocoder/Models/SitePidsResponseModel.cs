@@ -6,6 +6,7 @@ namespace Pims.Geocoder.Models
     {
         #region Properties
         public Guid SiteID { get; set; }
+
         public string Pids { get; set; }
         #endregion
     }

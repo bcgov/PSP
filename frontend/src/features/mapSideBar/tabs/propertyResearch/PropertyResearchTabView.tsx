@@ -1,4 +1,6 @@
+import { Claims } from 'constants/index';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -46,17 +48,21 @@ const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewP
     summaryNotes: props.researchFile.researchSummary || '',
   };
 
+  const { hasClaim } = useKeycloakWrapper();
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        <Button
-          variant="link"
-          onClick={() => {
-            props.setEditMode(true);
-          }}
-        >
-          <FaEdit size={'2rem'} />
-        </Button>
+        {hasClaim(Claims.RESEARCH_EDIT) ? (
+          <Button
+            variant="link"
+            onClick={() => {
+              props.setEditMode(true);
+            }}
+          >
+            <FaEdit size={'2rem'} />
+          </Button>
+        ) : null}
       </StyledEditWrapper>
       <Section header="Property of Interest">
         <SectionField label="Descriptive name">{detail.descriptiveName}</SectionField>

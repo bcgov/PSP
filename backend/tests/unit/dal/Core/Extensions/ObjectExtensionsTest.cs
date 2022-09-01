@@ -1,8 +1,8 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 

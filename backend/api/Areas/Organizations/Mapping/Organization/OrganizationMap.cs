@@ -30,7 +30,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.PimsOrganizationAddresses, src => src.Addresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
                 .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>()
-                .IgnoreNonMapped(true)  // with this we explicitly ignore the persons list if it gets sent to the backend
+                .IgnoreNonMapped(true) // with this we explicitly ignore the persons list if it gets sent to the backend
                 .IgnoreNullValues(true)
                 .AfterMapping((src, dest) =>
                 {

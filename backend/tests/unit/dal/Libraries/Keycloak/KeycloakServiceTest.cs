@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Http;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -6,9 +9,6 @@ using Pims.Core.Http;
 using Pims.Core.Test;
 using Pims.Keycloak;
 using Pims.Keycloak.Configuration;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
@@ -100,7 +100,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Authority = "https://keycloak",
                 Audience = "pims",
                 Client = "pims",
-                Admin = new KeycloakAdminOptions()
+                Admin = new KeycloakAdminOptions(),
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -128,8 +128,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Client = "pims",
                 Admin = new KeycloakAdminOptions()
                 {
-                    Authority = "https://keycloak/admin"
-                }
+                    Authority = "https://keycloak/admin",
+                },
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -158,7 +158,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions(),
             });
@@ -189,7 +189,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
@@ -223,14 +223,14 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
-                    UserInfo = "/protocol/openid-connect/userinfo"
+                    UserInfo = "/protocol/openid-connect/userinfo",
                 },
-                ServiceAccount = new KeycloakServiceAccountOptions()
+                ServiceAccount = new KeycloakServiceAccountOptions(),
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -259,17 +259,17 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
-                    UserInfo = "/protocol/openid-connect/userinfo"
+                    UserInfo = "/protocol/openid-connect/userinfo",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
-                    Client = "pims-service-account"
-                }
+                    Client = "pims-service-account",
+                },
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -298,18 +298,18 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
-                    UserInfo = "/protocol/openid-connect/userinfo"
+                    UserInfo = "/protocol/openid-connect/userinfo",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
                     Client = "pims-service-account",
                     Secret = "[USE SECRETS]",
-                }
+                },
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -342,12 +342,12 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
                     Token = "/protocol/openid-connect/token",
-                    UserInfo = "/protocol/openid-connect/userinfo"
+                    UserInfo = "/protocol/openid-connect/userinfo",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
@@ -355,7 +355,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Audience = "serviceaccount",
                     Client = "pims-service-account",
                     Secret = "[USE SECRETS]",
-                }
+                },
             });
 
             var openIdConnect = new Mock<IOpenIdConnectRequestClient>();
@@ -411,7 +411,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             openIdConnect.Setup(m => m.AuthClientOptions).Returns(new Pims.Core.Http.Configuration.AuthClientOptions());
             openIdConnect.Setup(m => m.DeleteAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Delete, "http://keycloak")
+                RequestMessage = new HttpRequestMessage(HttpMethod.Delete, "http://keycloak"),
             });
             helper.AddSingleton(openIdConnect.Object);
 

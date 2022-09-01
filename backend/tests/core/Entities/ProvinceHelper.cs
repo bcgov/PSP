@@ -52,6 +52,5 @@ namespace Pims.Core.Test
             country ??= context.PimsCountries.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a country.");
             return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
         }
-
     }
 }

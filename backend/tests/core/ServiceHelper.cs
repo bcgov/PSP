@@ -1,10 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Security.Claims;
 using Moq;
 using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Core.Test
 {
@@ -25,7 +25,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateRepository<T>(this TestHelper helper, Permissions permission, params object[] args) where T : IRepository
+        public static T CreateRepository<T>(this TestHelper helper, Permissions permission, params object[] args)
+            where T : IRepository
         {
             var user = PrincipalHelper.CreateForPermission(permission);
             return helper.CreateRepository<T>(user, args);
@@ -42,7 +43,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateRepository<T>(this TestHelper helper, string dbName, Permissions permission, params object[] args) where T : IRepository
+        public static T CreateRepository<T>(this TestHelper helper, string dbName, Permissions permission, params object[] args)
+            where T : IRepository
         {
             var user = PrincipalHelper.CreateForPermission(permission);
             return helper.CreateRepository<T>(dbName, user, args);
@@ -59,7 +61,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateMockRepository<T>(this TestHelper helper, ClaimsPrincipal user, PimsContext mock, params object[] args) where T : IRepository
+        public static T CreateMockRepository<T>(this TestHelper helper, ClaimsPrincipal user, PimsContext mock, params object[] args)
+            where T : IRepository
         {
             helper.AddSingleton(user);
             return helper.CreateRepository<T>(mock, args);
@@ -76,7 +79,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateRepository<T>(this TestHelper helper, ClaimsPrincipal user, params object[] args) where T : IRepository
+        public static T CreateRepository<T>(this TestHelper helper, ClaimsPrincipal user, params object[] args)
+            where T : IRepository
         {
             if (!helper.Services.Any(s => s.ServiceType == typeof(PimsContext)))
             {
@@ -98,7 +102,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateRepository<T>(this TestHelper helper, string dbName, ClaimsPrincipal user, params object[] args) where T : IRepository
+        public static T CreateRepository<T>(this TestHelper helper, string dbName, ClaimsPrincipal user, params object[] args)
+            where T : IRepository
         {
             return helper.CreateRepository<T>(helper.CreatePimsContext(dbName, user, false), args);
         }
@@ -113,7 +118,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateRepository<T>(this TestHelper helper, PimsContext context, params object[] args) where T : IRepository
+        public static T CreateRepository<T>(this TestHelper helper, PimsContext context, params object[] args)
+            where T : IRepository
         {
             helper.MockConstructorArguments<T>(args);
             helper.AddSingleton(context);
@@ -133,7 +139,8 @@ namespace Pims.Core.Test
         /// <param name="helper"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static T CreateRepository<T>(this TestHelper helper, params object[] args) where T : IRepository
+        public static T CreateRepository<T>(this TestHelper helper, params object[] args)
+            where T : IRepository
         {
             helper.MockConstructorArguments<T>(args);
 
@@ -152,7 +159,8 @@ namespace Pims.Core.Test
         /// <param name="helper"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static T Create<T>(this TestHelper helper, params object[] args) where T : class
+        public static T Create<T>(this TestHelper helper, params object[] args)
+            where T : class
         {
             helper.MockConstructorArguments<T>(args);
             helper.BuildServiceProvider();
@@ -170,7 +178,8 @@ namespace Pims.Core.Test
         /// <param name="helper"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static T Add<T>(this TestHelper helper, params object[] args) where T : class
+        public static T Add<T>(this TestHelper helper, params object[] args)
+            where T : class
         {
             var types = helper.MockConstructorArguments<T>(args);
             var con = typeof(T).GetConstructor(types.Select(t => t.Key).ToArray());

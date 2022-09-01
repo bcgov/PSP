@@ -8,6 +8,7 @@ namespace Pims.Dal
     public class PimsOptions : DbContextOptions<PimsContext>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Service account configuration details.
         /// </summary>

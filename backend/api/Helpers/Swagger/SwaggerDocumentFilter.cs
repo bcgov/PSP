@@ -16,6 +16,7 @@ namespace Pims.Api.Helpers.Swagger
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SwaggerDocumentFilter object, initializes it with the specified arguments.
         /// </summary>
@@ -29,6 +30,7 @@ namespace Pims.Api.Helpers.Swagger
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Apply the requested host to the document servers.
         /// </summary>

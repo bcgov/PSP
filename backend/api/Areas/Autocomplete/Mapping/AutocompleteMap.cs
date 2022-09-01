@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Autocomplete.Mapping
 {

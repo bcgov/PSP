@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     public class AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>
@@ -14,7 +15,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
         public long RowVersion { get; set; }
 
         /// <summary>

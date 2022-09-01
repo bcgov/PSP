@@ -10,12 +10,14 @@ namespace Pims.Geocoder.Parameters
         /// example": "-122.377,50.121".
         /// </summary>
         public string Point { get; set; }
+
         /// <summary>
-        /// get/set - If true, excludes sites that are units of a parent site
+        /// get/set - If true, excludes sites that are units of a parent site.
         /// </summary>
         public bool ExcludeUnits { get; set; }
+
         /// <summary>
-        /// get/set - If true, excludes sites without a civic address
+        /// get/set - If true, excludes sites without a civic address.
         /// </summary>
         public bool OnlyCivic { get; set; }
     }

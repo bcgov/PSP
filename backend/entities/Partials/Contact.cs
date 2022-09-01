@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Pims.Dal.Entities
 {
     /// <summary>
@@ -8,13 +6,14 @@ namespace Pims.Dal.Entities
     public partial class PimsContactMgrVw
     {
         #region Properties
+
         /// <summary>
-        /// get/set - Optional contact person
+        /// get/set - Optional contact person.
         /// </summary>
         public PimsPerson Person { get; set; }
 
         /// <summary>
-        /// get/set - Optional contact organization
+        /// get/set - Optional contact organization.
         /// </summary>
         ///
         public PimsOrganization Organization { get; set; }

@@ -8,6 +8,7 @@ namespace Pims.Keycloak.Models
     public class UserInfoModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Unique key to identify the claim.
         /// </summary>

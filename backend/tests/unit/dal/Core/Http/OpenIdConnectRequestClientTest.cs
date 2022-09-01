@@ -1,3 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using System.Text.Json;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -5,10 +9,6 @@ using Moq;
 using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
-using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
-using System.Text.Json;
 using Xunit;
 
 namespace Pims.Api.Test.Helpers

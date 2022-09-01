@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -19,16 +18,21 @@ namespace Pims.Dal.Repositories
     public class OrganizationRepository : BaseRepository<PimsOrganization>, IOrganizationRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a OrganizationService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<OrganizationRepository> logger) : base(dbContext, user, logger) { }
+        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<OrganizationRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get all organizations from the datasource.
         /// </summary>

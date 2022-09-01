@@ -4,6 +4,7 @@ using Pims.Api.Helpers.Extensions;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
+
 namespace Pims.Api.Areas.Lease.Mapping.Lease
 {
     public class LeaseMap : IRegister

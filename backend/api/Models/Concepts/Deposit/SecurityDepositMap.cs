@@ -27,8 +27,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.OtherDepositTypeDesc, src => src.OtherTypeDescription)
                 .Map(dest => dest.PimsSecurityDepositHolder, src => src.ContactHolder)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
-
-
         }
     }
 }

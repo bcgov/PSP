@@ -55,7 +55,7 @@ export const AddAcquisitionForm = React.forwardRef<
 
             <Section header="Acquisition Details">
               <SectionField label="Acquisition file name">
-                <LargeInput field="name" />
+                <LargeInput field="fileName" />
               </SectionField>
               <SectionField label="Physical file status">
                 <Select

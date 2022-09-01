@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class PropertyPurposeModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The relationship id.
         /// </summary>

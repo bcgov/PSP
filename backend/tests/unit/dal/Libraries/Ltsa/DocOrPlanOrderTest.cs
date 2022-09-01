@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Ltsa.Models;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa

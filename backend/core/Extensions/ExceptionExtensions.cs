@@ -8,7 +8,7 @@ namespace Pims.Core.Extensions
     public static class ExceptionExtensions
     {
         /// <summary>
-        /// Get all inner error messages
+        /// Get all inner error messages.
         /// </summary>
         /// <param name="ex"></param>
         /// <returns></returns>
@@ -24,7 +24,8 @@ namespace Pims.Core.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">The argument value cannot be null.</exception>
-        public static T ThrowIfNull<T>(this T value, string paramName) where T : class
+        public static T ThrowIfNull<T>(this T value, string paramName)
+            where T : class
         {
             return value ?? throw new ArgumentNullException(paramName);
         }

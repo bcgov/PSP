@@ -20,7 +20,7 @@ namespace Pims.Core.Test.Http
         /// <param name="response"></param>
         public FakeHttpMessageHandler(HttpResponseMessage response)
         {
-            _fakeResponse = response;
+            this._fakeResponse = response;
         }
         #endregion
 
@@ -33,7 +33,7 @@ namespace Pims.Core.Test.Http
         /// <returns></returns>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return await Task.FromResult(_fakeResponse);
+            return await Task.FromResult(this._fakeResponse);
         }
         #endregion
     }

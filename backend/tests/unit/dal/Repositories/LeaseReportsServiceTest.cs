@@ -1,20 +1,20 @@
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Pims.Core.Test;
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
-using Pims.Dal.Services;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Xunit;
-using Entity = Pims.Dal.Entities;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
-using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
+using Pims.Dal.Security;
+using Pims.Dal.Services;
+using Xunit;
+using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
+using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -31,18 +31,18 @@ namespace Pims.Dal.Test.Repositories
 
         public LeaseReportsServiceTest()
         {
-            helper = new TestHelper();
+            this.helper = new TestHelper();
         }
 
         public void Dispose()
         {
-            leaseRepository = null;
+            this.leaseRepository = null;
         }
 
         private void MockCommonServices()
         {
-            leaseReportsService = helper.Create<LeaseReportsService>();
-            leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
+            this.leaseReportsService = this.helper.Create<LeaseReportsService>();
+            this.leaseRepository = this.helper.GetService<Mock<ILeaseRepository>>();
         }
 
         #region Tests
@@ -54,15 +54,15 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission();
 
             var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
-            MockCommonServices();
-            leaseRepository.Setup(x => x.Get(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
+            this.MockCommonServices();
+            this.leaseRepository.Setup(x => x.Get(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => leaseReportsService.GetAggregatedLeaseReport(2022));
+            Assert.Throws<NotAuthorizedException>(() => this.leaseReportsService.GetAggregatedLeaseReport(2022));
         }
 
         [Fact]
@@ -73,19 +73,19 @@ namespace Pims.Dal.Test.Repositories
 
             var lease = EntityHelper.CreateLease(1);
             lease.OrigExpiryDate = new DateTime(2022, 4, 1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
 
-            MockCommonServices();
-            leaseRepository.Setup(x => x.Get(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
+            this.MockCommonServices();
+            this.leaseRepository.Setup(x => x.Get(It.IsAny<LeaseFilter>(), true)).Returns(new List<PimsLease>() { lease });
 
             // Act
-            var leases = leaseReportsService.GetAggregatedLeaseReport(2022);
+            var leases = this.leaseReportsService.GetAggregatedLeaseReport(2022);
 
             // Assert
             leases.Should().HaveCount(1);
             leases.FirstOrDefault().Should().Be(lease);
-            leaseRepository.Verify(x => x.Get(It.IsAny<LeaseFilter>(), true));
+            this.leaseRepository.Verify(x => x.Get(It.IsAny<LeaseFilter>(), true));
         }
         #endregion
         #endregion

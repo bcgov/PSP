@@ -6,6 +6,7 @@ namespace Pims.Api.Models.Tenant
     public class TenantModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The tenant unique code.
         /// </summary>

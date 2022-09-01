@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Extensions;
+using MoreLinq;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -15,6 +14,7 @@ namespace Pims.Dal.Repositories
     public class ResearchFilePropertyRepository : BaseRepository<PimsPropertyResearchFile>, IResearchFilePropertyRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFilePropertyRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -22,7 +22,9 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="logger"></param>
         public ResearchFilePropertyRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFilePropertyRepository> logger)
-            : base(dbContext, user, logger) { }
+            : base(dbContext, user, logger)
+        {
+        }
 
         #endregion
 

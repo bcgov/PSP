@@ -12,11 +12,12 @@ namespace Pims.Dal.Services
 {
     public class SecurityDepositService : ISecurityDepositService
     {
-        readonly ISecurityDepositRepository _securityDepositRepository;
-        readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
-        readonly ILeaseRepository _leaseRepository;
-        readonly ILeaseService _leaseService;
-        readonly ClaimsPrincipal _user;
+        private readonly ISecurityDepositRepository _securityDepositRepository;
+        private readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
+        private readonly ILeaseRepository _leaseRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ClaimsPrincipal _user;
+
         public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _securityDepositRepository = securityDepositRepository;
@@ -59,7 +60,7 @@ namespace Pims.Dal.Services
             lease.ReturnNotes = note;
             _leaseRepository.Update(lease);
             _leaseRepository.CommitTransaction();
-            
+
             return _leaseRepository.Get(leaseId);
         }
 

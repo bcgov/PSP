@@ -45,6 +45,9 @@ const LeaseAndLicenseListView = lazy(() =>
 const LeaseContainerWrapper = lazy(() =>
   componentLoader(import('features/leases/detail/LeaseContainerWrapper'), 2),
 );
+const AcquisitionListView = lazy(() =>
+  componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
+);
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -218,6 +221,15 @@ const AppRouter: React.FC = () => {
           layout={AuthLayout}
           claim={Claims.RESEARCH_VIEW}
           title={getTitle('View Research Files')}
+        />
+        <AppRoute
+          protected
+          exact
+          path="/acquisition/list"
+          component={AcquisitionListView}
+          layout={AuthLayout}
+          claim={Claims.ACQUISITION_VIEW}
+          title={getTitle('View Acquisition Files')}
         />
         <AppRoute
           protected

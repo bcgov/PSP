@@ -1,7 +1,7 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Extensions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
@@ -142,7 +142,7 @@ namespace Pims.Api.Test.Core.Extensions
         public void GetIntArrayValue_Empty()
         {
             // Arrange
-            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", "" } };
+            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", string.Empty } };
 
             // Act
             var result = dict.GetIntArrayValue("Ids");
@@ -549,13 +549,13 @@ namespace Pims.Api.Test.Core.Extensions
         public void GetStringArrayValue_Empty()
         {
             // Arrange
-            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", "" } };
+            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", string.Empty } };
 
             // Act
             var result = dict.GetStringArrayValue("Ids");
 
             // Assert
-            Assert.Equal(new[] { "" }, result);
+            Assert.Equal(new[] { string.Empty }, result);
             Assert.IsType<string[]>(result);
         }
 
@@ -569,7 +569,7 @@ namespace Pims.Api.Test.Core.Extensions
             var result = dict.GetStringArrayValue("Ids");
 
             // Assert
-            Assert.Equal(new[] { "1", "", "test", "2" }, result);
+            Assert.Equal(new[] { "1", string.Empty, "test", "2" }, result);
             Assert.IsType<string[]>(result);
         }
 
@@ -875,7 +875,7 @@ namespace Pims.Api.Test.Core.Extensions
             Utf8,
             Binary,
             Hex,
-            Base64
+            Base64,
         }
 
         [Fact]

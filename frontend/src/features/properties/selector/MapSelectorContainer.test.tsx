@@ -54,7 +54,11 @@ describe('MapSelectorContainer component', () => {
 
   beforeEach(() => {
     mockAxios
-      .onGet(new RegExp('ogs-internal/ows'))
+      .onGet(
+        new RegExp(
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows',
+        ),
+      )
       .reply(200, mockFAParcelLayerResponse)
       .onGet(new RegExp('tools/geocoder/nearest*'))
       .reply(200, mockGeocoderOptions[0]);

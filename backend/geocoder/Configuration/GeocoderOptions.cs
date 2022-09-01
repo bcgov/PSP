@@ -6,6 +6,7 @@ namespace Pims.Geocoder.Configuration
     public class GeocoderOptions
     {
         #region Properties
+
         /// <summary>
         /// get/set - The URI to the Geocoder API service.
         /// </summary>

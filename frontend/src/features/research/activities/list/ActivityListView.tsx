@@ -6,6 +6,7 @@ import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResu
 import { orderBy } from 'lodash';
 import { Api_Activity, Api_ActivityTemplate } from 'models/api/Activity';
 import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
 import { ActivityResults } from './ActivityResults/ActivityResults';
@@ -23,6 +24,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   props: IActivityListViewProps,
 ) => {
   const { fileId, defaultFilters } = props;
+  const history = useHistory();
   const isMounted = useIsMounted();
   const { getActivityTemplates, getResearchActivities, postActivity } = useApiResearchFile();
   const [sort, setSort] = React.useState<TableSort<Api_Activity>>({});
@@ -73,7 +75,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
         activityItems = activityItems.filter(activity => {
           return (
             (!filters.activityTypeId ||
-              activity.activityTemplateTypeCode === filters.activityTypeId) &&
+              activity.activityTemplateTypeCode?.id === filters.activityTypeId) &&
             (!filters.status || activity.activityStatusTypeCode?.id === filters.status)
           );
         });
@@ -98,12 +100,24 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
 
   const saveActivity = (activityTypeId: number) => {
     setIsLoading(true);
-    const activity: Api_Activity = { activityTemplateId: activityTypeId, description: '' };
+    const activity: Api_Activity = { id: 0, activityTemplateId: activityTypeId, description: '' };
     postActivity(activity).then(response => {
       const newResults = [...activityResults, response.data];
       setActivityResults(newResults);
       setIsLoading(false);
     });
+  };
+
+  const getActivityUrl = (id: number): string => {
+    const currentPath = history.location.pathname;
+    if (currentPath.indexOf('activity') > -1) {
+      const existing = currentPath.split('activity');
+      return `${existing[0]}activity/${id}/view`;
+    } else {
+      return currentPath.charAt(currentPath.length - 1) === '/'
+        ? `${currentPath}activity/${id}/view`
+        : `${currentPath}/activity/${id}/view`;
+    }
   };
 
   return (
@@ -124,7 +138,9 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
           loading={isLoading}
           sort={sort}
           setSort={setSort}
-          onShowActivity={(activity: Api_Activity) => {}}
+          onShowActivity={(activity: Api_Activity) => {
+            history.push(getActivityUrl(activity.id));
+          }}
           onDelete={(activity: Api_Activity) => {}}
         />
       </Styled.Scrollable>

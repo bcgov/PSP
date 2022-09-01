@@ -6,6 +6,7 @@ namespace Pims.Dal.Services.Interfaces
     public interface IContactService
     {
         PimsContactMgrVw GetById(string id);
+
         Paged<PimsContactMgrVw> GetPage(ContactFilter filter);
     }
 }

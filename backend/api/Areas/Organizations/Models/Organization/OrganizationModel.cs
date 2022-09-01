@@ -11,6 +11,7 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
     public class OrganizationModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The organization's id.
         /// </summary>

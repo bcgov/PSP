@@ -12,7 +12,6 @@ namespace Pims.Core.Test
         /// <summary>
         /// Creates default CreateDefaultKeycloakOptions options.
         /// </summary>
-        /// <returns></returns>
         public static KeycloakOptions CreateDefaultKeycloakOptions()
         {
             return new KeycloakOptions()
@@ -23,7 +22,7 @@ namespace Pims.Core.Test
                 Admin = new KeycloakAdminOptions()
                 {
                     Authority = "https://keycloak/admin",
-                    Users = "/users"
+                    Users = "/users",
                 },
                 OpenIdConnect = new Pims.Core.Http.Configuration.OpenIdConnectOptions()
                 {
@@ -32,14 +31,14 @@ namespace Pims.Core.Test
                     Register = "/protocol/openid-connect/registrations",
                     Token = "/protocol/openid-connect/token",
                     TokenIntrospect = "/protocol/openid-connect/token/introspect",
-                    UserInfo = "/protocol/openid-connect/userinfo"
+                    UserInfo = "/protocol/openid-connect/userinfo",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions()
                 {
                     Audience = "pims-service-account",
                     Secret = "[USE SECRETS]",
-                    Client = "pims-service-account"
-                }
+                    Client = "pims-service-account",
+                },
             };
         }
 
@@ -47,7 +46,6 @@ namespace Pims.Core.Test
         /// Creates default CreateDefaultKeycloakOptions options and adds them to the helper service.
         /// </summary>
         /// <param name="helper"></param>
-        /// <returns></returns>
         public static IOptions<KeycloakOptions> CreateDefaultKeycloakOptions(this TestHelper helper)
         {
             var options = Options.Create(CreateDefaultKeycloakOptions());
@@ -59,7 +57,6 @@ namespace Pims.Core.Test
         /// Creates default CreateDefaultKeycloakOptions options and adds them to the helper service.
         /// </summary>
         /// <param name="helper"></param>
-        /// <returns></returns>
         public static IOptionsMonitor<KeycloakOptions> CreateDefaultKeycloakOptionsMonitor(this TestHelper helper)
         {
             var monitor = new Mock<IOptionsMonitor<KeycloakOptions>>();

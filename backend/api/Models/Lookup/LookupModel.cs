@@ -6,6 +6,7 @@ namespace Pims.Api.Models.Lookup
     public class LookupModel<T> : LookupModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify record.
         /// </summary>
@@ -13,7 +14,7 @@ namespace Pims.Api.Models.Lookup
 
         /// <summary>
         /// get/set - Optional parent of this lookup.
-        /// Allows to model parent/child relationships in lookup codes (ex Country -> Province)
+        /// Allows to model parent/child relationships in lookup codes (ex Country -> Province).
         /// </summary>
         public new T ParentId { get; set; }
         #endregion
@@ -22,6 +23,7 @@ namespace Pims.Api.Models.Lookup
     public class LookupModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify record.
         /// </summary>
@@ -29,12 +31,12 @@ namespace Pims.Api.Models.Lookup
 
         /// <summary>
         /// get/set - Optional parent of this lookup.
-        /// Allows to model parent/child relationships in lookup codes (ex Country -> Province)
+        /// Allows to model parent/child relationships in lookup codes (ex Country -> Province).
         /// </summary>
         public string ParentId { get; set; }
 
         /// <summary>
-        /// get/set - Code value of this lookup
+        /// get/set - Code value of this lookup.
         /// </summary>
         public string Code { get; set; }
 

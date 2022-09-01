@@ -6,6 +6,7 @@ namespace Pims.Api.Models
     public class SystemConstantModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The constant name.
         /// </summary>

@@ -11,7 +11,7 @@ namespace Pims.Api.Models.Mayan.Document
         public byte[] FilePayload { get; set; }
 
         /// <summary>
-        /// get/set - The file size
+        /// get/set - The file size.
         /// </summary>
         public int Size { get; set; }
 

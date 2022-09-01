@@ -1,8 +1,8 @@
-using Pims.Core.Json;
 using System;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Pims.Core.Json;
 
 namespace Pims.Core.Converters
 {
@@ -11,11 +11,12 @@ namespace Pims.Core.Converters
     /// Serialization - Extract value from 'EnumValueAttribute' otherwise lowercase the enum name value.
     /// Deserialization - Ignore case.
     /// </summary>
-    /// <typeparam name="ET"></typeparam>
-    public class EnumValueJsonConverter<ET> : JsonConverter<ET>
-        where ET : struct, IConvertible
+    /// <typeparam name="T_Enum"></typeparam>
+    public class EnumValueJsonConverter<T_Enum> : JsonConverter<T_Enum>
+        where T_Enum : struct, IConvertible
     {
         #region Methods
+
         /// <summary>
         /// Ignore case when parsing, otherwise return default.
         /// </summary>
@@ -23,11 +24,11 @@ namespace Pims.Core.Converters
         /// <param name="typeToConvert"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public override ET Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override T_Enum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var value = reader.GetString();
 
-            var valid = Enum.TryParse(value, true, out ET result);
+            var valid = Enum.TryParse(value, true, out T_Enum result);
 
             if (valid)
             {
@@ -35,14 +36,14 @@ namespace Pims.Core.Converters
             }
             else
             {
-                var fields = Enum.GetValues(typeof(ET));
+                var fields = Enum.GetValues(typeof(T_Enum));
                 foreach (var field in fields)
                 {
-                    var mi = typeof(ET).GetMember(field.ToString());
+                    var mi = typeof(T_Enum).GetMember(field.ToString());
                     var attr = mi[0].GetCustomAttribute<EnumValueAttribute>();
-                    if (attr != null && String.CompareOrdinal(value, attr.Value) == 0)
+                    if (attr != null && string.CompareOrdinal(value, attr.Value) == 0)
                     {
-                        return (ET)field;
+                        return (T_Enum)field;
                     }
                 }
             }
@@ -56,9 +57,9 @@ namespace Pims.Core.Converters
         /// <param name="writer"></param>
         /// <param name="value"></param>
         /// <param name="options"></param>
-        public override void Write(Utf8JsonWriter writer, ET value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, T_Enum value, JsonSerializerOptions options)
         {
-            var fi = typeof(ET).GetField(value.ToString());
+            var fi = typeof(T_Enum).GetField(value.ToString());
             var attr = fi.GetCustomAttribute<EnumValueAttribute>();
 
             if (attr != null)

@@ -1,7 +1,7 @@
-using FluentAssertions;
-using Pims.Core.Exceptions;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Core.Exceptions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Exceptions

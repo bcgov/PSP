@@ -28,6 +28,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a RoleController class, initializes it with the specified arguments.
         /// </summary>
@@ -41,6 +42,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// GET - Returns a paged array of roles from the datasource.
         /// </summary>

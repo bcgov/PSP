@@ -10,35 +10,46 @@ namespace Pims.Api.Helpers.Exceptions
     public class BadRequestException : Exception
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a BadRequestException object.
         /// </summary>
         /// <returns></returns>
-        public BadRequestException() { }
+        public BadRequestException()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a BadRequestException object, initializes it with the specified arguments.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public BadRequestException(string message) : base(message) { }
+        public BadRequestException(string message)
+            : base(message)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a BadRequestException object, initializes it with the specified arguments.
-        /// /// </summary>
+        /// ///. </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         /// <returns></returns>
-        public BadRequestException(string message, Exception innerException) : base(message, innerException) { }
+        public BadRequestException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a BadRequestException object, initializes it with the specified arguments.
-        /// /// </summary>
+        /// ///. </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected BadRequestException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-
+        protected BadRequestException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
 
         #endregion
     }

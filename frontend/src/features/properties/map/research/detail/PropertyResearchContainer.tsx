@@ -22,8 +22,16 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { pidFormatter } from 'utils';
 
+import { FormKeys } from '../FormKeys';
+
 export interface IPropertyResearchContainerProps {
   researchFileProperty: Api_ResearchFileProperty;
+  // The "edit key" identifies which form is currently being edited: e.g.
+  //  - property details info,
+  //  - research summary,
+  //  - research property info
+  //  - 'none' means no form is being edited.
+  setEditKey: (editKey: FormKeys) => void;
   setEditMode: (isEditing: boolean) => void;
 }
 
@@ -115,12 +123,12 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
         ltsaData={ltsaData}
         ltsaRequestedOn={ltsaDataRequestedOn}
         loading={ltsaLoading}
+        pid={apiProperty?.pid}
       />
     ),
     key: InventoryTabNames.title,
     name: 'Title',
   });
-
   tabViews.push({
     content: <></>,
     key: InventoryTabNames.value,
@@ -131,7 +139,10 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     content: (
       <PropertyResearchTabView
         researchFile={props.researchFileProperty}
-        setEditMode={props.setEditMode}
+        setEditMode={editable => {
+          props.setEditMode(editable);
+          props.setEditKey(FormKeys.propertyResearch);
+        }}
       />
     ),
     key: InventoryTabNames.research,
@@ -142,7 +153,16 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
 
   if (showPropertyInfoTab) {
     tabViews.push({
-      content: <PropertyDetailsTabView property={propertyViewForm} loading={propertyLoading} />,
+      content: (
+        <PropertyDetailsTabView
+          property={propertyViewForm}
+          loading={propertyLoading}
+          setEditMode={editable => {
+            props.setEditMode(editable);
+            props.setEditKey(FormKeys.propertyDetails);
+          }}
+        />
+      ),
       key: InventoryTabNames.property,
       name: 'Property Details',
     });

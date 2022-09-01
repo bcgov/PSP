@@ -1,7 +1,7 @@
-using Pims.Core.Exceptions;
-using Pims.Core.Http.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Exceptions;
+using Pims.Core.Http.Configuration;
 using Xunit;
 
 namespace Pims.Api.Test.Helpers
@@ -19,9 +19,9 @@ namespace Pims.Api.Test.Helpers
                 new object[] { new AuthClientOptions() { Authority = null, Audience = "a", Client = "c" } },
                 new object[] { new AuthClientOptions() { Authority = "a", Audience = null, Client = "c" } },
                 new object[] { new AuthClientOptions() { Authority = "a", Audience = "a", Client = null } },
-                new object[] { new AuthClientOptions() { Authority = "", Audience = "a", Client = "c" } },
-                new object[] { new AuthClientOptions() { Authority = "a", Audience = "", Client = "c" } },
-                new object[] { new AuthClientOptions() { Authority = "a", Audience = "a", Client = "" } },
+                new object[] { new AuthClientOptions() { Authority = string.Empty, Audience = "a", Client = "c" } },
+                new object[] { new AuthClientOptions() { Authority = "a", Audience = string.Empty, Client = "c" } },
+                new object[] { new AuthClientOptions() { Authority = "a", Audience = "a", Client = string.Empty } },
                 new object[] { new AuthClientOptions() { Authority = " ", Audience = "a", Client = "c" } },
                 new object[] { new AuthClientOptions() { Authority = "a", Audience = " ", Client = "c" } },
                 new object[] { new AuthClientOptions() { Authority = "a", Audience = "a", Client = " " } },
