@@ -154,6 +154,7 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
                         <DocumentMetadataView
                           mayanMetadata={props.document.mayanMetadata}
                           formikProps={formikProps}
+                          edit={true}
                         ></DocumentMetadataView>
                       </StyledGreySection>
                       <Row className="justify-content-end pt-4">

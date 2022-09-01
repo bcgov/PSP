@@ -9,6 +9,7 @@ import { DocumentMetadataForm } from './ComposedDocument';
 export interface IDocumentMetadataViewProps {
   mayanMetadata?: Api_Storage_DocumentTypeMetadataType[];
   formikProps: FormikProps<DocumentMetadataForm>;
+  edit: boolean;
 }
 
 export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataViewProps> = props => {
@@ -18,12 +19,16 @@ export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataView
       {props.mayanMetadata?.map(value => (
         <SectionField
           labelWidth="4"
-          key={`document-${value.metadata_type?.id}-metadata-${value.id}`}
+          key={
+            props.edit
+              ? `document-metadata-${value.id}`
+              : `document-${value.metadata_type?.id}-metadata-${value.id}`
+          }
           label={value.metadata_type?.label || ''}
           required={value.required === true}
         >
           <Input
-            field={value.metadata_type?.id?.toString() || ''}
+            field={(props.edit ? value?.id?.toString() : value.metadata_type?.id?.toString()) || ''}
             required={value.required === true}
             defaultValue={value.value}
           />
