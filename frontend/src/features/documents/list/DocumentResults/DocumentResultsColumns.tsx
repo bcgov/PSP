@@ -89,7 +89,7 @@ const renderActions = (
         {hasClaim(Claims.DOCUMENT_VIEW) && (
           <Col>
             <Button
-              title="document view details"
+              data-testid="document-view-button"
               icon={<FaEye size={24} id={`document-view-${index}`} title="document view details" />}
               onClick={() => original?.id && onViewDetails(original)}
             ></Button>
@@ -99,6 +99,7 @@ const renderActions = (
           <Col>
             <StyledRemoveLinkButton
               title="document delete"
+              data-testid="document-delete-button"
               icon={<FaTrash size={24} id={`document-delete-${index}`} title="document delete" />}
               onClick={() => original?.id && onDelete(original)}
             ></StyledRemoveLinkButton>

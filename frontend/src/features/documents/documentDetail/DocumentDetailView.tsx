@@ -20,7 +20,7 @@ import { ComposedDocument, DocumentMetadataForm } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
 import DownloadDocumentButton from '../DownloadDocumentButton';
 
-interface IDocumentDetailsViewProps {
+export interface IDocumentDetailsViewProps {
   document: ComposedDocument;
   isLoading: boolean;
   onUpdate: (updateRequest: Api_DocumentUpdateRequest) => void;
@@ -30,7 +30,7 @@ interface IDocumentDetailsViewProps {
 /**
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
-const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
+export const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
   const { hasClaim } = useKeycloakWrapper();
   const [editable, setEditable] = useState<boolean>(false);
 
@@ -56,7 +56,12 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
-          <SectionField label="Document type" labelWidth="4" className="pb-2">
+          <SectionField
+            data-testid="document-type"
+            label="Document type"
+            labelWidth="4"
+            className="pb-2"
+          >
             {documentTypeLabel}
           </SectionField>
           <SectionField label={'File name'} labelWidth="4" className="pb-3">
@@ -180,8 +185,6 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
     </StyledContainer>
   );
 };
-
-export default DocumentDetailView;
 
 const StyledContainer = styled.div`
   padding: 1rem;

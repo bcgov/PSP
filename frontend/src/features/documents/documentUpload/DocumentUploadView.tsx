@@ -92,6 +92,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             </div>
             <SectionField label="Document type" labelWidth="3" className="pb-2">
               <Select
+                data-testid="document-type"
                 placeholder="Select Document type"
                 field="documentTypeId"
                 options={documentTypes}
@@ -101,6 +102,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             <SectionField label={'Choose document to upload'} labelWidth="12" className="mb-4">
               <div className="pt-2">
                 <input
+                  data-testid="upload-input"
                   id="uploadInput"
                   type="file"
                   name="documentFile"
@@ -135,12 +137,18 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             </StyledGreySection>
             <Row className="justify-content-end pt-4">
               <Col xs="auto">
-                <Button variant="secondary" type="button" onClick={props.onCancel}>
+                <Button
+                  data-testid="cancel"
+                  variant="secondary"
+                  type="button"
+                  onClick={props.onCancel}
+                >
                   Cancel
                 </Button>
               </Col>
               <Col xs="auto">
                 <Button
+                  data-testid="save"
                   type="submit"
                   onClick={formikProps.submitForm}
                   disabled={selectedFile === null}
