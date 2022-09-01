@@ -104,7 +104,7 @@ describe('PropertySelectorSearchContainer component', () => {
       expect(mockAxios.history.get).toHaveLength(4);
       // call parcel map layer
       expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+ilike+%27%25123456789%25%27',
+        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+%3D+%27123456789%27',
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(

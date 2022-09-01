@@ -1,4 +1,4 @@
-import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
+import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { mockLookups } from 'mocks/mockLookups';
@@ -13,6 +13,9 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+// mock keycloak auth library
+jest.mock('@react-keycloak/web');
+
 describe('PropertyDetailsTabView component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & { property?: IPropertyApiModel } = {}) => {
@@ -21,6 +24,7 @@ describe('PropertyDetailsTabView component', () => {
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
       store: storeState,
+      claims: [Claims.PROPERTY_EDIT],
       history,
     });
 
