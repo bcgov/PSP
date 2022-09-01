@@ -24,7 +24,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   <div
     class="py-2"
   >
-    Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria
+    Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria.
   </div>
   .c13.btn {
   display: -webkit-box;

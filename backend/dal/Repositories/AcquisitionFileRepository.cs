@@ -75,6 +75,12 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.AcqPhysFileStatusTypeCodeNavigation)
                 .Include(r => r.AcquisitionTypeCodeNavigation)
                 .Include(r => r.RegionCodeNavigation)
+                .Include(r => r.PimsPropertyAcquisitionFiles)
+                    .ThenInclude(rp => rp.Property)
+                    .ThenInclude(p => p.RegionCodeNavigation)
+                .Include(r => r.PimsPropertyAcquisitionFiles)
+                    .ThenInclude(rp => rp.Property)
+                    .ThenInclude(p => p.DistrictCodeNavigation)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -86,8 +92,17 @@ namespace Pims.Dal.Repositories
         public PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile)
         {
             using var _ = Logger.QueryScope();
-
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+
+            // Existing properties should not be added.
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                if (acquisitionProperty.Property.Id != 0)
+                {
+                    Context.Entry(acquisitionProperty.Property).State = EntityState.Unchanged;
+                }
+            }
+
             this.Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
         }

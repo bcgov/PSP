@@ -14,6 +14,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
+using Pims.Api.Services;
 using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;

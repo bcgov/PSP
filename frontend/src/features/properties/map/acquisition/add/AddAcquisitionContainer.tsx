@@ -29,6 +29,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
   // navigate to read-only view after file has been created
   const onSuccess = (acqFile: Api_AcquisitionFile) => {
+    formikRef.current?.resetForm();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
   };
 

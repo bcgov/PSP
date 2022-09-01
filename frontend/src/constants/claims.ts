@@ -33,6 +33,10 @@ export enum Claims {
   DOCUMENT_VIEW = 'document-view',
   DOCUMENT_ADD = 'document-add',
   DOCUMENT_DELETE = 'document-delete',
+  ACTIVITY_EDIT = 'activity-edit',
+  ACTIVITY_VIEW = 'activity-view',
+  ACTIVITY_ADD = 'activity-add',
+  ACTIVITY_DELETE = 'activity-delete',
 }
 
 export default Claims;
