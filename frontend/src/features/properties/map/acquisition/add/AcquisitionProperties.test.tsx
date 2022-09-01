@@ -4,7 +4,6 @@ import {
 } from 'components/maps/providers/SelectedPropertyContext';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
-import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
