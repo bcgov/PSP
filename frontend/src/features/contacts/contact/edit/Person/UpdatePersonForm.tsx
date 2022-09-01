@@ -68,26 +68,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   return (
     <Formik
       component={UpdatePersonComponent}
-      initialValues={
-        !!formPerson
-          ? {
-              ...defaultCreatePerson,
-              ...formPerson,
-              mailingAddress: {
-                ...defaultCreatePerson.mailingAddress,
-                ...formPerson.mailingAddress,
-              },
-              propertyAddress: {
-                ...defaultCreatePerson.propertyAddress,
-                ...formPerson.propertyAddress,
-              },
-              billingAddress: {
-                ...defaultCreatePerson.billingAddress,
-                ...formPerson.billingAddress,
-              },
-            }
-          : defaultCreatePerson
-      }
+      initialValues={!!formPerson ? { ...defaultCreatePerson, ...formPerson } : defaultCreatePerson}
       enableReinitialize
       validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
       onSubmit={onSubmit}
@@ -124,17 +105,6 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       history.push(`/contact/P${personId}`);
     }
   };
-
-  const isContactMethodInvalid = useMemo(() => {
-    return (
-      !!touched.phoneContactMethods &&
-      !!touched.emailContactMethods &&
-      (!!touched.mailingAddress?.streetAddress1 ||
-        !!touched.propertyAddress?.streetAddress1 ||
-        !!touched.billingAddress?.streetAddress1) &&
-      getIn(errors, 'needsContactMethod')
-    );
-  }, [touched, errors]);
 
   // update mailing address sub-form when "useOrganizationAddress" checkbox is toggled
   useEffect(() => {
@@ -204,7 +174,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
               </Styled.RowAligned>
             </FormSection>
 
-            <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
+            <PersonSubForm />
           </FlexBox>
         </Styled.Form>
       </Styled.ScrollingFormLayout>

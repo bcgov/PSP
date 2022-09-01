@@ -6,11 +6,6 @@ import { Claims } from 'constants/claims';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
 import { defaultLease, ILease } from 'interfaces';
-import {
-  getMockContactOrganizationWithMultiplePeople,
-  getMockContactOrganizationWithOnePerson,
-  getMockPerson,
-} from 'mocks/mockContacts';
 import { getMockLease } from 'mocks/mockLease';
 import {
   fillInput,
@@ -62,7 +57,6 @@ describe('AddLeaseTenantContainer component', () => {
 
   beforeEach(() => {
     mockAxios.resetHistory();
-    mockAxios.reset();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
   it('renders as expected', async () => {
@@ -78,18 +72,18 @@ describe('AddLeaseTenantContainer component', () => {
       items: sampleContactResponse,
     });
     const {
-      component: { getByText, findByText, findByTestId },
+      component: { getByText, findAllByTitle, findByTestId },
       findFirstRowTableTwo,
       findCell,
     } = await setup({});
 
     const checkbox = await findByTestId('selectrow-P2');
     userEvent.click(checkbox);
-    await findByText('1 selected');
 
     const addButton = getByText('Add selected tenants');
     userEvent.click(addButton);
 
+    await findAllByTitle('Click to remove');
     const dataRow = findFirstRowTableTwo() as HTMLElement;
     expect(dataRow).not.toBeNull();
     expect(findCell(dataRow, 3)?.textContent).toBe('Bob Billy Smith');
@@ -114,7 +108,6 @@ describe('AddLeaseTenantContainer component', () => {
 
     const checkbox = await findByTestId('selectrow-P2');
     userEvent.click(checkbox);
-    await findByText('1 selected');
 
     const addButton = getByText('Add selected tenants');
     userEvent.click(addButton);
@@ -126,92 +119,6 @@ describe('AddLeaseTenantContainer component', () => {
     expect(await findByText('French Mouse Property Management')).toBeVisible();
     expect(await findByText('Dairy Queen Forever! Property Management')).toBeVisible();
     expect(await findByText('Pussycat Property Management')).toBeVisible();
-  });
-
-  it('primary contact information is loaded for a organization with a single contact', async () => {
-    mockAxios.onPut().reply(200);
-    mockAxios
-      .onGet('/persons/concept/3')
-      .reply(200, getMockPerson({ id: 3, firstName: 'Stinky', surname: 'Cheese' }));
-    mockAxios.onGet().reply(200, {
-      items: [getMockContactOrganizationWithOnePerson()],
-    });
-    const {
-      component: { getByText, findByTestId, findByText, findAllByTitle },
-    } = await setup({});
-
-    const checkbox = await findByTestId('selectrow-O3');
-    userEvent.click(checkbox);
-    await findByText('1 selected');
-
-    const addButton = getByText('Add selected tenants');
-    userEvent.click(addButton);
-
-    await findAllByTitle('Click to remove');
-    expect(await findByText('Stinky Cheese')).toBeVisible();
-    expect(mockAxios.history.get[1].url).toBe('/persons/concept/3');
-  });
-
-  it('primary contact information is loaded for a organization with multiple person contacts', async () => {
-    mockAxios.onPut().reply(200);
-    mockAxios
-      .onGet('/persons/concept/3')
-      .reply(200, getMockPerson({ id: 3, firstName: 'Stinky', surname: 'Cheese' }));
-    mockAxios
-      .onGet('/persons/concept/1')
-      .reply(200, getMockPerson({ id: 1, firstName: 'Bob', surname: 'Billy' }));
-    mockAxios.onGet().reply(200, {
-      items: [getMockContactOrganizationWithMultiplePeople()],
-    });
-    const {
-      component: { getByText, findByTestId, findByText, findByRole },
-    } = await setup({});
-
-    const checkbox = await findByTestId('selectrow-O2');
-    userEvent.click(checkbox);
-    await findByText('1 selected');
-
-    const addButton = getByText('Add selected tenants');
-    userEvent.click(addButton);
-
-    expect(await findByRole('option', { name: 'Select a contact' })).toBeVisible();
-    expect(await findByRole('option', { name: 'Stinky Cheese' })).toBeVisible();
-    expect(await findByRole('option', { name: 'Bob Billy' })).toBeVisible();
-    expect(mockAxios.history.get[1].url).toBe('/persons/concept/1');
-    expect(mockAxios.history.get[2].url).toBe('/persons/concept/3');
-  });
-
-  it('primary contact information is loaded for multiple organizations each with multiple person contacts', async () => {
-    mockAxios.onPut().reply(200);
-    mockAxios
-      .onGet('/persons/concept/3')
-      .reply(200, getMockPerson({ id: 3, firstName: 'Stinky', surname: 'Cheese' }));
-    mockAxios
-      .onGet('/persons/concept/1')
-      .reply(200, getMockPerson({ id: 1, firstName: 'Bob', surname: 'Billy' }));
-    mockAxios.onGet().reply(200, {
-      items: [
-        getMockContactOrganizationWithMultiplePeople(),
-        { ...getMockContactOrganizationWithMultiplePeople(), id: 'O1', organizationId: 1 },
-      ],
-    });
-    const {
-      component: { getByText, findByTestId, findByText, findAllByRole },
-    } = await setup({});
-
-    const checkbox = await findByTestId('selectrow-O1');
-    userEvent.click(checkbox);
-    const checkbox2 = await findByTestId('selectrow-O2');
-    userEvent.click(checkbox2);
-    await findByText('2 selected');
-
-    const addButton = getByText('Add selected tenants');
-    userEvent.click(addButton);
-
-    expect((await findAllByRole('option', { name: 'Select a contact' }))[0]).toBeVisible();
-    expect(mockAxios.history.get).toHaveLength(3); // unique persons should only be requested once.
-    expect(mockAxios.history.get[1].url).toBe('/persons/concept/1');
-    expect(mockAxios.history.get[2].url).toBe('/persons/concept/3');
   });
 
   describe('displays modal warning when a tenant organization with persons has no primary contact', () => {

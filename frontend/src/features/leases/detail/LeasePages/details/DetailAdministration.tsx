@@ -97,6 +97,10 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
           disabled={disabled}
           field={withNameSpace(nameSpace, 'documentationReference')}
         />
+        <Form.Label>LIS #:</Form.Label>
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'tfaFileNo')} />
+        <Form.Label>PS #:</Form.Label>
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'psFileNo')} />
       </Styled.FormGrid>
     </li>
   );

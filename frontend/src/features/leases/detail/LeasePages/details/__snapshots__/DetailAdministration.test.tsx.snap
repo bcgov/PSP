@@ -343,6 +343,38 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           name="documentationReference"
         />
       </div>
+      <label
+        class="form-label"
+      >
+        LIS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-tfaFileNo"
+          name="tfaFileNo"
+          title="333"
+          value="333"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        PS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-psFileNo"
+          name="psFileNo"
+          title="444"
+          value="444"
+        />
+      </div>
     </div>
   </li>
 </DocumentFragment>
@@ -689,6 +721,38 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-documentationReference"
           name="documentationReference"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        LIS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-tfaFileNo"
+          name="tfaFileNo"
+          title=""
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        PS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-psFileNo"
+          name="psFileNo"
+          title=""
+          value=""
         />
       </div>
     </div>

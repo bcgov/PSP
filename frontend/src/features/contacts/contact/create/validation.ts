@@ -36,29 +36,24 @@ const baseSchema = Yup.object().shape({
       }),
     }),
   ),
-  mailingAddress: Yup.object().when('useOrganizationAddress', {
-    is: (useOrganizationAddress: boolean) => {
-      return !useOrganizationAddress;
-    },
-    then: Yup.object().shape({
-      municipality: Yup.string().when('streetAddress1', {
-        is: (streetAddress1: string) => !!streetAddress1,
-        then: Yup.string().required('City is required'),
-      }),
-      postal: Yup.string().when('streetAddress1', {
-        is: (streetAddress1: string) => !!streetAddress1,
-        then: Yup.string().required('Postal Code is required'),
-      }),
-      countryId: Yup.string().when('streetAddress1', {
-        is: (streetAddress1: string) => !!streetAddress1,
-        then: Yup.string().required('Country is required'),
-      }),
-      // $otherCountry - you can prefix properties with $ to specify a property that is dependent on context passed in by validate()
-      provinceId: Yup.string().when(['streetAddress1', 'countryId', '$otherCountry'], {
-        is: (streetAddress1: string, countryId: string, otherCountry: string) =>
-          !!streetAddress1 && countryId !== otherCountry,
-        then: Yup.string().required('Province/State is required'),
-      }),
+  mailingAddress: Yup.object().shape({
+    municipality: Yup.string().when('streetAddress1', {
+      is: (streetAddress1: string) => !!streetAddress1,
+      then: Yup.string().required('City is required'),
+    }),
+    postal: Yup.string().when('streetAddress1', {
+      is: (streetAddress1: string) => !!streetAddress1,
+      then: Yup.string().required('Postal Code is required'),
+    }),
+    countryId: Yup.string().when('streetAddress1', {
+      is: (streetAddress1: string) => !!streetAddress1,
+      then: Yup.string().required('Country is required'),
+    }),
+    // $otherCountry - you can prefix properties with $ to specify a property that is dependent on context passed in by validate()
+    provinceId: Yup.string().when(['streetAddress1', 'countryId', '$otherCountry'], {
+      is: (streetAddress1: string, countryId: string, otherCountry: string) =>
+        !!streetAddress1 && countryId !== otherCountry,
+      then: Yup.string().required('Province/State is required'),
     }),
   }),
   propertyAddress: Yup.object().shape({
