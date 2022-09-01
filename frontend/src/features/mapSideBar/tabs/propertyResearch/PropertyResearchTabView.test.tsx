@@ -1,3 +1,4 @@
+import { Claims } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { render, RenderOptions } from 'utils/test-utils';
@@ -7,6 +8,9 @@ import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './Proper
 const history = createMemoryHistory();
 
 const setEditMode = jest.fn();
+
+// mock keycloak auth library
+jest.mock('@react-keycloak/web');
 
 describe('PropertyResearchTabView component', () => {
   // render component under test
@@ -18,6 +22,7 @@ describe('PropertyResearchTabView component', () => {
       />,
       {
         history,
+        claims: [Claims.RESEARCH_EDIT],
       },
     );
 
