@@ -6,6 +6,7 @@ namespace Pims.Api.Areas.Property.Models.Search
     public class AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>
@@ -14,7 +15,6 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
         public long RowVersion { get; set; }
 
         /// <summary>

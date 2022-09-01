@@ -2,11 +2,13 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import {
   Api_DocumentRelationship,
   Api_DocumentType,
+  Api_DocumentUpdateRequest,
   Api_UploadRequest,
   Api_UploadResponse,
 } from 'models/api/Document';
 import {
   Api_Storage_DocumentMetadata,
+  Api_Storage_DocumentTypeMetadataType,
   DocumentQueryResult,
   FileDownload,
 } from 'models/api/DocumentStorage';
@@ -26,6 +28,11 @@ export const useApiDocuments = () => {
   return React.useMemo(
     () => ({
       getDocumentTypes: () => api.get<Api_DocumentType[]>(`/documents/types`),
+
+      getDocumentTypeMetadata: (mayanDocumentTypeId: number) =>
+        api.get<ExternalResult<DocumentQueryResult<Api_Storage_DocumentTypeMetadataType>>>(
+          `/documents/storage/types/${mayanDocumentTypeId}/metadata`,
+        ),
 
       getDocumentRelationship: (relationshipType: DocumentRelationshipType, parentId: number) =>
         api.get<Api_DocumentRelationship[]>(`/documents/${relationshipType}/${parentId}`),
@@ -61,10 +68,26 @@ export const useApiDocuments = () => {
         );
         formData.append('documentTypeId', uploadRequest.documentType.id?.toString() || '');
         formData.append('documentStatusCode', uploadRequest.documentStatusCode || '');
+        let index = 0;
+        for (const [key, value] of Object.entries(uploadRequest.documentMetadata)) {
+          formData.append('DocumentMetadata[' + index + '].MetadataTypeId', key);
+          formData.append('DocumentMetadata[' + index + '].Value', String(value));
+          index++;
+        }
 
         return api.post<Api_UploadResponse>(
           `/documents/upload/${relationshipType}/${parentId}`,
           formData,
+        );
+      },
+      updateDocumentMetadataApiCall: (
+        relationshipType: DocumentRelationshipType,
+        documentId: number,
+        updateRequest: Api_DocumentUpdateRequest,
+      ) => {
+        return api.put<boolean>(
+          `/documents/${documentId}/relationship/${relationshipType}/metadata`,
+          updateRequest,
         );
       },
     }),

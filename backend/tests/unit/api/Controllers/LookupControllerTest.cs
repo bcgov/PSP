@@ -73,7 +73,7 @@ namespace Pims.Api.Test.Controllers
                 Id = 1,
                 RoleUid = Guid.NewGuid(),
                 Name = "Ministry of Health",
-                Description = "The Ministry of Health"
+                Description = "The Ministry of Health",
             };
             service.Setup(m => m.Lookup.GetRoles()).Returns(new[] { role });
 
@@ -111,7 +111,6 @@ namespace Pims.Api.Test.Controllers
 
             var organizationTypes = EntityHelper.CreateOrganizationType("orgtype");
             service.Setup(m => m.Lookup.GetOrganizationTypes()).Returns(new[] { organizationTypes });
-
 
             var propertyTypes = EntityHelper.CreatePropertyType("property");
             service.Setup(m => m.Lookup.GetPropertyTypes()).Returns(new[] { propertyTypes });

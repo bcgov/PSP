@@ -29,7 +29,7 @@ namespace Pims.Core.Test
                 new Entity.PimsContactMethodType("Email") { ConcurrencyControlNumber = 1 },
                 new Entity.PimsContactMethodType("Phone") { ConcurrencyControlNumber = 1 },
                 new Entity.PimsContactMethodType("Mobile") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsContactMethodType("Fax") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsContactMethodType("Fax") { ConcurrencyControlNumber = 1 },
             };
         }
     }

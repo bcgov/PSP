@@ -50,34 +50,9 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
-            repositories.AddScoped<Repositories.IActivityRepository,Repositories.ActivityRepository>();
+            repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
             repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
-        }
-
-        /// <summary>
-        /// Add PimsService objects to the dependency injection service collection.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddPimsDalServices(this IServiceCollection services)
-        {
-            // Todo: move services to the API project
-            services.AddScoped<IPimsService, PimsService>();
-            services.AddScoped<ILeaseService, LeaseService>();
-            services.AddScoped<ILeaseReportsService, LeaseReportsService>();
-            services.AddScoped<ILeaseTermService, LeaseTermService>();
-            services.AddScoped<ILeasePaymentService, LeasePaymentService>();
-            services.AddScoped<ISecurityDepositService, SecurityDepositService>();
-            services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
-            services.AddScoped<IPersonService, PersonService>();
-            services.AddScoped<IOrganizationService, OrganizationService>();
-            services.AddScoped<IResearchFileService, ResearchFileService>();
-            services.AddScoped<IActivityService, ActivityService>();
-            services.AddScoped<IPropertyService, PropertyService>();
-            services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
-            
-            return services; // TODO: Use reflection to find all Repositories.
         }
 
         /// <summary>

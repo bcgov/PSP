@@ -1,14 +1,20 @@
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
     public interface IActivityRepository : IRepository<PimsActivityInstance>
     {
         PimsActivityInstance GetById(long id);
+
+        long GetRowVersion(long activityId);
+
         IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId);
+
         PimsActivityInstance Add(PimsActivityInstance instance);
 
+        PimsActivityInstance Update(PimsActivityInstance instance);
+
+        bool Delete(long activityId);
     }
 }

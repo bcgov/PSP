@@ -14,7 +14,7 @@ const ResearchProperties: React.FunctionComponent = () => {
       <StyledSectionHeader>Properties to include in this file:</StyledSectionHeader>
       <div className="py-2">
         Select one or more properties that you want to include in this research file. You can choose
-        a location from the map, or search by other criteria
+        a location from the map, or search by other criteria.
       </div>
 
       <FieldArray name="properties">

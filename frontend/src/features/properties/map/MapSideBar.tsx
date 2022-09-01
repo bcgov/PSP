@@ -1,13 +1,22 @@
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import styled from 'styled-components';
+
+import MapRouter from './MapRouter';
 
 interface IMapSideBarProps {
   showSideBar: boolean;
+  setShowSideBar: (showSideBar: boolean) => void;
+  onZoom?: (apiProperty?: IPropertyApiModel) => void;
 }
 
-const MapSideBar: React.FunctionComponent<IMapSideBarProps> = ({ showSideBar, ...props }) => {
+const MapSideBar: React.FunctionComponent<IMapSideBarProps> = ({
+  showSideBar,
+  setShowSideBar,
+  onZoom,
+}) => {
   return (
     <StyledMapSideBar show={showSideBar}>
-      <>{props.children}</>
+      <MapRouter showSideBar={showSideBar} setShowSideBar={setShowSideBar} onZoom={onZoom} />
     </StyledMapSideBar>
   );
 };
@@ -21,14 +30,10 @@ const StyledMapSideBar = styled.div<{ show: boolean }>`
     border-bottom: none;
     margin-bottom: 0.2rem;
   }
-  width: 93rem;
   min-width: 93rem;
-  max-width: 93rem;
   margin-left: ${props => (props.show ? `0rem` : `-93rem`)};
-  padding: 1.4rem 3.6rem;
+  padding: 1.4rem 1.6rem;
   padding-bottom: 2rem;
-
   overflow: hidden;
   transition: 1s;
-  position: relative;
 `;

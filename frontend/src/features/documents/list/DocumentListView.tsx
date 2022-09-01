@@ -120,13 +120,18 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     props.refreshDocumentList();
   };
 
+  const onUpdateSuccess = () => {
+    handleModalDetailsClose();
+    props.refreshDocumentList();
+  };
+
   return (
     <div>
       <Section
         header={
           <Row>
             <Col xs="auto">Documents</Col>
-            {hasClaim(Claims.RESEARCH_ADD) && (
+            {hasClaim(Claims.DOCUMENT_ADD) && (
               <Col>
                 <StyledAddButton onClick={() => setIsUploadVisible(true)}>
                   <FaUpload />
@@ -150,8 +155,10 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       </Section>
       <DocumentDetailModal
         display={isDetailsVisible}
+        relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
+        onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
       />
       <DocumentUploadModal

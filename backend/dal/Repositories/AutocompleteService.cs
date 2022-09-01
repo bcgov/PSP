@@ -14,18 +14,23 @@ namespace Pims.Dal.Repositories
     public class AutocompleteService : BaseRepository, IAutocompleteService
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AutocompleteService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AutocompleteService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger) : base(dbContext, user, logger) { }
+        public AutocompleteService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
-        /// Get organization autocomplete predictions based on the supplied autocomplete request
+        /// Get organization autocomplete predictions based on the supplied autocomplete request.
         /// </summary>
         public IEnumerable<PimsOrganization> GetOrganizationPredictions(AutocompletionRequestModel request)
         {

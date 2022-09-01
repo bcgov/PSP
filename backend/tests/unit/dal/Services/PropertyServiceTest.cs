@@ -1,20 +1,21 @@
-using FluentAssertions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using Moq;
+using NetTopologySuite.Geometries;
+using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Core.Test;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Helpers;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
-using Pims.Dal.Constants;
 using Xunit;
-using Pims.Core.Extensions;
-using NetTopologySuite.Geometries;
-using Pims.Dal.Repositories;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Api.Test.Services
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]

@@ -6,8 +6,11 @@ export const mockAcquisitionFileResponse = (
   rowVersion = 1,
 ): Api_AcquisitionFile => ({
   id,
-  name,
   rowVersion,
+  fileNumber: '1-12345-01',
+  fileName: name,
+  ministryProjectNumber: '001',
+  ministryProjectName: 'Hwy 14 improvements',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',
   acquisitionFileStatusTypeCode: {
@@ -25,7 +28,7 @@ export const mockAcquisitionFileResponse = (
     description: 'South Coast Region',
     isDisabled: false,
   },
-  appCreateTimestamp: '2022-07-28T00:57:37.42',
+  appCreateTimestamp: '2022-05-28T00:57:37.42',
   appLastUpdateTimestamp: '2022-07-28T00:57:37.42',
   appLastUpdateUserid: 'admin',
   appCreateUserid: 'admin',

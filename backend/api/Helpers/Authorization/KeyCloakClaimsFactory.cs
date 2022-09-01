@@ -1,8 +1,8 @@
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models.Keycloak;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Authorization
 {
@@ -12,6 +12,7 @@ namespace Pims.Api.Helpers.Authorization
     public class KeycloakClaimsFactory : UserClaimsPrincipalFactory<ApplicationUserModel>
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a KeycloakClaimsFactory class.
         /// </summary>
@@ -20,10 +21,14 @@ namespace Pims.Api.Helpers.Authorization
         /// <returns></returns>
         public KeycloakClaimsFactory(
             UserManager<ApplicationUserModel> userManager,
-            IOptions<IdentityOptions> optionsAccessor) : base(userManager, optionsAccessor) { }
+            IOptions<IdentityOptions> optionsAccessor)
+            : base(userManager, optionsAccessor)
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Creates a ClaimsPrincipal for the specified user.
         /// </summary>

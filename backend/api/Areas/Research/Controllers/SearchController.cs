@@ -11,6 +11,7 @@ namespace Pims.Api.Areas.Research.Controllers
     using Pims.Api.Helpers.Extensions;
     using Pims.Api.Models.Concepts;
     using Pims.Api.Policies;
+    using Pims.Api.Services;
     using Pims.Dal.Entities.Models;
     using Pims.Dal.Security;
     using Pims.Dal.Services;
@@ -33,6 +34,7 @@ namespace Pims.Api.Areas.Research.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a SearchController(Research) class, initializes it with the specified arguments.
         /// </summary>
@@ -48,10 +50,11 @@ namespace Pims.Api.Areas.Research.Controllers
 
         #region Endpoints
         #region Research List View Endpoints
+
         /// <summary>
         /// Get all the Research Files that satisfy the filter parameters.
         /// </summary>
-        /// <returns>An array of Research Files matching the filter</returns>
+        /// <returns>An array of Research Files matching the filter.</returns>
         [HttpGet]
         [HasPermission(Permissions.ResearchFileView)]
         [Produces("application/json")]
@@ -69,7 +72,7 @@ namespace Pims.Api.Areas.Research.Controllers
         /// Get all the researches that satisfy the filter parameters.
         /// </summary>
         /// <param name="filter"></param>
-        /// <returns>An array of research files matching the filter</returns>
+        /// <returns>An array of research files matching the filter.</returns>
         [HttpPost("filter")]
         [HasPermission(Permissions.ResearchFileView)]
         [Produces("application/json")]

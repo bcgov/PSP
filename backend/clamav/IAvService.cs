@@ -6,6 +6,7 @@ namespace Pims.Av
     public interface IAvService
     {
         public Task ScanAsync(IFormFile file);
+
         public Task ScanAsync(byte[] fileData);
     }
 }

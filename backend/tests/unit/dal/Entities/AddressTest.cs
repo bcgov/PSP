@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Core.Test;
-using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -20,10 +20,10 @@ namespace Pims.Dal.Test.Entities
             new List<object[]>
             {
                 new object[] { new PimsAddress("address1", "address2", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, address2, municipality, BC, district, Region 1, postal, CAN" },
-                new object[] { new PimsAddress("address1", "", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
+                new object[] { new PimsAddress("address1", string.Empty, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
                 new object[] { new PimsAddress("address1", " ", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
                 new object[] { new PimsAddress("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
-                new object[] { new PimsAddress("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" }
+                new object[] { new PimsAddress("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
             };
         #endregion
 
@@ -57,7 +57,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new PimsAddress("", "address2", "municipality", province, null, "postal"));
+            Assert.Throws<ArgumentException>(() => new PimsAddress(string.Empty, "address2", "municipality", province, null, "postal"));
         }
 
         [Fact]

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Comparers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using Entity = Pims.Dal.Entities;
@@ -48,6 +47,34 @@ namespace Pims.Dal.Keycloak
         }
 
         /// <summary>
+        /// Approve the access request and grant the user a role and organization.
+        /// </summary>
+        /// <param name="update"></param>
+        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
+        /// <returns></returns>
+        public async Task<Entity.PimsAccessRequest> UpdateAccessRequestAsync(Entity.PimsAccessRequest update)
+        {
+            update.ThrowIfNull(nameof(update));
+            _user.ThrowIfNotAuthorized(Permissions.AdminUsers);
+
+            var accessRequest = _pimsRepository.AccessRequest.Get(update.AccessRequestId);
+            var user = _pimsRepository.User.Get(accessRequest.UserId);
+
+            if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED)
+            {
+
+                user.PimsUserRoles.Clear();
+                user.IsDisabled = false;
+                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value });
+                await AppendToUserAsync(user);
+            }
+            update.User = user;
+            update.Role = _pimsRepository.Role.Find(update.RoleId);
+
+            return _pimsRepository.AccessRequest.Update(update);
+        }
+
+        /// <summary>
         /// Save the updated user in keycloak and database.
         /// </summary>
         /// <param name="update"></param>
@@ -87,11 +114,14 @@ namespace Pims.Dal.Keycloak
 
             if (resetRoles)
             {
-                // Remove all keycloak groups from user.  // TODO: Only add/remove the ones that should be removed.
                 var userGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
                 foreach (var group in userGroups)
                 {
-                    await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
+                    var matchingPimsRole = _pimsRepository.Role.GetByKeycloakId(group.Id);
+                    if (matchingPimsRole != null)
+                    {
+                        await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
+                    }
                 }
             }
 
@@ -110,39 +140,12 @@ namespace Pims.Dal.Keycloak
 
             kmodel.Attributes = new Dictionary<string, string[]>
             {
-                ["displayName"] = new[] { update.BusinessIdentifierValue }
+                ["displayName"] = new[] { update.BusinessIdentifierValue },
             };
             _logger.LogInformation($"Updating keycloak user '{euser.BusinessIdentifierValue}'.");
             await _keycloakService.UpdateUserAsync(kmodel);
 
             return _pimsRepository.User.Get(euser.Id);
-        }
-
-        /// <summary>
-        /// Approve the access request and grant the user a role and organization.
-        /// </summary>
-        /// <param name="update"></param>
-        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        /// <returns></returns>
-        public async Task<Entity.PimsAccessRequest> UpdateAccessRequestAsync(Entity.PimsAccessRequest update)
-        {
-            update.ThrowIfNull(nameof(update));
-            _user.ThrowIfNotAuthorized(Permissions.AdminUsers);
-
-            var accessRequest = _pimsRepository.AccessRequest.Get(update.AccessRequestId);
-            var user = _pimsRepository.User.Get(accessRequest.UserId);
-
-            if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED) {
-
-                user.PimsUserRoles.Clear();
-                user.IsDisabled = false;
-                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value});
-                await AppendToUserAsync(user);
-            }
-            update.User = user;
-            update.Role = _pimsRepository.Role.Find(update.RoleId);
-
-            return _pimsRepository.AccessRequest.Update(update);
         }
     }
     #endregion

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +12,9 @@ using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using SModel = Pims.Api.Areas.Lease.Models.Search;
-using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers.Lease
 {
@@ -34,7 +34,7 @@ namespace Pims.Api.Test.Controllers.Lease
 
         public readonly static IEnumerable<object[]> LeaseQueryFilters = new List<object[]>()
         {
-            new object [] { new Uri("http://host/api/lease/search?TenantName=test")},
+            new object [] { new Uri("http://host/api/lease/search?TenantName=test") },
             new object [] { new Uri("http://host/api/lease/search?LFileNo=1") },
             new object [] { new Uri("http://host/api/lease/search?PinOrPid=2") },
         };

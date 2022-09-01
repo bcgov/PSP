@@ -1,5 +1,5 @@
 import { Button } from 'components/common/buttons/Button';
-import { Input, Select, SelectOption } from 'components/common/form';
+import { Select, SelectOption } from 'components/common/form';
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
@@ -13,16 +13,15 @@ import { ChangeEvent, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-interface DocumentUploadForm {
-  documentTypeId: string;
-  documentStatusCode: string;
-}
+import { DocumentMetadataForm } from '../ComposedDocument';
+import { DocumentMetadataView } from '../DocumentMetadataView';
+import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
 
 interface IDocumentUploadViewProps {
   documentTypes: Api_DocumentType[];
   isLoading: boolean;
   mayanMetadata: Api_Storage_DocumentTypeMetadataType[];
-  onDocumentTypeChange: (param: any) => void;
+  onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
   onUploadDocument: (uploadRequest: Api_UploadRequest) => void;
   onCancel: () => void;
 }
@@ -32,7 +31,6 @@ interface IDocumentUploadViewProps {
  */
 const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = props => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
   const documentTypes = props.documentTypes.map<SelectOption>(x => {
     return { label: x.documentType || '', value: x.id?.toString() || '' };
   });
@@ -40,8 +38,8 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   const { getOptionsByType } = useLookupCodeHelpers();
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
 
-  const initialFormState: DocumentUploadForm = {
-    documentTypeId: documentTypes.length > 0 ? documentTypes[0]?.value?.toString() || '' : '',
+  const initialFormState: DocumentMetadataForm = {
+    documentTypeId: '',
     documentStatusCode:
       documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
   };
@@ -59,20 +57,23 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
-      <Formik<DocumentUploadForm>
+      <Formik<DocumentMetadataForm>
         enableReinitialize
         initialValues={initialFormState}
-        onSubmit={async (values: DocumentUploadForm, { setSubmitting }) => {
+        validateOnMount={true}
+        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
+        onSubmit={async (values: DocumentMetadataForm, { setSubmitting }) => {
+          const { documentStatusCode, documentTypeId, ...rest } = values;
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
-              x => x.id === Number(values.documentTypeId),
+              x => x.id === Number(documentTypeId),
             );
-
             if (selectedDocumentType !== undefined) {
               var request: Api_UploadRequest = {
-                documentStatusCode: values.documentStatusCode,
+                documentStatusCode: documentStatusCode,
                 documentType: selectedDocumentType,
                 file: selectedFile,
+                documentMetadata: rest,
               };
 
               await props.onUploadDocument(request);
@@ -91,6 +92,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             </div>
             <SectionField label="Document type" labelWidth="3" className="pb-2">
               <Select
+                placeholder="Select Document type"
                 field="documentTypeId"
                 options={documentTypes}
                 onChange={props.onDocumentTypeChange}
@@ -124,22 +126,10 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
 
               <StyledH3>Details</StyledH3>
               <StyledScrollable>
-                {props.mayanMetadata?.length === 0 && (
-                  <StyledNoData>No additional data</StyledNoData>
-                )}
-                {props.mayanMetadata?.map(value => (
-                  <SectionField
-                    labelWidth="4"
-                    key={`document-${value.metadata_type?.id}-metadata-${value.id}`}
-                    label={value.metadata_type?.label || ''}
-                    required={value.required === true}
-                  >
-                    <Input
-                      field={value.metadata_type?.name || ''}
-                      required={value.required === true}
-                    />
-                  </SectionField>
-                ))}
+                <DocumentMetadataView
+                  mayanMetadata={props.mayanMetadata}
+                  formikProps={formikProps}
+                ></DocumentMetadataView>
               </StyledScrollable>
             </StyledGreySection>
             <Row className="justify-content-end pt-4">
@@ -198,9 +188,4 @@ const StyledH3 = styled.h3`
 const StyledScrollable = styled(Scrollable)`
   overflow-x: hidden;
   max-height: 50rem;
-`;
-
-const StyledNoData = styled.div`
-  text-align: center;
-  font-style: italic;
 `;

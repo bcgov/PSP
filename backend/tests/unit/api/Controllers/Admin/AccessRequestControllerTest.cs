@@ -1,3 +1,5 @@
+using System.Linq;
+using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -11,8 +13,6 @@ using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
-using FluentAssertions;
-using System.Linq;
 
 namespace Pims.Api.Test.Admin.Controllers
 {
@@ -115,7 +115,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsRepository>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
-            service.Setup(m => m.AccessRequest.Get(It.IsAny <long>())).Returns(accessRequest1);
+            service.Setup(m => m.AccessRequest.Get(It.IsAny<long>())).Returns(accessRequest1);
 
             // Act
             var result = controller.GetAccessRequest(accessRequest1.AccessRequestId);
@@ -152,4 +152,3 @@ namespace Pims.Api.Test.Admin.Controllers
         #endregion
     }
 }
-

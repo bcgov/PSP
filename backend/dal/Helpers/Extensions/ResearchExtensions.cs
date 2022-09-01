@@ -11,6 +11,23 @@ namespace Pims.Dal.Helpers.Extensions
     public static class ResearchExtensions
     {
         /// <summary>
+        /// Generate a query for the specified 'filter'.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public static IQueryable<Entities.PimsResearchFile> GenerateResearchQuery(this PimsContext context, Entity.Models.ResearchFilter filter)
+        {
+            filter.ThrowIfNull(nameof(filter));
+
+            var query = context.PimsResearchFiles.AsNoTracking();
+
+            query = query.GenerateCommonResearchQuery(filter);
+
+            return query;
+        }
+
+        /// <summary>
         /// Generate an SQL statement for the specified 'research file' and 'filter'.
         /// </summary>
         /// <param name="query"></param>
@@ -94,23 +111,6 @@ namespace Pims.Dal.Helpers.Extensions
                 .Include(r => r.PimsPropertyResearchFiles)
                 .ThenInclude(p => p.Property)
                 .ThenInclude(p => p.RegionCodeNavigation);
-        }
-
-        /// <summary>
-        /// Generate a query for the specified 'filter'.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public static IQueryable<Entities.PimsResearchFile> GenerateResearchQuery(this PimsContext context, Entity.Models.ResearchFilter filter)
-        {
-            filter.ThrowIfNull(nameof(filter));
-
-            var query = context.PimsResearchFiles.AsNoTracking();
-
-            query = query.GenerateCommonResearchQuery(filter);
-
-            return query;
         }
     }
 }

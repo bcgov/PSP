@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -8,20 +10,28 @@ using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Mayan.Sync;
 using Pims.Api.Repositories.Mayan;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
+using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
     /// <summary>
     /// DocumentSyncService implementation provides document syncronization between different data sources.
     /// </summary>
-    public class DocumentSyncService : IDocumentSyncService
+    public class DocumentSyncService : BaseService, IDocumentSyncService
     {
         private readonly IEdmsDocumentRepository mayanDocumentRepository;
         private readonly IEdmsMetadataRepository mayanMetadataRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
 
-        public DocumentSyncService(IEdmsDocumentRepository edmsDocumentRepository, IEdmsMetadataRepository emdMetadataRepository, IDocumentTypeRepository documentTypeRepository)
+        public DocumentSyncService(
+            ClaimsPrincipal user,
+            ILogger<DocumentSyncService> logger,
+            IEdmsDocumentRepository edmsDocumentRepository,
+            IEdmsMetadataRepository emdMetadataRepository,
+            IDocumentTypeRepository documentTypeRepository)
+            : base(user, logger)
         {
             this.mayanDocumentRepository = edmsDocumentRepository;
             this.mayanMetadataRepository = emdMetadataRepository;
@@ -30,6 +40,9 @@ namespace Pims.Api.Services
 
         public ExternalBatchResult SyncMayanMetadataTypes(SyncModel model)
         {
+            this.Logger.LogInformation("Synchronizing Mayan metadata types");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
+
             ExternalBatchResult batchResult = new ExternalBatchResult();
 
             Task<ExternalResult<QueryResult<MetadataType>>> retrieveTask = mayanMetadataRepository.GetMetadataTypesAsync(pageSize: 5000);
@@ -77,6 +90,9 @@ namespace Pims.Api.Services
 
         public ExternalBatchResult SyncMayanDocumentTypes(SyncModel model)
         {
+            this.Logger.LogInformation("Synchronizing Mayan document types");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
+
             ExternalBatchResult batchResult = new ExternalBatchResult();
 
             Task<ExternalResult<QueryResult<DocumentType>>> documentTypeTask = mayanDocumentRepository.GetDocumentTypesAsync(pageSize: 5000);
@@ -93,7 +109,7 @@ namespace Pims.Api.Services
                     createTasks.Add(mayanDocumentRepository.CreateDocumentTypeAsync(new DocumentType() { Label = documentTypeModel.Label }));
                 }
             }
-            Task.WaitAll(createTasks.ToArray());
+            Task.WhenAll(createTasks.ToArray());
             foreach (var task in createTasks)
             {
                 batchResult.CreatedDocumentType.Add(task.Result);
@@ -125,6 +141,9 @@ namespace Pims.Api.Services
 
         public async Task<IList<PimsDocumentTyp>> SyncBackendDocumentTypes()
         {
+            this.Logger.LogInformation("Synchronizing Pims DB and Mayan document types");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
+
             ExternalResult<QueryResult<DocumentType>> mayanResult = await mayanDocumentRepository.GetDocumentTypesAsync(pageSize: 5000);
 
             if (mayanResult.Status != ExternalResultStatus.Success && mayanResult.Payload?.Results?.Count == 0)

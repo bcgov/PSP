@@ -7,7 +7,7 @@ import isAbsoluteUrl from 'is-absolute-url';
 import { wfsAxios } from './wfsAxios';
 
 export interface IUseWfsLayerOptions {
-  name: string;
+  name?: string;
   service?: string;
   version?: string;
   outputFormat?: string;
@@ -80,6 +80,10 @@ function getUrlParams(options: IUseWfsLayerOptions): Record<string, any> {
 function buildUrl(inputUrl: string, queryParams: Record<string, any> = {}): URL {
   const baseUrl = window.location.origin;
   const urlObj = isAbsoluteUrl(inputUrl) ? new URL(inputUrl) : new URL(inputUrl, baseUrl);
-  Object.keys(queryParams).forEach(k => urlObj.searchParams.set(k, queryParams[k]));
+  Object.keys(queryParams).forEach(k => {
+    if (queryParams[k] !== undefined) {
+      urlObj.searchParams.set(k, queryParams[k]);
+    }
+  });
   return urlObj;
 }

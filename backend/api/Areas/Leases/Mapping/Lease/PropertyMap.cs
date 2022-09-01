@@ -22,14 +22,14 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.LandArea, src => src.LeaseArea);
 
-            config.NewConfig<Model.PropertyModel,Entity.PimsPropertyLease>()
+            config.NewConfig<Model.PropertyModel, Entity.PimsPropertyLease>()
                 .Map(dest => dest.PropertyId, src => src.Id)
                 .Map(dest => dest.Property, src => src)
                 .Map(dest => dest.LeaseArea, src => src.LandArea)
                 .Map(dest => dest.AreaUnitTypeCode, src => src.AreaUnitType.Id)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion);
 
-            config.NewConfig<Model.PropertyModel, Entity.PimsProperty> ()
+            config.NewConfig<Model.PropertyModel, Entity.PimsProperty>()
                 .Map(dest => dest.PropertyId, src => src.Id)
                 .Map(dest => dest.Pid, src => src.PID == string.Empty ? "-1" : src.PID)
                 .Map(dest => dest.Pin, src => src.PIN)

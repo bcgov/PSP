@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Pims.Core.Extensions
@@ -10,20 +11,21 @@ namespace Pims.Core.Extensions
     public static class JsonSerializerExtensions
     {
         #region Variables
+
         /// <summary>
         /// JSON formatting options.
         /// </summary>
-        /// <value></value>
         private static readonly JsonSerializerOptions _jsonFormatOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            IgnoreNullValues = true,
-            WriteIndented = true
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            WriteIndented = true,
         };
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Deserialize the specified string into the specified object of type 'T'.
         /// </summary>

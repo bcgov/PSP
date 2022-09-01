@@ -9,6 +9,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     public class PaymentModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the lease payment.
         /// </summary>

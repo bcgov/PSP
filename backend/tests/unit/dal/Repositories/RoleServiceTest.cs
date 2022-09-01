@@ -281,7 +281,6 @@ namespace Pims.Dal.Test.Services
             var role = EntityHelper.CreateRole(Guid.NewGuid(), "Role 1");
             Guid[] exclusions = new Guid[] { role.RoleUid };
 
-
             var service = helper.CreateRepository<RoleService>(user);
 
             // Act

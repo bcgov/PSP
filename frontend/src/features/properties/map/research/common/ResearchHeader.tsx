@@ -12,7 +12,7 @@ export interface IResearchHeaderProps {
 }
 
 const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
-  const leftColumnWidth = '8';
+  const leftColumnWidth = '7';
   const leftColumnLabel = '3';
   const researchFile = props.researchFile;
 
@@ -39,68 +39,84 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
       }, []);
   }
   return (
-    <Row className="no-gutters">
-      <Col>
+    <StyledRow className="no-gutters">
+      <Col xs={leftColumnWidth}>
         <Row className="no-gutters">
-          <Col xs={leftColumnWidth}>
-            <HeaderField label="Research file #:" labelWidth={leftColumnLabel}>
+          <Col>
+            <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
               {researchFile?.rfileNumber}
             </HeaderField>
           </Col>
-          <Col className="text-right">
-            Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
-            <UserNameTooltip
-              userName={researchFile?.appCreateUserid}
-              userGuid={researchFile?.appCreateUserGuid}
-            />
-          </Col>
         </Row>
         <Row className="no-gutters">
-          <Col xs={leftColumnWidth}>
-            <HeaderField label="R-file name:" labelWidth={leftColumnLabel}>
+          <Col>
+            <HeaderField label="File name:" labelWidth={leftColumnLabel} contentWidth="9">
               {researchFile?.name}
             </HeaderField>
           </Col>
-          <Col className="text-right">
-            Last updated: <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong>{' '}
-            by{' '}
-            <UserNameTooltip
-              userName={researchFile?.appLastUpdateUserid}
-              userGuid={researchFile?.appLastUpdateUserGuid}
-            />
-          </Col>
         </Row>
         <Row className="no-gutters">
-          <Col xs={leftColumnWidth}>
+          <Col>
             <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth="9">
               {regions}
             </HeaderField>
           </Col>
+        </Row>
+        <Row className="no-gutters">
+          <Col>
+            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
+              {districts}
+            </HeaderField>
+          </Col>
+        </Row>
+      </Col>
+      <Col xs="5">
+        <Row className="no-gutters">
+          <Col className="text-right">
+            <StyleSmallText>
+              Created: <strong>{prettyFormatDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
+              <UserNameTooltip
+                userName={researchFile?.appCreateUserid}
+                userGuid={researchFile?.appCreateUserGuid}
+              />
+            </StyleSmallText>
+          </Col>
+        </Row>
+        <Row className="no-gutters">
+          <Col className="text-right">
+            <StyleSmallText>
+              Last updated:{' '}
+              <strong>{prettyFormatDate(researchFile?.appLastUpdateTimestamp)}</strong> by{' '}
+              <UserNameTooltip
+                userName={researchFile?.appLastUpdateUserid}
+                userGuid={researchFile?.appLastUpdateUserGuid}
+              />
+            </StyleSmallText>
+          </Col>
+        </Row>
+        <Row className="no-gutters">
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
               {researchFile?.researchFileStatusTypeCode?.description}
             </HeaderField>
           </Col>
         </Row>
-        <Row className="no-gutters">
-          <Col xs={leftColumnWidth}>
-            <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
-              {districts}
-            </HeaderField>
-          </Col>
-        </Row>
-        <StyledDivider />
       </Col>
-    </Row>
+    </StyledRow>
   );
 };
 
 export default ResearchHeader;
 
-const StyledDivider = styled.div`
+const StyledRow = styled(Row)`
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
+`;
+
+const StyleSmallText = styled.span`
+  font-size: 0.87em;
+  line-height: 1.9;
 `;

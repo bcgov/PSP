@@ -1,9 +1,11 @@
+import { StyledRemoveLinkButton } from 'components/common/buttons';
 import { Button } from 'components/common/buttons/Button';
 import { ColumnWithProps, DateCell, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/index';
 import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Document, Api_DocumentType } from 'models/api/Document';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
@@ -79,13 +81,12 @@ const renderActions = (
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIconsRow className="no-gutters">
-        {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_ADD) &&
-          original?.mayanDocumentId !== undefined && (
-            <Col>
-              <DownloadDocumentButton mayanDocumentId={original?.mayanDocumentId} />
-            </Col>
-          )}
-        {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_VIEW) && (
+        {hasClaim(Claims.DOCUMENT_VIEW) && original?.mayanDocumentId !== undefined && (
+          <Col>
+            <DownloadDocumentButton mayanDocumentId={original?.mayanDocumentId} />
+          </Col>
+        )}
+        {hasClaim(Claims.DOCUMENT_VIEW) && (
           <Col>
             <Button
               title="document view details"
@@ -94,13 +95,13 @@ const renderActions = (
             ></Button>
           </Col>
         )}
-        {/*TODO:Fix claims*/ hasClaim(Claims.PROPERTY_VIEW) && (
+        {hasClaim(Claims.DOCUMENT_DELETE) && (
           <Col>
-            <Button
+            <StyledRemoveLinkButton
               title="document delete"
               icon={<FaTrash size={24} id={`document-delete-${index}`} title="document delete" />}
               onClick={() => original?.id && onDelete(original)}
-            ></Button>
+            ></StyledRemoveLinkButton>
           </Col>
         )}
       </StyledIconsRow>

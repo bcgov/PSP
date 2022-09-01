@@ -16,15 +16,22 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The person repository.
         /// </summary>
-        public IPersonRepository Person { get { return _serviceProvider.GetService<IPersonRepository>(); } }
+        public IPersonRepository Person
+        {
+            get { return _serviceProvider.GetService<IPersonRepository>(); }
+        }
 
         /// <summary>
         /// get - The organization repository.
         /// </summary>
-        public IOrganizationRepository Organization { get { return _serviceProvider.GetService<IOrganizationRepository>(); } }
+        public IOrganizationRepository Organization
+        {
+            get { return _serviceProvider.GetService<IOrganizationRepository>(); }
+        }
 
         /// <summary>
         /// get - The user calling the repository.
@@ -34,95 +41,150 @@ namespace Pims.Dal
         /// <summary>
         /// get - The property repository.
         /// </summary>
-        public IPropertyRepository Property { get { return _serviceProvider.GetService<IPropertyRepository>(); } }
+        public IPropertyRepository Property
+        {
+            get { return _serviceProvider.GetService<IPropertyRepository>(); }
+        }
 
         /// <summary>
         /// get - The lookup repository.
         /// </summary>
-        public ILookupService Lookup { get { return _serviceProvider.GetService<ILookupService>(); } }
+        public ILookupService Lookup
+        {
+            get { return _serviceProvider.GetService<ILookupService>(); }
+        }
 
         /// <summary>
         /// get - The system constant repository.
         /// </summary>
-        public ISystemConstantService SystemConstant { get { return _serviceProvider.GetService<ISystemConstantService>(); } }
+        public ISystemConstantService SystemConstant
+        {
+            get { return _serviceProvider.GetService<ISystemConstantService>(); }
+        }
 
         /// <summary>
         /// get - The user repository.
         /// </summary>
-        public IUserRepository User { get { return _serviceProvider.GetService<IUserRepository>(); } }
+        public IUserRepository User
+        {
+            get { return _serviceProvider.GetService<IUserRepository>(); }
+        }
 
         /// <summary>
         /// get - The role repository.
         /// </summary>
-        public IRoleService Role { get { return _serviceProvider.GetService<IRoleService>(); } }
+        public IRoleService Role
+        {
+            get { return _serviceProvider.GetService<IRoleService>(); }
+        }
 
         /// <summary>
         /// get - The claim repository.
         /// </summary>
-        public IClaimService Claim { get { return _serviceProvider.GetService<IClaimService>(); } }
+        public IClaimService Claim
+        {
+            get { return _serviceProvider.GetService<IClaimService>(); }
+        }
 
         /// <summary>
         /// get - The access request repository.
         /// </summary>
-        public IAccessRequestRepository AccessRequest { get { return _serviceProvider.GetService<IAccessRequestRepository>(); } }
+        public IAccessRequestRepository AccessRequest
+        {
+            get { return _serviceProvider.GetService<IAccessRequestRepository>(); }
+        }
 
         /// <summary>
         /// get - The tenant repository.
         /// </summary>
-        public ITenantRepository Tenant { get { return _serviceProvider.GetService<ITenantRepository>(); } }
+        public ITenantRepository Tenant
+        {
+            get { return _serviceProvider.GetService<ITenantRepository>(); }
+        }
 
         /// <summary>
         /// get - The lease repository.
         /// </summary>
-        public ILeaseRepository Lease { get { return _serviceProvider.GetService<ILeaseRepository>(); } }
+        public ILeaseRepository Lease
+        {
+            get { return _serviceProvider.GetService<ILeaseRepository>(); }
+        }
 
         /// <summary>
         /// get - The lease term repository.
         /// </summary>
-        public ILeaseTermRepository LeaseTerm { get { return _serviceProvider.GetService<ILeaseTermRepository>(); } }
+        public ILeaseTermRepository LeaseTerm
+        {
+            get { return _serviceProvider.GetService<ILeaseTermRepository>(); }
+        }
 
         /// <summary>
         /// get - The security deposit repository.
         /// </summary>
-        public ISecurityDepositRepository SecurityDeposit { get { return _serviceProvider.GetService<ISecurityDepositRepository>(); } }
+        public ISecurityDepositRepository SecurityDeposit
+        {
+            get { return _serviceProvider.GetService<ISecurityDepositRepository>(); }
+        }
 
         /// <summary>
         /// get - The contact repository.
         /// </summary>
-        public IContactRepository Contact { get { return _serviceProvider.GetService<IContactRepository>(); } }
+        public IContactRepository Contact
+        {
+            get { return _serviceProvider.GetService<IContactRepository>(); }
+        }
 
         /// <summary>
         /// get - The insurance repository.
         /// </summary>
-        public IInsuranceRepository Insurance { get { return _serviceProvider.GetService<IInsuranceRepository>(); } }
+        public IInsuranceRepository Insurance
+        {
+            get { return _serviceProvider.GetService<IInsuranceRepository>(); }
+        }
 
         /// <summary>
         /// get - The autocomplete repository.
         /// </summary>
-        public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
+        public IAutocompleteService Autocomplete
+        {
+            get { return _serviceProvider.GetService<IAutocompleteService>(); }
+        }
 
         /// <summary>
         /// get - The research file repository.
         /// </summary>
-        public IResearchFileRepository ResearchFile { get { return _serviceProvider.GetService<IResearchFileRepository>(); } }
+        public IResearchFileRepository ResearchFile
+        {
+            get { return _serviceProvider.GetService<IResearchFileRepository>(); }
+        }
 
         /// <summary>
         /// get - The research file repository.
         /// </summary>
-        public IResearchFilePropertyRepository ResearchFileProperty { get { return _serviceProvider.GetService<IResearchFilePropertyRepository>(); } }
+        public IResearchFilePropertyRepository ResearchFileProperty
+        {
+            get { return _serviceProvider.GetService<IResearchFilePropertyRepository>(); }
+        }
 
         /// <summary>
         /// get - The note repository.
         /// </summary>
-        public INoteRepository Note { get { return _serviceProvider.GetService<INoteRepository>(); } }
+        public INoteRepository Note
+        {
+            get { return _serviceProvider.GetService<INoteRepository>(); }
+        }
 
         /// <summary>
         /// get - The entity-note repository.
         /// </summary>
-        public IEntityNoteRepository EntityNote { get { return _serviceProvider.GetService<IEntityNoteRepository>(); } }
+        public IEntityNoteRepository EntityNote
+        {
+            get { return _serviceProvider.GetService<IEntityNoteRepository>(); }
+        }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PimsService class, and initializes it with the specified arguments.
         /// </summary>

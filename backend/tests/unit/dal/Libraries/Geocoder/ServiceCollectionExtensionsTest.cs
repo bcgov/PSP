@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -5,8 +7,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Pims.Core.Http;
 using Pims.Geocoder;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Geocoder

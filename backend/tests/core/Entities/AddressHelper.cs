@@ -17,7 +17,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsAddress CreateAddress(long id)
         {
-            return CreateAddress(id, "1234 St", "", "", null, null, "V9V9V9");
+            return CreateAddress(id, "1234 St", string.Empty, string.Empty, null, null, "V9V9V9");
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Pims.Core.Test
             return new Entity.PimsAddress(address, unitNumber, municipality, province, district, postal)
             {
                 AddressId = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
 
@@ -88,9 +88,8 @@ namespace Pims.Core.Test
             return new Entity.PimsAddress(address, null, "municipality", province, district, postal)
             {
                 AddressId = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
     }
 }
-

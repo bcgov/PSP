@@ -31,11 +31,14 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile file);
 
+        Task<ExternalResult<DocumentMetadata>> CreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value);
+
+        Task<ExternalResult<DocumentMetadata>> UpdateDocumentMetadataAsync(long documentId, long metadataId, string value);
+
         Task<ExternalResult<DocumentTypeMetadataType>> CreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
 
         Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
 
         Task<ExternalResult<string>> DeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
-
     }
 }

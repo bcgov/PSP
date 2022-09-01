@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
@@ -16,6 +15,8 @@ namespace Pims.Api.Services
     public interface IDocumentService
     {
         Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
+
+        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> GetDocumentTypeMetadataType(long mayanDocumentTypeId, string ordering = "", int? page = null, int? pageSize = null);
 
         Task<ExternalResult<QueryResult<DocumentDetail>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null);
 
@@ -36,5 +37,7 @@ namespace Pims.Api.Services
         Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument);
 
         Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest);
+
+        Task<bool> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateMetadataRequest updateRequest);
     }
 }

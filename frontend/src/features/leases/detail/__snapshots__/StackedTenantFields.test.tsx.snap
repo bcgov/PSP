@@ -14,6 +14,13 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 }
 
 <div
+    class="container"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div
     class="Toastify"
   />
   .c2 {
@@ -76,6 +83,13 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
 
 <div
     class="Toastify"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="container"
   />
   @media only screen and (max-width:1250px) {
 

@@ -1,11 +1,11 @@
-using FluentAssertions.Extensions;
-using Pims.Core.Converters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using FluentAssertions.Extensions;
+using Pims.Core.Converters;
 using Xunit;
 
 namespace Pims.Dal.Test.Core.Converters
@@ -24,13 +24,13 @@ namespace Pims.Dal.Test.Core.Converters
         {
             new object[] { DateTimeOffset.UnixEpoch.AddMilliseconds(MIN_DATE).UtcDateTime, $"{{\"test\":0}}" },
             new object[] { DateTimeOffset.UnixEpoch.AddMilliseconds(DATE).UtcDateTime, $"{{\"test\":{DATE}}}" },
-            new object[] { null, $"{{\"test\":0}}" }
+            new object[] { null, $"{{\"test\":0}}" },
         };
 
         public static IEnumerable<object[]> ReadData = new List<object[]>()
         {
             new object[] { JsonTokenType.String, $"{DATE}", DateTimeOffset.UnixEpoch.AddMilliseconds(DATE).UtcDateTime },
-            new object[] { JsonTokenType.String, "", DateTimeOffset.UnixEpoch },
+            new object[] { JsonTokenType.String, string.Empty, DateTimeOffset.UnixEpoch },
             new object[] { JsonTokenType.String, "test", DateTimeOffset.UnixEpoch },
             new object[] { JsonTokenType.String, null, DateTimeOffset.UnixEpoch },
             new object[] { JsonTokenType.Number, null, DateTimeOffset.UnixEpoch },

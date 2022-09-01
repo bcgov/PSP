@@ -21,7 +21,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.CONTACT_VIEW)) {
         return (
-          <Link to={`/mapview/research/${props.row.original.id}/view`}>
+          <Link to={`/mapview/sidebar/research/${props.row.original.id}`}>
             {props.row.original.rfileNumber}
           </Link>
         );

@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Dal;
 using Pims.Dal.Security;
@@ -29,6 +30,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PersonController class, initializes it with the specified arguments.
         /// </summary>
@@ -45,6 +47,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the organization for the specified primary key 'id'.
         /// </summary>

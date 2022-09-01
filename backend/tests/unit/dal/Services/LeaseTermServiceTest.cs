@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -451,7 +452,6 @@ namespace Pims.Dal.Test.Services
             // Act
             var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Id, 1, term));
             ex.Message.Should().Be("You must delete all renewals before deleting the initial term.");
-
         }
         #endregion
         #endregion

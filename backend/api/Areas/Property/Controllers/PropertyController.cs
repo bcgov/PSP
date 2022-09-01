@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Property.Models.Property;
 using Pims.Api.Policies;
+using Pims.Api.Services;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
@@ -29,6 +30,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PropertyController class, initializes it with the specified arguments.
         /// </summary>
@@ -45,6 +47,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the property for the specified unique 'pid'.
         /// </summary>
@@ -95,6 +98,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Concept Endpoints
+
         /// <summary>
         /// Get the property for the specified unique 'id'.
         /// </summary>

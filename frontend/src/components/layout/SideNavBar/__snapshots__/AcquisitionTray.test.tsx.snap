@@ -6,6 +6,9 @@ exports[`AcquisitionTray matches snapshot 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c0 {
@@ -21,5 +24,10 @@ exports[`AcquisitionTray matches snapshot 1`] = `
   >
     Acquisition Files
   </h3>
+  <a
+    href="/acquisition/list"
+  >
+    Manage acquisition files
+  </a>
 </DocumentFragment>
 `;

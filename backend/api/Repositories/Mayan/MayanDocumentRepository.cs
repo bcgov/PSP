@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -48,7 +49,7 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
             JsonSerializerOptions serializerOptions = new()
             {
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
             using HttpContent content = new StringContent(serializedDocumentType);
@@ -152,7 +153,6 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Finished retrieving document metadata");
             return response;
         }
-
 
         public async Task<ExternalResult<FileDownload>> DownloadFileAsync(long documentId, long fileId)
         {
@@ -288,6 +288,42 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<DocumentMetadata>> CreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value)
+        {
+            _logger.LogDebug("Add existing metadata type with value to an existing document");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            var linkModel = new { metadata_type_id = metadataTypeId, value = value };
+            using HttpContent content = new StringContent(JsonSerializer.Serialize(linkModel));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/");
+
+            var response = await PostAsync<DocumentMetadata>(endpoint, content, authenticationToken);
+
+            _logger.LogDebug($"Finished adding existing metadata value to a  document");
+            return response;
+        }
+
+        public async Task<ExternalResult<DocumentMetadata>> UpdateDocumentMetadataAsync(long documentId, long metadataId, string value)
+        {
+            _logger.LogDebug("Update existing metadata type with value to an existing document");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            var linkModel = new { metadata_id = metadataId, value = value };
+            using HttpContent content = new StringContent(JsonSerializer.Serialize(linkModel));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/{metadataId}/");
+
+            var response = await PutAsync<DocumentMetadata>(endpoint, content, authenticationToken);
+
+            _logger.LogDebug($"Finished updating existing metadata value to a document");
+            return response;
+        }
+
         public async Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
         {
             _logger.LogDebug("Updating document type and metadata type...");
@@ -325,7 +361,7 @@ namespace Pims.Api.Repositories.Mayan
             const string fileNameFlag = "filename";
             string[] parts = contentDisposition.Split(" ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
+            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
         }
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -23,7 +22,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public NoteRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<NoteRepository> logger) : base(dbContext, user, logger) { }
+        public NoteRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<NoteRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
@@ -40,7 +42,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Adds the specified note to the datasource
+        /// Adds the specified note to the datasource.
         /// </summary>
         /// <param name="note">The note to add.</param>
         /// <returns></returns>
@@ -72,8 +74,8 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Retrieves the row version of the note with the specified id.
         /// </summary>
-        /// <param name="id">The note id</param>
-        /// <returns>The row version</returns>
+        /// <param name="id">The note id.</param>
+        /// <returns>The row version.</returns>
         public long GetRowVersion(long id)
         {
             return this.Context.PimsNotes.AsNoTracking()
@@ -93,17 +95,15 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.ActivityInstanceId == entityId && (x.IsDisabled ?? false) == false).Select(x => x.Note).ToList();
         }
 
-        public void DeleteActivityNotes(long noteId)
+        public void DeleteActivityNotes(long entityId)
         {
-            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
+            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.ActivityInstanceId == entityId).ToList();
             if (activityNotes.Any())
             {
-                foreach (var note in activityNotes)
+                foreach (var activityNote in activityNotes)
                 {
-                    note.IsDisabled = true;
-                    note.AppLastUpdateTimestamp = DateTime.UtcNow;
-                    note.AppLastUpdateUserid = User.GetUsername();
-                    note.AppLastUpdateUserGuid = User.GetUserKey();
+                    this.Context.PimsActivityInstanceNotes.Remove(activityNote);
+                    this.Context.PimsNotes.Remove(activityNote.Note);
                 }
             }
         }

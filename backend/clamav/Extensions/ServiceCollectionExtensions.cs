@@ -19,7 +19,6 @@ namespace Pims.Av
         public static IServiceCollection AddClamAvService(this IServiceCollection services, IConfigurationSection section)
         {
 
-
             return services
                 .Configure<Configuration.ClamAvOptions>(section)
                 .AddSingleton<IAvService, ClamAvService>()

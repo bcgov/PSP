@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -6,9 +9,6 @@ using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Concepts;
@@ -65,7 +65,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var service = helper.GetService<Mock<IPimsRepository>>();
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
-            var filter = new Entity.Models.UserFilter(1, 1, "", "", false, null, null, new string[0]);
+            var filter = new Entity.Models.UserFilter(1, 1, string.Empty, string.Empty, false, null, null, new string[0]);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
@@ -92,7 +92,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var service = helper.GetService<Mock<IPimsRepository>>();
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
-            var filter = new Entity.Models.UserFilter(1, 1, "", "email", false, null, null, new string[0]);
+            var filter = new Entity.Models.UserFilter(1, 1, string.Empty, "email", false, null, null, new string[0]);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act

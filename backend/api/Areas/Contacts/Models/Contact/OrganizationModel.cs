@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
     public class OrganizationModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The organization's id.
         /// </summary>

@@ -9,6 +9,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key.
         /// </summary>

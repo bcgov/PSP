@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,13 +18,17 @@ namespace Pims.Dal.Repositories
     public class ResearchFileRepository : BaseRepository<PimsResearchFile>, IResearchFileRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ResearchFileRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger) : base(dbContext, user, logger) { }
+        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
@@ -56,7 +59,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
                 .Include(r => r.PimsResearchFilePurposes)
                     .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
-                .FirstOrDefault();
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>

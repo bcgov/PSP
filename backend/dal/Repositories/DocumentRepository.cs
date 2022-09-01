@@ -1,11 +1,13 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -15,6 +17,7 @@ namespace Pims.Dal.Repositories
     public class DocumentRepository : BaseRepository<PimsDocument>, IDocumentRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a DocumentActivityRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -25,7 +28,9 @@ namespace Pims.Dal.Repositories
             PimsContext dbContext,
             ClaimsPrincipal user,
             ILogger<DocumentRepository> logger)
-            : base(dbContext, user, logger) { }
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
@@ -43,6 +48,36 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get the document from the database based on document id.
+        /// </summary>
+        /// <param name="documentId"></param>
+        /// <returns></returns>
+        public PimsDocument Get(long documentId)
+        {
+            return this.Context.PimsDocuments.FirstOrDefault(x => x.DocumentId == documentId);
+        }
+
+        /// <summary>
+        /// Updates the passed document in the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public PimsDocument Update(PimsDocument document, bool commitTransaction = true)
+        {
+            document.ThrowIfNull(nameof(document));
+
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
+            var existingDocument = this.Context.PimsDocuments.Where(l => l.DocumentId == document.DocumentId).FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            Context.Entry(existingDocument).CurrentValues.SetValues(document);
+            if (commitTransaction)
+            {
+                this.Context.CommitTransaction();
+            }
+            return existingDocument;
+        }
+
+        /// <summary>
         /// Deletes the passed document from the database.
         /// </summary>
         /// <param name="document"></param>
@@ -54,7 +89,6 @@ namespace Pims.Dal.Repositories
             this.Context.PimsDocuments.Remove(document);
             return true;
         }
-
 
         #endregion
     }

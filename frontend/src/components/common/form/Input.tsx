@@ -26,6 +26,8 @@ type OptionalAttributes = {
   /** Whether the field is required. Makes the field border blue. */
   required?: boolean;
   /** Specifies that the HTML element should be disabled */
+  defaultValue?: string;
+  /** Used for providing default value to user input */
   disabled?: boolean;
   /** Used for restricting user input */
   pattern?: RegExp;
@@ -61,6 +63,7 @@ export const Input: React.FC<InputProps> = ({
   pattern,
   style,
   required,
+  defaultValue,
   disabled,
   custom,
   onBlurFormatter,
@@ -129,7 +132,7 @@ export const Input: React.FC<InputProps> = ({
           isInvalid={!!touch && !!error}
           {...rest}
           isValid={false}
-          value={pattern ? restricted : rest.value ?? value}
+          value={pattern ? restricted : rest.value ?? (value || defaultValue)}
           title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
           aria-describedby={helpText ? `${field}-help-text` : undefined}

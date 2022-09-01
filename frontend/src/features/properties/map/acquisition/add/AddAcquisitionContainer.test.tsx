@@ -47,7 +47,8 @@ describe('AddAcquisitionContainer component', () => {
       ...utils,
       getSaveButton: () => utils.getByText(/Save/i),
       getCancelButton: () => utils.getByText(/Cancel/i),
-      getNameTextbox: () => utils.container.querySelector(`input[name="name"]`) as HTMLInputElement,
+      getNameTextbox: () =>
+        utils.container.querySelector(`input[name="fileName"]`) as HTMLInputElement,
       getRegionDropdown: () =>
         utils.container.querySelector(`select[name="region"]`) as HTMLSelectElement,
       getAcquisitionTypeDropdown: () =>
@@ -93,7 +94,7 @@ describe('AddAcquisitionContainer component', () => {
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
     const formValues = new AcquisitionForm();
-    formValues.name = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    formValues.fileName = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     formValues.acquisitionType = 'CONSEN';
     formValues.region = '1';
 
@@ -101,11 +102,11 @@ describe('AddAcquisitionContainer component', () => {
       DEFAULT_PROPS,
     );
 
-    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.name as string));
+    await waitFor(() => userEvent.paste(getNameTextbox(), formValues.fileName as string));
     await userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType);
     await userEvent.selectOptions(getRegionDropdown(), formValues.region);
 
-    mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.name));
+    mockAxios.onPost().reply(200, mockAcquisitionFileResponse(1, formValues.fileName));
     userEvent.click(getSaveButton());
 
     await waitFor(() => {
@@ -115,7 +116,7 @@ describe('AddAcquisitionContainer component', () => {
       expect(mockAxios.history.post[0].url).toBe('/acquisitionfiles');
       expect(axiosData).toEqual(expectedValues);
 
-      expect(history.location.pathname).toBe('/mapview/acquisition/1');
+      expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
     });
   });
 });
