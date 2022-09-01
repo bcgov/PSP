@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LISDB"
+  DTS:DTSID="{A0A05C25-9FB9-4C46-960C-C299B79C75CA}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{A0A05C25-9FB9-4C46-960C-C299B79C75CA}sqltst2012.th.gov.bc.ca.LIS_Tst;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
