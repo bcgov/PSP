@@ -145,26 +145,37 @@ exports[`Note Results Table matches snapshot 1`] = `
 }
 
 .c6.c6.btn {
-  background-color: unset;
-  border: none;
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c6.c6.btn .text {
+  display: none;
 }
 
 .c6.c6.btn:hover,
-.c6.c6.btn:focus,
-.c6.c6.btn:active {
-  background-color: unset;
-  outline: none;
-  box-shadow: none;
+.c6.c6.btn:active,
+.c6.c6.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
-.c6.c6.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c6.c6.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
+.c6.c6.btn:hover .text,
+.c6.c6.btn:active .text,
+.c6.c6.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
 }
 
 .c3 {
@@ -387,7 +398,7 @@ exports[`Note Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c5 Button c6 btn btn-link"
                 title="Delete Note"
                 type="button"
               >
@@ -399,16 +410,12 @@ exports[`Note Results Table matches snapshot 1`] = `
                     height="2rem"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 448 512"
                     width="2rem"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
                     />
                   </svg>
                 </div>
@@ -459,7 +466,7 @@ exports[`Note Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c5 Button c6 btn btn-link"
                 title="Delete Note"
                 type="button"
               >
@@ -471,16 +478,12 @@ exports[`Note Results Table matches snapshot 1`] = `
                     height="2rem"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 448 512"
                     width="2rem"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
                     />
                   </svg>
                 </div>
@@ -531,7 +534,7 @@ exports[`Note Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c5 Button c6 btn btn-link"
                 title="Delete Note"
                 type="button"
               >
@@ -543,16 +546,12 @@ exports[`Note Results Table matches snapshot 1`] = `
                     height="2rem"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 448 512"
                     width="2rem"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
                     />
                   </svg>
                 </div>
@@ -603,7 +602,7 @@ exports[`Note Results Table matches snapshot 1`] = `
               class="c3 c4"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c5 Button c6 btn btn-link"
                 title="Delete Note"
                 type="button"
               >
@@ -615,16 +614,12 @@ exports[`Note Results Table matches snapshot 1`] = `
                     height="2rem"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 448 512"
                     width="2rem"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
                     />
                   </svg>
                 </div>

@@ -95,17 +95,15 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.ActivityInstanceId == entityId && (x.IsDisabled ?? false) == false).Select(x => x.Note).ToList();
         }
 
-        public void DeleteActivityNotes(long noteId)
+        public void DeleteActivityNotes(long entityId)
         {
-            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.NoteId == noteId).ToList();
+            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.ActivityInstanceId == entityId).ToList();
             if (activityNotes.Any())
             {
-                foreach (var note in activityNotes)
+                foreach (var activityNote in activityNotes)
                 {
-                    note.IsDisabled = true;
-                    note.AppLastUpdateTimestamp = DateTime.UtcNow;
-                    note.AppLastUpdateUserid = User.GetUsername();
-                    note.AppLastUpdateUserGuid = User.GetUserKey();
+                    this.Context.PimsActivityInstanceNotes.Remove(activityNote);
+                    this.Context.PimsNotes.Remove(activityNote.Note);
                 }
             }
         }

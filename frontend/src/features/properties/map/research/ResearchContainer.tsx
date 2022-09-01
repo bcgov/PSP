@@ -27,7 +27,9 @@ export interface IResearchContainerProps {
 }
 
 export const ResearchContainer: React.FunctionComponent<IResearchContainerProps> = props => {
-  const { retrieveResearchFile } = useGetResearch();
+  const {
+    retrieveResearchFile: { execute: getResearchFile, loading: loadingResearchFile },
+  } = useGetResearch();
 
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
 
@@ -49,15 +51,15 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   menuItems.unshift('RFile Summary');
 
   const fetchResearchFile = React.useCallback(async () => {
-    var retrieved = await retrieveResearchFile(props.researchFileId);
+    var retrieved = await getResearchFile(props.researchFileId);
     setResearchFile(retrieved);
-  }, [retrieveResearchFile, setResearchFile, props.researchFileId]);
+  }, [getResearchFile, setResearchFile, props.researchFileId]);
 
   React.useEffect(() => {
     fetchResearchFile();
   }, [fetchResearchFile]);
 
-  if (researchFile === undefined) {
+  if (researchFile === undefined && loadingResearchFile) {
     return (
       <>
         <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>
@@ -120,7 +122,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     setIsShowingPropertySelector(true);
   };
 
-  if (isShowingPropertySelector) {
+  if (isShowingPropertySelector && researchFile) {
     return (
       <UpdateProperties
         researchFile={researchFile}
@@ -149,7 +151,9 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         <ResearchFileLayout
           leftComponent={
             <>
-              {selectedMenuIndex === 0 && hasClaim(Claims.RESEARCH_ADD) ? (
+              {selectedMenuIndex === 0 &&
+              hasClaim(Claims.RESEARCH_ADD) &&
+              researchFile !== undefined ? (
                 <Button variant="success" onClick={showPropertiesSelector}>
                   <MdLocationPin size={'2.5rem'} />
                   Edit properties

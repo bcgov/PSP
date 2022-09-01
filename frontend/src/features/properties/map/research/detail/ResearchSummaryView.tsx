@@ -31,30 +31,30 @@ interface DetailResearchFile {
 }
 
 export interface IResearchSummaryViewProps {
-  researchFile: Api_ResearchFile;
+  researchFile?: Api_ResearchFile;
   setEditMode: (editable: boolean) => void;
 }
 
 const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
   const keycloak = useKeycloakWrapper();
   const detail: DetailResearchFile = {
-    id: props.researchFile.id,
-    name: props.researchFile.name,
-    roadName: props.researchFile.roadName,
-    roadAlias: props.researchFile.roadAlias,
-    rfileNumber: props.researchFile.rfileNumber,
-    statusTypeCodeDescription: props.researchFile.researchFileStatusTypeCode?.description,
-    requestDate: props.researchFile.requestDate,
-    requestDescription: props.researchFile.requestDescription,
-    requestSourceDescription: props.researchFile.requestSourceDescription,
-    researchResult: props.researchFile.researchResult,
-    researchCompletionDate: props.researchFile.researchCompletionDate,
-    isExpropriation: props.researchFile.isExpropriation,
-    expropriationNotes: props.researchFile.expropriationNotes,
-    requestSourceTypeDescription: props.researchFile.requestSourceType?.description,
+    id: props.researchFile?.id,
+    name: props.researchFile?.name,
+    roadName: props.researchFile?.roadName,
+    roadAlias: props.researchFile?.roadAlias,
+    rfileNumber: props.researchFile?.rfileNumber,
+    statusTypeCodeDescription: props.researchFile?.researchFileStatusTypeCode?.description,
+    requestDate: props.researchFile?.requestDate,
+    requestDescription: props.researchFile?.requestDescription,
+    requestSourceDescription: props.researchFile?.requestSourceDescription,
+    researchResult: props.researchFile?.researchResult,
+    researchCompletionDate: props.researchFile?.researchCompletionDate,
+    isExpropriation: props.researchFile?.isExpropriation,
+    expropriationNotes: props.researchFile?.expropriationNotes,
+    requestSourceTypeDescription: props.researchFile?.requestSourceType?.description,
   };
 
-  if (props.researchFile.requestorPerson !== undefined) {
+  if (props.researchFile?.requestorPerson !== undefined) {
     detail.requestorName = formatApiPersonNames(props.researchFile.requestorPerson);
     var personOrganizations = props.researchFile.requestorPerson.personOrganizations;
     var organization =
@@ -62,7 +62,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
         ? personOrganizations[0].organization
         : undefined;
     detail.requestorOrganization = organization?.name;
-  } else if (props.researchFile.requestorOrganization !== undefined) {
+  } else if (props.researchFile?.requestorOrganization !== undefined) {
     detail.requestorName = props.researchFile.requestorOrganization.name;
   }
 
@@ -71,7 +71,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   }
 
   detail.researchFilePurposes =
-    props.researchFile.researchFilePurposes !== undefined
+    props.researchFile?.researchFilePurposes !== undefined
       ? props.researchFile.researchFilePurposes
           .map(x => x.researchPurposeTypeCode?.description)
           .filter(isString)
@@ -80,7 +80,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.RESEARCH_EDIT) ? (
+        {keycloak.hasClaim(Claims.RESEARCH_EDIT) && props.researchFile !== undefined ? (
           <Button
             variant="link"
             title="Edit research file"

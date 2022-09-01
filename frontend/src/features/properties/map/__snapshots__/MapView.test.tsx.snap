@@ -373,7 +373,7 @@ exports[`MapView Renders the map 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-  width: 100vw;
+  width: 100%;
 }
 
 .c0.draft-cursor,

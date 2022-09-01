@@ -110,7 +110,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
 const StyleMapView = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100vw;
+  width: 100%;
   &.draft-cursor,
   &.draft-cursor .leaflet-grab,
   &.draft-cursor .leaflet-interactive {

@@ -7,8 +7,14 @@ namespace Pims.Dal.Repositories
     {
         PimsActivityInstance GetById(long id);
 
+        long GetRowVersion(long activityId);
+
         IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId);
 
         PimsActivityInstance Add(PimsActivityInstance instance);
+
+        PimsActivityInstance Update(PimsActivityInstance instance);
+
+        bool Delete(long activityId);
     }
 }
