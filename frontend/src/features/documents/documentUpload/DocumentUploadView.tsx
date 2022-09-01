@@ -61,7 +61,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
         enableReinitialize
         initialValues={initialFormState}
         validateOnMount={true}
-        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
+        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata, false)}
         onSubmit={async (values: DocumentMetadataForm, { setSubmitting }) => {
           const { documentStatusCode, documentTypeId, ...rest } = values;
           if (selectedFile !== null) {
@@ -129,6 +129,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                 <DocumentMetadataView
                   mayanMetadata={props.mayanMetadata}
                   formikProps={formikProps}
+                  edit={false}
                 ></DocumentMetadataView>
               </StyledScrollable>
             </StyledGreySection>
