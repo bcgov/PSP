@@ -1,7 +1,7 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
@@ -23,7 +23,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Act
             builder.AppendQuery("key1", "value1");
             builder.AppendQuery("key2", null);
-            builder.AppendQuery("key3", "");
+            builder.AppendQuery("key3", string.Empty);
             builder.AppendQuery("key4", " ");
 
             // Assert
@@ -39,7 +39,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Act
             builder.AppendQuery("key1", "value1");
             builder.AppendQuery("key2", null, true);
-            builder.AppendQuery("key3", "", true);
+            builder.AppendQuery("key3", string.Empty, true);
             builder.AppendQuery("key4", " ", true);
 
             // Assert
@@ -55,7 +55,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Act
             // Assert
             Assert.Throws<ArgumentException>(() => builder.AppendQuery(null, "value1"));
-            Assert.Throws<ArgumentException>(() => builder.AppendQuery("", "value1"));
+            Assert.Throws<ArgumentException>(() => builder.AppendQuery(string.Empty, "value1"));
             Assert.Throws<ArgumentException>(() => builder.AppendQuery(" ", "value1"));
         }
         #endregion

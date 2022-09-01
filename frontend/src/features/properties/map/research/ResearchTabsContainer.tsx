@@ -8,9 +8,16 @@ import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
 
 import ResearchSummaryView from './detail/ResearchSummaryView';
+import { FormKeys } from './FormKeys';
 
 export interface IResearchTabsContainerProps {
   researchFile: Api_ResearchFile;
+  // The "edit key" identifies which form is currently being edited: e.g.
+  //  - property details info,
+  //  - research summary,
+  //  - research property info
+  //  - 'none' means no form is being edited.
+  setEditKey: (editKey: FormKeys) => void;
   setEditMode: (isEditing: boolean) => void;
 }
 
@@ -20,11 +27,20 @@ export interface IResearchTabsContainerProps {
 export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContainerProps> = ({
   researchFile,
   setEditMode,
+  setEditKey,
 }) => {
   const tabViews: TabResearchView[] = [];
 
   tabViews.push({
-    content: <ResearchSummaryView researchFile={researchFile} setEditMode={setEditMode} />,
+    content: (
+      <ResearchSummaryView
+        researchFile={researchFile}
+        setEditMode={editable => {
+          setEditMode(editable);
+          setEditKey(FormKeys.researchSummary);
+        }}
+      />
+    ),
     key: ResearchTabNames.researchDetails,
     name: 'Research Details',
   });

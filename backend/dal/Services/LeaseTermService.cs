@@ -12,10 +12,11 @@ namespace Pims.Dal.Services
 {
     public class LeaseTermService : ILeaseTermService
     {
-        readonly Repositories.ILeaseTermRepository _leaseTermRepository;
-        readonly Repositories.ILeaseRepository _leaseRepository;
-        readonly ILeaseService _leaseService;
-        readonly ClaimsPrincipal _user;
+        private readonly Repositories.ILeaseTermRepository _leaseTermRepository;
+        private readonly Repositories.ILeaseRepository _leaseRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ClaimsPrincipal _user;
+
         public LeaseTermService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;

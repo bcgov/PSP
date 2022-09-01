@@ -1,3 +1,8 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -7,11 +12,6 @@ using Pims.Geocoder;
 using Pims.Geocoder.Configuration;
 using Pims.Geocoder.Models;
 using Pims.Geocoder.Parameters;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Geocoder
@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -70,14 +70,14 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var options = Options.Create(new GeocoderOptions()
             {
                 Sites = {
-                    AddressesUrl = "/addresses"
+                    AddressesUrl = "/addresses",
                 },
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureCollectionModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -102,12 +102,12 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureCollectionModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -132,12 +132,12 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureCollectionModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -162,12 +162,12 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureCollectionModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -176,7 +176,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
             var parameters = new AddressesParameters()
             {
-                AddressString = "address with encoding"
+                AddressString = "address with encoding",
             };
 
             // Act
@@ -196,12 +196,12 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureCollectionModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -210,7 +210,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
             var parameters = new AddressesParameters()
             {
-                AddressString = "address with encoding"
+                AddressString = "address with encoding",
             };
 
             // Act
@@ -232,12 +232,12 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -246,7 +246,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
             var parameters = new NearestParameters()
             {
-                Point = "123,456"
+                Point = "123,456",
             };
 
             // Act
@@ -268,12 +268,12 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var features = new FeatureCollectionModel()
             {
-                Type = "Feature"
+                Type = "Feature",
             };
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var clientFactory = helper.CreateHttpClientFactory(response);
@@ -282,7 +282,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
             var parameters = new NearParameters()
             {
-                Point = "123,456"
+                Point = "123,456",
             };
 
             // Act
@@ -304,7 +304,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var sitePids = new SitePidsResponseModel();
@@ -332,7 +332,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var helper = new TestHelper();
             var options = Options.Create(new GeocoderOptions()
             {
-                Key = "test"
+                Key = "test",
             });
             var mockRequestClient = new Mock<IHttpRequestClient>();
             var sitePids = new SitePidsResponseModel();

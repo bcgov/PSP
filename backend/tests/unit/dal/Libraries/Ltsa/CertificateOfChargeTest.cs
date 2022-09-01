@@ -1,8 +1,8 @@
-using FluentAssertions;
-using Pims.Ltsa.Models;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
@@ -16,19 +16,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_Number()
         {
-            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge(null, "", DateTime.Now));
+            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge(null, string.Empty, DateTime.Now));
         }
 
         [Fact]
         public void TestConstructor_Null_Type()
         {
-            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge("", null, DateTime.Now));
+            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge(string.Empty, null, DateTime.Now));
         }
 
         [Fact]
         public void TestConstructor_Null_IssuedDate()
         {
-            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge("", "", null));
+            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge(string.Empty, string.Empty, null));
         }
 
         [Fact]

@@ -18,35 +18,39 @@ const setup = (renderOptions: RenderOptions = {}) => {
 
 describe('AcquisitionTray', () => {
   it('matches snapshot', async () => {
-    mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
+    mockKeycloak({ claims: [Claims.ACQUISITION_VIEW] });
     const { asFragment } = setup();
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
+
   it('should have the Acquisition Files header in the component', async () => {
     setup({});
     expect(screen.getByText(`Acquisition Files`)).toBeInTheDocument();
   });
-  it('should have the Search for an Acquisition file link in the component', async () => {
+
+  it(`should have the "Manage acquisition files" link in the component`, async () => {
     mockKeycloak({ claims: [Claims.ACQUISITION_VIEW] });
     setup({});
-    expect(screen.getByText(`Search for an Acquisition file`)).toBeInTheDocument();
-  });
-  it('should have the Create an Acquisition file link in the component', async () => {
-    mockKeycloak({ claims: [Claims.ACQUISITION_ADD] });
-    setup({});
-    expect(screen.getByText(`Create an Acquisition file`)).toBeInTheDocument();
+    expect(screen.getByText(`Manage acquisition files`)).toBeInTheDocument();
   });
 
-  it('should not have the Search for an Acquisition file link in the component', async () => {
-    mockKeycloak({ claims: [] });
+  it(`should have the Create an acquisition file link in the component`, async () => {
+    mockKeycloak({ claims: [Claims.ACQUISITION_ADD] });
     setup({});
-    expect(screen.queryByText(`Search for an Acquisition file`)).toBe(null);
+    expect(screen.getByText(`Create an acquisition file`)).toBeInTheDocument();
   });
-  it('should not have the Create an Acquisition file link in the component', async () => {
+
+  it(`should not have the "Manage acquisition files" link in the component`, async () => {
     mockKeycloak({ claims: [] });
     setup({});
-    expect(screen.queryByText(`Create an Acquisition file`)).toBe(null);
+    expect(screen.queryByText(`Manage acquisition files`)).toBe(null);
+  });
+
+  it(`should not have the "Create an acquisition file" link in the component`, async () => {
+    mockKeycloak({ claims: [] });
+    setup({});
+    expect(screen.queryByText(`Create an acquisition file`)).toBe(null);
   });
 });

@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Core.Exceptions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
+using FluentAssertions;
+using Pims.Core.Exceptions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Exceptions
@@ -71,7 +71,7 @@ namespace Pims.Api.Test.Core.Exceptions
             var response = new HttpResponseMessage()
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com/"),
-                Content = new StringContent("test")
+                Content = new StringContent("test"),
             };
             var inner = new HttpClientRequestException(response);
 
@@ -93,7 +93,7 @@ namespace Pims.Api.Test.Core.Exceptions
             var response = new HttpResponseMessage()
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com/"),
-                Content = new StringContent("test")
+                Content = new StringContent("test"),
             };
 
             // Act
@@ -123,7 +123,7 @@ namespace Pims.Api.Test.Core.Exceptions
             var response = new HttpResponseMessage()
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com/"),
-                Content = new StringContent("test")
+                Content = new StringContent("test"),
             };
 
             // Act
@@ -152,7 +152,7 @@ namespace Pims.Api.Test.Core.Exceptions
             var response = new HttpResponseMessage()
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com/"),
-                Content = new StringContent("test")
+                Content = new StringContent("test"),
             };
             var inner = new HttpClientRequestException(response);
 
@@ -174,7 +174,7 @@ namespace Pims.Api.Test.Core.Exceptions
             var response = new HttpResponseMessage()
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "https://test.com/"),
-                Content = new StringContent("test")
+                Content = new StringContent("test"),
             };
             var inner = new HttpClientRequestException(response);
 

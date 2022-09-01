@@ -3,6 +3,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
     public class PropertyModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>
@@ -21,7 +22,6 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The string value of the street address.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
         #endregion
     }

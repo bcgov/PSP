@@ -26,7 +26,7 @@ namespace Pims.Core.Test
             return new Entity.PimsContactMethod(person, organization, type, value)
             {
                 ContactMethodId = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
 
@@ -46,9 +46,8 @@ namespace Pims.Core.Test
             return new Entity.PimsContactMethod(person, organization, type, value)
             {
                 ContactMethodId = id,
-                ConcurrencyControlNumber = 1
+                ConcurrencyControlNumber = 1,
             };
         }
     }
 }
-

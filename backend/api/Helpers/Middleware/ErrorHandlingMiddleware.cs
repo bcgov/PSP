@@ -31,6 +31,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an ErrorHandlingMiddleware class, and initializes it with the specified arguments.
         /// </summary>
@@ -48,6 +49,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Handle the exception if one occurs.
         /// </summary>

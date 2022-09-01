@@ -15,7 +15,9 @@ namespace Pims.Dal.Entities
         public override long Id { get => UserRoleId; set => UserRoleId = value; }
 
         #region Constructors
-        public PimsUserRole() { }
+        public PimsUserRole()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a UserRole class.

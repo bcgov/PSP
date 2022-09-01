@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class CoordinateModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The value on the X axis.
         /// </summary>

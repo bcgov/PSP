@@ -10,7 +10,7 @@ namespace Pims.Dal.Services
 {
     public class OrganizationService : BaseService, IOrganizationService
     {
-        readonly Repositories.IOrganizationRepository _organizationRepository;
+        private readonly Repositories.IOrganizationRepository _organizationRepository;
 
         /// <summary>
         /// Creates a new instance of a OrganizationService, and initializes it with the specified arguments.
@@ -18,7 +18,8 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <param name="organizationRepository"></param>
-        public OrganizationService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IOrganizationRepository organizationRepository) : base(user, logger)
+        public OrganizationService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IOrganizationRepository organizationRepository)
+            : base(user, logger)
         {
             _organizationRepository = organizationRepository;
         }

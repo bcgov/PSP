@@ -32,7 +32,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PaymentAmountTotal, src => src.AmountTotal)
                 .Map(dest => dest.PaymentReceivedDate, src => src.ReceivedDate)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity> ();
+                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
 }

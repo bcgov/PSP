@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+using System.IO;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Constants;
 using Pims.Core.Helpers;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Pims.Api.Helpers.Reporting
 {
@@ -13,6 +13,7 @@ namespace Pims.Api.Helpers.Reporting
     public static class ReportHelper
     {
         #region Methods
+
         /// <summary>
         /// Generates a CSV file for the specified 'items'.
         /// </summary>
@@ -25,7 +26,7 @@ namespace Pims.Api.Helpers.Reporting
             var result = new ContentResult
             {
                 Content = csv,
-                ContentType = ContentTypes.CONTENT_TYPE_CSV
+                ContentType = ContentTypes.CONTENT_TYPE_CSV,
             };
             return result;
         }

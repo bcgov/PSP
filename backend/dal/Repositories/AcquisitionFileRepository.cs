@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -15,16 +18,45 @@ namespace Pims.Dal.Repositories
     public class AcquisitionFileRepository : BaseRepository<PimsAcquisitionFile>, IAcquisitionFileRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AcquisitionFileRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, IMapper mapper) : base(dbContext, user, logger) { }
+        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, IMapper mapper)
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Retrieves a page with an array of acquisition files within the specified filters.
+        /// Note that the 'filter' will control the 'page' and 'quantity'.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="regions"></param>
+        /// <returns></returns>
+        public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter, HashSet<short> regions)
+        {
+            filter.ThrowIfNull(nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
+
+            var skip = (filter.Page - 1) * filter.Quantity;
+            var query = this.Context.GenerateAcquisitionQuery(filter, regions);
+            var items = query
+                .Skip(skip)
+                .Take(filter.Quantity)
+                .ToArray();
+
+            return new Paged<PimsAcquisitionFile>(items, filter.Page, filter.Quantity, query.Count());
+        }
 
         /// <summary>
         /// Retrieves the acquisition file with the specified id.

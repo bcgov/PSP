@@ -5,7 +5,10 @@ import { Api_ConcurrentVersion } from './ConcurrentVersion';
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
-  name?: string;
+  fileNumber?: string;
+  fileName?: string;
+  ministryProjectNumber?: string;
+  ministryProjectName?: string;
   assignedDate?: string;
   deliveryDate?: string;
   // Code Tables

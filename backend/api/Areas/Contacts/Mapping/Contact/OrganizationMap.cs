@@ -18,7 +18,6 @@ namespace Pims.Api.Areas.Contact.Mapping.Contact
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
                 .Map(dest => dest.Persons, src => src.GetPersons())
                 .Map(dest => dest.Comment, src => src.Comment);
-
         }
     }
 }

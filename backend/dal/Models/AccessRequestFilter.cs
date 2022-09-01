@@ -12,7 +12,8 @@ namespace Pims.Dal.Entities.Models
         /// <param name="quantity"></param>
         /// <param name="searchText"></param>
         /// <param name="sort"></param>
-        public AccessRequestFilter(int page = 1, int quantity = 10, string searchText = "", string[] sort = null) : base(page, quantity, sort)
+        public AccessRequestFilter(int page = 1, int quantity = 10, string searchText = "", string[] sort = null)
+            : base(page, quantity, sort)
         {
             this.SearchText = searchText;
         }

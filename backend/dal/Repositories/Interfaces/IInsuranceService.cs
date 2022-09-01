@@ -8,7 +8,9 @@ namespace Pims.Dal.Repositories
     public interface IInsuranceRepository : IRepository<PimsInsurance>
     {
         PimsInsurance Add(PimsInsurance insurance, bool commit = true);
+
         PimsInsurance Update(PimsInsurance insurance, bool commit = true);
+
         PimsInsurance Delete(PimsInsurance insurance, bool commit = true);
     }
 }

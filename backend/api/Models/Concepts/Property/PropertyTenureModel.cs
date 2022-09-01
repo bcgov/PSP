@@ -3,6 +3,7 @@ namespace Pims.Api.Models.Concepts
     public class PropertyTenureModel : BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Property tenure id.
         /// </summary>

@@ -17,6 +17,7 @@ import styled from 'styled-components';
 import SidebarFooter from '../shared/SidebarFooter';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
+import { FormKeys } from './FormKeys';
 import { useGetResearch } from './hooks/useGetResearch';
 import { UpdateProperties } from './update/properties/UpdateProperties';
 import ViewSelector from './ViewSelector';
@@ -33,6 +34,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editKey, setEditKey] = useState(FormKeys.none);
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
@@ -108,11 +110,13 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     }
     setShowConfirmModal(false);
     setIsEditing(false);
+    setEditKey(FormKeys.none);
   };
 
   const onSuccess = () => {
     fetchResearchFile();
     setIsEditing(false);
+    setEditKey(FormKeys.none);
     search();
   };
 
@@ -186,8 +190,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
                   researchFile={researchFile}
                   selectedIndex={selectedMenuIndex}
                   isEditMode={isEditing}
+                  editKey={editKey}
                   onSuccess={onSuccess}
                   setEditMode={setIsEditing}
+                  setEditKey={setEditKey}
                   setFormikRef={setFormikRef}
                 />
               </>

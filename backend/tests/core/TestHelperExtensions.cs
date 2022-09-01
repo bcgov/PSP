@@ -38,7 +38,7 @@ namespace Pims.Core.Test
             var cargs = ci.GetParameters();
             foreach (var carg in cargs)
             {
-                var exists = tempProvider.GetService(carg.ParameterType);// helper.Services.FirstOrDefault(sd => sd.ServiceType == carg.ParameterType);
+                var exists = tempProvider.GetService(carg.ParameterType); // helper.Services.FirstOrDefault(sd => sd.ServiceType == carg.ParameterType);
                 if (exists != null)
                 {
                     types.Add(new KeyValuePair<Type, object>(carg.ParameterType, exists));

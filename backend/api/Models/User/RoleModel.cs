@@ -6,6 +6,7 @@ namespace Pims.Api.Models.User
     public class RoleModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify the role.
         /// </summary>

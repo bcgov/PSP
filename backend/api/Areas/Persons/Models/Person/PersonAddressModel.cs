@@ -1,4 +1,3 @@
-
 namespace Pims.Api.Areas.Persons.Models.Person
 {
     /// <summary>
@@ -7,6 +6,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
     public class PersonAddressModel : Pims.Api.Models.Contact.AddressModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the person-address relationship.
         /// </summary>
@@ -15,7 +15,6 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - The concurrency row version of the person-address relationship.
         /// </summary>
-        /// <value></value>
         public long PersonAddressRowVersion { get; set; }
 
         /// <summary>

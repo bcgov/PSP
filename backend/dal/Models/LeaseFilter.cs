@@ -9,6 +9,7 @@ namespace Pims.Dal.Entities.Models
     public class LeaseFilter : PageFilter
     {
         #region Properties
+
         /// <summary>
         /// get/set - The unique identifier for titled property, either pid or pin.
         /// </summary>
@@ -17,13 +18,11 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
-        /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
         /// get/set - The address to search by.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
 
         /// <summary>
@@ -34,7 +33,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The value of the tenant name.
         /// </summary>
-        /// <value></value>
         public string TenantName { get; set; }
 
         /// <summary>
@@ -45,25 +43,21 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The Program(s) to filter by.
         /// </summary>
-        /// <value></value>
         public IList<string> NotInStatus { get; set; } = new List<string>();
 
         /// <summary>
         /// get/set - Filter to return leases that have expired after or on a given date.
         /// </summary>
-        /// <value></value>
         public DateTime? ExpiryAfterDate { get; set; }
 
         /// <summary>
         /// get/set - Filter to return leases that had a start date before or on the given date.
         /// </summary>
-        /// <value></value>
         public DateTime? StartBeforeDate { get; set; }
 
         /// <summary>
         /// get/set - Filter to return only receivable leases.
         /// </summary>
-        /// <value></value>
         public bool? IsReceivable { get; set; }
 
         /// <summary>
@@ -75,6 +69,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The expiry filter end date.
         /// </summary>
         public DateTime? ExpiryEndDate { get; set; }
+
         public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string[] sort)
         {
             this.LFileNo = lFileNo;
@@ -95,13 +90,17 @@ namespace Pims.Dal.Entities.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseFilter class.
         /// </summary>
-        public LeaseFilter() { }
+        public LeaseFilter()
+        {
+        }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>

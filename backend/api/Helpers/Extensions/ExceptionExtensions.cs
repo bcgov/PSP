@@ -15,9 +15,10 @@ namespace Pims.Api.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="BadRequestException">The item cannot be null.</exception>
-        public static T ThrowBadRequestIfNull<T>(this T item, string message) where T : class
+        public static T ThrowBadRequestIfNull<T>(this T item, string message)
+            where T : class
         {
-            if (String.IsNullOrWhiteSpace(message))
+            if (string.IsNullOrWhiteSpace(message))
             {
                 throw new ArgumentException("Argument cannot be null, empty or whitespace.", nameof(message));
             }

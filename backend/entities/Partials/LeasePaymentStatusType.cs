@@ -5,6 +5,7 @@ namespace Pims.Dal.Entities
     public partial class PimsLeasePaymentStatusType : ITypeEntity<string>
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify lease type.
         /// </summary>

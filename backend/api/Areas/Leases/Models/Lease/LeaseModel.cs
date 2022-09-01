@@ -11,6 +11,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
     public class LeaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key to identify the lease.
         /// </summary>
@@ -29,19 +30,16 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The value of the tenant name.
         /// </summary>
-        /// <value></value>
         public string TenantName { get; set; }
 
         /// <summary>
         /// get/set - The value of the moti resource assigned to this lease.
         /// </summary>
-        /// <value></value>
         public string MotiName { get; set; }
 
         /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
-        /// <value></value>
         public string ProgramName { get; set; }
 
         /// <summary>
@@ -62,68 +60,56 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The string value of the street address.
         /// </summary>
-        /// <value></value>
         public string Address { get; set; }
 
         /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
-        /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
         /// get/set - The LIS TFA File #.
         /// </summary>
-        /// <value></value>
         public string TfaFileNo { get; set; }
 
         /// <summary>
         /// get/set - The LIS Ps File #.
         /// </summary>
-        /// <value></value>
         public string PsFileNo { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease category type is set to "other"
+        /// get/set - The text description if the lease category type is set to "other".
         /// </summary>
-        /// <value></value>
         public string OtherCategoryType { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease program type is set to "other"
+        /// get/set - The text description if the lease program type is set to "other".
         /// </summary>
-        /// <value></value>
         public string OtherProgramType { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease purpose type is set to "other"
+        /// get/set - The text description if the lease purpose type is set to "other".
         /// </summary>
-        /// <value></value>
         public string OtherPurposeType { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease type is set to "other"
+        /// get/set - The text description if the lease type is set to "other".
         /// </summary>
-        /// <value></value>
         public string OtherType { get; set; }
 
-
         /// <summary>
-        /// get/set - The calculated expiry date of the lease
+        /// get/set - The calculated expiry date of the lease.
         /// </summary>
-        /// <value></value>
         public DateTime? ExpiryDate { get; set; }
 
         /// <summary>
-        /// get/set - The original start date of the lease
+        /// get/set - The original start date of the lease.
         /// </summary>
-        /// <value></value>
         public DateTime? StartDate { get; set; }
 
         /// <summary>
-        /// get/set - The most recent renewal date on the lease
+        /// get/set - The most recent renewal date on the lease.
         /// </summary>
-        /// <value></value>
         public DateTime? RenewalDate { get; set; }
 
         /// <summary>
@@ -132,9 +118,8 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public int RenewalCount { get; set; }
 
         /// <summary>
-        /// get/set - The receivable payment type code identifier
+        /// get/set - The receivable payment type code identifier.
         /// </summary>
-        /// <value></value>
         public TypeModel<string> PaymentReceivableType { get; set; }
 
         /// <summary>
@@ -190,40 +175,40 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - A list of tenant notes.
         /// </summary>
-        public IEnumerable<String> TenantNotes { get; set; }
+        public IEnumerable<string> TenantNotes { get; set; }
 
         /// <summary>
-        /// get/set - A list of persons tenants associated with this lease
+        /// get/set - A list of persons tenants associated with this lease.
         /// </summary>
         public IEnumerable<PersonModel> Persons { get; set; }
 
         /// <summary>
-        /// get/set - A list of organization tenants associated with this lease
+        /// get/set - A list of organization tenants associated with this lease.
         /// </summary>
         public IEnumerable<OrganizationModel> Organizations { get; set; }
 
         /// <summary>
-        /// get/set - A list of organization tenants associated with this lease
+        /// get/set - A list of organization tenants associated with this lease.
         /// </summary>
         public IEnumerable<TenantModel> Tenants { get; set; }
 
         /// <summary>
-        /// get/set - A list of properties associated with this lease
+        /// get/set - A list of properties associated with this lease.
         /// </summary>
         public IEnumerable<PropertyModel> Properties { get; set; }
 
         /// <summary>
-        /// get/set - A list of insurance objects associated with this lease
+        /// get/set - A list of insurance objects associated with this lease.
         /// </summary>
         public IEnumerable<InsuranceModel> Insurances { get; set; }
 
         /// <summary>
-        /// get/set - A collection of Improvements associated to this Lease
+        /// get/set - A collection of Improvements associated to this Lease.
         /// </summary>
         public IEnumerable<PropertyImprovementModel> Improvements { get; set; }
 
         /// <summary>
-        /// get/set - A collection of Security Deposits associated to this Lease
+        /// get/set - A collection of Security Deposits associated to this Lease.
         /// </summary>
         public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
 
@@ -246,10 +231,15 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - Whether this improvement is of type other.
         /// </summary>
         public bool IsOtherImprovement { get; set; }
+
         public bool HasPhysicalFile { get; set; }
+
         public bool HasDigitalFile { get; set; }
+
         public bool? HasPhysicalLicense { get; set; }
+
         public bool? HasDigitalLicense { get; set; }
+
         public bool IsExpired { get; set; }
         #endregion
     }

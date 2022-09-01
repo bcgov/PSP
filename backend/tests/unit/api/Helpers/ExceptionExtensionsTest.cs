@@ -1,7 +1,7 @@
-using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Helpers.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Extensions;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 

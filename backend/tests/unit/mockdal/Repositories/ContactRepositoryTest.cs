@@ -27,13 +27,13 @@ namespace Pims.Dal.Test.Services
             new List<object[]>
             {
                 new object[] { new ContactFilter() { Municipality = "victoria" }, "P1", 2 },
-                new object[] { new ContactFilter() { Municipality = "fake city" }, "", 0 },
-                new object[] { new ContactFilter() { Summary = "person name" }, "", 1 },
-                new object[] { new ContactFilter() { Summary = "organization" }, "", 1 },
+                new object[] { new ContactFilter() { Municipality = "fake city" }, string.Empty, 0 },
+                new object[] { new ContactFilter() { Summary = "person name" }, string.Empty, 1 },
+                new object[] { new ContactFilter() { Summary = "organization" }, string.Empty, 1 },
                 new object[] { new ContactFilter() { ActiveContactsOnly = true, SearchBy = "all" }, "P1", 2 },
                 new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all" }, "P2", 3 },
-                new object[] { new ContactFilter() { SearchBy = "organizations" }, "", 1 },
-                new object[] { new ContactFilter() { SearchBy = "persons" }, "", 1 },
+                new object[] { new ContactFilter() { SearchBy = "organizations" }, string.Empty, 1 },
+                new object[] { new ContactFilter() { SearchBy = "persons" }, string.Empty, 1 },
                 new object[] { new ContactFilter() { SearchBy = "all" }, "P1", 2 },
                 new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "FirstName asc" } }, "O1", 3 },
                 new object[] { new ContactFilter() { ActiveContactsOnly = false, SearchBy = "all", Sort = new string[] { "FirstName desc" } }, "P1", 3 },

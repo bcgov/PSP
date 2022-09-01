@@ -25,7 +25,6 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
                 .Map(dest => dest.Zoning, src => src.Zoning);
-
         }
     }
 }

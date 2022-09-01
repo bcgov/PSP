@@ -7,6 +7,7 @@ namespace Pims.Dal.Keycloak
     {
         #region Users
         Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user);
+
         Task<Entity.PimsAccessRequest> UpdateAccessRequestAsync(Entity.PimsAccessRequest update);
         #endregion
     }

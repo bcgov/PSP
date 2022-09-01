@@ -10,18 +10,25 @@ namespace Pims.Dal.Exceptions
     public class UserOverrideException : Exception
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserOverrideException class.
         /// </summary>
         /// <returns></returns>
-        public UserOverrideException() : base() { }
+        public UserOverrideException()
+            : base()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a UserOverrideException class, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public UserOverrideException(string message) : base(message) { }
+        public UserOverrideException(string message)
+            : base(message)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a UserOverrideException class, and initializes it with the specified arguments.
@@ -29,7 +36,10 @@ namespace Pims.Dal.Exceptions
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         /// <returns></returns>
-        public UserOverrideException(string message, Exception innerException) : base(message, innerException) { }
+        public UserOverrideException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a UserOverrideException class, and initializes it with the specified arguments.
@@ -37,7 +47,10 @@ namespace Pims.Dal.Exceptions
         /// <param name="info"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected UserOverrideException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected UserOverrideException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
         #endregion
     }
 }

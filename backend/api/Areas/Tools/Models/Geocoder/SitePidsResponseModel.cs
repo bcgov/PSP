@@ -7,6 +7,7 @@ namespace Pims.Api.Areas.Tools.Models.Geocoder
     {
         #region Properties
         public Guid SiteId { get; set; }
+
         public IEnumerable<string> Pids { get; set; }
         #endregion
     }

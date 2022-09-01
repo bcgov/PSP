@@ -203,8 +203,8 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-name"
-                name="name"
+                id="input-fileName"
+                name="fileName"
                 title=""
                 value=""
               />

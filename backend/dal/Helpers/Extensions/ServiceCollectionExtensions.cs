@@ -50,7 +50,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
-            repositories.AddScoped<Repositories.IActivityRepository,Repositories.ActivityRepository>();
+            repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
             repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
@@ -76,7 +76,7 @@ namespace Pims.Dal
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
-            
+
             return services; // TODO: Use reflection to find all Repositories.
         }
 

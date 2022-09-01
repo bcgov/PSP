@@ -1,7 +1,7 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
@@ -126,7 +126,7 @@ namespace Pims.Api.Test.Core.Extensions
         public void FormatAsPostal_Empty()
         {
             // Arrange
-            var value = "";
+            var value = string.Empty;
 
             // Act
             var result = value.FormatAsPostal();
@@ -206,13 +206,13 @@ namespace Pims.Api.Test.Core.Extensions
         public void LowercaseFirstCharacter_Empty()
         {
             // Arrange
-            var value = "";
+            var value = string.Empty;
 
             // Act
             var result = value.LowercaseFirstCharacter();
 
             // Assert
-            result.Should().Be("");
+            result.Should().Be(string.Empty);
         }
 
         [Fact]
@@ -260,7 +260,7 @@ namespace Pims.Api.Test.Core.Extensions
         public void GetHttpMethod_Empty()
         {
             // Arrange
-            var value = "";
+            var value = string.Empty;
 
             // Act
             var result = value.GetHttpMethod();
@@ -446,7 +446,7 @@ namespace Pims.Api.Test.Core.Extensions
         public void Truncate_Empty()
         {
             // Arrange
-            var value = "";
+            var value = string.Empty;
 
             // Act
             var result = value.Truncate(1);

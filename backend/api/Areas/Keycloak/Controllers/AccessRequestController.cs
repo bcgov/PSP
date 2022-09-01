@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts;
@@ -5,7 +6,6 @@ using Pims.Api.Policies;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Threading.Tasks;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Areas.Keycloak.Controllers
@@ -27,6 +27,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AccessRequestController class.
         /// </summary>
@@ -40,6 +41,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Update an access request, generally to grant/deny it.
         /// </summary>

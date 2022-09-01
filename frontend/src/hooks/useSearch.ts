@@ -29,7 +29,7 @@ export interface SearchState<IFilter, ISearchResult extends object> {
 }
 
 /**
- * Hook that searches for leases based on supplied filter object.
+ * Hook that searches for API entities based on supplied filter object.
  * @param initialFilter The filter parameters.
  * @param apiCall a function wrapping an api endpoint call that will handle this filter and return paginated results.
  * @param initialSort Any sort parameters to apply to the filter.

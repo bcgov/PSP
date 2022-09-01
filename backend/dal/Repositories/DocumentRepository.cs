@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -15,6 +13,7 @@ namespace Pims.Dal.Repositories
     public class DocumentRepository : BaseRepository<PimsDocument>, IDocumentRepository
     {
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a DocumentActivityRepository, and initializes it with the specified arguments.
         /// </summary>
@@ -25,7 +24,9 @@ namespace Pims.Dal.Repositories
             PimsContext dbContext,
             ClaimsPrincipal user,
             ILogger<DocumentRepository> logger)
-            : base(dbContext, user, logger) { }
+            : base(dbContext, user, logger)
+        {
+        }
         #endregion
 
         #region Methods
@@ -54,7 +55,6 @@ namespace Pims.Dal.Repositories
             this.Context.PimsDocuments.Remove(document);
             return true;
         }
-
 
         #endregion
     }

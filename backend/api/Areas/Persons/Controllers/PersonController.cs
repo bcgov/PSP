@@ -30,6 +30,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PersonController class, initializes it with the specified arguments.
         /// </summary>
@@ -46,6 +47,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Get the person for the specified primary key 'id'.
         /// </summary>

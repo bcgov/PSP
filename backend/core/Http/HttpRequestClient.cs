@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -21,6 +22,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The HttpClient use to make requests.
         /// </summary>
@@ -28,6 +30,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a HttpRequestClient class, initializes it with the specified arguments.
         /// </summary>
@@ -41,13 +44,14 @@ namespace Pims.Core.Http
             {
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             _logger = logger;
         }
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Dispose managed resources.
         /// </summary>
@@ -55,18 +59,6 @@ namespace Pims.Core.Http
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Dispose the HttpClient.
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // free managed resources
-                this.Client.Dispose();
-            }
         }
 
         /// <summary>
@@ -97,6 +89,7 @@ namespace Pims.Core.Http
         }
 
         #region HttpResponseMessage Methods
+
         /// <summary>
         /// Send an HTTP request to the specified 'url'.
         /// </summary>
@@ -155,7 +148,7 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public virtual Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url))
+            if (string.IsNullOrWhiteSpace(url))
             {
                 throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
             }
@@ -375,6 +368,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Serialization Methods
+
         /// <summary>
         /// Send an HTTP request to the specified 'url'.
         /// </summary>
@@ -689,6 +683,18 @@ namespace Pims.Core.Http
         public async Task<TModel> DeleteAsync<TModel>(Uri url, HttpContent content = null)
         {
             return await SendAsync<TModel>(url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>

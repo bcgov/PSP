@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -60,7 +61,7 @@ namespace Pims.Api.Repositories.Mayan
 
             JsonSerializerOptions serializerOptions = new()
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             string serializedMetadataType = JsonSerializer.Serialize(metadataType, serializerOptions);
             using HttpContent content = new StringContent(serializedMetadataType);
