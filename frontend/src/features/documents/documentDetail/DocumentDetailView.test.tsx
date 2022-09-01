@@ -1,12 +1,11 @@
 import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockDocumentMetadata, mockDocumentTypesResponse } from 'mocks/mockDocuments';
-import { mockLookups } from 'mocks/mockLookups';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
-
 import { ComposedDocument } from '../ComposedDocument';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { DocumentDetailView } from './DocumentDetailView';
+import { mockDocumentMetadata, mockDocumentTypesResponse } from 'mocks/mockDocuments';
+import { mockLookups } from 'mocks';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
