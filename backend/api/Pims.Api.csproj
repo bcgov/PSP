@@ -3,7 +3,7 @@
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
 
-    <Version>2.2.5-33.29</Version>
+    <Version>2.2.5-33.30</Version>
     <AssemblyVersion>2.2.5.33</AssemblyVersion>
 
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
