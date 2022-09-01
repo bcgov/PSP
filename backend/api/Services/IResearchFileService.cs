@@ -1,7 +1,7 @@
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public interface IResearchFileService
     {

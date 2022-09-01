@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Organizations.Controllers;
+using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Security;

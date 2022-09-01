@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class CoordinateTransformService : ICoordinateTransformService
     {

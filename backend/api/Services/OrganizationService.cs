@@ -4,13 +4,14 @@ using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class OrganizationService : BaseService, IOrganizationService
     {
-        private readonly Repositories.IOrganizationRepository _organizationRepository;
+        private readonly IOrganizationRepository _organizationRepository;
 
         /// <summary>
         /// Creates a new instance of a OrganizationService, and initializes it with the specified arguments.
@@ -18,7 +19,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <param name="organizationRepository"></param>
-        public OrganizationService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IOrganizationRepository organizationRepository)
+        public OrganizationService(ClaimsPrincipal user, ILogger<BaseService> logger, IOrganizationRepository organizationRepository)
             : base(user, logger)
         {
             _organizationRepository = organizationRepository;

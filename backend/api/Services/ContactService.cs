@@ -1,13 +1,13 @@
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Services.Interfaces;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Interfaces;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class ContactService : IContactService
     {

@@ -56,30 +56,6 @@ namespace Pims.Dal
         }
 
         /// <summary>
-        /// Add PimsService objects to the dependency injection service collection.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddPimsDalServices(this IServiceCollection services)
-        {
-            // Todo: move services to the API project
-            services.AddScoped<IPimsService, PimsService>();
-            services.AddScoped<ILeaseService, LeaseService>();
-            services.AddScoped<ILeaseReportsService, LeaseReportsService>();
-            services.AddScoped<ILeaseTermService, LeaseTermService>();
-            services.AddScoped<ILeasePaymentService, LeasePaymentService>();
-            services.AddScoped<ISecurityDepositService, SecurityDepositService>();
-            services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
-            services.AddScoped<IPersonService, PersonService>();
-            services.AddScoped<IOrganizationService, OrganizationService>();
-            services.AddScoped<IResearchFileService, ResearchFileService>();
-            services.AddScoped<IPropertyService, PropertyService>();
-            services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
-
-            return services; // TODO: Use reflection to find all Repositories.
-        }
-
-        /// <summary>
         /// Add the PIMS DB Context to the repository collection.
         /// </summary>
         /// <param name="repositories"></param>

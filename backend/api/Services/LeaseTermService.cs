@@ -5,19 +5,20 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using static Pims.Dal.Entities.PimsLeaseTermStatusType;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class LeaseTermService : ILeaseTermService
     {
-        private readonly Repositories.ILeaseTermRepository _leaseTermRepository;
-        private readonly Repositories.ILeaseRepository _leaseRepository;
+        private readonly ILeaseTermRepository _leaseTermRepository;
+        private readonly ILeaseRepository _leaseRepository;
         private readonly ILeaseService _leaseService;
         private readonly ClaimsPrincipal _user;
 
-        public LeaseTermService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
+        public LeaseTermService(ILeaseTermRepository leaseTermRepository, ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;
             _leaseRepository = leaseRepository;

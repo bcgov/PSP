@@ -1,7 +1,8 @@
+using Pims.Api.Services;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class LeaseService : ILeaseService
     {

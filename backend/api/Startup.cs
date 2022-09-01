@@ -213,7 +213,6 @@ namespace Pims.Api
             services.AddHttpClient("Pims.Api.Logging").AddHttpMessageHandler<LoggingHandler>();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
             services.AddPimsDalRepositories();
-            services.AddPimsDalServices();
             AddPimsApiRepositories(services);
             AddPimsApiServices(services);
             services.AddPimsKeycloakService();
@@ -373,6 +372,18 @@ namespace Pims.Api
             services.AddScoped<INoteService, NoteService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
+            services.AddScoped<IPimsService, PimsService>();
+            services.AddScoped<ILeaseService, LeaseService>();
+            services.AddScoped<ILeaseReportsService, LeaseReportsService>();
+            services.AddScoped<ILeaseTermService, LeaseTermService>();
+            services.AddScoped<ILeasePaymentService, LeasePaymentService>();
+            services.AddScoped<ISecurityDepositService, SecurityDepositService>();
+            services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IResearchFileService, ResearchFileService>();
+            services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
         }
         #endregion
     }

@@ -4,13 +4,14 @@ using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class PersonService : BaseService, IPersonService
     {
-        private readonly Repositories.IPersonRepository _personRepository;
+        private readonly IPersonRepository _personRepository;
 
         /// <summary>
         /// Creates a new instance of a PersonService, and initializes it with the specified arguments.
@@ -18,7 +19,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="logger"></param>
         /// <param name="personRepository"></param>
-        public PersonService(ClaimsPrincipal user, ILogger<BaseService> logger, Repositories.IPersonRepository personRepository)
+        public PersonService(ClaimsPrincipal user, ILogger<BaseService> logger, IPersonRepository personRepository)
             : base(user, logger)
         {
             _personRepository = personRepository;

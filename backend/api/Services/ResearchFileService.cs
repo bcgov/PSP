@@ -11,7 +11,7 @@ using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class ResearchFileService : IResearchFileService
     {

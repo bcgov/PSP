@@ -1,9 +1,10 @@
 using System;
 using System.Security.Claims;
 using Microsoft.Extensions.DependencyInjection;
+using Pims.Api.Services;
 using Pims.Dal.Services;
 
-namespace Pims.Dal
+namespace Pims.Api
 {
     /// <summary>
     /// PimsService class, provides a encapsulated way to references all the independent services.

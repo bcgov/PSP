@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public interface ILeaseReportsService
     {

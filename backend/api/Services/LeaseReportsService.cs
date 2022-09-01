@@ -8,7 +8,7 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public class LeaseReportsService : ILeaseReportsService
     {
@@ -28,7 +28,7 @@ namespace Pims.Dal.Services
 
             // fiscal defined as April 01 to March 31 of following year
             return _leaseRepository.Get(
-                new Entities.Models.LeaseFilter()
+                new Dal.Entities.Models.LeaseFilter()
                 {
                     ExpiryAfterDate = fiscalYearStartDate,
                     StartBeforeDate = fiscalYearStartDate.AddYears(1).AddDays(-1),

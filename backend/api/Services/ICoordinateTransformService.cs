@@ -1,6 +1,6 @@
 using NetTopologySuite.Geometries;
 
-namespace Pims.Dal.Services
+namespace Pims.Api.Services
 {
     public interface ICoordinateTransformService
     {
