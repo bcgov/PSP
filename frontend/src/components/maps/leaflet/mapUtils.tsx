@@ -177,6 +177,8 @@ export const toCqlFilterValue = (object: Record<string, string>, forceSimplePid?
         cql.push(
           `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'  OR PID_PADDED ilike '%${object[key]}%'`,
         );
+      } else if (key === 'PID' && object[key]?.length === 9) {
+        cql.push(`${key} = '${object[key]}'`);
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }
