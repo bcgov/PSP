@@ -8,28 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_PROPERTY_ACQUISITION_FILE_HIST")]
-    [Index(nameof(PropertyAcquisitionFileHistId), nameof(EndDateHist), Name = "PIMS_PRACQF_H_UK", IsUnique = true)]
-    public partial class PimsPropertyAcquisitionFileHist
+    [Table("PIMS_ACT_INST_PROP_ACQ_FILE")]
+    [Index(nameof(ActivityInstanceId), Name = "AIPAFL_ACTIVITY_INSTANCE_ID_IDX")]
+    [Index(nameof(PropertyAcquisitionFileId), nameof(ActivityInstanceId), Name = "AIPAFL_ACT_INST_PROP_ACQ_FL_TUC", IsUnique = true)]
+    [Index(nameof(PropertyAcquisitionFileId), Name = "AIPAFL_PROPERTY_ACQUISITION_FILE_ID_IDX")]
+    public partial class PimsActInstPropAcqFile
     {
         [Key]
-        [Column("_PROPERTY_ACQUISITION_FILE_HIST_ID")]
-        public long PropertyAcquisitionFileHistId { get; set; }
-        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-        public DateTime EffectiveDateHist { get; set; }
-        [Column("END_DATE_HIST", TypeName = "datetime")]
-        public DateTime? EndDateHist { get; set; }
+        [Column("ACT_INST_PROP_ACQ_FILE_ID")]
+        public long ActInstPropAcqFileId { get; set; }
+        [Column("ACTIVITY_INSTANCE_ID")]
+        public long ActivityInstanceId { get; set; }
         [Column("PROPERTY_ACQUISITION_FILE_ID")]
         public long PropertyAcquisitionFileId { get; set; }
-        [Column("ACQUISITION_FILE_ID")]
-        public long AcquisitionFileId { get; set; }
-        [Column("PROPERTY_ID")]
-        public long PropertyId { get; set; }
-        [Column("PROPERTY_NAME")]
-        [StringLength(500)]
-        public string PropertyName { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -70,5 +61,12 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+
+        [ForeignKey(nameof(ActivityInstanceId))]
+        [InverseProperty(nameof(PimsActivityInstance.PimsActInstPropAcqFiles))]
+        public virtual PimsActivityInstance ActivityInstance { get; set; }
+        [ForeignKey(nameof(PropertyAcquisitionFileId))]
+        [InverseProperty(nameof(PimsPropertyAcquisitionFile.PimsActInstPropAcqFiles))]
+        public virtual PimsPropertyAcquisitionFile PropertyAcquisitionFile { get; set; }
     }
 }
