@@ -235,7 +235,7 @@ exports[`DocumentUploadView component renders as expected 1`] = `
                 class="option"
                 value="1"
               >
-                BC Assessment Search
+                Survey
               </option>
               <option
                 class="option"
