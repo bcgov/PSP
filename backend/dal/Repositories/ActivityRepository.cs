@@ -123,7 +123,7 @@ namespace Pims.Dal.Repositories
             {
                 Context.Entry(instance.ActivityTemplate).State = EntityState.Unchanged;
             }
-            foreach(PimsActivityInstanceDocument activityInstanceDocument in instance.PimsActivityInstanceDocuments)
+            foreach (PimsActivityInstanceDocument activityInstanceDocument in instance.PimsActivityInstanceDocuments)
             {
                 Context.Entry(activityInstanceDocument).State = EntityState.Unchanged;
             }
