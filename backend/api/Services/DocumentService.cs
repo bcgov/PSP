@@ -151,7 +151,7 @@ namespace Pims.Api.Services
                 this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", documentId);
                 return true;
             }
-            throw new BadRequestException("Document Id not found.");        
+            throw new BadRequestException("Document Id not found.");
         }
 
         public async Task<bool> DeleteDocumentAsync(PimsDocument document)

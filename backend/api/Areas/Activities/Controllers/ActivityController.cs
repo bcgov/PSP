@@ -87,7 +87,7 @@ namespace Pims.Api.Areas.Activities.Controllers
         [HasPermission(Permissions.ActivityEdit)]
         [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
         [SwaggerOperation(Tags = new[] { "activity" })]
-        public IActionResult UpdateActivity( long activityId, [FromBody] ActivityInstanceModel activityModel)
+        public IActionResult UpdateActivity(long activityId, [FromBody] ActivityInstanceModel activityModel)
         {
             var activityInstance = _mapper.Map<PimsActivityInstance>(activityModel);
             var updatedActivity = _activityService.Update(activityInstance);

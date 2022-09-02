@@ -157,7 +157,7 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Add
-        [Fact(Skip ="Seq execution error")]
+        [Fact(Skip = "Seq execution error")]
         public void Add_Success()
         {
             // Arrange
@@ -211,7 +211,7 @@ namespace Pims.Dal.Test.Repositories
             var eResearch = EntityHelper.CreateResearchFile(rfileNumber: "100-000-000");
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
-            eResearch.Name = "research file name";            
+            eResearch.Name = "research file name";
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(eResearch);
             var pimsResearchFilePurpose = new PimsResearchFilePurpose() { ResearchFileId = 1, ResearchFilePurposeId = 1, ResearchPurposeTypeCode = "CODE" };
             var purposes = new List<PimsResearchFilePurpose>();
@@ -246,8 +246,7 @@ namespace Pims.Dal.Test.Repositories
             purposes.Add(pimsResearchFilePurpose);
             eResearch.PimsResearchFilePurposes = purposes;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(eResearch);
-            
-            
+
             var repository = helper.CreateRepository<ResearchFileRepository>(user);
 
             // Act
@@ -263,7 +262,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().BeAssignableTo<PimsResearchFile>();
             result.PimsResearchFilePurposes.Should().NotBeNull();
             result.PimsResearchFilePurposes.Count.Should().Be(2);
-            result.PimsResearchFilePurposes.Where(x=>x.ResearchPurposeTypeCode == "CODE2").Count().Should().Be(1);            
+            result.PimsResearchFilePurposes.Where(x => x.ResearchPurposeTypeCode == "CODE2").Count().Should().Be(1);
             result.RoadAlias.Should().Be("a road name or alias updated");
         }
 
