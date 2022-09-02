@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.1                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S35.01.dez                                 */
+/* Project file:          PIMS S36.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2022-08-22 16:07                                */
+/* Created on:            2022-08-30 12:49                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1093,6 +1093,22 @@ DROP TRIGGER [dbo].[PIMS_ACTIST_I_S_I_TR]
 GO
 
 
+DROP TRIGGER [dbo].[PIMS_LNSRVT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_LNSRVT_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_LNSRVT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_LNSRVT_I_S_I_TR]
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Drop views                                                             */
 /* ---------------------------------------------------------------------- */
@@ -1973,6 +1989,10 @@ ALTER TABLE [dbo].[PIMS_PROPERTY_RESEARCH_FILE] DROP CONSTRAINT [PRSCRC_PK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_PROPERTY_RESEARCH_FILE] DROP CONSTRAINT [PRSCRC_RSRCH_FILE_PROP_TUC]
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_RESEARCH_FILE', 'COLUMN', N'PROPERTY_NAME'
 GO
 
@@ -2348,6 +2368,18 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_PROPERTY_ACQUISITION_FILE] DROP CONSTRAINT [PRACQF_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_PROPERTY_ACQUISITION_FILE] DROP CONSTRAINT [PRACQF_PROP_ACQ_TUC]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACQUISITION_FILE', 'COLUMN', N'PROPERTY_NAME'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACQUISITION_FILE', 'COLUMN', N'DISPLAY_ORDER'
 GO
 
 
@@ -2759,6 +2791,10 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY', 'COLUMN', N'SURVEY_PLAN_NUMBER'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY', 'COLUMN', N'ENCUMBRANCE_REASON'
 GO
 
@@ -2897,6 +2933,10 @@ ALTER TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE] DROP CONSTRAINT [RSCHAI_PK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_RESEARCH_ACTIVITY_INSTANCE] DROP CONSTRAINT [RSCHAI_RSRCH_FILE_ACTIVITY_TUC]
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_RESEARCH_ACTIVITY_INSTANCE', 'COLUMN', N'IS_DISABLED'
 GO
 
@@ -2971,6 +3011,10 @@ ALTER TABLE [dbo].[PIMS_ACQUISITION_ACTIVITY_INSTANCE] DROP CONSTRAINT [ACQAIN_P
 GO
 
 
+ALTER TABLE [dbo].[PIMS_ACQUISITION_ACTIVITY_INSTANCE] DROP CONSTRAINT [ACQAIN_ACQ_ACTIVITY_TUC]
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_ACTIVITY_INSTANCE', 'COLUMN', N'IS_DISABLED'
 GO
 
@@ -3038,6 +3082,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE_DOCUMENT] DROP CONSTRAINT [ACTDOC_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE_DOCUMENT] DROP CONSTRAINT [ACTDOC_ACTIVITY_DOCUMENT_TUC]
 GO
 
 
@@ -3112,6 +3160,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE_NOTE] DROP CONSTRAINT [ACTINN_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE_NOTE] DROP CONSTRAINT [ACTINN_ACTIVITY_NOTE_TUC]
 GO
 
 
@@ -5652,6 +5704,122 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_LETTER_TYPE"                                      */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LETTER_TYPE] DROP CONSTRAINT [LTRTYP_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LETTER_TYPE', 'COLUMN', N'LETTER_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LETTER_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LETTER_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LETTER_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LETTER_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_LETTER_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_FENCE_TYPE"                                       */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FENCE_TYPE] DROP CONSTRAINT [FNCTYP_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_FENCE_TYPE', 'COLUMN', N'FENCE_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_FENCE_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_FENCE_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_FENCE_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_FENCE_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_FENCE_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_RESEARCH_ACTIVITY_INSTANCE_HIST"                  */
 /* ---------------------------------------------------------------------- */
 
@@ -6357,6 +6525,10 @@ ALTER TABLE [dbo].[PIMS_NOTE] DROP CONSTRAINT [NOTE_NOTE_TXT_DEF]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_NOTE] DROP CONSTRAINT [NOTE_IS_SYSTEM_GENERATED_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_NOTE] DROP CONSTRAINT [NOTE_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
@@ -6406,6 +6578,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_NOTE', 'COLUMN', N'NOTE_TXT'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_NOTE', 'COLUMN', N'IS_SYSTEM_GENERATED'
 GO
 
 
