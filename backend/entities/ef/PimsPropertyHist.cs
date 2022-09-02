@@ -82,6 +82,9 @@ namespace Pims.Dal.Entities
         public string FileNumberSuffix { get; set; }
         [Column("LAND_AREA")]
         public float? LandArea { get; set; }
+        [Column("SURVEY_PLAN_NUMBER")]
+        [StringLength(250)]
+        public string SurveyPlanNumber { get; set; }
         [Column("ENCUMBRANCE_REASON")]
         [StringLength(500)]
         public string EncumbranceReason { get; set; }
@@ -160,8 +163,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("SURVEY_PLAN_NUMBER")]
-        [StringLength(250)]
-        public string SurveyPlanNumber { get; set; }
     }
 }

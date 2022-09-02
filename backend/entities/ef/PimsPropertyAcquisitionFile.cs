@@ -14,6 +14,11 @@ namespace Pims.Dal.Entities
     [Index(nameof(PropertyId), nameof(AcquisitionFileId), Name = "PRACQF_PROP_ACQ_TUC", IsUnique = true)]
     public partial class PimsPropertyAcquisitionFile
     {
+        public PimsPropertyAcquisitionFile()
+        {
+            PimsActInstPropAcqFiles = new HashSet<PimsActInstPropAcqFile>();
+        }
+
         [Key]
         [Column("PROPERTY_ACQUISITION_FILE_ID")]
         public long PropertyAcquisitionFileId { get; set; }
@@ -21,6 +26,11 @@ namespace Pims.Dal.Entities
         public long AcquisitionFileId { get; set; }
         [Column("PROPERTY_ID")]
         public long PropertyId { get; set; }
+        [Column("PROPERTY_NAME")]
+        [StringLength(500)]
+        public string PropertyName { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -61,11 +71,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("PROPERTY_NAME")]
-        [StringLength(500)]
-        public string PropertyName { get; set; }
-        [Column("DISPLAY_ORDER")]
-        public int? DisplayOrder { get; set; }
 
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsPropertyAcquisitionFiles))]
@@ -73,5 +78,7 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(PropertyId))]
         [InverseProperty(nameof(PimsProperty.PimsPropertyAcquisitionFiles))]
         public virtual PimsProperty Property { get; set; }
+        [InverseProperty(nameof(PimsActInstPropAcqFile.PropertyAcquisitionFile))]
+        public virtual ICollection<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
     }
 }

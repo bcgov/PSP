@@ -23,6 +23,9 @@ namespace Pims.Dal.Entities
         [Column("NOTE_TXT")]
         [StringLength(4000)]
         public string NoteTxt { get; set; }
+        [Required]
+        [Column("IS_SYSTEM_GENERATED")]
+        public bool? IsSystemGenerated { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -61,9 +64,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Required]
-        [Column("IS_SYSTEM_GENERATED")]
-        public bool? IsSystemGenerated { get; set; }
 
         [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
         public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
