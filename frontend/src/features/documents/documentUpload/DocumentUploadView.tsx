@@ -1,5 +1,5 @@
 import { Button } from 'components/common/buttons/Button';
-import { Input, Select, SelectOption } from 'components/common/form';
+import { Select, SelectOption } from 'components/common/form';
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
@@ -13,12 +13,9 @@ import { ChangeEvent, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { DocumentMetadataForm } from '../ComposedDocument';
+import { DocumentMetadataView } from '../DocumentMetadataView';
 import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
-
-interface DocumentUploadForm {
-  documentTypeId: string;
-  documentStatusCode: string;
-}
 
 interface IDocumentUploadViewProps {
   documentTypes: Api_DocumentType[];
@@ -41,7 +38,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   const { getOptionsByType } = useLookupCodeHelpers();
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
 
-  const initialFormState: DocumentUploadForm = {
+  const initialFormState: DocumentMetadataForm = {
     documentTypeId: '',
     documentStatusCode:
       documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
@@ -60,12 +57,12 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
-      <Formik<DocumentUploadForm>
+      <Formik<DocumentMetadataForm>
         enableReinitialize
         initialValues={initialFormState}
         validateOnMount={true}
-        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata)}
-        onSubmit={async (values: DocumentUploadForm, { setSubmitting }) => {
+        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata, false)}
+        onSubmit={async (values: DocumentMetadataForm, { setSubmitting }) => {
           const { documentStatusCode, documentTypeId, ...rest } = values;
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
@@ -95,6 +92,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             </div>
             <SectionField label="Document type" labelWidth="3" className="pb-2">
               <Select
+                data-testid="document-type"
                 placeholder="Select Document type"
                 field="documentTypeId"
                 options={documentTypes}
@@ -104,6 +102,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
             <SectionField label={'Choose document to upload'} labelWidth="12" className="mb-4">
               <div className="pt-2">
                 <input
+                  data-testid="upload-input"
                   id="uploadInput"
                   type="file"
                   name="documentFile"
@@ -129,37 +128,27 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
 
               <StyledH3>Details</StyledH3>
               <StyledScrollable>
-                {props.mayanMetadata?.length === 0 && (
-                  <StyledNoData>No additional data</StyledNoData>
-                )}
-                {props.mayanMetadata?.map(value => (
-                  <SectionField
-                    labelWidth="4"
-                    key={`document-${value.metadata_type?.id}-metadata-${value.id}`}
-                    label={value.metadata_type?.label || ''}
-                    required={value.required === true}
-                  >
-                    <Input
-                      field={value.metadata_type?.id?.toString() || ''}
-                      required={value.required === true}
-                    />
-                  </SectionField>
-                ))}
-                <div style={{ border: 'solid 1px;', color: 'red' }}>
-                  {Object.values(formikProps.errors).length > 0 && (
-                    <>Mandatory fields are required.</>
-                  )}
-                </div>
+                <DocumentMetadataView
+                  mayanMetadata={props.mayanMetadata}
+                  formikProps={formikProps}
+                  edit={false}
+                ></DocumentMetadataView>
               </StyledScrollable>
             </StyledGreySection>
             <Row className="justify-content-end pt-4">
               <Col xs="auto">
-                <Button variant="secondary" type="button" onClick={props.onCancel}>
+                <Button
+                  data-testid="cancel"
+                  variant="secondary"
+                  type="button"
+                  onClick={props.onCancel}
+                >
                   Cancel
                 </Button>
               </Col>
               <Col xs="auto">
                 <Button
+                  data-testid="save"
                   type="submit"
                   onClick={formikProps.submitForm}
                   disabled={selectedFile === null}
@@ -208,9 +197,4 @@ const StyledH3 = styled.h3`
 const StyledScrollable = styled(Scrollable)`
   overflow-x: hidden;
   max-height: 50rem;
-`;
-
-const StyledNoData = styled.div`
-  text-align: center;
-  font-style: italic;
 `;

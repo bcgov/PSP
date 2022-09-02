@@ -17,11 +17,7 @@ export default MapActionWindow;
 const StyledMapWindow = styled.div<{ show: boolean }>`
   flex-grow: 1;
   border-radius: 1rem;
-  border: solid 0.3rem lightgray;
-  h1 {
-    border-bottom: none;
-    margin-bottom: 0.2rem;
-  }
+  border: ${props => (props.show ? `solid 0.3rem lightgray` : `none`)};
   overflow: hidden;
   transition: 1s;
 `;

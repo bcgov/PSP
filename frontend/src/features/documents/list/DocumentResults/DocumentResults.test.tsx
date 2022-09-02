@@ -1,7 +1,8 @@
 import { useKeycloak } from '@react-keycloak/web';
+import { Claims } from 'constants/claims';
 import { noop } from 'lodash';
 import { mockDocumentsResponse } from 'mocks/mockDocuments';
-import { cleanup, render, RenderOptions } from 'utils/test-utils';
+import { cleanup, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 
@@ -49,6 +50,7 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
 
 describe('Document Results Table', () => {
   beforeEach(() => {
+    mockKeycloak({ claims: [] });
     setSort.mockClear();
   });
   afterEach(() => {
@@ -69,5 +71,21 @@ describe('Document Results Table', () => {
     expect(tableRows.length).toBe(0);
     const toasts = await findAllByText('No matching Documents found');
     expect(toasts[0]).toBeVisible();
+  });
+
+  it('displays document view button', async () => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT] });
+    const { getByTestId } = setup({ results: mockDocumentsResponse() });
+
+    const dButton = await getByTestId('document-view-button');
+    expect(dButton).toBeVisible();
+  });
+
+  it('displays document delete button', async () => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
+    const { getByTestId } = setup({ results: mockDocumentsResponse() });
+
+    const dButton = await getByTestId('document-delete-button');
+    expect(dButton).toBeVisible();
   });
 });

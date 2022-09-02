@@ -9,9 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import css from 'assets/scss/_variables.module.scss';
 import { AuthStateContextProvider } from 'contexts/authStateContext';
+import { ModalContextProvider } from 'contexts/modalContext';
 import LoginLoading from 'features/account/LoginLoading';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import EmptyLayout from 'layouts/EmptyLayout';
+import noop from 'lodash/noop';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -42,9 +44,11 @@ const Index = () => {
             >
               <Provider store={store}>
                 <AuthStateContextProvider>
-                  <Router>
-                    <App />
-                  </Router>
+                  <ModalContextProvider setModalProps={noop} setDisplayModal={noop}>
+                    <Router>
+                      <App />
+                    </Router>
+                  </ModalContextProvider>
                 </AuthStateContextProvider>
               </Provider>
             </ReactKeycloakProvider>

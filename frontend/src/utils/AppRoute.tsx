@@ -1,45 +1,72 @@
 import React from 'react';
-import { Route, RouteProps } from 'react-router-dom';
+import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 import PrivateRoute from 'utils/PrivateRoute';
 
-export type IAppRouteProps = RouteProps & {
-  component: React.ComponentType<any>;
-  layout?: React.ComponentType<any>;
+interface BaseAppRoute extends RouteProps {
   protected?: boolean;
   role?: string | string[];
   claim?: string | string[];
   title: string;
-};
+}
+interface ComponentRoute extends BaseAppRoute {
+  customComponent: React.ComponentType<any>;
+  layout?: React.ComponentType<any>;
+}
 
-const AppRoute: React.FC<IAppRouteProps> = ({
-  component: Component,
-  layout,
-  protected: usePrivateRoute,
-  role,
-  claim,
-  title,
-  ...rest
-}) => {
-  const Layout = layout === undefined ? (props: any) => <>{props.children}</> : layout;
+interface RenderRoute extends BaseAppRoute {
+  customRender: (props: RouteComponentProps<any>) => React.ReactNode;
+}
+type IAppRouteProps = ComponentRoute | RenderRoute;
 
-  document.title = title;
+function isRenderRoute(route: RenderRoute | ComponentRoute): route is RenderRoute {
+  return (route as RenderRoute).customRender !== undefined;
+}
 
-  if (!!usePrivateRoute) {
-    return (
-      <PrivateRoute {...rest} component={Component} layout={Layout} role={role} claim={claim} />
-    );
+const AppRoute: React.FC<IAppRouteProps> = props => {
+  document.title = props.title;
+
+  if (!!props.protected) {
+    if (isRenderRoute(props)) {
+      return (
+        <PrivateRoute
+          {...props}
+          customRender={props.customRender}
+          role={props.role}
+          claim={props.claim}
+        />
+      );
+    } else {
+      const Layout =
+        props.layout === undefined ? (props: any) => <>{props.children}</> : props.layout;
+      return (
+        <PrivateRoute
+          {...props}
+          customComponent={props.customComponent}
+          layout={Layout}
+          role={props.role}
+          claim={props.claim}
+        />
+      );
+    }
   }
 
-  return (
-    <Route
-      {...rest}
-      render={props => (
-        <Layout>
-          <Component {...props} />
-        </Layout>
-      )}
-    />
-  );
+  if (isRenderRoute(props)) {
+    return <Route {...props} render={props.customRender} />;
+  } else {
+    const Component = props.customComponent;
+    const Layout =
+      props.layout === undefined ? (props: any) => <>{props.children}</> : props.layout;
+    return (
+      <Route
+        {...props}
+        render={props => (
+          <Layout>
+            <Component {...props} />
+          </Layout>
+        )}
+      />
+    );
+  }
 };
 
 export default AppRoute;

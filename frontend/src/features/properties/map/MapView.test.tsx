@@ -99,7 +99,7 @@ const useLayerQueryMock = {
 const mockDetails = {
   propertyDetail: {
     id: 1,
-    pid: '000-000-000',
+    pid: '000-000-001',
     pin: '',
     statusId: PropertyStatusTypes.UnderAdmin,
     dataSourceId: PropertyDataSourceTypes.PAIMS,

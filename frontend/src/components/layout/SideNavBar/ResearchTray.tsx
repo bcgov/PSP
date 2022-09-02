@@ -22,7 +22,7 @@ export const ResearchTray = ({ onLinkClick }: ISideTrayPageProps) => {
           </Link>
         )}
         {hasClaim(Claims.RESEARCH_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/research/new">
+          <Link onClick={onLinkClick} to="/mapview/sidebar/research/new">
             Create a Research File
           </Link>
         )}

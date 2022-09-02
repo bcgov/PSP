@@ -14,7 +14,7 @@ export const LeaseRouter: React.FunctionComponent<ILeaseRouterProps> = React.mem
       {Array.from(leasePages.entries()).map(([pageName, page]) => (
         <AppRoute
           path={`${path}/${pageName}`}
-          component={page.component ?? React.Fragment}
+          customComponent={page.component}
           title={`${page.title}`}
           exact
           key={pageName}

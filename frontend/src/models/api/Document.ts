@@ -29,6 +29,7 @@ export interface Api_DocumentRelationship extends Api_ConcurrentVersion, Api_Aud
 }
 
 export interface Api_DocumentMetadata {
+  id: number;
   metadataTypeId: number;
   value: string;
 }
@@ -43,4 +44,11 @@ export interface Api_UploadRequest {
 export interface Api_UploadResponse {
   documentRelationship?: Api_DocumentRelationship;
   externalResult?: ExternalResult<Api_Storage_DocumentDetail>;
+}
+
+export interface Api_DocumentUpdateRequest {
+  documentId?: number;
+  mayanDocumentId?: number;
+  documentStatusCode?: string;
+  documentMetadata: Api_DocumentMetadata[];
 }

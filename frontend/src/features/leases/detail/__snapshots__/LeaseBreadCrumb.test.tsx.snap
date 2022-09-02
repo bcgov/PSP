@@ -6,6 +6,9 @@ exports[`LeaseBreadCrumb component renders as expected with data 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c0 {
@@ -67,6 +70,9 @@ exports[`LeaseBreadCrumb component renders as expected with no data 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
+  />
+  <div
+    class="container"
   />
   <div
     class="Toastify"

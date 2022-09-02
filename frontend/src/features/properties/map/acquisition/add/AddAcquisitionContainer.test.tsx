@@ -116,7 +116,7 @@ describe('AddAcquisitionContainer component', () => {
       expect(mockAxios.history.post[0].url).toBe('/acquisitionfiles');
       expect(axiosData).toEqual(expectedValues);
 
-      expect(history.location.pathname).toBe('/mapview/acquisition/1');
+      expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
     });
   });
 });

@@ -6,6 +6,9 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c0 {
@@ -349,6 +352,9 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
+  />
+  <div
+    class="container"
   />
   <div
     class="Toastify"

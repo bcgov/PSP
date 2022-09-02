@@ -6,17 +6,12 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
-  .c10.c10.form-control.is-valid {
-  background-image: none;
-}
-
-.c10.c10.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c12.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -147,6 +142,14 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
 
 .c12.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c10.c10.form-control.is-valid {
+  background-image: none;
+}
+
+.c10.c10.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c9 {

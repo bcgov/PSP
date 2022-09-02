@@ -1,9 +1,11 @@
+import { StyledRemoveLinkButton } from 'components/common/buttons';
 import { Button } from 'components/common/buttons/Button';
 import { ColumnWithProps, DateCell, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/index';
 import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Document, Api_DocumentType } from 'models/api/Document';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
@@ -87,7 +89,7 @@ const renderActions = (
         {hasClaim(Claims.DOCUMENT_VIEW) && (
           <Col>
             <Button
-              title="document view details"
+              data-testid="document-view-button"
               icon={<FaEye size={24} id={`document-view-${index}`} title="document view details" />}
               onClick={() => original?.id && onViewDetails(original)}
             ></Button>
@@ -95,11 +97,12 @@ const renderActions = (
         )}
         {hasClaim(Claims.DOCUMENT_DELETE) && (
           <Col>
-            <Button
+            <StyledRemoveLinkButton
               title="document delete"
+              data-testid="document-delete-button"
               icon={<FaTrash size={24} id={`document-delete-${index}`} title="document delete" />}
               onClick={() => original?.id && onDelete(original)}
-            ></Button>
+            ></StyledRemoveLinkButton>
           </Col>
         )}
       </StyledIconsRow>

@@ -1,9 +1,11 @@
+import { Claims } from 'constants/claims';
 import {
   ResearchTabNames,
   ResearchTabs,
   TabResearchView,
 } from 'features/mapSideBar/tabs/ResearchTabs';
 import ActivityListView from 'features/research/activities/list/ActivityListView';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
 
@@ -11,7 +13,7 @@ import ResearchSummaryView from './detail/ResearchSummaryView';
 import { FormKeys } from './FormKeys';
 
 export interface IResearchTabsContainerProps {
-  researchFile: Api_ResearchFile;
+  researchFile?: Api_ResearchFile;
   // The "edit key" identifies which form is currently being edited: e.g.
   //  - property details info,
   //  - research summary,
@@ -30,6 +32,7 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
   setEditKey,
 }) => {
   const tabViews: TabResearchView[] = [];
+  const { hasClaim } = useKeycloakWrapper();
 
   tabViews.push({
     content: (
@@ -45,7 +48,7 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
     name: 'Research Details',
   });
 
-  if (researchFile?.id) {
+  if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
     tabViews.push({
       content: <ActivityListView fileId={researchFile.id}></ActivityListView>,
       key: ResearchTabNames.activities,

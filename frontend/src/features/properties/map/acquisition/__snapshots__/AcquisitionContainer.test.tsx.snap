@@ -1,0 +1,276 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcquisitionContainer component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c2 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
+}
+
+.c1 {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h1
+          class="c0 mr-auto"
+        >
+          <svg
+            class="mr-2"
+            fill="currentColor"
+            height="2.6rem"
+            title="Acquisition file Icon"
+            width="2.6rem"
+          >
+            real-estate-agent.svg
+          </svg>
+          Acquisition File
+        </h1>
+      </div>
+      <div
+        class="col-auto"
+      >
+        <svg
+          class="c1"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c2"
+    />
+  </div>
+  .c0 {
+  position: relative;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c1 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c2 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 no-gutters row"
+    >
+      <div
+        class="col-7"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label>
+                  File #:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                <strong>
+                  1-12345-01
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label>
+                  Ministry project:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                <strong>
+                  001 - Hwy 14 improvements
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="text-right col"
+          >
+            <span
+              class="c2"
+            >
+              Created: 
+              <strong>
+                May 28, 2022
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon"
+                id="userNameTooltip"
+              >
+                <span
+                  class="c3"
+                >
+                  admin
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="text-right col"
+          >
+            <span
+              class="c2"
+            >
+              Last updated: 
+              <strong>
+                Jul 28, 2022
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon"
+                id="userNameTooltip"
+              >
+                <span
+                  class="c3"
+                >
+                  admin
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="justify-content-end row"
+            >
+              <div
+                class="pr-0 text-left col-auto"
+              >
+                <label>
+                  Status:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  Active
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c0 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c1 {
+  height: 100%;
+  width: 100%;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;

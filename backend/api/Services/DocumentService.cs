@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
@@ -126,6 +127,31 @@ namespace Pims.Api.Services
                 response.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newActivityDocument);
             }
             return response;
+        }
+
+        public async Task<bool> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateMetadataRequest updateRequest)
+        {
+            this.Logger.LogInformation("Updating document for single activity");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
+
+            // update metadata of document
+            IList<Task<ExternalResult<DocumentMetadata>>> metadataTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
+            foreach (var metadata in updateRequest.DocumentMetadata ?? new List<DocumentMetadataUpdateModel>())
+            {
+                metadataTasks.Add(documentStorageRepository.UpdateDocumentMetadataAsync(updateRequest.MayanDocumentId, metadata.Id, metadata.Value));
+            }
+            if (metadataTasks.Count > 0) { await Task.WhenAll(metadataTasks.ToArray()); }
+
+            // update the pims document status
+            PimsDocument existingDocument = documentRepository.Get(documentId);
+            if (existingDocument is not null)
+            {
+                existingDocument.DocumentStatusTypeCode = updateRequest.DocumentStatusCode;
+                documentRepository.Update(existingDocument);
+                this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", documentId);
+                return true;
+            }
+            throw new BadRequestException("Document Id not found.");
         }
 
         public async Task<bool> DeleteDocumentAsync(PimsDocument document)

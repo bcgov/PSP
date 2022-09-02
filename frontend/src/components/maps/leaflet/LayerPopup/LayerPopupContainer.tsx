@@ -36,12 +36,12 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
 
   const handleCreateResearchFile = () => {
     selectedFeature && setSelectedResearchFeature(selectedFeature);
-    history.push('/mapview/research/new');
+    history.push('/mapview/sidebar/research/new');
   };
 
   const handleCreateAcquisitionFile = () => {
     selectedFeature && setSelectedResearchFeature(selectedFeature);
-    history.push('/mapview/acquisition/new');
+    history.push('/mapview/sidebar/acquisition/new');
   };
 
   return (

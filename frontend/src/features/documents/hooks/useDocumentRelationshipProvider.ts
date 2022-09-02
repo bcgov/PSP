@@ -5,6 +5,7 @@ import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { IApiError } from 'interfaces/IApiError';
 import {
   Api_DocumentRelationship,
+  Api_DocumentUpdateRequest,
   Api_UploadRequest,
   Api_UploadResponse,
 } from 'models/api/Document';
@@ -19,6 +20,7 @@ export const useDocumentRelationshipProvider = () => {
     getDocumentRelationship,
     deleteDocumentRelationshipApiCall,
     uploadDocumentRelationshipApiCall,
+    updateDocumentMetadataApiCall,
   } = useApiDocuments();
 
   // Provides functionality to retrieve document relationship
@@ -110,6 +112,35 @@ export const useDocumentRelationshipProvider = () => {
     }, []),
   });
 
+  // Provides functionality for uploading a document for a given relationship
+  const { execute: updateDocument, loading: updateDocumentLoading } = useApiRequestWrapper<
+    (
+      relationshipType: DocumentRelationshipType,
+      documentId: number,
+      updateRequest: Api_DocumentUpdateRequest,
+    ) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        relationshipType: DocumentRelationshipType,
+        documentId: number,
+        updateRequest: Api_DocumentUpdateRequest,
+      ) => await updateDocumentMetadataApiCall(relationshipType, documentId, updateRequest),
+      [updateDocumentMetadataApiCall],
+    ),
+    requestName: 'updateDocumentMetadataApiCall',
+    onSuccess: useCallback(() => {
+      toast.success('Updated document metadata');
+    }, []),
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+      } else {
+        toast.error('Update document relationship error. Check responses and try again.');
+      }
+    }, []),
+  });
+
   return {
     retrieveDocumentRelationship,
     retrieveDocumentRelationshipLoading,
@@ -117,5 +148,7 @@ export const useDocumentRelationshipProvider = () => {
     deleteDocumentRelationshipLoading,
     uploadDocument,
     uploadDocumentLoading,
+    updateDocument,
+    updateDocumentLoading,
   };
 };

@@ -10,13 +10,13 @@ interface IRemoveButtonProps {
 
 export const RemoveButton: React.FunctionComponent<IRemoveButtonProps> = ({ onRemove }) => {
   return (
-    <StyledLinkButton onClick={onRemove}>
+    <StyledRemoveLinkButton onClick={onRemove}>
       <MdClose size="2rem" title="remove" /> <span className="text">Remove</span>
-    </StyledLinkButton>
+    </StyledRemoveLinkButton>
   );
 };
 
-const StyledLinkButton = styled(LinkButton)`
+export const StyledRemoveLinkButton = styled(LinkButton)`
   &&.btn {
     color: #aaaaaa;
     text-decoration: none;

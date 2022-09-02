@@ -3,11 +3,12 @@ import * as Yup from 'yup';
 
 export const getDocumentUploadYupSchema = (
   mayanMetadata: Api_Storage_DocumentTypeMetadataType[],
+  edit: boolean,
 ) => {
   let yupSchema: any = {};
   for (const data of mayanMetadata) {
     if (data.metadata_type?.id && data.required) {
-      yupSchema[data.metadata_type?.id || ''] = Yup.string().required(
+      yupSchema[(edit ? data.id : data.metadata_type?.id) || ''] = Yup.string().required(
         `${data.metadata_type?.name} is required`,
       );
     }
