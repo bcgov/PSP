@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACTIVITY_INSTANCE_DOCUMENT")]
+    [Index(nameof(DocumentId), nameof(ActivityInstanceId), Name = "ACTDOC_ACTIVITY_DOCUMENT_TUC", IsUnique = true)]
     [Index(nameof(ActivityInstanceId), Name = "ACTDOC_ACTIVITY_INSTANCE_ID_IDX")]
     [Index(nameof(DocumentId), Name = "ACTDOC_DOCUMENT_ID_IDX")]
     public partial class PimsActivityInstanceDocument

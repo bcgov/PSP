@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_PROPERTY_ACQUISITION_FILE")]
     [Index(nameof(AcquisitionFileId), Name = "PRACQF_ACQUISITION_FILE_ID_IDX")]
     [Index(nameof(PropertyId), Name = "PRACQF_PROPERTY_ID_IDX")]
+    [Index(nameof(PropertyId), nameof(AcquisitionFileId), Name = "PRACQF_PROP_ACQ_TUC", IsUnique = true)]
     public partial class PimsPropertyAcquisitionFile
     {
         [Key]
@@ -60,6 +61,11 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("PROPERTY_NAME")]
+        [StringLength(500)]
+        public string PropertyName { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
 
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsPropertyAcquisitionFiles))]

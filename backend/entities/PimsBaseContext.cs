@@ -109,6 +109,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsDocumentStatusType> PimsDocumentStatusTypes { get; set; }
         public virtual DbSet<PimsDocumentTyp> PimsDocumentTyps { get; set; }
         public virtual DbSet<PimsDocumentTypHist> PimsDocumentTypHists { get; set; }
+        public virtual DbSet<PimsFenceType> PimsFenceTypes { get; set; }
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
@@ -134,6 +135,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsLeaseTermHist> PimsLeaseTermHists { get; set; }
         public virtual DbSet<PimsLeaseTermStatusType> PimsLeaseTermStatusTypes { get; set; }
         public virtual DbSet<PimsLessorType> PimsLessorTypes { get; set; }
+        public virtual DbSet<PimsLetterType> PimsLetterTypes { get; set; }
         public virtual DbSet<PimsNote> PimsNotes { get; set; }
         public virtual DbSet<PimsNoteHist> PimsNoteHists { get; set; }
         public virtual DbSet<PimsOrgIdentifierType> PimsOrgIdentifierTypes { get; set; }
@@ -2953,6 +2955,34 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsFenceType>(entity =>
+            {
+                entity.HasKey(e => e.FenceTypeCode)
+                    .HasName("FNCTYP_PK");
+
+                entity.HasComment("Codified values for the fence type.  This is an unassociated table that is used in the UI to populate JSON attributes.");
+
+                entity.Property(e => e.FenceTypeCode).HasComment("Code value for the fence type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the fence type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is inactive.");
+            });
+
             modelBuilder.Entity<PimsInsurance>(entity =>
             {
                 entity.HasKey(e => e.InsuranceId)
@@ -3730,6 +3760,34 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
+            modelBuilder.Entity<PimsLetterType>(entity =>
+            {
+                entity.HasKey(e => e.LetterTypeCode)
+                    .HasName("LTRTYP_PK");
+
+                entity.HasComment("Codified values for the letter type.  This is an unassociated table that is used in the UI to populate JSON attributes.");
+
+                entity.Property(e => e.LetterTypeCode).HasComment("Code value for the letter type.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Description of the letter type.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code value is inactive.");
+            });
+
             modelBuilder.Entity<PimsNote>(entity =>
             {
                 entity.HasKey(e => e.NoteId)
@@ -3761,6 +3819,10 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.IsSystemGenerated)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicatesd if this note is system-generated.");
+
                 entity.Property(e => e.NoteTxt)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Contents of the note.");
@@ -3774,6 +3836,8 @@ namespace Pims.Dal
                 entity.Property(e => e.NoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.IsSystemGenerated).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsOrgIdentifierType>(entity =>
@@ -4430,6 +4494,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.SurplusDeclarationDate).HasComment("Date the property was declared surplus");
 
+                entity.Property(e => e.SurveyPlanNumber).HasComment("Property/Land Parcel survey plan number");
+
                 entity.Property(e => e.VolumetricMeasurement).HasComment("Volumetric measurement of the parcel.");
 
                 entity.Property(e => e.Zoning).HasComment("Current property zoning");
@@ -4545,9 +4611,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the relationship is active.");
+
+                entity.Property(e => e.PropertyName).HasComment("Descriptive reference for the property associated with the acquisition file.");
 
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsPropertyAcquisitionFiles)

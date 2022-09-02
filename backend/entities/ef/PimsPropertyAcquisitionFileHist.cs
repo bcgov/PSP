@@ -65,5 +65,10 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("PROPERTY_NAME")]
+        [StringLength(500)]
+        public string PropertyName { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
     }
 }

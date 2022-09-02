@@ -195,6 +195,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("SURVEY_PLAN_NUMBER")]
+        [StringLength(250)]
+        public string SurveyPlanNumber { get; set; }
 
         [ForeignKey(nameof(AddressId))]
         [InverseProperty(nameof(PimsAddress.PimsProperties))]

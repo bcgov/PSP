@@ -61,6 +61,9 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Required]
+        [Column("IS_SYSTEM_GENERATED")]
+        public bool? IsSystemGenerated { get; set; }
 
         [InverseProperty(nameof(PimsActivityInstanceNote.Note))]
         public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
