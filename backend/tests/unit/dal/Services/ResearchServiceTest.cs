@@ -135,10 +135,10 @@ namespace Pims.Dal.Test.Services
             var repository = helper.GetService<Mock<IResearchFileRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
-        // Act
+            // Act
             Action act = () => service.GetById(1);
 
-        // Assert
+            // Assert
             act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
