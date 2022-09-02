@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACQUISITION_ACTIVITY_INSTANCE")]
     [Index(nameof(AcquisitionFileId), Name = "ACQAIN_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(ActivityInstanceId), nameof(AcquisitionFileId), Name = "ACQAIN_ACQ_ACTIVITY_TUC", IsUnique = true)]
     [Index(nameof(ActivityInstanceId), Name = "ACQAIN_ACTIVITY_INSTANCE_ID_IDX")]
     public partial class PimsAcquisitionActivityInstance
     {
