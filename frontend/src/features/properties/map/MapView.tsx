@@ -43,8 +43,10 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
     history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
   };
 
-  const onPropertyViewClicked = (pid?: string | null) => {
-    if (pid !== undefined && pid !== null) {
+  const onPropertyViewClicked = (pid?: string | null, id?: number) => {
+    if (id !== undefined) {
+      history.push(`/mapview/sidebar/property/${id}?pid=${pid}`);
+    } else if (pid !== undefined && pid !== null) {
       const parsedPid = pidParser(pid);
       history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
     } else {
