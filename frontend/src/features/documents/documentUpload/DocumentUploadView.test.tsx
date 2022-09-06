@@ -1,7 +1,6 @@
 import { createMemoryHistory } from 'history';
+import { mockDocumentTypeMetadata, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { mockLookups } from 'mocks/mockLookups';
-import { Api_DocumentType } from 'models/api/Document';
-import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
@@ -15,49 +14,15 @@ const handleSubmit = jest.fn();
 const handleCancelClick = jest.fn();
 const onUploadDocument = jest.fn();
 const onDocumentTypeChange = jest.fn();
-const documentTypes: Api_DocumentType[] = [
-  {
-    id: 1,
-    documentType: 'BC Assessment Search',
-    mayanId: 17,
-  },
-  {
-    id: 2,
-    documentType: 'Privy Council',
-    mayanId: 7,
-  },
-];
-const documentTypeMetadata: Api_Storage_DocumentTypeMetadataType[] = [
-  {
-    id: 1,
-    document_type: {
-      id: 1,
-      label: 'BC Assessment Search',
-    },
-    metadata_type: {
-      default: '',
-      id: 1,
-      label: 'Tag',
-      lookup: '',
-      name: 'Tag',
-      parser: '',
-      parser_arguments: '',
-      url: '',
-      validation: '',
-      validation_arguments: '',
-    },
-    required: true,
-  },
-];
 
 describe('DocumentUploadView component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & { initialValues: DocumentMetadataForm }) => {
     const utils = render(
       <DocumentUploadView
-        documentTypes={documentTypes}
+        documentTypes={mockDocumentTypesResponse()}
         isLoading={false}
-        mayanMetadata={documentTypeMetadata}
+        mayanMetadata={mockDocumentTypeMetadata()}
         onDocumentTypeChange={onDocumentTypeChange}
         onUploadDocument={onUploadDocument}
         onCancel={handleCancelClick}
