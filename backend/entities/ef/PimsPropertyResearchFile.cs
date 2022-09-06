@@ -11,10 +11,12 @@ namespace Pims.Dal.Entities
     [Table("PIMS_PROPERTY_RESEARCH_FILE")]
     [Index(nameof(PropertyId), Name = "PRSCRC_PROPERTY_ID_IDX")]
     [Index(nameof(ResearchFileId), Name = "PRSCRC_RESEARCH_FILE_ID_IDX")]
+    [Index(nameof(ResearchFileId), nameof(PropertyId), Name = "PRSCRC_RSRCH_FILE_PROP_TUC", IsUnique = true)]
     public partial class PimsPropertyResearchFile
     {
         public PimsPropertyResearchFile()
         {
+            PimsActInstPropRsrchFiles = new HashSet<PimsActInstPropRsrchFile>();
             PimsPrfPropResearchPurposeTypes = new HashSet<PimsPrfPropResearchPurposeType>();
         }
 
@@ -86,6 +88,8 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(ResearchFileId))]
         [InverseProperty(nameof(PimsResearchFile.PimsPropertyResearchFiles))]
         public virtual PimsResearchFile ResearchFile { get; set; }
+        [InverseProperty(nameof(PimsActInstPropRsrchFile.PropertyResearchFile))]
+        public virtual ICollection<PimsActInstPropRsrchFile> PimsActInstPropRsrchFiles { get; set; }
         [InverseProperty(nameof(PimsPrfPropResearchPurposeType.PropertyResearchFile))]
         public virtual ICollection<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; }
     }
