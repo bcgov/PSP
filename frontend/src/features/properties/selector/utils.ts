@@ -49,6 +49,7 @@ export const getResearchPropertyName = (
       pid: property.pid?.toString(),
       latitude: property.latitude,
       longitude: property.longitude,
+      planNumber: property.planNumber,
     };
     return getPropertyName(mapProperty);
   }

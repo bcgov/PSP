@@ -92,6 +92,7 @@ export class PropertyForm {
       id: this.apiId,
       pid: pidParser(this.pid),
       pin: this.pin !== undefined ? Number(this.pin) : undefined,
+      planNumber: this.planNumber,
       landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
       region: toTypeCode(this.regionId),
