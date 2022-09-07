@@ -9,7 +9,7 @@ import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { AcquisitionProperties } from './AcquisitionProperties';
-import { AddAcquisitionTeamForm } from './AddAcquisitionTeamForm';
+import { AcquisitionTeam } from './AcquisitionTeam';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
@@ -89,7 +89,7 @@ export const AddAcquisitionForm = React.forwardRef<
             </Section>
 
             <Section header="Acquisition Team">
-              <AddAcquisitionTeamForm formikProps={formikProps} />
+              <AcquisitionTeam formikProps={formikProps} />
             </Section>
           </Container>
 
