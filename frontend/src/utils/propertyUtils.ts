@@ -1,4 +1,5 @@
 import { IAddress } from 'interfaces';
+import { Api_Address } from 'models/api/Address';
 
 /**
  * The pidFormatter is used to format the specified PID value
@@ -56,6 +57,21 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
  * @returns Civic address string value.
  */
 export const formatAddress = (address?: IAddress) => {
+  const values = [
+    address?.streetAddress1 ?? '',
+    address?.streetAddress2 ?? '',
+    address?.streetAddress3 ?? '',
+    address?.province ?? '',
+  ];
+  return values.join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
+};
+
+/**
+ * Provides a formatted address as a string.
+ * @param address Address object from property.
+ * @returns Civic address string value.
+ */
+export const formatApiAddress = (address?: Api_Address) => {
   const values = [
     address?.streetAddress1 ?? '',
     address?.streetAddress2 ?? '',

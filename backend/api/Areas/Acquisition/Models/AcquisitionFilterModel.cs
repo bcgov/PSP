@@ -10,7 +10,22 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
         #region Properties
 
         /// <summary>
-        /// get/set - The status of the acquisition file,.
+        /// get/set - The pid identifier to search by.
+        /// </summary>
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The pin identifier to serach by.
+        /// </summary>
+        public string Pin { get; set; }
+
+        /// <summary>
+        /// get/set - The address to search by.
+        /// </summary>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// get/set - The status of the acquisition file.
         /// </summary>
         public string AcquisitionFileStatusTypeCode { get; set; }
 
@@ -45,6 +60,9 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
+            this.Pid = filter.GetStringValue(nameof(this.Pid));
+            this.Pin = filter.GetStringValue(nameof(this.Pin));
+            this.Address = filter.GetStringValue(nameof(this.Address));
             this.AcquisitionFileStatusTypeCode = filter.GetStringValue(nameof(this.AcquisitionFileStatusTypeCode));
             this.AcquisitionFileNameOrNumber = filter.GetStringValue(nameof(this.AcquisitionFileNameOrNumber));
             this.ProjectNameOrNumber = filter.GetStringValue(nameof(this.ProjectNameOrNumber));
@@ -66,6 +84,9 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
                 Page = model.Page,
                 Quantity = model.Quantity,
 
+                Pid = model.Pid,
+                Pin = model.Pin,
+                Address = model.Address,
                 AcquisitionFileStatusTypeCode = model.AcquisitionFileStatusTypeCode,
                 AcquisitionFileNameOrNumber = model.AcquisitionFileNameOrNumber,
                 ProjectNameOrNumber = model.ProjectNameOrNumber,

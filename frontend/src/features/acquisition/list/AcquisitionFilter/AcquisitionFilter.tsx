@@ -1,5 +1,6 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Form, Input, Select } from 'components/common/form';
+import { SelectInput } from 'components/common/List/SelectInput';
 import { ACQUISITION_FILE_STATUS_TYPES } from 'constants/API';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
@@ -19,6 +20,10 @@ export const defaultAcquisitionFilter: IAcquisitionFilter = {
   acquisitionFileStatusTypeCode: 'ACTIVE',
   acquisitionFileNameOrNumber: '',
   projectNameOrNumber: '',
+  searchBy: 'address',
+  pin: '',
+  pid: '',
+  address: '',
 };
 
 /**
@@ -64,17 +69,41 @@ export const AcquisitionFilter: React.FC<IAcquisitionFilterProps> = ({ filter, s
             </Col>
             <Col xl="5">
               <Row>
-                <Col xl="12">
-                  <Row>
-                    <Col xl="4">
-                      <Select
-                        options={acquisitionStatusOptions}
-                        field="acquisitionFileStatusTypeCode"
-                        placeholder="Any status"
-                      />
-                    </Col>
-                    <Col xl="8"></Col>
-                  </Row>
+                <Col>
+                  <SelectInput<
+                    {
+                      address: string;
+                      pin: string;
+                      pid: string;
+                    },
+                    IAcquisitionFilter
+                  >
+                    field="searchBy"
+                    defaultKey="address"
+                    selectOptions={[
+                      {
+                        label: 'Civic Address',
+                        key: 'address',
+                        placeholder: 'Enter an address',
+                      },
+                      { label: 'PID', key: 'pid', placeholder: 'Enter a PID' },
+                      {
+                        label: 'PIN',
+                        key: 'pin',
+                        placeholder: 'Enter a PIN',
+                      },
+                    ]}
+                    className="idir-input-group"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xl="4">
+                  <Select
+                    options={acquisitionStatusOptions}
+                    field="acquisitionFileStatusTypeCode"
+                    placeholder="Any status"
+                  />
                 </Col>
               </Row>
             </Col>
@@ -126,7 +155,6 @@ const FilterBoxForm = styled(Form)`
       width: 16rem;
     }
     input {
-      width: 18rem;
       max-width: 100%;
     }
   }
