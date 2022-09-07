@@ -3,8 +3,12 @@ name: APP (React)
 on:
   push:
     branches: [master, dev, test]
+    paths:
+    - frontend
   pull_request:
     branches: [master, dev, test]
+    paths:
+    - frontend
 
 jobs:
   build-frontend:
