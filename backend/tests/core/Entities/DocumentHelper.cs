@@ -12,7 +12,7 @@ namespace Pims.Core.Test
         /// <summary>
         /// Create a new instance of ActivityDocument.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">placeholder</param>
         /// <param name="note"></param>
         /// <param name="activity"></param>
         /// <returns></returns>
