@@ -3,15 +3,28 @@ name: API (.NET 6)
 on:
   push:
     branches: [master, dev, test]
-    paths:
-      - 'backend/**'
   pull_request:
     branches: [master, dev, test]
-    paths:
-      - 'backend/**'
 
 jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+
   build-backend:
+   needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
     env:
       working-directory: ./backend
