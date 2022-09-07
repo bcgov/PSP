@@ -8,7 +8,7 @@ import { NotFoundPage } from './NotFoundPage';
 const history = createMemoryHistory();
 
 describe('NotFoundPage', () => {
-  it('renders component correctly', () => {
+  it('renders correctly', () => {
     const tree = renderer
       .create(
         <Router history={history}>
