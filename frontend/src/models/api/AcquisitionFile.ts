@@ -17,6 +17,7 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   // MOTI region
   regionCode?: Api_TypeCode<number>;
   acquisitionProperties?: Api_AcquisitionFileProperty[];
+  acquisitionTeam?: Api_AcquisitionFilePerson[];
 }
 
 export interface Api_AcquisitionFileProperty extends Api_ConcurrentVersion, Api_AuditFields {
@@ -26,4 +27,10 @@ export interface Api_AcquisitionFileProperty extends Api_ConcurrentVersion, Api_
   propertyName?: string;
   property?: Api_Property;
   acquisitionFile?: Api_AcquisitionFile;
+}
+
+export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_AuditFields {
+  id?: number;
+  personId: number;
+  personProfileTypeCode: string;
 }

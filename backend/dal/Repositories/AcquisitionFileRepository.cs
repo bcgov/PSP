@@ -103,6 +103,15 @@ namespace Pims.Dal.Repositories
                 }
             }
 
+            // Existing properties should not be added.
+            foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
+            {
+                if (acquisitionPeople.AcquisitionFilePersonId != 0)
+                {
+                    Context.Entry(acquisitionPeople).State = EntityState.Unchanged;
+                }
+            }
+
             this.Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
         }

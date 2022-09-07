@@ -51,6 +51,11 @@ namespace Pims.Api.Models.Concepts
         /// get/set - A list of research property relationships.
         /// </summary>
         public IList<AcquisitionFilePropertyModel> AcquisitionProperties { get; set; }
+
+        /// <summary>
+        /// get/set - A list of acquisition file person relationships.
+        /// </summary>
+        public IList<AcquisitionFilePersonModel> AcquisitionTeam{ get; set; }
         #endregion
     }
 }

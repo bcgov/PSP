@@ -64,7 +64,11 @@ export const ContactInput: React.FC<ContactInputProps> = ({
         <Row className="align-items-center">
           <Col>
             <StyledDiv className={!!touch && !!error ? 'is-invalid' : ''}>{text}</StyledDiv>
-            <Input field={field + '.id'} className="d-none"></Input>
+            <Input
+              field={field + '.id'}
+              placeholder="Select from Contacts"
+              className="d-none"
+            ></Input>
           </Col>
           <Col xs="auto" className="pl-0 align-self-center">
             <Button
