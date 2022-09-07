@@ -6,21 +6,21 @@ import styled from 'styled-components';
 import { formatApiAddress } from 'utils';
 
 export interface IAcquisitionPropertiesProps {
-  aquisitionProperties?: Api_AcquisitionFileProperty[];
+  acquisitionProperties?: Api_AcquisitionFileProperty[];
   maxDisplayCount: number;
 }
 
 const AcquisitionProperties: React.FunctionComponent<IAcquisitionPropertiesProps> = props => {
   const [isExpanded, setExpanded] = useState(false);
 
-  const aquisitionProperties = props.aquisitionProperties || [];
+  const acquisitionProperties = props.acquisitionProperties || [];
   const maxDisplayCount = props.maxDisplayCount;
 
   let displayProperties: Api_AcquisitionFileProperty[] = [];
   if (!isExpanded) {
-    displayProperties = aquisitionProperties.slice(0, maxDisplayCount);
+    displayProperties = acquisitionProperties.slice(0, maxDisplayCount);
   } else {
-    displayProperties = aquisitionProperties;
+    displayProperties = acquisitionProperties;
   }
 
   let rowItems = displayProperties.map((property, index) => {
@@ -48,13 +48,13 @@ const AcquisitionProperties: React.FunctionComponent<IAcquisitionPropertiesProps
     );
   });
 
-  if (aquisitionProperties.length > rowItems.length || isExpanded) {
+  if (acquisitionProperties.length > rowItems.length || isExpanded) {
     rowItems.push(
       <Row key="showMoreKey">
         <Col />
         <Col md="auto">
           <LinkButton onClick={() => setExpanded(!isExpanded)}>
-            {isExpanded ? 'hide' : `[+${aquisitionProperties.length - rowItems.length} more...]`}
+            {isExpanded ? 'hide' : `[+${acquisitionProperties.length - rowItems.length} more...]`}
           </LinkButton>
         </Col>
       </Row>,

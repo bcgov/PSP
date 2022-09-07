@@ -6,7 +6,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-import AcquisitionProperties from './AquisitionProperties';
+import AcquisitionProperties from './AcquisitionProperties';
 
 export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
   {
@@ -69,7 +69,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     Cell: (props: CellProps<Api_AcquisitionFile>) => {
       return (
         <AcquisitionProperties
-          aquisitionProperties={props.row.original.acquisitionProperties}
+          acquisitionProperties={props.row.original.acquisitionProperties}
           maxDisplayCount={2}
         ></AcquisitionProperties>
       );

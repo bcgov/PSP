@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities.Models
         public string Pid { get; set; }
 
         /// <summary>
-        /// get/set - The pin identifier to serach by.
+        /// get/set - The pin identifier to search by.
         /// </summary>
         public string Pin { get; set; }
 
