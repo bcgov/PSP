@@ -23,7 +23,7 @@ namespace Pims.Dal.Entities.Models
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a AcquisitionFilter class. test
+        /// Creates a new instance of a AcquisitionFilter class.
         /// </summary>
         public AcquisitionFilter()
         {

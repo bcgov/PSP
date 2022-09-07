@@ -8,7 +8,7 @@ on:
 
 jobs:
   # JOB to run change detection
-  changes:
+  check-changes:
     runs-on: ubuntu-latest
     # Set job outputs to values from filter step
     outputs:
@@ -23,8 +23,8 @@ jobs:
               - 'frontend/**'
 
   build-frontend:
-    needs: changes
-    if: ${{ needs.changes.outputs.frontend == 'true' }}
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.frontend == 'true' }}
     runs-on: ubuntu-latest
     env:
       CI: true
