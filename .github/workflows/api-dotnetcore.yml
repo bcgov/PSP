@@ -3,8 +3,12 @@ name: API (.NET 6)
 on:
   push:
     branches: [master, dev, test]
+    paths:
+    - backend
   pull_request:
     branches: [master, dev, test]
+    paths:
+    - backend
 
 jobs:
   build-backend:
