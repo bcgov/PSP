@@ -60,7 +60,8 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult GetAcquisitionFile(long id)
         {
             // RECOMMENDED - Add valuable metadata to logs
-            _logger.LogInformation("Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(AcquisitionFileController),
                 nameof(GetAcquisitionFile),
                 User.GetUsername(),
@@ -84,6 +85,15 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult AddAcquisitionFile([FromBody] AcquisitionFileModel model)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(AddAcquisitionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
+
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
             var acquisitionFile = _acquisitionService.Add(acqFileEntity);
 
