@@ -63,7 +63,7 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(pr
         path={`/mapview/sidebar/acquisition/new`}
         customRender={() => <AddAcquisitionContainer onClose={onClose} />}
         claim={Claims.ACQUISITION_ADD}
-        key={'NewAquisition'}
+        key={'NewAcquisition'}
         title={'Create Acquisition File'}
       />
       <AppRoute
@@ -72,7 +72,7 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(pr
           <AcquisitionContainer acquisitionFileId={Number(match.params.id)} onClose={onClose} />
         )}
         claim={Claims.ACQUISITION_VIEW}
-        key={'Aquisition'}
+        key={'Acquisition'}
         title={'Acquisition File'}
       />
       <AppRoute
