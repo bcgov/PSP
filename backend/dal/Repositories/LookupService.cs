@@ -283,6 +283,11 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsActivityInstanceStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
+
+         public IEnumerable<PimsAcqFlPersonProfileType> GetAcqFilePersonProfileTypes()
+        {
+            return this.Context.PimsAcqFlPersonProfileTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }
