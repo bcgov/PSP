@@ -15,7 +15,7 @@ namespace Pims.Api.Controllers
     /// </summary>
     [Authorize]
     [ApiController]
-    [ApiVersion("1.0")]
+    [ApiVersion("1.2")]
     [Route("v{version:apiVersion}/documents/")]
     [Route("/documents")]
     public class SyncMayanController : ControllerBase
