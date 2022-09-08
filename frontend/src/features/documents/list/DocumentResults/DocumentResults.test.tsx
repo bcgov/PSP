@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { Claims } from 'constants/claims';
 import { noop } from 'lodash';
 import { mockDocumentsResponse } from 'mocks/mockDocuments';
-import { cleanup, getAllByTestId, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+import { cleanup, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 
