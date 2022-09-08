@@ -45,7 +45,7 @@ describe('Activity List View', () => {
 
   beforeAll(() => {
     mockAxios.onGet(new RegExp(`/activities/templates`)).reply(200, mockTemplateTypes);
-    mockAxios.onGet(new RegExp(`/activities/research/file/*`)).reply(200, mockActivitiesResponse());
+    mockAxios.onGet(new RegExp(`/activities/research/*`)).reply(200, mockActivitiesResponse());
     mockAxios.onAny().reply(200, {});
   });
   it('renders as expected', async () => {
