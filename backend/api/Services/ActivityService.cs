@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Pims.Dal.Services;
 
 namespace Pims.Api.Services
 {
@@ -14,6 +16,8 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
+        private readonly IResearchFileService _researchFileService;
+        private readonly IAcquisitionFileService _acquisitionFileService;
         private readonly IDocumentService _documentService;
         private readonly INoteService _noteService;
 
@@ -22,6 +26,8 @@ namespace Pims.Api.Services
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
             IActivityTemplateRepository activityTemplateRepository,
+            IAcquisitionFileService acquisitionFileService,
+            IResearchFileService researchFileService,
             INoteService noteService,
             IDocumentService documentService)
             : base(user, logger)
@@ -29,6 +35,8 @@ namespace Pims.Api.Services
             _logger = logger;
             _activityRepository = activityRepository;
             _activityTemplateRepository = activityTemplateRepository;
+            _acquisitionFileService = acquisitionFileService;
+            _researchFileService = researchFileService;
             _noteService = noteService;
             _documentService = documentService;
         }
@@ -47,8 +55,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting activities by research id {researchFileId}", researchFileId);
             this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
+            this.User.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             var activityInstances = _activityRepository.GetAllByResearchFileId(researchFileId);
+
+            return activityInstances;
+        }
+
+        public IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId)
+        {
+            _logger.LogInformation("Getting activities by acquisition id {acquisitionFileId}", acquisitionFileId);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
+            this.User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            var activityInstances = _activityRepository.GetAllByAcquisitionFileId(acquisitionFileId);
 
             return activityInstances;
         }
@@ -70,6 +90,22 @@ namespace Pims.Api.Services
             var newActivityInstance = _activityRepository.Add(instance);
             _activityRepository.CommitTransaction();
             return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+        }
+
+        public PimsActivityInstance AddResearchActivity(PimsActivityInstance instance, long researchFileId)
+        {
+            _logger.LogInformation("Adding research activity instance ...");
+            instance.PimsResearchActivityInstances.Add(new PimsResearchActivityInstance() { ResearchFileId = researchFileId, ActivityInstance = instance });
+
+            return AddFileActivity(Permissions.ResearchFileEdit, instance);
+        }
+
+        public PimsActivityInstance AddAcquisitionActivity(PimsActivityInstance instance, long acquisitionFileId)
+        {
+            _logger.LogInformation("Adding acquisition activity instance ...");
+            instance.PimsAcquisitionActivityInstances.Add(new PimsAcquisitionActivityInstance() { AcquisitionFileId = acquisitionFileId, ActivityInstance = instance });
+
+            return AddFileActivity(Permissions.AcquisitionFileEdit, instance);
         }
 
         public PimsActivityInstance Update(PimsActivityInstance model)
@@ -102,6 +138,16 @@ namespace Pims.Api.Services
 
             _activityRepository.Delete(activityId);
             _activityRepository.CommitTransaction();
+        }
+
+        private PimsActivityInstance AddFileActivity(Permissions fileClaim, PimsActivityInstance instance)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityAdd);
+            this.User.ThrowIfNotAuthorized(fileClaim);
+
+            var newActivityInstance = _activityRepository.Add(instance);
+            _activityRepository.CommitTransaction();
+            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
         }
 
         private void ValidateVersion(long activityId, long activityVersion)

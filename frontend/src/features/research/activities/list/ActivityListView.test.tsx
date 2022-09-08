@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
+import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { mockActivitiesResponse } from 'mocks/mockActivities';
@@ -30,7 +31,7 @@ jest.mock('@react-keycloak/web');
 describe('Activity List View', () => {
   const setup = (renderOptions?: RenderOptions & Partial<IActivityListViewProps>) => {
     // render component under test
-    const component = render(<ActivityListView fileId={1} />, {
+    const component = render(<ActivityListView fileId={1} fileType={FileTypes.Research} />, {
       ...renderOptions,
       store: storeState,
       history: history,
@@ -43,12 +44,8 @@ describe('Activity List View', () => {
   };
 
   beforeAll(() => {
-    mockAxios
-      .onGet(new RegExp(`/researchFiles/activity-templates/*`))
-      .reply(200, mockTemplateTypes);
-    mockAxios
-      .onGet(new RegExp(`/researchFiles/1/activities/*`))
-      .reply(200, mockActivitiesResponse());
+    mockAxios.onGet(new RegExp(`/activities/templates`)).reply(200, mockTemplateTypes);
+    mockAxios.onGet(new RegExp(`/activities/research/file/*`)).reply(200, mockActivitiesResponse());
     mockAxios.onAny().reply(200, {});
   });
   it('renders as expected', async () => {
@@ -81,7 +78,9 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const link = getAllByTitle('View Activity')[0];
     userEvent.click(link);
-    expect(history.location.pathname).toBe('/activity/1');
+
+    //note: extra '/' caused by the test path not containing an id.
+    expect(history.location.pathname).toBe('//activity/1');
   });
 
   it('should allow an activity to be viewed by clicking the link', async () => {
@@ -92,7 +91,9 @@ describe('Activity List View', () => {
     const link = getByText('Survey');
 
     userEvent.click(link);
-    expect(history.location.pathname).toBe('/activity/1');
+
+    //note: extra '/' caused by the test path not containing an id.
+    expect(history.location.pathname).toBe('//activity/1');
   });
 
   it('should not show the delete icon unless the user has the correct claim', async () => {
@@ -129,6 +130,46 @@ describe('Activity List View', () => {
       expect(mockAxios.history.delete[0].url).toBe('/activities/1');
     });
   });
+
+  it('should hide the view activity screen if deleting the currently viewed activity', async () => {
+    const { getByTitle, getAllByTitle } = setup({
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
+    });
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+    const viewButton = getAllByTitle('View Activity')[0];
+    userEvent.click(viewButton);
+    const deleteButton = getAllByTitle('Delete Activity')[0];
+    userEvent.click(deleteButton);
+    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    const continueButton = await screen.findByText('Continue');
+    userEvent.click(continueButton);
+
+    await waitFor(async () => {
+      expect(history.location.pathname).toBe('/');
+    });
+  });
+
+  it('should not hide the view activity screen if deleting an activity that is not being viewed', async () => {
+    const { getByTitle, getAllByTitle } = setup({
+      claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
+    });
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+    const viewButton = getAllByTitle('View Activity')[1];
+    userEvent.click(viewButton);
+    const deleteButton = getAllByTitle('Delete Activity')[0];
+    userEvent.click(deleteButton);
+    expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
+    const continueButton = await screen.findByText('Continue');
+    userEvent.click(continueButton);
+
+    await waitFor(async () => {
+      //note, the extra '/' is an artifact of no research file id being present in the test logic.
+      expect(history.location.pathname).toBe('//activity/2');
+    });
+  });
+
   it('should close the delete modal if deletion is cancelled', async () => {
     const { getByTitle, getAllByTitle } = setup({
       claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],

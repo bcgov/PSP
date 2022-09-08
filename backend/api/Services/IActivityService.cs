@@ -9,9 +9,15 @@ namespace Pims.Api.Services
 
         IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId);
 
+        IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId);
+
         IList<PimsActivityTemplate> GetAllActivityTemplates();
 
         PimsActivityInstance Add(PimsActivityInstance instance);
+
+        PimsActivityInstance AddResearchActivity(PimsActivityInstance instance, long researchFileId);
+
+        PimsActivityInstance AddAcquisitionActivity(PimsActivityInstance instance, long acquisitionFileId);
 
         PimsActivityInstance Update(PimsActivityInstance model);
 

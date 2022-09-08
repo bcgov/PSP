@@ -1,4 +1,5 @@
 import { Claims } from 'constants/claims';
+import { FileTypes } from 'constants/fileTypes';
 import {
   ResearchTabNames,
   ResearchTabs,
@@ -50,7 +51,9 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
 
   if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
     tabViews.push({
-      content: <ActivityListView fileId={researchFile.id}></ActivityListView>,
+      content: (
+        <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
+      ),
       key: ResearchTabNames.activities,
       name: 'Activities',
     });

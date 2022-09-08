@@ -41,4 +41,5 @@ export const ActivityTray = styled.div`
   border-radius: 1rem;
   text-align: left;
   transition: transform 0.5s ease-in-out;
+  position: relative;
 `;

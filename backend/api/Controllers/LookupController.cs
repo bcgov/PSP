@@ -119,6 +119,7 @@ namespace Pims.Api.Controllers
             var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionPhysFileStatusTypes());
             var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionTypes());
             var activityTemplateTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetActivityTemplateTypes());
+            var activityStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetActivityStatusTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);
@@ -162,6 +163,7 @@ namespace Pims.Api.Controllers
             codes.AddRange(acquisitionPhysFileStatusTypes);
             codes.AddRange(acquisitionTypes);
             codes.AddRange(activityTemplateTypes);
+            codes.AddRange(activityStatusTypes);
 
             return new JsonResult(codes);
         }

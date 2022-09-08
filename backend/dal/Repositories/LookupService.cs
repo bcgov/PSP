@@ -251,7 +251,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsDocumentStatusType> GetDocumentStatusTypes()
         {
-            return this.Context.PimsDocumentStatusTypes.AsNoTracking().ToArray();
+            return this.Context.PimsDocumentStatusTypes.AsNoTracking().OrderBy(d => d.DisplayOrder).ToArray();
         }
 
         public IEnumerable<PimsDocumentTyp> GetDocumentTypes()
@@ -277,6 +277,11 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsActivityTemplateType> GetActivityTemplateTypes()
         {
             return this.Context.PimsActivityTemplateTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsActivityInstanceStatusType> GetActivityStatusTypes()
+        {
+            return this.Context.PimsActivityInstanceStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
         #endregion
     }

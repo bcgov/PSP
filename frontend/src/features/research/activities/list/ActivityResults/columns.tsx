@@ -3,8 +3,7 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import ITypeCode from 'interfaces/ITypeCode';
-import { Api_Activity } from 'models/api/Activity';
+import { Api_Activity, Api_ActivityTemplate } from 'models/api/Activity';
 import { FaTrash } from 'react-icons/fa';
 import { ImEye } from 'react-icons/im';
 import { CellProps } from 'react-table';
@@ -17,19 +16,19 @@ export function createActivityTableColumns(
   const columns: ColumnWithProps<Api_Activity>[] = [
     {
       Header: 'Activity type',
-      accessor: 'activityTemplateTypeCode',
+      accessor: 'activityTemplate',
       align: 'left',
       sortable: true,
       minWidth: 30,
       maxWidth: 40,
-      Cell: (cellProps: CellProps<any, ITypeCode<string>>) => {
+      Cell: (cellProps: CellProps<any, Api_ActivityTemplate>) => {
         const { hasClaim } = useKeycloakWrapper();
         return hasClaim(Claims.ACTIVITY_VIEW) ? (
           <LinkButton onClick={() => onShowActivity(cellProps.row.original)}>
-            {cellProps.value?.description ?? ''}
+            {cellProps.value?.activityTemplateTypeCode?.description ?? ''}
           </LinkButton>
         ) : (
-          cellProps.value?.description ?? ''
+          cellProps.value?.activityTemplateTypeCode?.description ?? ''
         );
       },
     },
@@ -52,8 +51,8 @@ export function createActivityTableColumns(
       Header: 'Actions',
       align: 'right',
       sortable: false,
-      width: 40,
-      maxWidth: 40,
+      width: 20,
+      maxWidth: 20,
       Cell: (cellProps: CellProps<Api_Activity>) => {
         const { hasClaim } = useKeycloakWrapper();
         return (

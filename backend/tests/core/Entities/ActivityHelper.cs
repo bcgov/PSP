@@ -27,6 +27,7 @@ namespace Pims.Core.Test
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
                 ConcurrencyControlNumber = 1,
+                ActivityInstanceStatusTypeCodeNavigation = new Entity.PimsActivityInstanceStatusType() { Id = "NOSTART" },
             };
 
             if (notes != null)
@@ -46,6 +47,10 @@ namespace Pims.Core.Test
             if (template != null)
             {
                 activity.ActivityTemplate = template;
+            }
+            else
+            {
+                activity.ActivityTemplate = new Entity.PimsActivityTemplate();
             }
 
             return activity;

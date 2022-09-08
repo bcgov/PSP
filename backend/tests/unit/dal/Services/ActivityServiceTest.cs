@@ -121,7 +121,7 @@ namespace Pims.Dal.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView, Permissions.ResearchFileView);
             var service = helper.Create<ActivityService>(user);
 
             var mapper = helper.GetService<IMapper>();

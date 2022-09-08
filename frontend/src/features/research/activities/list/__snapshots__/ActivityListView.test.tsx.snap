@@ -349,66 +349,6 @@ exports[`Activity List View renders as expected 1`] = `
                 >
                   All statuses
                 </option>
-                <option
-                  class="option"
-                  value="AMENDD"
-                >
-                  Amended
-                </option>
-                <option
-                  class="option"
-                  value="APPROVD"
-                >
-                  Approved
-                </option>
-                <option
-                  class="option"
-                  value="CNCLD"
-                >
-                  Cancelled
-                </option>
-                <option
-                  class="option"
-                  value="DRAFT"
-                >
-                  Draft
-                </option>
-                <option
-                  class="option"
-                  value="FINAL"
-                >
-                  Final
-                </option>
-                <option
-                  class="option"
-                  value="NONE"
-                >
-                  None
-                </option>
-                <option
-                  class="option"
-                  value="RGSTRD"
-                >
-                  Registered
-                </option>
-                <option
-                  class="option"
-                  value="SENT"
-                >
-                  Sent
-                </option>
-                <option
-                  class="option"
-                  value="SIGND"
-                >
-                  Signed
-                </option>
-                <option
-                  class="option"
-                  value="UNREGD"
-                >
-                  Unregistered
-                </option>
               </select>
             </div>
           </div>
@@ -624,7 +564,7 @@ exports[`Activity List View renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -682,7 +622,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
@@ -785,7 +725,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
@@ -888,7 +828,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div

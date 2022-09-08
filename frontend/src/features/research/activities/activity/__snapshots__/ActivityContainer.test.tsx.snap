@@ -186,6 +186,7 @@ exports[`Activity Container renders as expected 1`] = `
   -webkit-transition: -webkit-transform 0.5s ease-in-out;
   -webkit-transition: transform 0.5s ease-in-out;
   transition: transform 0.5s ease-in-out;
+  position: relative;
 }
 
 .c5 {

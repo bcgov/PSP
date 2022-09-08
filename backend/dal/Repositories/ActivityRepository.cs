@@ -40,77 +40,46 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsActivityInstances
                 .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
+                .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.ActivityInstanceId == id) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
-        /// Retrieves the activities  with the specified research file id.
+        /// Retrieves the activities with the specified research file id.
         /// </summary>
         /// <param name="researchFileId"></param>
         /// <returns></returns>
         public IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId)
         {
+             return this.Context.PimsActivityInstances.AsNoTracking()
+                .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
+                .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+                .Where(x => x.PimsResearchActivityInstances.Any(ra => ra.ResearchFileId == researchFileId))
+                .ToList();
+        }
 
-            List<PimsActivityInstance> instances = new List<PimsActivityInstance>();
-            instances.Add(new PimsActivityInstance()
-            {
-                ActivityInstanceId = 1,
-                ActivityTemplateId = 1,
-                ActivityTemplate = new PimsActivityTemplate()
-                {
-                    ActivityTemplateId = 1,
-                    ActivityTemplateTypeCodeNavigation = new PimsActivityTemplateType()
-                    {
-                        Id = "GENERAL",
-                        ActivityTemplateTypeCode = "GENERAL",
-                        Description = "General",
-                    },
-                },
-            });
-            instances.Add(new PimsActivityInstance()
-            {
-                ActivityInstanceId = 2,
-                ActivityTemplateId = 2,
-                ActivityTemplate = new PimsActivityTemplate()
-                {
-                    ActivityTemplateId = 2,
-                    ActivityTemplateTypeCodeNavigation = new PimsActivityTemplateType()
-                    {
-                        Id = "SITEVIS",
-                        ActivityTemplateTypeCode = "SITEVIS",
-                        Description = "Site Visit",
-                    },
-                },
-            });
-            instances.Add(new PimsActivityInstance()
-            {
-                ActivityInstanceId = 3,
-                ActivityTemplateId = 3,
-                ActivityTemplate = new PimsActivityTemplate()
-                {
-                    ActivityTemplateId = 3,
-                    ActivityTemplateTypeCodeNavigation = new PimsActivityTemplateType()
-                    {
-                        Id = "SURVEY",
-                        ActivityTemplateTypeCode = "SURVEY",
-                        Description = "Survey",
-                    },
-                },
-            });
-            return instances;
-
-            // TODO Call actual table data
-            // return this.Context.PimsActivityInstances.AsNoTracking()
-            // .Include(i => i.ActivityTemplate)
-            // .ThenInclude(t => t.ActivityTemplateTypeCodeNavigation)
-            // .Where(x => x.ActivityInstanceId == researchFileId)
-            // .ToList();
+        /// <summary>
+        /// Retrieves the activities with the specified acquisition file id.
+        /// </summary>
+        /// <param name="acquisitionFileId"></param>
+        /// <returns></returns>
+        public IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId)
+        {
+            return this.Context.PimsActivityInstances.AsNoTracking()
+               .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
+               .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+               .Where(x => x.PimsAcquisitionActivityInstances.Any(ra => ra.AcquisitionFileId == acquisitionFileId))
+               .ToList();
         }
 
         public PimsActivityInstance Add(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
+            if (instance.ActivityTemplate != null)
+            {
+                Context.Entry(instance.ActivityTemplate).State = EntityState.Unchanged;
+            }
             this.Context.PimsActivityInstances.Add(instance);
             return instance;
         }
@@ -140,7 +109,20 @@ namespace Pims.Dal.Repositories
         public bool Delete(long activityId)
         {
             var instance = this.Context.PimsActivityInstances
+                .Include(a => a.PimsResearchActivityInstances)
+                .Include(a => a.PimsAcquisitionActivityInstances)
                 .FirstOrDefault(x => x.ActivityInstanceId == activityId) ?? throw new KeyNotFoundException();
+
+            foreach(var acquisitionActivityInstance in instance.PimsAcquisitionActivityInstances)
+            {
+                this.Context.PimsAcquisitionActivityInstances.Remove(acquisitionActivityInstance);
+            }
+
+            foreach (var researchActivityInstance in instance.PimsResearchActivityInstances)
+            {
+                this.Context.PimsResearchActivityInstances.Remove(researchActivityInstance);
+            }
+
             this.Context.PimsActivityInstances.Remove(instance);
             return true;
         }

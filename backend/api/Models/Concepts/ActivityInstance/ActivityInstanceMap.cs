@@ -11,7 +11,7 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ActivityInstanceId)
                 .Map(dest => dest.ActivityTemplateId, src => src.ActivityTemplateId)
-                .Map(dest => dest.ActivityTemplateTypeCode, src => src.ActivityTemplate.ActivityTemplateTypeCodeNavigation)
+                .Map(dest => dest.ActivityStatusTypeCode, src => src.ActivityInstanceStatusTypeCodeNavigation)
                 .Map(dest => dest.ActivityTemplate, src => src.ActivityTemplate);
 
             config.NewConfig<ActivityInstanceModel, Entity.PimsActivityInstance>()

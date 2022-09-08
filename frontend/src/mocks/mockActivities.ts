@@ -2,9 +2,11 @@ import { Api_Activity } from 'models/api/Activity';
 
 export const mockActivitiesResponse = (): Api_Activity[] => [
   {
-    activityTemplateTypeCode: {
-      id: 'SURVEY',
-      description: 'Survey',
+    activityTemplate: {
+      activityTemplateTypeCode: {
+        id: 'SURVEY',
+        description: 'Survey',
+      },
     },
     id: 1,
     activityStatusTypeCode: {
@@ -14,9 +16,11 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
     description: 'Survey Activity',
   },
   {
-    activityTemplateTypeCode: {
-      id: 'GENERAL',
-      description: 'General',
+    activityTemplate: {
+      activityTemplateTypeCode: {
+        id: 'GENERAL',
+        description: 'General',
+      },
     },
     id: 2,
     activityStatusTypeCode: {
@@ -26,9 +30,11 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
     description: 'General Activity',
   },
   {
-    activityTemplateTypeCode: {
-      id: 'SITEVIS',
-      description: 'Site Visit',
+    activityTemplate: {
+      activityTemplateTypeCode: {
+        id: 'SITEVIS',
+        description: 'Site Visit',
+      },
     },
     id: 3,
     activityStatusTypeCode: {
