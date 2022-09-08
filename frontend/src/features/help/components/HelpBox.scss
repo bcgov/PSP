@@ -13,6 +13,7 @@
   .active:after {
     content: '';
     transform: translateX(100%);
+    align-self: center;
     width: 0;
     height: 0;
     display: inline-block;
