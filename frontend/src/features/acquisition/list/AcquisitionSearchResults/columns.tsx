@@ -6,6 +6,8 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
+import AcquisitionProperties from './AcquisitionProperties';
+
 export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
   {
     Header: 'Acquisition file #',
@@ -58,6 +60,19 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
       const { ministryProjectNumber, ministryProjectName } = props.row.original;
       const formattedValue = [ministryProjectNumber, ministryProjectName].filter(Boolean).join(' ');
       return formattedValue;
+    },
+  },
+  {
+    Header: 'Civic Address / PID / PIN',
+    accessor: 'acquisitionProperties',
+    align: 'left',
+    Cell: (props: CellProps<Api_AcquisitionFile>) => {
+      return (
+        <AcquisitionProperties
+          acquisitionProperties={props.row.original.acquisitionProperties}
+          maxDisplayCount={2}
+        ></AcquisitionProperties>
+      );
     },
   },
   {

@@ -1,3 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
@@ -8,14 +16,6 @@ using Pims.Ltsa.Extensions;
 using Pims.Ltsa.Models;
 using Polly;
 using Polly.Retry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Pims.Ltsa
 {
@@ -46,7 +46,6 @@ namespace Pims.Ltsa
         /// <param name="serializerOptions"></param>
         public LtsaService(IOptions<LtsaOptions> options, IHttpRequestClient client, ILogger<ILtsaService> logger, IOptions<JsonSerializerOptions> serializerOptions)
         {
-
             this.Options = options.Value;
             this.Client = client;
             _logger = logger;
@@ -59,8 +58,6 @@ namespace Pims.Ltsa
                     this.Client.Client?.DefaultRequestHeaders?.Clear();
                     this.Client.Client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {_token.AccessToken}");
                 });
-
-
         }
         #endregion
 
@@ -161,7 +158,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         private async Task<TokenModel> RefreshAccessTokenAsync()
         {
-            //If the refresh token exists, try an refresh the token.
+            // If the refresh token exists, try and refresh the token.
             if (_token?.RefreshToken != null)
             {
                 try
@@ -195,7 +192,6 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<TokenModel> GetTokenAsync(string integratorUsername = null, string integratorPassword = null, string myLtsaUsername = null, string myLtsaUserPassword = null)
         {
-
             var creds = new IntegratorCredentials()
             {
                 IntegratorUsername = integratorUsername ?? this.Options.IntegratorUsername,
