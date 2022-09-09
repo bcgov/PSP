@@ -27,6 +27,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
     SelectedPropertyContext,
   );
+  console.log(selectedResearchFeature);
 
   const initialForm = useMemo(() => {
     const researchForm = new AcquisitionForm();
@@ -61,7 +62,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
   };
 
-  const helper = useAddAcquisitionFormManagement({ onSuccess });
+  const helper = useAddAcquisitionFormManagement({ onSuccess, initialForm });
 
   return (
     <MapSideBarLayout
