@@ -966,6 +966,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                         <input
                                           data-testid="selectrow-parent"
                                           disabled=""
+                                          name=""
                                           style="cursor: pointer;"
                                           title="Click to deselect all."
                                           type="checkbox"
