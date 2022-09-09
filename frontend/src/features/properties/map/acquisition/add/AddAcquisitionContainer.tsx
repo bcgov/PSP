@@ -1,7 +1,10 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
+import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
+import React, { useEffect, useMemo } from 'react';
 import { useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,7 +12,7 @@ import styled from 'styled-components';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
 import { AddAcquisitionForm } from './AddAcquisitionForm';
-import { AcquisitionForm } from './models';
+import { AcquisitionForm, AcquisitionPropertyForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
   onClose?: () => void;
@@ -21,6 +24,31 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
+  const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
+    SelectedPropertyContext,
+  );
+
+  const initialForm = useMemo(() => {
+    const researchForm = new AcquisitionForm();
+    if (!!selectedResearchFeature) {
+      researchForm.properties = [
+        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+      ];
+    }
+    return researchForm;
+  }, [selectedResearchFeature]);
+
+  useEffect(() => {
+    if (!!selectedResearchFeature && !!formikRef.current) {
+      formikRef.current.resetForm();
+      formikRef.current?.setFieldValue('properties', [
+        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+      ]);
+    }
+    return () => {
+      setSelectedResearchFeature(null);
+    };
+  }, [initialForm, selectedResearchFeature, setSelectedResearchFeature]);
 
   const handleSave = () => {
     formikRef.current?.setSubmitting(true);

@@ -51,9 +51,13 @@ export class PropertyForm {
   public longitude?: number;
   public planNumber?: string;
   public name?: string;
-  public regionId?: number;
-  public districtId?: number;
+  public region?: number;
+  public regionName?: string;
+  public district?: number;
+  public districtName?: string;
   public rowVersion?: number;
+  public legalDescription?: string;
+  public address?: string;
 
   private constructor() {}
 
@@ -64,8 +68,12 @@ export class PropertyForm {
     newForm.latitude = model.latitude;
     newForm.longitude = model.longitude;
     newForm.planNumber = model.planNumber;
-    newForm.regionId = model.region;
-    newForm.districtId = model.district;
+    newForm.region = model.region;
+    newForm.regionName = model.regionName;
+    newForm.district = model.district;
+    newForm.districtName = model.districtName;
+    newForm.legalDescription = model.legalDescription;
+    newForm.address = model.address;
 
     return newForm;
   }
@@ -80,8 +88,8 @@ export class PropertyForm {
     newForm.latitude = model.property?.latitude;
     newForm.longitude = model.property?.longitude;
     newForm.planNumber = model.property?.planNumber;
-    newForm.regionId = model.property?.region?.id;
-    newForm.districtId = model.property?.district?.id;
+    newForm.region = model.property?.region?.id;
+    newForm.district = model.property?.district?.id;
     newForm.rowVersion = model.rowVersion;
 
     return newForm;
@@ -95,8 +103,8 @@ export class PropertyForm {
       planNumber: this.planNumber,
       landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
-      region: toTypeCode(this.regionId),
-      district: toTypeCode(this.districtId),
+      region: toTypeCode(this.region),
+      district: toTypeCode(this.district),
     };
   }
 }

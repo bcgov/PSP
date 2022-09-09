@@ -74,9 +74,13 @@ export class AcquisitionPropertyForm {
   name?: string;
   isDisabled?: boolean;
   displayOrder?: number;
-  regionId?: number;
-  districtId?: number;
+  region?: number;
+  regionName?: string;
+  district?: number;
+  districtName?: string;
   rowVersion?: number;
+  legalDescription?: string;
+  address?: string;
 
   static fromMapProperty(model: IMapProperty): AcquisitionPropertyForm {
     const newForm = new AcquisitionPropertyForm();
@@ -85,8 +89,12 @@ export class AcquisitionPropertyForm {
     newForm.latitude = model.latitude;
     newForm.longitude = model.longitude;
     newForm.planNumber = model.planNumber;
-    newForm.regionId = model.region;
-    newForm.districtId = model.district;
+    newForm.region = model.region;
+    newForm.regionName = model.regionName;
+    newForm.district = model.district;
+    newForm.districtName = model.districtName;
+    newForm.legalDescription = model.legalDescription;
+    newForm.address = model.address;
 
     return newForm;
   }
@@ -101,8 +109,8 @@ export class AcquisitionPropertyForm {
     newForm.latitude = model.property?.latitude;
     newForm.longitude = model.property?.longitude;
     newForm.planNumber = model.property?.planNumber;
-    newForm.regionId = model.property?.region?.id;
-    newForm.districtId = model.property?.district?.id;
+    newForm.region = model.property?.region?.id;
+    newForm.district = model.property?.district?.id;
     newForm.rowVersion = model.rowVersion;
 
     return newForm;
@@ -115,8 +123,8 @@ export class AcquisitionPropertyForm {
       pin: this.pin !== undefined ? Number(this.pin) : undefined,
       landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
-      region: toTypeCode(this.regionId),
-      district: toTypeCode(this.districtId),
+      region: toTypeCode(this.region),
+      district: toTypeCode(this.district),
     };
   }
 }

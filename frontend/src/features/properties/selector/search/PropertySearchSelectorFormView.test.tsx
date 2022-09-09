@@ -202,7 +202,7 @@ describe('PropertySearchSelectorFormView component', () => {
           districtName: undefined,
           id: 'PID-006-772-331',
           latitude: 55.706191605,
-          legalDescription: 'placeholder',
+          legalDescription: undefined,
           longitude: -121.60790412,
           pid: '006772331',
           pin: 10514131,
