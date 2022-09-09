@@ -9,7 +9,7 @@ export const getDocumentUploadYupSchema = (
   for (const data of mayanMetadata) {
     if (data.metadata_type?.id && data.required) {
       yupSchema[(edit ? data.id : data.metadata_type?.id) || ''] = Yup.string().required(
-        `${data.metadata_type?.name} is required`,
+        `${data.metadata_type?.label} is required`,
       );
     }
   }
