@@ -81,38 +81,20 @@ describe('Document Results Table', () => {
     expect(viewButtons[0]).toBeVisible();
   });
 
-  it('displays document filename as link', async () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW] });
-    const { queryByTestId, getAllByTestId } = setup({ results: mockDocumentsResponse() });
-
-    const filenameLink = await getAllByTestId('document-view-filename-link');
-    expect(filenameLink[0]).toBeVisible();
-
-    expect(queryByTestId('document-view-filename-text')).toBeNull();
-  });
-
-  it('displays document filename as plain text', async () => {
-    mockKeycloak({ claims: [] });
-    const { queryByTestId, getAllByTestId } = setup({ results: mockDocumentsResponse() });
-
-    const filenameText = await getAllByTestId('document-view-filename-text');
-    expect(filenameText[0]).toBeVisible();
-
-    expect(queryByTestId('document-view-filename-link')).toBeNull();
-  });
-
   it('displays document delete button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId, container } = setup({ results: mockDocumentsResponse() });
 
+    console.log(container.outerHTML);
     const deleteButtons = await getAllByTestId('document-delete-button');
     expect(deleteButtons[0]).toBeVisible();
   });
 
   it('displays document delete button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId, container } = setup({ results: mockDocumentsResponse() });
 
+    console.log(container.outerHTML);
     const deleteButtons = await getAllByTestId('document-delete-button');
     expect(deleteButtons[0]).toBeVisible();
   });
