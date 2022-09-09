@@ -48,11 +48,17 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
       if (filters) {
         documentItems = documentItems.filter(document => {
-          return (
-            (!filters.documentTypeId ||
-              document?.documentType?.id === Number(filters.documentTypeId)) &&
-            (!filters.status || document?.statusTypeCode?.id === filters.status)
-          );
+          const matchesDocumentType =
+            !filters.documentTypeId ||
+            document?.documentType?.id === Number(filters.documentTypeId);
+          const matchesStatus = !filters.status || document?.statusTypeCode?.id === filters.status;
+          const filename = document.fileName?.toLowerCase() || '';
+          const matchesFilename: boolean =
+            filters.filename !== ''
+              ? filename.indexOf(filters.filename.toLowerCase() || '') > -1
+              : true;
+
+          return matchesDocumentType && matchesStatus && matchesFilename;
         });
       }
       if (sort) {

@@ -356,6 +356,60 @@ exports[`Document Results Table matches snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 177px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Sep 8, 2022
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            admin
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c3 no-gutters row"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   .c0 {
@@ -369,7 +423,7 @@ exports[`Document Results Table matches snapshot 1`] = `
       class="align-self-center col-auto"
     >
       <span>
-        1 - 1 of  1
+        1 - 2 of  2
       </span>
     </div>
     <div
