@@ -1,5 +1,5 @@
 import { ResetButton, SearchButton } from 'components/common/buttons';
-import { Form, Select, SelectOption } from 'components/common/form';
+import { Form, Input, Select, SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { Formik } from 'formik';
 import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
@@ -48,10 +48,10 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col lg={2}>
+            <Col lg="auto">
               <label>Filter by:</label>
             </Col>
-            <Col lg={4}>
+            <Col lg={3}>
               <Select
                 data-testid="document-type"
                 field="documentTypeId"
@@ -59,7 +59,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                 options={documentTypes}
               />
             </Col>
-            <Col lg={4}>
+            <Col lg={3}>
               <Select
                 field="status"
                 data-testid="document-status"
@@ -67,7 +67,10 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                 options={documentStatusTypeOptions}
               />
             </Col>
-            <ColButtons xl={2}>
+            <Col lg={3}>
+              <Input field="filename" data-testid="document-filename" placeholder="File name" />
+            </Col>
+            <ColButtons xl="auto">
               <Row>
                 <Col xs="auto" className="pr-0">
                   <SearchButton disabled={formikProps.isSubmitting} />
