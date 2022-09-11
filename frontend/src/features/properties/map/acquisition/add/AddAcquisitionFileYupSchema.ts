@@ -9,9 +9,9 @@ export const AddAcquisitionFileYupSchema = Yup.object().shape({
   region: Yup.string().required('Ministry region is required'),
   team: Yup.array().of(
     Yup.object().shape({
-      contact: Yup.object().shape({
-        id: Yup.number().required('Select a contact'),
-      }),
+      // contact: Yup.object().shape({
+      //   id: Yup.number().required('Select a contact'),
+      // }),
       contactTypeCode: Yup.string()
         .ensure()
         .required('Select a profile'),

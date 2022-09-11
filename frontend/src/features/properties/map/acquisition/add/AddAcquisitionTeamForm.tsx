@@ -13,10 +13,12 @@ import { MdClose } from 'react-icons/md';
 
 import { AcquisitionForm, AcquisitionTeamForm } from './models';
 
-interface AcquisitionTeamProp {
+interface AddAcquisitionTeamFormProp {
   formikProps: FormikProps<AcquisitionForm>;
 }
-export const AcquisitionTeam: React.FunctionComponent<AcquisitionTeamProp> = ({ formikProps }) => {
+export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamFormProp> = ({
+  formikProps,
+}) => {
   const { values } = useFormikContext<AcquisitionForm>();
   const [contactIndex, setContactIndex] = useState<number>(-1);
   const [showContactManager, setShowContactManager] = useState<boolean>(false);
@@ -73,7 +75,9 @@ export const AcquisitionTeam: React.FunctionComponent<AcquisitionTeamProp> = ({ 
             <LinkButton
               data-testid="add-team-member"
               onClick={() => {
-                const person: AcquisitionTeamForm = { contactTypeCode: '' };
+                const person: AcquisitionTeamForm = {
+                  contactTypeCode: '',
+                };
                 arrayHelpers.push(person);
               }}
             >

@@ -4,7 +4,7 @@ import { mockLookups } from 'mocks';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { AcquisitionTeam } from './AcquisitionTeam';
+import { AddAcquisitionTeamForm } from './AddAcquisitionTeamForm';
 import { AcquisitionForm } from './models';
 
 describe('AcquisitionTeam component', () => {
@@ -12,7 +12,7 @@ describe('AcquisitionTeam component', () => {
   const setup = (props: { initialForm: AcquisitionForm }, renderOptions: RenderOptions = {}) => {
     const utils = render(
       <Formik initialValues={props.initialForm} onSubmit={noop}>
-        {formikProps => <AcquisitionTeam formikProps={formikProps} />}
+        {formikProps => <AddAcquisitionTeamForm formikProps={formikProps} />}
       </Formik>,
       {
         ...renderOptions,

@@ -47,14 +47,7 @@ export class AcquisitionForm {
           acquisitionFile: { id: this.id },
         };
       }),
-      acquisitionTeam: this.team
-        .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map<Api_AcquisitionFilePerson>(x => {
-          return {
-            personId: x.contact?.personId || 0,
-            personProfileTypeCode: x.contactTypeCode,
-          };
-        }),
+      acquisitionTeam: AcquisitionTeamForm.toApi(this.team),
     };
   }
 
@@ -143,7 +136,23 @@ export class AcquisitionPropertyForm {
   }
 }
 
-export interface AcquisitionTeamForm {
+export class AcquisitionTeamForm {
   contact?: IContactSearchResult;
   contactTypeCode: string;
+
+  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
+    this.contactTypeCode = contactTypeCode;
+    this.contact = contact;
+  }
+
+  static toApi(model: AcquisitionTeamForm[]): Api_AcquisitionFilePerson[] {
+    return model
+      .filter(x => !!x.contact && !!x.contactTypeCode)
+      .map<Api_AcquisitionFilePerson>(x => {
+        return {
+          personId: x.contact?.personId || 0,
+          personProfileTypeCode: x.contactTypeCode,
+        };
+      });
+  }
 }
