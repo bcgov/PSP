@@ -7,7 +7,6 @@ import * as API from 'constants/API';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
-import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
@@ -29,7 +28,6 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
   const handleContactManagerOk = () => {
     formikProps.setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
     setShowContactManager(false);
-    setSelectedContact([]);
   };
 
   return (
@@ -56,11 +54,12 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                       setContactIndex(index);
                       setShowContactManager(true);
                     }}
+                    displayErrorTooltips={true}
                     field={`team[${index}].contact`}
                     onClear={() => formikProps.setFieldValue(`team[${index}].contact`, undefined)}
                   ></ContactInput>
                 </Col>
-                <Col xs="auto" xl="2" className="pl-0 align-self-center mb-3">
+                <Col xs="auto" xl="2">
                   <Button
                     data-testid="remove-team-member"
                     icon={<MdClose size={20} />}
@@ -95,12 +94,6 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
         setDisplay={setShowContactManager}
         isSingleSelect
         handleModalOk={handleContactManagerOk}
-        handleModalCancel={() => {
-          setShowContactManager(false);
-          setSelectedContact([]);
-        }}
-        showActiveSelector={true}
-        showOnlyIndividuals={true}
       ></ContactManagerModal>
     </>
   );
