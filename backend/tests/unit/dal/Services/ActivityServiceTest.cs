@@ -278,8 +278,8 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             repository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
-            documentService.Verify(x => x.DeleteActivityDocumentAsync(activityDocuments.FirstOrDefault()));
-            noteService.Verify(x => x.DeleteNote(NoteType.Activity, It.IsAny<long>()));
+            documentService.Verify(x => x.DeleteActivityDocumentAsync(activityDocuments.FirstOrDefault(), false));
+            noteService.Verify(x => x.DeleteNote(NoteType.Activity, It.IsAny<long>(), false));
         }
 
         [Fact]
