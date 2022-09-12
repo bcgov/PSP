@@ -1,0 +1,1400 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivityForm test Renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="no-gutters pl-4 pr-4 row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-5"
+        >
+          <div
+            class="flex-nowrap row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label>
+                File:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-auto"
+            >
+              <strong>
+                1-12345-01 - Test ACQ File
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-right col"
+        >
+          Created: 
+          <strong>
+            Jan 1, 0001
+          </strong>
+           by 
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon"
+            id="userNameTooltip"
+          >
+            <span
+              class="c0"
+            >
+              USER
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-5"
+        />
+        <div
+          class="text-right col"
+        >
+          Last updated: 
+          <strong>
+            Feb 1, 0001
+          </strong>
+           by 
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon"
+            id="userNameTooltip"
+          >
+            <span
+              class="c0"
+            >
+              USER
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-5"
+        />
+        <div
+          class="col"
+        >
+          <div
+            class="justify-content-end row"
+          >
+            <div
+              class="pr-0 text-left col-auto"
+            >
+              <label>
+                Status:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-auto"
+            >
+              <strong>
+                Not Started
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c1"
+      />
+    </div>
+  </div>
+  .c1.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c1.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c1.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c1.btn.btn-primary {
+  border: none;
+}
+
+.c1.btn.btn-secondary {
+  background: none;
+}
+
+.c1.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
+  background: none;
+}
+
+.c1.btn.btn-light {
+  border: none;
+}
+
+.c1.btn.btn-dark {
+  border: none;
+}
+
+.c1.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c1.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c1.Button--icon-only:focus {
+  outline: none;
+}
+
+.c1.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+}
+
+.c0 .btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+<div
+    class="c0"
+  >
+    <button
+      class="btn btn-link"
+      title="edit"
+      type="button"
+    >
+      <svg
+        fill="currentColor"
+        height="2rem"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 576 512"
+        width="2rem"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+        />
+      </svg>
+    </button>
+    <button
+      class="c1 Button btn btn-secondary mr-4"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        Related properties
+      </div>
+    </button>
+  </div>
+  .c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          Description
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c2"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              collapse-description
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M7 14l5-5 5 5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <p>
+        test description
+      </p>
+    </div>
+  </div>
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  border: none;
+}
+
+.c5.btn.btn-secondary {
+  background: none;
+}
+
+.c5.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  background: none;
+}
+
+.c5.btn.btn-light {
+  border: none;
+}
+
+.c5.btn.btn-dark {
+  border: none;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c8 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c7 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c3 {
+  border-radius: 0.5rem;
+}
+
+.c4 {
+  border-left: 0.2rem solid white;
+}
+
+<div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="no-gutters justify-content-between row"
+            >
+              <div
+                class="px-2 my-1 col-auto"
+              >
+                Documents
+              </div>
+              <div
+                class="my-1 col-auto"
+              />
+            </div>
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-documents
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <form
+          class="c3 p-3"
+          novalidate=""
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-lg-2"
+            >
+              <label>
+                Filter by:
+              </label>
+            </div>
+            <div
+              class="col-lg-4"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  data-testid="document-type"
+                  id="input-documentTypeId"
+                  name="documentTypeId"
+                >
+                  <option
+                    value=""
+                  >
+                    All document types
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="col-lg-4"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  data-testid="document-status"
+                  id="input-status"
+                  name="status"
+                >
+                  <option
+                    value=""
+                  >
+                    All statuses
+                  </option>
+                  <option
+                    class="option"
+                    value="AMENDD"
+                  >
+                    Amended
+                  </option>
+                  <option
+                    class="option"
+                    value="APPROVD"
+                  >
+                    Approved
+                  </option>
+                  <option
+                    class="option"
+                    value="CNCLD"
+                  >
+                    Cancelled
+                  </option>
+                  <option
+                    class="option"
+                    value="DRAFT"
+                  >
+                    Draft
+                  </option>
+                  <option
+                    class="option"
+                    value="FINAL"
+                  >
+                    Final
+                  </option>
+                  <option
+                    class="option"
+                    value="NONE"
+                  >
+                    None
+                  </option>
+                  <option
+                    class="option"
+                    value="RGSTRD"
+                  >
+                    Registered
+                  </option>
+                  <option
+                    class="option"
+                    value="SENT"
+                  >
+                    Sent
+                  </option>
+                  <option
+                    class="option"
+                    value="SIGND"
+                  >
+                    Signed
+                  </option>
+                  <option
+                    class="option"
+                    value="UNREGD"
+                  >
+                    Unregistered
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="c4 col-xl-2"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="pr-0 col-auto"
+                >
+                  <button
+                    class="c5 Button Button--icon-only primary btn btn-primary"
+                    data-testid="search"
+                    id="search-button"
+                    title="search"
+                    type="submit"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+                <div
+                  class="col-auto"
+                >
+                  <button
+                    class="c5 Button Button--icon-only btn btn-info"
+                    data-testid="reset-button"
+                    id="reset-button"
+                    title="reset-button"
+                    type="reset"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div
+          class="table"
+          data-testid="documentsTable"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 177px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Document type
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  File name
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Upload date
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Uploaded by
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Status
+                  <div
+                    class="c6"
+                  >
+                    <svg
+                      class="c7"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      style="margin-bottom: -8px;"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 320l128-128 128 128z"
+                      />
+                    </svg>
+                    <svg
+                      class="c8"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 192l128 128 128-128z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Actions
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-rows-message"
+          >
+            No matching Documents found
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="align-self-center col-auto"
+          />
+          <div
+            class="ml-auto align-self-center col-auto"
+          />
+          <div
+            class="align-self-center col-auto"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="container"
+    />
+    <div
+      class="container"
+    />
+    <div
+      class="container"
+    />
+  </div>
+  .c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c8 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c7 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c5 {
+  float: right;
+  cursor: pointer;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  gap: 2.5rem;
+  padding: 0;
+}
+
+.c2 {
+  width: 100%;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 c2"
+    >
+      <div
+        class="c3 form-section"
+      >
+        <h2
+          class="c4"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="no-gutters justify-content-between row"
+              >
+                <div
+                  class="px-2 my-1 col-auto"
+                >
+                  Notes
+                </div>
+                <div
+                  class="my-1 col-auto"
+                />
+              </div>
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c5"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  collapse-notes
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="table"
+            data-testid="notesTable"
+            role="table"
+          >
+            <div
+              class="thead thead-light"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 112px;"
+              >
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Note
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 24 0 auto; min-width: 24px; width: 24px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Created date
+                    <div
+                      class="c6"
+                    >
+                      <svg
+                        class="c7"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="margin-bottom: -8px;"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 320l128-128 128 128z"
+                        />
+                      </svg>
+                      <svg
+                        class="c8"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 192l128 128 128-128z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Last updated by
+                    <div
+                      class="c6"
+                    >
+                      <svg
+                        class="c7"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="margin-bottom: -8px;"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 320l128-128 128 128z"
+                        />
+                      </svg>
+                      <svg
+                        class="c8"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 192l128 128 128-128z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="no-rows-message"
+            >
+              No matching Notes found
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="align-self-center col-auto"
+            />
+            <div
+              class="ml-auto align-self-center col-auto"
+            />
+            <div
+              class="align-self-center col-auto"
+            />
+          </div>
+          <div
+            class="container"
+          />
+          <div
+            class="container"
+          />
+          <div
+            class="container"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

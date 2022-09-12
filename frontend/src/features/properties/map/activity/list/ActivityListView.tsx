@@ -7,9 +7,10 @@ import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';
 import { orderBy } from 'lodash';
 import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from 'models/api/Activity';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import { SideBarContext } from '../../context/sidebarContext';
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
 import { ActivityResults } from './ActivityResults/ActivityResults';
@@ -47,6 +48,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   const [filters, setFilters] = React.useState<IActivityFilter>(
     defaultFilters ?? defaultActivityFilter,
   );
+  const { staleFile, setStaleFile } = useContext(SideBarContext);
   const { setModalProps, setDisplayModal } = useModalContext();
   const { hasClaim } = useKeycloakWrapper();
 
@@ -55,8 +57,11 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   }, [getFileActivities, fileId, fileType]);
 
   React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (activityResults === undefined || staleFile) {
+      fetchData();
+      setStaleFile(false);
+    }
+  }, [fetchData, staleFile, setStaleFile, activityResults]);
 
   const templateTypes =
     templateResponse?.map(
@@ -87,8 +92,8 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
           const keyName = sort[sortFields[0] as keyof Api_Activity];
           return orderBy(
             activityItems,
-            sortFields[0] === 'activityTemplateTypeCode'
-              ? 'activityTemplateTypeCode.description'
+            sortFields[0] === 'activityTemplate'
+              ? 'activityTemplate.activityTemplateTypeCode.description'
               : sortFields[0],
             keyName,
           );
@@ -106,6 +111,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
         activityTemplateId: activityTypeId,
         description: '',
         activityTemplate: {},
+        activityDataJson: '',
       },
     };
     addFileActivity(fileType, fileActivity).then(async () => {

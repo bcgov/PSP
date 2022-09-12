@@ -6,6 +6,7 @@ import { FileTypes } from 'constants/fileTypes';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks';
 import { mockActivitiesResponse } from 'mocks/mockActivities';
+import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   render,
@@ -15,6 +16,7 @@ import {
   waitForElementToBeRemoved,
 } from 'utils/test-utils';
 
+import { SideBarContextProvider } from '../../context/sidebarContext';
 import ActivityListView, { IActivityListViewProps } from './ActivityListView';
 
 const mockAxios = new MockAdapter(axios);
@@ -31,12 +33,17 @@ jest.mock('@react-keycloak/web');
 describe('Activity List View', () => {
   const setup = (renderOptions?: RenderOptions & Partial<IActivityListViewProps>) => {
     // render component under test
-    const component = render(<ActivityListView fileId={1} fileType={FileTypes.Research} />, {
-      ...renderOptions,
-      store: storeState,
-      history: history,
-      claims: renderOptions?.claims ?? [],
-    });
+    const component = render(
+      <SideBarContextProvider>
+        <ActivityListView fileId={1} fileType={FileTypes.Research} />
+      </SideBarContextProvider>,
+      {
+        ...renderOptions,
+        store: storeState,
+        history: history,
+        claims: renderOptions?.claims ?? [],
+      },
+    );
 
     return {
       ...component,

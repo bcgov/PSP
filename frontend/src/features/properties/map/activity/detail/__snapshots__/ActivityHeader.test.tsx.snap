@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivityHeader component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="no-gutters pl-4 pr-4 row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-5"
+        >
+          <div
+            class="flex-nowrap row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label>
+                File:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-auto"
+            >
+              <strong>
+                R-Bubba1 - Bubba BBQ Whirled
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-right col"
+        >
+          Created: 
+          <strong>
+            Jan 1, 0001
+          </strong>
+           by 
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon"
+            id="userNameTooltip"
+          >
+            <span
+              class="c0"
+            >
+              USER
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-5"
+        />
+        <div
+          class="text-right col"
+        >
+          Last updated: 
+          <strong>
+            Feb 1, 0001
+          </strong>
+           by 
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon"
+            id="userNameTooltip"
+          >
+            <span
+              class="c0"
+            >
+              USER
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col-5"
+        />
+        <div
+          class="col"
+        >
+          <div
+            class="justify-content-end row"
+          >
+            <div
+              class="pr-0 text-left col-auto"
+            >
+              <label>
+                Status:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-auto"
+            >
+              <strong>
+                Not Started
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c1"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

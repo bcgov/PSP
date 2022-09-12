@@ -193,10 +193,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c5 {
-  border-radius: 0.5rem;
-}
-
 .c12 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -224,6 +220,10 @@ exports[`Lease and License List View matches snapshot 1`] = `
 .c13 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c5 {
+  border-radius: 0.5rem;
 }
 
 .c9 {

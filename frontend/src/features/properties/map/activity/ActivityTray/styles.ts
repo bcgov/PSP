@@ -19,7 +19,7 @@ export const ActivityTrayPage = styled.div`
   a {
     font-size: 1.7rem;
   }
-  min-width: 92rem;
+  padding: 1.5rem;
 `;
 
 export const CloseButton = styled(Button)`

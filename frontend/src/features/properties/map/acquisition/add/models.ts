@@ -25,7 +25,7 @@ export class AcquisitionForm {
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
-      acquisitionFileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
+      fileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
@@ -51,7 +51,7 @@ export class AcquisitionForm {
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
-    newForm.acquisitionFileStatusType = fromTypeCode(model.acquisitionFileStatusTypeCode);
+    newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
     newForm.region = fromTypeCode(model.regionCode)?.toString();

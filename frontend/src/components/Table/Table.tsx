@@ -245,6 +245,14 @@ export interface IIdentifiedObject {
   id?: number | string;
 }
 
+const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>(
+  props: React.PropsWithChildren<TableProps<T, TFilter>>,
+) => {
+  if (props.hideToolbar === true && props.manualPagination === false) {
+    throw Error('When hiding pagination toolbar manual pagination must be true.');
+  }
+};
+
 /**
  * A table component. Supports sorting, filtering and paging.
  * Uses `react-table` to handle table logic.
@@ -263,6 +271,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     }),
     [],
   );
+  validateProps(props);
 
   const {
     clickableTooltip,
@@ -284,10 +293,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   } = props;
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
-  const pageCount =
-    pageSizeProp !== undefined
-      ? externalPageCount ?? Math.ceil(totalItems / pageSizeProp)
-      : undefined;
+  const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? 10));
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
 
   const dataRef = React.useRef<T[]>(data ?? []);
@@ -323,7 +329,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             pageSize: pageSizeProp,
           }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
-      manualPagination: manualPagination ?? true, // Tell the usePagination hook
+      manualPagination: props.hideToolbar === true ?? manualPagination ?? true, // Tell the usePagination hook
       manualSortBy: manualSortBy,
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
@@ -703,6 +709,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     externalSelectedRows,
     selectedFlatRows,
     page,
+    pageIndex,
   ]);
 
   var canShowTotals: boolean = false;

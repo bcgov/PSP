@@ -14,6 +14,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       description: 'Draft',
     },
     description: 'Survey Activity',
+    activityDataJson: '',
   },
   {
     activityTemplate: {
@@ -28,6 +29,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       description: 'Draft',
     },
     description: 'General Activity',
+    activityDataJson: '',
   },
   {
     activityTemplate: {
@@ -42,15 +44,21 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       description: 'Draft',
     },
     description: 'Site Visit Activity',
+    activityDataJson: '',
   },
 ];
 
-export const getMockActivityResponse = () => ({
+export const getMockActivityResponse: () => Api_Activity = () => ({
   id: 2,
   activityTemplateId: 1,
   activityTemplateTypeCode: {
     id: 'GENERAL',
     description: 'General',
+    isDisabled: false,
+  },
+  activityStatusTypeCode: {
+    id: 'NOSTART',
+    description: 'Not Started',
     isDisabled: false,
   },
   activityTemplate: {
@@ -67,6 +75,8 @@ export const getMockActivityResponse = () => ({
     rowVersion: 1,
   },
   appCreateTimestamp: '0001-01-01T00:00:00',
-  appLastUpdateTimestamp: '0001-01-01T00:00:00',
+  appLastUpdateTimestamp: '0001-02-01T00:00:00',
   rowVersion: 0,
+  description: 'test description',
+  activityDataJson: '{}',
 });

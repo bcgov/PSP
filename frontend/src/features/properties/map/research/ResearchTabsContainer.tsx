@@ -5,11 +5,11 @@ import {
   ResearchTabs,
   TabResearchView,
 } from 'features/mapSideBar/tabs/ResearchTabs';
-import ActivityListView from 'features/research/activities/list/ActivityListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
 
+import { ActivityListView } from '../activity/list/ActivityListView';
 import ResearchSummaryView from './detail/ResearchSummaryView';
 import { FormKeys } from './FormKeys';
 

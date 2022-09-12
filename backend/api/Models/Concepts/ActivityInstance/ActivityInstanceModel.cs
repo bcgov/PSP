@@ -23,6 +23,11 @@ namespace Pims.Api.Models.Concepts
         public int ActivityTemplateId { get; set; }
 
         /// <summary>
+        /// get/set - JSON form data .
+        /// </summary>
+        public string ActivityDataJson { get; set; }
+
+        /// <summary>
         /// get/set - Activity Template Id .
         /// </summary>
         public TypeModel<string> ActivityTemplateTypeCode { get; set; }

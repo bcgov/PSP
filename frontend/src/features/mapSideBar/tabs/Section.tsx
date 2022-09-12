@@ -6,6 +6,7 @@ import { ArrowDropDownIcon, ArrowDropUpIcon } from './SectionStyles';
 
 interface SectionProps {
   header?: React.ReactNode;
+  title?: string;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
 }
@@ -13,6 +14,7 @@ interface SectionProps {
 export const Section: React.FC<SectionProps> = ({
   header,
   children,
+  title,
   isCollapsable,
   initiallyExpanded,
 }) => {
@@ -26,6 +28,7 @@ export const Section: React.FC<SectionProps> = ({
             <Col xs="1">
               {isCollapsable && isCollapsed && (
                 <ArrowDropDownIcon
+                  title={`expand-${title ?? 'section'}`}
                   onClick={() => {
                     setIsCollapsed(!isCollapsed);
                   }}
@@ -33,6 +36,7 @@ export const Section: React.FC<SectionProps> = ({
               )}
               {isCollapsable && !isCollapsed && (
                 <ArrowDropUpIcon
+                  title={`collapse-${title ?? 'section'}`}
                   onClick={() => {
                     setIsCollapsed(!isCollapsed);
                   }}

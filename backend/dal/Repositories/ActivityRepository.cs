@@ -111,6 +111,8 @@ namespace Pims.Dal.Repositories
             var instance = this.Context.PimsActivityInstances
                 .Include(a => a.PimsResearchActivityInstances)
                 .Include(a => a.PimsAcquisitionActivityInstances)
+                .Include(a => a.PimsActivityInstanceDocuments)
+                .Include(a => a.PimsActivityInstanceNotes)
                 .FirstOrDefault(x => x.ActivityInstanceId == activityId) ?? throw new KeyNotFoundException();
 
             foreach(var acquisitionActivityInstance in instance.PimsAcquisitionActivityInstances)
@@ -121,6 +123,16 @@ namespace Pims.Dal.Repositories
             foreach (var researchActivityInstance in instance.PimsResearchActivityInstances)
             {
                 this.Context.PimsResearchActivityInstances.Remove(researchActivityInstance);
+            }
+
+            foreach (var activityDocument in instance.PimsActivityInstanceDocuments)
+            {
+                this.Context.PimsActivityInstanceDocuments.Remove(activityDocument);
+            }
+
+            foreach (var activityNote in instance.PimsActivityInstanceNotes)
+            {
+                this.Context.PimsActivityInstanceNotes.Remove(activityNote);
             }
 
             this.Context.PimsActivityInstances.Remove(instance);

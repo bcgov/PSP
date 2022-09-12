@@ -73,7 +73,7 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
                 documentStatusCode: documentStatusCode,
                 documentType: selectedDocumentType,
                 file: selectedFile,
-                documentMetadata: rest,
+                documentMetadata: Object.values(rest)?.length > 0 ? rest : [],
               };
 
               await props.onUploadDocument(request);

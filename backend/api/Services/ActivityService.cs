@@ -127,13 +127,13 @@ namespace Pims.Api.Services
             var activityDocuments = _documentService.GetActivityDocuments(activityId);
             foreach (PimsActivityInstanceDocument activityInstanceDocument in activityDocuments)
             {
-                _documentService.DeleteActivityDocumentAsync(activityInstanceDocument);
+                _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
             }
 
             var notes = _noteService.GetNotes(Constants.NoteType.Activity, activityId);
             foreach (PimsNote note in notes)
             {
-                _noteService.DeleteNote(Constants.NoteType.Activity, note.Id);
+                _noteService.DeleteNote(Constants.NoteType.Activity, note.Id, false);
             }
 
             _activityRepository.Delete(activityId);

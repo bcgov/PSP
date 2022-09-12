@@ -167,6 +167,45 @@ exports[`Activity List View renders as expected 1`] = `
   transition: all 0.3s ease-in;
 }
 
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c8 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c7 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
 .c12.c12.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -199,45 +238,6 @@ exports[`Activity List View renders as expected 1`] = `
 .c12.c12.btn:focus .text {
   display: inline;
   line-height: 2rem;
-}
-
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-left: 0.5rem;
-}
-
-.c8 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c7 {
-  width: 1.6rem;
-  height: 1.6rem;
 }
 
 .c4 {

@@ -1138,7 +1138,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c0.btn {
+  .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1168,49 +1168,49 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c0.btn:hover {
+.c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c0.btn:focus {
+.c1.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c0.btn.btn-primary {
+.c1.btn.btn-primary {
   border: none;
 }
 
-.c0.btn.btn-secondary {
+.c1.btn.btn-secondary {
   background: none;
 }
 
-.c0.btn.btn-info {
+.c1.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c0.btn.btn-info:hover,
-.c0.btn.btn-info:active,
-.c0.btn.btn-info:focus {
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
   background: none;
 }
 
-.c0.btn.btn-light {
+.c1.btn.btn-light {
   border: none;
 }
 
-.c0.btn.btn-dark {
+.c1.btn.btn-dark {
   border: none;
 }
 
-.c0.btn.btn-link {
+.c1.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -1230,9 +1230,9 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c0.btn.btn-link:hover,
-.c0.btn.btn-link:active,
-.c0.btn.btn-link:focus {
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -1241,14 +1241,14 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c0.btn.btn-link:disabled,
-.c0.btn.btn-link.disabled {
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c0.btn:disabled,
-.c0.btn:disabled:hover {
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1259,29 +1259,37 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c0.Button .Button__icon {
+.c1.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c0.Button--icon-only:focus {
+.c1.Button--icon-only:focus {
   outline: none;
 }
 
-.c0.Button--icon-only .Button__icon {
+.c1.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c0 {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  background: white;
+  z-index: 10;
 }
 
 <div
     class=""
   >
     <div
-      class="justify-content-end mt-auto no-gutters pt-3 row"
+      class="c0 justify-content-end mt-auto no-gutters row"
     >
       <div
         class="pr-4 col-auto"
       >
         <button
-          class="c0 Button btn btn-secondary"
+          class="c1 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -1295,7 +1303,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
         class="col-auto"
       >
         <button
-          class="c0 Button btn btn-primary"
+          class="c1 Button btn btn-primary"
           type="button"
         >
           <div

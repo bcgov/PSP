@@ -209,7 +209,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieves the list of document types.
+        /// Retrieves the list metadata for a document type.
         /// </summary>
         [HttpGet("storage/types/{mayanDocumentTypeId}/metadata")]
         [HasPermission(Permissions.DocumentAdd)]

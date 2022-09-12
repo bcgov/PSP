@@ -1097,105 +1097,10 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
           </a>
         </li>
         <li
-          class="page-item"
+          class="page-item disabled"
         >
           <a
-            aria-label="Page 2"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            2
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-label="Page 3"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            3
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-label="Page 4"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            4
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-label="Page 5"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            5
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-label="Page 6"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            6
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            ...
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-label="Page 9"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            9
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-label="Page 10"
-            class="page-link"
-            role="button"
-            tabindex="0"
-          >
-            10
-          </a>
-        </li>
-        <li
-          class="page-item"
-        >
-          <a
-            aria-disabled="false"
+            aria-disabled="true"
             aria-label="Next page"
             class="page-link"
             rel="next"

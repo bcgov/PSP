@@ -34,7 +34,7 @@ namespace Pims.Api.Services
 
         Task<bool> DeleteDocumentAsync(PimsDocument document);
 
-        Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument);
+        Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true);
 
         Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest);
 
