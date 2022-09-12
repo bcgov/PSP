@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -119,7 +120,31 @@ namespace Pims.Api.Services
             return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
         }
 
-        public void Delete(long activityId)
+        public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance model)
+        {
+            _logger.LogInformation("Updating activity instance research properties ...", model.PimsActInstPropRsrchFiles);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityEdit);
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
+
+            var newActivityInstance = _activityRepository.UpdateActivityResearchProperties(model);
+            _activityRepository.CommitTransaction();
+            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+        }
+
+        public PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance model)
+        {
+            _logger.LogInformation("Updating activity instance acquisition properties ...", model.PimsActInstPropAcqFiles);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityEdit);
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
+
+            var newActivityInstance = _activityRepository.UpdateActivityAcquisitionProperties(model);
+            _activityRepository.CommitTransaction();
+            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+        }
+
+        public async Task Delete(long activityId)
         {
             _logger.LogInformation("Deleting activity instance ...", activityId);
             this.User.ThrowIfNotAuthorized(Permissions.ActivityDelete);
@@ -127,7 +152,7 @@ namespace Pims.Api.Services
             var activityDocuments = _documentService.GetActivityDocuments(activityId);
             foreach (PimsActivityInstanceDocument activityInstanceDocument in activityDocuments)
             {
-                _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
+                await _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
             }
 
             var notes = _noteService.GetNotes(Constants.NoteType.Activity, activityId);

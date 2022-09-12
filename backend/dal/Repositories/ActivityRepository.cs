@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -41,6 +42,8 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsActivityInstances
                 .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
                 .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+                .Include(a => a.PimsActInstPropAcqFiles)
+                .Include(a => a.PimsActInstPropRsrchFiles)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.ActivityInstanceId == id) ?? throw new KeyNotFoundException();
         }
@@ -87,22 +90,26 @@ namespace Pims.Dal.Repositories
         public PimsActivityInstance Update(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
-            GetById(instance.ActivityInstanceId);
-            if (instance.ActivityTemplate != null)
-            {
-                Context.Entry(instance.ActivityTemplate).State = EntityState.Unchanged;
-            }
-            foreach (PimsActivityInstanceDocument activityInstanceDocument in instance.PimsActivityInstanceDocuments)
-            {
-                Context.Entry(activityInstanceDocument).State = EntityState.Unchanged;
-            }
+            var currentActivity = this.Context.PimsActivityInstances
+                .FirstOrDefault(x => x.ActivityInstanceId == instance.Id) ?? throw new KeyNotFoundException();
+            this.Context.Entry(currentActivity).CurrentValues.SetValues(instance);
 
-            foreach (PimsActivityInstanceNote activityInstanceNote in instance.PimsActivityInstanceNotes)
-            {
-                Context.Entry(activityInstanceNote).State = EntityState.Unchanged;
-            }
+            return instance;
+        }
 
-            this.Context.PimsActivityInstances.Update(instance);
+        public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance)
+        {
+            instance.ThrowIfNull(nameof(instance));
+            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropRsrchFile>(a => a.PimsActInstPropRsrchFiles, instance.Id, instance.PimsActInstPropRsrchFiles.ToArray(), false);
+
+            return instance;
+        }
+
+        public PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance instance)
+        {
+            instance.ThrowIfNull(nameof(instance));
+            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropRsrchFile>(a => a.PimsActInstPropRsrchFiles, instance.Id, instance.PimsActInstPropRsrchFiles.ToArray(), false);
+
             return instance;
         }
 
@@ -113,6 +120,8 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PimsAcquisitionActivityInstances)
                 .Include(a => a.PimsActivityInstanceDocuments)
                 .Include(a => a.PimsActivityInstanceNotes)
+                .Include(a => a.PimsActInstPropAcqFiles)
+                .Include(a => a.PimsActInstPropRsrchFiles)
                 .FirstOrDefault(x => x.ActivityInstanceId == activityId) ?? throw new KeyNotFoundException();
 
             foreach(var acquisitionActivityInstance in instance.PimsAcquisitionActivityInstances)
@@ -133,6 +142,16 @@ namespace Pims.Dal.Repositories
             foreach (var activityNote in instance.PimsActivityInstanceNotes)
             {
                 this.Context.PimsActivityInstanceNotes.Remove(activityNote);
+            }
+
+            foreach (var propAcqFile in instance.PimsActInstPropAcqFiles)
+            {
+                this.Context.PimsActInstPropAcqFiles.Remove(propAcqFile);
+            }
+
+            foreach (var propRsrchFile in instance.PimsActInstPropRsrchFiles)
+            {
+                this.Context.PimsActInstPropRsrchFiles.Remove(propRsrchFile);
             }
 
             this.Context.PimsActivityInstances.Remove(instance);

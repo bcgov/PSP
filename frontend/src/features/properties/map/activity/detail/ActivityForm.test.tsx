@@ -18,6 +18,7 @@ const mockAxios = new MockAdapter(axios);
 
 jest.mock('@react-keycloak/web');
 const onSave = jest.fn();
+const onEditRelatedProperties = jest.fn();
 const setEditMode = jest.fn();
 
 describe('ActivityForm test', () => {
@@ -29,6 +30,7 @@ describe('ActivityForm test', () => {
         activity={renderOptions?.activity ?? { ...getMockActivityResponse(), id: 2 }}
         editMode={renderOptions?.editMode ?? false}
         setEditMode={renderOptions?.setEditMode ?? setEditMode}
+        onEditRelatedProperties={onEditRelatedProperties}
         onSave={onSave}
       />,
       {

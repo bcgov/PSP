@@ -23,5 +23,10 @@ export const putActivity = (activity: Api_Activity) =>
     `/activities/${activity.id ?? 0}`,
     activity,
   );
+export const putActivityProperties = (fileType: FileTypes, activity: Api_Activity) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_Activity>(
+    `/activities/${fileType}/activity/${activity.id ?? 0}/properties`,
+    activity,
+  );
 export const deleteActivity = (activityId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).delete<boolean>(`/activities/${activityId}`);

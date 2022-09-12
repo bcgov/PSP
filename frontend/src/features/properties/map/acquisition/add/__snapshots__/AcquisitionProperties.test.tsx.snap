@@ -748,7 +748,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
                           <div>
                             <input
                               data-testid="selectrow-parent"
-                              disabled=""
                               style="cursor: pointer;"
                               title="Click to deselect all."
                               type="checkbox"

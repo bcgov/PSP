@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
@@ -41,6 +43,16 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Activity Status Type Code .
         /// </summary>
         public TypeModel<string> ActivityStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The list of properties that are part of this research file and this activity.
+        /// </summary>
+        public IList<PimsActInstPropFile> ActInstPropRsrchFiles { get; set; }
+
+        /// <summary>
+        /// get/set - The list of properties that are part of this acquisition file and this activity.
+        /// </summary>
+        public IList<PimsActInstPropFile> ActInstPropAcqFiles { get; set; }
         #endregion
     }
 }

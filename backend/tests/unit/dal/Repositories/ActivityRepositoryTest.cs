@@ -187,6 +187,31 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void Delete_Relationships_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var activity = EntityHelper.CreateActivity(1);
+            activity.PimsAcquisitionActivityInstances = new List<PimsAcquisitionActivityInstance>() { new PimsAcquisitionActivityInstance() };
+            activity.PimsResearchActivityInstances = new List<PimsResearchActivityInstance>() { new PimsResearchActivityInstance() };
+            activity.PimsActInstPropAcqFiles = new List<PimsActInstPropAcqFile>() { new PimsActInstPropAcqFile() };
+            activity.PimsActInstPropRsrchFiles = new List<PimsActInstPropRsrchFile>() { new PimsActInstPropRsrchFile() };
+            activity.PimsActivityInstanceDocuments = new List<PimsActivityInstanceDocument>() { new PimsActivityInstanceDocument() };
+            activity.PimsActivityInstanceNotes = new List<PimsActivityInstanceNote>() { new PimsActivityInstanceNote() };
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.Delete(activity.ActivityInstanceId);
+
+            // Assert
+            result.Should().Be(true);
+        }
+
+        [Fact]
         public void Delete_KeyNotFound()
         {
             // Arrange

@@ -14,6 +14,7 @@ export interface IActivityFormProps {
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
+  onEditRelatedProperties: () => void;
 }
 
 export const ActivityForm: React.FunctionComponent<IActivityFormProps> = ({
@@ -22,6 +23,7 @@ export const ActivityForm: React.FunctionComponent<IActivityFormProps> = ({
   editMode,
   setEditMode,
   onSave,
+  onEditRelatedProperties,
 }) => {
   const { setModalProps, setDisplayModal } = useModalContext();
 
@@ -62,6 +64,7 @@ export const ActivityForm: React.FunctionComponent<IActivityFormProps> = ({
             file={file}
             editMode={editMode}
             setEditMode={setEditMode}
+            onEditRelatedProperties={onEditRelatedProperties}
           />
           {editMode && (
             <SidebarFooter

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using MapsterMapper;
 using Moq;
@@ -256,7 +257,7 @@ namespace Pims.Dal.Test.Services
 
         #region DeleteActivity
         [Fact]
-        public void DeleteActivity_Success()
+        public async void DeleteActivity_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -274,7 +275,7 @@ namespace Pims.Dal.Test.Services
             repository.Setup(x => x.Delete(It.IsAny<long>()));
 
             // Act
-            service.Delete(1);
+            await service.Delete(1);
 
             // Assert
             repository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
@@ -283,7 +284,7 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
-        public void DeleteActivity_NoPermission()
+        public async void DeleteActivity_NoPermission()
         {
             // Arrange
             var helper = new TestHelper();
@@ -295,7 +296,7 @@ namespace Pims.Dal.Test.Services
             repository.Setup(x => x.Delete(It.IsAny<long>()));
 
             // Act
-            Action act = () => service.Delete(1);
+            Func<Task> act = async () => await service.Delete(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
