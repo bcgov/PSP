@@ -2,7 +2,6 @@ import { Input } from 'components/common/form';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { StyledNoData } from './commonStyles';
