@@ -69,7 +69,7 @@ namespace Pims.Api.Services
             return documentActivityRespository.GetAllByActivity(activityId);
         }
 
-        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = false)
+        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting PIMS document for single activity");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
