@@ -523,7 +523,6 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
-        public void DeleteActivity_NoPermission()
         {
             // Arrange
             var helper = new TestHelper();

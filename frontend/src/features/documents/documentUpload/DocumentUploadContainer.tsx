@@ -2,7 +2,6 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
