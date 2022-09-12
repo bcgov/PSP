@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
-    <Version>2.2.0-35.27</Version>
-    <Version>2.2.0-35.27</Version>
+    <Version>2.2.0-35.29</Version>
+    <Version>2.2.0-35.29</Version>
     <AssemblyVersion>2.2.0.35</AssemblyVersion>
 
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

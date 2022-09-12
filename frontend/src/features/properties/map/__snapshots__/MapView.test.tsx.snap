@@ -352,6 +352,7 @@ exports[`MapView Renders the map 1`] = `
   -ms-flex-flow: column;
   flex-flow: column;
   min-width: 93rem;
+  max-width: 93rem;
   margin-left: -93rem;
   padding: 1.4rem 1.6rem;
   padding-bottom: 2rem;
