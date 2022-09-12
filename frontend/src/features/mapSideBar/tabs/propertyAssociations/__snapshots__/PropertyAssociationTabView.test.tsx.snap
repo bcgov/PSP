@@ -130,6 +130,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>
+                expand-section
+              </title>
               <path
                 d="M0 0h24v24H0z"
                 fill="none"
@@ -349,6 +352,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>
+                expand-section
+              </title>
               <path
                 d="M0 0h24v24H0z"
                 fill="none"
@@ -434,6 +440,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>
+                expand-section
+              </title>
               <path
                 d="M0 0h24v24H0z"
                 fill="none"
@@ -653,6 +662,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>
+                expand-section
+              </title>
               <path
                 d="M0 0h24v24H0z"
                 fill="none"

@@ -1,8 +1,8 @@
 export const getMockResearchFile = () => ({
   id: 109,
-  name: 'fsdgsdf',
-  rfileNumber: 'R-109',
-  researchFileStatusTypeCode: {
+  fileName: 'fsdgsdf',
+  fileNumber: 'R-109',
+  fileStatusTypeCode: {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,

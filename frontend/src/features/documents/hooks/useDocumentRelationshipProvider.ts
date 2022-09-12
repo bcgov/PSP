@@ -39,7 +39,6 @@ export const useDocumentRelationshipProvider = () => {
       [getDocumentRelationship],
     ),
     requestName: 'retrieveDocumentRelationship',
-    onSuccess: useCallback(() => toast.success('Document relationship retrieved'), []),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

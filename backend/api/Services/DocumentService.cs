@@ -69,7 +69,7 @@ namespace Pims.Api.Services
             return documentActivityRespository.GetAllByActivity(activityId);
         }
 
-        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument)
+        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting PIMS document for single activity");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
@@ -78,12 +78,20 @@ namespace Pims.Api.Services
             if (existingActivityDocuments.Count == 1)
             {
                 documentActivityRespository.Delete(activityDocument);
-                return await DeleteDocumentAsync(activityDocument.Document);
+                var deletedDocumentFlag = await DeleteDocumentAsync(activityDocument.Document);
+                if(commitTransaction)
+                {
+                    documentActivityRespository.CommitTransaction();
+                }
+                return deletedDocumentFlag;
             }
             else
             {
                 documentActivityRespository.Delete(activityDocument);
-                documentActivityRespository.CommitTransaction();
+                if (commitTransaction)
+                {
+                    documentActivityRespository.CommitTransaction();
+                }
                 return true;
             }
         }
@@ -101,7 +109,7 @@ namespace Pims.Api.Services
 
                 // Save metadata of document
                 IList<Task<ExternalResult<DocumentMetadata>>> metadataTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
-                foreach (var metadata in uploadRequest.DocumentMetadata)
+                foreach (var metadata in uploadRequest?.DocumentMetadata ?? new List<DocumentMetadataUpdateModel>())
                 {
                     metadataTasks.Add(documentStorageRepository.CreateDocumentMetadataAsync(externalDocument.Id, metadata.MetadataTypeId, metadata.Value));
                 }

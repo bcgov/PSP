@@ -358,7 +358,11 @@ exports[`Document Results Table matches snapshot 1`] = `
       </div>
     </div>
   </div>
-  <div
+  .c0 {
+  margin-top: 0.3rem;
+}
+
+<div
     class="row"
   >
     <div
@@ -371,6 +375,74 @@ exports[`Document Results Table matches snapshot 1`] = `
     <div
       class="ml-auto align-self-center col-auto"
     />
+    <div
+      class="align-self-center col-auto"
+    >
+      <div>
+        <div
+          class="Menu-root"
+        >
+          <div
+            class="Menu-button"
+          >
+            <div
+              style="display: flex;"
+            >
+              <span
+                class="c0"
+              >
+                Show
+              </span>
+              <input
+                class="form-control form-control-sm"
+                style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                type="number"
+                value="10"
+              />
+              <span
+                class="c0"
+              >
+                Entries
+              </span>
+            </div>
+          </div>
+          <div
+            class="Menu-items"
+            style="width: 10.0rem;"
+          >
+            <div
+              class="Menu-options scrollable list-group"
+            >
+              <div
+                class="Menu-item list-group-item"
+              >
+                5
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                10
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                20
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                50
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                100
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="align-self-center col-auto"
     >

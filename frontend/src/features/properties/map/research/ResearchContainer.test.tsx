@@ -8,6 +8,7 @@ import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, waitForElementToBeRemoved } from 'utils/test-utils';
 
+import { SideBarContextProvider } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 
 const history = createMemoryHistory();
@@ -29,14 +30,19 @@ const onClose = jest.fn();
 describe('ResearchContainer component', () => {
   // render component under test
   const setup = (props: Partial<IResearchContainerProps>, renderOptions: RenderOptions = {}) => {
-    const utils = render(<ResearchContainer researchFileId={1} onClose={onClose} />, {
-      ...renderOptions,
-      store: {
-        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+    const utils = render(
+      <SideBarContextProvider>
+        <ResearchContainer researchFileId={1} onClose={onClose} />
+      </SideBarContextProvider>,
+      {
+        ...renderOptions,
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+        history,
+        claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD],
       },
-      history,
-      claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD],
-    });
+    );
 
     return {
       ...utils,

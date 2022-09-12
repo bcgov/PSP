@@ -17,7 +17,7 @@ export class ResearchForm {
   public toApi(): Api_ResearchFile {
     return {
       id: this.id,
-      name: this.name,
+      fileName: this.name,
       researchProperties: this.properties.map<Api_ResearchFileProperty>(x => {
         return {
           id: x.researchFilePropertyId,
@@ -34,7 +34,7 @@ export class ResearchForm {
   public static fromApi(model: Api_ResearchFile): ResearchForm {
     const newForm = new ResearchForm();
     newForm.id = model.id;
-    newForm.name = model.name || '';
+    newForm.name = model.fileName || '';
     newForm.properties = model.researchProperties?.map(x => PropertyForm.fromApi(x)) || [];
     newForm.rowVersion = model.rowVersion;
 

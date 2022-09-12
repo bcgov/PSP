@@ -3,24 +3,9 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
-    public class AcquisitionFileModel : BaseAppModel
+    public class AcquisitionFileModel : FileModel
     {
         #region Properties
-
-        /// <summary>
-        /// get/set - The model id.
-        /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The acquisition file number.
-        /// </summary>
-        public string FileNumber { get; set; }
-
-        /// <summary>
-        /// get/set - The acquisition file name.
-        /// </summary>
-        public string FileName { get; set; }
 
         /// <summary>
         /// get/set - The ministry project number.

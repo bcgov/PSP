@@ -13,7 +13,7 @@ export const mockAcquisitionFileResponse = (
   ministryProjectName: 'Hwy 14 improvements',
   assignedDate: '2022-06-27T00:00:00',
   deliveryDate: '2022-07-29T00:00:00',
-  acquisitionFileStatusTypeCode: {
+  fileStatusTypeCode: {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,

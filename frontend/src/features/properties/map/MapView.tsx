@@ -17,6 +17,7 @@ import { pidParser } from 'utils';
 
 import Map from '../../../components/maps/leaflet/Map';
 import ActivityRouter from './ActivityRouter';
+import { SideBarContextProvider } from './context/sidebarContext';
 import MapActionWindow from './MapActionWindow';
 import MapSideBar from './MapSideBar';
 
@@ -72,14 +73,16 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
         {({ cursor }) => (
           <PropertyContextProvider>
             <StyleMapView data-test="map-view" className={clsx(cursor)}>
-              <MapSideBar
-                showSideBar={showSideBar}
-                setShowSideBar={setShowSideBar}
-                onZoom={onZoom}
-              />
-              <MapActionWindow showWindow={showActionBar}>
-                <ActivityRouter setShowActionBar={setShowActionBar} />
-              </MapActionWindow>
+              <SideBarContextProvider>
+                <MapSideBar
+                  showSideBar={showSideBar}
+                  setShowSideBar={setShowSideBar}
+                  onZoom={onZoom}
+                />
+                <MapActionWindow showWindow={showActionBar}>
+                  <ActivityRouter setShowActionBar={setShowActionBar} />
+                </MapActionWindow>
+              </SideBarContextProvider>
               {!showActionBar && (
                 <FilterProvider>
                   <Map

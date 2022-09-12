@@ -162,16 +162,6 @@ exports[`ContactManagerView matches snapshot 1`] = `
   flex-shrink: 0;
 }
 
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c8 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -199,6 +189,16 @@ exports[`ContactManagerView matches snapshot 1`] = `
 .c9 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c1.form-group {

@@ -150,3 +150,19 @@ export const StyledAddButton = styled(Button)`
     background-color: ${props => props.theme.css.completedColor};
   }
 `;
+
+export const StyledSectionAddButton = styled(StyledAddButton)`
+  && {
+    display: inline-block;
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+export const StyledDivider = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+`;

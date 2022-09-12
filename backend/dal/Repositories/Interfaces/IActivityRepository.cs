@@ -11,6 +11,8 @@ namespace Pims.Dal.Repositories
 
         IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId);
 
+        IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId);
+
         PimsActivityInstance Add(PimsActivityInstance instance);
 
         PimsActivityInstance Update(PimsActivityInstance instance);

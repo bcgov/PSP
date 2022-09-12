@@ -31,7 +31,6 @@ export const DocumentResults: React.FunctionComponent<IDocumentResultProps> = ({
     <Table<Api_Document>
       name="documentsTable"
       manualSortBy={false}
-      lockPageSize={true}
       manualPagination={false}
       totalItems={results.length}
       columns={columns}

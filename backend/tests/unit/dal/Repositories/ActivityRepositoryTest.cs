@@ -69,7 +69,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
 
             var template = EntityHelper.CreateActivityTemplate(1);
             var activity = EntityHelper.CreateActivity(id: 1, template: template);
@@ -110,7 +110,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteEdit);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityEdit);
 
             var activity = EntityHelper.CreateActivity(1);
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
