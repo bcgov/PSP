@@ -11,7 +11,7 @@ export interface IDocumentDetailModalProps {
   setDisplay?: (display: boolean) => void;
   pimsDocument?: Api_Document;
   onUpdateSuccess: () => void;
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalProps> = props => {
@@ -31,7 +31,6 @@ export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalPr
             relationshipType={props.relationshipType}
             pimsDocument={props.pimsDocument}
             onUpdateSuccess={props.onUpdateSuccess}
-            onCancel={props.onClose}
           />
         )
       }

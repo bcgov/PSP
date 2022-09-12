@@ -3,35 +3,31 @@ import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { FormikProps } from 'formik';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import styled from 'styled-components';
+import { withNameSpace } from 'utils/formUtils';
 
-import { DocumentMetadataForm } from './ComposedDocument';
+import { StyledNoData } from './commonStyles';
+import { DocumentUpdateFormData, DocumentUploadFormData } from './ComposedDocument';
 
 export interface IDocumentMetadataViewProps {
-  mayanMetadata?: Api_Storage_DocumentTypeMetadataType[];
-  formikProps: FormikProps<DocumentMetadataForm>;
-  edit: boolean;
+  mayanMetadata: Api_Storage_DocumentTypeMetadataType[];
+  formikProps: FormikProps<DocumentUploadFormData> | FormikProps<DocumentUpdateFormData>;
 }
 
 export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataViewProps> = props => {
   return (
     <>
-      {props.mayanMetadata?.length === 0 && <StyledNoData>No additional data</StyledNoData>}
-      {props.mayanMetadata?.map(value => (
+      {props.mayanMetadata.length === 0 && <StyledNoData>No additional data</StyledNoData>}
+      {props.mayanMetadata.map(meta => (
         <SectionField
           labelWidth="4"
-          key={
-            props.edit
-              ? `document-metadata-${value.id}`
-              : `document-${value.metadata_type?.id}-metadata-${value.id}`
-          }
-          label={value.metadata_type?.label || ''}
-          required={value.required === true}
+          key={`document-metadata-${meta.metadata_type?.name}`}
+          label={meta.metadata_type?.label || ''}
+          required={meta.required === true}
         >
           <Input
-            data-testid={`metadata-input-${value.metadata_type?.label}` || ''}
-            field={(props.edit ? value?.id?.toString() : value.metadata_type?.id?.toString()) || ''}
-            required={value.required === true}
-            defaultValue={value.value}
+            data-testid={`metadata-input-${meta.metadata_type?.name}` || ''}
+            field={withNameSpace('documentMetadata', meta.metadata_type?.id || '')}
+            required={meta.required === true}
           />
         </SectionField>
       ))}
@@ -41,8 +37,3 @@ export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataView
     </>
   );
 };
-
-const StyledNoData = styled.div`
-  text-align: center;
-  font-style: italic;
-`;

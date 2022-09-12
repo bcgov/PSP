@@ -83,18 +83,16 @@ describe('Document Results Table', () => {
 
   it('displays document delete button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId, container } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
 
-    console.log(container.outerHTML);
     const deleteButtons = await getAllByTestId('document-delete-button');
     expect(deleteButtons[0]).toBeVisible();
   });
 
   it('displays document delete button', async () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
-    const { getAllByTestId, container } = setup({ results: mockDocumentsResponse() });
+    const { getAllByTestId } = setup({ results: mockDocumentsResponse() });
 
-    console.log(container.outerHTML);
     const deleteButtons = await getAllByTestId('document-delete-button');
     expect(deleteButtons[0]).toBeVisible();
   });

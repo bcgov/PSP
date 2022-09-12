@@ -1,6 +1,10 @@
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import styled from 'styled-components';
 
+export const StyledContainer = styled.div`
+  padding: 1rem;
+`;
+
 export const ListPage = styled.div`
   display: flex;
   flex-direction: column;
