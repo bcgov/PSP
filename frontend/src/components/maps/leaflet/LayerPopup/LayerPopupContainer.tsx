@@ -11,7 +11,7 @@ import { LayerPopupTitle } from './styles';
 export interface ILayerPopupContainerProps {
   layerPopup: LayerPopupInformation;
   onClose?: () => void;
-  onViewPropertyInfo: (pid?: string | null) => void;
+  onViewPropertyInfo: (pid?: string | null, id?: number) => void;
 }
 
 export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
@@ -26,6 +26,8 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
 
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;
+  // Attempt to get the id field, the id will be populated if the user clicked on a lat/lng that belongs to an existing PIMS Property Boundary.
+  const id = layerPopup?.pimsProperty?.properties?.PROPERTY_ID;
   // open/close map popup fly-out menu
   const [showFlyout, setShowFlyout] = useState(false);
   const openFlyout = useCallback(() => setShowFlyout(true), []);
@@ -33,7 +35,7 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
 
   // bubble up the non-inventory property - based on their PID
   const handleViewPropertyInfo = () => {
-    onViewPropertyInfo(pid);
+    onViewPropertyInfo(pid, id);
   };
 
   const handleCreateResearchFile = () => {

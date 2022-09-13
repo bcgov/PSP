@@ -31,6 +31,7 @@ export type LayerPopupInformation = {
    * {ADMIN_AREA_SQFT: (data: any) => `${data.ADMIN_AREA_SQFT} ft^2`}
    */
   config: PopupContentConfig;
+  pimsProperty?: Feature;
 };
 
 export interface ILayerPopupProps {
