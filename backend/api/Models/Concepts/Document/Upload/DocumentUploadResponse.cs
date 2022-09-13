@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
@@ -13,9 +15,14 @@ namespace Pims.Api.Models.Concepts
         public DocumentRelationshipModel DocumentRelationship { get; set; }
 
         /// <summary>
-        /// get/set - External response from the file storage.
+        /// get/set - Response with document information from the file storage.
         /// </summary>
-        public ExternalResult<Mayan.Document.DocumentDetail> ExternalResult { get; set; }
+        public ExternalResult<Mayan.Document.DocumentDetail> DocumentExternalResult { get; set; }
+
+        /// <summary>
+        /// get/set - Response with metadata from the file storage.
+        /// </summary>
+        public List<ExternalResult<Mayan.Document.DocumentMetadata>> MetadataExternalResult { get; set; }
         #endregion
     }
 }

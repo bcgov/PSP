@@ -1,35 +1,36 @@
 import { Button } from 'components/common/buttons/Button';
 import { Select, SelectOption } from 'components/common/form';
-import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as API from 'constants/API';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { Api_DocumentType, Api_UploadRequest } from 'models/api/Document';
+import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ChangeEvent, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 
-import { DocumentMetadataForm } from '../ComposedDocument';
+import { StyledGreySection, StyledH2, StyledH3, StyledScrollable } from '../commonStyles';
+import { DocumentUploadFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
+import { StyledContainer } from '../list/styles';
 import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
 
-interface IDocumentUploadViewProps {
-  documentTypes: Api_DocumentType[];
+interface IDocumentUploadFormProps {
   isLoading: boolean;
-  mayanMetadata: Api_Storage_DocumentTypeMetadataType[];
+  initialDocumentType: string;
+  documentTypes: Api_DocumentType[];
+  mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
   onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
-  onUploadDocument: (uploadRequest: Api_UploadRequest) => void;
+  onUploadDocument: (uploadRequest: Api_DocumentUploadRequest) => void;
   onCancel: () => void;
 }
 
 /**
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
-const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = props => {
+const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = props => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const documentTypes = props.documentTypes.map<SelectOption>(x => {
     return { label: x.documentType || '', value: x.id?.toString() || '' };
@@ -37,12 +38,6 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
-
-  const initialFormState: DocumentMetadataForm = {
-    documentTypeId: '',
-    documentStatusCode:
-      documentStatusTypes.length > 0 ? documentStatusTypes[0]?.value?.toString() || '' : '',
-  };
 
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
     // handle validations
@@ -54,27 +49,27 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
     }
   };
 
+  const initialFormData = new DocumentUploadFormData(
+    documentStatusTypes[0]?.value?.toString(),
+    props.initialDocumentType,
+    props.mayanMetadataTypes,
+  );
+
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
-      <Formik<DocumentMetadataForm>
+      <Formik<DocumentUploadFormData>
         enableReinitialize
-        initialValues={initialFormState}
+        initialValues={initialFormData}
         validateOnMount={true}
-        validationSchema={getDocumentUploadYupSchema(props.mayanMetadata, false)}
-        onSubmit={async (values: DocumentMetadataForm, { setSubmitting }) => {
-          const { documentStatusCode, documentTypeId, ...rest } = values;
+        validationSchema={getDocumentUploadYupSchema(props.mayanMetadataTypes, false)}
+        onSubmit={async (values: DocumentUploadFormData, { setSubmitting }) => {
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
-              x => x.id === Number(documentTypeId),
+              x => x.id === Number(values.documentTypeId),
             );
             if (selectedDocumentType !== undefined) {
-              var request: Api_UploadRequest = {
-                documentStatusCode: documentStatusCode,
-                documentType: selectedDocumentType,
-                file: selectedFile,
-                documentMetadata: Object.values(rest)?.length > 0 ? rest : [],
-              };
+              var request = values.toRequestApi(selectedFile, selectedDocumentType);
 
               await props.onUploadDocument(request);
               setSubmitting(false);
@@ -129,9 +124,8 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
               <StyledH3>Details</StyledH3>
               <StyledScrollable>
                 <DocumentMetadataView
-                  mayanMetadata={props.mayanMetadata}
+                  mayanMetadata={props.mayanMetadataTypes}
                   formikProps={formikProps}
-                  edit={false}
                 ></DocumentMetadataView>
               </StyledScrollable>
             </StyledGreySection>
@@ -164,37 +158,4 @@ const DocumentUploadView: React.FunctionComponent<IDocumentUploadViewProps> = pr
   );
 };
 
-export default DocumentUploadView;
-
-const StyledContainer = styled.div`
-  padding: 1rem;
-`;
-
-const StyledGreySection = styled.div`
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.css.filterBackgroundColor};
-`;
-
-const StyledH2 = styled.h2`
-  font-weight: 700;
-  color: ${props => props.theme.css.primaryColor};
-`;
-const StyledH3 = styled.h3`
-  font-weight: 700;
-  font-size: 1.7rem;
-  text-align: left;
-
-  margin-top: 0rem;
-  padding-top: 0rem;
-
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.1rem ${props => props.theme.css.primaryColor};
-`;
-
-const StyledScrollable = styled(Scrollable)`
-  overflow-x: hidden;
-  max-height: 50rem;
-`;
+export default DocumentUploadForm;

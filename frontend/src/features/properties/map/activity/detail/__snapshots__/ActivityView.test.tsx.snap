@@ -642,14 +642,14 @@ exports[`ActivityView test Renders as expected 1`] = `
             class="row"
           >
             <div
-              class="col-lg-2"
+              class="col-lg-auto"
             >
               <label>
                 Filter by:
               </label>
             </div>
             <div
-              class="col-lg-4"
+              class="col-lg-3"
             >
               <div
                 class="form-group"
@@ -669,7 +669,7 @@ exports[`ActivityView test Renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="col-lg-4"
+              class="col-lg-3"
             >
               <div
                 class="form-group"
@@ -749,7 +749,24 @@ exports[`ActivityView test Renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c4 col-xl-2"
+              class="col-lg-3"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  data-testid="document-filename"
+                  id="input-filename"
+                  name="filename"
+                  placeholder="File name"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="c4 col-xl-auto"
             >
               <div
                 class="row"
