@@ -108,7 +108,7 @@ namespace Pims.Dal.Repositories
         public PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
-            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropRsrchFile>(a => a.PimsActInstPropRsrchFiles, instance.Id, instance.PimsActInstPropRsrchFiles.ToArray(), false);
+            this.Context.UpdateChild<PimsActivityInstance, long, PimsActInstPropAcqFile>(a => a.PimsActInstPropAcqFiles, instance.Id, instance.PimsActInstPropAcqFiles.ToArray(), false);
 
             return instance;
         }

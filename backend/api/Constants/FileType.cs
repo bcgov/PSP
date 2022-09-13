@@ -10,5 +10,7 @@ namespace Pims.Api.Constants
         Acquisition,
         [EnumMember(Value = "research")]
         Research,
+        [EnumMember(Value = "unknown")]
+        Unknown,
     }
 }

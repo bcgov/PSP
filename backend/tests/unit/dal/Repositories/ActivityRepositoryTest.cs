@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -101,6 +102,94 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             act.Should().Throw<KeyNotFoundException>();
+        }
+        #endregion
+
+        #region Get Activity By Research Id
+        [Fact]
+        public void GetByResearchId_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
+
+            var template = EntityHelper.CreateActivityTemplate(1);
+            var activity = EntityHelper.CreateActivity(id: 1, template: template);
+            activity.PimsResearchActivityInstances = new List<PimsResearchActivityInstance>() { new PimsResearchActivityInstance() { ActivityInstanceId = 1, ResearchFileId = 1 } };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByResearchFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.FirstOrDefault().Should().BeAssignableTo<PimsActivityInstance>();
+            result.FirstOrDefault().ActivityTemplateId.Should().Be(template.ActivityTemplateId);
+            result.FirstOrDefault().ActivityInstanceId.Should().Be(activity.ActivityInstanceId);
+        }
+
+        [Fact]
+        public void GetByResearchId_NotFound()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByResearchFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IList<PimsActivityInstance>>();
+            result.Should().BeEmpty();
+        }
+        #endregion
+
+        #region Get Activity By Acquisition Id
+        [Fact]
+        public void GetByAcquisitionId_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
+
+            var template = EntityHelper.CreateActivityTemplate(1);
+            var activity = EntityHelper.CreateActivity(id: 1, template: template);
+            activity.PimsAcquisitionActivityInstances = new List<PimsAcquisitionActivityInstance>() { new PimsAcquisitionActivityInstance() { ActivityInstanceId = 1, AcquisitionFileId = 1 } };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByAcquisitionFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.FirstOrDefault().Should().BeAssignableTo<PimsActivityInstance>();
+            result.FirstOrDefault().ActivityTemplateId.Should().Be(template.ActivityTemplateId);
+            result.FirstOrDefault().ActivityInstanceId.Should().Be(activity.ActivityInstanceId);
+        }
+
+        [Fact]
+        public void GetByAcquisitionId_NotFound()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByAcquisitionFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IList<PimsActivityInstance>>();
+            result.Should().BeEmpty();
         }
         #endregion
 
