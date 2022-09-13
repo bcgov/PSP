@@ -23,9 +23,10 @@ export interface IAddResearchContainerProps {
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
-    SelectedPropertyContext,
-  );
+  const {
+    selectedFileFeature: selectedResearchFeature,
+    setSelectedFileFeature: setSelectedResearchFeature,
+  } = React.useContext(SelectedPropertyContext);
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (!!selectedResearchFeature) {

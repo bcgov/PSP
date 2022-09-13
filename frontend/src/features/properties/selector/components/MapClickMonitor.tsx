@@ -46,7 +46,7 @@ export const mapFeatureToProperty = (
     longitude: selectedFeature?.properties?.CLICK_LAT_LNG?.lng ?? latLng.lng ?? undefined,
     planNumber: selectedFeature?.properties?.PLAN_NUMBER ?? undefined,
     address: 'placeholder', //todo: need alternate source for this
-    legalDescription: 'placeholder', //todo: need access to fully attributed parcelmap bc layer,
+    legalDescription: selectedFeature?.properties?.LEGAL_DESCRIPTION,
     region: selectedFeature?.properties?.REGION_NUMBER,
     regionName: selectedFeature?.properties?.REGION_NAME,
     district: selectedFeature?.properties?.DISTRICT_NUMBER,
