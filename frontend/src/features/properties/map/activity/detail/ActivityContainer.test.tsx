@@ -13,12 +13,14 @@ import { getMockResearchFile } from 'mocks/mockResearchFile';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity } from 'models/api/Activity';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import ActivityContainer, { IActivityContainerProps } from './ActivityContainer';
+import { IActivityFormProps } from './ActivityForm';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -27,9 +29,9 @@ const storeState = {
 jest.mock('@react-keycloak/web');
 const onClose = jest.fn();
 const mockAxios = new MockAdapter(axios);
-let viewProps: IActivityTrayProps | undefined;
+let viewProps: (IActivityFormProps & IActivityTrayProps) | undefined;
 
-const ActivityView = (props: IActivityTrayProps) => {
+const ActivityView = (props: IActivityFormProps & IActivityTrayProps) => {
   viewProps = props;
   return (
     <>
@@ -55,7 +57,7 @@ describe('Activity Container', () => {
         }}
       >
         <ActivityContainer
-          View={ActivityView}
+          View={ActivityView as FunctionComponent<IActivityTrayProps>}
           onClose={onClose}
           activityId={renderOptions?.activityId ?? 1}
         />

@@ -1,15 +1,20 @@
 import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { Input } from 'components/common/form';
 import { Claims } from 'constants/claims';
+import { FileTypes } from 'constants/fileTypes';
+import { useFormikContext } from 'formik';
 import { mockLookups } from 'mocks';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { getMockActivityResponse } from 'mocks/mockActivities';
 import { act } from 'react-test-renderer';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import * as Yup from 'yup';
 
 import { ActivityForm, IActivityFormProps } from './ActivityForm';
+import { ActivityModel } from './models';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -26,12 +31,19 @@ describe('ActivityForm test', () => {
     // render component under test
     const component = render(
       <ActivityForm
-        file={renderOptions?.file ?? { ...mockAcquisitionFileResponse(), id: 1 }}
+        file={
+          renderOptions?.file ?? {
+            ...mockAcquisitionFileResponse(),
+            id: 1,
+            fileType: FileTypes.Acquisition,
+          }
+        }
         activity={renderOptions?.activity ?? { ...getMockActivityResponse(), id: 2 }}
         editMode={renderOptions?.editMode ?? false}
         setEditMode={renderOptions?.setEditMode ?? setEditMode}
         onEditRelatedProperties={onEditRelatedProperties}
         onSave={onSave}
+        formContent={renderOptions?.formContent}
       />,
       {
         ...renderOptions,
@@ -147,5 +159,132 @@ describe('ActivityForm test', () => {
 
     expect(setEditMode).not.toHaveBeenCalled();
     expect(await findByDisplayValue('another description')).toBeVisible();
+  });
+
+  describe('dynamic form content', () => {
+    it('displays the view form in view mode', async () => {
+      const { getByText, findByText } = setup({
+        formContent: {
+          header: 'Test',
+          initialValues: {} as any,
+          EditForm: props => <>Site Visit(Edit)</>,
+          ViewForm: props => <>Site Visit(View)</>,
+          validationSchema: Yup.object().shape({}),
+          version: '1.0',
+        },
+      });
+      await findByText('No matching Documents found');
+
+      userEvent.click(getByText('Test'));
+
+      expect(getByText('Site Visit(View)')).toBeVisible();
+    });
+    it('displays the edit form in edit mode', async () => {
+      const { getByText, findByText } = setup({
+        formContent: {
+          header: 'Test',
+          initialValues: {} as any,
+          EditForm: props => <>Site Visit(Edit)</>,
+          ViewForm: props => <>Site Visit(View)</>,
+          validationSchema: Yup.object().shape({}),
+          version: '1.0',
+        },
+        editMode: true,
+      });
+      await findByText('No matching Documents found');
+
+      expect(getByText('Site Visit(Edit)')).toBeVisible();
+    });
+    it('prepopulates the form based on loaded data', async () => {
+      const { getByText, findByText } = setup({
+        formContent: {
+          header: 'Test',
+          initialValues: {} as any,
+          EditForm: props => <>Site Visit(Edit)</>,
+          ViewForm: props => {
+            const { values } = useFormikContext<ActivityModel>();
+            return <>{values.activityData.test}</>;
+          },
+          validationSchema: Yup.object().shape({}),
+          version: '1.0',
+        },
+        activity: { activityDataJson: '{"test":"test string"}' } as any,
+      });
+      await findByText('No matching Documents found');
+
+      userEvent.click(getByText('Test'));
+
+      expect(getByText('test string')).toBeVisible();
+    });
+    it('saves dynamic form data as expected', async () => {
+      const { getByText, findByText, container } = setup({
+        formContent: {
+          header: 'Test',
+          initialValues: { test: '' } as any,
+          EditForm: props => <Input field="activityData.test" />,
+          ViewForm: props => <></>,
+          validationSchema: Yup.object().shape({}),
+          version: '1.0',
+        },
+        editMode: true,
+      });
+      await findByText('No matching Documents found');
+
+      await fillInput(container, 'activityData.test', 'test string');
+      const saveButton = getByText('Save').closest('button');
+      await waitFor(() => expect(saveButton).not.toBeDisabled());
+      userEvent.click(saveButton!);
+
+      await waitFor(() => {
+        expect(onSave).toHaveBeenCalledWith(
+          expect.objectContaining({ activityDataJson: '{"test":"test string","version":"1.0"}' }),
+        );
+      });
+    });
+    it('displays validation errors and does not save when given a validation schema', async () => {
+      const { getByText, findByText, container } = setup({
+        formContent: {
+          header: 'Test',
+          initialValues: { test: '' } as any,
+          EditForm: props => <Input field="activityData.test" />,
+          ViewForm: props => <></>,
+          validationSchema: Yup.object().shape({
+            activityData: Yup.object().shape({ test: Yup.string().required('test is required') }),
+          }),
+          version: '1.0',
+        },
+        editMode: true,
+      });
+      await findByText('No matching Documents found');
+
+      await fillInput(container, 'description', 'another description', 'textarea');
+      const saveButton = getByText('Save').closest('button');
+      await waitFor(() => expect(saveButton).not.toBeDisabled());
+      userEvent.click(saveButton!);
+
+      expect(await findByText('test is required')).toBeVisible();
+    });
+    it('displays validation errors and does not save when given a validation function', async () => {
+      const { getByText, findByText, container } = setup({
+        formContent: {
+          header: 'Test',
+          initialValues: { test: '' } as any,
+          EditForm: props => <Input field="activityData.test" />,
+          ViewForm: props => <></>,
+          validationSchema: Yup.object().shape({}),
+          validationFunction: (values: any) => ({ activityData: { test: 'test is required' } }),
+          version: '1.0',
+        },
+        editMode: true,
+      });
+      await findByText('No matching Documents found');
+
+      await fillInput(container, 'description', 'another description', 'textarea');
+      const saveButton = getByText('Save').closest('button');
+      await waitFor(() => expect(saveButton).not.toBeDisabled());
+      userEvent.click(saveButton!);
+
+      expect(await findByText('test is required')).toBeVisible();
+    });
   });
 });

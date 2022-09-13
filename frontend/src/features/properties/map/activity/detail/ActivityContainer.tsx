@@ -2,7 +2,6 @@ import { FileTypes } from 'constants/fileTypes';
 import { SideBarContext, TypedFile } from 'features/properties/map/context/sidebarContext';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity, Api_PropertyActivity } from 'models/api/Activity';
-import { Api_File } from 'models/api/File';
 import { Api_Property } from 'models/api/Property';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -12,7 +11,10 @@ import { useContext, useState } from 'react';
 
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import { useActivityRepository } from '../hooks/useActivityRepository';
+import ActivityForm from './ActivityForm';
 import ActivityPropertyModal from './ActivityPropertyModal';
+import { formContent } from './content/formContent';
+import { ActivityTemplateTypes } from './content/models';
 import { ActivityModel } from './models';
 
 export interface IActivityContainerProps {
@@ -21,7 +23,7 @@ export interface IActivityContainerProps {
   View: React.FunctionComponent<IActivityTrayProps>;
 }
 
-export interface ActivityFile extends Api_File {
+export interface ActivityFile extends TypedFile {
   id: number;
 }
 
@@ -82,20 +84,36 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
     throw new Error('Unable to determine id of current file.');
   }
 
+  const currentFormContent = response?.activityTemplate?.activityTemplateTypeCode?.id
+    ? formContent.get(
+        response?.activityTemplate?.activityTemplateTypeCode?.id as ActivityTemplateTypes,
+      )
+    : undefined;
   return !!file?.id ? (
     <>
       <View
-        file={file as ActivityFile}
-        activity={response}
         onClose={onClose}
         loading={loading}
         updateLoading={updateLoading}
         error={!!error}
-        editMode={editMode}
-        setEditMode={setEditMode}
-        onSave={editActivity}
+        activity={response}
         onEditRelatedProperties={() => setDisplay(true)}
-      ></View>
+        onSave={editActivity}
+      >
+        <>
+          {!!response?.id && (
+            <ActivityForm
+              activity={{ ...response, id: +response.id }}
+              file={file as ActivityFile}
+              editMode={editMode}
+              setEditMode={setEditMode}
+              onSave={editActivity}
+              onEditRelatedProperties={() => setDisplay(true)}
+              formContent={currentFormContent}
+            />
+          )}
+        </>
+      </View>
       <ActivityPropertyModal
         display={display}
         setDisplay={setDisplay}

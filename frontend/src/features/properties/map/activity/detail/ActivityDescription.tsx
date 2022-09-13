@@ -2,9 +2,10 @@ import { TextArea } from 'components/common/form';
 import { Claims } from 'constants/claims';
 import { getIn, useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_Activity } from 'models/api/Activity';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
+
+import { ActivityModel } from './models';
 
 export interface IActivityDescriptionProps {
   editMode?: boolean;
@@ -16,14 +17,16 @@ export const ActivityDescription: React.FunctionComponent<IActivityDescriptionPr
   nameSpace,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
-  const { values } = useFormikContext<Api_Activity>();
+  const { values } = useFormikContext<ActivityModel>();
   const fieldNameSpace = withNameSpace(nameSpace, 'description');
   const description = getIn(values, fieldNameSpace);
 
   return !editMode || !hasClaim(Claims.ACTIVITY_EDIT) ? (
     <p>{description}</p>
   ) : (
-    <TextArea field={fieldNameSpace} />
+    <>
+      <TextArea field={fieldNameSpace} />
+    </>
   );
 };
 

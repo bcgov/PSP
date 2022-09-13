@@ -7,49 +7,28 @@ import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
-import { ActivityFile } from '../detail/ActivityContainer';
-import { ActivityForm } from '../detail/ActivityForm';
 import * as Styled from './styles';
 
 export interface IActivityTrayProps {
-  file: ActivityFile;
   activity?: Api_Activity;
   onClose: () => void;
   loading: boolean;
   updateLoading: boolean;
   error: boolean;
-  editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
-  onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
-  onEditRelatedProperties: () => void;
+  onSave?: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
+  onEditRelatedProperties?: () => void;
 }
 
-export const ActivityTray = ({
-  file,
+export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
   activity,
   onClose,
   onSave,
   error,
   loading,
-  editMode,
-  setEditMode,
-  onEditRelatedProperties,
-}: IActivityTrayProps) => {
+  children,
+}) => {
   const [show, setShow] = useState(true);
-  let trayContent = (
-    <HalfHeightDiv>
-      {!!activity?.id && (
-        <ActivityForm
-          activity={{ ...activity, id: +activity.id }}
-          file={file}
-          editMode={editMode}
-          setEditMode={setEditMode}
-          onSave={onSave}
-          onEditRelatedProperties={onEditRelatedProperties}
-        />
-      )}
-    </HalfHeightDiv>
-  );
+  let trayContent = <HalfHeightDiv>{children}</HalfHeightDiv>;
   if (error) {
     trayContent = <b>Failed to load activity. Refresh the page or load another activity.</b>;
   } else if (loading) {

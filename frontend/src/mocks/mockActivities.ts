@@ -78,7 +78,7 @@ export const getMockActivityResponse: () => Api_Activity = () => ({
   appLastUpdateTimestamp: '0001-02-01T00:00:00',
   rowVersion: 0,
   description: 'test description',
-  activityDataJson: '{}',
+  activityDataJson: '{"version": "1.0"}',
   actInstPropAcqFiles: [
     {
       id: 23,
