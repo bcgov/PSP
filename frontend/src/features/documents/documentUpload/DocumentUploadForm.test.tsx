@@ -5,8 +5,8 @@ import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
-import { DocumentMetadataForm } from '../ComposedDocument';
-import DocumentUploadView from './DocumentUploadView';
+import { DocumentUploadFormData } from '../ComposedDocument';
+import DocumentUploadForm from './DocumentUploadForm';
 
 const history = createMemoryHistory();
 
@@ -27,7 +27,7 @@ const documentTypes: Api_DocumentType[] = [
     mayanId: 7,
   },
 ];
-const documentTypeMetadata: Api_Storage_DocumentTypeMetadataType[] = [
+const documentTypeMetadataType: Api_Storage_DocumentTypeMetadataType[] = [
   {
     id: 1,
     document_type: {
@@ -52,15 +52,16 @@ const documentTypeMetadata: Api_Storage_DocumentTypeMetadataType[] = [
 
 describe('DocumentUploadView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { initialValues: DocumentMetadataForm }) => {
+  const setup = (renderOptions: RenderOptions & { initialValues: DocumentUploadFormData }) => {
     const utils = render(
-      <DocumentUploadView
+      <DocumentUploadForm
         documentTypes={documentTypes}
         isLoading={false}
-        mayanMetadata={documentTypeMetadata}
+        mayanMetadataTypes={documentTypeMetadataType}
         onDocumentTypeChange={onDocumentTypeChange}
         onUploadDocument={onUploadDocument}
         onCancel={handleCancelClick}
+        initialDocumentType={'AMMEND'}
       />,
       {
         ...renderOptions,
@@ -78,13 +79,15 @@ describe('DocumentUploadView component', () => {
     };
   };
 
-  let initialValues: DocumentMetadataForm;
+  let initialValues: DocumentUploadFormData;
   let file: File;
   beforeEach(() => {
-    initialValues = {
-      documentTypeId: '1',
-      documentStatusCode: 'AMEND',
-    };
+    initialValues = new DocumentUploadFormData(
+      'AMEND',
+      'BC Assessment Search',
+      documentTypeMetadataType,
+    );
+    initialValues.documentTypeId = '1';
     file = new File(['(⌐□_□)'], 'test.png', { type: 'image/png' });
   });
 

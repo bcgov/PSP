@@ -127,12 +127,12 @@ namespace Pims.Api.Controllers
         [HttpPut("{documentId}/relationship/{relationshipType}/metadata")]
         [Produces("application/json")]
         [HasPermission(Permissions.DocumentEdit)]
-        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(typeof(DocumentUpdateResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         public async Task<IActionResult> UpdateDocumentMetadata(
             long documentId,
             DocumentRelationType relationshipType,
-            [FromBody] DocumentUpdateMetadataRequest updateRequest)
+            [FromBody] DocumentUpdateRequest updateRequest)
         {
             switch (relationshipType)
             {
