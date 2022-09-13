@@ -24,32 +24,29 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
-    SelectedPropertyContext,
-  );
-  console.log(selectedResearchFeature);
+  const { selectedFileFeature, setSelectedFileFeature } = React.useContext(SelectedPropertyContext);
 
   const initialForm = useMemo(() => {
-    const researchForm = new AcquisitionForm();
-    if (!!selectedResearchFeature) {
-      researchForm.properties = [
-        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+    const acquisitionForm = new AcquisitionForm();
+    if (!!selectedFileFeature) {
+      acquisitionForm.properties = [
+        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ];
     }
-    return researchForm;
-  }, [selectedResearchFeature]);
+    return acquisitionForm;
+  }, [selectedFileFeature]);
 
   useEffect(() => {
-    if (!!selectedResearchFeature && !!formikRef.current) {
+    if (!!selectedFileFeature && !!formikRef.current) {
       formikRef.current.resetForm();
       formikRef.current?.setFieldValue('properties', [
-        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedResearchFeature)),
+        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ]);
     }
     return () => {
-      setSelectedResearchFeature(null);
+      setSelectedFileFeature(null);
     };
-  }, [initialForm, selectedResearchFeature, setSelectedResearchFeature]);
+  }, [initialForm, selectedFileFeature, setSelectedFileFeature]);
 
   const handleSave = () => {
     formikRef.current?.setSubmitting(true);
