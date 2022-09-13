@@ -154,7 +154,7 @@ namespace Pims.Api.Services
             };
 
 
-            var metadataUpdateSucessfull = false;
+            var metadataUpdateSucessful = false;
             if (updateRequest.DocumentMetadata.Count > 0)
             {
                 // Retrieve the existing metadata and check if it needs to be updated.
@@ -197,15 +197,15 @@ namespace Pims.Api.Services
                 foreach (var task in response.MetadataExternalResult)
                 {
                     // Flag to know if at least one call was successful.
-                    metadataUpdateSucessfull = metadataUpdateSucessfull || task.Status == ExternalResultStatus.Success;
+                    metadataUpdateSucessful = metadataUpdateSucessful || task.Status == ExternalResultStatus.Success;
                 }
             }
             else
             {
-                metadataUpdateSucessfull = true;
+                metadataUpdateSucessful = true;
             }
 
-            if (metadataUpdateSucessfull)
+            if (metadataUpdateSucessful)
             {
                 documentRepository.CommitTransaction();
                 this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", documentId);

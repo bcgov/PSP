@@ -78,7 +78,7 @@ const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <>
-        {hasClaim(Claims.DOCUMENT_VIEW) && (
+        {hasClaim(Claims.DOCUMENT_VIEW) === true ? (
           <Button
             data-testid="document-view-filename-link"
             onClick={() => cell.row.original?.id && onViewDetails(cell.row.original)}
@@ -86,8 +86,7 @@ const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
           >
             {cell.value}
           </Button>
-        )}
-        {!hasClaim(Claims.DOCUMENT_VIEW) && (
+        ) : (
           <span data-testid="document-view-filename-text">{cell.value}</span>
         )}
       </>
