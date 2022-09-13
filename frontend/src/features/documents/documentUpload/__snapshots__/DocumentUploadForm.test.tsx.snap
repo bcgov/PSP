@@ -431,8 +431,8 @@ exports[`DocumentUploadView component renders as expected 1`] = `
                 <input
                   class="form-control"
                   data-testid="metadata-input-Tag"
-                  id="input-documentMetadata.1"
-                  name="documentMetadata.1"
+                  id="input-[documentMetadata.1]"
+                  name="[documentMetadata.1]"
                   title=""
                   value=""
                 />

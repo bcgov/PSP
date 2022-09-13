@@ -49,9 +49,10 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
     const mayanDocumentTypeId = documentTypes.find(x => x.id === documentTypeId)?.mayanId;
     setDocumentType(documentTypeId?.toString() || '');
     if (mayanDocumentTypeId) {
-      const results = await retrieveDocumentTypeMetadata(mayanDocumentTypeId);
-      if (results?.status === ExternalResultStatus.Success) {
-        setDocumentTypeMetadataTypes(results?.payload?.results);
+      const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeId);
+      if (axiosResponse?.data.status === ExternalResultStatus.Success) {
+        let results = axiosResponse?.data.payload.results;
+        setDocumentTypeMetadataTypes(results);
       }
     }
   };

@@ -379,7 +379,11 @@ exports[`Document Results Table matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          />
+          >
+            <span
+              data-testid="document-view-filename-text"
+            />
+          </div>
           <div
             class="td"
             role="cell"
