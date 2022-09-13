@@ -2,7 +2,14 @@ import { useKeycloak } from '@react-keycloak/web';
 import { Claims } from 'constants/claims';
 import { noop } from 'lodash';
 import { mockDocumentsResponse } from 'mocks/mockDocuments';
-import { cleanup, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+import {
+  cleanup,
+  getByTestId,
+  mockKeycloak,
+  queryByTestId,
+  render,
+  RenderOptions,
+} from 'utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 
@@ -79,6 +86,26 @@ describe('Document Results Table', () => {
 
     const viewButtons = await getAllByTestId('document-view-button');
     expect(viewButtons[0]).toBeVisible();
+  });
+
+  it('displays document filename as link', async () => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW] });
+    const { queryByTestId, getAllByTestId } = setup({ results: mockDocumentsResponse() });
+
+    const filenameLink = await getAllByTestId('document-view-filename-link');
+    expect(filenameLink[0]).toBeVisible();
+
+    expect(queryByTestId('document-view-filename-text')).toBeNull();
+  });
+
+  it('displays document filename as plain text', async () => {
+    mockKeycloak({ claims: [] });
+    const { queryByTestId, getAllByTestId } = setup({ results: mockDocumentsResponse() });
+
+    const filenameText = await getAllByTestId('document-view-filename-text');
+    expect(filenameText[0]).toBeVisible();
+
+    expect(queryByTestId('document-view-filename-link')).toBeNull();
   });
 
   it('displays document delete button', async () => {

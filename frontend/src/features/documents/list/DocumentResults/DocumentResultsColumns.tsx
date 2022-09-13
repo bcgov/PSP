@@ -8,6 +8,7 @@ import { Api_Document, Api_DocumentType } from 'models/api/Document';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
@@ -36,6 +37,7 @@ export const getDocumentColumns = ({
       sortable: true,
       width: 40,
       maxWidth: 40,
+      Cell: renderFileName(onViewDetails),
     },
     {
       Header: 'Upload date',
@@ -69,9 +71,31 @@ export const getDocumentColumns = ({
   ];
 };
 
-function renderDocumentType({ value }: CellProps<any, Api_DocumentType>) {
+function renderDocumentType({ value }: CellProps<Api_Document, Api_DocumentType>) {
   return value?.documentType ?? '';
 }
+
+const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
+  return function(cell: CellProps<Api_Document, string>) {
+    const { hasClaim } = useKeycloakWrapper();
+    return (
+      <>
+        {hasClaim(Claims.DOCUMENT_VIEW) && (
+          <Button
+            data-testid="document-view-filename-link"
+            onClick={() => cell.row.original?.id && onViewDetails(cell.row.original)}
+            variant="link"
+          >
+            {cell.value}
+          </Button>
+        )}
+        {!hasClaim(Claims.DOCUMENT_VIEW) && (
+          <span data-testid="document-view-filename-text">{cell.value}</span>
+        )}
+      </>
+    );
+  };
+};
 
 const renderActions = (
   onViewDetails: (values: Api_Document) => void,
