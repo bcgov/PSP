@@ -152,7 +152,11 @@ namespace Pims.Api.Services
             var activityDocuments = _documentService.GetActivityDocuments(activityId);
             foreach (PimsActivityInstanceDocument activityInstanceDocument in activityDocuments)
             {
-                await _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
+                var response = await _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
+                if(!response)
+                {
+                    throw new DbUpdateException("Failed to delete one or more related documents, unable to remove activity at this time. If this error persists, contact support.");
+                }
             }
 
             var notes = _noteService.GetNotes(Constants.NoteType.Activity, activityId);
