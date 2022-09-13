@@ -67,14 +67,8 @@ namespace Pims.Dal.Repositories
             document.ThrowIfNull(nameof(document));
 
             this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
-            var existingDocument = this.Context.PimsDocuments.Where(l => l.DocumentId == document.DocumentId).FirstOrDefault()
-                 ?? throw new KeyNotFoundException();
-            Context.Entry(existingDocument).CurrentValues.SetValues(document);
-            if (commitTransaction)
-            {
-                this.Context.CommitTransaction();
-            }
-            return existingDocument;
+            document = Context.Update(document).Entity;
+            return document;
         }
 
         /// <summary>

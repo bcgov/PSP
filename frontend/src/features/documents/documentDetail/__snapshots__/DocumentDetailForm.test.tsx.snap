@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DocumentDetailView component renders as expected 1`] = `
+exports[`DocumentDetailForm component renders as expected 1`] = `
 .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -145,7 +145,7 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c8 {
+.c7 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -162,7 +162,7 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   font-weight: 700;
 }
 
-.c7 {
+.c9 {
   font-weight: 700;
   font-size: 1.7rem;
   margin-bottom: 1rem;
@@ -179,7 +179,7 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   display: flex;
 }
 
-.c9 {
+.c8 {
   overflow-x: hidden;
   max-height: 50rem;
 }
@@ -218,7 +218,7 @@ exports[`DocumentDetailView component renders as expected 1`] = `
         <div
           class="c2 text-left col"
         >
-          Survey
+          BC Assessment Search
         </div>
       </div>
       <div
@@ -316,61 +316,103 @@ exports[`DocumentDetailView component renders as expected 1`] = `
               </span>
             </div>
           </div>
+        </div>
+        <div
+          class="c7 c8"
+        >
           <div
-            class="col-2"
+            class="pb-2 row"
           >
-             
-            <button
-              class="c3 Button btn btn-link"
-              type="button"
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c1"
+              >
+                Status
+                :
+              </label>
+            </div>
+            <div
+              class="c2 text-left col"
             >
               <div
-                class="Button__value"
+                class="form-group"
               >
-                <svg
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 576 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <select
+                  class="form-select form-control"
+                  id="input-documentStatusCode"
+                  name="documentStatusCode"
                 >
-                  <path
-                    d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                  />
-                </svg>
+                  <option
+                    class="option"
+                    value="AMENDD"
+                  >
+                    Amended
+                  </option>
+                  <option
+                    class="option"
+                    value="APPROVD"
+                  >
+                    Approved
+                  </option>
+                  <option
+                    class="option"
+                    value="CNCLD"
+                  >
+                    Cancelled
+                  </option>
+                  <option
+                    class="option"
+                    value="DRAFT"
+                  >
+                    Draft
+                  </option>
+                  <option
+                    class="option"
+                    value="FINAL"
+                  >
+                    Final
+                  </option>
+                  <option
+                    class="option"
+                    value="NONE"
+                  >
+                    None
+                  </option>
+                  <option
+                    class="option"
+                    value="RGSTRD"
+                  >
+                    Registered
+                  </option>
+                  <option
+                    class="option"
+                    value="SENT"
+                  >
+                    Sent
+                  </option>
+                  <option
+                    class="option"
+                    value="SIGND"
+                  >
+                    Signed
+                  </option>
+                  <option
+                    class="option"
+                    value="UNREGD"
+                  >
+                    Unregistered
+                  </option>
+                </select>
               </div>
-            </button>
+            </div>
           </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
+          <h3
+            class="c9"
           >
-            <label
-              class="c1"
-            >
-              Status
-              :
-            </label>
-          </div>
-          <div
-            class="c2 text-left col"
-          >
-            Amended
-          </div>
-        </div>
-        <h3
-          class="c7"
-        >
-          Details
-        </h3>
-        <div
-          class="c8 c9"
-        >
+            Details
+          </h3>
           <div
             class="pb-2 row"
           >
@@ -387,7 +429,53 @@ exports[`DocumentDetailView component renders as expected 1`] = `
             <div
               class="c2 text-left col"
             >
-              Tag1234
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  data-testid="metadata-input-tag-foo"
+                  id="input-[documentMetadata.1]"
+                  name="[documentMetadata.1]"
+                  title="Tag1234"
+                  value="Tag1234"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            style="color: red;"
+          />
+          <div
+            class="justify-content-end pt-4 row"
+          >
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c3 Button btn btn-secondary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Cancel
+                </div>
+              </button>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c3 Button btn btn-primary"
+                type="submit"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Save
+                </div>
+              </button>
             </div>
           </div>
         </div>

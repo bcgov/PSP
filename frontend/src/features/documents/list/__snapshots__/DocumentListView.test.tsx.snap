@@ -742,7 +742,11 @@ exports[`Document List View renders as expected 1`] = `
                   style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  DocTest.docx
+                  <span
+                    data-testid="document-view-filename-text"
+                  >
+                    DocTest.docx
+                  </span>
                 </div>
                 <div
                   class="td"
@@ -800,7 +804,11 @@ exports[`Document List View renders as expected 1`] = `
                   style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  moti_plan.txt
+                  <span
+                    data-testid="document-view-filename-text"
+                  >
+                    moti_plan.txt
+                  </span>
                 </div>
                 <div
                   class="td"
@@ -1728,7 +1736,11 @@ exports[`Document List View renders as expected 2`] = `
                   style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  DocTest.docx
+                  <span
+                    data-testid="document-view-filename-text"
+                  >
+                    DocTest.docx
+                  </span>
                 </div>
                 <div
                   class="td"
@@ -1786,7 +1798,11 @@ exports[`Document List View renders as expected 2`] = `
                   style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  moti_plan.txt
+                  <span
+                    data-testid="document-view-filename-text"
+                  >
+                    moti_plan.txt
+                  </span>
                 </div>
                 <div
                   class="td"

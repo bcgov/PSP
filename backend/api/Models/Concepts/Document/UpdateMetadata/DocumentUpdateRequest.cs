@@ -1,19 +1,13 @@
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
-    /// DocumentUpdateMetadataRequest class, represents a request to update a document metadata.
+    /// DocumentUpdateRequest class, represents a response to update a document.
     /// </summary>
-    public class DocumentUpdateMetadataRequest
+    public class DocumentUpdateRequest
     {
         #region Properties
-
-        /// <summary>
-        /// get/set - The document id.
-        /// </summary>
-        public long DocumentId { get; set; }
 
         /// <summary>
         /// get/set - The mayan document id.
@@ -21,12 +15,7 @@ namespace Pims.Api.Models.Concepts
         public long MayanDocumentId { get; set; }
 
         /// <summary>
-        /// get/set - The type for the document to be uploaded.
-        /// </summary>
-        public long DocumentTypeId { get; set; }
-
-        /// <summary>
-        /// get/set - Initial status code of the document.
+        /// get/set - Status code of the document.
         /// </summary>
         public string DocumentStatusCode { get; set; }
 

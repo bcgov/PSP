@@ -4,8 +4,8 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
-import { DocumentMetadataForm } from '../ComposedDocument';
-import DocumentUploadView from './DocumentUploadView';
+import { DocumentUploadFormData } from '../ComposedDocument';
+import DocumentUploadForm from './DocumentUploadForm';
 
 const history = createMemoryHistory();
 
@@ -14,18 +14,53 @@ const handleSubmit = jest.fn();
 const handleCancelClick = jest.fn();
 const onUploadDocument = jest.fn();
 const onDocumentTypeChange = jest.fn();
+const documentTypes: Api_DocumentType[] = [
+  {
+    id: 1,
+    documentType: 'BC Assessment Search',
+    mayanId: 17,
+  },
+  {
+    id: 2,
+    documentType: 'Privy Council',
+    mayanId: 7,
+  },
+];
+const documentTypeMetadataType: Api_Storage_DocumentTypeMetadataType[] = [
+  {
+    id: 1,
+    document_type: {
+      id: 1,
+      label: 'BC Assessment Search',
+    },
+    metadata_type: {
+      default: '',
+      id: 1,
+      label: 'Tag',
+      lookup: '',
+      name: 'Tag',
+      parser: '',
+      parser_arguments: '',
+      url: '',
+      validation: '',
+      validation_arguments: '',
+    },
+    required: true,
+  },
+];
 
 describe('DocumentUploadView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { initialValues: DocumentMetadataForm }) => {
+  const setup = (renderOptions: RenderOptions & { initialValues: DocumentUploadFormData }) => {
     const utils = render(
-      <DocumentUploadView
-        documentTypes={mockDocumentTypesResponse()}
+      <DocumentUploadForm
+        documentTypes={documentTypes}
         isLoading={false}
-        mayanMetadata={mockDocumentTypeMetadata()}
+        mayanMetadataTypes={documentTypeMetadataType}
         onDocumentTypeChange={onDocumentTypeChange}
         onUploadDocument={onUploadDocument}
         onCancel={handleCancelClick}
+        initialDocumentType={'AMMEND'}
       />,
       {
         ...renderOptions,
@@ -43,13 +78,15 @@ describe('DocumentUploadView component', () => {
     };
   };
 
-  let initialValues: DocumentMetadataForm;
+  let initialValues: DocumentUploadFormData;
   let file: File;
   beforeEach(() => {
-    initialValues = {
-      documentTypeId: '1',
-      documentStatusCode: 'AMEND',
-    };
+    initialValues = new DocumentUploadFormData(
+      'AMEND',
+      'BC Assessment Search',
+      documentTypeMetadataType,
+    );
+    initialValues.documentTypeId = '1';
     file = new File(['(⌐□_□)'], 'test.png', { type: 'image/png' });
   });
 

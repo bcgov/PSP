@@ -324,6 +324,19 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<string>> DeleteDocumentMetadataAsync(long documentId, long metadataId)
+        {
+            _logger.LogDebug("Delete existing metadata type from an existing document");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/{metadataId}/");
+
+            var response = await DeleteAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug($"Finished deleting existing metadata from a document");
+            return response;
+        }
+
         public async Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
         {
             _logger.LogDebug("Updating document type and metadata type...");
