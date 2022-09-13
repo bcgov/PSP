@@ -11,7 +11,6 @@ import { useContext, useState } from 'react';
 
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import { useActivityRepository } from '../hooks/useActivityRepository';
-import ActivityForm from './ActivityForm';
 import ActivityPropertyModal from './ActivityPropertyModal';
 import { formContent } from './content/formContent';
 import { ActivityTemplateTypes } from './content/models';
@@ -58,6 +57,10 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
             ActivityModel.fromApi(activity, file.fileType).actInstPropFiles ?? [],
           ),
         );
+      } else {
+        throw Error(
+          'unable to load required file or activity details. Please refresh this page to try again. If this error persists please contact support',
+        );
       }
       return activity;
     }
@@ -72,9 +75,9 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
     return updatedActivity;
   };
 
-  const onSaveActivityProperties = async () => {
+  const onSaveActivityProperties = async (updatedActivity: ActivityModel) => {
     if (file?.fileType && !!activityModel) {
-      await updateActivityProperties(file?.fileType, activityModel?.toApi());
+      await updateActivityProperties(file?.fileType, updatedActivity.toApi());
     }
     setStaleFile(true);
     return await fetchActivity();
@@ -99,21 +102,11 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
         activity={response}
         onEditRelatedProperties={() => setDisplay(true)}
         onSave={editActivity}
-      >
-        <>
-          {!!response?.id && (
-            <ActivityForm
-              activity={{ ...response, id: +response.id }}
-              file={file as ActivityFile}
-              editMode={editMode}
-              setEditMode={setEditMode}
-              onSave={editActivity}
-              onEditRelatedProperties={() => setDisplay(true)}
-              formContent={currentFormContent}
-            />
-          )}
-        </>
-      </View>
+        editMode={editMode}
+        setEditMode={setEditMode}
+        file={file as ActivityFile}
+        currentFormContent={currentFormContent}
+      ></View>
       <ActivityPropertyModal
         display={display}
         setDisplay={setDisplay}

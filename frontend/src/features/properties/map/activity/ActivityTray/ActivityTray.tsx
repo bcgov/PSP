@@ -7,6 +7,9 @@ import { MdClose } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
+import { ActivityFile } from '../detail/ActivityContainer';
+import { ActivityForm } from '../detail/ActivityForm';
+import { IActivityFormContent } from '../detail/content/models';
 import * as Styled from './styles';
 
 export interface IActivityTrayProps {
@@ -15,8 +18,12 @@ export interface IActivityTrayProps {
   loading: boolean;
   updateLoading: boolean;
   error: boolean;
-  onSave?: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
-  onEditRelatedProperties?: () => void;
+  file: ActivityFile;
+  editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
+  onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
+  onEditRelatedProperties: () => void;
+  currentFormContent?: IActivityFormContent;
 }
 
 export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
@@ -25,10 +32,28 @@ export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
   onSave,
   error,
   loading,
-  children,
+  file,
+  editMode,
+  setEditMode,
+  onEditRelatedProperties,
+  currentFormContent,
 }) => {
   const [show, setShow] = useState(true);
-  let trayContent = <HalfHeightDiv>{children}</HalfHeightDiv>;
+  let trayContent = (
+    <HalfHeightDiv>
+      {!!activity?.id && (
+        <ActivityForm
+          activity={{ ...activity, id: +activity.id }}
+          file={file as ActivityFile}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          onSave={onSave}
+          onEditRelatedProperties={onEditRelatedProperties}
+          formContent={currentFormContent}
+        />
+      )}
+    </HalfHeightDiv>
+  );
   if (error) {
     trayContent = <b>Failed to load activity. Refresh the page or load another activity.</b>;
   } else if (loading) {
