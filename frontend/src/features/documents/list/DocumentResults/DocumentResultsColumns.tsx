@@ -5,10 +5,8 @@ import { Claims } from 'constants/index';
 import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Document, Api_DocumentType } from 'models/api/Document';
-import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
