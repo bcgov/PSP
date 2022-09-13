@@ -102,13 +102,21 @@ namespace Pims.Api.Services
 
             if (externalResult.Status == ExternalResultStatus.Success)
             {
-
                 var externalDocument = externalResult.Payload;
 
                 // Create metadata of document
-                if (uploadRequest.DocumentMetadata != null && uploadRequest.DocumentMetadata.Count > 0)
+                if (uploadRequest.DocumentMetadata != null)
                 {
-                    response.MetadataExternalResult = await CreateMetadata(uploadRequest.DocumentTypeMayanId, uploadRequest.DocumentMetadata);
+                    List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
+                    foreach (var metadata in uploadRequest.DocumentMetadata)
+                    {
+                        if (!string.IsNullOrEmpty(metadata.Value))
+                        {
+                            creates.Add(metadata);
+                        }
+                    }
+
+                    response.MetadataExternalResult = await CreateMetadata(externalDocument.Id, creates);
                 }
 
                 // Create the pims document
@@ -170,7 +178,10 @@ namespace Pims.Api.Services
 
                     if (existing == null)
                     {
-                        creates.Add(updateMetadata);
+                        if (!string.IsNullOrEmpty(updateMetadata.Value))
+                        {
+                            creates.Add(updateMetadata);
+                        }
                     }
                     else if (existing.Value != updateMetadata.Value && !string.IsNullOrEmpty(updateMetadata.Value))
                     {

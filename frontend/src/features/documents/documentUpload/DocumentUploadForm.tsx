@@ -18,8 +18,9 @@ import { StyledContainer } from '../list/styles';
 import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
 
 interface IDocumentUploadFormProps {
-  documentTypes: Api_DocumentType[];
   isLoading: boolean;
+  initialDocumentType: string;
+  documentTypes: Api_DocumentType[];
   mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
   onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
   onUploadDocument: (uploadRequest: Api_DocumentUploadRequest) => void;
@@ -38,8 +39,6 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = pr
   const { getOptionsByType } = useLookupCodeHelpers();
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
 
-  const initialFormState = new DocumentUploadFormData(documentStatusTypes[0]?.value?.toString());
-
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
     // handle validations
     if (changeEvent.target !== null) {
@@ -50,12 +49,18 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = pr
     }
   };
 
+  const initialFormData = new DocumentUploadFormData(
+    documentStatusTypes[0]?.value?.toString(),
+    props.initialDocumentType,
+    props.mayanMetadataTypes,
+  );
+
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
       <Formik<DocumentUploadFormData>
         enableReinitialize
-        initialValues={initialFormState}
+        initialValues={initialFormData}
         validateOnMount={true}
         validationSchema={getDocumentUploadYupSchema(props.mayanMetadataTypes, false)}
         onSubmit={async (values: DocumentUploadFormData, { setSubmitting }) => {

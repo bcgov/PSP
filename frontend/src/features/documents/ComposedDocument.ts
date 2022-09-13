@@ -5,7 +5,10 @@ import {
   Api_DocumentUpdateRequest,
   Api_DocumentUploadRequest,
 } from 'models/api/Document';
-import { Api_Storage_DocumentMetadata } from 'models/api/DocumentStorage';
+import {
+  Api_Storage_DocumentMetadata,
+  Api_Storage_DocumentTypeMetadataType,
+} from 'models/api/DocumentStorage';
 
 export interface ComposedDocument {
   mayanMetadata?: Api_Storage_DocumentMetadata[];
@@ -17,6 +20,20 @@ export class DocumentUploadFormData {
   public documentTypeId: string;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
+
+  public constructor(
+    initialStatus: string,
+    documentType: string,
+    metadata: Api_Storage_DocumentTypeMetadataType[],
+  ) {
+    this.documentStatusCode = initialStatus;
+    this.documentTypeId = documentType;
+    this.documentMetadata = {};
+
+    metadata.forEach(metaType => {
+      this.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] = '';
+    });
+  }
 
   public toRequestApi(file: File, documentType: Api_DocumentType): Api_DocumentUploadRequest {
     var metadata: Api_DocumentMetadataUpdate[] = [];
@@ -35,12 +52,6 @@ export class DocumentUploadFormData {
       documentMetadata: metadata,
     };
   }
-
-  public constructor(initialStatus: string) {
-    this.documentTypeId = '';
-    this.documentStatusCode = initialStatus;
-    this.documentMetadata = {};
-  }
 }
 
 export class DocumentUpdateFormData {
@@ -49,14 +60,21 @@ export class DocumentUpdateFormData {
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
 
-  public static fromApi(composedDocument: ComposedDocument): DocumentUpdateFormData {
+  public static fromApi(
+    composedDocument: ComposedDocument,
+    metadataTypes: Api_Storage_DocumentTypeMetadataType[],
+  ): DocumentUpdateFormData {
     var model = new DocumentUpdateFormData();
     model.documentId = composedDocument.pimsDocument?.id || 0;
     model.mayanDocumentId = composedDocument.pimsDocument?.mayanDocumentId || 0;
     model.documentStatusCode = composedDocument.pimsDocument?.statusTypeCode?.id?.toString() || '';
     model.documentMetadata = {};
-    composedDocument?.mayanMetadata?.forEach(x => {
-      model.documentMetadata[x.metadata_type.id || 'T'] = x.value;
+    metadataTypes.forEach(metaType => {
+      var foundMetadata = composedDocument.mayanMetadata?.find(
+        currentMeta => currentMeta.metadata_type.id === metaType.metadata_type?.id,
+      );
+      model.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] =
+        foundMetadata?.value ?? '';
     });
     return model;
   }

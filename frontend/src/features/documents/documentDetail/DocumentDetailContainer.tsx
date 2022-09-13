@@ -88,7 +88,7 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
     setIsEditable(false);
   };
 
-  if (!!isEditable) {
+  if (isEditable === false) {
     return (
       <DocumentDetailView
         document={document}

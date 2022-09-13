@@ -40,7 +40,8 @@ export const DocumentDetailForm: React.FunctionComponent<IDocumentDetailFormProp
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
-  const initialFormState = DocumentUpdateFormData.fromApi(props.document);
+  const initialFormState = DocumentUpdateFormData.fromApi(props.document, props.mayanMetadataTypes);
+
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
