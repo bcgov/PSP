@@ -2,6 +2,7 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
+import { ExternalResultStatus } from 'models/api/ExternalResult';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -49,9 +50,8 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
     setDocumentType(documentTypeId?.toString() || '');
     if (mayanDocumentTypeId) {
       const results = await retrieveDocumentTypeMetadata(mayanDocumentTypeId);
-      if (results?.data.status === ExternalResultStatus.Success) {
-        let results = results?.payload?.results;
-        setDocumentTypeMetadataTypes(results);
+      if (results?.status === ExternalResultStatus.Success) {
+        setDocumentTypeMetadataTypes(results?.payload?.results);
       }
     }
   };
