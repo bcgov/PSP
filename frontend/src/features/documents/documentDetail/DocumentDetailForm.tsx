@@ -1,6 +1,5 @@
 import { Button } from 'components/common/buttons/Button';
 import { Select } from 'components/common/form';
-import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as API from 'constants/API';
@@ -12,10 +11,17 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_DocumentUpdateRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 
+import {
+  StyledGreySection,
+  StyledH2,
+  StyledH3,
+  StyledHeader,
+  StyledScrollable,
+} from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
+import { StyledContainer } from '../list/styles';
 import DocumentDetailHeader from './DocumentDetailHeader';
 
 export interface IDocumentDetailFormProps {
@@ -100,37 +106,3 @@ export const DocumentDetailForm: React.FunctionComponent<IDocumentDetailFormProp
     </StyledContainer>
   );
 };
-
-const StyledContainer = styled.div`
-  padding: 1rem;
-`;
-
-const StyledGreySection = styled.div`
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.css.filterBackgroundColor};
-  border: 1px solid red;
-`;
-
-const StyledH2 = styled.h2`
-  font-weight: 700;
-  color: ${props => props.theme.css.primaryColor};
-`;
-
-const StyledH3 = styled.h3`
-  font-weight: 700;
-  font-size: 1.7rem;
-  margin-bottom: 1rem;
-  text-align: left;
-  padding-top: 1rem;
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.1rem ${props => props.theme.css.primaryColor};
-`;
-
-const StyledHeader = styled.div`
-  text-align: left !important;
-  display: flex;
-`;
-const StyledScrollable = styled(Scrollable)`
-  overflow-x: hidden;
-  max-height: 50rem;
-`;
