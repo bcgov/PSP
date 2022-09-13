@@ -7,7 +7,7 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { ComposedDocument } from '../ComposedDocument';
-import { DocumentDetailView } from './DocumentDetailView';
+import { DocumentDetailForm } from './DocumentDetailForm';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -66,11 +66,17 @@ const mockDocument: ComposedDocument = {
   },
   mayanFileId: 2,
 };
-describe('DocumentDetailView component', () => {
+describe('DocumentDetailForm component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions) => {
     const utils = render(
-      <DocumentDetailView document={mockDocument} isLoading={false} setIsEditable={jest.fn()} />,
+      <DocumentDetailForm
+        onUpdate={jest.fn()}
+        document={mockDocument}
+        isLoading={false}
+        mayanMetadataTypes={documentTypeMetadata}
+        onCancel={jest.fn()}
+      />,
       {
         ...renderOptions,
         store: {
@@ -112,9 +118,10 @@ describe('DocumentDetailView component', () => {
 
     expect(textarea).toBeVisible();
   });
-  it('displays label for metadata types', async () => {
-    const { getAllByText } = setup({});
-    const textarea = getAllByText('Tag1234')[0];
+
+  it('displays field for metadata types', async () => {
+    const { getAllByDisplayValue } = setup({});
+    const textarea = getAllByDisplayValue('Tag1234')[0];
 
     expect(textarea).toBeVisible();
   });

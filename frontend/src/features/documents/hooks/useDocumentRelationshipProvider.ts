@@ -6,8 +6,9 @@ import { IApiError } from 'interfaces/IApiError';
 import {
   Api_DocumentRelationship,
   Api_DocumentUpdateRequest,
-  Api_UploadRequest,
-  Api_UploadResponse,
+  Api_DocumentUpdateResponse,
+  Api_DocumentUploadRequest,
+  Api_DocumentUploadResponse,
 } from 'models/api/Document';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -87,14 +88,14 @@ export const useDocumentRelationshipProvider = () => {
     (
       relationshipType: DocumentRelationshipType,
       parentId: number,
-      uploadRequest: Api_UploadRequest,
-    ) => Promise<AxiosResponse<Api_UploadResponse, any>>
+      uploadRequest: Api_DocumentUploadRequest,
+    ) => Promise<AxiosResponse<Api_DocumentUploadResponse, any>>
   >({
     requestFunction: useCallback(
       async (
         relationshipType: DocumentRelationshipType,
         parentId: number,
-        uploadRequest: Api_UploadRequest,
+        uploadRequest: Api_DocumentUploadRequest,
       ) => await uploadDocumentRelationshipApiCall(relationshipType, parentId, uploadRequest),
       [uploadDocumentRelationshipApiCall],
     ),
@@ -117,7 +118,7 @@ export const useDocumentRelationshipProvider = () => {
       relationshipType: DocumentRelationshipType,
       documentId: number,
       updateRequest: Api_DocumentUpdateRequest,
-    ) => Promise<AxiosResponse<boolean, any>>
+    ) => Promise<AxiosResponse<Api_DocumentUpdateResponse, any>>
   >({
     requestFunction: useCallback(
       async (
