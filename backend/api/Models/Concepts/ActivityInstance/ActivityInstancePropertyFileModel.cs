@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Concepts
 {
-    public class PimsActInstPropFile : BaseAppModel
+    public class ActivityInstancePropertyFileModel : BaseAppModel
     {
         public long Id { get; set; }
 

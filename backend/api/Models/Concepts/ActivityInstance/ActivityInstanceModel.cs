@@ -47,12 +47,12 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The list of properties that are part of this research file and this activity.
         /// </summary>
-        public IList<PimsActInstPropFile> ActInstPropRsrchFiles { get; set; }
+        public IList<ActivityInstancePropertyFileModel> ActInstPropRsrchFiles { get; set; }
 
         /// <summary>
         /// get/set - The list of properties that are part of this acquisition file and this activity.
         /// </summary>
-        public IList<PimsActInstPropFile> ActInstPropAcqFiles { get; set; }
+        public IList<ActivityInstancePropertyFileModel> ActInstPropAcqFiles { get; set; }
         #endregion
     }
 }

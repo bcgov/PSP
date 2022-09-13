@@ -144,14 +144,14 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsActivityInstanceNotes.Remove(activityNote);
             }
 
-            foreach (var propAcqFile in instance.PimsActInstPropAcqFiles)
+            foreach (var propertyAcquisitionFile in instance.PimsActInstPropAcqFiles)
             {
-                this.Context.PimsActInstPropAcqFiles.Remove(propAcqFile);
+                this.Context.PimsActInstPropAcqFiles.Remove(propertyAcquisitionFile);
             }
 
-            foreach (var propRsrchFile in instance.PimsActInstPropRsrchFiles)
+            foreach (var propertyResearchFile in instance.PimsActInstPropRsrchFiles)
             {
-                this.Context.PimsActInstPropRsrchFiles.Remove(propRsrchFile);
+                this.Context.PimsActInstPropRsrchFiles.Remove(propertyResearchFile);
             }
 
             this.Context.PimsActivityInstances.Remove(instance);
