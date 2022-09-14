@@ -92,7 +92,7 @@ export const ContactInput: React.FC<ContactInputProps> = ({
           </Col>
         </Row>
       </TooltipWrapper>
-      {!displayErrorTooltips && <DisplayError field={field} errorPrompt />}
+      {!displayErrorTooltips && <DisplayError field={field} errorPrompt={true} />}
     </Form.Group>
   );
 };
