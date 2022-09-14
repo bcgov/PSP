@@ -8,13 +8,25 @@ export const AddAcquisitionFileYupSchema = Yup.object().shape({
   acquisitionType: Yup.string().required('Acquisition type is required'),
   region: Yup.string().required('Ministry region is required'),
   team: Yup.array().of(
-    Yup.object().shape({
-      contact: Yup.object()
-        .nullable()
-        .required('Select a contact'),
-      contactTypeCode: Yup.string()
-        .ensure()
-        .required('Select a profile'),
-    }),
+    Yup.object().shape(
+      {
+        contact: Yup.object()
+          .nullable()
+          .when('contactTypeCode', {
+            is: (contactTypeCode: string) => Boolean(contactTypeCode),
+            then: Yup.string().required('Select a team member'),
+          }),
+        contactTypeCode: Yup.string()
+          .trim()
+          .when('contact', {
+            is: (contact: object) => Boolean(contact),
+            then: Yup.string().required('Select a profile'),
+          }),
+      },
+      [
+        ['contact', 'contactTypeCode'],
+        ['contactTypeCode', 'contact'],
+      ],
+    ),
   ),
 });
