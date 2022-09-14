@@ -18,6 +18,7 @@ export interface Api_Activity extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   activityTemplateId?: number;
   description: string;
+  status: string;
   activityStatusTypeCode?: Api_TypeCode<string>;
   activityTemplate: Api_ActivityTemplate;
   activityDataJson: string;

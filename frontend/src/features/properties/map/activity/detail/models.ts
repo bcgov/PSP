@@ -8,6 +8,7 @@ export class ActivityModel {
   id?: number;
   activityTemplateId?: number;
   description?: string;
+  status?: string;
   activityStatusTypeCode?: Api_TypeCode<string>;
   activityTemplate?: Api_ActivityTemplate;
   activityDataJson?: string;
@@ -21,6 +22,7 @@ export class ActivityModel {
       id: this.id,
       activityTemplateId: this.activityTemplateId,
       description: this.description ?? '',
+      status: this.status ?? '',
       activityStatusTypeCode: this.activityStatusTypeCode,
       activityTemplate: this.activityTemplate ?? {},
       activityDataJson: this.activityData ? JSON.stringify(this.activityData) : '',

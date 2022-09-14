@@ -9,6 +9,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       },
     },
     id: 1,
+    status: 'DRAFT',
     activityStatusTypeCode: {
       id: 'DRAFT',
       description: 'Draft',
@@ -24,6 +25,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       },
     },
     id: 2,
+    status: 'DRAFT',
     activityStatusTypeCode: {
       id: 'DRAFT',
       description: 'Draft',
@@ -39,6 +41,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       },
     },
     id: 3,
+    status: 'DRAFT',
     activityStatusTypeCode: {
       id: 'DRAFT',
       description: 'Draft',
@@ -50,6 +53,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
 
 export const getMockActivityResponse: () => Api_Activity = () => ({
   id: 2,
+  status: 'GENERAL',
   activityTemplateId: 1,
   activityTemplateTypeCode: {
     id: 'GENERAL',
