@@ -74,11 +74,10 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Deleting PIMS document for single activity");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespository.GetAllByDocument(activityDocument.DocumentId);
+            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespository.GetAllByDocument(activityDocument.DocumentId, true);
             if (existingActivityDocuments.Count == 1)
             {
-                documentActivityRespository.Delete(activityDocument);
-                var deletedDocumentFlag = await DeleteDocumentAsync(activityDocument.Document);
+                var deletedDocumentFlag = await DeleteDocumentAsync(activityDocument.Document, false);
                 if(commitTransaction)
                 {
                     documentActivityRespository.CommitTransaction();
@@ -237,7 +236,7 @@ namespace Pims.Api.Services
             return response;
         }
 
-        public async Task<bool> DeleteDocumentAsync(PimsDocument document)
+        public async Task<bool> DeleteDocumentAsync(PimsDocument document, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
@@ -254,7 +253,10 @@ namespace Pims.Api.Services
                 if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
                 {
                     documentRepository.Delete(document);
-                    documentRepository.CommitTransaction();
+                    if (commitTransaction)
+                    {
+                        documentRepository.CommitTransaction();
+                    }
                     return true;
                 }
                 else

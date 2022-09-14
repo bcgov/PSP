@@ -80,6 +80,11 @@ namespace Pims.Dal.Repositories
         {
             document.ThrowIfNull(nameof(document));
 
+            foreach (var pimsActivityInstanceDocument in document.PimsActivityInstanceDocuments)
+            {
+                this.Context.PimsActivityInstanceDocuments.Remove(pimsActivityInstanceDocument);
+            }
+
             this.Context.PimsDocuments.Remove(document);
             return true;
         }

@@ -34,32 +34,38 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document relationships for a given document.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsActivityInstanceDocument> GetAllByDocument(long documentId)
+        public IList<PimsActivityInstanceDocument> GetAllByDocument(long documentId, bool tracking = false)
         {
-            return this.Context.PimsActivityInstanceDocuments
+            var query = this.Context.PimsActivityInstanceDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.DocumentId == documentId)
-                .AsNoTracking()
-                .ToList();
+                .Where(ad => ad.DocumentId == documentId);
+            if (tracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return query.ToList();
         }
 
         /// <summary>
         /// Get a list of all the document relationships for a given activity.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsActivityInstanceDocument> GetAllByActivity(long activityId)
+        public IList<PimsActivityInstanceDocument> GetAllByActivity(long activityId, bool tracking = false)
         {
-            return this.Context.PimsActivityInstanceDocuments
+            var query = this.Context.PimsActivityInstanceDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.ActivityInstanceId == activityId)
-                .AsNoTracking()
-                .ToList();
+                .Where(ad => ad.ActivityInstanceId == activityId);
+            if (tracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return query.ToList();
         }
 
         /// <summary>
