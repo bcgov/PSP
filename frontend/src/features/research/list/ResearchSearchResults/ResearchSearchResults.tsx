@@ -11,7 +11,7 @@ import { CellProps } from 'react-table';
 const columns: ColumnWithProps<IResearchSearchResult>[] = [
   {
     Header: 'R-File Number',
-    accessor: 'rfileNumber',
+    accessor: 'fileNumber',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -22,16 +22,16 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
       if (hasClaim(Claims.CONTACT_VIEW)) {
         return (
           <Link to={`/mapview/sidebar/research/${props.row.original.id}`}>
-            {props.row.original.rfileNumber}
+            {props.row.original.fileNumber}
           </Link>
         );
       }
-      return props.row.original.rfileNumber;
+      return props.row.original.fileNumber;
     },
   },
   {
     Header: 'Research file name',
-    accessor: 'name',
+    accessor: 'fileName',
     align: 'right',
     clickable: true,
     sortable: true,
