@@ -13,8 +13,6 @@ import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { handleSortChange } from 'hooks/useSearch';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
-import remove from 'lodash/remove';
-import uniq from 'lodash/uniq';
 import React, {
   PropsWithChildren,
   ReactElement,
@@ -204,35 +202,24 @@ const IndeterminateCheckbox = React.forwardRef(
       rest.onChange && !allDataRef && rest.onChange(e);
       const currentSelected = selectedRef?.current ? [...selectedRef?.current] : [];
       if (isHeaderCheck) {
-        setSelected([]);
-      } else {
-        if (isSingleSelect === true) {
-          currentSelected.splice(0, currentSelected.length);
-          currentSelected.push(row.original);
+        if (e.target.checked && !indeterminate) {
+          currentSelected.push(...(allDataRef?.current ?? []));
+          setSelected(allDataRef?.current ?? []);
         } else {
-          if (currentSelected.find(selected => selected.id === row.original.id)) {
-            remove(
-              currentSelected,
-              currentSelected.find(selected => selected.id === row.original.id),
-            );
-          } else {
-            currentSelected.push(row.original);
-          }
+          setSelected([]);
         }
-        setSelected(uniq([...currentSelected]));
+      } else {
+        setSelected([row.original]);
       }
     };
-    rest.checked = isHeaderCheck
-      ? selectedRef?.current?.length === allDataRef?.current?.length &&
-        !!allDataRef?.current?.length
-      : checked;
+
+    rest.checked = isHeaderCheck ? !indeterminate && checked : checked;
     return (
       <>
         <input
           type={isSingleSelect === true ? 'radio' : 'checkbox'}
           ref={resolvedRef}
           {...rest}
-          disabled={isHeaderCheck && rest.checked === false && !indeterminate}
           onChange={onChainedChange}
           data-testid={`selectrow-${row?.original?.id ?? 'parent'}`}
         />

@@ -21,6 +21,7 @@ export interface IActivityTrayProps {
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
+  onEditRelatedProperties: () => void;
 }
 
 export const ActivityTray = ({
@@ -32,6 +33,7 @@ export const ActivityTray = ({
   loading,
   editMode,
   setEditMode,
+  onEditRelatedProperties,
 }: IActivityTrayProps) => {
   const [show, setShow] = useState(true);
   let trayContent = (
@@ -43,6 +45,7 @@ export const ActivityTray = ({
           editMode={editMode}
           setEditMode={setEditMode}
           onSave={onSave}
+          onEditRelatedProperties={onEditRelatedProperties}
         />
       )}
     </HalfHeightDiv>
