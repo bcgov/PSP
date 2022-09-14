@@ -7,6 +7,7 @@ import * as API from 'constants/API';
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
+import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
@@ -28,6 +29,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
   const handleContactManagerOk = () => {
     formikProps.setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
     setShowContactManager(false);
+    setSelectedContact([]);
   };
 
   return (
@@ -94,6 +96,11 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
         setDisplay={setShowContactManager}
         isSingleSelect
         handleModalOk={handleContactManagerOk}
+        handleModalCancel={() => {
+          setSelectedContact([]);
+        }}
+        showActiveSelector={true}
+        showOnlyIndividuals={true}
       ></ContactManagerModal>
     </>
   );
