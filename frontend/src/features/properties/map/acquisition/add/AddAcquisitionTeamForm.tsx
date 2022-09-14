@@ -96,6 +96,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
         isSingleSelect
         handleModalOk={handleContactManagerOk}
         handleModalCancel={() => {
+          setShowContactManager(false);
           setSelectedContact([]);
         }}
         showActiveSelector={true}
