@@ -11,7 +11,7 @@ export const AddAcquisitionFileYupSchema = Yup.object().shape({
     Yup.object().shape({
       contact: Yup.object()
         .nullable()
-        .required('Select a contact'),
+        .required('Select a team member'),
       contactTypeCode: Yup.string()
         .ensure()
         .required('Select a profile'),
