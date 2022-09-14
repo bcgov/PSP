@@ -57,10 +57,6 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
             ActivityModel.fromApi(activity, file.fileType).actInstPropFiles ?? [],
           ),
         );
-      } else {
-        throw Error(
-          'unable to load required file or activity details. Please refresh this page to try again. If this error persists please contact support',
-        );
       }
       return activity;
     }
