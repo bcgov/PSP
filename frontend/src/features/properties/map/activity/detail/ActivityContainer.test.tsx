@@ -1,4 +1,5 @@
 import { waitForElementToBeRemoved } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
@@ -7,11 +8,14 @@ import { SideBarContextProvider } from 'features/properties/map/context/sidebarC
 import { mockLookups } from 'mocks';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { getMockActivityResponse } from 'mocks/mockActivities';
+import { getMockApiPropertyFiles } from 'mocks/mockProperties';
+import { getMockResearchFile } from 'mocks/mockResearchFile';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity } from 'models/api/Activity';
-import { Api_File } from 'models/api/File';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { act } from 'react-dom/test-utils';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+import { render, RenderOptions } from 'utils/test-utils';
 
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import ActivityContainer, { IActivityContainerProps } from './ActivityContainer';
@@ -36,14 +40,18 @@ const ActivityView = (props: IActivityTrayProps) => {
 
 describe('Activity Container', () => {
   const setup = (
-    renderOptions?: RenderOptions & Partial<IActivityContainerProps> & { file?: Api_File },
+    renderOptions?: RenderOptions &
+      Partial<IActivityContainerProps> & {
+        file?: Partial<Api_ResearchFile> | Partial<Api_AcquisitionFile>;
+        fileType?: FileTypes;
+      },
   ) => {
     // render component under test
     const component = render(
       <SideBarContextProvider
         file={{
           ...(renderOptions?.file ?? mockAcquisitionFileResponse()),
-          fileType: FileTypes.Acquisition,
+          fileType: renderOptions?.fileType ?? FileTypes.Acquisition,
         }}
       >
         <ActivityContainer
@@ -64,7 +72,9 @@ describe('Activity Container', () => {
   };
 
   beforeAll(() => {
-    mockAxios.onGet(new RegExp(`activities/1`)).reply(200, getMockActivityResponse());
+    mockAxios.onGet(new RegExp(`activities/1`)).reply(200, {
+      ...getMockActivityResponse(),
+    });
     mockAxios
       .onPut(new RegExp(`activities/2`))
       .reply(200, { ...getMockActivityResponse(), rowVersion: 2 });
@@ -84,6 +94,48 @@ describe('Activity Container', () => {
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
     expect(viewProps?.activity).toStrictEqual(getMockActivityResponse());
+  });
+
+  it('fetches the activity for a research file and passes it to the view', async () => {
+    const { getByTestId } = setup({ fileType: FileTypes.Research });
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+
+    expect(viewProps?.activity).toStrictEqual(getMockActivityResponse());
+  });
+
+  it('displays the select properties modal for an acquisition file', async () => {
+    const { getByTestId } = setup({
+      file: { ...mockAcquisitionFileResponse(), acquisitionProperties: getMockApiPropertyFiles() },
+    });
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+
+    await act(async () => {
+      viewProps?.onEditRelatedProperties();
+    });
+
+    expect(screen.getByText('Related properties')).toBeVisible();
+    const checkBoxes = screen.getAllByTitle('Toggle Row Selected');
+    checkBoxes.forEach(checkBox => {
+      expect(checkBox).toBeChecked();
+    });
+  });
+
+  it('displays the select properties modal for a research file', async () => {
+    const { getByTestId } = setup({
+      file: { ...getMockResearchFile(), researchProperties: getMockApiPropertyFiles() },
+      fileType: FileTypes.Research,
+    });
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+
+    await act(async () => {
+      viewProps?.onEditRelatedProperties();
+    });
+
+    expect(screen.getByText('Related properties')).toBeVisible();
+    const checkBoxes = screen.getAllByTitle('Toggle Row Selected');
+    checkBoxes.forEach(checkBox => {
+      expect(checkBox).toBeChecked();
+    });
   });
 
   it('calls update activity and returns the response', async () => {

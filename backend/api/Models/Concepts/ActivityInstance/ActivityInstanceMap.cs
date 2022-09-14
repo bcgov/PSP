@@ -15,6 +15,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ActivityTemplate, src => src.ActivityTemplate)
                 .Map(dest => dest.ActivityDataJson, src => src.ActivityDataJson)
                 .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.ActInstPropRsrchFiles, src => src.PimsActInstPropRsrchFiles)
+                .Map(dest => dest.ActInstPropAcqFiles, src => src.PimsActInstPropAcqFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
             config.NewConfig<ActivityInstanceModel, Entity.PimsActivityInstance>()
@@ -24,6 +26,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ActivityInstanceStatusTypeCode, src => src.ActivityStatusTypeCode.Id)
                 .Map(dest => dest.ActivityDataJson, src => src.ActivityDataJson)
                 .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.PimsActInstPropRsrchFiles, src => src.ActInstPropRsrchFiles)
+                .Map(dest => dest.PimsActInstPropAcqFiles, src => src.ActInstPropAcqFiles)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

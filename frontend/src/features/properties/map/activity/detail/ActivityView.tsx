@@ -3,7 +3,6 @@ import { NoteTypes } from 'constants/noteTypes';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { NoteListView } from 'features/notes/list/NoteListView';
-import noop from 'lodash/noop';
 import * as React from 'react';
 
 import { Activity, ActivityFile } from './ActivityContainer';
@@ -16,6 +15,7 @@ export interface IActivityViewProps {
   file: ActivityFile;
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
+  onEditRelatedProperties: () => void;
 }
 
 export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
@@ -23,6 +23,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   activity,
   editMode,
   setEditMode,
+  onEditRelatedProperties,
 }) => {
   return (
     <>
@@ -30,7 +31,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
       <ActivityControlsBar
         editMode={editMode}
         setEditMode={setEditMode}
-        onEditRelatedProperties={noop}
+        onEditRelatedProperties={onEditRelatedProperties}
       />
       <Section header="Description" isCollapsable initiallyExpanded title="description">
         <ActivityDescription editMode={editMode} />

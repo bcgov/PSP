@@ -15,6 +15,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const mockAxios = new MockAdapter(axios);
+const onEditRelatedProperties = jest.fn();
 
 jest.mock('@react-keycloak/web');
 
@@ -28,6 +29,7 @@ describe('ActivityView test', () => {
           activity={renderOptions?.activity ?? { ...getMockActivityResponse(), id: 2 }}
           editMode={renderOptions?.editMode ?? false}
           setEditMode={renderOptions?.setEditMode ?? noop}
+          onEditRelatedProperties={onEditRelatedProperties}
         />
       </Formik>,
       {

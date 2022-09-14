@@ -14,5 +14,5 @@ export const getDocumentUploadYupSchema = (
     }
   }
 
-  return Yup.object().shape(yupSchema);
+  return Yup.object().shape({ documentMetadata: Yup.object().shape(yupSchema) });
 };
