@@ -166,7 +166,7 @@ namespace Pims.Api.Helpers.Middleware
                     using var responseStream = await exception?.Response.Content.ReadAsStreamAsync();
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
-                    details = readStream.ReadToEnd(); // TODO: Rewrite this logic.
+                    details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
                     _logger.LogError(ex, details);
                 }
                 catch (Exception streamEx)
@@ -201,7 +201,7 @@ namespace Pims.Api.Helpers.Middleware
                     using var responseStream = await exception?.Response.Content.ReadAsStreamAsync();
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
-                    details = readStream.ReadToEnd(); // TODO: Rewrite this logic.
+                    details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
                     _logger.LogError(ex, details);
                 }
                 catch (Exception streamEx)
