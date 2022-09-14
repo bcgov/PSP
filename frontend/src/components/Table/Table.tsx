@@ -125,7 +125,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   showSelectedRowCount?: boolean;
   hideHeaders?: boolean;
   onRequestData?: (props: { pageIndex: number; pageSize: number }) => void;
-  loading?: boolean; // TODO: PSP-4394 Show loading indicator while fetching data from server
+  loading?: boolean;
   totalItems?: number;
   pageCount?: number;
   pageSize?: number;
