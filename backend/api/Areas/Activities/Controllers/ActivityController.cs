@@ -10,6 +10,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pims.Api.Areas.Activities.Controllers
 {
@@ -128,6 +129,29 @@ namespace Pims.Api.Areas.Activities.Controllers
         }
 
         /// <summary>
+        /// Updates the activity properties with the specified file type.
+        /// </summary>
+        /// <param name="fileType">The type of file this activity is associated with.</param>
+        /// <param name="activityModel">The updated activity property values.</param>
+        /// <returns></returns>
+        [HttpPut("{fileType}/activity/{activityId:long}/properties")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.ActivityEdit)]
+        [ProducesResponseType(typeof(ActivityInstanceModel), 200)]
+        [SwaggerOperation(Tags = new[] { "activity" })]
+        public IActionResult UpdateActivityProperties(FileType fileType, [FromBody] ActivityInstanceModel activityModel)
+        {
+            var activityInstance = _mapper.Map<PimsActivityInstance>(activityModel);
+            var updatedActivity = fileType switch
+            {
+                FileType.Research => _activityService.UpdateActivityResearchProperties(activityInstance),
+                FileType.Acquisition => _activityService.UpdateActivityAcquisitionProperties(activityInstance),
+                _ => throw new BadRequestException("File type must be a known type"),
+            };
+            return new JsonResult(_mapper.Map<ActivityInstanceModel>(updatedActivity));
+        }
+
+        /// <summary>
         /// Get the activity template types.
         /// </summary>
         /// <returns></returns>
@@ -153,9 +177,9 @@ namespace Pims.Api.Areas.Activities.Controllers
         [HasPermission(Permissions.ActivityDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "activity" })]
-        public IActionResult DeleteActivity(long activityId)
+        public async Task<IActionResult> DeleteActivity(long activityId)
         {
-            _activityService.Delete(activityId);
+            await _activityService.Delete(activityId);
             return new JsonResult(true);
         }
         #endregion

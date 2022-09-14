@@ -21,7 +21,7 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
       title={
         <>
           <FaUpload />
-          <span>Add a Document</span>
+          <span className="ml-3">Add a Document</span>
         </>
       }
       message={

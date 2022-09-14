@@ -17,6 +17,10 @@ namespace Pims.Dal.Repositories
 
         PimsActivityInstance Update(PimsActivityInstance instance);
 
+        PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance);
+
+        PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance instance);
+
         bool Delete(long activityId);
     }
 }

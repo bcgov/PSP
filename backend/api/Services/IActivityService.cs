@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -21,6 +23,10 @@ namespace Pims.Api.Services
 
         PimsActivityInstance Update(PimsActivityInstance model);
 
-        void Delete(long activityId);
+        PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance model);
+
+        PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance model);
+
+        Task Delete(long activityId);
     }
 }

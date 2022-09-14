@@ -18,9 +18,13 @@ interface PropertyName {
 }
 
 export const getPropertyName = (property: IMapProperty): PropertyName => {
-  if (property.pid !== undefined && property.pid?.length > 0 && property.pid !== '0') {
+  if (property.pid !== undefined && property.pid?.toString().length > 0 && property.pid !== '0') {
     return { label: NameSourceType.PID, value: pidFormatter(property.pid.toString()) };
-  } else if (property.pin !== undefined && property.pin?.length > 0 && property.pin !== '0') {
+  } else if (
+    property.pin !== undefined &&
+    property.pin?.toString()?.length > 0 &&
+    property.pin !== '0'
+  ) {
     return { label: NameSourceType.PIN, value: property.pin.toString() };
   } else if (property.planNumber !== undefined) {
     return { label: NameSourceType.PLAN, value: property.planNumber };
