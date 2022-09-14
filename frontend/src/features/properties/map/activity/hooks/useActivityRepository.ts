@@ -8,6 +8,7 @@ import {
   postActivity,
   postFileActivity,
   putActivity,
+  putActivityProperties,
 } from 'hooks/pims-api/useApiActivities';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { Api_Activity, Api_ActivityTemplate, Api_FileActivity } from 'models/api/Activity';
@@ -87,6 +88,19 @@ export const useActivityRepository = () => {
     onError: useAxiosErrorHandler(),
   });
 
+  const updateActivityPropertiesApi = useApiRequestWrapper<
+    (fileType: FileTypes, activity: Api_Activity) => Promise<AxiosResponse<Api_Activity, any>>
+  >({
+    requestFunction: useCallback(
+      async (fileType: FileTypes, activity: Api_Activity) =>
+        await putActivityProperties(fileType, activity),
+      [],
+    ),
+    requestName: 'UpdateActivityProperties',
+    onSuccess: useAxiosSuccessHandler('Activity saved'),
+    onError: useAxiosErrorHandler(),
+  });
+
   const deleteActivityApi = useApiRequestWrapper<
     (activityId: number) => Promise<AxiosResponse<boolean, any>>
   >({
@@ -109,6 +123,7 @@ export const useActivityRepository = () => {
       getFileActivities: getFileActivitiesApi,
       updateActivity: updateActivityApi,
       deleteActivity: deleteActivityApi,
+      updateActivityProperties: updateActivityPropertiesApi,
     }),
     [
       addActivityApi,
@@ -118,6 +133,7 @@ export const useActivityRepository = () => {
       updateActivityApi,
       deleteActivityApi,
       getActivityTemplatesApi,
+      updateActivityPropertiesApi,
     ],
   );
 };
