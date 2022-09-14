@@ -106,7 +106,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult AddRole([FromBody] Model.RoleModel model)
         {
-            var entity = _mapper.Map<Entity.PimsRole>(model); // TODO: Return bad request.
+            var entity = _mapper.Map<Entity.PimsRole>(model); // TODO: PSP-4417 Return bad request.
             _pimsService.Role.Add(entity);
             var role = _mapper.Map<Model.RoleModel>(entity);
 

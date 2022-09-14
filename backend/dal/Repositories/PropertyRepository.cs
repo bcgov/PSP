@@ -61,7 +61,7 @@ namespace Pims.Dal.Repositories
             var query = this.Context.GeneratePropertyQuery(this.User, filter);
             var properties = query.ToArray();
 
-            // TODO: Add optional paging ability to query.
+            // TODO: PSP-4427 Add optional paging ability to query.
             return properties;
         }
 

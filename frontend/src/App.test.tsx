@@ -33,7 +33,7 @@ describe('App suite', () => {
     expect(1).toBe(1);
   });
 
-  // TODO: Create tests for the App component.
+  // TODO: PSP-860 Create tests for the App component.
   // it('App snapshot', () => {
   //   const { container } = render(<App />);
   //   expect(container).toMatchSnapshot();
