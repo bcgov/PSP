@@ -56,7 +56,6 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                       setContactIndex(index);
                       setShowContactManager(true);
                     }}
-                    displayErrorTooltips={true}
                     field={`team[${index}].contact`}
                     onClear={() => formikProps.setFieldValue(`team[${index}].contact`, undefined)}
                   ></ContactInput>
