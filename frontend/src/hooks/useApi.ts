@@ -31,7 +31,7 @@ export interface IPimsAPI {
 }
 
 /**
- * TODO: This hook needs to get deleted.
+ * TODO: PSP-4408 This hook needs to get deleted.
  * @deprecated The /hooks/pims-api hooks should be used instead.
  */
 export const useApi = (): IPimsAPI => {

@@ -20,7 +20,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     Cell: (props: CellProps<Api_AcquisitionFile>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.ACQUISITION_VIEW)) {
-        // TODO: Remove icon when file number field is added to CREATE ACQUISITION FILE form.
+        // TODO: PSP-4400 Remove icon when file number field is added to CREATE ACQUISITION FILE form.
         // The icon is here so we can open ACQ File details from list
         return (
           <Link to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>

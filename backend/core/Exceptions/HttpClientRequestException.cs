@@ -66,7 +66,7 @@ namespace Pims.Core.Exceptions
         {
             this.Response = response ?? throw new ArgumentNullException(nameof(response)); // NOSONAR
 
-            // TODO: Extract error response details into innerException.
+            // TODO: PSP-4423 Extract error response details into innerException.
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Pims.Core.Exceptions
         {
             this.Response = response ?? throw new ArgumentNullException(nameof(response)); // NOSONAR
 
-            // TODO: Extract error response details into innerException.
+            // TODO: PSP-4423 Extract error response details into innerException.
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Pims.Core.Exceptions
         {
             this.Response = response ?? throw new ArgumentNullException(nameof(response)); // NOSONAR
 
-            // TODO: Extract error response details into innerException.
+            // TODO: PSP-4423 Extract error response details into innerException.
         }
 
         #endregion
