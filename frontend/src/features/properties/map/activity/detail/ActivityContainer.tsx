@@ -2,8 +2,8 @@ import { FileTypes } from 'constants/fileTypes';
 import { SideBarContext, TypedFile } from 'features/properties/map/context/sidebarContext';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity, Api_PropertyActivity } from 'models/api/Activity';
+import { Api_File } from 'models/api/File';
 import { Api_Property } from 'models/api/Property';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -13,8 +13,6 @@ import { useContext, useState } from 'react';
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import { useActivityRepository } from '../hooks/useActivityRepository';
 import ActivityPropertyModal from './ActivityPropertyModal';
-import { formContent } from './content/formContent';
-import { ActivityTemplateTypes } from './content/models';
 import { ActivityModel } from './models';
 
 export interface IActivityContainerProps {
@@ -72,9 +70,9 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
     return updatedActivity;
   };
 
-  const onSaveActivityProperties = async (updatedActivity: ActivityModel) => {
+  const onSaveActivityProperties = async () => {
     if (file?.fileType && !!activityModel) {
-      await updateActivityProperties(file?.fileType, updatedActivity.toApi());
+      await updateActivityProperties(file?.fileType, activityModel?.toApi());
     }
     setStaleFile(true);
     return await fetchActivity();
@@ -84,25 +82,19 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
     throw new Error('Unable to determine id of current file.');
   }
 
-  const currentFormContent = response?.activityTemplate?.activityTemplateTypeCode?.id
-    ? formContent.get(
-        response?.activityTemplate?.activityTemplateTypeCode?.id as ActivityTemplateTypes,
-      )
-    : undefined;
   return !!file?.id ? (
     <>
       <View
+        file={file as ActivityFile}
+        activity={response}
         onClose={onClose}
         loading={loading}
         updateLoading={updateLoading}
         error={!!error}
-        activity={response}
-        onEditRelatedProperties={() => setDisplay(true)}
-        onSave={editActivity}
         editMode={editMode}
         setEditMode={setEditMode}
-        file={file as ActivityFile}
-        currentFormContent={currentFormContent}
+        onSave={editActivity}
+        onEditRelatedProperties={() => setDisplay(true)}
       ></View>
       <ActivityPropertyModal
         display={display}
@@ -124,20 +116,23 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
 export const getActivityPropertiesOnFile = (
   file: TypedFile,
   activityFileProperties: Api_PropertyActivity[],
-): Api_PropertyFile[] => {
+) => {
   const activityFilePropertyIds = activityFileProperties.map(af => af.propertyFileId);
-
+  let fileProperties: Api_Property[] = [];
   if (file?.fileType === FileTypes.Research) {
-    return (file as Api_ResearchFile).researchProperties
-      ?.filter(researchProperty => activityFilePropertyIds.includes(researchProperty.id))
-      .map(p => ({ id: p.id })) as Api_PropertyFile[];
+    fileProperties =
+      (file as Api_ResearchFile).researchProperties
+        ?.filter(rp => rp?.property !== undefined)
+        ?.map(rp => rp.property as Api_Property) ?? [];
   } else if (file?.fileType === FileTypes.Acquisition) {
-    return (file as Api_AcquisitionFile).acquisitionProperties
-      ?.filter(acquisitionProperty => activityFilePropertyIds.includes(acquisitionProperty.id))
-      .map(p => ({ id: p.id })) as Api_PropertyFile[];
-  } else {
-    throw Error('Unexpected file type');
+    fileProperties =
+      (file as Api_AcquisitionFile).acquisitionProperties
+        ?.filter(ap => ap?.property !== undefined)
+        ?.map(ap => ap.property as Api_Property) ?? [];
   }
+  return (
+    fileProperties?.filter(fileProperty => activityFilePropertyIds.includes(fileProperty.id)) ?? []
+  );
 };
 
 export default ActivityContainer;

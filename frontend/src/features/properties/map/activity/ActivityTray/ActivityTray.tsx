@@ -23,7 +23,6 @@ export interface IActivityTrayProps {
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
-  currentFormContent?: IActivityFormContent;
 }
 
 export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
@@ -36,8 +35,7 @@ export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
   editMode,
   setEditMode,
   onEditRelatedProperties,
-  currentFormContent,
-}) => {
+}: IActivityTrayProps) => {
   const [show, setShow] = useState(true);
   let trayContent = (
     <HalfHeightDiv>
@@ -49,7 +47,6 @@ export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
           setEditMode={setEditMode}
           onSave={onSave}
           onEditRelatedProperties={onEditRelatedProperties}
-          formContent={currentFormContent}
         />
       )}
     </HalfHeightDiv>
