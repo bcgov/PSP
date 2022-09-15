@@ -100,6 +100,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 

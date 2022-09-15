@@ -519,6 +519,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
