@@ -1,6 +1,7 @@
 import { createMemoryHistory } from 'history';
-import { mockDocumentTypeMetadata, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_DocumentType } from 'models/api/Document';
+import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 

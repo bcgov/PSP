@@ -1,11 +1,10 @@
 import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
-import { mockDocumentMetadata, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_DocumentType } from 'models/api/Document';
 import { Api_Storage_DocumentMetadata, Api_Storage_MetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { ComposedDocument } from '../ComposedDocument';
 import { DocumentDetailView } from './DocumentDetailView';
@@ -57,11 +56,11 @@ const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
   },
 ];
 const mockDocument: ComposedDocument = {
-  mayanMetadata: mockDocumentMetadata(),
+  mayanMetadata: documentTypeMetadata,
   pimsDocument: {
     id: 1,
     mayanDocumentId: 15,
-    documentType: mockDocumentTypesResponse()[0],
+    documentType: documentTypes[0],
     statusTypeCode: { id: 'AMEND', description: 'Amended' },
     fileName: 'NewFile.doc',
   },
@@ -74,21 +73,22 @@ describe('DocumentDetailView component', () => {
       <DocumentDetailView document={mockDocument} isLoading={false} setIsEditable={jest.fn()} />,
       {
         ...renderOptions,
-        useMockAuthentication: true,
         store: {
           [lookupCodesSlice.name]: { lookupCodes: mockLookups },
         },
         history,
-        claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
       },
     );
 
     return {
       ...utils,
+      useMockAuthentication: true,
     };
   };
 
-  beforeEach(() => {});
+  beforeEach(() => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT] });
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -108,7 +108,7 @@ describe('DocumentDetailView component', () => {
 
   it('renders the document type', () => {
     const { getAllByText } = setup({});
-    const textarea = getAllByText('Survey')[0];
+    const textarea = getAllByText('BC Assessment Search')[0];
 
     expect(textarea).toBeVisible();
   });
