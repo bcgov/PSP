@@ -26,35 +26,37 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
   return (
     <>
       {hasClaim(Claims.ACTIVITY_EDIT) && (
-        <RightAlignedRow>
-          <SectionField label="Status">
-            <Select
-              disabled={!editMode && !hasClaim(Claims.PROPERTY_EDIT)}
-              field="status"
-              options={activityStatusTypeOptions}
-            />
-          </SectionField>
-
-          {hasClaim(Claims.PROPERTY_EDIT) && (
-            <Button onClick={onEditRelatedProperties} variant="secondary mr-4">
-              Related properties
-            </Button>
-          )}
-          {!editMode && <EditButton onClick={() => setEditMode(true)} />}
-        </RightAlignedRow>
+        <StyledRow>
+          <LeftAligned>
+            <SectionField label="Status">
+              <Select disabled={!editMode} field="status" options={activityStatusTypeOptions} />
+            </SectionField>
+          </LeftAligned>
+          <RightAligned>
+            {!editMode && <EditButton onClick={() => setEditMode(true)} />}
+            {hasClaim(Claims.PROPERTY_EDIT) && (
+              <Button className="" onClick={onEditRelatedProperties} variant="secondary mr-4">
+                Related properties
+              </Button>
+            )}
+          </RightAligned>
+        </StyledRow>
       )}
     </>
   );
 };
-
-const RightAlignedRow = styled.div`
+const StyledRow = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: row;
-  justify-content: space-between;
-  .btn {
-    width: fit-content;
-  }
+  width: 100%;
+`;
+const RightAligned = styled.div`
+  width: inherit;
+  display: flex;
+  flex-direction: row-reverse;
+`;
+const LeftAligned = styled.div`
+  width: inherit;
 `;
 
 export default ActivityControlsBar;
