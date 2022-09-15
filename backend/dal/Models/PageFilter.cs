@@ -78,7 +78,7 @@ namespace Pims.Dal.Entities.Models
         }
 
         /// <summary>
-        /// Convert a start index to a page for paging. // TODO: Should switch to using start index instead of paging because it has a little more control.
+        /// Convert a start index to a page for paging. // TODO: PSP-4425 Should switch to using start index instead of paging because it has a little more control.
         /// </summary>
         /// <param name="startIndex"></param>
         /// <param name="quantity"></param>

@@ -3,6 +3,7 @@ import GenericModal from 'components/common/GenericModal';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Claims } from 'constants/claims';
+import { FileTypes } from 'constants/fileTypes';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
 import { getResearchPropertyName } from 'features/properties/selector/utils';
@@ -10,10 +11,12 @@ import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
 
+import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
@@ -33,6 +36,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   } = useGetResearch();
 
   const [researchFile, setResearchFile] = useState<Api_ResearchFile | undefined>(undefined);
+  const { setFile, setFileLoading } = React.useContext(SideBarContext);
 
   const [selectedMenuIndex, setSelectedMenuIndex] = useState<number>(0);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -52,14 +56,19 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     researchFile?.researchProperties?.map(x => getResearchPropertyName(x).value) || [];
   menuItems.unshift('RFile Summary');
 
+  useEffect(() => setFileLoading(loadingResearchFile), [loadingResearchFile, setFileLoading]);
+
   const fetchResearchFile = React.useCallback(async () => {
     var retrieved = await getResearchFile(props.researchFileId);
     setResearchFile(retrieved);
-  }, [getResearchFile, setResearchFile, props.researchFileId]);
+    setFile({ ...retrieved, fileType: FileTypes.Research });
+  }, [getResearchFile, props.researchFileId, setFile]);
 
   React.useEffect(() => {
-    fetchResearchFile();
-  }, [fetchResearchFile]);
+    if (researchFile === undefined) {
+      fetchResearchFile();
+    }
+  }, [fetchResearchFile, researchFile]);
 
   if (researchFile === undefined && loadingResearchFile) {
     return (

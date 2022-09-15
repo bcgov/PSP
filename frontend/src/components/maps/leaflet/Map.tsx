@@ -99,7 +99,7 @@ const Map: React.FC<MapProps> = ({
   const [geoFilter, setGeoFilter] = useState<IGeoSearchParams>({
     ...defaultFilterValues,
     includeAllProperties: keycloak.hasClaim(Claims.ADMIN_PROPERTIES),
-  } as any); // Todo: remove type coercion
+  } as any); // Todo: PSP-4392 remove type coercion
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
   const [triggerFilterChanged, setTriggerFilterChanged] = useState(true);
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);

@@ -24,9 +24,13 @@ const onRemoveProperty = jest.fn();
 
 const testProperty: IMapProperty = {
   pid: '123-456-789',
-  planNumber: '123546',
+  planNumber: 'SPS22411',
   address: 'Test address 123',
   legalDescription: 'Test Legal Description',
+  region: 1,
+  regionName: 'South Coast',
+  district: 5,
+  districtName: 'Okanagan-Shuswap',
 };
 
 describe('MapSelectorContainer component', () => {
@@ -102,6 +106,19 @@ describe('MapSelectorContainer component', () => {
     });
     await act(async () => {
       expect(getByText('PID: 123-456-789')).toBeVisible();
+    });
+  });
+
+  it('displays all selected property attributes', async () => {
+    const { getByText } = setup({
+      existingProperties: [PropertyForm.fromMapProperty(testProperty)],
+    });
+    await act(async () => {
+      expect(getByText(/SPS22411/g)).toBeVisible();
+      expect(getByText(/Test address 123/g)).toBeVisible();
+      expect(getByText(/1 - South Coast/g)).toBeVisible();
+      expect(getByText(/5 - Okanagan-Shuswap/g)).toBeVisible();
+      expect(getByText(/Test Legal Description/g)).toBeVisible();
     });
   });
 

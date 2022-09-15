@@ -72,16 +72,31 @@ describe('LayerPopupContainer component', () => {
       expect(getByText('View more property info')).toBeVisible();
     });
 
-    it('handles view property action', async () => {
+    it('handles view property action for inventory properties', async () => {
       const { getByTestId, getByText } = setup({
-        layerPopup: {} as any,
+        layerPopup: {
+          pimsProperty: { properties: { PROPERTY_ID: 1 } },
+          data: { PID: '123456789' },
+        } as any,
         onViewPropertyInfo: onViewPropertyInfo,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       userEvent.click(ellipsis);
       const link = getByText('View more property info');
       userEvent.click(link);
-      expect(onViewPropertyInfo).toHaveBeenCalled();
+      expect(onViewPropertyInfo).toHaveBeenCalledWith('123456789', 1);
+    });
+
+    it('handles view property action for non-inventory properties', async () => {
+      const { getByTestId, getByText } = setup({
+        layerPopup: { data: { PID: '123456789' } } as any,
+        onViewPropertyInfo: onViewPropertyInfo,
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      userEvent.click(ellipsis);
+      const link = getByText('View more property info');
+      userEvent.click(link);
+      expect(onViewPropertyInfo).toHaveBeenCalledWith('123456789', undefined);
     });
 
     it('handles create research file action', async () => {

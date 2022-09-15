@@ -13,8 +13,8 @@ export interface ISelectedPropertyContext {
   setPropertyInfo: (propertyInfo: IProperty | null) => void;
   selectedFeature: Feature<Geometry, GeoJsonProperties> | null;
   setSelectedFeature: (feature: Feature<Geometry, GeoJsonProperties> | null) => void;
-  selectedResearchFeature: Feature<Geometry, GeoJsonProperties> | null;
-  setSelectedResearchFeature: (feature: Feature<Geometry, GeoJsonProperties> | null) => void;
+  selectedFileFeature: Feature<Geometry, GeoJsonProperties> | null;
+  setSelectedFileFeature: (feature: Feature<Geometry, GeoJsonProperties> | null) => void;
   draftProperties: PointFeature[];
   setDraftProperties: (draftProperties: PointFeature[]) => void;
   loading: boolean;
@@ -29,8 +29,8 @@ export const SelectedPropertyContext = React.createContext<ISelectedPropertyCont
   setPropertyInfo: noop,
   selectedFeature: null,
   setSelectedFeature: noop,
-  selectedResearchFeature: null,
-  setSelectedResearchFeature: noop,
+  selectedFileFeature: null,
+  setSelectedFileFeature: noop,
   draftProperties: [],
   setDraftProperties: noop,
   loading: false,
@@ -58,10 +58,10 @@ export const SelectedPropertyContextProvider: React.FC<ISelectedPropertyContextC
     Geometry,
     GeoJsonProperties
   > | null>(values?.selectedFeature ?? null);
-  const [selectedResearchFeature, setSelectedResearchFeature] = React.useState<Feature<
+  const [selectedFileFeature, setSelectedFileFeature] = React.useState<Feature<
     Geometry,
     GeoJsonProperties
-  > | null>(values?.selectedResearchFeature ?? null);
+  > | null>(values?.selectedFileFeature ?? null);
   const [draftProperties, setDraftProperties] = React.useState<PointFeature[]>(
     values?.draftProperties ?? [],
   );
@@ -74,9 +74,8 @@ export const SelectedPropertyContextProvider: React.FC<ISelectedPropertyContextC
         setPropertyInfo,
         selectedFeature,
         setSelectedFeature,
-        selectedResearchFeature,
-        setSelectedResearchFeature:
-          values?.setSelectedResearchFeature ?? setSelectedResearchFeature,
+        selectedFileFeature: selectedFileFeature,
+        setSelectedFileFeature: values?.setSelectedFileFeature ?? setSelectedFileFeature,
         draftProperties,
         setDraftProperties: values?.setDraftProperties ?? setDraftProperties,
         loading,

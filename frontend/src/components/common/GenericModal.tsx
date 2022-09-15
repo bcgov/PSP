@@ -97,6 +97,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
     cancelButtonText,
     closeButton,
     hideFooter,
+    modalSize,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -129,7 +130,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
   };
 
   return (
-    <ModalContainer {...rest} show={showState}>
+    <ModalContainer {...rest} show={showState} modalSize={modalSize}>
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -189,6 +190,10 @@ const StyledModal = styled(Modal)`
     .close {
       color: white;
       opacity: 1;
+      font-size: 3rem;
+      font-weight: 10;
+      text-shadow: none;
+      font-family: 'Helvetica Narrow';
     }
   }
 `;

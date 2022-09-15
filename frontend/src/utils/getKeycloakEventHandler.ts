@@ -18,7 +18,7 @@ const getKeycloakEventHandler = (keycloak: KeycloakInstance) => {
     } else if (eventType === 'onReady') {
       store.dispatch(setKeycloakReady(true));
     } else {
-      //TODO: log error properly
+      //TODO: PSP-4411 log error properly
       console.debug(`keycloak event: ${eventType} error ${error}`);
     }
   };

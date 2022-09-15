@@ -82,9 +82,6 @@ export const CustomAxios = ({
         lifecycleToasts.errorToast();
       }
 
-      // TODO: This is not returning the error to an async/await try/catch implementation...
-      //const errorMessage =
-      //  errorToastMessage || (error.response && error.response.data.message) || String.ERROR;
       return Promise.reject(error);
     },
   );

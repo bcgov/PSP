@@ -706,7 +706,6 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       <div>
                         <input
                           data-testid="selectrow-parent"
-                          disabled=""
                           name=""
                           style="cursor: pointer;"
                           title="Click to deselect all."

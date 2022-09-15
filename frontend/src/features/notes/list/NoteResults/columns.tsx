@@ -20,16 +20,15 @@ export function createTableColumns(
       accessor: 'note',
       align: 'left',
       sortable: false,
-      minWidth: 100,
-      width: 100,
+      width: 80,
     },
     {
       Header: 'Created date',
       accessor: 'appCreateTimestamp',
       align: 'center',
       sortable: true,
-      width: 10,
-      maxWidth: 20,
+      minWidth: 24,
+      maxWidth: 24,
       Cell: DateCell,
     },
     {
@@ -37,8 +36,8 @@ export function createTableColumns(
       accessor: 'appLastUpdateUserid',
       align: 'center',
       sortable: true,
-      width: 10,
-      maxWidth: 20,
+      minWidth: 28,
+      maxWidth: 28,
     },
 
     {
@@ -46,8 +45,8 @@ export function createTableColumns(
       accessor: 'controls' as any, // this column is not part of the data model
       align: 'right',
       sortable: false,
-      width: 40,
-      maxWidth: 40,
+      width: 10,
+      maxWidth: 10,
       Cell: (cellProps: CellProps<Api_Note>) => {
         const { hasClaim } = useKeycloakWrapper();
 

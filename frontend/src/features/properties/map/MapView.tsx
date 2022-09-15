@@ -17,6 +17,7 @@ import { pidParser } from 'utils';
 
 import Map from '../../../components/maps/leaflet/Map';
 import ActivityRouter from './ActivityRouter';
+import { SideBarContextProvider } from './context/sidebarContext';
 import MapActionWindow from './MapActionWindow';
 import MapSideBar from './MapSideBar';
 
@@ -42,8 +43,10 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
     history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
   };
 
-  const onPropertyViewClicked = (pid?: string | null) => {
-    if (pid !== undefined && pid !== null) {
+  const onPropertyViewClicked = (pid?: string | null, id?: number) => {
+    if (id !== undefined) {
+      history.push(`/mapview/sidebar/property/${id}?pid=${pid}`);
+    } else if (pid !== undefined && pid !== null) {
       const parsedPid = pidParser(pid);
       history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
     } else {
@@ -72,14 +75,16 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
         {({ cursor }) => (
           <PropertyContextProvider>
             <StyleMapView data-test="map-view" className={clsx(cursor)}>
-              <MapSideBar
-                showSideBar={showSideBar}
-                setShowSideBar={setShowSideBar}
-                onZoom={onZoom}
-              />
-              <MapActionWindow showWindow={showActionBar}>
-                <ActivityRouter setShowActionBar={setShowActionBar} />
-              </MapActionWindow>
+              <SideBarContextProvider>
+                <MapSideBar
+                  showSideBar={showSideBar}
+                  setShowSideBar={setShowSideBar}
+                  onZoom={onZoom}
+                />
+                <MapActionWindow showWindow={showActionBar}>
+                  <ActivityRouter setShowActionBar={setShowActionBar} />
+                </MapActionWindow>
+              </SideBarContextProvider>
               {!showActionBar && (
                 <FilterProvider>
                   <Map

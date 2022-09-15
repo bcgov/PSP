@@ -1,5 +1,10 @@
 import { IMapProperty } from 'features/properties/selector/models';
-import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
+import { IContactSearchResult } from 'interfaces';
+import {
+  Api_AcquisitionFile,
+  Api_AcquisitionFilePerson,
+  Api_AcquisitionFileProperty,
+} from 'models/api/AcquisitionFile';
 import { Api_Property } from 'models/api/Property';
 import { pidParser } from 'utils';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
@@ -17,6 +22,7 @@ export class AcquisitionForm {
   // MOTI region
   region?: string;
   properties: AcquisitionPropertyForm[] = [];
+  team: AcquisitionTeamForm[] = [];
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -25,7 +31,7 @@ export class AcquisitionForm {
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
-      acquisitionFileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
+      fileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
@@ -41,6 +47,7 @@ export class AcquisitionForm {
           acquisitionFile: { id: this.id },
         };
       }),
+      acquisitionTeam: AcquisitionTeamForm.toApi(this.team),
     };
   }
 
@@ -51,7 +58,7 @@ export class AcquisitionForm {
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
-    newForm.acquisitionFileStatusType = fromTypeCode(model.acquisitionFileStatusTypeCode);
+    newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
     newForm.region = fromTypeCode(model.regionCode)?.toString();
@@ -74,9 +81,13 @@ export class AcquisitionPropertyForm {
   name?: string;
   isDisabled?: boolean;
   displayOrder?: number;
-  regionId?: number;
-  districtId?: number;
+  region?: number;
+  regionName?: string;
+  district?: number;
+  districtName?: string;
   rowVersion?: number;
+  legalDescription?: string;
+  address?: string;
 
   static fromMapProperty(model: IMapProperty): AcquisitionPropertyForm {
     const newForm = new AcquisitionPropertyForm();
@@ -85,8 +96,12 @@ export class AcquisitionPropertyForm {
     newForm.latitude = model.latitude;
     newForm.longitude = model.longitude;
     newForm.planNumber = model.planNumber;
-    newForm.regionId = model.region;
-    newForm.districtId = model.district;
+    newForm.region = model.region;
+    newForm.regionName = model.regionName;
+    newForm.district = model.district;
+    newForm.districtName = model.districtName;
+    newForm.legalDescription = model.legalDescription;
+    newForm.address = model.address;
 
     return newForm;
   }
@@ -101,8 +116,8 @@ export class AcquisitionPropertyForm {
     newForm.latitude = model.property?.latitude;
     newForm.longitude = model.property?.longitude;
     newForm.planNumber = model.property?.planNumber;
-    newForm.regionId = model.property?.region?.id;
-    newForm.districtId = model.property?.district?.id;
+    newForm.region = model.property?.region?.id;
+    newForm.district = model.property?.district?.id;
     newForm.rowVersion = model.rowVersion;
 
     return newForm;
@@ -115,8 +130,29 @@ export class AcquisitionPropertyForm {
       pin: this.pin !== undefined ? Number(this.pin) : undefined,
       landArea: 0,
       location: { coordinate: { x: this.longitude, y: this.latitude } },
-      region: toTypeCode(this.regionId),
-      district: toTypeCode(this.districtId),
+      region: toTypeCode(this.region),
+      district: toTypeCode(this.district),
     };
+  }
+}
+
+export class AcquisitionTeamForm {
+  contact?: IContactSearchResult;
+  contactTypeCode: string;
+
+  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
+    this.contactTypeCode = contactTypeCode;
+    this.contact = contact;
+  }
+
+  static toApi(model: AcquisitionTeamForm[]): Api_AcquisitionFilePerson[] {
+    return model
+      .filter(x => !!x.contact && !!x.contactTypeCode)
+      .map<Api_AcquisitionFilePerson>(x => {
+        return {
+          personId: x.contact?.personId || 0,
+          personProfileTypeCode: x.contactTypeCode,
+        };
+      });
   }
 }

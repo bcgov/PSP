@@ -1,3 +1,4 @@
+import { EditButton } from 'components/common/EditButton';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as API from 'constants/API';
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
@@ -6,8 +7,7 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
-import { FaEdit } from 'react-icons/fa';
+import { Col, Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
 
@@ -64,14 +64,12 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         <LoadingBackdrop show={loading} parentScreen={true} />
         <StyledEditWrapper className="mr-3 my-1">
           {setEditMode !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
-            <Button
-              variant="link"
+            <EditButton
+              title="Edit research file"
               onClick={() => {
                 setEditMode(true);
               }}
-            >
-              <FaEdit size={'2rem'} />
-            </Button>
+            />
           )}
         </StyledEditWrapper>
         <Section header="Property Attributes">
