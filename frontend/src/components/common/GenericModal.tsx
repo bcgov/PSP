@@ -130,7 +130,7 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
   };
 
   return (
-    <ModalContainer {...rest} show={showState}>
+    <ModalContainer {...rest} show={showState} modalSize={modalSize}>
       <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
