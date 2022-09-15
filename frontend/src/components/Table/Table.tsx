@@ -207,8 +207,7 @@ const IndeterminateCheckbox = React.forwardRef(
         setSelected([]);
       } else {
         if (isSingleSelect === true) {
-          currentSelected.splice(0, currentSelected.length);
-          currentSelected.push(row.original);
+          setSelected([row.original]);
         } else {
           if (currentSelected.find(selected => selected.id === row.original.id)) {
             remove(
@@ -218,8 +217,8 @@ const IndeterminateCheckbox = React.forwardRef(
           } else {
             currentSelected.push(row.original);
           }
+          setSelected(uniq([...currentSelected]));
         }
-        setSelected(uniq([...currentSelected]));
       }
     };
     rest.checked = isHeaderCheck
@@ -230,6 +229,7 @@ const IndeterminateCheckbox = React.forwardRef(
       <>
         <input
           type={isSingleSelect === true ? 'radio' : 'checkbox'}
+          name={isSingleSelect === true ? 'table-radio' : ''}
           ref={resolvedRef}
           {...rest}
           disabled={isHeaderCheck && rest.checked === false && !indeterminate}
@@ -366,20 +366,24 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                       {...row.getToggleRowSelectedProps()}
                       row={row}
                       setSelected={(values: T[]) => {
-                        const allPreviouslySelected = instance.rows
-                          .filter(row => row.isSelected)
-                          .map(row => row.original);
-                        const previouslySelected = allPreviouslySelected.find(
-                          row => values.length === 1 && row.id === values[0].id,
-                        );
-                        if (previouslySelected) {
-                          setExternalSelectedRows &&
-                            setExternalSelectedRows(
-                              allPreviouslySelected.filter(row => row !== previouslySelected),
-                            );
+                        if (isSingleSelect === true) {
+                          setExternalSelectedRows && setExternalSelectedRows([...values]);
                         } else {
-                          setExternalSelectedRows &&
-                            setExternalSelectedRows([...allPreviouslySelected, ...values]);
+                          const allPreviouslySelected = instance.rows
+                            .filter(row => row.isSelected)
+                            .map(row => row.original);
+                          const previouslySelected = allPreviouslySelected.find(
+                            row => values.length === 1 && row.id === values[0].id,
+                          );
+                          if (previouslySelected) {
+                            setExternalSelectedRows &&
+                              setExternalSelectedRows(
+                                allPreviouslySelected.filter(row => row !== previouslySelected),
+                              );
+                          } else {
+                            setExternalSelectedRows &&
+                              setExternalSelectedRows([...allPreviouslySelected, ...values]);
+                          }
                         }
                       }}
                       selectedRef={selectedRowsRef}
