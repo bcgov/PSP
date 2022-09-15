@@ -218,6 +218,7 @@ const IndeterminateCheckbox = React.forwardRef(
       <>
         <input
           type={isSingleSelect === true ? 'radio' : 'checkbox'}
+          name={isSingleSelect === true ? 'table-radio' : ''}
           ref={resolvedRef}
           {...rest}
           onChange={onChainedChange}
@@ -359,20 +360,24 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                       {...row.getToggleRowSelectedProps()}
                       row={row}
                       setSelected={(values: T[]) => {
-                        const allPreviouslySelected = instance.rows
-                          .filter(row => row.isSelected)
-                          .map(row => row.original);
-                        const previouslySelected = allPreviouslySelected.find(
-                          row => values.length === 1 && row.id === values[0].id,
-                        );
-                        if (previouslySelected) {
-                          setExternalSelectedRows &&
-                            setExternalSelectedRows(
-                              allPreviouslySelected.filter(row => row !== previouslySelected),
-                            );
+                        if (isSingleSelect === true) {
+                          setExternalSelectedRows && setExternalSelectedRows([...values]);
                         } else {
-                          setExternalSelectedRows &&
-                            setExternalSelectedRows([...allPreviouslySelected, ...values]);
+                          const allPreviouslySelected = instance.rows
+                            .filter(row => row.isSelected)
+                            .map(row => row.original);
+                          const previouslySelected = allPreviouslySelected.find(
+                            row => values.length === 1 && row.id === values[0].id,
+                          );
+                          if (previouslySelected) {
+                            setExternalSelectedRows &&
+                              setExternalSelectedRows(
+                                allPreviouslySelected.filter(row => row !== previouslySelected),
+                              );
+                          } else {
+                            setExternalSelectedRows &&
+                              setExternalSelectedRows([...allPreviouslySelected, ...values]);
+                          }
                         }
                       }}
                       selectedRef={selectedRowsRef}

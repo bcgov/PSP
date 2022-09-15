@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "LISOS_PIMS", "LISOS_PIMS\LISOS_PIMS.dtproj", "{CBA561AE-87EE-4A06-8DC1-0DC2BFF0B41C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBA561AE-87EE-4A06-8DC1-0DC2BFF0B41C}.Development|Default.ActiveCfg = Development
+		{CBA561AE-87EE-4A06-8DC1-0DC2BFF0B41C}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAAC5CD8-2693-46D7-85AE-B6AB6261B7DE}
+	EndGlobalSection
+EndGlobal

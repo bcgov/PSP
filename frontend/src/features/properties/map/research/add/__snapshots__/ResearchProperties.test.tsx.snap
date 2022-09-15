@@ -758,6 +758,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                           <div>
                             <input
                               data-testid="selectrow-parent"
+                              name=""
                               style="cursor: pointer;"
                               title="Click to deselect all."
                               type="checkbox"
