@@ -41,7 +41,7 @@ const HelpModal: FunctionComponent<IModalProps> = ({ handleCancel, handleSubmit,
   React.useEffect(() => {
     const update = async () => {
       if (!config) {
-        await getSettings(); // TODO: Determine why the HelpModal is being created two times, which results in two requests to the API.
+        await getSettings(); // TODO: PSP-4402 Determine why the HelpModal is being created two times, which results in two requests to the API.
       }
     };
     update();

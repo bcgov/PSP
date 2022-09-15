@@ -390,6 +390,20 @@ exports[`ActivityForm test Renders as expected 1`] = `
       </p>
     </div>
   </div>
+  .c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <div
+      class="collapse"
+    />
+  </div>
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;

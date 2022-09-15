@@ -15,7 +15,7 @@ namespace Pims.Api.Models
         /// <summary>
         /// get/set - The parent id of this item.
         /// </summary>
-        public long? ParentId { get; set; } // TODO: this isn't ideal as it will only currently be used by organization.
+        public long? ParentId { get; set; } // TODO: PSP-4421 this isn't ideal as it will only currently be used by organization.
 
         /// <summary>
         /// get/set - The name of the code.

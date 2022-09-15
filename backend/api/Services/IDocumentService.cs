@@ -32,7 +32,7 @@ namespace Pims.Api.Services
 
         IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
 
-        Task<bool> DeleteDocumentAsync(PimsDocument document);
+        Task<bool> DeleteDocumentAsync(PimsDocument document, bool commitTransaction = true);
 
         Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true);
 

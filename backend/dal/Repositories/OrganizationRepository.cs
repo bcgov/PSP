@@ -125,8 +125,6 @@ namespace Pims.Dal.Repositories
             // update main entity - PimsOrganization
             Context.Entry(existingOrganization).CurrentValues.SetValues(organization);
 
-            // TODO: Verify these are working as expected!!!
-
             // update direct relationships - contact_methods, organizations
             this.Context.UpdateChild<PimsOrganization, long, PimsContactMethod>(o => o.PimsContactMethods, orgId, organization.PimsContactMethods.ToArray());
 
