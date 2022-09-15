@@ -1,18 +1,17 @@
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import * as Yup from 'yup';
 
-export const getDocumentUploadYupSchema = (
+export const getDocumentMetadataYupSchema = (
   mayanMetadata: Api_Storage_DocumentTypeMetadataType[],
-  edit: boolean,
 ) => {
-  let yupSchema: any = {};
+  let metadataSchema: Record<string, Yup.StringSchema> = {};
   for (const data of mayanMetadata) {
     if (data.metadata_type?.id && data.required) {
-      yupSchema[(edit ? data.id : data.metadata_type?.id) || ''] = Yup.string().required(
+      metadataSchema[`${data.metadata_type?.id}`] = Yup.string().required(
         `${data.metadata_type?.label} is required`,
       );
     }
   }
 
-  return Yup.object().shape(yupSchema);
+  return Yup.object().shape({ documentMetadata: Yup.object().shape(metadataSchema) });
 };

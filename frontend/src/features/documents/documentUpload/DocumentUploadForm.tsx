@@ -4,21 +4,22 @@ import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import * as API from 'constants/API';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { StyledGreySection, StyledH2, StyledH3, StyledScrollable } from '../commonStyles';
 import { DocumentUploadFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
+import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
 import { StyledContainer } from '../list/styles';
-import { getDocumentUploadYupSchema } from './DocumentUploadYupSchema';
 
 interface IDocumentUploadFormProps {
   isLoading: boolean;
+  formikRef: React.RefObject<FormikProps<DocumentUploadFormData>>;
   initialDocumentType: string;
   documentTypes: Api_DocumentType[];
   mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
@@ -45,6 +46,8 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = pr
       var target = changeEvent.target;
       if (target.files !== null) {
         setSelectedFile(target.files[0]);
+        // forces formik to flag the change as dirty
+        props.formikRef.current?.setFieldValue('fileSet', true);
       }
     }
   };
@@ -54,15 +57,24 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = pr
     props.initialDocumentType,
     props.mayanMetadataTypes,
   );
+  useEffect(() => {
+    const isTypeDirty =
+      props.documentTypes.find(x => x.id?.toString() === props.initialDocumentType) !== undefined;
+    if (isTypeDirty) {
+      // forces formik to flag the change as dirty
+      props.formikRef.current?.setFieldValue('isDocumentTypeChanged', isTypeDirty);
+    }
+  }, [props.formikRef, props.documentTypes, props.initialDocumentType, props.mayanMetadataTypes]);
 
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
       <Formik<DocumentUploadFormData>
+        innerRef={props.formikRef}
         enableReinitialize
         initialValues={initialFormData}
         validateOnMount={true}
-        validationSchema={getDocumentUploadYupSchema(props.mayanMetadataTypes, false)}
+        validationSchema={getDocumentMetadataYupSchema(props.mayanMetadataTypes)}
         onSubmit={async (values: DocumentUploadFormData, { setSubmitting }) => {
           if (selectedFile !== null) {
             const selectedDocumentType = props.documentTypes.find(
@@ -94,7 +106,7 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = pr
                 onChange={props.onDocumentTypeChange}
               />
             </SectionField>
-            <SectionField label={'Choose document to upload'} labelWidth="12" className="mb-4">
+            <SectionField label="Choose document to upload" labelWidth="12" className="mb-4">
               <div className="pt-2">
                 <input
                   data-testid="upload-input"

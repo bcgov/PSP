@@ -42,7 +42,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   const {
     deleteActivity: { execute: deleteActivity },
   } = useActivityRepository();
-  const { setModalProps, setDisplayModal } = useModalContext();
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { hasClaim } = useKeycloakWrapper();
 
   const fetchData = useCallback(async () => {
@@ -153,9 +153,8 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
               history.push(getActivityUrl(activity.id));
             }}
             onDelete={async (activity: Api_Activity) => {
-              setModalProps({
+              setModalContent({
                 ...deleteModalProps,
-                display: true,
                 title: 'Delete Activity',
                 closeButton: true,
                 message: (
@@ -181,6 +180,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
                   setDisplayModal(false);
                 },
               });
+              setDisplayModal(true);
             }}
           />
         </Styled.Scrollable>

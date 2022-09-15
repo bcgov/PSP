@@ -13,7 +13,15 @@ export enum ModalSize {
   SMALL = 'modal-s',
 }
 
-export interface ModalProps {
+export interface ModalVisibleState {
+  /** allows the parent component to control the display of this modal.
+   * Default behaviour is to show this modal on creation and close it on button click. */
+  display?: boolean;
+  /** set the value of the externally tracked display prop above. */
+  setDisplay?: (display: boolean) => void;
+}
+
+export interface ModalContent {
   /** Optional function to control behaviour of cancel button. Default is to close the modal. */
   handleCancel?: Function;
   /** Optional function to control behaviour of ok button. Default is to reload the app. */
@@ -62,11 +70,6 @@ export interface ModalProps {
   title?: string | React.ReactNode;
   /** Optional message to display - no default. */
   message?: string | React.ReactNode;
-  /** allows the parent component to control the display of this modal.
-   * Default behaviour is to show this modal on creation and close it on button click. */
-  display?: boolean;
-  /** set the value of the externally tracked display prop above. */
-  setDisplay?: (display: boolean) => void;
   /** optional override to control the x button in the top right of the modal. Default is to show. */
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
@@ -78,6 +81,8 @@ export interface ModalProps {
   /** optional override to hide the footer of the modal modal. Default is to show. */
   hideFooter?: boolean;
 }
+
+export type ModalProps = ModalVisibleState & ModalContent;
 
 /**
  * Generic Component used to display modal popups to the user.
@@ -121,8 +126,8 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
   };
 
   const ok = () => {
-    if (props.handleOk !== undefined) {
-      props.handleOk();
+    if (handleOk !== undefined) {
+      handleOk();
     } else {
       showControl(false);
     }
