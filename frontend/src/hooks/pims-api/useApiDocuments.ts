@@ -3,8 +3,9 @@ import {
   Api_DocumentRelationship,
   Api_DocumentType,
   Api_DocumentUpdateRequest,
-  Api_UploadRequest,
-  Api_UploadResponse,
+  Api_DocumentUpdateResponse,
+  Api_DocumentUploadRequest,
+  Api_DocumentUploadResponse,
 } from 'models/api/Document';
 import {
   Api_Storage_DocumentMetadata,
@@ -58,7 +59,7 @@ export const useApiDocuments = () => {
       uploadDocumentRelationshipApiCall: (
         relationshipType: DocumentRelationshipType,
         parentId: number,
-        uploadRequest: Api_UploadRequest,
+        uploadRequest: Api_DocumentUploadRequest,
       ) => {
         const formData = new FormData();
         formData.append('file', uploadRequest.file);
@@ -68,14 +69,17 @@ export const useApiDocuments = () => {
         );
         formData.append('documentTypeId', uploadRequest.documentType.id?.toString() || '');
         formData.append('documentStatusCode', uploadRequest.documentStatusCode || '');
-        let index = 0;
-        for (const [key, value] of Object.entries(uploadRequest.documentMetadata)) {
-          formData.append('DocumentMetadata[' + index + '].MetadataTypeId', key);
-          formData.append('DocumentMetadata[' + index + '].Value', String(value));
-          index++;
-        }
 
-        return api.post<Api_UploadResponse>(
+        uploadRequest.documentMetadata?.forEach((metadata, index) => {
+          formData.append(
+            'DocumentMetadata[' + index + '].MetadataTypeId',
+            metadata.metadataTypeId.toString(),
+          );
+          formData.append('DocumentMetadata[' + index + '].Value', metadata.value);
+          index++;
+        });
+
+        return api.post<Api_DocumentUploadResponse>(
           `/documents/upload/${relationshipType}/${parentId}`,
           formData,
         );
@@ -85,7 +89,7 @@ export const useApiDocuments = () => {
         documentId: number,
         updateRequest: Api_DocumentUpdateRequest,
       ) => {
-        return api.put<boolean>(
+        return api.put<Api_DocumentUpdateResponse>(
           `/documents/${documentId}/relationship/${relationshipType}/metadata`,
           updateRequest,
         );

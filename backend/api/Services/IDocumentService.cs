@@ -38,6 +38,6 @@ namespace Pims.Api.Services
 
         Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest);
 
-        Task<bool> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateMetadataRequest updateRequest);
+        Task<DocumentUpdateResponse> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateRequest updateRequest);
     }
 }

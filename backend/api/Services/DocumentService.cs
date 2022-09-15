@@ -94,18 +94,31 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             ExternalResult<DocumentDetail> externalResult = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
-            DocumentUploadResponse response = new DocumentUploadResponse() { ExternalResult = externalResult };
+            DocumentUploadResponse response = new DocumentUploadResponse()
+            {
+                DocumentExternalResult = externalResult,
+                MetadataExternalResult = new List<ExternalResult<DocumentMetadata>>(),
+            };
+
             if (externalResult.Status == ExternalResultStatus.Success)
             {
                 var externalDocument = externalResult.Payload;
 
-                // Save metadata of document
-                IList<Task<ExternalResult<DocumentMetadata>>> metadataTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
-                foreach (var metadata in uploadRequest.DocumentMetadata)
+                // Create metadata of document
+                if (uploadRequest.DocumentMetadata != null)
                 {
-                    metadataTasks.Add(documentStorageRepository.CreateDocumentMetadataAsync(externalDocument.Id, metadata.MetadataTypeId, metadata.Value));
+                    List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
+                    foreach (var metadata in uploadRequest.DocumentMetadata)
+                    {
+                        if (!string.IsNullOrEmpty(metadata.Value))
+                        {
+                            creates.Add(metadata);
+                        }
+                    }
+
+                    response.MetadataExternalResult = await CreateMetadata(externalDocument.Id, creates);
                 }
-                await Task.WhenAll(metadataTasks.ToArray());
+
                 // Create the pims document
                 PimsDocument newPimsDocument = new PimsDocument()
                 {
@@ -129,29 +142,91 @@ namespace Pims.Api.Services
             return response;
         }
 
-        public async Task<bool> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateMetadataRequest updateRequest)
+        public async Task<DocumentUpdateResponse> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateRequest updateRequest)
         {
             this.Logger.LogInformation("Updating document for single activity");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
 
-            // update metadata of document
-            IList<Task<ExternalResult<DocumentMetadata>>> metadataTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
-            foreach (var metadata in updateRequest.DocumentMetadata ?? new List<DocumentMetadataUpdateModel>())
-            {
-                metadataTasks.Add(documentStorageRepository.UpdateDocumentMetadataAsync(updateRequest.MayanDocumentId, metadata.Id, metadata.Value));
-            }
-            if (metadataTasks.Count > 0) { await Task.WhenAll(metadataTasks.ToArray()); }
-
             // update the pims document status
             PimsDocument existingDocument = documentRepository.Get(documentId);
-            if (existingDocument is not null)
+            if (existingDocument == null)
             {
-                existingDocument.DocumentStatusTypeCode = updateRequest.DocumentStatusCode;
-                documentRepository.Update(existingDocument);
-                this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", documentId);
-                return true;
+                throw new BadRequestException("Document Id not found.");
             }
-            throw new BadRequestException("Document Id not found.");
+            existingDocument.DocumentStatusTypeCode = updateRequest.DocumentStatusCode;
+            documentRepository.Update(existingDocument);
+
+            DocumentUpdateResponse response = new DocumentUpdateResponse()
+            {
+                MetadataExternalResult = new List<ExternalResult<DocumentMetadata>>(),
+            };
+
+
+            var metadataUpdateSucessful = false;
+            if (updateRequest.DocumentMetadata.Count > 0)
+            {
+                // Retrieve the existing metadata and check if it needs to be updated.
+                ExternalResult<QueryResult<DocumentMetadata>> existingMetadata = await documentStorageRepository.GetDocumentMetadataAsync(updateRequest.MayanDocumentId);
+
+                List<DocumentMetadataUpdateModel> updates = new List<DocumentMetadataUpdateModel>();
+                List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
+                List<DocumentMetadataUpdateModel> deletes = new List<DocumentMetadataUpdateModel>();
+
+                foreach (var updateMetadata in updateRequest.DocumentMetadata)
+                {
+                    var existing = existingMetadata.Payload.Results.FirstOrDefault(x => x.MetadataType.Id == updateMetadata.MetadataTypeId);
+
+                    if (existing == null)
+                    {
+                        if (!string.IsNullOrEmpty(updateMetadata.Value))
+                        {
+                            creates.Add(updateMetadata);
+                        }
+                    }
+                    else if (existing.Value != updateMetadata.Value && !string.IsNullOrEmpty(updateMetadata.Value))
+                    {
+                        updateMetadata.Id = existing.Id;
+                        updates.Add(updateMetadata);
+                    }
+                    else if (string.IsNullOrEmpty(updateMetadata.Value))
+                    {
+                        updateMetadata.Id = existing.Id;
+                        deletes.Add(updateMetadata);
+                    }
+                }
+
+                // Update metadata of document
+                response.MetadataExternalResult.AddRange(await UpdateMetadata(updateRequest.MayanDocumentId, updates));
+
+                // Create metadata of document
+                response.MetadataExternalResult.AddRange(await CreateMetadata(updateRequest.MayanDocumentId, creates));
+
+                // Delete metadata of document
+                response.MetadataExternalResult.AddRange(await DeleteMetadata(updateRequest.MayanDocumentId, deletes));
+
+                // Add the metadata response
+                foreach (var task in response.MetadataExternalResult)
+                {
+                    // Flag to know if at least one call was successful.
+                    metadataUpdateSucessful = metadataUpdateSucessful || task.Status == ExternalResultStatus.Success;
+                }
+            }
+            else
+            {
+                metadataUpdateSucessful = true;
+            }
+
+            if (metadataUpdateSucessful)
+            {
+                documentRepository.CommitTransaction();
+                this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", documentId);
+            }
+            else
+            {
+                this.Logger.LogError("Metadata & Status for Document with id {id} update aborted", documentId);
+            }
+
+            return response;
         }
 
         public async Task<bool> DeleteDocumentAsync(PimsDocument document)
@@ -166,7 +241,7 @@ namespace Pims.Api.Services
             }
             else
             {
-                // If the storage deletion was successfull or the id was not found on the storage (already deleted) delete the pims reference.
+                // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
                 ExternalResult<string> result = await documentStorageRepository.DeleteDocument(document.MayanId);
                 if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
                 {
@@ -263,6 +338,77 @@ namespace Pims.Api.Services
 
             await this.avService.ScanAsync(fileRaw);
             ExternalResult<DocumentDetail> result = await documentStorageRepository.UploadDocumentAsync(documentType, fileRaw);
+            return result;
+        }
+
+        private async Task<List<ExternalResult<DocumentMetadata>>> CreateMetadata(long mayanDocumentId, List<DocumentMetadataUpdateModel> metadataRequest)
+        {
+            // Save metadata of document
+            IList<Task<ExternalResult<DocumentMetadata>>> metadataCreateTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
+            foreach (var metadata in metadataRequest)
+            {
+                metadataCreateTasks.Add(documentStorageRepository.CreateDocumentMetadataAsync(mayanDocumentId, metadata.MetadataTypeId, metadata.Value));
+            }
+
+            await Task.WhenAll(metadataCreateTasks.ToArray());
+
+            List<ExternalResult<DocumentMetadata>> result = new List<ExternalResult<DocumentMetadata>>();
+
+            // Add the metadata response
+            foreach (var task in metadataCreateTasks)
+            {
+                result.Add(task.Result);
+            }
+
+            return result;
+        }
+
+        private async Task<List<ExternalResult<DocumentMetadata>>> UpdateMetadata(long mayanDocumentId, List<DocumentMetadataUpdateModel> metadataRequest)
+        {
+            // Save metadata of document
+            IList<Task<ExternalResult<DocumentMetadata>>> metadataUpdateTasks = new List<Task<ExternalResult<DocumentMetadata>>>();
+            foreach (var metadata in metadataRequest)
+            {
+                metadataUpdateTasks.Add(documentStorageRepository.UpdateDocumentMetadataAsync(mayanDocumentId, metadata.Id, metadata.Value));
+            }
+
+            await Task.WhenAll(metadataUpdateTasks.ToArray());
+
+            List<ExternalResult<DocumentMetadata>> result = new List<ExternalResult<DocumentMetadata>>();
+
+            // Add the metadata response
+            foreach (var task in metadataUpdateTasks)
+            {
+                result.Add(task.Result);
+            }
+
+            return result;
+        }
+
+        private async Task<List<ExternalResult<DocumentMetadata>>> DeleteMetadata(long mayanDocumentId, List<DocumentMetadataUpdateModel> metadataRequest)
+        {
+            // Save metadata of document
+            IList<Task<ExternalResult<string>>> metadataDeleteTasks = new List<Task<ExternalResult<string>>>();
+            foreach (var metadata in metadataRequest)
+            {
+                metadataDeleteTasks.Add(documentStorageRepository.DeleteDocumentMetadataAsync(mayanDocumentId, metadata.Id));
+            }
+
+            await Task.WhenAll(metadataDeleteTasks.ToArray());
+
+            List<ExternalResult<DocumentMetadata>> result = new List<ExternalResult<DocumentMetadata>>();
+
+            // Add the metadata response
+            foreach (var task in metadataDeleteTasks)
+            {
+                result.Add(new ExternalResult<DocumentMetadata>()
+                {
+                    Status = task.Result.Status,
+                    Message = task.Result.Message,
+                    HttpStatusCode = task.Result.HttpStatusCode,
+                });
+            }
+
             return result;
         }
     }

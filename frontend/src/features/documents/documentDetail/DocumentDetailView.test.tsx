@@ -2,7 +2,7 @@ import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { Api_DocumentType } from 'models/api/Document';
-import { Api_Storage_DocumentMetadata } from 'models/api/DocumentStorage';
+import { Api_Storage_DocumentMetadata, Api_Storage_MetadataType } from 'models/api/DocumentStorage';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
@@ -26,6 +26,10 @@ const documentTypes: Api_DocumentType[] = [
     mayanId: 7,
   },
 ];
+const metadataTypes: Api_Storage_MetadataType[] = [
+  { id: 1, label: 'Tag Foo', name: 'tag-foo' },
+  { id: 2, label: 'Tag Bar', name: 'tag-bar' },
+];
 const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
   {
     document: {
@@ -46,7 +50,7 @@ const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
       document_type: { id: 1, label: 'BC Assessment Search' },
     },
     id: 1,
-    metadata_type: { id: 1, label: 'Tag' },
+    metadata_type: metadataTypes[0],
     url: '',
     value: 'Tag1234',
   },
@@ -60,12 +64,13 @@ const mockDocument: ComposedDocument = {
     statusTypeCode: { id: 'AMEND', description: 'Amended' },
     fileName: 'NewFile.doc',
   },
+  mayanFileId: 2,
 };
 describe('DocumentDetailView component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions) => {
     const utils = render(
-      <DocumentDetailView onUpdate={jest.fn()} document={mockDocument} isLoading={false} />,
+      <DocumentDetailView document={mockDocument} isLoading={false} setIsEditable={jest.fn()} />,
       {
         ...renderOptions,
         store: {

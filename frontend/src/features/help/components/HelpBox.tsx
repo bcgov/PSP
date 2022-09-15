@@ -25,6 +25,7 @@ const Box = styled.div`
 const TopicButton = styled(Button)`
   max-height: 4rem;
   background-color: white;
+  display: flex;
 `;
 
 const TopicSelector = styled(ButtonGroup)``;

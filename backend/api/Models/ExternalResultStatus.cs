@@ -10,7 +10,7 @@ namespace Pims.Api.Models
     public enum ExternalResultStatus
     {
         /// <summary>
-        /// The call was successfull.
+        /// The call was successful.
         /// </summary>
         [EnumMember(Value = "success")]
         Success,
