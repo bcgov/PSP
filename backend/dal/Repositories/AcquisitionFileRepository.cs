@@ -103,6 +103,14 @@ namespace Pims.Dal.Repositories
                 }
             }
 
+            foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
+            {
+                if (acquisitionPeople.AcquisitionFilePersonId != 0)
+                {
+                    Context.Entry(acquisitionPeople).State = EntityState.Unchanged;
+                }
+            }
+
             this.Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
         }

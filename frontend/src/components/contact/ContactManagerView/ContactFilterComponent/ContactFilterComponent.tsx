@@ -21,6 +21,7 @@ export interface IContactFilterComponentProps {
   filter?: IContactFilter;
   setFilter: (filter: IContactFilter) => void;
   showActiveSelector?: boolean;
+  showOnlyIndividuals?: boolean;
 }
 
 /**
@@ -31,10 +32,12 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
   filter,
   setFilter,
   showActiveSelector,
+  showOnlyIndividuals,
 }: IContactFilterComponentProps) => {
   const resetFilter = (values: IContactFilter) => {
     setFilter({ ...defaultFilter, searchBy: values.searchBy });
   };
+
   return (
     <Formik
       enableReinitialize
@@ -53,35 +56,49 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
                 label="Search by:"
                 field="searchBy"
                 radioGroupClassName="pb-3"
-                radioValues={[
-                  {
-                    radioLabel: (
-                      <>
-                        <FaRegBuilding size={20} />
-                        <span>Organizations</span>
-                      </>
-                    ),
-                    radioValue: 'organizations',
-                  },
-                  {
-                    radioLabel: (
-                      <>
-                        <FaRegUser size={20} />
-                        <span>Individuals</span>
-                      </>
-                    ),
-                    radioValue: 'persons',
-                  },
-                  {
-                    radioLabel: (
-                      <>
-                        <FaRegBuilding size={20} />+<FaRegUser size={20} />
-                        <span>All</span>
-                      </>
-                    ),
-                    radioValue: 'all',
-                  },
-                ]}
+                radioValues={
+                  showOnlyIndividuals
+                    ? [
+                        {
+                          radioLabel: (
+                            <>
+                              <FaRegUser size={20} />
+                              <span>Individuals</span>
+                            </>
+                          ),
+                          radioValue: 'persons',
+                        },
+                      ]
+                    : [
+                        {
+                          radioLabel: (
+                            <>
+                              <FaRegBuilding size={20} />
+                              <span>Organizations</span>
+                            </>
+                          ),
+                          radioValue: 'organizations',
+                        },
+                        {
+                          radioLabel: (
+                            <>
+                              <FaRegUser size={20} />
+                              <span>Individuals</span>
+                            </>
+                          ),
+                          radioValue: 'persons',
+                        },
+                        {
+                          radioLabel: (
+                            <>
+                              <FaRegBuilding size={20} />+<FaRegUser size={20} />
+                              <span>All</span>
+                            </>
+                          ),
+                          radioValue: 'all',
+                        },
+                      ]
+                }
               />
             </Col>
             <Col>

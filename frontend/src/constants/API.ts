@@ -89,6 +89,7 @@ export const ACQUISITION_PHYSICAL_FILE_STATUS_TYPES = 'PimsAcqPhysFileStatusType
 export const ACQUISITION_TYPES = 'PimsAcquisitionType';
 export const ACTIVITY_TEMPLATE_TYPE = 'PimsActivityTemplateType';
 export const ACTIVITY_INSTANCE_STATUS_TYPE = 'PimsActivityInstanceStatusType';
+export const ACQUISITION_FILE_PERSON_PROFILE_TYPES = 'PimsAcqFlPersonProfileType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

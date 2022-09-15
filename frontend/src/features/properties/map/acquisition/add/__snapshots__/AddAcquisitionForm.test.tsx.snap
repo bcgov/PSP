@@ -1217,6 +1217,44 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Acquisition Team
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <button
+          class="c16 Button btn btn-link"
+          data-testid="add-team-member"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add another team member
+          </div>
+        </button>
+        <div
+          class="container"
+        />
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
