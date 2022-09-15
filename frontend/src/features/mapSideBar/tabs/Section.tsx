@@ -1,3 +1,4 @@
+import clsx from 'classnames';
 import React, { useState } from 'react';
 import { Col, Collapse, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -6,19 +7,22 @@ import { ArrowDropDownIcon, ArrowDropUpIcon } from './SectionStyles';
 
 interface SectionProps {
   header?: React.ReactNode;
+  title?: string;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
 }
 
-export const Section: React.FC<SectionProps> = ({
+export const Section: React.FC<SectionProps & React.HTMLAttributes<HTMLDivElement>> = ({
   header,
   children,
+  title,
   isCollapsable,
   initiallyExpanded,
+  className,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
   return (
-    <StyledFormSection className="form-section">
+    <StyledFormSection className={clsx('form-section', className)}>
       {header && (
         <StyledSectionHeader>
           <Row>
@@ -26,6 +30,7 @@ export const Section: React.FC<SectionProps> = ({
             <Col xs="1">
               {isCollapsable && isCollapsed && (
                 <ArrowDropDownIcon
+                  title={`expand-${title ?? 'section'}`}
                   onClick={() => {
                     setIsCollapsed(!isCollapsed);
                   }}
@@ -33,6 +38,7 @@ export const Section: React.FC<SectionProps> = ({
               )}
               {isCollapsable && !isCollapsed && (
                 <ArrowDropUpIcon
+                  title={`collapse-${title ?? 'section'}`}
                   onClick={() => {
                     setIsCollapsed(!isCollapsed);
                   }}

@@ -9,6 +9,7 @@ import { useAcquisitionProvider } from './useAcquisitionProvider';
 export interface IUseAddAcquisitionFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */
   onSuccess?: (acquisitionFile: Api_AcquisitionFile) => void;
+  initialForm?: AcquisitionForm;
 }
 
 /**
@@ -37,7 +38,7 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
 
   return {
     handleSubmit,
-    initialValues: new AcquisitionForm(),
+    initialValues: props.initialForm ?? new AcquisitionForm(),
     validationSchema: AddAcquisitionFileYupSchema,
   };
 }

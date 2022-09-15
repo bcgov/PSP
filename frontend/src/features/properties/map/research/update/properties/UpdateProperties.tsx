@@ -61,7 +61,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await updateResearchFileProperties(researchFile);
     formikRef.current?.setSubmitting(false);
-    if (!!response?.name) {
+    if (!!response?.fileName) {
       formikRef.current?.resetForm();
       props.setIsShowingPropertySelector(false);
       props.onSuccess();

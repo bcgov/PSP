@@ -85,8 +85,8 @@ export const TermsForm: React.FunctionComponent<ITermsFormProps> = ({
           name="leasePaymentsTable"
           columns={columns}
           data={formikProps.values.terms ?? []}
-          manualPagination={true}
-          hideToolbar={true}
+          manualPagination
+          hideToolbar
           noRowsMessage="There is no corresponding data"
           canRowExpand={() => true}
           detailsPanel={{

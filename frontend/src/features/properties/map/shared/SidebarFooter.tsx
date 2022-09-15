@@ -1,5 +1,6 @@
 import { Button } from 'components/common/buttons/Button';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 interface ISidebarFooterProps {
   isOkDisabled?: boolean;
@@ -9,7 +10,7 @@ interface ISidebarFooterProps {
 
 const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = props => {
   return (
-    <Row className="justify-content-end mt-auto no-gutters pt-3">
+    <SidebarFooterBar className="justify-content-end mt-auto no-gutters">
       <Col xs="auto" className="pr-4">
         <Button variant="secondary" onClick={props.onCancel}>
           Cancel
@@ -20,8 +21,15 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = props => {
           Save
         </Button>
       </Col>
-    </Row>
+    </SidebarFooterBar>
   );
 };
+
+const SidebarFooterBar = styled(Row)`
+  position: sticky;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+`;
 
 export default SidebarFooter;

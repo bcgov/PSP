@@ -14,7 +14,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote[] notes = null, Entity.PimsActivityTemplate template = null)
+        public static Entity.PimsActivityInstance CreateActivity(long id = 0, Entity.PimsNote[] notes = null, Entity.PimsDocument[] documents = null, Entity.PimsActivityTemplate template = null)
         {
             var activity = new Entity.PimsActivityInstance()
             {
@@ -27,6 +27,7 @@ namespace Pims.Core.Test
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
                 ConcurrencyControlNumber = 1,
+                ActivityInstanceStatusTypeCodeNavigation = new Entity.PimsActivityInstanceStatusType() { Id = "NOSTART" },
             };
 
             if (notes != null)
@@ -43,9 +44,27 @@ namespace Pims.Core.Test
                     });
                 }
             }
+            if (documents != null)
+            {
+                foreach (var d in documents)
+                {
+                    activity.PimsActivityInstanceDocuments.Add(new Entity.PimsActivityInstanceDocument()
+                    {
+                        ActivityInstance = activity,
+                        ActivityInstanceId = activity.ActivityInstanceId,
+                        Document = d,
+                        DocumentId = d.Id,
+                        IsDisabled = false,
+                    });
+                }
+            }
             if (template != null)
             {
                 activity.ActivityTemplate = template;
+            }
+            else
+            {
+                activity.ActivityTemplate = new Entity.PimsActivityTemplate();
             }
 
             return activity;

@@ -149,6 +149,10 @@ exports[`NoteDetailsFormModal component renders as expected 1`] = `
 .c0 .modal-header .close {
   color: white;
   opacity: 1;
+  font-size: 3rem;
+  font-weight: 10;
+  text-shadow: none;
+  font-family: 'Helvetica Narrow';
 }
 
 .c2 {

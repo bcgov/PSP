@@ -1,8 +1,10 @@
 import Claims from 'constants/claims';
-import { ActivityContainer } from 'features/research/activities/activity/ActivityContainer';
 import * as React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';
+
+import { ActivityTray } from './activity/ActivityTray/ActivityTray';
+import { ActivityContainer } from './activity/detail/ActivityContainer';
 
 interface IActivityRouterProps {
   setShowActionBar: (show: boolean) => void;
@@ -40,6 +42,7 @@ export const ActivityRouter: React.FunctionComponent<IActivityRouterProps> = Rea
           <ActivityContainer
             activityId={Number(match.params.activityId)}
             onClose={onClose}
+            View={ActivityTray}
           ></ActivityContainer>
         )}
         claim={Claims.ACTIVITY_VIEW}

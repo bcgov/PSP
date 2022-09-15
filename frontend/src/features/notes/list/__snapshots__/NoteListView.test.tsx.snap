@@ -11,25 +11,7 @@ exports[`Note List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c5 {
-  float: right;
-  cursor: pointer;
-}
-
-.c4 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c6 {
+  .c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -56,6 +38,24 @@ exports[`Note List View renders as expected 1`] = `
 .c7 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c5 {
+  float: right;
+  cursor: pointer;
+}
+
+.c4 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c1 {
@@ -85,7 +85,6 @@ exports[`Note List View renders as expected 1`] = `
 }
 
 .c2 {
-  padding: 1.6rem 3.2rem;
   width: 100%;
 }
 
@@ -133,6 +132,9 @@ exports[`Note List View renders as expected 1`] = `
                 width="1em"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>
+                  collapse-notes
+                </title>
                 <path
                   d="M0 0h24v24H0z"
                   fill="none"
@@ -158,13 +160,13 @@ exports[`Note List View renders as expected 1`] = `
               <div
                 class="tr"
                 role="row"
-                style="display: flex; flex: 1 0 auto; min-width: 190px;"
+                style="display: flex; flex: 1 0 auto; min-width: 112px;"
               >
                 <div
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"
@@ -176,7 +178,7 @@ exports[`Note List View renders as expected 1`] = `
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 24 0 auto; min-width: 24px; width: 24px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"
@@ -221,7 +223,7 @@ exports[`Note List View renders as expected 1`] = `
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"
@@ -266,7 +268,7 @@ exports[`Note List View renders as expected 1`] = `
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"

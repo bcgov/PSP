@@ -6,11 +6,11 @@ import ResearchSummaryView, { IResearchSummaryViewProps } from './ResearchSummar
 
 const testResearchFile: Api_ResearchFile = {
   id: 5,
-  name: 'New research file',
+  fileName: 'New research file',
   roadName: 'Test road name',
   roadAlias: 'Test road alias',
-  rfileNumber: 'RFile-0000000018',
-  researchFileStatusTypeCode: {
+  fileNumber: 'RFile-0000000018',
+  fileStatusTypeCode: {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,

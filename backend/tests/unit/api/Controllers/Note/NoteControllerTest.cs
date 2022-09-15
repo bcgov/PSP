@@ -160,7 +160,7 @@ namespace Pims.Api.Test.Controllers.Note
             var service = helper.GetService<Mock<INoteService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>()));
+            service.Setup(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true));
 
             // Act
             var result = controller.DeleteNote(Constants.NoteType.Activity, 1);
@@ -168,7 +168,7 @@ namespace Pims.Api.Test.Controllers.Note
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Equal(true, actionResult.Value);
-            service.Verify(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>()), Times.Once());
+            service.Verify(m => m.DeleteNote(It.IsAny<NoteType>(), It.IsAny<long>(), true), Times.Once());
         }
         #endregion
     }

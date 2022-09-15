@@ -40,6 +40,27 @@ namespace Pims.Dal.Helpers.Extensions
         {
             filter.ThrowIfNull(nameof(filter));
 
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
+            {
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                query = query.Where(l => l.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                query = query.Where(l => l.PimsPropertyAcquisitionFiles.Any(pa => pa != null && EF.Functions.Like(pa.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                query = query.Where(l => l.PimsPropertyAcquisitionFiles.Any(pl => pl != null &&
+                    (EF.Functions.Like(pl.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pl.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pl.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileStatusTypeCode))
             {
                 query = query.Where(r => r.AcquisitionFileStatusTypeCode == filter.AcquisitionFileStatusTypeCode);
@@ -69,7 +90,10 @@ namespace Pims.Dal.Helpers.Extensions
 
             return query
                 .Include(r => r.AcquisitionFileStatusTypeCodeNavigation)
-                .Include(r => r.RegionCodeNavigation);
+                .Include(r => r.RegionCodeNavigation)
+                .Include(r => r.PimsPropertyAcquisitionFiles)
+                    .ThenInclude(pa => pa.Property)
+                    .ThenInclude(p => p.Address);
         }
     }
 }

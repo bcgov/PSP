@@ -94,7 +94,8 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="type">Note type to determine the type of note to delete.</param>
         /// <param name="noteId">Note id to identify the note to delete.</param>
-        public void DeleteNote(NoteType type, long noteId)
+        /// <param name="commitTransaction">Whether or not this transaction should be commited as part of this function.</param>
+        public void DeleteNote(NoteType type, long noteId, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting note with type {type} and id {noteId}", type, noteId);
             this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
@@ -103,7 +104,10 @@ namespace Pims.Api.Services
             {
                 case NoteType.Activity:
                     _noteRepository.DeleteActivityNotes(noteId);
-                    _entityNoteRepository.CommitTransaction();
+                    if (commitTransaction)
+                    {
+                        _entityNoteRepository.CommitTransaction();
+                    }
                     break;
                 case NoteType.File:
                     // Write code to delete the note from FileNotes table

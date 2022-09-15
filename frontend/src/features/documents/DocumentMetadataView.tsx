@@ -29,7 +29,7 @@ export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataView
               >
                 <Input
                   data-testid={`metadata-input-${meta.metadata_type?.name}` || ''}
-                  field={`[documentMetadata.${meta.metadata_type?.id}]`}
+                  field={`documentMetadata.${meta.metadata_type?.id}`}
                   required={meta.required === true}
                   value={props.formikProps.values.documentMetadata[meta.metadata_type?.id || '']}
                 />

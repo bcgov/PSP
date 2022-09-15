@@ -148,6 +148,32 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c2 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 {
+  margin: 0;
+}
+
+.c0 [class^='col-'] {
+  padding: 0;
+}
+
 .c4.c4.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -180,32 +206,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
 .c4.c4.btn:focus .text {
   display: inline;
   line-height: 2rem;
-}
-
-.c0 {
-  margin: 0;
-}
-
-.c0 [class^='col-'] {
-  padding: 0;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c2 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 <div
