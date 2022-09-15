@@ -56,7 +56,7 @@ describe('Activity Container', () => {
         }}
       >
         <ActivityContainer
-          View={ActivityView as FunctionComponent<IActivityTrayProps>}
+          View={ActivityView}
           onClose={onClose}
           activityId={renderOptions?.activityId ?? 1}
         />
