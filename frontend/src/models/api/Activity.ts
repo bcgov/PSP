@@ -5,6 +5,7 @@ export interface Api_Activity extends Api_ConcurrentVersion {
   id: number;
   activityTemplateId?: number;
   activityTemplateTypeCode?: Api_TypeCode<string>;
+  activityTemplate?: Api_ActivityTemplate;
   description: string;
   activityStatusTypeCode?: Api_TypeCode<string>;
 }

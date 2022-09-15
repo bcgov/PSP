@@ -23,7 +23,7 @@ export interface IMotiInventoryContainerProps {
   id?: number;
   pid?: string;
   onClose: () => void;
-  onZoom: (apiProperty?: IPropertyApiModel | undefined) => void;
+  onZoom?: (apiProperty?: IPropertyApiModel) => void;
 }
 
 /**

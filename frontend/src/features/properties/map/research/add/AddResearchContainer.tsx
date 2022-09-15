@@ -54,7 +54,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     formikRef.current?.setSubmitting(false);
     if (!!response?.name) {
       formikRef.current?.resetForm();
-      history.replace(`/mapview/research/${response.id}/edit`);
+      history.replace(`/mapview/sidebar/research/${response.id}`);
     }
   };
 

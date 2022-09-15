@@ -88,4 +88,18 @@ describe('DocumentFilterForm component', () => {
 
     expect(getByTestId('document-status')).not.toBeNull();
   });
+
+  it('renders filename with data as expected', async () => {
+    const {
+      component: { getByTestId, container },
+    } = await setup({
+      initialValues: { ...defaultDocumentFilter },
+    });
+
+    act(() => {
+      fillInput(container, 'filename', 'someDocName', 'input');
+    });
+
+    expect(getByTestId('document-filename')).not.toBeNull();
+  });
 });

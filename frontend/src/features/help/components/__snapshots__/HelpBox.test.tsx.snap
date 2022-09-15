@@ -148,11 +148,18 @@ exports[`Help box tests... renders correctly.. 1`] = `
 .c2 {
   max-height: 4rem;
   background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 <div>
   <div
     class="Toastify"
+  />
+  <div
+    class="container"
   />
   <div
     class="Toastify"

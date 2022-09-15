@@ -8,6 +8,7 @@ import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { AcquisitionProperties } from './AcquisitionProperties';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
@@ -51,6 +52,10 @@ export const AddAcquisitionForm = React.forwardRef<
               <SectionField label="Delivery date">
                 <FastDatePicker field="deliveryDate" formikProps={formikProps} />
               </SectionField>
+            </Section>
+
+            <Section header="Properties to include in this file:">
+              <AcquisitionProperties />
             </Section>
 
             <Section header="Acquisition Details">
@@ -106,6 +111,13 @@ const Container = styled.div`
   .form-section {
     margin: 0;
     padding-left: 0;
+  }
+
+  .tab-pane {
+    .form-section {
+      margin: 1.5rem;
+      padding-left: 1.5rem;
+    }
   }
 
   .react-datepicker-wrapper {

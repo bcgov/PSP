@@ -11,6 +11,7 @@ namespace Pims.Api.Areas.Research.Controllers
     using Pims.Api.Helpers.Extensions;
     using Pims.Api.Models.Concepts;
     using Pims.Api.Policies;
+    using Pims.Api.Services;
     using Pims.Dal.Entities.Models;
     using Pims.Dal.Security;
     using Pims.Dal.Services;

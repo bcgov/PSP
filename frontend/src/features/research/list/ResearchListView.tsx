@@ -71,7 +71,7 @@ export const ResearchListView: React.FunctionComponent = () => {
           </Row>
         </Styled.PageToolbar>
         {hasClaim(Claims.RESEARCH_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/research/new')}>
+          <StyledAddButton onClick={() => history.push('/mapview/sidebar/research/new')}>
             <FaPlus />
             &nbsp;Create a Research File
           </StyledAddButton>

@@ -71,7 +71,7 @@ export const AcquisitionListView: React.FunctionComponent = () => {
           </Row>
         </Styled.PageToolbar>
         {hasClaim(Claims.ACQUISITION_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/acquisition/new')}>
+          <StyledAddButton onClick={() => history.push('/mapview/sidebar/acquisition/new')}>
             <FaPlus />
             &nbsp;Create an acquisition file
           </StyledAddButton>

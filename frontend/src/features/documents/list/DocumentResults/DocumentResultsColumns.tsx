@@ -1,3 +1,4 @@
+import { StyledRemoveLinkButton } from 'components/common/buttons';
 import { Button } from 'components/common/buttons/Button';
 import { ColumnWithProps, DateCell, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/index';
@@ -34,6 +35,7 @@ export const getDocumentColumns = ({
       sortable: true,
       width: 40,
       maxWidth: 40,
+      Cell: renderFileName(onViewDetails),
     },
     {
       Header: 'Upload date',
@@ -67,9 +69,30 @@ export const getDocumentColumns = ({
   ];
 };
 
-function renderDocumentType({ value }: CellProps<any, Api_DocumentType>) {
+function renderDocumentType({ value }: CellProps<Api_Document, Api_DocumentType>) {
   return value?.documentType ?? '';
 }
+
+const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
+  return function(cell: CellProps<Api_Document, string>) {
+    const { hasClaim } = useKeycloakWrapper();
+    return (
+      <>
+        {hasClaim(Claims.DOCUMENT_VIEW) === true ? (
+          <Button
+            data-testid="document-view-filename-link"
+            onClick={() => cell.row.original?.id && onViewDetails(cell.row.original)}
+            variant="link"
+          >
+            {cell.value}
+          </Button>
+        ) : (
+          <span data-testid="document-view-filename-text">{cell.value}</span>
+        )}
+      </>
+    );
+  };
+};
 
 const renderActions = (
   onViewDetails: (values: Api_Document) => void,
@@ -87,7 +110,7 @@ const renderActions = (
         {hasClaim(Claims.DOCUMENT_VIEW) && (
           <Col>
             <Button
-              title="document view details"
+              data-testid="document-view-button"
               icon={<FaEye size={24} id={`document-view-${index}`} title="document view details" />}
               onClick={() => original?.id && onViewDetails(original)}
             ></Button>
@@ -95,11 +118,12 @@ const renderActions = (
         )}
         {hasClaim(Claims.DOCUMENT_DELETE) && (
           <Col>
-            <Button
+            <StyledRemoveLinkButton
               title="document delete"
+              data-testid="document-delete-button"
               icon={<FaTrash size={24} id={`document-delete-${index}`} title="document delete" />}
               onClick={() => original?.id && onDelete(original)}
-            ></Button>
+            ></StyledRemoveLinkButton>
           </Col>
         )}
       </StyledIconsRow>

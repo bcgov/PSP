@@ -6,6 +6,9 @@ exports[`Manage access requests Snapshot matches 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c4.btn {

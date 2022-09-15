@@ -89,6 +89,8 @@ dotnet_diagnostic.S1128.severity = warning
 dotnet_diagnostic.S3358.severity = warning
 # SA1617 Void return value should not be documented
 dotnet_diagnostic.SA1617.severity = error
+# SA1122 Use string.Empty for empty strings
+dotnet_diagnostic.SA1122.severity = error
 
 # StyleCop
 # SA1600 Elements should be documented
@@ -161,8 +163,6 @@ dotnet_diagnostic.SA1516.severity = warning
 dotnet_diagnostic.SA1208.severity = warning
 # SA1507 Code should not contain multiple blank lines in a row
 dotnet_diagnostic.SA1507.severity = warning
-# SA1122 Use string.Empty for empty strings
-dotnet_diagnostic.SA1122.severity = warning
 # SA1629 Documentation text should end with a period
 dotnet_diagnostic.SA1629.severity = warning
 # SA1121 Use built-in type alias

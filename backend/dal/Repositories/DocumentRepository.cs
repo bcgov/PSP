@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -41,6 +45,30 @@ namespace Pims.Dal.Repositories
 
             // Add all document relationships
             return document.PimsActivityInstanceDocuments.Count;
+        }
+
+        /// <summary>
+        /// Get the document from the database based on document id.
+        /// </summary>
+        /// <param name="documentId"></param>
+        /// <returns></returns>
+        public PimsDocument Get(long documentId)
+        {
+            return this.Context.PimsDocuments.FirstOrDefault(x => x.DocumentId == documentId);
+        }
+
+        /// <summary>
+        /// Updates the passed document in the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public PimsDocument Update(PimsDocument document, bool commitTransaction = true)
+        {
+            document.ThrowIfNull(nameof(document));
+
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
+            document = Context.Update(document).Entity;
+            return document;
         }
 
         /// <summary>
