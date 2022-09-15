@@ -14,5 +14,7 @@ VALUES
   (N'ACTIVE', N'Active'),
   (N'CANCEL', N'Cancelled'),
   (N'CLOSED', N'Closed'),
-  (N'ARCHIV', N'Archived');
+  (N'ARCHIV', N'Archived'),
+  (N'DRAFT',  N'Draft'),
+  (N'HOLD',   N'Hold');
 GO
