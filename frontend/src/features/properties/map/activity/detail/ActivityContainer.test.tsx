@@ -13,7 +13,6 @@ import { getMockResearchFile } from 'mocks/mockResearchFile';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity } from 'models/api/Activity';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
-import { FunctionComponent } from 'react';
 import { act } from 'react-dom/test-utils';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
