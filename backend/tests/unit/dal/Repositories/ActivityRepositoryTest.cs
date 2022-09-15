@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -69,7 +70,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
 
             var template = EntityHelper.CreateActivityTemplate(1);
             var activity = EntityHelper.CreateActivity(id: 1, template: template);
@@ -104,13 +105,101 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region Get Activity By Research Id
+        [Fact]
+        public void GetByResearchId_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
+
+            var template = EntityHelper.CreateActivityTemplate(1);
+            var activity = EntityHelper.CreateActivity(id: 1, template: template);
+            activity.PimsResearchActivityInstances = new List<PimsResearchActivityInstance>() { new PimsResearchActivityInstance() { ActivityInstanceId = 1, ResearchFileId = 1 } };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByResearchFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.FirstOrDefault().Should().BeAssignableTo<PimsActivityInstance>();
+            result.FirstOrDefault().ActivityTemplateId.Should().Be(template.ActivityTemplateId);
+            result.FirstOrDefault().ActivityInstanceId.Should().Be(activity.ActivityInstanceId);
+        }
+
+        [Fact]
+        public void GetByResearchId_NotFound()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByResearchFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IList<PimsActivityInstance>>();
+            result.Should().BeEmpty();
+        }
+        #endregion
+
+        #region Get Activity By Acquisition Id
+        [Fact]
+        public void GetByAcquisitionId_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityView);
+
+            var template = EntityHelper.CreateActivityTemplate(1);
+            var activity = EntityHelper.CreateActivity(id: 1, template: template);
+            activity.PimsAcquisitionActivityInstances = new List<PimsAcquisitionActivityInstance>() { new PimsAcquisitionActivityInstance() { ActivityInstanceId = 1, AcquisitionFileId = 1 } };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByAcquisitionFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.FirstOrDefault().Should().BeAssignableTo<PimsActivityInstance>();
+            result.FirstOrDefault().ActivityTemplateId.Should().Be(template.ActivityTemplateId);
+            result.FirstOrDefault().ActivityInstanceId.Should().Be(activity.ActivityInstanceId);
+        }
+
+        [Fact]
+        public void GetByAcquisitionId_NotFound()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.GetAllByAcquisitionFileId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IList<PimsActivityInstance>>();
+            result.Should().BeEmpty();
+        }
+        #endregion
+
         #region Update
         [Fact]
         public void Update_Success()
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteEdit);
+            var user = PrincipalHelper.CreateForPermission(Permissions.ActivityEdit);
 
             var activity = EntityHelper.CreateActivity(1);
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
@@ -175,6 +264,31 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var activity = EntityHelper.CreateActivity(1);
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
+
+            var repository = helper.CreateRepository<ActivityRepository>(user);
+
+            // Act
+            var result = repository.Delete(activity.ActivityInstanceId);
+
+            // Assert
+            result.Should().Be(true);
+        }
+
+        [Fact]
+        public void Delete_Relationships_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var activity = EntityHelper.CreateActivity(1);
+            activity.PimsAcquisitionActivityInstances = new List<PimsAcquisitionActivityInstance>() { new PimsAcquisitionActivityInstance() };
+            activity.PimsResearchActivityInstances = new List<PimsResearchActivityInstance>() { new PimsResearchActivityInstance() };
+            activity.PimsActInstPropAcqFiles = new List<PimsActInstPropAcqFile>() { new PimsActInstPropAcqFile() };
+            activity.PimsActInstPropRsrchFiles = new List<PimsActInstPropRsrchFile>() { new PimsActInstPropRsrchFile() };
+            activity.PimsActivityInstanceDocuments = new List<PimsActivityInstanceDocument>() { new PimsActivityInstanceDocument() };
+            activity.PimsActivityInstanceNotes = new List<PimsActivityInstanceNote>() { new PimsActivityInstanceNote() };
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
             var repository = helper.CreateRepository<ActivityRepository>(user);

@@ -89,8 +89,7 @@ describe('Document List View', () => {
     expect(getByTestId('document-type')).toBeInTheDocument();
   });
 
-  it('should have the Documents add button in the component', () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE] });
+  it('should have the Documents filename in the component', () => {
     const { getByTestId } = setup({
       hideFilters: false,
       isLoading: false,
@@ -100,6 +99,20 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       refreshDocumentList: noop,
     });
-    expect(getByTestId('document-add-button')).toBeInTheDocument();
+    expect(getByTestId('document-filename')).toBeInTheDocument();
+  });
+
+  it('should have the Documents add button in the component', () => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE] });
+    const { getByText } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.FILES,
+      documentResults: mockDocumentsResponse(),
+      onDelete: deleteMock,
+      refreshDocumentList: noop,
+    });
+    expect(getByText('Add a Document')).toBeInTheDocument();
   });
 });

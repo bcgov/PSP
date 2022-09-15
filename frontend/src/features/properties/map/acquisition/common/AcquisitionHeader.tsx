@@ -64,7 +64,7 @@ export const AcquisitionHeader: React.FunctionComponent<IAcquisitionHeaderProps>
         <Row className="no-gutters">
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
-              {acquisitionFile?.acquisitionFileStatusTypeCode?.description}
+              {acquisitionFile?.fileStatusTypeCode?.description}
             </HeaderField>
           </Col>
         </Row>

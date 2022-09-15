@@ -321,7 +321,11 @@ exports[`Document Results Table matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          />
+          >
+            <span
+              data-testid="document-view-filename-text"
+            />
+          </div>
           <div
             class="td"
             role="cell"
@@ -356,21 +360,151 @@ exports[`Document Results Table matches snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 177px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <span
+              data-testid="document-view-filename-text"
+            />
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Sep 8, 2022
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            admin
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c3 no-gutters row"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div
+  .c0 {
+  margin-top: 0.3rem;
+}
+
+<div
     class="row"
   >
     <div
       class="align-self-center col-auto"
     >
       <span>
-        1 - 1 of  1
+        1 - 2 of  2
       </span>
     </div>
     <div
       class="ml-auto align-self-center col-auto"
     />
+    <div
+      class="align-self-center col-auto"
+    >
+      <div>
+        <div
+          class="Menu-root"
+        >
+          <div
+            class="Menu-button"
+          >
+            <div
+              style="display: flex;"
+            >
+              <span
+                class="c0"
+              >
+                Show
+              </span>
+              <input
+                class="form-control form-control-sm"
+                style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                type="number"
+                value="10"
+              />
+              <span
+                class="c0"
+              >
+                Entries
+              </span>
+            </div>
+          </div>
+          <div
+            class="Menu-items"
+            style="width: 10.0rem;"
+          >
+            <div
+              class="Menu-options scrollable list-group"
+            >
+              <div
+                class="Menu-item list-group-item"
+              >
+                5
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                10
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                20
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                50
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                100
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="align-self-center col-auto"
     >

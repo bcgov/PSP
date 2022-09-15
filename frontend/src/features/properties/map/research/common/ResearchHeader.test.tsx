@@ -6,11 +6,11 @@ import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
 
 const testResearchFile: Api_ResearchFile = {
   id: 5,
-  name: 'New research file',
+  fileName: 'New research file',
   roadName: 'Test road name',
   roadAlias: 'Test road alias',
-  rfileNumber: 'RFile-0000000018',
-  researchFileStatusTypeCode: {
+  fileNumber: 'RFile-0000000018',
+  fileStatusTypeCode: {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,
@@ -70,8 +70,8 @@ describe('ResearchHeader component', () => {
       component: { getByText },
     } = await setup({ researchFile: testResearchFile });
 
-    expect(getByText(testResearchFile.rfileNumber as string)).toBeVisible();
-    expect(getByText(testResearchFile.name as string)).toBeVisible();
+    expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
+    expect(getByText(testResearchFile.fileName as string)).toBeVisible();
 
     expect(getByText(prettyFormatDate(testResearchFile.appCreateTimestamp))).toBeVisible();
     expect(getByText(prettyFormatDate(testResearchFile.appLastUpdateTimestamp))).toBeVisible();

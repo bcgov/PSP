@@ -36,9 +36,9 @@ describe('AddResearchContainer component', () => {
     const component = render(
       <SelectedPropertyContextProvider
         values={{
-          selectedResearchFeature: renderOptions.selectedResearchFeature,
+          selectedFileFeature: renderOptions.selectedFileFeature,
           setDraftProperties: renderOptions.setDraftProperties,
-          setSelectedResearchFeature: renderOptions.setSelectedResearchFeature,
+          setSelectedFileFeature: renderOptions.setSelectedFileFeature,
         }}
       >
         <AddResearchContainer onClose={renderOptions.onClose} />
@@ -64,7 +64,7 @@ describe('AddResearchContainer component', () => {
   it('displays the currently selected property', async () => {
     const {
       component: { findByText },
-    } = setup({ onClose: noop, selectedResearchFeature: selectedFeature });
+    } = setup({ onClose: noop, selectedFileFeature: selectedFeature });
     await act(async () => {
       const pidText = await findByText('PID: 002-225-255');
       expect(pidText).toBeVisible();
@@ -110,7 +110,7 @@ describe('AddResearchContainer component', () => {
     } = setup({
       onClose: noop,
       selectedFeature: null,
-      setSelectedResearchFeature: setSelectedResearchFeature,
+      setSelectedFileFeature: setSelectedResearchFeature,
     });
 
     const closeButton = getByTitle('close');
@@ -125,7 +125,7 @@ describe('AddResearchContainer component', () => {
     setup({
       onClose: noop,
       selectedFeature: null,
-      setSelectedResearchFeature: noop,
+      setSelectedFileFeature: noop,
     });
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });

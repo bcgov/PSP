@@ -833,6 +833,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                       class="form-control"
                       id="input-requestor.id"
                       name="requestor.id"
+                      placeholder="Select from Contacts"
                       title="O3"
                       value="O3"
                     />

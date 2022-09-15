@@ -1,5 +1,7 @@
+import { Api_File } from 'models/api/File';
 import Api_TypeCode from 'models/api/TypeCode';
 
+import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
@@ -25,13 +27,9 @@ export interface Api_ResearchFileProperty extends Api_ConcurrentVersion {
   purposeTypes?: Api_ResearchFilePropertyPurposeType[];
 }
 
-export interface Api_ResearchFile extends Api_ConcurrentVersion {
-  id?: number;
-  name?: string;
+export interface Api_ResearchFile extends Api_File, Api_AuditFields {
   roadName?: string;
   roadAlias?: string;
-  rfileNumber?: string;
-  researchFileStatusTypeCode?: Api_TypeCode<string>;
   researchProperties?: Api_ResearchFileProperty[];
   requestDate?: string;
   requestDescription?: string;
@@ -44,19 +42,9 @@ export interface Api_ResearchFile extends Api_ConcurrentVersion {
   requestorPerson?: Api_Person;
   requestorOrganization?: Api_Organization;
   researchFilePurposes?: Api_ResearchFilePurpose[];
-  appCreateTimestamp?: string;
-  appLastUpdateTimestamp?: string;
-  appLastUpdateUserid?: string;
-  appCreateUserid?: string;
-  appCreateUserGuid?: string;
-  appLastUpdateUserGuid?: string;
 }
 
-export interface Api_ResearchFilePurpose extends Api_ConcurrentVersion {
+export interface Api_ResearchFilePurpose extends Api_ConcurrentVersion, Api_AuditFields {
   id?: string;
   researchPurposeTypeCode?: Api_TypeCode<string>;
-  appCreateTimestamp?: string;
-  appLastUpdateTimestamp?: string;
-  appLastUpdateUserid?: string;
-  appCreateUserid?: string;
 }

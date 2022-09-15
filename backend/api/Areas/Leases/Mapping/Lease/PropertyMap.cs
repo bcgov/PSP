@@ -18,7 +18,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Address, src => src.Property.Address)
                 .Map(dest => dest.IsSensitive, src => src.Property.IsSensitive)
                 .Map(dest => dest.Description, src => src.Property.Description)
-                .Map(dest => dest.SurplusDeclaration, src => src)
+                .Map(dest => dest.SurplusDeclaration, src => src.Property)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.LandArea, src => src.LeaseArea);
 

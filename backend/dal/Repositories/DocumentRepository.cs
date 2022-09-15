@@ -67,14 +67,8 @@ namespace Pims.Dal.Repositories
             document.ThrowIfNull(nameof(document));
 
             this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
-            var existingDocument = this.Context.PimsDocuments.Where(l => l.DocumentId == document.DocumentId).FirstOrDefault()
-                 ?? throw new KeyNotFoundException();
-            Context.Entry(existingDocument).CurrentValues.SetValues(document);
-            if (commitTransaction)
-            {
-                this.Context.CommitTransaction();
-            }
-            return existingDocument;
+            document = Context.Update(document).Entity;
+            return document;
         }
 
         /// <summary>
@@ -86,7 +80,19 @@ namespace Pims.Dal.Repositories
         {
             document.ThrowIfNull(nameof(document));
 
-            this.Context.PimsDocuments.Remove(document);
+            // Need to load required related entities otherwise the below foreach may fail.
+            var documentToDelete = this.Context.PimsDocuments.AsNoTracking()
+                .Include(d => d.PimsActivityInstanceDocuments)
+                .Where(d => d.DocumentId == document.Id)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)
+            {
+                this.Context.PimsActivityInstanceDocuments.Remove(pimsActivityInstanceDocument);
+            }
+
+            this.Context.PimsDocuments.Remove(documentToDelete);
             return true;
         }
 

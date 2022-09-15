@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsVolumetricType class, provides an entity for the datamodel to manage a list of volumetric types.
+    /// PimsActivityTemplateType class, provides an entity for the datamodel to manage a list of activity template types.
     /// </summary>
     public partial class PimsActivityTemplateType : ITypeEntity<string>
     {
         #region Properties
 
         /// <summary>
-        /// get/set - Primary key to identify volumetric type.
+        /// get/set - Primary key to activity template type.
         /// </summary>
         [NotMapped]
         public string Id { get => ActivityTemplateTypeCode; set => ActivityTemplateTypeCode = value; }

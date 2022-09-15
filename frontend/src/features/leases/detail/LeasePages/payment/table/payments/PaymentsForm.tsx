@@ -77,8 +77,8 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
               name="securityDepositsTable"
               columns={columns}
               data={payments ?? []}
-              manualPagination={true}
-              hideToolbar={true}
+              manualPagination
+              hideToolbar
               noRowsMessage="There is no corresponding data"
               footer={true}
             />

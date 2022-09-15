@@ -1,14 +1,15 @@
 import { Claims } from 'constants/claims';
+import { FileTypes } from 'constants/fileTypes';
 import {
   ResearchTabNames,
   ResearchTabs,
   TabResearchView,
 } from 'features/mapSideBar/tabs/ResearchTabs';
-import ActivityListView from 'features/research/activities/list/ActivityListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
 
+import { ActivityListView } from '../activity/list/ActivityListView';
 import ResearchSummaryView from './detail/ResearchSummaryView';
 import { FormKeys } from './FormKeys';
 
@@ -50,7 +51,9 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
 
   if (researchFile?.id && hasClaim(Claims.ACTIVITY_VIEW)) {
     tabViews.push({
-      content: <ActivityListView fileId={researchFile.id}></ActivityListView>,
+      content: (
+        <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
+      ),
       key: ResearchTabNames.activities,
       name: 'Activities',
     });

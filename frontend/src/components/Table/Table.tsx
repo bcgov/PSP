@@ -13,8 +13,6 @@ import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { handleSortChange } from 'hooks/useSearch';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
-import remove from 'lodash/remove';
-import uniq from 'lodash/uniq';
 import React, {
   PropsWithChildren,
   ReactElement,
@@ -125,7 +123,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   showSelectedRowCount?: boolean;
   hideHeaders?: boolean;
   onRequestData?: (props: { pageIndex: number; pageSize: number }) => void;
-  loading?: boolean; // TODO: Show loading indicator while fetching data from server
+  loading?: boolean;
   totalItems?: number;
   pageCount?: number;
   pageSize?: number;
@@ -204,35 +202,24 @@ const IndeterminateCheckbox = React.forwardRef(
       rest.onChange && !allDataRef && rest.onChange(e);
       const currentSelected = selectedRef?.current ? [...selectedRef?.current] : [];
       if (isHeaderCheck) {
-        setSelected([]);
-      } else {
-        if (isSingleSelect === true) {
-          currentSelected.splice(0, currentSelected.length);
-          currentSelected.push(row.original);
+        if (e.target.checked && !indeterminate) {
+          currentSelected.push(...(allDataRef?.current ?? []));
+          setSelected(allDataRef?.current ?? []);
         } else {
-          if (currentSelected.find(selected => selected.id === row.original.id)) {
-            remove(
-              currentSelected,
-              currentSelected.find(selected => selected.id === row.original.id),
-            );
-          } else {
-            currentSelected.push(row.original);
-          }
+          setSelected([]);
         }
-        setSelected(uniq([...currentSelected]));
+      } else {
+        setSelected([row.original]);
       }
     };
-    rest.checked = isHeaderCheck
-      ? selectedRef?.current?.length === allDataRef?.current?.length &&
-        !!allDataRef?.current?.length
-      : checked;
+
+    rest.checked = isHeaderCheck ? !indeterminate && checked : checked;
     return (
       <>
         <input
           type={isSingleSelect === true ? 'radio' : 'checkbox'}
           ref={resolvedRef}
           {...rest}
-          disabled={isHeaderCheck && rest.checked === false && !indeterminate}
           onChange={onChainedChange}
           data-testid={`selectrow-${row?.original?.id ?? 'parent'}`}
         />
@@ -244,6 +231,14 @@ const IndeterminateCheckbox = React.forwardRef(
 export interface IIdentifiedObject {
   id?: number | string;
 }
+
+const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>(
+  props: React.PropsWithChildren<TableProps<T, TFilter>>,
+) => {
+  if (props.hideToolbar === true && props.manualPagination === false) {
+    throw Error('When hiding pagination toolbar manual pagination must be true.');
+  }
+};
 
 /**
  * A table component. Supports sorting, filtering and paging.
@@ -263,6 +258,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     }),
     [],
   );
+  validateProps(props);
 
   const {
     clickableTooltip,
@@ -284,10 +280,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   } = props;
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
-  const pageCount =
-    pageSizeProp !== undefined
-      ? externalPageCount ?? Math.ceil(totalItems / pageSizeProp)
-      : undefined;
+  const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? 10));
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
 
   const dataRef = React.useRef<T[]>(data ?? []);
@@ -323,7 +316,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             pageSize: pageSizeProp,
           }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
-      manualPagination: manualPagination ?? true, // Tell the usePagination hook
+      manualPagination: props.hideToolbar === true ?? manualPagination ?? true, // Tell the usePagination hook
       manualSortBy: manualSortBy,
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
@@ -703,6 +696,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     externalSelectedRows,
     selectedFlatRows,
     page,
+    pageIndex,
   ]);
 
   var canShowTotals: boolean = false;
