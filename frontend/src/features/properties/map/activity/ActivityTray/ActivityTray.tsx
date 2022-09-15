@@ -9,32 +9,35 @@ import styled from 'styled-components';
 
 import { ActivityFile } from '../detail/ActivityContainer';
 import { ActivityForm } from '../detail/ActivityForm';
+import { IActivityFormContent } from '../detail/content/models';
 import * as Styled from './styles';
 
 export interface IActivityTrayProps {
-  file: ActivityFile;
   activity?: Api_Activity;
   onClose: () => void;
   loading: boolean;
   updateLoading: boolean;
   error: boolean;
+  file: ActivityFile;
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
+  currentFormContent?: IActivityFormContent;
 }
 
-export const ActivityTray = ({
-  file,
+export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
   activity,
   onClose,
   onSave,
   error,
   loading,
+  file,
   editMode,
   setEditMode,
   onEditRelatedProperties,
-}: IActivityTrayProps) => {
+  currentFormContent,
+}) => {
   const [show, setShow] = useState(true);
   let trayContent = (
     <HalfHeightDiv>
@@ -46,6 +49,7 @@ export const ActivityTray = ({
           setEditMode={setEditMode}
           onSave={onSave}
           onEditRelatedProperties={onEditRelatedProperties}
+          formContent={currentFormContent}
         />
       )}
     </HalfHeightDiv>

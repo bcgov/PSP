@@ -149,4 +149,26 @@ describe('ActivityPropertyModal tests', () => {
     expect(screen.getByText('Related properties')).toBeVisible();
     expect(setSelectedFileProperties).not.toHaveBeenCalled();
   });
+
+  it('confirming the modal calls onSave and hides the modal', async () => {
+    onSave.mockResolvedValueOnce({});
+    const { getByText } = setup({
+      props: { selectedFileProperties: [getMockApiPropertyFiles()[0]], activityModel: {} as any },
+    });
+
+    const saveButton = getByText('Save');
+    userEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(onSave).toHaveBeenCalledWith({
+        actInstPropFiles: [
+          {
+            activityId: undefined,
+            propertyFileId: 1,
+          },
+        ],
+      });
+    });
+    expect(setDisplay).toHaveBeenCalledWith(false);
+  });
 });

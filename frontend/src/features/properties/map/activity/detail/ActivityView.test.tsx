@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
+import { FileTypes } from 'constants/fileTypes';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
 import { mockLookups } from 'mocks';
@@ -25,7 +26,13 @@ describe('ActivityView test', () => {
     const component = render(
       <Formik onSubmit={noop} initialValues={renderOptions?.activity ?? getMockActivityResponse()}>
         <ActivityView
-          file={renderOptions?.file ?? { ...mockAcquisitionFileResponse(), id: 1 }}
+          file={
+            renderOptions?.file ?? {
+              ...mockAcquisitionFileResponse(),
+              id: 1,
+              fileType: FileTypes.Acquisition,
+            }
+          }
           activity={renderOptions?.activity ?? { ...getMockActivityResponse(), id: 2 }}
           editMode={renderOptions?.editMode ?? false}
           setEditMode={renderOptions?.setEditMode ?? noop}

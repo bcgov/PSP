@@ -24,6 +24,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   editMode,
   setEditMode,
   onEditRelatedProperties,
+  children,
 }) => {
   return (
     <>
@@ -36,6 +37,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
       <Section header="Description" isCollapsable initiallyExpanded title="description">
         <ActivityDescription editMode={editMode} />
       </Section>
+      {children}
       <DocumentListContainer
         relationshipType={DocumentRelationshipType.ACTIVITIES}
         parentId={activity.id}
