@@ -20,7 +20,6 @@ import { render, RenderOptions } from 'utils/test-utils';
 
 import { IActivityTrayProps } from '../ActivityTray/ActivityTray';
 import ActivityContainer, { IActivityContainerProps } from './ActivityContainer';
-import { IActivityFormProps } from './ActivityForm';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -29,9 +28,9 @@ const storeState = {
 jest.mock('@react-keycloak/web');
 const onClose = jest.fn();
 const mockAxios = new MockAdapter(axios);
-let viewProps: (IActivityFormProps & IActivityTrayProps) | undefined;
+let viewProps: IActivityTrayProps | undefined;
 
-const ActivityView = (props: IActivityFormProps & IActivityTrayProps) => {
+const ActivityView = (props: IActivityTrayProps) => {
   viewProps = props;
   return (
     <>

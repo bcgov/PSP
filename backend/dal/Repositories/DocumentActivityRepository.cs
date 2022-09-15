@@ -34,38 +34,32 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document relationships for a given document.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsActivityInstanceDocument> GetAllByDocument(long documentId, bool tracking = false)
+        public IList<PimsActivityInstanceDocument> GetAllByDocument(long documentId)
         {
-            var query = this.Context.PimsActivityInstanceDocuments
+            return this.Context.PimsActivityInstanceDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.DocumentId == documentId);
-            if (tracking)
-            {
-                query = query.AsNoTracking();
-            }
-            return query.ToList();
+                .Where(ad => ad.DocumentId == documentId)
+                .AsNoTracking()
+                .ToList();
         }
 
         /// <summary>
         /// Get a list of all the document relationships for a given activity.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsActivityInstanceDocument> GetAllByActivity(long activityId, bool tracking = false)
+        public IList<PimsActivityInstanceDocument> GetAllByActivity(long activityId)
         {
-            var query = this.Context.PimsActivityInstanceDocuments
+            return this.Context.PimsActivityInstanceDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.ActivityInstanceId == activityId);
-            if (tracking)
-            {
-                query = query.AsNoTracking();
-            }
-            return query.ToList();
+                .Where(ad => ad.ActivityInstanceId == activityId)
+                .AsNoTracking()
+                .ToList();
         }
 
         /// <summary>
@@ -100,7 +94,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentNullException(nameof(activityDocument), "activityDocument cannot be null.");
             }
 
-            this.Context.PimsActivityInstanceDocuments.Remove(activityDocument);
+            this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { ActivityInstanceDocumentId = activityDocument.ActivityInstanceId });
             return true;
         }
 

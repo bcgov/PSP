@@ -44,7 +44,7 @@ export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
       {!!activity?.id && (
         <ActivityForm
           activity={{ ...activity, id: +activity.id }}
-          file={file as ActivityFile}
+          file={file}
           editMode={editMode}
           setEditMode={setEditMode}
           onSave={onSave}
