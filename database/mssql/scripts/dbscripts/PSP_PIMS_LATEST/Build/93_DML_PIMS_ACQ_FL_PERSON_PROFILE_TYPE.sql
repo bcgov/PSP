@@ -14,5 +14,6 @@ VALUES
   (N'NEGOTAGENT', N'Negotiation agent'),
   (N'PROPCOORD',  N'Property Coordinator'),
   (N'EXPRAGENT',  N'Expropriation agent'),
-  (N'PROPAGENT',  N'Property agent');
+  (N'PROPAGENT',  N'Property agent'),
+  (N'PROPANLYS',  N'Property analyst');
 GO
