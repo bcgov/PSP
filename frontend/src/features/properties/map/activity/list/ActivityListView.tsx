@@ -110,6 +110,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
       activity: {
         activityTemplateId: activityTypeId,
         description: '',
+        status: '',
         activityTemplate: {},
         activityDataJson: '',
       },

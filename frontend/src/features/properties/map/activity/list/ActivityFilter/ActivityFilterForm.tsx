@@ -15,8 +15,8 @@ export interface IActivityFilterFormProps {
 
 export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
   const { getOptionsByType } = useLookupCodeHelpers();
-  // TODO: PSP-4405 change to activity status once available
-  const activityStatusTypeOptions = getOptionsByType(API.ACTIVITY_INSTANCE_STATUS_TYPE);
+  // TODO: change to activity status once available
+  const activityStatusTypeOptions = getOptionsByType(API.ACTIVITY_STATUS_TYPE);
   const activityTypeOptions = getOptionsByType(API.ACTIVITY_TEMPLATE_TYPE);
 
   return (
