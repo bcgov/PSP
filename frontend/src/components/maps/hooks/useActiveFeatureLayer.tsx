@@ -48,7 +48,7 @@ const useActiveFeatureLayer = ({
   const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
-  const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL);
+  const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
 
   const { isSelecting, setSelectedFeature } = useContext(SelectedPropertyContext);
   // add geojson layer to the map
