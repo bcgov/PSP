@@ -29,7 +29,6 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
   const handleContactManagerOk = () => {
     formikProps.setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
     setShowContactManager(false);
-    setSelectedContact([]);
   };
 
   return (
@@ -87,7 +86,6 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
           </>
         )}
       />
-
       <ContactManagerModal
         selectedRows={selectedContact}
         setSelectedRows={setSelectedContact}
@@ -97,7 +95,6 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
         handleModalOk={handleContactManagerOk}
         handleModalCancel={() => {
           setShowContactManager(false);
-          setSelectedContact([]);
         }}
         showActiveSelector={true}
         showOnlyIndividuals={true}
