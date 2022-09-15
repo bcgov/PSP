@@ -18,7 +18,7 @@ export interface IActivityPropertyModalProps {
   originalSelectedProperties: Api_PropertyFile[];
   selectedFileProperties: Api_PropertyFile[];
   setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
-  onSave: () => Promise<Api_Activity | undefined>;
+  onSave: (activity: ActivityModel) => Promise<Api_Activity | undefined>;
 }
 
 export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyModalProps> = ({
@@ -69,7 +69,7 @@ export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyMod
               activityId: activityModel?.id,
               propertyFileId: p?.id,
             })) ?? [];
-          const updatedActivity = await onSave();
+          const updatedActivity = await onSave(activityModel);
           // if the activity was updated successfully, hide the modal.
           if (!!updatedActivity) {
             setDisplay(false);

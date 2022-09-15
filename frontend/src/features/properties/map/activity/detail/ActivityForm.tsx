@@ -19,6 +19,7 @@ export interface IActivityFormProps {
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
+  formContent?: IActivityFormContent;
 }
 
 export const ActivityForm = ({
@@ -28,7 +29,8 @@ export const ActivityForm = ({
   setEditMode,
   onSave,
   onEditRelatedProperties,
-}) => {
+  formContent,
+}: IActivityFormProps) => {
   const { setModalProps, setDisplayModal } = useModalContext();
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -79,7 +81,6 @@ export const ActivityForm = ({
         }
       }}
       onSubmit={async (values, formikHelpers) => {
-        values.activityStatusTypeCode = toTypeCode(values.status);
         const updatedActivity = await onSave(values.toApi());
         if (!!updatedActivity) {
           formikHelpers.resetForm({
@@ -98,7 +99,17 @@ export const ActivityForm = ({
             editMode={editMode}
             setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}
-          />
+          >
+            <Section
+              header={formContent?.header ?? ''}
+              initiallyExpanded={editMode}
+              isCollapsable
+              title={formContent?.header?.toLocaleLowerCase() ?? ''}
+            >
+              {editMode && EditForm && <EditForm />}
+              {!editMode && ViewForm && <ViewForm />}
+            </Section>
+          </ActivityView>
           {editMode && (
             <SidebarFooter
               onSave={() => submitForm()}

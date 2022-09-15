@@ -24,6 +24,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   editMode,
   setEditMode,
   onEditRelatedProperties,
+  children,
 }) => {
   return (
     <>
