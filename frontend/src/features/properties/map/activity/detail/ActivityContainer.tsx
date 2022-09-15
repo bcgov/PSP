@@ -3,6 +3,7 @@ import { SideBarContext, TypedFile } from 'features/properties/map/context/sideb
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity, Api_PropertyActivity } from 'models/api/Activity';
 import { Api_Property } from 'models/api/Property';
+import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -123,23 +124,20 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
 export const getActivityPropertiesOnFile = (
   file: TypedFile,
   activityFileProperties: Api_PropertyActivity[],
-) => {
+): Api_PropertyFile[] => {
   const activityFilePropertyIds = activityFileProperties.map(af => af.propertyFileId);
-  let fileProperties: Api_Property[] = [];
+
   if (file?.fileType === FileTypes.Research) {
-    fileProperties =
-      (file as Api_ResearchFile).researchProperties
-        ?.filter(rp => rp?.property !== undefined)
-        ?.map(rp => rp.property as Api_Property) ?? [];
+    return (file as Api_ResearchFile).researchProperties
+      ?.filter(researchProperty => activityFilePropertyIds.includes(researchProperty.id))
+      .map(p => ({ id: p.id })) as Api_PropertyFile[];
   } else if (file?.fileType === FileTypes.Acquisition) {
-    fileProperties =
-      (file as Api_AcquisitionFile).acquisitionProperties
-        ?.filter(ap => ap?.property !== undefined)
-        ?.map(ap => ap.property as Api_Property) ?? [];
+    return (file as Api_AcquisitionFile).acquisitionProperties
+      ?.filter(acquisitionProperty => activityFilePropertyIds.includes(acquisitionProperty.id))
+      .map(p => ({ id: p.id })) as Api_PropertyFile[];
+  } else {
+    throw Error('Unexpected file type');
   }
-  return (
-    fileProperties?.filter(fileProperty => activityFilePropertyIds.includes(fileProperty.id)) ?? []
-  );
 };
 
 export default ActivityContainer;
