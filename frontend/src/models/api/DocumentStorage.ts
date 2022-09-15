@@ -15,7 +15,7 @@ export interface Api_Storage_DocumentDetail {
 export interface Api_Storage_DocumentMetadata {
   document: Api_Storage_DocumentDetail;
   id: number;
-  metadata_type: Api_Storage_DocumentType;
+  metadata_type: Api_Storage_MetadataType;
   url: string;
   value: string;
 }
@@ -57,6 +57,7 @@ export interface Api_Storage_DocumentTypeMetadataType {
   metadata_type?: Api_Storage_MetadataType;
   required?: boolean;
   url?: string;
+  value?: string;
 }
 
 export interface Api_Storage_MetadataType {

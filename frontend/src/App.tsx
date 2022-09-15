@@ -3,13 +3,14 @@ import 'assets/scss/Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import AppRouter from 'AppRouter';
+import { ModalContainer } from 'components/common/ModalContainer';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import { useUsers } from 'features/admin/users/hooks/useUsers';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import PublicLayout from 'layouts/PublicLayout';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
 import { useLookupCodes } from 'store/slices/lookupCodes';
@@ -60,6 +61,7 @@ const App = () => {
               draggable
               pauseOnHover
             />
+            <ModalContainer />
           </>
         );
       }}

@@ -1,9 +1,12 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -23,6 +26,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         #region Variables
         private readonly IAcquisitionFileService _acquisitionService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         #endregion
 
         #region Constructors
@@ -32,11 +36,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// </summary>
         /// <param name="acquisitionService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IMapper mapper)
+        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IMapper mapper, ILogger<AcquisitionFileController> logger)
         {
             _acquisitionService = acquisitionService;
             _mapper = mapper;
+            _logger = logger;
         }
         #endregion
 
@@ -53,6 +59,16 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult GetAcquisitionFile(long id)
         {
+            // RECOMMENDED - Add valuable metadata to logs
+            _logger.LogInformation("Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(GetAcquisitionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            // RECOMMENDED - Log communications between components
+            _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
+
             var acqFile = _acquisitionService.GetById(id);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acqFile));
         }

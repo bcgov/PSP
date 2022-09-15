@@ -1,12 +1,13 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from 'mocks/mockDocuments';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { cleanup, render, RenderOptions, waitFor } from 'utils/test-utils';
+import { cleanup, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
 
@@ -69,6 +70,12 @@ describe('Document List View', () => {
     expect(fragment).toMatchSnapshot();
   });
 
+  it('renders as expected', async () => {
+    const { asFragment } = setup();
+    const fragment = await waitFor(() => asFragment());
+    expect(fragment).toMatchSnapshot();
+  });
+
   it('should have the Documents type in the component', () => {
     const { getByTestId } = setup({
       hideFilters: false,
@@ -80,5 +87,32 @@ describe('Document List View', () => {
       refreshDocumentList: noop,
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
+  });
+
+  it('should have the Documents filename in the component', () => {
+    const { getByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.FILES,
+      documentResults: mockDocumentsResponse(),
+      onDelete: deleteMock,
+      refreshDocumentList: noop,
+    });
+    expect(getByTestId('document-filename')).toBeInTheDocument();
+  });
+
+  it('should have the Documents add button in the component', () => {
+    mockKeycloak({ claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE] });
+    const { getByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: 0,
+      relationshipType: DocumentRelationshipType.FILES,
+      documentResults: mockDocumentsResponse(),
+      onDelete: deleteMock,
+      refreshDocumentList: noop,
+    });
+    expect(getByTestId('document-add-button')).toBeInTheDocument();
   });
 });

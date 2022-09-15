@@ -23,6 +23,13 @@ namespace Pims.Dal.Entities
         public long ActivityInstanceId { get; set; }
         [Column("ACTIVITY_TEMPLATE_ID")]
         public long? ActivityTemplateId { get; set; }
+        [Required]
+        [Column("ACTIVITY_INSTANCE_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string ActivityInstanceStatusTypeCode { get; set; }
+        [Column("DESCRIPTION")]
+        [StringLength(500)]
+        public string Description { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -306,6 +306,37 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResult<DocumentMetadata>> UpdateDocumentMetadataAsync(long documentId, long metadataId, string value)
+        {
+            _logger.LogDebug("Update existing metadata type with value to an existing document");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            var linkModel = new { metadata_id = metadataId, value = value };
+            using HttpContent content = new StringContent(JsonSerializer.Serialize(linkModel));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/{metadataId}/");
+
+            var response = await PutAsync<DocumentMetadata>(endpoint, content, authenticationToken);
+
+            _logger.LogDebug($"Finished updating existing metadata value to a document");
+            return response;
+        }
+
+        public async Task<ExternalResult<string>> DeleteDocumentMetadataAsync(long documentId, long metadataId)
+        {
+            _logger.LogDebug("Delete existing metadata type from an existing document");
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/{metadataId}/");
+
+            var response = await DeleteAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug($"Finished deleting existing metadata from a document");
+            return response;
+        }
+
         public async Task<ExternalResult<DocumentTypeMetadataType>> UpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
         {
             _logger.LogDebug("Updating document type and metadata type...");
@@ -343,7 +374,7 @@ namespace Pims.Api.Repositories.Mayan
             const string fileNameFlag = "filename";
             string[] parts = contentDisposition.Split(" ");
             string fileNamePart = parts.FirstOrDefault(x => x.Contains(fileNameFlag));
-            return fileNamePart[(fileNameFlag.Length + 1) ..].Replace("\"", string.Empty);
+            return fileNamePart[(fileNameFlag.Length + 1)..].Replace("\"", string.Empty);
         }
     }
 }

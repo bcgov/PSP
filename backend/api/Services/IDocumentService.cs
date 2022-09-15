@@ -37,5 +37,7 @@ namespace Pims.Api.Services
         Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument);
 
         Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest);
+
+        Task<DocumentUpdateResponse> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateRequest updateRequest);
     }
 }

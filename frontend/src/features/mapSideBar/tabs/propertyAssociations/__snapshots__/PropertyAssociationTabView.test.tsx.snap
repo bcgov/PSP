@@ -6,6 +6,9 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c3 {
@@ -235,7 +238,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                   title=""
                 >
                   <a
-                    href="/mapview/research/1/view"
+                    href="/mapview/sidebar/research/1"
                   >
                     R-1
                   </a>

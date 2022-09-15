@@ -107,10 +107,10 @@ describe('Multiselect component', () => {
 
     // find option to remove (multi-select chip) and click on the X icon
     const chip = findChip(optionToRemove);
-    userEvent.click(findChipCloseIcon(chip));
+    await waitFor(() => userEvent.click(findChipCloseIcon(chip)));
 
     // assert
-    await waitFor(() => expect(onRemoveSpy).toHaveBeenCalledWith(remainingOptions));
+    expect(onRemoveSpy).toHaveBeenCalledWith(remainingOptions);
   });
 });
 

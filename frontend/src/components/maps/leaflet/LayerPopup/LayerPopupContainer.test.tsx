@@ -94,7 +94,7 @@ describe('LayerPopupContainer component', () => {
       userEvent.click(ellipsis);
       const link = getByText('Research File - Create new');
       userEvent.click(link);
-      expect(history.location.pathname).toBe('/mapview/research/new');
+      expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
     });
 
     it('handles create acquisition file action', async () => {
@@ -107,7 +107,7 @@ describe('LayerPopupContainer component', () => {
       userEvent.click(ellipsis);
       const link = getByText('Acquisition File - Create new');
       userEvent.click(link);
-      expect(history.location.pathname).toBe('/mapview/acquisition/new');
+      expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
     });
   });
 });

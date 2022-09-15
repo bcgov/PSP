@@ -16,7 +16,7 @@ describe('App Route', () => {
     act(() => {
       ReactDOM.render(
         <Router history={history}>
-          <AppRoute component={() => <p>Title Test Page</p>} title={title} />
+          <AppRoute customComponent={() => <p>Title Test Page</p>} title={title} />
         </Router>,
         container,
       );

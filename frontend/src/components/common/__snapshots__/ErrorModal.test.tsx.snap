@@ -8,6 +8,9 @@ exports[`Error modal tests... renders correctly 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   <div

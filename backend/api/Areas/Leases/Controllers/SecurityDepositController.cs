@@ -8,6 +8,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
+using Pims.Api.Services;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Pims.Dal.Services;

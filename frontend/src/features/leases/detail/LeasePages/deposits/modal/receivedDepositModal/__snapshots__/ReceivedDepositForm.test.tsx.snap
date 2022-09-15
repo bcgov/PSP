@@ -6,17 +6,12 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
-  .c3.c3.form-control.is-valid {
-  background-image: none;
-}
-
-.c3.c3.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c5.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -147,6 +142,14 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
 
 .c5.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c1 {
@@ -459,17 +462,12 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
-  .c3.c3.form-control.is-valid {
-  background-image: none;
-}
-
-.c3.c3.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c5.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -600,6 +598,14 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
 
 .c5.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c1 {

@@ -10,7 +10,7 @@ import UpdatePropertyView from './update/property/UpdatePropertyView';
 import UpdateSummaryView from './update/summary/UpdateSummaryView';
 
 export interface IViewSelectorProps {
-  researchFile: Api_ResearchFile;
+  researchFile?: Api_ResearchFile;
   selectedIndex: number;
 
   isEditMode: boolean;
@@ -29,7 +29,7 @@ export interface IViewSelectorProps {
 
 const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
   if (props.selectedIndex === 0) {
-    if (props.isEditMode) {
+    if (props.isEditMode && !!props.researchFile) {
       return (
         <UpdateSummaryView
           researchFile={props.researchFile}
@@ -47,7 +47,7 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
       );
     }
   } else {
-    const properties = props.researchFile.researchProperties || [];
+    const properties = props.researchFile?.researchProperties || [];
     const selectedPropertyIndex = props.selectedIndex - 1;
     const researchFileProperty = properties[selectedPropertyIndex];
     researchFileProperty.researchFile = props.researchFile;

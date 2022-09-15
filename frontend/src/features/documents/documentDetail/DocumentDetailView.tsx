@@ -1,69 +1,73 @@
-import { Scrollable } from 'components/common/Scrollable/Scrollable';
+import { LinkButton } from 'components/common/buttons';
+import TooltipIcon from 'components/common/TooltipIcon';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import Claims from 'constants/claims';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import { FaEdit } from 'react-icons/fa';
 
-import DownloadDocumentButton from '../DownloadDocumentButton';
-import { ComposedDocument } from './ComposedDocument';
+import {
+  StyledGreySection,
+  StyledH2,
+  StyledH3,
+  StyledHeader,
+  StyledNoData,
+  StyledScrollable,
+} from '../commonStyles';
+import { ComposedDocument } from '../ComposedDocument';
+import { StyledContainer } from '../list/styles';
+import DocumentDetailHeader from './DocumentDetailHeader';
 
-interface IDocumentDetailsViewProps {
+export interface IDocumentDetailsViewProps {
   document: ComposedDocument;
   isLoading: boolean;
+  setIsEditable: (isEditable: boolean) => void;
 }
 
 /**
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
-const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
+export const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = props => {
   const { hasClaim } = useKeycloakWrapper();
-
-  const documentTypeLabel = props.document.pimsDocument?.documentType?.documentType;
-  const documentFileName = props.document.pimsDocument?.fileName;
-  const mayanDocumentId = props.document.pimsDocument?.mayanDocumentId || -1;
-
-  let mayanFileId = undefined;
-  if (props.document.mayanMetadata !== undefined && props.document.mayanMetadata?.length > 0) {
-    const document = props.document.mayanMetadata[0]?.document;
-    mayanFileId = document.file_latest.id;
-  }
 
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
-          <SectionField label="Document type" labelWidth="4" className="pb-2">
-            {documentTypeLabel}
-          </SectionField>
-          <SectionField label={'File name'} labelWidth="4" className="pb-3">
-            <Row>
-              <Col xs="auto">{documentFileName}</Col>
-              <Col xs="auto">
-                <DownloadDocumentButton
-                  mayanDocumentId={mayanDocumentId}
-                  mayanFileId={mayanFileId}
-                />
-              </Col>
-            </Row>
-          </SectionField>
-
+          <DocumentDetailHeader document={props.document} />
           <StyledGreySection>
             <Row className="pb-3">
               <Col className="text-left">
-                <StyledH2>Document information</StyledH2>
+                <StyledHeader>
+                  <StyledH2>Document information</StyledH2>
+                  <TooltipIcon
+                    toolTipId="documentInfoToolTip"
+                    className="documentInfoToolTip"
+                    toolTip="Information you provided here will be searchable"
+                  ></TooltipIcon>
+                </StyledHeader>
               </Col>
-              {hasClaim(Claims.DOCUMENT_EDIT) && <Col xs="2">Edit</Col>}
+              {hasClaim(Claims.DOCUMENT_EDIT) && (
+                <Col xs="2">
+                  {' '}
+                  <LinkButton
+                    onClick={() => {
+                      props.setIsEditable(true);
+                    }}
+                  >
+                    <FaEdit />
+                  </LinkButton>
+                </Col>
+              )}
             </Row>
             <SectionField label="Status" labelWidth="4">
               {props.document.pimsDocument?.statusTypeCode?.description}
             </SectionField>
-
             <StyledH3>Details</StyledH3>
             <StyledScrollable>
-              {props.document.mayanMetadata?.length === 0 && (
+              {(props.document.mayanMetadata ?? []).length === 0 && (
                 <StyledNoData>No additional data</StyledNoData>
               )}
               {props.document.mayanMetadata?.map(value => (
@@ -82,38 +86,3 @@ const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewProps> = p
     </StyledContainer>
   );
 };
-
-export default DocumentDetailView;
-
-const StyledContainer = styled.div`
-  padding: 1rem;
-`;
-
-const StyledGreySection = styled.div`
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.css.filterBackgroundColor};
-`;
-
-const StyledH2 = styled.h2`
-  font-weight: 700;
-  color: ${props => props.theme.css.primaryColor};
-`;
-const StyledH3 = styled.h3`
-  font-weight: 700;
-  font-size: 1.7rem;
-  margin-bottom: 1rem;
-  text-align: left;
-  padding-top: 1rem;
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.1rem ${props => props.theme.css.primaryColor};
-`;
-
-const StyledScrollable = styled(Scrollable)`
-  overflow-x: hidden;
-  max-height: 50rem;
-`;
-
-const StyledNoData = styled.div`
-  text-align: center;
-  font-style: italic;
-`;

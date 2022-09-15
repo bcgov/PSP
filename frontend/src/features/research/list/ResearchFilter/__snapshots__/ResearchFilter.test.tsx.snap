@@ -6,6 +6,9 @@ exports[`Research Filter matches snapshot 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c7.btn {

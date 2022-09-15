@@ -6,6 +6,9 @@ exports[`LayersControl View renders correctly 1`] = `
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c1.btn {

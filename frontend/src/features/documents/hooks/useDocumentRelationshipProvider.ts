@@ -5,8 +5,10 @@ import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { IApiError } from 'interfaces/IApiError';
 import {
   Api_DocumentRelationship,
-  Api_UploadRequest,
-  Api_UploadResponse,
+  Api_DocumentUpdateRequest,
+  Api_DocumentUpdateResponse,
+  Api_DocumentUploadRequest,
+  Api_DocumentUploadResponse,
 } from 'models/api/Document';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -19,6 +21,7 @@ export const useDocumentRelationshipProvider = () => {
     getDocumentRelationship,
     deleteDocumentRelationshipApiCall,
     uploadDocumentRelationshipApiCall,
+    updateDocumentMetadataApiCall,
   } = useApiDocuments();
 
   // Provides functionality to retrieve document relationship
@@ -86,14 +89,14 @@ export const useDocumentRelationshipProvider = () => {
     (
       relationshipType: DocumentRelationshipType,
       parentId: number,
-      uploadRequest: Api_UploadRequest,
-    ) => Promise<AxiosResponse<Api_UploadResponse, any>>
+      uploadRequest: Api_DocumentUploadRequest,
+    ) => Promise<AxiosResponse<Api_DocumentUploadResponse, any>>
   >({
     requestFunction: useCallback(
       async (
         relationshipType: DocumentRelationshipType,
         parentId: number,
-        uploadRequest: Api_UploadRequest,
+        uploadRequest: Api_DocumentUploadRequest,
       ) => await uploadDocumentRelationshipApiCall(relationshipType, parentId, uploadRequest),
       [uploadDocumentRelationshipApiCall],
     ),
@@ -110,6 +113,35 @@ export const useDocumentRelationshipProvider = () => {
     }, []),
   });
 
+  // Provides functionality for uploading a document for a given relationship
+  const { execute: updateDocument, loading: updateDocumentLoading } = useApiRequestWrapper<
+    (
+      relationshipType: DocumentRelationshipType,
+      documentId: number,
+      updateRequest: Api_DocumentUpdateRequest,
+    ) => Promise<AxiosResponse<Api_DocumentUpdateResponse, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        relationshipType: DocumentRelationshipType,
+        documentId: number,
+        updateRequest: Api_DocumentUpdateRequest,
+      ) => await updateDocumentMetadataApiCall(relationshipType, documentId, updateRequest),
+      [updateDocumentMetadataApiCall],
+    ),
+    requestName: 'updateDocumentMetadataApiCall',
+    onSuccess: useCallback(() => {
+      toast.success('Updated document metadata');
+    }, []),
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+      } else {
+        toast.error('Update document relationship error. Check responses and try again.');
+      }
+    }, []),
+  });
+
   return {
     retrieveDocumentRelationship,
     retrieveDocumentRelationshipLoading,
@@ -117,5 +149,7 @@ export const useDocumentRelationshipProvider = () => {
     deleteDocumentRelationshipLoading,
     uploadDocument,
     uploadDocumentLoading,
+    updateDocument,
+    updateDocumentLoading,
   };
 };

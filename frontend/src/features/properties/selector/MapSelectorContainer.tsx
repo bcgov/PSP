@@ -7,8 +7,8 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { PropertyForm } from '../map/research/add/models';
-import SelectedPropertyHeaderRow from '../map/research/add/SelectedPropertyHeaderRow';
-import SelectedPropertyRow from '../map/research/add/SelectedPropertyRow';
+import SelectedPropertyHeaderRow from './components/SelectedPropertyHeaderRow';
+import SelectedPropertyRow from './components/SelectedPropertyRow';
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
 import { IMapProperty } from './models';
 import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTabsView';

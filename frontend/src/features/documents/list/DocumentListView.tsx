@@ -53,11 +53,17 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
       if (filters) {
         documentItems = documentItems.filter(document => {
-          return (
-            (!filters.documentTypeId ||
-              document?.documentType?.id === Number(filters.documentTypeId)) &&
-            (!filters.status || document?.statusTypeCode?.id === filters.status)
-          );
+          const matchesDocumentType =
+            !filters.documentTypeId ||
+            document?.documentType?.id === Number(filters.documentTypeId);
+          const matchesStatus = !filters.status || document?.statusTypeCode?.id === filters.status;
+          const filename = document.fileName?.toLowerCase() || '';
+          const matchesFilename: boolean =
+            filters.filename !== ''
+              ? filename.indexOf(filters.filename.toLowerCase() || '') > -1
+              : true;
+
+          return matchesDocumentType && matchesStatus && matchesFilename;
         });
       }
       if (sort) {
@@ -120,6 +126,11 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     props.refreshDocumentList();
   };
 
+  const onUpdateSuccess = () => {
+    handleModalDetailsClose();
+    props.refreshDocumentList();
+  };
+
   return (
     <div>
       <Section
@@ -128,7 +139,10 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             <Col xs="auto">Documents</Col>
             {hasClaim(Claims.DOCUMENT_ADD) && (
               <Col>
-                <StyledAddButton onClick={() => setIsUploadVisible(true)}>
+                <StyledAddButton
+                  data-testid="document-add-button"
+                  onClick={() => setIsUploadVisible(true)}
+                >
                   <FaUpload />
                   &nbsp;Add a Document
                 </StyledAddButton>
@@ -150,8 +164,10 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       </Section>
       <DocumentDetailModal
         display={isDetailsVisible}
+        relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument}
+        onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
       />
       <DocumentUploadModal

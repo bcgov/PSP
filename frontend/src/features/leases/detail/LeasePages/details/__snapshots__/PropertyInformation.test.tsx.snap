@@ -6,6 +6,9 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
     class="Toastify"
   />
   <div
+    class="container"
+  />
+  <div
     class="Toastify"
   />
   .c2:not(:first-child) {
@@ -175,6 +178,9 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
+  />
+  <div
+    class="container"
   />
   <div
     class="Toastify"
