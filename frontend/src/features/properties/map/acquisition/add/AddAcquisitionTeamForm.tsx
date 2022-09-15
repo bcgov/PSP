@@ -60,7 +60,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                     onClear={() => formikProps.setFieldValue(`team[${index}].contact`, undefined)}
                   ></ContactInput>
                 </Col>
-                <Col xs="auto" xl="2">
+                <Col xs="auto" xl="2" className="pl-0 align-self-center mb-3">
                   <Button
                     data-testid="remove-team-member"
                     icon={<MdClose size={20} />}
