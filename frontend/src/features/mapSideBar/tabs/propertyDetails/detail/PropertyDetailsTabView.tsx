@@ -124,7 +124,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             {pphStatusTypeCodeDesc ?? 'Unknown'}
           </SectionField>
           {isHighwayRoad && (
-            <SectionField label="Highway / Road">
+            <SectionField label="Highway / Road established by">
               <Multiselect
                 disable
                 disablePreSelectedValues
@@ -137,7 +137,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             </SectionField>
           )}
           {isAdjacentLand && (
-            <SectionField label="Adjacent land">
+            <SectionField label="Adjacent Land Type">
               <Multiselect
                 disable
                 disablePreSelectedValues
