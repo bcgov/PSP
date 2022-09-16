@@ -10,8 +10,8 @@ namespace Pims.Api.Models.Concepts
             config.NewConfig<Entity.PimsPropertyAcquisitionFile, AcquisitionFilePropertyModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropertyAcquisitionFileId)
-                // TODO: Mapping missing from IS35 schema!! --> .Map(dest => dest.PropertyName, src => src.PropertyName)
-                // TODO: Mapping missing from IS35 schema!! --> .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.PropertyName, src => src.PropertyName)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.AcquisitionFile, src => src.AcquisitionFile)
@@ -22,8 +22,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFile.Id)
-                // TODO: Mapping missing from IS35 schema!! --> .Map(dest => dest.PropertyName, src => src.PropertyName)
-                // TODO: Mapping missing from IS35 schema!! --> .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.PropertyName, src => src.PropertyName)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }

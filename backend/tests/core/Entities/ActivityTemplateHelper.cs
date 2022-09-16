@@ -26,6 +26,7 @@ namespace Pims.Core.Test
                 AppLastUpdateUserid = string.Empty,
                 DbCreateUserid = string.Empty,
                 DbLastUpdateUserid = string.Empty,
+                ActivityTemplateTypeCodeNavigation = new Entity.PimsActivityTemplateType() { Id = "testActivityTemplateTypeCode" },
                 ConcurrencyControlNumber = 1,
             };
 

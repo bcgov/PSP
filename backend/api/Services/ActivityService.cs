@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Pims.Dal.Services;
 
 namespace Pims.Api.Services
 {
@@ -14,6 +17,8 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
+        private readonly IResearchFileService _researchFileService;
+        private readonly IAcquisitionFileService _acquisitionFileService;
         private readonly IDocumentService _documentService;
         private readonly INoteService _noteService;
 
@@ -22,6 +27,8 @@ namespace Pims.Api.Services
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
             IActivityTemplateRepository activityTemplateRepository,
+            IAcquisitionFileService acquisitionFileService,
+            IResearchFileService researchFileService,
             INoteService noteService,
             IDocumentService documentService)
             : base(user, logger)
@@ -29,6 +36,8 @@ namespace Pims.Api.Services
             _logger = logger;
             _activityRepository = activityRepository;
             _activityTemplateRepository = activityTemplateRepository;
+            _acquisitionFileService = acquisitionFileService;
+            _researchFileService = researchFileService;
             _noteService = noteService;
             _documentService = documentService;
         }
@@ -47,8 +56,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting activities by research id {researchFileId}", researchFileId);
             this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
+            this.User.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             var activityInstances = _activityRepository.GetAllByResearchFileId(researchFileId);
+
+            return activityInstances;
+        }
+
+        public IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId)
+        {
+            _logger.LogInformation("Getting activities by acquisition id {acquisitionFileId}", acquisitionFileId);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
+            this.User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            var activityInstances = _activityRepository.GetAllByAcquisitionFileId(acquisitionFileId);
 
             return activityInstances;
         }
@@ -72,6 +93,22 @@ namespace Pims.Api.Services
             return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
         }
 
+        public PimsActivityInstance AddResearchActivity(PimsActivityInstance instance, long researchFileId)
+        {
+            _logger.LogInformation("Adding research activity instance ...");
+            instance.PimsResearchActivityInstances.Add(new PimsResearchActivityInstance() { ResearchFileId = researchFileId, ActivityInstance = instance });
+
+            return AddFileActivity(Permissions.ResearchFileEdit, instance);
+        }
+
+        public PimsActivityInstance AddAcquisitionActivity(PimsActivityInstance instance, long acquisitionFileId)
+        {
+            _logger.LogInformation("Adding acquisition activity instance ...");
+            instance.PimsAcquisitionActivityInstances.Add(new PimsAcquisitionActivityInstance() { AcquisitionFileId = acquisitionFileId, ActivityInstance = instance });
+
+            return AddFileActivity(Permissions.AcquisitionFileEdit, instance);
+        }
+
         public PimsActivityInstance Update(PimsActivityInstance model)
         {
             _logger.LogInformation("Updating activity instance ...", model);
@@ -83,7 +120,31 @@ namespace Pims.Api.Services
             return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
         }
 
-        public void Delete(long activityId)
+        public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance model)
+        {
+            _logger.LogInformation("Updating activity instance research properties ...", model.PimsActInstPropRsrchFiles);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityEdit);
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
+
+            var newActivityInstance = _activityRepository.UpdateActivityResearchProperties(model);
+            _activityRepository.CommitTransaction();
+            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+        }
+
+        public PimsActivityInstance UpdateActivityAcquisitionProperties(PimsActivityInstance model)
+        {
+            _logger.LogInformation("Updating activity instance acquisition properties ...", model.PimsActInstPropAcqFiles);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityEdit);
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+            ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
+
+            var newActivityInstance = _activityRepository.UpdateActivityAcquisitionProperties(model);
+            _activityRepository.CommitTransaction();
+            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+        }
+
+        public async Task Delete(long activityId)
         {
             _logger.LogInformation("Deleting activity instance ...", activityId);
             this.User.ThrowIfNotAuthorized(Permissions.ActivityDelete);
@@ -91,17 +152,31 @@ namespace Pims.Api.Services
             var activityDocuments = _documentService.GetActivityDocuments(activityId);
             foreach (PimsActivityInstanceDocument activityInstanceDocument in activityDocuments)
             {
-                _documentService.DeleteActivityDocumentAsync(activityInstanceDocument);
+                var response = await _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
+                if(!response)
+                {
+                    throw new DbUpdateException("Failed to delete one or more related documents, unable to remove activity at this time. If this error persists, contact support.");
+                }
             }
 
             var notes = _noteService.GetNotes(Constants.NoteType.Activity, activityId);
             foreach (PimsNote note in notes)
             {
-                _noteService.DeleteNote(Constants.NoteType.Activity, note.Id);
+                _noteService.DeleteNote(Constants.NoteType.Activity, note.Id, false);
             }
 
             _activityRepository.Delete(activityId);
             _activityRepository.CommitTransaction();
+        }
+
+        private PimsActivityInstance AddFileActivity(Permissions fileClaim, PimsActivityInstance instance)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityAdd);
+            this.User.ThrowIfNotAuthorized(fileClaim);
+
+            var newActivityInstance = _activityRepository.Add(instance);
+            _activityRepository.CommitTransaction();
+            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
         }
 
         private void ValidateVersion(long activityId, long activityVersion)

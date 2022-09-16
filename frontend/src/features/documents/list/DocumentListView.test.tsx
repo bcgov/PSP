@@ -104,7 +104,7 @@ describe('Document List View', () => {
 
   it('should have the Documents add button in the component', () => {
     mockKeycloak({ claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE] });
-    const { getByTestId } = setup({
+    const { getByText } = setup({
       hideFilters: false,
       isLoading: false,
       parentId: 0,
@@ -113,6 +113,6 @@ describe('Document List View', () => {
       onDelete: deleteMock,
       refreshDocumentList: noop,
     });
-    expect(getByTestId('document-add-button')).toBeInTheDocument();
+    expect(getByText('Add a Document')).toBeInTheDocument();
   });
 });

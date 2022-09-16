@@ -1,8 +1,9 @@
 import React from 'react';
 import { FaPlus } from 'react-icons/fa';
 
+import { StyledAddButton } from '../styles';
 import TooltipWrapper from '../TooltipWrapper';
-import { Button, ButtonProps } from '.';
+import { ButtonProps } from '.';
 
 interface IPlusButtonProps extends ButtonProps {
   /** set the text of the tooltip that appears on hover of the plus button */
@@ -18,7 +19,7 @@ interface IPlusButtonProps extends ButtonProps {
 export const PlusButton: React.FC<IPlusButtonProps> = ({ toolId, toolText, ...props }) => {
   return (
     <TooltipWrapper toolTipId={toolId} toolTip={toolText}>
-      <Button className="primary" {...props} icon={<FaPlus size={20} />} />
+      <StyledAddButton className="primary" {...props} icon={<FaPlus size={20} />} />
     </TooltipWrapper>
   );
 };

@@ -18,6 +18,7 @@ jest.mock('components/maps/leaflet/LayerPopup');
 
 let clearLayers = jest.fn();
 let addData = jest.fn();
+const setLayerPopup = jest.fn();
 (geoJSON as jest.Mock).mockReturnValue({
   addTo: () => ({ clearLayers, addData } as any),
 });
@@ -68,8 +69,8 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
-    // call to parcelmap BC
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    // call to parcelmap BC and to internal pims layer
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(2);
     // calls to region and district layers
     expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
@@ -102,12 +103,41 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
-    // call to parcelmap BC
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    // call to parcelmap BC and to internal pims layer
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(2);
     // calls to region and district layers
     expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
+    });
+  });
+
+  it('sets the layer popup with the expected data', async () => {
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [{ properties: { pid: '123456789' } }],
+    });
+    useLayerQueryMock.findOneWhereContains.mockResolvedValueOnce({
+      features: [{ properties: { PROPERTY_ID: 200 } }],
+    });
+    renderHook(
+      () =>
+        useActiveFeatureLayer({
+          mapRef: mapRef as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
+          layerPopup: undefined,
+          setLayerPopup: setLayerPopup,
+        }),
+      {
+        wrapper: getWrapper(getStore()),
+      },
+    );
+    await waitFor(() => {
+      expect(setLayerPopup).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: { pid: '123456789' },
+          pimsProperty: { properties: { PROPERTY_ID: 200 } },
+        }),
+      );
     });
   });
 });

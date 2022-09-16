@@ -21,7 +21,7 @@ export const useMapSearch = () => {
   const search = async (
     filters?: IGeoSearchParams[],
   ): Promise<Feature<Geometry, GeoJsonProperties>[]> => {
-    //TODO: currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
+    //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
     try {
       const tileData = await loadProperties(
         filters?.length && filters.length > 1 ? filters[0] : undefined,
@@ -52,7 +52,7 @@ export const useMapSearch = () => {
 };
 
 /**
- * TODO: convert polygon features into lat/lng coordinates, remove this when new Point Geoserver layer available.
+ * TODO: PSP-4390 convert polygon features into lat/lng coordinates, remove this when new Point Geoserver layer available.
  * @param feature the feature to obtain lat/lng coordinates for.
  * @returns [lat, lng]
  */
@@ -71,7 +71,7 @@ export const propertiesResponseToPointFeature = (
 ): PointFeature[] => {
   const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
   const data: PointFeature[] = validFeatures.map((feature: Feature) => {
-    //TODO: this converts all polygons to points, this should be changed to a View that returns the POINT instead of the POLYGON (psp-1859)
+    //TODO: PSP-4390 this converts all polygons to points, this should be changed to a View that returns the POINT instead of the POLYGON (psp-1859)
     return {
       ...feature,
       geometry: { type: 'Point', coordinates: getLatLng(feature) },

@@ -1,5 +1,7 @@
 import GenericModal from 'components/common/GenericModal';
+import { SectionListHeader } from 'components/common/SectionListHeader';
 import { TableSort } from 'components/Table/TableSort';
+import { Claims } from 'constants/claims';
 import { NoteTypes } from 'constants/noteTypes';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { useApiNotes } from 'hooks/pims-api/useApiNotes';
@@ -12,7 +14,6 @@ import { toast } from 'react-toastify';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';
-import { NoteListHeader } from './NoteListHeader/NoteListHeader';
 import { NoteResults } from './NoteResults/NoteResults';
 import * as Styled from './styles';
 
@@ -84,7 +85,15 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
     <Styled.ListPage>
       <Styled.Scrollable vertical={true}>
         <Section
-          header={<NoteListHeader title="Notes" onAddNote={openAddNotes} />}
+          header={
+            <SectionListHeader
+              claims={[Claims.NOTE_ADD]}
+              title="Notes"
+              addButtonText="Add a Note"
+              onAdd={openAddNotes}
+            />
+          }
+          title="notes"
           isCollapsable
           initiallyExpanded
         >
@@ -126,7 +135,7 @@ export const NoteListView: React.FunctionComponent<INoteListViewProps> = (
           <GenericModal
             display={showDeleteConfirm}
             title="Delete Note"
-            message={`Are you sure you want to delete note?`}
+            message={`Are you sure you want to delete this note?`}
             handleOk={onDeleteNoteConfirm}
             okButtonText="OK"
             cancelButtonText="Cancel"

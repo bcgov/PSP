@@ -23,9 +23,10 @@ export interface IAddResearchContainerProps {
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const { selectedResearchFeature, setSelectedResearchFeature } = React.useContext(
-    SelectedPropertyContext,
-  );
+  const {
+    selectedFileFeature: selectedResearchFeature,
+    setSelectedFileFeature: setSelectedResearchFeature,
+  } = React.useContext(SelectedPropertyContext);
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (!!selectedResearchFeature) {
@@ -52,7 +53,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
     formikRef.current?.setSubmitting(false);
-    if (!!response?.name) {
+    if (!!response?.fileName) {
       formikRef.current?.resetForm();
       history.replace(`/mapview/sidebar/research/${response.id}`);
     }

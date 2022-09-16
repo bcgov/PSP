@@ -16,6 +16,8 @@ namespace Pims.Dal.Entities
         public PimsActivityInstance()
         {
             PimsAcquisitionActivityInstances = new HashSet<PimsAcquisitionActivityInstance>();
+            PimsActInstPropAcqFiles = new HashSet<PimsActInstPropAcqFile>();
+            PimsActInstPropRsrchFiles = new HashSet<PimsActInstPropRsrchFile>();
             PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
             PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
             PimsResearchActivityInstances = new HashSet<PimsResearchActivityInstance>();
@@ -83,6 +85,10 @@ namespace Pims.Dal.Entities
         public virtual PimsActivityTemplate ActivityTemplate { get; set; }
         [InverseProperty(nameof(PimsAcquisitionActivityInstance.ActivityInstance))]
         public virtual ICollection<PimsAcquisitionActivityInstance> PimsAcquisitionActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsActInstPropAcqFile.ActivityInstance))]
+        public virtual ICollection<PimsActInstPropAcqFile> PimsActInstPropAcqFiles { get; set; }
+        [InverseProperty(nameof(PimsActInstPropRsrchFile.ActivityInstance))]
+        public virtual ICollection<PimsActInstPropRsrchFile> PimsActInstPropRsrchFiles { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceDocument.ActivityInstance))]
         public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceNote.ActivityInstance))]

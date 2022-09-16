@@ -76,8 +76,8 @@ const Surplus: React.FunctionComponent = () => {
         name="leasesTable"
         columns={columns}
         data={declarations ?? []}
-        manualPagination={true}
-        hideToolbar={true}
+        manualPagination
+        hideToolbar
         noRowsMessage="Lease / Surplus Declaration details do not exist in PIMS inventory"
       ></Table>
     </FormSection>

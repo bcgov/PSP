@@ -3,8 +3,8 @@ import Api_TypeCode from 'interfaces/ITypeCode';
 import { Api_PropertyResearchFile } from './../models/api/PropertyResearchFile';
 export interface IResearchSearchResult {
   id: number;
-  rfileNumber: string;
-  name?: string;
+  fileNumber: string;
+  fileName?: string;
   region?: string;
   appLastUpdateUserid: string;
   appCreateTimestamp: string;

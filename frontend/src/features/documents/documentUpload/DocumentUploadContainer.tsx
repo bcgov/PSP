@@ -1,6 +1,5 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FormikProps } from 'formik';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
 import useIsMounted from 'hooks/useIsMounted';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
@@ -48,8 +47,11 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
   };
 
   const isMounted = useIsMounted();
-  const { getDocumentTypes, getDocumentTypeMetadata } = useApiDocuments();
-  const { retrieveDocumentMetadataLoading } = useDocumentProvider();
+  const {
+    retrieveDocumentMetadataLoading,
+    retrieveDocumentTypeMetadata,
+    retrieveDocumentTypes,
+  } = useDocumentProvider();
 
   const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
 
@@ -62,24 +64,23 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
 
   useEffect(() => {
     const fetch = async () => {
-      const axiosResponse = await getDocumentTypes();
+      const axiosResponse = await retrieveDocumentTypes();
       if (axiosResponse && isMounted()) {
-        setDocumentTypes(axiosResponse.data);
+        setDocumentTypes(axiosResponse);
       }
     };
 
     fetch();
-  }, [getDocumentTypes, isMounted]);
+  }, [retrieveDocumentTypes, isMounted]);
 
   const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
     const documentTypeId = Number(changeEvent.target.value);
     const mayanDocumentTypeId = documentTypes.find(x => x.id === documentTypeId)?.mayanId;
     setDocumentType(documentTypeId?.toString() || '');
     if (mayanDocumentTypeId) {
-      const axiosResponse = await getDocumentTypeMetadata(mayanDocumentTypeId);
-      if (axiosResponse?.data.status === ExternalResultStatus.Success) {
-        let results = axiosResponse?.data.payload.results;
-        setDocumentTypeMetadataTypes(results);
+      const results = await retrieveDocumentTypeMetadata(mayanDocumentTypeId);
+      if (results?.status === ExternalResultStatus.Success) {
+        setDocumentTypeMetadataTypes(results?.payload?.results);
       }
     } else {
       setDocumentTypeMetadataTypes([]);

@@ -92,12 +92,12 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsNote> GetActivityNotes(long entityId)
         {
             return this.Context.PimsActivityInstanceNotes
-                .Where(x => x.ActivityInstanceId == entityId && (x.IsDisabled ?? false) == false).Select(x => x.Note).ToList();
+                .Where(x => x.ActivityInstanceId == entityId).Select(x => x.Note).ToList();
         }
 
         public void DeleteActivityNotes(long entityId)
         {
-            var activityNotes = this.Context.PimsActivityInstanceNotes.Where(x => x.ActivityInstanceId == entityId).ToList();
+            var activityNotes = this.Context.PimsActivityInstanceNotes.Include(ai => ai.Note).Where(x => x.NoteId == entityId).ToList();
             if (activityNotes.Any())
             {
                 foreach (var activityNote in activityNotes)

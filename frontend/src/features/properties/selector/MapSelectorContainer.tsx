@@ -41,6 +41,11 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
         setActiveTab={setActiveSelectorTab}
         MapSelectorView={
           <PropertyMapSelectorFormView
+            initialSelectedProperty={
+              existingProperties?.length === 1 && existingProperties[0].apiId === undefined
+                ? existingProperties[0]
+                : undefined
+            }
             onSelectedProperty={(property: IMapProperty) =>
               addProperties([property], existingProperties, onSelectedProperty)
             }

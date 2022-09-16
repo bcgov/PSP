@@ -14,7 +14,7 @@ import { Api_Person } from 'models/api/Person';
 import { Api_User } from 'models/api/User';
 import { ILookupCode } from 'store/slices/lookupCodes';
 
-// TODO: This needs to be removed as Administrative Areas no longer exist.
+// TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [
   {
     code: '0',

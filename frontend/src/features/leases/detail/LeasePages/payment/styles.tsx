@@ -65,7 +65,7 @@ export const StyledTable = styled(Table)`
       }
     }
     > .tbody > .tr-wrapper > .tr > .td:nth-of-type(2) {
-      margin-right: -5rem; /** TODO: prevent expander from pushing tds to the right */
+      margin-right: -5rem; /** TODO: PSP-4403 prevent expander from pushing tds to the right */
       padding-left: 0;
     }
     .td {

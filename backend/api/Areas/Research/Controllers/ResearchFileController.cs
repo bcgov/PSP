@@ -77,17 +77,6 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             var activityInstances = _activityService.GetAllByResearchFileId(researchFileId);
             List<ActivityInstanceModel> models = _mapper.Map<List<ActivityInstanceModel>>(activityInstances);
 
-            // TODO remove below once mapping complete
-            foreach (ActivityInstanceModel model in models)
-            {
-                model.Description = model.ActivityTemplateTypeCode.Description + " Activity";
-                model.ActivityStatusTypeCode = new Models.TypeModel<string>()
-                {
-                    Id = "Draft",
-                    Description = "Draft",
-                };
-            }
-
             return new JsonResult(models);
         }
 

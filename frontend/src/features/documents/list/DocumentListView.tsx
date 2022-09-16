@@ -1,16 +1,13 @@
 import GenericModal from 'components/common/GenericModal';
+import { SectionListHeader } from 'components/common/SectionListHeader';
 import { TableSort } from 'components/Table/TableSort';
 import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
 import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
 import React, { useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
-import { FaUpload } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
@@ -36,8 +33,6 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   const { documentResults, isLoading, defaultFilters, hideFilters } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
-
-  const { hasClaim } = useKeycloakWrapper();
 
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
@@ -72,7 +67,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           const keyName = (sort as any)[sortFields[0]];
           return orderBy(
             documentItems,
-            sortFields[0] === 'statusTypeCode' ? 'statusTypeCode.description' : sortFields[0],
+            sortFields[0] === 'documentType' ? 'documentType.documentType' : sortFields[0],
             keyName,
           );
         }
@@ -135,22 +130,16 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     <div>
       <Section
         header={
-          <Row>
-            <Col xs="auto">Documents</Col>
-            {hasClaim(Claims.DOCUMENT_ADD) && (
-              <Col>
-                <StyledAddButton
-                  data-testid="document-add-button"
-                  onClick={() => setIsUploadVisible(true)}
-                >
-                  <FaUpload />
-                  &nbsp;Add a Document
-                </StyledAddButton>
-              </Col>
-            )}
-          </Row>
+          <SectionListHeader
+            claims={[Claims.DOCUMENT_ADD]}
+            title="Documents"
+            addButtonText="Add a Document"
+            onAdd={() => setIsUploadVisible(true)}
+          />
         }
+        title="documents"
         isCollapsable
+        initiallyExpanded
       >
         {!hideFilters && <DocumentFilterForm onSetFilter={setFilters} documentFilter={filters} />}
         <DocumentResults
@@ -204,10 +193,3 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 };
 
 export default DocumentListView;
-
-const StyledAddButton = styled(Button)`
-  font-weight: bold;
-  font-size: 1.3rem;
-  background-color: ${props => props.theme.css.completedColor};
-  margin-bottom: 0.2rem;
-`;

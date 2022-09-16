@@ -143,6 +143,11 @@ namespace Pims.Api.Models.Concepts
         public int? Pin { get; set; }
 
         /// <summary>
+        /// get/set - The survey plan number.
+        /// </summary>
+        public string PlanNumber { get; set; }
+
+        /// <summary>
         /// get/set - Area Unit name.
         /// </summary>
         public TypeModel<string> AreaUnit { get; set; }

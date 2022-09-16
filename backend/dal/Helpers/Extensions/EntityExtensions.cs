@@ -112,7 +112,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="childNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="children"></param>
-        public static void UpdateChild<T_Entity, T_Id, T_ChildEntity>(this PimsContext context, Expression<Func<T_Entity, object>> childNavigation, T_Id parentId, T_ChildEntity[] children)
+        public static void UpdateChild<T_Entity, T_Id, T_ChildEntity>(this PimsContext context, Expression<Func<T_Entity, object>> childNavigation, T_Id parentId, T_ChildEntity[] children, bool updateChildValues = true)
             where T_Entity : IdentityBaseAppEntity<T_Id>
             where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {
@@ -136,8 +136,11 @@ namespace Pims.Dal.Helpers.Extensions
                 }
                 else
                 {
-                    context.Entry(oldItem).CurrentValues.SetValues(item);
-                    dbItemsMap.Remove(item.Id);
+                    if (updateChildValues)
+                    {
+                        context.Entry(oldItem).CurrentValues.SetValues(item);
+                        dbItemsMap.Remove(item.Id);
+                    }
                 }
             }
 

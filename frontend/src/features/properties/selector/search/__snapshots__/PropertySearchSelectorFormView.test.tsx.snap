@@ -394,7 +394,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
                 <div>
                   <input
                     data-testid="selectrow-parent"
-                    disabled=""
+                    name=""
                     style="cursor: pointer;"
                     title="Click to deselect all."
                     type="checkbox"

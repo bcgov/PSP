@@ -666,7 +666,7 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
                       <div>
                         <input
                           data-testid="selectrow-parent"
-                          disabled=""
+                          name=""
                           style="cursor: pointer;"
                           title="Click to deselect all."
                           type="checkbox"

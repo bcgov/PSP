@@ -94,7 +94,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentNullException(nameof(activityDocument), "activityDocument cannot be null.");
             }
 
-            this.Context.PimsActivityInstanceDocuments.Remove(activityDocument);
+            this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { ActivityInstanceDocumentId = activityDocument.ActivityInstanceId });
             return true;
         }
 
