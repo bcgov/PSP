@@ -2007,7 +2007,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FileName).HasComment("Descriptive name given to the acquisition file.");
 
-                entity.Property(e => e.FileNumber).HasComment("File number assigned to the acquisition file.");
+                entity.Property(e => e.FileNo)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NO_SEQ])")
+                    .HasComment("File number assigned to the acquisition file.");
+
+                entity.Property(e => e.FileNumber)
+                    .HasDefaultValueSql("('<Empty>')")
+                    .HasComment("Formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01')");
 
                 entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
 
@@ -3956,8 +3962,6 @@ namespace Pims.Dal
                 entity.Property(e => e.NoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.IsSystemGenerated).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsOrgIdentifierType>(entity =>
@@ -6550,9 +6554,7 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_NUMBER_SEQ")
-                .HasMin(1)
-                .HasMax(2147483647);
+            modelBuilder.HasSequence<int>("PIMS_ACQUISITION_FILE_NO_SEQ").HasMin(1);
 
             modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_PERSON_H_ID_SEQ")
                 .HasMin(1)
