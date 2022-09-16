@@ -16,12 +16,12 @@ export const AcquisitionTray = ({ onLinkClick }: ISideTrayPageProps) => {
       <Styled.TrayHeader>Acquisition Files</Styled.TrayHeader>
       {hasClaim(Claims.ACQUISITION_VIEW) && (
         <Link onClick={onLinkClick} to="/acquisition/list">
-          Manage acquisition files
+          Manage Acquisition files
         </Link>
       )}
       {hasClaim(Claims.ACQUISITION_ADD) && (
         <Link onClick={onLinkClick} to="/mapview/sidebar/acquisition/new">
-          Create an acquisition file
+          Create an Acquisition file
         </Link>
       )}
     </>
