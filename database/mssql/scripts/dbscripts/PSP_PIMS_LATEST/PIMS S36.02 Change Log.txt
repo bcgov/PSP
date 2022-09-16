@@ -1,3 +1,10 @@
+PSP_PIMS S37.00 Sprint 36 2022-Sep-14
+- Altered tables:
+  - PIMS_ACQUISITION_FILE
+  - PIMS_ACQUISITION_FILE_HIST
+  - PIMS_NOTE_HIST
+- Requires additional metadata to meet standards
+
 PSP_PIMS S36.02 Sprint 36 2022-Sep-08
 - Added seed scripts:
   - 89_DML_PIMS_ACQUISITION_FILE_STATUS_TYPE.sql
