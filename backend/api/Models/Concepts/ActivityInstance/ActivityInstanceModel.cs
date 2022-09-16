@@ -20,6 +20,11 @@ namespace Pims.Api.Models.Concepts
         public string Description { get; set; }
 
         /// <summary>
+        /// get/set - Activity Instance Status
+        /// </summary>
+        public string Status { get; set; }
+
+        /// <summary>
         /// get/set - Activity Template Id .
         /// </summary>
         public int ActivityTemplateId { get; set; }

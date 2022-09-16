@@ -1,4 +1,4 @@
-// TODO: This whole file needs to be rethought out and refactored.
+// TODO: PSP-4395 This whole file needs to be rethought out and refactored.
 // Network URL's
 import { AccessRequestStatus } from './accessStatus';
 
@@ -88,9 +88,10 @@ export const ACQUISITION_FILE_STATUS_TYPES = 'PimsAcquisitionFileStatusType';
 export const ACQUISITION_PHYSICAL_FILE_STATUS_TYPES = 'PimsAcqPhysFileStatusType';
 export const ACQUISITION_TYPES = 'PimsAcquisitionType';
 export const ACTIVITY_TEMPLATE_TYPE = 'PimsActivityTemplateType';
-export const ACTIVITY_INSTANCE_STATUS_TYPE = 'PimsActivityInstanceStatusType';
+export const ACTIVITY_STATUS_TYPE = 'PimsActivityInstanceStatusType';
+export const ACQUISITION_FILE_PERSON_PROFILE_TYPES = 'PimsAcqFlPersonProfileType';
 
-// TODO: This should all be removed from this and moved to the useApi* hooks.
+// TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
 export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties or all if not specified.
 

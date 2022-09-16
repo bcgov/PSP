@@ -1,5 +1,10 @@
 import { IMapProperty } from 'features/properties/selector/models';
-import { Api_AcquisitionFile, Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
+import { IContactSearchResult } from 'interfaces';
+import {
+  Api_AcquisitionFile,
+  Api_AcquisitionFilePerson,
+  Api_AcquisitionFileProperty,
+} from 'models/api/AcquisitionFile';
 import { Api_Property } from 'models/api/Property';
 import { pidParser } from 'utils';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
@@ -17,6 +22,7 @@ export class AcquisitionForm {
   // MOTI region
   region?: string;
   properties: AcquisitionPropertyForm[] = [];
+  team: AcquisitionTeamForm[] = [];
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -41,6 +47,7 @@ export class AcquisitionForm {
           acquisitionFile: { id: this.id },
         };
       }),
+      acquisitionTeam: AcquisitionTeamForm.toApi(this.team),
     };
   }
 
@@ -126,5 +133,26 @@ export class AcquisitionPropertyForm {
       region: toTypeCode(this.region),
       district: toTypeCode(this.district),
     };
+  }
+}
+
+export class AcquisitionTeamForm {
+  contact?: IContactSearchResult;
+  contactTypeCode: string;
+
+  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
+    this.contactTypeCode = contactTypeCode;
+    this.contact = contact;
+  }
+
+  static toApi(model: AcquisitionTeamForm[]): Api_AcquisitionFilePerson[] {
+    return model
+      .filter(x => !!x.contact && !!x.contactTypeCode)
+      .map<Api_AcquisitionFilePerson>(x => {
+        return {
+          personId: x.contact?.personId || 0,
+          personProfileTypeCode: x.contactTypeCode,
+        };
+      });
   }
 }

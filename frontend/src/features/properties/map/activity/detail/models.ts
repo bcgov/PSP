@@ -8,9 +8,11 @@ export class ActivityModel {
   id?: number;
   activityTemplateId?: number;
   description?: string;
+  status?: string;
   activityStatusTypeCode?: Api_TypeCode<string>;
   activityTemplate?: Api_ActivityTemplate;
   activityDataJson?: string;
+  activityData: any;
   actInstPropFiles?: Api_PropertyActivity[];
   fileType?: FileTypes;
   rowVersion?: number;
@@ -20,9 +22,10 @@ export class ActivityModel {
       id: this.id,
       activityTemplateId: this.activityTemplateId,
       description: this.description ?? '',
+      status: this.status ?? '',
       activityStatusTypeCode: this.activityStatusTypeCode,
       activityTemplate: this.activityTemplate ?? {},
-      activityDataJson: this.activityDataJson ?? '',
+      activityDataJson: this.activityData ? JSON.stringify(this.activityData) : '',
       actInstPropAcqFiles:
         this.fileType === FileTypes.Acquisition ? this.actInstPropFiles ?? [] : [],
       actInstPropRsrchFiles:
@@ -38,6 +41,9 @@ export class ActivityModel {
     activity.activityStatusTypeCode = model?.activityStatusTypeCode;
     activity.activityTemplate = model?.activityTemplate;
     activity.activityDataJson = model?.activityDataJson;
+    activity.activityData = !!model?.activityDataJson
+      ? JSON.parse(model.activityDataJson)
+      : undefined;
     activity.actInstPropFiles = ActivityModel.getProperties(model, fileType);
     activity.fileType = fileType;
     activity.rowVersion = model.rowVersion;

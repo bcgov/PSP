@@ -217,7 +217,7 @@ namespace Pims.Dal.Repositories
                                         from copop in contactPersonOrganizationPerson.DefaultIfEmpty()
                                         select new { Contact = c, Organization = co, PersonOrganization = copo };
 
-            // TODO refactor this into a shared method.
+            // TODO PSP-4426 refactor this into a shared method.
             if (filter.Sort?.Any() == true)
             {
                 var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();

@@ -9,6 +9,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       },
     },
     id: 1,
+    status: 'DRAFT',
     activityStatusTypeCode: {
       id: 'DRAFT',
       description: 'Draft',
@@ -24,6 +25,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       },
     },
     id: 2,
+    status: 'DRAFT',
     activityStatusTypeCode: {
       id: 'DRAFT',
       description: 'Draft',
@@ -39,6 +41,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
       },
     },
     id: 3,
+    status: 'DRAFT',
     activityStatusTypeCode: {
       id: 'DRAFT',
       description: 'Draft',
@@ -50,6 +53,7 @@ export const mockActivitiesResponse = (): Api_Activity[] => [
 
 export const getMockActivityResponse: () => Api_Activity = () => ({
   id: 2,
+  status: 'GENERAL',
   activityTemplateId: 1,
   activityTemplateTypeCode: {
     id: 'GENERAL',
@@ -78,7 +82,7 @@ export const getMockActivityResponse: () => Api_Activity = () => ({
   appLastUpdateTimestamp: '0001-02-01T00:00:00',
   rowVersion: 0,
   description: 'test description',
-  activityDataJson: '{}',
+  activityDataJson: '{"version": "1.0"}',
   actInstPropAcqFiles: [
     {
       id: 23,

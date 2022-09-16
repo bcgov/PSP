@@ -56,6 +56,9 @@ namespace Pims.Dal.Entities
         [Column("FILE_NAME")]
         [StringLength(500)]
         public string FileName { get; set; }
+        [Column("FILE_NO")]
+        public int FileNo { get; set; }
+        [Required]
         [Column("FILE_NUMBER")]
         [StringLength(18)]
         public string FileNumber { get; set; }

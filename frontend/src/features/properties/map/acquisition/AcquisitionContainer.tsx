@@ -36,7 +36,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
-  // TODO: Placeholder UI until details view gets implemented
   return (
     <MapSideBarLayout
       showCloseButton

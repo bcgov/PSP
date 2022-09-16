@@ -84,7 +84,7 @@ const wfsAxios = (timeout?: number) => {
 };
 
 /**
- * // TODO: This should be deprecated
+ * // TODO: PSP-4393 This should be deprecated
  * Custom hook to fetch layer feature collection from wfs url
  * @param url wfs request url
  * @param geometry the name of the geometry in the feature collection

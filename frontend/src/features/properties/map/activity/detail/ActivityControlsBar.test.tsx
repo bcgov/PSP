@@ -1,5 +1,8 @@
 import { Claims } from 'constants/claims';
+import { Formik } from 'formik';
+import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
+import { getMockActivityResponse } from 'mocks/mockActivities';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
@@ -17,11 +20,13 @@ describe('ActivityControlsBar test', () => {
   const setup = (renderOptions: RenderOptions & IActivityControlsBarProps) => {
     // render component under test
     const component = render(
-      <ActivityControlsBar
-        editMode={renderOptions.editMode}
-        setEditMode={renderOptions.setEditMode}
-        onEditRelatedProperties={renderOptions.onEditRelatedProperties}
-      />,
+      <Formik onSubmit={noop} initialValues={getMockActivityResponse()}>
+        <ActivityControlsBar
+          editMode={renderOptions.editMode}
+          setEditMode={renderOptions.setEditMode}
+          onEditRelatedProperties={renderOptions.onEditRelatedProperties}
+        />
+      </Formik>,
       {
         ...renderOptions,
         store: storeState,
@@ -66,6 +71,16 @@ describe('ActivityControlsBar test', () => {
       onEditRelatedProperties,
     });
     expect(queryByText('Related properties')).toBeNull();
+  });
+
+  it('renders the activity status select', async () => {
+    const { queryByLabelText } = setup({
+      editMode: false,
+      setEditMode,
+      claims: [],
+      onEditRelatedProperties,
+    });
+    expect(queryByLabelText('Status')).toBeNull();
   });
 
   it('calls expected function when edit is clicked', async () => {
