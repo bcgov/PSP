@@ -671,7 +671,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                           active.svg
                         </svg>
                         <span>
-                          Show active users only
+                          Show active contacts only
                         </span>
                       </div>
                     </div>
