@@ -31,7 +31,7 @@ export const ActivityForm = ({
   onEditRelatedProperties,
   formContent,
 }: IActivityFormProps) => {
-  const { setModalProps, setDisplayModal } = useModalContext();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     const onCancel = () => {
@@ -41,14 +41,14 @@ export const ActivityForm = ({
     if (!dirty) {
       onCancel();
     } else {
-      setModalProps({
+      setModalContent({
         ...getCancelModalProps(),
         handleOk: () => {
           onCancel();
           setDisplayModal(false);
         },
-        display: true,
       });
+      setDisplayModal(true);
     }
   };
   const EditForm = formContent?.EditForm;

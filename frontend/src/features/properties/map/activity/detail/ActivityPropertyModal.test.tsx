@@ -131,7 +131,7 @@ describe('ActivityPropertyModal tests', () => {
     const confirmButton = screen.getByText('Confirm');
     userEvent.click(confirmButton);
 
-    expect(screen.queryByText('Unsaved Changes')).toBeNull();
+    expect(setDisplay).toHaveBeenLastCalledWith(false);
     expect(setSelectedFileProperties).toHaveBeenLastCalledWith([]);
   });
 
