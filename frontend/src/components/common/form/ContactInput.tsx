@@ -12,6 +12,7 @@ import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 import { formatNames } from 'utils/personUtils';
 
+import { LinkButton } from '../buttons';
 import TooltipWrapper from '../TooltipWrapper';
 import { DisplayError } from './DisplayError';
 
@@ -61,25 +62,24 @@ export const ContactInput: React.FC<ContactInputProps> = ({
       {!!label && <Form.Label>{label}</Form.Label>}
 
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
-        <Row className="align-items-center">
+        <Row>
           <Col>
-            <StyledDiv className={!!touch && !!error ? 'is-invalid' : ''}>{text}</StyledDiv>
+            <StyledDiv className={!!touch && !!error ? 'is-invalid' : ''}>
+              {text}
+              <StyledRemoveLinkButton
+                onClick={() => {
+                  onClear();
+                }}
+                disabled={contactInfo === undefined}
+              >
+                <MdClose size="2rem" title="remove" />
+              </StyledRemoveLinkButton>
+            </StyledDiv>
             <Input
               field={field + '.id'}
               placeholder="Select from Contacts"
               className="d-none"
             ></Input>
-          </Col>
-          <Col xs="auto" className="pl-0 align-self-center">
-            <Button
-              icon={<MdClose size={20} />}
-              variant="secondary"
-              className="px-2"
-              onClick={() => {
-                onClear();
-              }}
-              disabled={contactInfo === undefined}
-            ></Button>
           </Col>
           <Col xs="auto" className="pl-0">
             <Button
@@ -99,13 +99,39 @@ export const ContactInput: React.FC<ContactInputProps> = ({
 
 const StyledDiv = styled.div`
   border-radius: 0.3rem;
-  padding: 12px 6px 6px 12px;
+  padding: 6px;
   min-height: 2.5em;
+
   background-image: none;
   background-color: ${props => props.theme.css.filterBackgroundColor};
   border: #606060 solid 0.1rem;
 
   &.is-invalid {
     border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+  }
+`;
+
+export const StyledRemoveLinkButton = styled(LinkButton)`
+  &&.btn {
+    float: right;
+    color: #aaaaaa;
+    text-decoration: none;
+    line-height: unset;
+    .text {
+      display: none;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+      color: #d8292f;
+      text-decoration: none;
+      opacity: unset;
+      display: flex;
+      flex-direction: row;
+      .text {
+        display: inline;
+        line-height: 2rem;
+      }
+    }
   }
 `;

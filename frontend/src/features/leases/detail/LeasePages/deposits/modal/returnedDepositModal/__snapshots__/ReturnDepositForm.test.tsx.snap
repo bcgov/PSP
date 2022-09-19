@@ -208,7 +208,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 
 .c6 {
   border-radius: 0.3rem;
-  padding: 12px 6px 6px 12px;
+  padding: 6px;
   min-height: 2.5em;
   background-image: none;
   border: #606060 solid 0.1rem;
@@ -216,6 +216,41 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 
 .c6.is-invalid {
   border: solid 0.1rem;
+}
+
+.c8.c8.btn {
+  float: right;
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c8.c8.btn .text {
+  display: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c8.c8.btn:hover .text,
+.c8.c8.btn:active .text,
+.c8.c8.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
 }
 
 .c0 .form-group {
@@ -475,14 +510,45 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
             Payee name:
           </label>
           <div
-            class="align-items-center row"
+            class="row"
           >
             <div
               class="col"
             >
               <div
                 class="c6"
-              />
+              >
+                <button
+                  class="c7 Button Button--disabled c8 btn btn-link"
+                  disabled=""
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
               <div
                 class="d-none input form-group"
               >
@@ -494,37 +560,6 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
                   value=""
                 />
               </div>
-            </div>
-            <div
-              class="pl-0 align-self-center col-auto"
-            >
-              <button
-                class="c7 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
-                disabled=""
-                type="button"
-              >
-                <div
-                  class="Button__icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-              </button>
             </div>
             <div
               class="pl-0 col-auto"
@@ -771,7 +806,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 
 .c6 {
   border-radius: 0.3rem;
-  padding: 12px 6px 6px 12px;
+  padding: 6px;
   min-height: 2.5em;
   background-image: none;
   border: #606060 solid 0.1rem;
@@ -779,6 +814,41 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
 
 .c6.is-invalid {
   border: solid 0.1rem;
+}
+
+.c8.c8.btn {
+  float: right;
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c8.c8.btn .text {
+  display: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c8.c8.btn:hover .text,
+.c8.c8.btn:active .text,
+.c8.c8.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
 }
 
 .c0 .form-group {
@@ -1038,14 +1108,45 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
             Payee name:
           </label>
           <div
-            class="align-items-center row"
+            class="row"
           >
             <div
               class="col"
             >
               <div
                 class="c6"
-              />
+              >
+                <button
+                  class="c7 Button Button--disabled c8 btn btn-link"
+                  disabled=""
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
               <div
                 class="d-none input form-group"
               >
@@ -1057,37 +1158,6 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
                   value=""
                 />
               </div>
-            </div>
-            <div
-              class="pl-0 align-self-center col-auto"
-            >
-              <button
-                class="c7 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
-                disabled=""
-                type="button"
-              >
-                <div
-                  class="Button__icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-              </button>
             </div>
             <div
               class="pl-0 col-auto"

@@ -51,7 +51,7 @@ describe('AcquisitionTeam component', () => {
       userEvent.click(addTeamMember);
     });
 
-    expect(getByTestId('remove-team-member')).toBeVisible();
+    expect(getByTestId('remove-button')).toBeVisible();
   });
 
   it('renders person profile select', async () => {
