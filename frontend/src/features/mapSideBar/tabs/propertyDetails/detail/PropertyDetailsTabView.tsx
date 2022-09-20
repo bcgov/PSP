@@ -137,7 +137,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             </SectionField>
           )}
           {isAdjacentLand && (
-            <SectionField label="Adjacent Land Type">
+            <SectionField label="Adjacent Land type">
               <Multiselect
                 disable
                 disablePreSelectedValues

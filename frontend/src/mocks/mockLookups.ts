@@ -2235,7 +2235,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 'ADJLAND',
-    name: 'Adjacent Land Type',
+    name: 'Adjacent Land type',
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',

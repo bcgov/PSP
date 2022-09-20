@@ -63,7 +63,7 @@ const fakeProperty: Api_Property = {
       propertyId: 205,
       propertyTenureTypeCode: {
         id: 'ADJLAND',
-        description: 'Adjacent Land Type',
+        description: 'Adjacent Land type',
         isDisabled: false,
       },
       rowVersion: 16,

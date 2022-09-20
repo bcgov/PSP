@@ -188,7 +188,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
           </SectionField>
         )}
         {isAdjacentLand && (
-          <SectionField label="Adjacent Land Type">
+          <SectionField label="Adjacent Land type">
             <Multiselect
               field="adjacentLands"
               displayValue="typeDescription"
