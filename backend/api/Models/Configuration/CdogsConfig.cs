@@ -4,7 +4,7 @@ namespace Pims.Api.Models.Config
 {
     public class CdogsConfig
     {
-        public Uri AuthHost { get; set; }
+        public Uri AuthEndpoint { get; set; }
 
         public Uri CDogsHost { get; set; }
 

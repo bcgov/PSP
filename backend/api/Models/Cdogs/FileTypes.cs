@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Cdogs
     public class FileTypes
     {
         /// <summary>
-        /// get/set - The document type id.
+        /// get/set - A dictionary containing file types with a list of file extensions.
         /// </summary>
         [JsonPropertyName("dictionary")]
         public IDictionary<string, IList<string>> Dictionary { get; set; }

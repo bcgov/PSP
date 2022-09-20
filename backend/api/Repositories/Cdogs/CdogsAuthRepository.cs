@@ -78,8 +78,6 @@ namespace Pims.Api.Repositories.Cdogs
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             client.DefaultRequestHeaders.Accept.Clear();
 
-            Uri endpoint = new Uri(_config.AuthHost, "auth/realms/jbd6rnxw/protocol/openid-connect/token");
-
             var requestForm = new Dictionary<string, string>
                 {
                     { "grant_type", "client_credentials" },
@@ -91,7 +89,7 @@ namespace Pims.Api.Repositories.Cdogs
             content.Headers.Clear();
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
-            ExternalResult<JwtResponse> result = await PostAsync<JwtResponse>(endpoint, content);
+            ExternalResult<JwtResponse> result = await PostAsync<JwtResponse>(_config.AuthEndpoint, content);
             _logger.LogDebug("Finished getting authentication token");
 
             return result;

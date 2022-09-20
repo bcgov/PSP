@@ -24,7 +24,7 @@ namespace Pims.Api.Controllers
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a ErrorController class.
+        /// Creates a new instance of a DocumentGenerationController class.
         /// </summary>
         /// <param name="documentGenerationService"></param>
         /// <param name="mapper"></param>
