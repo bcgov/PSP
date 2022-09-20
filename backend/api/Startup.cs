@@ -37,6 +37,7 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
+using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Av;
@@ -359,6 +360,8 @@ namespace Pims.Api
             services.AddSingleton<IEdmsAuthRepository, MayanAuthRepository>();
             services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
             services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
+            services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
+            services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
         }
 
         /// <summary>
@@ -384,6 +387,7 @@ namespace Pims.Api
             services.AddScoped<IResearchFileService, ResearchFileService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
+            services.AddScoped<IDocumentGenerationService, DocumentGenerationService>();
         }
         #endregion
     }
