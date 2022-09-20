@@ -100,6 +100,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -523,7 +524,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               active.svg
             </svg>
             <span>
-              Show active users only
+              Show active contacts only
             </span>
           </div>
         </div>

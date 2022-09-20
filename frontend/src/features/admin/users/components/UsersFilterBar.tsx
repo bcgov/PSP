@@ -87,7 +87,7 @@ export const UsersFilterBar: React.FC<IProps> = ({ values, onChange }) => {
                 <Col>
                   <ActiveFilterCheck<IUsersFilter> fieldName="activeOnly" setFilter={onChange} />
                   <Active />
-                  <span className="ml-1">Show Active contacts only</span>
+                  <span className="ml-1">Show active users only</span>
                 </Col>
               </Row>
             </Col>

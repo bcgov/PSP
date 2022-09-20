@@ -90,6 +90,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -435,6 +436,7 @@ exports[`Empty Header MOTI Login Loading 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 

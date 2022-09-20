@@ -106,6 +106,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -642,6 +643,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 

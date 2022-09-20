@@ -76,6 +76,7 @@ describe('DocumentDetailForm component', () => {
         isLoading={false}
         mayanMetadataTypes={documentTypeMetadata}
         onCancel={jest.fn()}
+        formikRef={{ current: { submitForm: jest.fn() } } as any}
       />,
       {
         ...renderOptions,

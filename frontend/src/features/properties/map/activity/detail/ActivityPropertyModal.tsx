@@ -31,7 +31,7 @@ export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyMod
   setSelectedFileProperties,
   onSave,
 }) => {
-  const { setModalProps, setDisplayModal } = useContext(ModalContext);
+  const { setModalContent, setDisplayModal } = useContext(ModalContext);
   return (
     <GenericModal
       modalSize={ModalSize.MEDIUM}
@@ -48,15 +48,15 @@ export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyMod
             selectedFileProperties.map(fp => fp.id),
           )
         ) {
-          setModalProps({
+          setModalContent({
             ...getCancelModalProps(),
-            display: true,
             handleOk: () => {
               setSelectedFileProperties(originalSelectedProperties);
               setDisplay(false);
               setDisplayModal(false);
             },
           });
+          setDisplayModal(true);
         } else {
           setDisplay(false);
           setDisplayModal(false);
