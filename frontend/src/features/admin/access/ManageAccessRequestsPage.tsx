@@ -1,4 +1,3 @@
-import { H1 } from 'components/common/styles';
 import { Table } from 'components/Table';
 import { useApiAccessRequests } from 'hooks/pims-api';
 import { useSearch } from 'hooks/useSearch';
@@ -42,7 +41,7 @@ const ManageAccessRequestsPage = () => {
 
   return (
     <StyledContainer>
-      <H1>PIMS User Access Requests</H1>
+      <StyledPageHeader>PIMS User Access Requests</StyledPageHeader>
       <AccessRequestFilter
         initialValues={filter}
         applyFilter={accessRequestfilter => setFilter(accessRequestfilter)}
@@ -73,6 +72,10 @@ export const defaultFilter: IAccessRequestsFilterData = {
 const StyledContainer = styled(ScrollXYContainer)`
   width: 100%;
   height: 100%;
+`;
+
+const StyledPageHeader = styled.h3`
+  text-align: left;
 `;
 
 export default ManageAccessRequestsPage;
