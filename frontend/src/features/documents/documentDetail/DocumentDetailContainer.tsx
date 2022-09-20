@@ -1,11 +1,16 @@
+import { ModalProps } from 'components/common/GenericModal';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { ModalContext } from 'contexts/modalContext';
+import { FormikProps } from 'formik';
 import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import { getCancelModalProps } from 'hooks/useModalContext';
 import { Api_Document, Api_DocumentUpdateRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { ComposedDocument } from '../ComposedDocument';
+import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import { DocumentDetailForm } from './DocumentDetailForm';
@@ -27,6 +32,38 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
 
   const { retrieveDocumentMetadata, retrieveDocumentMetadataLoading } = useDocumentProvider();
   const { getDocumentTypeMetadata } = useApiDocuments();
+
+  const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
+
+  const deleteModalProps = getCancelModalProps();
+
+  const { setDisplayModal, setModalContent } = useContext(ModalContext);
+
+  const confirmCancel = useCallback(() => {
+    setDisplayModal(false);
+    setIsEditable(false);
+  }, [setDisplayModal]);
+
+  const customModalProps: ModalProps = useMemo(() => {
+    return {
+      ...deleteModalProps,
+      display: false,
+      closeButton: false,
+      handleOk: confirmCancel,
+    };
+  }, [deleteModalProps, confirmCancel]);
+
+  useDeepCompareEffect(() => {
+    setModalContent(customModalProps);
+  }, [customModalProps]);
+
+  const onCancelClick = () => {
+    if (formikRef.current?.dirty === true) {
+      setDisplayModal(true);
+    } else {
+      setIsEditable(false);
+    }
+  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -84,10 +121,6 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
     }
   };
 
-  const onCancelUpdate = () => {
-    setIsEditable(false);
-  };
-
   if (isEditable === false) {
     return (
       <DocumentDetailView
@@ -99,10 +132,11 @@ export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailCon
   } else {
     return (
       <DocumentDetailForm
+        formikRef={formikRef}
         document={document}
         isLoading={retrieveDocumentMetadataLoading || updateDocumentLoading}
         onUpdate={onUpdateDocument}
-        onCancel={onCancelUpdate}
+        onCancel={onCancelClick}
         mayanMetadataTypes={documentTypeMetadataTypes}
       />
     );

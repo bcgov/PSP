@@ -3,7 +3,6 @@ import ModalContainer from 'components/common/ModalContainer';
 import { ModalContextProvider } from 'contexts/modalContext';
 import { MemoryHistory } from 'history';
 import { IOrganization } from 'interfaces';
-import noop from 'lodash/noop';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -57,7 +56,7 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
           <TestProviderWrapper store={store}>
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css: {} }}>
-                <ModalContextProvider setModalProps={noop} setDisplayModal={noop}>
+                <ModalContextProvider>
                   <ToastContainer
                     autoClose={5000}
                     hideProgressBar
