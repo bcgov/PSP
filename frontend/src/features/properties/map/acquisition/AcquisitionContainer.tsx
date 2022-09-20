@@ -3,12 +3,14 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { FileTypes } from 'constants/index';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
+import { getAcquisitionPropertyName } from 'features/properties/selector/utils';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { AcquisitionHeader } from './common/AcquisitionHeader';
+import AcquisitionMenu from './common/AcquisitionMenu';
 import { EditFormNames } from './EditFormNames';
 import { useAcquisitionProvider } from './hooks/useAcquisitionProvider';
 import ViewSelector from './ViewSelector';
@@ -22,6 +24,7 @@ export interface IAcquisitionContainerProps {
 export interface AcquisitionContainerState {
   isEditing: boolean;
   activeEditForm?: EditFormNames;
+  selectedMenuIndex: number;
 }
 
 export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
@@ -45,6 +48,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     {
       isEditing: false,
       activeEditForm: undefined,
+      selectedMenuIndex: 0,
     },
   );
 
@@ -69,8 +73,16 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
+  const onMenuChange = (selectedIndex: number) => {
+    setContainerState({ selectedMenuIndex: selectedIndex });
+  };
+
   // UI components
   const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
+
+  const menuItems =
+    acquisitionFile?.acquisitionProperties?.map(x => getAcquisitionPropertyName(x).value) || [];
+  menuItems.unshift('File Summary');
 
   if (acquisitionFile === undefined && loadingAcquisitionFile) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
@@ -94,7 +106,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       footer={null}
     >
       <FileLayout
-        leftComponent={<></>}
+        leftComponent={
+          <AcquisitionMenu
+            items={menuItems}
+            selectedIndex={containerState.selectedMenuIndex}
+            onChange={onMenuChange}
+            setContainerState={setContainerState}
+          />
+        }
         bodyComponent={
           <StyledFormWrapper>
             <ViewSelector acquisitionFile={acquisitionFile} setContainerState={setContainerState} />
