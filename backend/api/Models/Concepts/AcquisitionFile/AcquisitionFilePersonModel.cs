@@ -10,14 +10,26 @@ namespace Pims.Api.Models.Concepts
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The Id  of the person associated with acquisition file.
+        /// TODO: Remove/refactor this flattened model
+        /// get/set - The Id of the person associated with an acquisition file as part of the acquisition team.
         /// </summary>
         public long PersonId { get; set; }
 
         /// <summary>
+        /// get/set - The person associated with an acquisition file as part of the acquisition team.
+        /// </summary>
+        public PersonModel Person { get; set; }
+
+        /// <summary>
+        /// TODO: Remove/refactor this flattened model
         /// get/set - The Person's profile type code.
         /// </summary>
         public string PersonProfileTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The Person's profile type code.
+        /// </summary>
+        public TypeModel<string> PersonProfileType { get; set; }
 
         /// <summary>
         /// get/set - The relationship's disabled status flag.

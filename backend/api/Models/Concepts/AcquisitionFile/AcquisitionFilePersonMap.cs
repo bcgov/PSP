@@ -11,15 +11,19 @@ namespace Pims.Api.Models.Concepts
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFilePersonId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Person, src => src.Person)
+                .Map(dest => dest.PersonProfileType, src => src.AcqFlPersonProfileTypeCodeNavigation)
+                // TODO: Remove/refactor this flattened properties
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.PersonProfileTypeCode, src => src.AcqFlPersonProfileTypeCode)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<AcquisitionFilePersonModel, Entity.PimsAcquisitionFilePerson>()
                 .Map(dest => dest.AcquisitionFilePersonId, src => src.Id)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                // TODO: Remove/refactor this flattened properties
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.AcqFlPersonProfileTypeCode, src => src.PersonProfileTypeCode)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseModel, Entity.IBaseEntity>();
         }
     }

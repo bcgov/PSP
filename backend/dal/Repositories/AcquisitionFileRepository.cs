@@ -70,7 +70,7 @@ namespace Pims.Dal.Repositories
         {
             using var _ = Logger.QueryScope();
 
-            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+            return Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.AcquisitionFileStatusTypeCodeNavigation)
                 .Include(r => r.AcqPhysFileStatusTypeCodeNavigation)
                 .Include(r => r.AcquisitionTypeCodeNavigation)
@@ -81,6 +81,10 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                     .ThenInclude(rp => rp.Property)
                     .ThenInclude(p => p.DistrictCodeNavigation)
+                .Include(r => r.PimsAcquisitionFilePeople)
+                    .ThenInclude(rp => rp.Person)
+                .Include(r => r.PimsAcquisitionFilePeople)
+                    .ThenInclude(rp => rp.AcqFlPersonProfileTypeCodeNavigation)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -103,6 +107,8 @@ namespace Pims.Dal.Repositories
                 }
             }
 
+            // TODO: Review this logic in the context of an addition
+            // - there should be no pre-existing AcquisitionFilePerson rows for this file!
             foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
             {
                 if (acquisitionPeople.AcquisitionFilePersonId != 0)
