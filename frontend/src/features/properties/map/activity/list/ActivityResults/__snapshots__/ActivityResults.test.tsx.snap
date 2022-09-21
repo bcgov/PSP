@@ -83,6 +83,7 @@ exports[`Activity Results Table matches snapshot 1`] = `
             Activity type
             <div
               class="c0"
+              data-testid="sort-column-activityTemplate"
             >
               <svg
                 class="c1"
@@ -128,6 +129,7 @@ exports[`Activity Results Table matches snapshot 1`] = `
             Description
             <div
               class="c0"
+              data-testid="sort-column-description"
             >
               <svg
                 class="c1"
@@ -173,6 +175,7 @@ exports[`Activity Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
+              data-testid="sort-column-activityStatusTypeCode"
             >
               <svg
                 class="c1"

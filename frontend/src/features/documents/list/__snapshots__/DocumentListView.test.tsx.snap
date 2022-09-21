@@ -490,6 +490,7 @@ exports[`Document List View renders as expected 1`] = `
                   Document type
                   <div
                     class="c6"
+                    data-testid="sort-column-documentType"
                   >
                     <svg
                       class="c7"
@@ -535,6 +536,7 @@ exports[`Document List View renders as expected 1`] = `
                   File name
                   <div
                     class="c6"
+                    data-testid="sort-column-fileName"
                   >
                     <svg
                       class="c7"
@@ -580,6 +582,7 @@ exports[`Document List View renders as expected 1`] = `
                   Upload date
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateTimestamp"
                   >
                     <svg
                       class="c7"
@@ -625,6 +628,7 @@ exports[`Document List View renders as expected 1`] = `
                   Uploaded by
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateUserid"
                   >
                     <svg
                       class="c7"
@@ -670,6 +674,7 @@ exports[`Document List View renders as expected 1`] = `
                   Status
                   <div
                     class="c6"
+                    data-testid="sort-column-statusTypeCode"
                   >
                     <svg
                       class="c7"
@@ -1485,6 +1490,7 @@ exports[`Document List View renders as expected 2`] = `
                   Document type
                   <div
                     class="c6"
+                    data-testid="sort-column-documentType"
                   >
                     <svg
                       class="c7"
@@ -1530,6 +1536,7 @@ exports[`Document List View renders as expected 2`] = `
                   File name
                   <div
                     class="c6"
+                    data-testid="sort-column-fileName"
                   >
                     <svg
                       class="c7"
@@ -1575,6 +1582,7 @@ exports[`Document List View renders as expected 2`] = `
                   Upload date
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateTimestamp"
                   >
                     <svg
                       class="c7"
@@ -1620,6 +1628,7 @@ exports[`Document List View renders as expected 2`] = `
                   Uploaded by
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateUserid"
                   >
                     <svg
                       class="c7"
@@ -1665,6 +1674,7 @@ exports[`Document List View renders as expected 2`] = `
                   Status
                   <div
                     class="c6"
+                    data-testid="sort-column-statusTypeCode"
                   >
                     <svg
                       class="c7"

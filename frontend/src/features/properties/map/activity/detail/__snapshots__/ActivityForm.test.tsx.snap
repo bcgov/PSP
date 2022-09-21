@@ -925,6 +925,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                   Document type
                   <div
                     class="c6"
+                    data-testid="sort-column-documentType"
                   >
                     <svg
                       class="c7"
@@ -970,6 +971,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                   File name
                   <div
                     class="c6"
+                    data-testid="sort-column-fileName"
                   >
                     <svg
                       class="c7"
@@ -1015,6 +1017,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                   Upload date
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateTimestamp"
                   >
                     <svg
                       class="c7"
@@ -1060,6 +1063,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                   Uploaded by
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateUserid"
                   >
                     <svg
                       class="c7"
@@ -1105,6 +1109,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                   Status
                   <div
                     class="c6"
+                    data-testid="sort-column-statusTypeCode"
                   >
                     <svg
                       class="c7"
@@ -1358,6 +1363,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                     Created date
                     <div
                       class="c6"
+                      data-testid="sort-column-appCreateTimestamp"
                     >
                       <svg
                         class="c7"
@@ -1403,6 +1409,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                     Last updated by
                     <div
                       class="c6"
+                      data-testid="sort-column-appLastUpdateUserid"
                     >
                       <svg
                         class="c7"

@@ -639,6 +639,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 Summary
                 <div
                   class="c8"
+                  data-testid="sort-column-summary"
                 >
                   <svg
                     class="c9"
@@ -684,6 +685,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 First name
                 <div
                   class="c8"
+                  data-testid="sort-column-firstName"
                 >
                   <svg
                     class="c9"
@@ -729,6 +731,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 Last name
                 <div
                   class="c8"
+                  data-testid="sort-column-surname"
                 >
                   <svg
                     class="c9"
@@ -774,6 +777,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 Organization
                 <div
                   class="c8"
+                  data-testid="sort-column-organizationName"
                 >
                   <svg
                     class="c9"
@@ -843,6 +847,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 City
                 <div
                   class="c8"
+                  data-testid="sort-column-municipalityName"
                 >
                   <svg
                     class="c9"

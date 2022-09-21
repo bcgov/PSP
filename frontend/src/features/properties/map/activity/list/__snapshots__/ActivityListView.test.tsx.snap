@@ -438,6 +438,7 @@ exports[`Activity List View renders as expected 1`] = `
                 Activity type
                 <div
                   class="c6"
+                  data-testid="sort-column-activityTemplate"
                 >
                   <svg
                     class="c7"
@@ -483,6 +484,7 @@ exports[`Activity List View renders as expected 1`] = `
                 Description
                 <div
                   class="c6"
+                  data-testid="sort-column-description"
                 >
                   <svg
                     class="c7"
@@ -528,6 +530,7 @@ exports[`Activity List View renders as expected 1`] = `
                 Status
                 <div
                   class="c6"
+                  data-testid="sort-column-activityStatusTypeCode"
                 >
                   <svg
                     class="c7"
