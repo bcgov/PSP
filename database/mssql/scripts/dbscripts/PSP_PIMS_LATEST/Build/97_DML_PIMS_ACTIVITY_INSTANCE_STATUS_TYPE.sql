@@ -13,6 +13,6 @@ INSERT INTO PIMS_ACTIVITY_INSTANCE_STATUS_TYPE (ACTIVITY_INSTANCE_STATUS_TYPE_CO
 VALUES
   (N'NOSTART',   N'Not Started', 1),
   (N'INPROG',    N'In Progress', 2),
-  (N'COMPLETE',  N'Complete',    3),
+  (N'COMPLETE',  N'Completed',   3),
   (N'CANCELLED', N'Cancelled',   4);
 GO
