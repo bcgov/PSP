@@ -1,4 +1,5 @@
 import { SelectOption } from 'components/common/form/Select';
+import { ModalContent } from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
@@ -49,7 +50,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
     defaultFilters ?? defaultActivityFilter,
   );
   const { staleFile, setStaleFile } = useContext(SideBarContext);
-  const { setModalProps, setDisplayModal } = useModalContext();
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { hasClaim } = useKeycloakWrapper();
 
   const fetchData = useCallback(async () => {
@@ -121,8 +122,8 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   };
 
   const onDeleteActivity = async (activity: Api_Activity) => {
-    setModalProps({
-      ...deleteModalProps,
+    setModalContent({
+      ...deleteModalContent,
       handleOk: async () => {
         activity?.id !== undefined &&
           (await deleteActivity(activity?.id).then(async () => {
@@ -137,6 +138,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
         setDisplayModal(false);
       },
     });
+    setDisplayModal(true);
   };
 
   return (
@@ -169,9 +171,8 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   );
 };
 
-const deleteModalProps = {
+const deleteModalContent: ModalContent = {
   ...getDeleteModalProps(),
-  display: true,
   title: 'Delete Activity',
   closeButton: true,
   message: (

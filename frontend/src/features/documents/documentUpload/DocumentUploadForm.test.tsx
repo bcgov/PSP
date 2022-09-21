@@ -10,6 +10,7 @@ import DocumentUploadForm from './DocumentUploadForm';
 
 const history = createMemoryHistory();
 
+const submitForm = jest.fn();
 const handleSubmit = jest.fn();
 
 const handleCancelClick = jest.fn();
@@ -27,6 +28,7 @@ const documentTypes: Api_DocumentType[] = [
     mayanId: 7,
   },
 ];
+
 const documentTypeMetadataType: Api_Storage_DocumentTypeMetadataType[] = [
   {
     id: 1,
@@ -62,6 +64,7 @@ describe('DocumentUploadView component', () => {
         onUploadDocument={onUploadDocument}
         onCancel={handleCancelClick}
         initialDocumentType={'AMMEND'}
+        formikRef={{ current: { submitForm, dirty: true } } as any}
       />,
       {
         ...renderOptions,

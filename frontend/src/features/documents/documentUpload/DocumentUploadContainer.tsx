@@ -1,10 +1,13 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { FormikProps } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
+import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
+import { DocumentUploadFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentUploadForm from './DocumentUploadForm';
@@ -17,6 +20,32 @@ export interface IDocumentUploadContainerProps {
 }
 
 export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadContainerProps> = props => {
+  const deleteModalProps = getCancelModalProps();
+
+  const { setDisplayModal } = useModalContext({
+    ...deleteModalProps,
+    closeButton: false,
+    handleOk: () => {
+      handleCancelConfirm();
+    },
+  });
+
+  const formikRef = useRef<FormikProps<DocumentUploadFormData>>(null);
+
+  const handleCancelClick = () => {
+    if (formikRef.current?.dirty) {
+      setDisplayModal(true);
+    } else {
+      handleCancelConfirm();
+    }
+  };
+
+  const handleCancelConfirm = () => {
+    setDisplayModal(false);
+    formikRef.current?.resetForm();
+    props.onCancel();
+  };
+
   const isMounted = useIsMounted();
   const {
     retrieveDocumentMetadataLoading,
@@ -53,6 +82,8 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
       if (results?.status === ExternalResultStatus.Success) {
         setDocumentTypeMetadataTypes(results?.payload?.results);
       }
+    } else {
+      setDocumentTypeMetadataTypes([]);
     }
   };
 
@@ -63,13 +94,14 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
 
   return (
     <DocumentUploadForm
+      formikRef={formikRef}
       isLoading={retrieveDocumentMetadataLoading || uploadDocumentLoading}
       initialDocumentType={documentType}
       documentTypes={documentTypes}
       mayanMetadataTypes={documentTypeMetadataTypes}
       onDocumentTypeChange={onDocumentTypeChange}
       onUploadDocument={onUploadDocument}
-      onCancel={props.onCancel}
+      onCancel={handleCancelClick}
     />
   );
 };
