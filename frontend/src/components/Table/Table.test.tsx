@@ -89,7 +89,7 @@ describe('Generic table component', () => {
     expect(tableRows).toHaveLength(5);
   });
 
-  it('it displays all rows if manualPagination is false', async () => {
+  it('it displays all rows if manualPagination is true', async () => {
     const { tableRows } = setup({ props: { pageSize: 5, manualPagination: true } });
 
     expect(tableRows).toHaveLength(6);

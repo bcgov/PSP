@@ -43,7 +43,7 @@ function ColumnSort<T extends object = {}>({ column, onSort, sort }: IColumnSort
 
   const overrideSort = has(sort, column.id);
   return (
-    <Wrapper onClick={onSort}>
+    <Wrapper onClick={onSort} data-testid={`sort-column-${column.id}`}>
       {overrideSort && column.isSorted && !column.isSortedDesc && <Up $active={true} />}
       {overrideSort && column.isSorted && column.isSortedDesc && <Down $active={true} />}
 

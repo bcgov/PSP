@@ -244,11 +244,8 @@ const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>
       'When manual pagination is set to false do not pass in onRequestData or pageIndex.',
     );
   }
-  if (
-    (props.setSelectedRows || props.isSingleSelect || props.selectedRows) &&
-    !props.showSelectedRowCount
-  ) {
-    throw Error('Show selected row count required for table select logic');
+  if ((props.setSelectedRows || props.isSingleSelect) && !props.showSelectedRowCount) {
+    throw Error('Show selected row count required for interactive table select logic');
   }
 };
 

@@ -70,7 +70,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<IPropertySe
           name="map-properties"
           columns={mapPropertyColumns}
           data={tableData}
-          setSelectedRows={onSelectedProperties}
+          setSelectedRows={searchResults?.length <= 15 ? onSelectedProperties : undefined}
           selectedRows={selectedData}
           loading={loading}
           lockPageSize={true}
