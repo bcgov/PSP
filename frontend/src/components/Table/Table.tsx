@@ -239,6 +239,14 @@ const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>
   if (props.hideToolbar === true && props.manualPagination === false) {
     throw Error('When hiding pagination toolbar manual pagination must be true.');
   }
+  if (props.manualPagination === false && (props.onRequestData !== undefined || props.pageIndex)) {
+    throw Error(
+      'When manual pagination is set to false do not pass in onRequestData or pageIndex.',
+    );
+  }
+  if ((props.setSelectedRows || props.isSingleSelect) && !props.showSelectedRowCount) {
+    throw Error('Show selected row count required for interactive table select logic');
+  }
 };
 
 /**
@@ -317,11 +325,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             pageSize: pageSizeProp,
           }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
-      manualPagination: props.hideToolbar === true ?? manualPagination ?? true, // Tell the usePagination hook
-      manualSortBy: manualSortBy,
+      manualPagination: (props.hideToolbar || manualPagination) ?? true, // Tell the usePagination hook
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
-      // pageCount.
+      // pageCount. In the majority of cases we want to use manualPagination.
+      manualSortBy: manualSortBy,
       pageCount,
       autoResetSelectedRows: false,
     },

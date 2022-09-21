@@ -71,6 +71,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             Document type
             <div
               class="c0"
+              data-testid="sort-column-documentType"
             >
               <svg
                 class="c1"
@@ -116,6 +117,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             File name
             <div
               class="c0"
+              data-testid="sort-column-fileName"
             >
               <svg
                 class="c1"
@@ -161,6 +163,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             Upload date
             <div
               class="c0"
+              data-testid="sort-column-appCreateTimestamp"
             >
               <svg
                 class="c1"
@@ -206,6 +209,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             Uploaded by
             <div
               class="c0"
+              data-testid="sort-column-appCreateUserid"
             >
               <svg
                 class="c1"
@@ -251,6 +255,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
+              data-testid="sort-column-statusTypeCode"
             >
               <svg
                 class="c1"

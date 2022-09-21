@@ -69,6 +69,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             L-File Number
             <div
               class="c0"
+              data-testid="sort-column-lFileNo"
             >
               <svg
                 class="c1"
@@ -114,6 +115,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Expiry Date
             <div
               class="c0"
+              data-testid="sort-column-expiryDate"
             >
               <svg
                 class="c1"
@@ -159,6 +161,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Program Name
             <div
               class="c0"
+              data-testid="sort-column-programName"
             >
               <svg
                 class="c1"
@@ -228,6 +231,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
+              data-testid="sort-column-statusType"
             >
               <svg
                 class="c1"

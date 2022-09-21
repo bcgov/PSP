@@ -263,6 +263,7 @@ exports[`Note Results Table matches snapshot 1`] = `
             Created date
             <div
               class="c0"
+              data-testid="sort-column-appCreateTimestamp"
             >
               <svg
                 class="c1"
@@ -308,6 +309,7 @@ exports[`Note Results Table matches snapshot 1`] = `
             Last updated by
             <div
               class="c0"
+              data-testid="sort-column-appLastUpdateUserid"
             >
               <svg
                 class="c1"

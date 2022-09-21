@@ -1,0 +1,351 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Generic table component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="table"
+    data-testid="default"
+    role="table"
+  >
+    <div
+      class="thead thead-light"
+    >
+      <div
+        class="tr"
+        role="row"
+        style="display: flex; flex: 1 0 auto; min-width: 60px;"
+      >
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Column number
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Column name
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tbody"
+      role="rowgroup"
+    >
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 60px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            one
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            1
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 60px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            two
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            2
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 60px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            three
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            3
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 60px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            four
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            4
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 60px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            five
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            5
+          </div>
+        </div>
+      </div>
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 60px;"
+        >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            six
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            6
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c0 {
+  margin-top: 0.3rem;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="align-self-center col-auto"
+    >
+      <span>
+        1 - 6 of  6
+      </span>
+    </div>
+    <div
+      class="ml-auto align-self-center col-auto"
+    />
+    <div
+      class="align-self-center col-auto"
+    >
+      <div>
+        <div
+          class="Menu-root"
+        >
+          <div
+            class="Menu-button"
+          >
+            <div
+              style="display: flex;"
+            >
+              <span
+                class="c0"
+              >
+                Show
+              </span>
+              <input
+                class="form-control form-control-sm"
+                style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                type="number"
+                value="10"
+              />
+              <span
+                class="c0"
+              >
+                Entries
+              </span>
+            </div>
+          </div>
+          <div
+            class="Menu-items"
+            style="width: 10.0rem;"
+          >
+            <div
+              class="Menu-options scrollable list-group"
+            >
+              <div
+                class="Menu-item list-group-item"
+              >
+                5
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                10
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                20
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                50
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                100
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="align-self-center col-auto"
+    >
+      <ul
+        class="pagination"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Previous page"
+            class="page-link"
+            rel="prev"
+            role="button"
+            tabindex="0"
+          >
+            &lt;
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            aria-current="page"
+            aria-label="Page 1 is your current page"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Next page"
+            class="page-link"
+            rel="next"
+            role="button"
+            tabindex="0"
+          >
+            &gt;
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;

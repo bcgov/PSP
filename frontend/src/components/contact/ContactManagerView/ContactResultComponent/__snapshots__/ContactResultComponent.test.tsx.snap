@@ -226,8 +226,28 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 430px;"
+        style="display: flex; flex: 1 0 auto; min-width: 440px;"
       >
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            <div>
+              <input
+                data-testid="selectrow-parent"
+                name=""
+                style="cursor: pointer;"
+                title="Click to deselect all."
+                type="checkbox"
+              />
+            </div>
+          </div>
+        </div>
         <div
           class="th"
           colspan="1"
@@ -260,6 +280,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             Summary
             <div
               class="c0"
+              data-testid="sort-column-summary"
             >
               <svg
                 class="c1"
@@ -305,6 +326,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             First name
             <div
               class="c0"
+              data-testid="sort-column-firstName"
             >
               <svg
                 class="c1"
@@ -350,6 +372,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             Last name
             <div
               class="c0"
+              data-testid="sort-column-surname"
             >
               <svg
                 class="c1"
@@ -395,6 +418,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             Organization
             <div
               class="c0"
+              data-testid="sort-column-organizationName"
             >
               <svg
                 class="c1"
@@ -464,6 +488,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             City
             <div
               class="c0"
+              data-testid="sort-column-municipalityName"
             >
               <svg
                 class="c1"
@@ -533,8 +558,24 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 430px;"
+          style="display: flex; flex: 1 0 auto; min-width: 440px;"
         >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div>
+              <input
+                data-testid="selectrow-1"
+                name=""
+                style="cursor: pointer;"
+                title="Toggle Row Selected"
+                type="checkbox"
+              />
+            </div>
+          </div>
           <div
             class="td"
             role="cell"
@@ -683,8 +724,24 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 430px;"
+          style="display: flex; flex: 1 0 auto; min-width: 440px;"
         >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div>
+              <input
+                data-testid="selectrow-2"
+                name=""
+                style="cursor: pointer;"
+                title="Toggle Row Selected"
+                type="checkbox"
+              />
+            </div>
+          </div>
           <div
             class="td"
             role="cell"
@@ -833,8 +890,24 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 430px;"
+          style="display: flex; flex: 1 0 auto; min-width: 440px;"
         >
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div>
+              <input
+                data-testid="selectrow-3"
+                name=""
+                style="cursor: pointer;"
+                title="Toggle Row Selected"
+                type="checkbox"
+              />
+            </div>
+          </div>
           <div
             class="td"
             role="cell"
@@ -980,6 +1053,10 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
     </div>
   </div>
   .c0 {
+  font-size: 1.4rem;
+}
+
+.c1 {
   margin-top: 0.3rem;
 }
 
@@ -995,7 +1072,13 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
     </div>
     <div
       class="ml-auto align-self-center col-auto"
-    />
+    >
+      <p
+        class="c0"
+      >
+        0 selected
+      </p>
+    </div>
     <div
       class="align-self-center col-auto"
     >
@@ -1010,7 +1093,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
               style="display: flex;"
             >
               <span
-                class="c0"
+                class="c1"
               >
                 Show
               </span>
@@ -1021,7 +1104,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
                 value="10"
               />
               <span
-                class="c0"
+                class="c1"
               >
                 Entries
               </span>
