@@ -36,4 +36,5 @@ export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_Au
   person?: Api_Person;
   personProfileTypeCode?: string;
   personProfileType?: Api_TypeCode<string>;
+  isDisabled?: boolean;
 }
