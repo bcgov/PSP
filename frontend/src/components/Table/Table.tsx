@@ -317,7 +317,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             pageSize: pageSizeProp,
           }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
-      manualPagination: props.hideToolbar === true ?? manualPagination ?? true, // Tell the usePagination hook
+      manualPagination: (props.hideToolbar || manualPagination) ?? true, // Tell the usePagination hook
       manualSortBy: manualSortBy,
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
