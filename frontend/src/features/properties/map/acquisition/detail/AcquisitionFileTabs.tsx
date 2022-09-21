@@ -7,13 +7,15 @@ import React, { useState } from 'react';
 
 import { ActivityListView } from '../../activity/list/ActivityListView';
 import { AcquisitionContainerState } from '../AcquisitionContainer';
+import { EditFormNames } from '../EditFormNames';
+import AcquisitionSummaryView from './AcquisitionSummaryView';
 
-export interface IAcquisitionSummaryTabsProps {
+export interface IAcquisitionFileTabsProps {
   acquisitionFile?: Api_AcquisitionFile;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
-export const AcquisitionSummaryTabs: React.FunctionComponent<IAcquisitionSummaryTabsProps> = ({
+export const AcquisitionFileTabs: React.FunctionComponent<IAcquisitionFileTabsProps> = ({
   acquisitionFile,
   setContainerState,
 }) => {
@@ -21,7 +23,14 @@ export const AcquisitionSummaryTabs: React.FunctionComponent<IAcquisitionSummary
   const { hasClaim } = useKeycloakWrapper();
 
   tabViews.push({
-    content: <></>, // TODO: implement PSP-3271 !!
+    content: (
+      <AcquisitionSummaryView
+        acquisitionFile={acquisitionFile}
+        onEdit={() =>
+          setContainerState({ isEditing: true, activeEditForm: EditFormNames.acquisitionSummary })
+        }
+      />
+    ),
     key: FileTabNames.fileDetails,
     name: 'File details',
   });
@@ -53,4 +62,4 @@ export const AcquisitionSummaryTabs: React.FunctionComponent<IAcquisitionSummary
   );
 };
 
-export default AcquisitionSummaryTabs;
+export default AcquisitionFileTabs;

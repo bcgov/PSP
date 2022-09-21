@@ -1,10 +1,8 @@
-import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 
 import { AcquisitionContainerState } from './AcquisitionContainer';
-import AcquisitionSummaryTabs from './detail/AcquisitionSummaryTabs';
-import { EditFormNames } from './EditFormNames';
+import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 
 export interface IViewSelectorProps {
   acquisitionFile?: Api_AcquisitionFile;
@@ -17,7 +15,7 @@ export interface IViewSelectorProps {
 
 export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
   return (
-    <AcquisitionSummaryTabs
+    <AcquisitionFileTabs
       acquisitionFile={props.acquisitionFile}
       setContainerState={props.setContainerState}
     />
