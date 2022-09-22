@@ -42,7 +42,7 @@ const AcquisitionMenu: React.FunctionComponent<IAcquisitionMenuProps> = props =>
           {index === 0 && (
             <StyledMenuHeaderWrapper>
               <StyledMenuHeader>Properties</StyledMenuHeader>
-              {hasClaim(Claims.PROPERTY_EDIT) && (
+              {hasClaim(Claims.ACQUISITION_EDIT) && (
                 <EditButton
                   title="Edit acquisition properties"
                   onClick={() => {
