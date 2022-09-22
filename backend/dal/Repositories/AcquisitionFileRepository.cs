@@ -107,7 +107,7 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            // TODO: Review this logic in the context of an addition
+            // TODO: PSP-4508 Review this logic in the context of an addition
             // - there should be no pre-existing AcquisitionFilePerson rows for this file!
             foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
             {

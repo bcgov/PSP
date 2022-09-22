@@ -7,10 +7,6 @@ import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 export interface IViewSelectorProps {
   acquisitionFile?: Api_AcquisitionFile;
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
-
-  // selectedIndex: number;
-  // setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
-  // onSuccess: () => void;
 }
 
 export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
