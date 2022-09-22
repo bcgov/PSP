@@ -147,6 +147,28 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region GetByPin
+        [Fact]
+        public void GetByPin_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
+            var pin = 1111;
+            var property = EntityHelper.CreateProperty(1, pin);
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(property);
+
+            var repository = helper.CreateRepository<PropertyRepository>(user);
+
+            // Act
+            var result = repository.GetByPin(pin);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Pin.Should().Be(pin);
+        }
+        #endregion
+
         #region Update
         [Fact]
         public void Update_Property_Success()
