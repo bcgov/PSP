@@ -33,7 +33,12 @@ const AcquisitionSummaryView: React.FunctionComponent<IAcquisitionSummaryViewPro
       </StyledEditWrapper>
       <Section header="Schedule">
         <SectionField label="Assigned date">{prettyFormatDate(detail.assignedDate)}</SectionField>
-        <SectionField label="Delivery date">{prettyFormatDate(detail.deliveryDate)}</SectionField>
+        <SectionField
+          label="Delivery date"
+          helpText="Date for delivery of the property to the project"
+        >
+          {prettyFormatDate(detail.deliveryDate)}
+        </SectionField>
       </Section>
       <Section header="Acquisition details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>
