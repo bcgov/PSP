@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Pims.Ltsa
@@ -27,7 +28,6 @@ namespace Pims.Ltsa
         private TokenModel _token = null;
         private readonly JsonSerializerOptions _jsonSerializerOptions = null;
         private readonly ILogger<ILtsaService> _logger;
-        private readonly int MAX_RETRIES = 5;
         private readonly AsyncRetryPolicy _authPolicy;
         #endregion
         #region Properties
@@ -101,7 +101,8 @@ namespace Pims.Ltsa
         {
             var orderProcessingPolicy = Policy
                 .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
-                 .WaitAndRetryAsync(MAX_RETRIES, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                 .Or<JsonException>()
+                 .WaitAndRetryAsync(Options.MaxRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             try
             {
@@ -121,9 +122,14 @@ namespace Pims.Ltsa
                 Error error = await GetLtsaError(ex, url);
                 throw new LtsaException(ex, this.Client, error);
             }
+            catch (JsonException ex)
+            {
+                this._logger.LogError("Failed to process LTSA json: ", ex);
+                throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
+            }
         }
 
-        private bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response) where T : IFieldedData
+        private static bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response) where T : IFieldedData
         {
             return response?.Order?.Status == OrderParent<T>.StatusEnum.Processing && response?.Order?.OrderedProduct == null;
         }
@@ -137,9 +143,11 @@ namespace Pims.Ltsa
                 try
                 {
                     error = JsonSerializer.Deserialize<Error>(errorContent, _jsonSerializerOptions);
-                } catch (JsonException)
+                }
+                catch (JsonException)
                 {
-                    error = new Error(new List<String>() { ex.Message });
+                    _logger.LogError(ex, $"Failed to deserialize error from remote host: ${errorContent}");
+                    error = new Error(new List<String>() { ex.Message, "LTSA returned an invalid response. Please refresh your page to try again." });
                 }
                 _logger.LogError(ex, $"Failed to send/receive request: ${url}");
             }
@@ -158,7 +166,7 @@ namespace Pims.Ltsa
             {
                 try
                 {
-                    var refreshToken = _token.RefreshToken;
+                    var refreshToken = _token?.RefreshToken;
                     _token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
                     var response = await _authPolicy.ExecuteAsync(async () => await this.Client.PostJsonAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), new { refreshToken }));
                     var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
@@ -267,7 +275,7 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T: IFieldedData
+        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
             return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);

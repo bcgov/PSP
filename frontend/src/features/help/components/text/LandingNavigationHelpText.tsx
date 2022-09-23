@@ -10,11 +10,13 @@ const LandingNavigationHelpText = () => {
       <br />
       <strong>Home:</strong> Shows the map to view and find properties.
       <br />
-      <strong>Administration:</strong> Manage users, agencies and Access Requests. (SRES users only)
+      <strong>Administration:</strong> Manage users, agencies and Access Requests. [Role based]
       <br />
-      <strong>Submit Property:</strong> View Inventory or Submit a new property to inventory.
+      <strong>Add a Property:</strong> Add a new property to inventory.
       <br />
       <strong>View Property Inventory:</strong> View properties in a table format.
+      <br />
+      <strong>Reports:</strong> Generate multiple reports.
     </p>
   );
 };

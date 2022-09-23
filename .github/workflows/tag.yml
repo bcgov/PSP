@@ -1,0 +1,40 @@
+name: Pre-release Tag
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [master]
+
+jobs:
+  prepare-release:
+    # this job will only run if the PR has been merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }} # with this we can bypass branch protection rules here (no-push)
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Setup git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Check release version
+        run: |
+          export VERSION=$(build/version.sh)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Prepare git tag
+        run: |
+          export TAG=v${{ env.VERSION }}
+          git tag -f -a $TAG -m "Release $TAG"
+
+      - name: Commit changes
+        run: |
+          git push -f --tags --no-verify

@@ -1,16 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header tests Header renders correctly 1`] = `
-.c1 {
-  border-left: 2px solid white;
-  font-size: 34px;
-  margin: 0 15px 0 25px;
+exports[`App Header renders correctly 1`] = `
+<DocumentFragment>
+  @media (min-width:99.2rem) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media (min-width:99.2rem) {
+
+}
+
+<div
+    class="container"
+  />
+  @media (min-width:99.2rem) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  .c1 {
+  border-left: 0.2rem solid white;
+  font-size: 3.4rem;
+  margin: 0 1.5rem 0 2.5rem;
   vertical-align: top;
 }
 
 .c0 {
-  padding: 0 10px;
-  min-height: 70px;
+  padding: 0 1rem;
+  min-height: 7rem;
   color: #ffffff;
 }
 
@@ -23,18 +45,29 @@ exports[`Header tests Header renders correctly 1`] = `
 }
 
 .c0 .brand-box {
-  padding: 10px 0;
+  padding: 1rem 0;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c0 .brand-box .pims-logo {
-  margin: 0 10px;
+  margin: 0 1rem;
+}
+
+.c0 .title {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
 }
 
 .c0 .title h1 {
-  margin-top: 10px;
+  margin-top: 1rem;
   padding-left: 0px;
   text-align: center;
-  font-size: 24px;
+  font-size: 2.4rem;
   -webkit-text-decoration: none solid rgb(255,255,255);
   text-decoration: none solid rgb(255,255,255);
   font-family: 'BCSans',Fallback,sans-serif;
@@ -43,6 +76,10 @@ exports[`Header tests Header renders correctly 1`] = `
 }
 
 .c0 .other {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -66,11 +103,11 @@ exports[`Header tests Header renders correctly 1`] = `
   font-weight: 700;
 }
 
-@media (min-width:992px) {
+@media (min-width:99.2rem) {
   .c0 .longAppName {
     display: block;
     text-align: left;
-    padding-left: 40px;
+    padding-left: 4rem;
   }
 
   .c0 .shortAppName {
@@ -79,56 +116,55 @@ exports[`Header tests Header renders correctly 1`] = `
 }
 
 <nav
-  className="c0 App-header navbar navbar-expand navbar-light"
->
-  <span
-    className="brand-box navbar-brand"
+    class="c0 App-header navbar navbar-expand navbar-light"
   >
-    <a
-      href="https://www2.gov.bc.ca/gov/content/home"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <img
-        alt="Government of BC logo"
-        className="bc-gov-icon"
-        height={43}
-        src="logo-banner.svg"
-        width={156}
-      />
-    </a>
     <span
-      className="c1"
-    />
-    <img
-      alt="PIMS logo"
-      className="pims-logo"
-      height={50}
-      src=""
-    />
-  </span>
-  <div
-    className="title mr-auto navbar-nav"
-    onKeyDown={[Function]}
-  >
-    <div
-      className="nav-item"
+      class="brand-box navbar-brand"
     >
-      <h1
-        className="longAppName"
+      <a
+        href="https://www2.gov.bc.ca/gov/content/home"
+        rel="noopener noreferrer"
+        target="_blank"
       >
-        Default Tenant Name
-      </h1>
-      <h1
-        className="shortAppName"
+        <img
+          alt="Government of BC logo"
+          class="bc-gov-icon"
+          height="43"
+          src="logo-banner.svg"
+          width="156"
+        />
+      </a>
+      <span
+        class="c1"
+      />
+      <img
+        alt="PIMS logo"
+        class="pims-logo"
+        height="50"
+        src="/tenants/MOTI/PIMS-logo.png"
+      />
+    </span>
+    <div
+      class="title mr-auto navbar-nav"
+    >
+      <div
+        class="nav-item"
       >
-        PIMS
-      </h1>
+        <h1
+          class="longAppName"
+        >
+          Property Information Management System
+        </h1>
+        <h1
+          class="shortAppName"
+        >
+          PIMS
+        </h1>
+      </div>
     </div>
-  </div>
-  <div
-    className="other navbar-nav"
-    onKeyDown={[Function]}
-  />
-</nav>
+    <div
+      class="other navbar-nav"
+    />
+  </nav>
+</DocumentFragment>
 `;

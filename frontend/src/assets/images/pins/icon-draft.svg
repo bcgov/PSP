@@ -1,0 +1,12 @@
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 30" width="30" height="45">
+      <defs>
+        <style></style>
+      </defs>
+      <g id="PDF_preview">
+        <path
+          className="cls-1"
+          fill="#2a81cb"
+          d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+        />
+      </g>
+    </svg>

@@ -1,6 +1,6 @@
-using Pims.Core.Helpers;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Helpers;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -17,7 +17,7 @@ namespace Pims.Api.Test.Helpers
             new List<object[]>
             {
                 new object[] { new[] { new { Id = 1, Name = "test1" }, new { Id = 2, Name = "test2" } }, 2 },
-                new object[] { new[] { new Entity.PropertyType("test1") { Id = 1 }, new Entity.PropertyType("test2") { Id = 2 } }, 10 }
+                new object[] { new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") }, 10 },
             };
         #endregion
 
@@ -52,7 +52,7 @@ namespace Pims.Api.Test.Helpers
         public void HandleKeyNotFound_Object()
         {
             // Arrange
-            static Entity.Parcel get() => throw new KeyNotFoundException();
+            static Entity.PimsProperty get() => throw new KeyNotFoundException();
 
             // Act
             var result = ExceptionHelper.HandleKeyNotFound(get);
@@ -92,14 +92,14 @@ namespace Pims.Api.Test.Helpers
         public void HandleKeyNotFound_WithDefaultInstance()
         {
             // Arrange
-            static Entity.Parcel get() => throw new KeyNotFoundException();
+            static Entity.PimsProperty get() => throw new KeyNotFoundException();
 
             // Act
             var result = ExceptionHelper.HandleKeyNotFoundWithDefault(get);
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<Entity.Parcel>(result);
+            Assert.IsType<Entity.PimsProperty>(result);
         }
 
         [Fact]

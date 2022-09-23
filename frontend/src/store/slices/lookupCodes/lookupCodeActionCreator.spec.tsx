@@ -1,10 +1,11 @@
+import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { STORE_LOOKUP_CODE_RESULTS } from 'constants/actionTypes';
-import { AGENCY_CODE_SET_NAME } from 'constants/API';
-import { find } from 'lodash';
+import { ORGANIZATION_TYPES } from 'constants/API';
+import { find, values } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
+import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -38,6 +39,12 @@ describe('getFetchLookupCodeAction action creator', () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
+
+  const setup = () => {
+    const { result } = renderHook(useLookupCodes, { wrapper: getWrapper(getStore(values)) });
+    return result.current;
+  };
+
   const url = `/lookup/all`;
   const mockResponse = {
     data: [
@@ -46,74 +53,42 @@ describe('getFetchLookupCodeAction action creator', () => {
         id: '1',
         isDisabled: false,
         name: 'Ministry of Advanced Education',
-        type: AGENCY_CODE_SET_NAME,
+        type: ORGANIZATION_TYPES,
       },
     ],
   };
-  it('calls the api with the expected url', () => {
+  it('calls the api with the expected url', async () => {
     mockAxios.onGet(url).reply(200, mockResponse);
-    renderHook(
-      () =>
-        useLookupCodes()
-          .fetchLookupCodes()
-          .then(() => {
-            expect(mockAxios.history.get[0]).toMatchObject({
-              url: '/lookup/all',
-            });
-          }),
-      {
-        wrapper: getWrapper(getStore()),
-      },
+    const { fetchLookupCodes } = setup();
+    fetchLookupCodes();
+    await waitFor(async () =>
+      expect(mockAxios.history.get[0]).toMatchObject({
+        url: '/lookup/all',
+      }),
     );
   });
-  it('gets all codes when paramaters contains all', () => {
+  it('gets all codes when paramaters contains all', async () => {
     mockAxios.onGet(url).reply(200, mockResponse);
-    renderHook(
-      () =>
-        useLookupCodes()
-          .fetchLookupCodes()
-          .then(() => {
-            expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-            expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-            expect(currentStore.getActions()).toContainEqual({
-              payload: mockResponse,
-              type: 'lookupCode/storeLookupCodes',
-            });
-          }),
-      {
-        wrapper: getWrapper(getStore()),
-      },
-    );
+    const { fetchLookupCodes } = setup();
+    fetchLookupCodes();
+    await waitFor(async () => {
+      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+      expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+      expect(currentStore.getActions()).toContainEqual({
+        payload: mockResponse,
+        type: 'lookupCode/storeLookupCodes',
+      });
+    });
   });
 
-  it('Request failure, dispatches error with correct response', () => {
+  it('Request failure, dispatches error with correct response', async () => {
     mockAxios.onGet(url).reply(400, MOCK.ERROR);
-    const mockResponse = {
-      data: [
-        {
-          code: 'AEST',
-          id: '1',
-          isDisabled: false,
-          name: 'Ministry of Advanced Education',
-          type: AGENCY_CODE_SET_NAME,
-        },
-      ],
-    };
-    renderHook(
-      () =>
-        useLookupCodes()
-          .fetchLookupCodes()
-          .then(() => {
-            expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-            expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-            expect(currentStore.getActions()).not.toContainEqual({
-              payload: mockResponse,
-              type: STORE_LOOKUP_CODE_RESULTS,
-            });
-          }),
-      {
-        wrapper: getWrapper(getStore()),
-      },
-    );
+    const { fetchLookupCodes } = setup();
+    fetchLookupCodes();
+    await waitFor(async () => {
+      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+    });
   });
 });

@@ -1,19 +1,24 @@
+import clsx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
+import { isArray } from 'lodash';
 import React from 'react';
 
 import { FastInput } from '.';
 import { Input, InputProps } from './Input';
 
 // only "field" is required for <Input>, the rest are optional
-export type TextProps = InputProps & {
+export type TextAreaProps = InputProps & {
   /** use FastInput instead of Input */
   fast?: boolean;
+  rows?: number;
+  cols?: number;
+  mapFunction?: (value: any) => any;
 };
 
 /**
  * Formik-connected <Input> form control
  */
-export const TextArea: React.FC<TextProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   field,
   label,
   placeholder,
@@ -22,10 +27,16 @@ export const TextArea: React.FC<TextProps> = ({
   disabled,
   custom,
   fast,
+  innerClassName,
+  mapFunction,
   ...rest
 }) => {
   const formikProps = useFormikContext();
   const { values, handleChange, errors, touched } = formikProps;
+  let value = getIn(values, field);
+  if (isArray(value) && mapFunction !== undefined) {
+    value = value.map(mapFunction);
+  }
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
 
@@ -35,28 +46,29 @@ export const TextArea: React.FC<TextProps> = ({
       label={label}
       as="textarea"
       field={field}
-      className={className}
+      className={clsx(className, 'textarea')}
       required={required}
       disabled={disabled}
       custom={custom}
       isInvalid={!!touch && !!error}
       {...rest}
-      value={getIn(values, field)}
+      value={value}
       placeholder={placeholder}
       onChange={handleChange}
     />
   ) : (
     <Input
       label={label}
+      innerClassName={innerClassName}
       as="textarea"
       field={field}
-      className={className}
+      className={clsx(className, 'textarea')}
       required={required}
       disabled={disabled}
       custom={custom}
       isInvalid={!!touch && !!error}
       {...rest}
-      value={getIn(values, field)}
+      value={value}
       placeholder={placeholder}
       onChange={handleChange}
     />

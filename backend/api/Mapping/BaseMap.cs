@@ -7,11 +7,11 @@ namespace Pims.Api.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.BaseEntity, Models.BaseModel>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion);
+            config.NewConfig<Entity.IBaseEntity, Models.BaseModel>()
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber);
 
-            config.NewConfig<Models.BaseModel, Entity.BaseEntity>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion);
+            config.NewConfig<Models.BaseModel, Entity.IBaseEntity>()
+                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion);
         }
     }
 }

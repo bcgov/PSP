@@ -15,6 +15,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a ErrorController class.
         /// </summary>
@@ -26,6 +27,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Returns a json result with the error details.
         /// </summary>
@@ -35,7 +37,7 @@ namespace Pims.Api.Controllers
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-            _logger.LogError(exceptionHandlerPathFeature.Error, "Unhandled error occured.");
+            _logger.LogError(exceptionHandlerPathFeature.Error, "Unhandled error occurred.");
             return new JsonResult(new { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         #endregion

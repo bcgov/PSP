@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Dal.Entities;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -18,28 +18,31 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var accessRequest = new AccessRequest();
+            var accessRequest = new PimsAccessRequest();
 
             // Assert
-            accessRequest.Agencies.Should().BeEmpty();
-            accessRequest.Roles.Should().BeEmpty();
-            accessRequest.Status.Should().Be(AccessRequestStatus.OnHold);
+            accessRequest.User.Should().BeNull();
+            accessRequest.Role.Should().BeNull();
+            accessRequest.AccessRequestStatusTypeCode.Should().BeNull();
+            accessRequest.GetOrganizations().Should().BeEmpty();
         }
 
         [Fact]
         public void AccessRequest_User_Constructor()
         {
             // Arrange
-            var user = new User();
+            var user = new PimsUser();
+            var role = new PimsRole();
+            var status = new PimsAccessRequestStatusType();
 
             // Act
-            var accessRequest = new AccessRequest(user);
+            var accessRequest = new PimsAccessRequest(user, role, status);
 
             // Assert
-            accessRequest.Agencies.Should().BeEmpty();
-            accessRequest.Roles.Should().BeEmpty();
-            accessRequest.Status.Should().Be(AccessRequestStatus.OnHold);
             accessRequest.User.Should().Be(user);
+            accessRequest.Role.Should().Be(role);
+            accessRequest.AccessRequestStatusTypeCodeNavigation.Should().Be(status);
+            accessRequest.GetOrganizations().Should().BeEmpty();
         }
         #endregion
     }

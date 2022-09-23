@@ -1,20 +1,15 @@
+using System;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
-using Pims.Api.Models.User;
 using Pims.Core.Http;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
-using Model = Pims.Api.Models.User;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Controllers
 {
@@ -29,36 +24,32 @@ namespace Pims.Api.Controllers
     public class UserController : ControllerBase
     {
         #region Variables
-        private readonly ILogger<UserController> _logger;
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
         private readonly IProxyRequestClient _requestClient;
-        private readonly IPimsService _pimsService;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly PimsOptions _options;
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="optionsKeycloak"></param>
-        /// <param name="options"></param>
-        /// <param name="pimsService"></param>
-        /// <param name="mapper"></param>
         /// <param name="requestClient"></param>
-        public UserController(ILogger<UserController> logger, IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IOptions<PimsOptions> options, IPimsService pimsService, IMapper mapper, IProxyRequestClient requestClient)
+        /// <param name="userRepository"></param>
+        /// <param name="mapper"></param>
+        public UserController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IProxyRequestClient requestClient, IUserRepository userRepository, IMapper mapper)
         {
-            _logger = logger;
             _optionsKeycloak = optionsKeycloak.CurrentValue;
             _requestClient = requestClient;
-            _pimsService = pimsService;
+            _userRepository = userRepository;
             _mapper = mapper;
-            _options = options.Value;
         }
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Redirects user to the keycloak user info endpoint.
         /// </summary>
@@ -76,115 +67,26 @@ namespace Pims.Api.Controllers
             return await response.HandleResponseAsync<KModel.UserInfoModel>();
         }
 
-        #region Access Requests
         /// <summary>
-        /// Get the most recent access request for the current user.
+        /// Returns user person info for given keycloakUserId.
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("access/requests")]
+        /// <param name="keycloakUserId"></param>
+        /// <returns>User person info.</returns>
+        [HttpGet("info/{keycloakUserId}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
-        [ProducesResponseType(204)]
-        [SwaggerOperation(Tags = new[] { "user" })]
-        public IActionResult GetAccessRequest()
-        {
-            var accessRequest = _pimsService.User.GetAccessRequest();
-            if (accessRequest == null) return NoContent();
-            return new JsonResult(_mapper.Map<Model.AccessRequestModel>(accessRequest));
-        }
-
-        /// <summary>
-        /// Get the most recent access request for the current user.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("access/requests/{id}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
+        [ProducesResponseType(typeof(Model.UserModel), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 403)]
-        [SwaggerOperation(Tags = new[] { "user" })]
-        public IActionResult GetAccessRequest(long id)
+        [SwaggerOperation(Tags = new[] { "userInfo" })]
+        public IActionResult UserBasicInfo([FromRoute] Guid keycloakUserId)
         {
-            var accessRequest = _pimsService.User.GetAccessRequest(id);
-            return new JsonResult(_mapper.Map<Model.AccessRequestModel>(accessRequest));
+            if (keycloakUserId == Guid.Empty)
+            {
+                return new JsonResult(new Models.ErrorResponseModel("Invalid keycloakUserId", "keycloakUserId should be a valid non empty guid"));
+            }
+            var entity = _userRepository.GetUserInfo(keycloakUserId);
+            var user = _mapper.Map<Model.UserModel>(entity);
+            return new JsonResult(user);
         }
-
-        /// <summary>
-        /// Provides a way for a user to submit an access request to the system, associating a role and agency to their user.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("access/requests")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AccessRequestModel), 201)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "user" })]
-        public async Task<IActionResult> AddAccessRequestAsync([FromBody] Model.AccessRequestModel model)
-        {
-            if (model == null || model.Agencies == null || model.Roles == null)
-            {
-                throw new BadRequestException("Invalid access request specified");
-            }
-            if (model.Agencies.Count() != 1)
-            {
-                throw new BadRequestException("Each access request can only contain one agency.");
-            }
-            if (model.Roles.Count() != 1)
-            {
-                throw new BadRequestException("Each access request can only contain one role.");
-            }
-            var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
-            _pimsService.User.AddAccessRequest(accessRequest);
-
-            // Send notification to administrators.
-            try
-            {
-                var template = _pimsService.NotificationTemplate.Get(_options.AccessRequest.NotificationTemplate);
-                var administrators = _pimsService.User.GetAdmininstrators(accessRequest.Agencies.Select(a => a.Id).ToArray());
-                var notification = _pimsService.NotificationQueue.GenerateNotification(
-                    String.Join(";", administrators.Select(a => a.Email).Concat(new[] { _options.AccessRequest.SendTo }).Where(e => !String.IsNullOrWhiteSpace(e))),
-                    template,
-                    new AccessRequestNotificationModel(accessRequest, _options));
-                await _pimsService.NotificationQueue.SendNotificationsAsync(new[] { notification });
-            }
-            catch (Exception ex)
-            {
-                // Ignore email errors.
-                _logger.LogError(ex, "Error occurred while attempting to send an access request notification to administrators.");
-            }
-
-            return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.Id }, _mapper.Map<Model.AccessRequestModel>(accessRequest));
-        }
-
-        /// <summary>
-        /// Provides a way for a user to update their access request.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("access/requests/{id}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
-        [ProducesResponseType(typeof(Models.ErrorResponseModel), 403)]
-        [SwaggerOperation(Tags = new[] { "user" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is used for consistent routing.")]
-        public IActionResult UpdateAccessRequest(long id, [FromBody] Model.AccessRequestModel model)
-        {
-            if (model == null || model.Agencies == null || model.Roles == null)
-            {
-                throw new BadRequestException("Invalid access request specified");
-            }
-            if (model.Agencies.Count() != 1)
-            {
-                throw new BadRequestException("Each access request must only contain one agency.");
-            }
-            if (model.Roles.Count() != 1)
-            {
-                throw new BadRequestException("Each access request must only contain one role.");
-            }
-            var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
-            _pimsService.User.UpdateAccessRequest(accessRequest);
-            return new JsonResult(_mapper.Map<Model.AccessRequestModel>(accessRequest));
-        }
-        #endregion
         #endregion
     }
 }

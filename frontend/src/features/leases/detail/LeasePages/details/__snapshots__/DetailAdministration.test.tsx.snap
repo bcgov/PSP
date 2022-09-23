@@ -1,0 +1,697 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailAdministration component renders a complete lease as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c3 {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black !important;
+  border-radius: 0;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0 0.5rem 0 0;
+}
+
+.c1 > .input,
+.c1 > .notes {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid #666666;
+}
+
+.c1 .form-control:not(.description,.notes) {
+  font-family: 'BCSans-Bold';
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea :not(.notes),
+.c1 > h3,
+.c1 > h5 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 input.form-control {
+  font-size: 1.8rem;
+}
+
+.c4 {
+  padding: 0.6rem 1.2rem;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Administration
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Region:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-region.regionName"
+          name="region.regionName"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Program:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-programName"
+          name="programName"
+          title="A program"
+          value="A program"
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Type
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-type.description"
+          name="type.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Receivable To:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-paymentReceivableType.description"
+          name="paymentReceivableType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Category:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-categoryType.description"
+          name="categoryType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Purpose:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-purposeType.description"
+          name="purposeType.description"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Initiator: 
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+          id="initiator-tooltip"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-initiatorType.description"
+          name="initiatorType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Responsibility: 
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+          id="responsibility-tooltip"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-responsibilityType.description"
+          name="responsibilityType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Effective Date:
+      </label>
+      <input
+        class="c3 form-control"
+        disabled=""
+        value=""
+      />
+      <br />
+      <label
+        class="form-label"
+      >
+        L-file #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-lFileNo"
+          name="lFileNo"
+          title="222"
+          value="222"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        MoTI contact:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-motiName"
+          name="motiName"
+          title="test moti name"
+          value="test moti name"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Physical lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasPhysicalLicense"
+          name="hasPhysicalLicense"
+          title="No"
+          value="No"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Digital lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasDigitalLicense"
+          name="hasDigitalLicense"
+          title="Yes"
+          value="Yes"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Location of documents:
+      </label>
+      <div
+        class="c4 textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-documentationReference"
+          name="documentationReference"
+        />
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`DetailAdministration component renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c3 {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black !important;
+  border-radius: 0;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0 0.5rem 0 0;
+}
+
+.c1 > .input,
+.c1 > .notes {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid #666666;
+}
+
+.c1 .form-control:not(.description,.notes) {
+  font-family: 'BCSans-Bold';
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea :not(.notes),
+.c1 > h3,
+.c1 > h5 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 input.form-control {
+  font-size: 1.8rem;
+}
+
+.c4 {
+  padding: 0.6rem 1.2rem;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Administration
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Region:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-region.regionName"
+          name="region.regionName"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Program:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-programName"
+          name="programName"
+          title=""
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Type
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-type.description"
+          name="type.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Receivable To:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-paymentReceivableType.description"
+          name="paymentReceivableType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Category:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-categoryType.description"
+          name="categoryType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Purpose:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-purposeType.description"
+          name="purposeType.description"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Initiator: 
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+          id="initiator-tooltip"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-initiatorType.description"
+          name="initiatorType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Responsibility: 
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+          id="responsibility-tooltip"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-responsibilityType.description"
+          name="responsibilityType.description"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Effective Date:
+      </label>
+      <input
+        class="c3 form-control"
+        disabled=""
+        value=""
+      />
+      <br />
+      <label
+        class="form-label"
+      >
+        L-file #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-lFileNo"
+          name="lFileNo"
+          title=""
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        MoTI contact:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-motiName"
+          name="motiName"
+          title=""
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Physical lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasPhysicalLicense"
+          name="hasPhysicalLicense"
+          title="Unknown"
+          value="Unknown"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Digital lease/license exists:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-hasDigitalLicense"
+          name="hasDigitalLicense"
+          title="Unknown"
+          value="Unknown"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        Location of documents:
+      </label>
+      <div
+        class="c4 textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-documentationReference"
+          name="documentationReference"
+        />
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

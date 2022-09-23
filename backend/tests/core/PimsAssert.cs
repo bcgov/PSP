@@ -1,16 +1,15 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
-using Pims.Api.Policies;
-using Pims.Core.Comparers;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
+using Pims.Api.Policies;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Security;
 using Xunit;
 
 namespace Pims.Core.Test
@@ -30,11 +29,17 @@ namespace Pims.Core.Test
         {
             var attr = attribute.Arguments.First();
             if (attr is Permissions[] aperms)
+            {
                 Assert.Equal(permissions.Select(p => p).ToArray(), aperms);
+            }
             else if (attr is Permissions aperm)
+            {
                 Assert.Equal(permissions.Select(p => p).ToArray(), new Permissions[] { aperm });
+            }
             else
+            {
                 Assert.True(false, "Invalid filter argument type");
+            }
         }
 
         /// <summary>
@@ -55,9 +60,13 @@ namespace Pims.Core.Test
         public static void HasTemplate(this HttpMethodAttribute attribute, string template = null)
         {
             if (template == null)
+            {
                 Assert.Null(attribute.Template);
+            }
             else
+            {
                 Assert.Equal(template, attribute.Template);
+            }
         }
 
         /// <summary>
@@ -190,28 +199,6 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
-        /// Does a deep compare of the two objects public properties.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="expected"></param>
-        /// <param name="actual"></param>
-        public static void DeepPropertyEqual<T>(T expected, T actual)
-        {
-            Assert.Equal(expected, actual, new DeepPropertyCompare<T>());
-        }
-
-        /// <summary>
-        /// Does a shallow compare of the two objects public properties.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="expected"></param>
-        /// <param name="actual"></param>
-        public static void ShallowPropertyEqual<T>(T expected, T actual)
-        {
-            Assert.Equal(expected, actual, new ShallowPropertyCompare<T>());
-        }
-
-        /// <summary>
         /// Check if the specified 'obj' is of the specified Paged[T] type.
         /// Use this method to verify anonymous types returned from endpoints.
         /// The reason anonymous types are returned is because serialization will return an array if we simply return the paged object itself.
@@ -223,10 +210,16 @@ namespace Pims.Core.Test
         {
             var type = obj.GetType();
             var itemsProp = type.GetProperty("Items");
-            if (itemsProp == null) Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            if (itemsProp == null)
+            {
+                Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            }
 
             var items = itemsProp.GetValue(obj) as IEnumerable<T>;
-            if (items == null) Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            if (items == null)
+            {
+                Assert.True(false, $"The object is not of the specified type '{typeof(Paged<T>).Name}'.");
+            }
 
             var pageProp = type.GetProperty("Page");
             var page = (int)pageProp.GetValue(obj);
@@ -238,7 +231,6 @@ namespace Pims.Core.Test
             var total = (int)totalProp.GetValue(obj);
 
             return new Paged<T>(items, page, quantity, total);
-
         }
     }
 }

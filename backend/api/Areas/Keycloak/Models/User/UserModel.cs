@@ -9,30 +9,21 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
+
         /// <summary>
-        /// get/set - The primary key IDENTITY.
+        /// get/set - The primary key.
         /// </summary>
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - Unique key to identify the claim.
+        /// get/set - Unique key to identify the user within keycloak.
         /// </summary>
-        public Guid Key { get; set; }
+        public Guid KeycloakUserId { get; set; }
 
         /// <summary>
         /// get/set - A unique username to identify the user.
         /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        /// get/set - The user's display name.
-        /// </summary>
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// get/set - The user's position title.
-        /// </summary>
-        public string Position { get; set; }
+        public string BusinessIdentifier { get; set; }
 
         /// <summary>
         /// get/set - The user's given name.
@@ -40,14 +31,14 @@ namespace Pims.Api.Areas.Keycloak.Models.User
         public string FirstName { get; set; }
 
         /// <summary>
-        /// get/set - The user's middle name.
+        /// get/set - The user's middle names.
         /// </summary>
-        public string MiddleName { get; set; }
+        public string MiddleNames { get; set; }
 
         /// <summary>
         /// get/set - The user's last name.
         /// </summary>
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
         /// <summary>
         /// get/set - The user's email.
@@ -60,19 +51,9 @@ namespace Pims.Api.Areas.Keycloak.Models.User
         public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - Whether the email has been verified.
+        /// get/set - An array of organizations the user belongs to.
         /// </summary>
-        public bool EmailVerified { get; set; }
-
-        /// <summary>
-        /// get/set - A note about the user.
-        /// </summary>
-        public string Note { get; set; }
-
-        /// <summary>
-        /// get/set - An array of agencies the user belongs to.
-        /// </summary>
-        public IEnumerable<AgencyModel> Agencies { get; set; } = new List<AgencyModel>();
+        public IEnumerable<OrganizationModel> Organizations { get; set; } = new List<OrganizationModel>();
 
         /// <summary>
         /// get/set - An array of roles the user is a member of.

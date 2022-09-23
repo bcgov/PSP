@@ -1,22 +1,49 @@
-@import '../../colors.scss';
+@import '~assets/scss/colors.scss';
 
 .tooltip-icon {
-  min-width: 14px;
-  min-height: 14px;
+  min-width: 1.4rem;
+  min-height: 1.4rem;
   color: $secondary-variant-color;
-  margin: 0px 2px;
+  margin: 0rem 0.2rem;
 }
 
 .tooltip {
   white-space: pre-wrap;
   .tooltip-inner {
     text-align: left;
-    max-width: 25rem;
+    max-width: 40rem;
     background-color: $secondary-variant-color;
     color: #ffffff;
   }
-  .arrow:before {
+  &.bs-tooltip-top .arrow::before {
     border-top-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-right .arrow::before {
+    border-right-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-left .arrow::before {
+    border-left-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: $secondary-variant-color;
+  }
+}
+
+.tooltip.tooltip-light {
+  .tooltip-inner {
+    background-color: $filter-box-color;
+  }
+  &.bs-tooltip-top .arrow::before {
+    border-top-color: $filter-box-color;
+  }
+  &.bs-tooltip-right .arrow::before {
+    border-right-color: $filter-box-color;
+  }
+  &.bs-tooltip-left .arrow::before {
+    border-left-color: $filter-box-color;
+  }
+  &.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: $filter-box-color;
   }
 }
 

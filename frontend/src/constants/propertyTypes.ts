@@ -1,7 +1,12 @@
 export enum PropertyTypes {
-  Parcel = 1,
-  Building = 2,
-  Subdivision = 3,
-  DraftParcel = 4,
-  DraftBuilding = 5,
+  CrownFederalSurveyed = 'CROWNFSRVD',
+  CrownFederalUnsurveyed = 'CROWNFUSRVD',
+  CrownProvincialSurveyed = 'CROWNPSRVD',
+  CrownProvincialUnsurveyed = 'CROWNPUSRVD',
+  HighwayRoad = 'HWYROAD',
+  Parks = 'PARKS',
+  Reserve = 'RESERVE',
+  StrataCommonProperty = 'STRATACP',
+  Titled = 'TITLED',
+  Unknown = 'UNKNOWN',
 }

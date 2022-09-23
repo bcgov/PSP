@@ -1,20 +1,15 @@
-export enum AccountActive {
-  YES = 'Yes',
-  NO = 'No',
-}
-
 export interface IUserRecord {
-  id: number;
-  key: string;
+  id?: number;
+  keycloakUserId?: string;
   email?: string;
-  username?: string;
+  businessIdentifierValue?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   isDisabled?: boolean;
-  agency?: string;
+  regions?: string;
   roles?: string;
   position?: string;
   lastLogin?: string;
-  createdOn?: string;
-  rowVersion: number;
+  appCreateTimestamp?: string;
+  rowVersion?: number;
 }

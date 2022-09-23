@@ -1,9 +1,8 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Extensions;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Test.Core.Extensions
 {
@@ -143,7 +142,7 @@ namespace Pims.Api.Test.Core.Extensions
         public void GetIntArrayValue_Empty()
         {
             // Arrange
-            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", "" } };
+            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", string.Empty } };
 
             // Act
             var result = dict.GetIntArrayValue("Ids");
@@ -550,13 +549,13 @@ namespace Pims.Api.Test.Core.Extensions
         public void GetStringArrayValue_Empty()
         {
             // Arrange
-            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", "" } };
+            var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Ids", string.Empty } };
 
             // Act
             var result = dict.GetStringArrayValue("Ids");
 
             // Assert
-            Assert.Equal(new[] { "" }, result);
+            Assert.Equal(new[] { string.Empty }, result);
             Assert.IsType<string[]>(result);
         }
 
@@ -570,7 +569,7 @@ namespace Pims.Api.Test.Core.Extensions
             var result = dict.GetStringArrayValue("Ids");
 
             // Assert
-            Assert.Equal(new[] { "1", "", "test", "2" }, result);
+            Assert.Equal(new[] { "1", string.Empty, "test", "2" }, result);
             Assert.IsType<string[]>(result);
         }
 
@@ -871,6 +870,14 @@ namespace Pims.Api.Test.Core.Extensions
         #endregion
 
         #region GetEnumValue
+        private enum TestEnum
+        {
+            Utf8,
+            Binary,
+            Hex,
+            Base64,
+        }
+
         [Fact]
         public void GetEnumValue()
         {
@@ -878,11 +885,11 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Id", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumValue<Entity.NotificationEncodings>("Id");
+            var result = dict.GetEnumValue<TestEnum>("Id");
 
             // Assert
-            Assert.Equal(Entity.NotificationEncodings.Utf8, result);
-            Assert.IsType<Entity.NotificationEncodings>(result);
+            Assert.Equal(TestEnum.Utf8, result);
+            Assert.IsType<TestEnum>(result);
         }
 
         [Fact]
@@ -892,11 +899,11 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Id", "utf8" } };
 
             // Act
-            var result = dict.GetEnumValue("Id", false, Entity.NotificationEncodings.Base64);
+            var result = dict.GetEnumValue("Id", false, TestEnum.Base64);
 
             // Assert
-            Assert.Equal(Entity.NotificationEncodings.Base64, result);
-            Assert.IsType<Entity.NotificationEncodings>(result);
+            Assert.Equal(TestEnum.Base64, result);
+            Assert.IsType<TestEnum>(result);
         }
 
         [Fact]
@@ -906,11 +913,11 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Name", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumValue<Entity.NotificationEncodings>("Id");
+            var result = dict.GetEnumValue<TestEnum>("Id");
 
             // Assert
-            Assert.Equal(Entity.NotificationEncodings.Utf8, result);
-            Assert.IsType<Entity.NotificationEncodings>(result);
+            Assert.Equal(TestEnum.Utf8, result);
+            Assert.IsType<TestEnum>(result);
         }
 
         [Fact]
@@ -920,11 +927,11 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Name", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumValue<Entity.NotificationEncodings>("Id", false, Entity.NotificationEncodings.Binary);
+            var result = dict.GetEnumValue<TestEnum>("Id", false, TestEnum.Binary);
 
             // Assert
-            Assert.Equal(Entity.NotificationEncodings.Binary, result);
-            Assert.IsType<Entity.NotificationEncodings>(result);
+            Assert.Equal(TestEnum.Binary, result);
+            Assert.IsType<TestEnum>(result);
         }
 
         [Fact]
@@ -934,11 +941,11 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Id", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumNullValue<Entity.NotificationEncodings>("Id");
+            var result = dict.GetEnumNullValue<TestEnum>("Id");
 
             // Assert
-            Assert.Equal(Entity.NotificationEncodings.Utf8, result);
-            Assert.IsType<Entity.NotificationEncodings>(result);
+            Assert.Equal(TestEnum.Utf8, result);
+            Assert.IsType<TestEnum>(result);
         }
 
         [Fact]
@@ -948,7 +955,7 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Id", "utf8" } };
 
             // Act
-            var result = dict.GetEnumNullValue<Entity.NotificationEncodings>("Id", false);
+            var result = dict.GetEnumNullValue<TestEnum>("Id", false);
 
             // Assert
             Assert.Null(result);
@@ -961,7 +968,7 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Name", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumNullValue<Entity.NotificationEncodings>("Id");
+            var result = dict.GetEnumNullValue<TestEnum>("Id");
 
             // Assert
             Assert.Null(result);
@@ -974,7 +981,7 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Name", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumNullValue<Entity.NotificationEncodings>("Id");
+            var result = dict.GetEnumNullValue<TestEnum>("Id");
 
             // Assert
             Assert.Null(result);
@@ -987,11 +994,11 @@ namespace Pims.Api.Test.Core.Extensions
             var dict = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>() { { "Name", "Utf8" } };
 
             // Act
-            var result = dict.GetEnumNullValue<Entity.NotificationEncodings>("Id", false, Entity.NotificationEncodings.Binary);
+            var result = dict.GetEnumNullValue<TestEnum>("Id", false, TestEnum.Binary);
 
             // Assert
-            Assert.Equal(Entity.NotificationEncodings.Binary, result);
-            Assert.IsType<Entity.NotificationEncodings>(result);
+            Assert.Equal(TestEnum.Binary, result);
+            Assert.IsType<TestEnum>(result);
         }
         #endregion
         #endregion

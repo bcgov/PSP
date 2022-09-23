@@ -6,9 +6,17 @@ Array [
     className="Toastify"
   />,
   <div
+    className="container"
+  />,
+  .c0 {
+  cursor: pointer;
+}
+
+<div
     className="nav-item"
   >
     <svg
+      className="c0"
       fill="currentColor"
       height="1em"
       onBlur={[Function]}
@@ -20,9 +28,7 @@ Array [
       strokeWidth="0"
       style={
         Object {
-          "color": "#fff",
-          "cursor": "pointer",
-          "marginLeft": -145,
+          "color": undefined,
         }
       }
       viewBox="0 0 512 512"

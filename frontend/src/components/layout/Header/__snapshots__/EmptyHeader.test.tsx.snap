@@ -2,15 +2,15 @@
 
 exports[`Empty Header renders 1`] = `
 .c1 {
-  border-left: 2px solid white;
-  font-size: 34px;
-  margin: 0 15px 0 25px;
+  border-left: 0.2rem solid white;
+  font-size: 3.4rem;
+  margin: 0 1.5rem 0 2.5rem;
   vertical-align: top;
 }
 
 .c0 {
-  padding: 0 10px;
-  min-height: 70px;
+  padding: 0 1rem;
+  min-height: 7rem;
   color: #ffffff;
 }
 
@@ -23,18 +23,29 @@ exports[`Empty Header renders 1`] = `
 }
 
 .c0 .brand-box {
-  padding: 10px 0;
+  padding: 1rem 0;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c0 .brand-box .pims-logo {
-  margin: 0 10px;
+  margin: 0 1rem;
+}
+
+.c0 .title {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
 }
 
 .c0 .title h1 {
-  margin-top: 10px;
+  margin-top: 1rem;
   padding-left: 0px;
   text-align: center;
-  font-size: 24px;
+  font-size: 2.4rem;
   -webkit-text-decoration: none solid rgb(255,255,255);
   text-decoration: none solid rgb(255,255,255);
   font-family: 'BCSans',Fallback,sans-serif;
@@ -43,6 +54,10 @@ exports[`Empty Header renders 1`] = `
 }
 
 .c0 .other {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -66,11 +81,11 @@ exports[`Empty Header renders 1`] = `
   font-weight: 700;
 }
 
-@media (min-width:992px) {
+@media (min-width:99.2rem) {
   .c0 .longAppName {
     display: block;
     text-align: left;
-    padding-left: 40px;
+    padding-left: 4rem;
   }
 
   .c0 .shortAppName {

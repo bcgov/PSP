@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { Classifications } from 'constants/classifications';
+import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { createMemoryHistory } from 'history';
 import queryString from 'query-string';
 import React from 'react';
@@ -27,32 +27,21 @@ const getWrapper = (store: any) => ({ children }: any) => (
 const emptyFilter = {
   searchBy: 'address',
   pid: '',
+  pin: '',
   address: '',
-  administrativeArea: '',
-  agencies: '',
-  classificationId: '',
-  minLotSize: '',
-  maxLotSize: '',
-  propertyType: 'Land',
-  rentableArea: '',
-  includeAllProperties: '',
-  maxAssessedValue: '',
-  maxMarketValue: '',
-  maxNetBookValue: '',
-  name: '',
 };
 
 const defaultFilter = {
   searchBy: 'address',
   pid: '1',
+  pin: '',
   address: '2',
   administrativeArea: '3',
-  agencies: '5',
-  classificationId: `${Classifications.Subdivided}`,
+  organizations: '5',
+  classificationId: `${PropertyClassificationTypes.Subdivided}`,
   minLotSize: '7',
   maxLotSize: '8',
   parcelId: '9',
-  propertyType: '10',
   rentableArea: '',
   includeAllProperties: '',
   maxAssessedValue: '',

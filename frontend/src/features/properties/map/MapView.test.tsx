@@ -1,37 +1,49 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
-import { Claims, Classifications, PropertyTypes } from 'constants/index';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
+import {
+  Claims,
+  PropertyAreaUnitTypes,
+  PropertyClassificationTypes,
+  PropertyDataSourceTypes,
+  PropertyStatusTypes,
+  PropertyTenureTypes,
+} from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { PimsAPI, useApi } from 'hooks/useApi';
-import { IParcel, IProperty } from 'interfaces';
-import { noop } from 'lodash';
+import { useProperties } from 'hooks';
+import { useApiProperties } from 'hooks/pims-api';
+import { useLtsa } from 'hooks/useLtsa';
+import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
+import { IProperty } from 'interfaces';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
 import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
+import { useMapProperties } from './hooks/useMapProperties';
 import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
-jest.mock('hooks/useApi');
+jest.mock('./hooks/useMapProperties');
 jest.mock('components/maps/leaflet/LayerPopup');
-jest.mock('features/properties/common/slices/usePropertyNames');
-jest.mock('store/slices/properties/useProperties');
+jest.mock('hooks/useProperties');
+jest.mock('hooks/usePropertyAssociations');
+jest.mock('hooks/pims-api');
+jest.mock('hooks/useLtsa');
 
-const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
-(usePropertyNames as any).mockImplementation(() => ({
-  fetchPropertyNames,
-}));
+const ltsaMock = {
+  getLtsaData: jest.fn(),
+  ltsaLoading: false,
+};
+(useLtsa as any).mockImplementation(() => ltsaMock);
 
 (useProperties as any).mockImplementation(() => ({
   deleteParcel: jest.fn(),
@@ -43,88 +55,91 @@ const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
   fetchParcelDetail: jest.fn(),
   fetchParcelsDetail: jest.fn(),
   fetchParcels: jest.fn(),
+  getPropertyWithPid: jest.fn(),
+}));
+
+(usePropertyAssociations as any).mockImplementation(() => ({
+  getPropertyAssociations: jest.fn(),
 }));
 
 const largeMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 3, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 4, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 5, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 6, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 7, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 8, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 9, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 10, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 11, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Parcel },
+  { id: 1, latitude: 53.917061, longitude: -122.749672 },
+  { id: 2, latitude: 53.917062, longitude: -122.749672 },
+  { id: 3, latitude: 53.917063, longitude: -122.749672 },
+  { id: 4, latitude: 53.917064, longitude: -122.749672 },
+  { id: 5, latitude: 53.917065, longitude: -122.749672 },
+  { id: 6, latitude: 53.917066, longitude: -122.749672 },
+  { id: 7, latitude: 53.917067, longitude: -122.749672 },
+  { id: 8, latitude: 53.917068, longitude: -122.749672 },
+  { id: 9, latitude: 53.917069, longitude: -122.749672 },
+  { id: 10, latitude: 53.917071, longitude: -122.749672 },
+  { id: 11, latitude: 53.918172, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const smallMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Parcel },
+  { id: 1, latitude: 54.917061, longitude: -122.749672 },
+  { id: 3, latitude: 54.918162, longitude: -122.749772 },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Parcel },
+  { id: 1, latitude: 55.917061, longitude: -122.749672, pid: '7771' },
+  { id: 2, latitude: 55.917062, longitude: -122.749672, pid: '7772' },
+  { id: 3, latitude: 55.917063, longitude: -122.749772, pid: '7773' },
 ] as IProperty[];
 
-let findOneWhereContains = jest.fn();
-
-(useLayerQuery as jest.Mock).mockReturnValue({
-  findOneWhereContains: findOneWhereContains,
-});
+const useLayerQueryMock = {
+  findOneWhereContains: jest.fn(),
+  findMetadataByLocation: jest.fn(),
+};
+(useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
 
 // This will spoof the active parcel (the one that will populate the popup details)
-const mockDetails: IPropertyDetail = {
-  propertyTypeId: PropertyTypes.Parcel,
-  parcelDetail: {
+const mockDetails = {
+  propertyDetail: {
     id: 1,
-    name: 'test name',
-    pid: '000-000-000',
+    pid: '000-000-001',
     pin: '',
+    statusId: PropertyStatusTypes.UnderAdmin,
+    dataSourceId: PropertyDataSourceTypes.PAIMS,
+    dataSourceEffectiveDate: new Date(),
+    classificationId: PropertyClassificationTypes.CoreStrategic,
+    classification: 'Core Operational',
+    tenureId: PropertyTenureTypes.HighwayRoad,
+    name: 'test name',
+    description: 'test',
     encumbranceReason: '',
-    assessedBuilding: 0,
-    assessedLand: 0,
-    classificationId: Classifications.CoreStrategic,
     zoning: '',
     zoningPotential: '',
-    agencyId: 0,
     latitude: 48,
     longitude: 123,
-    classification: 'Core Operational',
-    description: 'test',
     isSensitive: false,
-    parcels: [],
     evaluations: [
       {
-        date: '2019',
-        key: '',
+        evaluatedOn: '2019',
+        key: 1,
         value: 100000,
       },
     ],
-    fiscals: [],
+    regionId: 1,
+    districtId: 1,
     address: {
-      line1: '1234 mock Street',
-      line2: 'N/A',
-      administrativeArea: '',
-      provinceId: 'BC',
+      streetAddress1: '1234 mock Street',
+      streetAddress2: 'N/A',
+      municipality: '',
+      provinceId: 1,
       postal: 'V1V1V1',
     },
-    landArea: '',
+    areaUnitId: PropertyAreaUnitTypes.Hectare,
+    landArea: 0,
     landLegalDescription: 'test',
-    buildings: [],
-    agency: 'FIN',
   },
 };
 
 const store = mockStore({
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: { parcelDetail: mockDetails, draftParcels: [], parcels: mockParcels },
-  [leafletMouseSlice.name]: { parcelDetail: mockDetails },
+  [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 });
 
 let history = createMemoryHistory();
@@ -132,19 +147,27 @@ describe('MapView', () => {
   const onMarkerClick = jest.fn();
 
   beforeEach(() => {
+    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
-          agencies: [0],
+          roles: ['property-edit', 'property-view'],
+          organizations: [0],
         },
       },
     });
-    ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return createPoints(mockParcels);
-      }),
-      getParcel: async () => {
-        return {} as IParcel;
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
+          features: createPoints(mockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        }),
+      },
+    });
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+      getProperty: async () => {
+        return {} as IProperty;
       },
     });
     delete (window as any).ResizeObserver;
@@ -164,13 +187,10 @@ describe('MapView', () => {
 
   const getMap = () => {
     process.env.REACT_APP_TENANT = 'MOTI';
+    const onMarkerPopupClosed = jest.fn();
     return (
       <TestCommonWrapper store={store} history={history}>
-        <MapView
-          disableMapFilterBar={false}
-          showParcelBoundaries={true}
-          onMarkerPopupClosed={noop}
-        />
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
       </TestCommonWrapper>
     );
   };
@@ -208,7 +228,7 @@ describe('MapView', () => {
     await waitFor(() => render(getMap()));
     // find basemap toggle button
     const basemapButton = document.querySelector<HTMLElement>('.basemap-item-button.secondary');
-    expect(basemapButton).not.toBeNull();
+    expect(basemapButton).toBeDefined();
     const { getByAltText } = within(basemapButton!);
     const image = getByAltText('Map Thumbnail');
     expect(image).toHaveAttribute('src', '/satellite.jpg');
@@ -223,34 +243,19 @@ describe('MapView', () => {
     expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
 
-  it('Rendered markers can be clicked', async () => {
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
-    const text = await screen.findByText('Property Info');
-    expect(text).toBeVisible();
-  });
-
-  it('Rendered markers can be clicked and displayed with permissions', async () => {
-    mockKeycloak([Claims.ADMIN_PROPERTIES], []);
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
-    const text = await screen.findByText('Property Info');
-    expect(text).toBeVisible();
-  });
-
   it('the map can zoom in until no clusters are visible', async () => {
-    ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return createPoints(smallMockParcels);
-      }),
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
+          features: createPoints(smallMockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        }),
+      },
+    });
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getParcel: async () => {
-        return {} as IParcel;
+        return {} as IProperty;
       },
     });
 
@@ -264,11 +269,31 @@ describe('MapView', () => {
     });
   });
 
+  it('the map can handle features with invalid geometry', async () => {
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
+          features: createPoints(smallMockParcels).map(feature => ({ ...feature, geometry: null })),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        }),
+      },
+    });
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+      getParcel: async () => {
+        return {} as IProperty;
+      },
+    });
+    const { findByText } = render(getMap());
+
+    expect(await findByText('No search results found')).toBeVisible();
+  });
+
   it('the map can zoom out until the markers are clustered', async () => {
     const { container } = render(getMap());
     await waitFor(() => {
       const icon = container.querySelector('.leaflet-control-zoom-out');
-      fireEvent.click(icon!);
+      userEvent.click(icon!);
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
       expect(cluster).toBeVisible();
     });
@@ -293,14 +318,12 @@ describe('MapView', () => {
   });
 
   it('the map can be clicked', async () => {
-    findOneWhereContains.mockResolvedValue({
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({
       features: [
         {
           type: 'Feature',
           geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
-          properties: {
-            propertyTypeId: PropertyTypes.Parcel,
-          },
+          properties: {},
         },
       ],
     });
@@ -310,21 +333,19 @@ describe('MapView', () => {
       expect(map).toBeVisible();
       fireEvent.click(map!);
     });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });
   });
 
-  it('When the map is clicked, the resulting popup can be closed', async () => {
-    findOneWhereContains.mockResolvedValue({
+  xit('When the map is clicked, the resulting popup can be closed', async () => {
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({
       features: [
         {
           type: 'Feature',
           geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
-          properties: {
-            propertyTypeId: PropertyTypes.Parcel,
-          },
+          properties: { pid: '123-456-789' },
         },
       ],
     });
@@ -332,9 +353,9 @@ describe('MapView', () => {
     await waitFor(() => {
       const map = container.querySelector('.leaflet-container');
       expect(map).toBeVisible();
-      fireEvent.click(map!);
+      userEvent.click(map!);
     });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });
@@ -345,12 +366,18 @@ describe('MapView', () => {
   });
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
-    ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return createPoints(largeMockParcels);
-      }),
-      getParcel: async () => {
-        return {} as IParcel;
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+      getProperty: async () => {
+        return {} as IProperty;
+      },
+    });
+    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+      loadProperties: {
+        execute: jest.fn().mockResolvedValue({
+          features: createPoints(largeMockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        }),
       },
     });
     const { container } = render(getMap());
@@ -368,5 +395,38 @@ describe('MapView', () => {
       const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
       expect(polyline).toBeVisible();
     });
+  });
+
+  it('Rendered markers can be clicked normally', async () => {
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Information');
+    expect(text).toBeVisible();
+  });
+
+  it('Rendered markers can be clicked and displayed with permissions', async () => {
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Information');
+    expect(text).toBeVisible();
+  });
+
+  it('Rendered markers can be clicked which hides the filter', async () => {
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Information');
+    expect(text).toBeVisible();
+    const label = await screen.queryByText('Search:');
+    expect(label).toBeNull();
   });
 });

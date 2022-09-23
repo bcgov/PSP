@@ -1,21 +1,24 @@
-import './MapView.scss';
-
-import classNames from 'classnames';
+import DraftSvg from 'assets/images/pins/icon-draft.svg';
+import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import * as API from 'constants/API';
-import { MotiInventoryContainer } from 'features/mapSideBar';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { LeafletMouseEvent } from 'leaflet';
-import queryString from 'query-string';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { useAppSelector } from 'store/hooks';
-import { saveClickLatLng as saveLeafletMouseEvent } from 'store/slices/leafletMouse/LeafletMouseSlice';
-import { IPropertyDetail } from 'store/slices/properties';
+import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
+import {
+  SelectedPropertyContext,
+  SelectedPropertyContextProvider,
+} from 'components/maps/providers/SelectedPropertyContext';
+import { MAP_MAX_ZOOM } from 'constants/strings';
+import { IProperty } from 'interfaces';
+import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import React, { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import styled from 'styled-components';
+import { pidParser } from 'utils';
 
-import Map, { MapViewportChangeEvent } from '../../../components/maps/leaflet/Map';
-import useParamSideBar from '../../mapSideBar/hooks/useQueryParamSideBar';
+import Map from '../../../components/maps/leaflet/Map';
+import ActivityRouter from './ActivityRouter';
+import MapActionWindow from './MapActionWindow';
+import MapSideBar from './MapSideBar';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {
@@ -24,60 +27,95 @@ const defaultLatLng = {
 };
 
 interface MapViewProps {
-  disableMapFilterBar?: boolean;
   showParcelBoundaries?: boolean;
-  onMarkerPopupClosed?: (obj: IPropertyDetail) => void;
+  onMarkerPopupClosed?: (obj: IProperty) => void;
 }
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
-  const lookupCodes = useLookupCodeHelpers();
-  const properties = useAppSelector(state => [...state.properties.parcels]);
+  const history = useHistory();
   const [loadedProperties, setLoadedProperties] = useState(false);
-  const propertyDetail = useAppSelector(state => state.properties.propertyDetail);
-  const agencies = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
-  const administrativeAreas = lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME);
+  const [mapInstance, setMapInstance] = useState<L.Map | undefined>();
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [showActionBar, setShowActionBar] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const saveLatLng = (e: LeafletMouseEvent) => {
-    dispatch(
-      saveLeafletMouseEvent({
-        latlng: { lat: e.latlng.lat, lng: e.latlng.lng },
-        originalEvent: { timeStamp: e.originalEvent.timeStamp },
-      }),
-    );
+  const onMarkerClicked = (property: IProperty) => {
+    history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
   };
 
-  const { showSideBar, size } = useParamSideBar();
+  const onPropertyViewClicked = (pid?: string | null) => {
+    if (pid !== undefined && pid !== null) {
+      const parsedPid = pidParser(pid);
+      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+    } else {
+      console.warn('Invalid marker when trying to see property information');
+      toast.warn('A map parcel must have a PID in order to view detailed information');
+    }
+  };
 
-  const location = useLocation();
-  const urlParsed = queryString.parse(location.search);
-  const disableFilter = urlParsed.sidebar === 'true' ? true : false;
+  const onZoom = useCallback(
+    (apiProperty?: IPropertyApiModel) =>
+      apiProperty?.longitude &&
+      apiProperty?.latitude &&
+      mapInstance?.flyTo(
+        { lat: apiProperty?.latitude, lng: apiProperty?.longitude },
+        MAP_MAX_ZOOM,
+        {
+          animate: false,
+        },
+      ),
+    [mapInstance],
+  );
+
   return (
-    <div className={classNames(showSideBar ? 'side-bar' : '', 'd-flex')}>
-      <MotiInventoryContainer />
-      <FilterProvider>
-        <Map
-          sidebarSize={size}
-          lat={defaultLatLng.lat}
-          lng={defaultLatLng.lng}
-          properties={properties}
-          selectedProperty={propertyDetail}
-          agencies={agencies}
-          administrativeAreas={administrativeAreas}
-          onViewportChanged={(mapFilterModel: MapViewportChangeEvent) => {
-            if (!loadedProperties) {
-              setLoadedProperties(true);
-            }
-          }}
-          onMapClick={saveLatLng}
-          disableMapFilterBar={disableFilter}
-          showParcelBoundaries={props.showParcelBoundaries ?? true}
-          zoom={6}
-        />
-      </FilterProvider>
-    </div>
+    <SelectedPropertyContextProvider>
+      <SelectedPropertyContext.Consumer>
+        {({ cursor }) => (
+          <PropertyContextProvider>
+            <StyleMapView data-test="map-view" className={clsx(cursor)}>
+              <MapSideBar
+                showSideBar={showSideBar}
+                setShowSideBar={setShowSideBar}
+                onZoom={onZoom}
+              />
+              <MapActionWindow showWindow={showActionBar}>
+                <ActivityRouter setShowActionBar={setShowActionBar} />
+              </MapActionWindow>
+              {!showActionBar && (
+                <FilterProvider>
+                  <Map
+                    lat={defaultLatLng.lat}
+                    lng={defaultLatLng.lng}
+                    onViewportChanged={() => {
+                      if (!loadedProperties) {
+                        setLoadedProperties(true);
+                      }
+                    }}
+                    showParcelBoundaries={props.showParcelBoundaries ?? true}
+                    zoom={6}
+                    onPropertyMarkerClick={onMarkerClicked}
+                    onViewPropertyClick={onPropertyViewClicked}
+                    showSideBar={showSideBar}
+                    whenCreated={setMapInstance}
+                  />
+                </FilterProvider>
+              )}
+            </StyleMapView>
+          </PropertyContextProvider>
+        )}
+      </SelectedPropertyContext.Consumer>
+    </SelectedPropertyContextProvider>
   );
 };
+
+const StyleMapView = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  &.draft-cursor,
+  &.draft-cursor .leaflet-grab,
+  &.draft-cursor .leaflet-interactive {
+    cursor: url(${DraftSvg}) 15 45, pointer;
+  }
+`;
 
 export default MapView;

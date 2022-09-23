@@ -1,30 +1,16 @@
-import './PropertyFilter.scss';
-
-import { ParentSelect } from 'components/common/form/ParentSelect';
-import ResetButton from 'components/common/form/ResetButton';
-import SearchButton from 'components/common/form/SearchButton';
-import { TypeaheadField } from 'components/common/form/Typeahead';
+import { ResetButton, SearchButton } from 'components/common/buttons';
+import { Form } from 'components/common/form';
+import { SelectInput } from 'components/common/List/SelectInput';
 import { TableSort } from 'components/Table/TableSort';
-import { Claims } from 'constants/claims';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
-import { Formik, getIn } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodes from 'hooks/useLookupCodeHelpers';
-import { useMyAgencies } from 'hooks/useMyAgencies';
+import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import styled from 'styled-components';
-import { mapLookupCode, mapLookupCodeWithParentString } from 'utils';
-import { mapSelectOptionWithParent } from 'utils';
+import { useHistory } from 'react-router';
 import { FilterBarSchema } from 'utils/YupSchema';
 
-import { Form, Select } from '../../../components/common/form';
-import { PropertyFilterOptions } from './';
 import { IPropertyFilter } from './IPropertyFilter';
-import { PropertyFilterAgencyOptions } from './PropertyFilterAgencyOptions';
+import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 
 /**
  * PropertyFilter component properties.
@@ -32,36 +18,17 @@ import { PropertyFilterAgencyOptions } from './PropertyFilterAgencyOptions';
 export interface IPropertyFilterProps {
   /** The default filter to apply if a different one hasn't been set in the URL or stored in redux. */
   defaultFilter: IPropertyFilter;
-  /** An array of agency lookup codes. */
-  agencyLookupCodes: ILookupCode[];
-  /** An array of administrative area codes. */
-  adminAreaLookupCodes: ILookupCode[];
   /** Callback event when the filter is changed during Mount. */
   onChange: (filter: IPropertyFilter) => void;
   /** Comma separated list of column names to sort by. */
   sort?: TableSort<any>;
   /** Event fire when sorting changes. */
   onSorting?: (sort: TableSort<any>) => void;
-  /** Show select with my agencies/All Government dropdown */
-  showAllAgencySelect?: boolean;
   /** Override to trigger filterchanged in the parent */
   setTriggerFilterChanged?: (used: boolean) => void;
+  /** Which toggle view is currently active */
+  toggle?: SearchToggleOption;
 }
-
-const AgencyCol = styled(Col)`
-  display: flex;
-  .form-control {
-    width: 165px;
-    height: 35px;
-  }
-  .form-group {
-    .rbt {
-      .rbt-menu {
-        width: 370px !important;
-      }
-    }
-  }
-`;
 
 /**
  * Property filter bar to search for properties.
@@ -69,18 +36,13 @@ const AgencyCol = styled(Col)`
  */
 export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   defaultFilter,
-  agencyLookupCodes,
-  adminAreaLookupCodes,
   onChange,
   sort,
   onSorting,
-  showAllAgencySelect,
   setTriggerFilterChanged,
+  toggle = SearchToggleOption.Map,
 }) => {
-  const [propertyFilter, setPropertyFilter] = React.useState<IPropertyFilter>(defaultFilter);
-  const keycloak = useKeycloakWrapper();
-  const lookupCodes = useLookupCodes();
-  const [initialLoad, setInitialLoad] = useState(false);
+  const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
   useRouterFilter({
     filter: propertyFilter,
     setFilter: filter => {
@@ -92,49 +54,29 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     setSorting: onSorting,
   });
 
-  const agencies = (agencyLookupCodes ?? []).map(c =>
-    mapLookupCodeWithParentString(c, agencyLookupCodes),
-  );
-  const classifications = lookupCodes.getPropertyClassificationOptions();
-  const adminAreas = (adminAreaLookupCodes ?? []).map(c => mapLookupCode(c));
-  const [clear, setClear] = useState<boolean | undefined>(false);
-  const [options, setOptions] = useState<string[]>([]);
-  const { fetchPropertyNames } = usePropertyNames();
+  const history = useHistory();
 
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
-    if (typeof values.agencies === 'string') {
-      const agency = agencies.find(x => x.value.toString() === values.agencies?.toString()) as any;
-      if (agency) {
-        values.agencies = agency;
-      }
-    } else {
-      const agencies: any[] = values?.agencies || [];
-      if (agencies.length > 0) {
-        values.agencies = agencies[0] || (agencies.length === 2 ? agencies[1] : undefined);
-      }
-    }
     return values;
-  }, [defaultFilter, propertyFilter, agencies]);
-
-  const myAgencies = useMyAgencies();
+  }, [defaultFilter, propertyFilter]);
 
   const changeFilter = (values: IPropertyFilter) => {
-    const agencyIds = (values.agencies as any)?.value
-      ? (values.agencies as any).value
-      : values.agencies;
-    setPropertyFilter({ ...values, agencies: agencyIds });
-    onChange?.({ ...values, agencies: agencyIds });
+    setPropertyFilter({ ...values });
+    onChange?.({ ...values });
   };
 
   const resetFilter = () => {
-    ref.current.clear();
     changeFilter(defaultFilter);
-    setClear(true);
   };
 
-  const [findMoreOpen] = useState<boolean>(false);
-  const ref = useRef<any>();
+  const handlePageToggle = (option: SearchToggleOption) => {
+    if (option === SearchToggleOption.Map) {
+      history.push('/mapview');
+    } else if (option === SearchToggleOption.List) {
+      history.push('/properties/list');
+    }
+  };
 
   return (
     <Formik<IPropertyFilter>
@@ -147,84 +89,52 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, setFieldValue, values }) => (
+      {({ isSubmitting, setFieldValue, values, resetForm }) => (
         <Form>
-          <Form.Row className="map-filter-bar">
-            <AgencyCol>
-              {showAllAgencySelect ? (
-                <PropertyFilterAgencyOptions disabled={findMoreOpen} agencies={agencies} />
-              ) : (
-                <ParentSelect
-                  field="agencies"
-                  options={myAgencies.map(c => mapSelectOptionWithParent(c, myAgencies))}
-                  filterBy={['code', 'label', 'parent']}
-                  placeholder="My Agencies"
-                  selectClosest
-                  disabled={findMoreOpen}
-                />
-              )}
-            </AgencyCol>
-            <Col className="map-filter-typeahead">
-              <AsyncTypeahead
-                disabled={
-                  (findMoreOpen || values.includeAllProperties === true) &&
-                  !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)
-                }
-                isLoading={initialLoad}
-                id={`name-field`}
-                inputProps={{ id: `name-field` }}
-                placeholder="Property name"
-                onSearch={() => {
-                  setInitialLoad(true);
-                  fetchPropertyNames(keycloak.agencyId!).then(results => {
-                    setOptions(results);
-                    setInitialLoad(false);
-                  });
-                }}
-                options={options}
-                onChange={(newValues: string[]) => {
-                  setFieldValue('name', getIn(newValues[0], 'value') ?? newValues[0]);
-                }}
-                ref={ref}
-                onBlur={(e: any) =>
-                  getIn(values, 'name') !== e.target.value && setFieldValue('name', e.target.value)
-                }
+          <Form.Row className="map-filter-bar pb-4">
+            <Col xs="auto">
+              <span>Search:</span>
+            </Col>
+            <Col xs="6" md="5" lg="4" xl="3">
+              <SelectInput<
+                {
+                  pinOrPid: string;
+                  address: string;
+                },
+                IPropertyFilter
+              >
+                field="searchBy"
+                defaultKey="pinOrPid"
+                selectOptions={[
+                  { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+                  { label: 'Address', key: 'address', placeholder: 'Enter an address' },
+                ]}
+                className="idir-input-group"
               />
             </Col>
-            <Col className="map-filter-typeahead">
-              <TypeaheadField
-                name="administrativeArea"
-                placeholder="Location"
-                selectClosest
-                hideValidation={true}
-                options={adminAreas.map(x => x.label)}
-                onChange={(vals: any) => {
-                  setFieldValue('administrativeArea', getIn(vals[0], 'name') ?? vals[0]);
-                }}
-                clearSelected={clear}
-                setClear={setClear}
-                disabled={findMoreOpen}
-              />
-            </Col>
-            <Col className="bar-item">
-              <PropertyFilterOptions disabled={findMoreOpen} />
-            </Col>
-            <Col className="bar-item">
-              <Select
-                field="classificationId"
-                placeholder="Classification"
-                options={classifications}
-                disabled={findMoreOpen}
-              />
-            </Col>
-            <Col className="bar-item flex-grow-0">
+            <Col xs="auto">
               <SearchButton
-                disabled={isSubmitting || findMoreOpen}
+                disabled={isSubmitting}
                 onClick={() => setTriggerFilterChanged && setTriggerFilterChanged(true)}
               />
             </Col>
-            <Col className="bar-item flex-grow-0">
-              <ResetButton disabled={isSubmitting || findMoreOpen} onClick={resetFilter} />
+            <Col xs="auto">
+              <ResetButton
+                disabled={isSubmitting}
+                onClick={() => {
+                  resetForm();
+                  resetFilter();
+                }}
+              />
+            </Col>
+            <Col xs="auto" className="bar-item">
+              <PropertySearchToggle
+                onPageToggle={option => {
+                  handlePageToggle(option);
+                }}
+                toolId={'toggle'}
+                toggle={toggle}
+              />
             </Col>
           </Form.Row>
         </Form>

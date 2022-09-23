@@ -1,20 +1,24 @@
 import React from 'react';
-import { create } from 'react-test-renderer';
+import { cleanup, render } from 'utils/test-utils';
 
 import FilterBar from './FilterBar';
 
 const componentRender = () => {
-  let component = create(
+  return render(
     <div>
-      <FilterBar initialValues={{ username: 'test', firstName: 'user' }} onChange={() => {}} />
+      <FilterBar
+        initialValues={{ businessIdentifierValue: 'test', firstName: 'user' }}
+        onChange={() => {}}
+      />
     </div>,
   );
-  return component;
 };
 
 describe('Filter Bar', () => {
-  it('Snapshot matches', () => {
-    const component = componentRender();
-    expect(component.toJSON()).toMatchSnapshot();
+  afterEach(cleanup);
+
+  it('Renders correctly', () => {
+    const { asFragment } = componentRender();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

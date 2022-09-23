@@ -1,7 +1,7 @@
-using FluentAssertions;
-using Pims.Dal.Exceptions;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Dal.Exceptions;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -11,42 +11,42 @@ namespace Pims.Dal.Test.Entities
     [Trait("category", "entities")]
     [Trait("group", "entity")]
     [ExcludeFromCodeCoverage]
-    public class RowVersionMissingExceptionTest
+    public class ConcurrencyControlNumberMissingExceptionTest
     {
         #region Tests
         [Fact]
-        public void RowVersionMissingException_Base_Constructor()
+        public void ConcurrencyControlNumberMissingException_Base_Constructor()
         {
             // Arrange
             // Act
-            var exception = new RowVersionMissingException();
+            var exception = new ConcurrencyControlNumberMissingException();
 
             // Assert
-            exception.Message.Should().Be("Exception of type 'Pims.Dal.Exceptions.RowVersionMissingException' was thrown.");
+            exception.Message.Should().Be("Exception of type 'Pims.Dal.Exceptions.ConcurrencyControlNumberMissingException' was thrown.");
         }
 
         [Fact]
-        public void RowVersionMissingException_Constructor_01()
+        public void ConcurrencyControlNumberMissingException_Constructor_01()
         {
             // Arrange
             var msg = "test";
 
             // Act
-            var exception = new RowVersionMissingException(msg);
+            var exception = new ConcurrencyControlNumberMissingException(msg);
 
             // Assert
             exception.Message.Should().Be(msg);
         }
 
         [Fact]
-        public void RowVersionMissingException_Constructor_02()
+        public void ConcurrencyControlNumberMissingException_Constructor_02()
         {
             // Arrange
             var msg = "test";
             var error = new Exception("inner");
 
             // Act
-            var exception = new RowVersionMissingException(msg, error);
+            var exception = new ConcurrencyControlNumberMissingException(msg, error);
 
             // Assert
             exception.Message.Should().Be(msg);

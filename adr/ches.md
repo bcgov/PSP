@@ -8,16 +8,16 @@
 
 ## Context
 
-PIMS requires a way to send email notifications to agencies throughout the workflow of disposing properties.
+PIMS requires a way to send email notifications to organizations throughout the workflow of disposing properties.
 
 Use Cases;
 
-- Whitelist of agencies who will receive emails
-- Inform all agencies of a new properties in the Enhanced Referral Program (ERP)
-- A way for agencies to show interest, or to opt out of further notifications
-- Inform all agencies of status change or progress of properties in ERP
-- Inform owning agency of status change of disposal project
-- Notify owning agency of requirement or information
+- Whitelist of organizations who will receive emails
+- Inform all organizations of a new properties in the Enhanced Referral Program (ERP)
+- A way for organizations to show interest, or to opt out of further notifications
+- Inform all organizations of status change or progress of properties in ERP
+- Inform owning organization of status change of disposal project
+- Notify owning organization of requirement or information
 
 The **Common Hosted Email Service (CHES)** is a free service offered and supported by the **Exchange Lab**.
 

@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Help Box tests.. renders properly 1`] = `
-.c0 {
+<DocumentFragment>
+  .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-<div>
-  <div
+<div
     class="c0 help-submit-box"
   >
     <span
@@ -72,74 +72,74 @@ exports[`Help Box tests.. renders properly 1`] = `
         class=""
       >
         <div
-          class="form-group"
+          class="input form-group"
         >
           <label
             class="form-label"
             for="input-user"
           >
-            User
-             
+            User 
           </label>
           <input
             class="form-control"
             id="input-user"
             name="user"
+            title="Test User"
             value="Test User"
           />
         </div>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <label
             class="form-label"
             for="input-email"
           >
-            Email
-             
+            Email 
           </label>
           <input
             class="form-control"
             id="input-email"
             name="email"
+            title="test@test.com"
             value="test@test.com"
           />
         </div>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <label
             class="form-label"
             for="input-page"
           >
-            Page
-             
+            Page 
           </label>
           <input
             class="form-control"
             id="input-page"
             name="page"
+            title="Landing Page"
             value="Landing Page"
           />
         </div>
         <div
-          class="form-group"
+          class="textarea input form-group"
         >
           <label
             class="form-label"
             for="input-question"
           >
-            Question
-             
+            Question 
           </label>
           <textarea
             class="form-control"
             id="input-question"
             name="question"
+            title=""
           />
         </div>
       </form>
     </span>
   </div>
-</div>
+</DocumentFragment>
 `;

@@ -1,3 +1,5 @@
+import { ILayerItem } from 'components/maps/leaflet/LayersControl/types';
+
 /**
  * Interface for tenant configuration settings.
  */
@@ -14,6 +16,12 @@ export interface ITenantConfig {
   logo: ITenantLogoConfig;
   // Login page settings.
   login: ITenantLoginConfig;
+  // optional additional layers to add using config.
+  layers: ILayerItem[];
+  // the url that should be used to query the PSP properties layer.
+  propertiesUrl?: string;
+  // configuration pertaining the Fully Attributed Parcel Map layer
+  parcelMapFullyAttributed: IFullyAttributedParcelLayerConfig;
 }
 
 export interface ITenantLoginConfig {
@@ -34,4 +42,9 @@ export interface ITenantLogoConfig {
   image: string;
   // Path to image with text.
   imageWithText: string;
+}
+
+export interface IFullyAttributedParcelLayerConfig {
+  url: string;
+  name: string;
 }

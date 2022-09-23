@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import CustomAxios from 'customAxios';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
@@ -10,6 +10,23 @@ export interface IDownloadConfig extends AxiosRequestConfig {
   fileName: string;
   actionType: string;
 }
+
+/**
+ * Programmatically triggers a file download with content generated through an API
+ * @param filename the file name
+ * @param blobData Raw blob data as returned by a file export API
+ */
+export const downloadFile = (filename: string, blobData: any) => {
+  const uri = window.URL.createObjectURL(new Blob([blobData]));
+  const link = document.createElement('a');
+  link.href = uri;
+  link.setAttribute('download', filename ?? new Date().toDateString());
+  document.body.appendChild(link);
+  link.click();
+  // release the object URL after the link has been clicked
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(link.href);
+};
 
 /**
  * Make an AJAX request to download content from the specified endpoint.
@@ -25,14 +42,14 @@ const download = (config: IDownloadConfig) => (dispatch: Function) => {
   dispatch(logRequest(options.actionType));
   dispatch(showLoading());
   return CustomAxios()
-    .request({
+    .request<BlobPart>({
       url: options.url,
       headers: options.headers,
       method: options.method ?? 'get',
       responseType: options.responseType ?? 'blob',
       data: options.data,
     })
-    .then((response: AxiosResponse) => {
+    .then(response => {
       dispatch(logSuccess({ name: options.actionType }));
 
       const uri = window.URL.createObjectURL(new Blob([response.data]));
@@ -42,7 +59,7 @@ const download = (config: IDownloadConfig) => (dispatch: Function) => {
       document.body.appendChild(link);
       link.click();
     })
-    .catch((axiosError: AxiosError) =>
+    .catch(axiosError =>
       dispatch(
         logError({
           name: options.actionType,

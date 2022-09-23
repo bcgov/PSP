@@ -5,7 +5,7 @@ For the tech stack chosen for PIMS, we need to import the following base images 
 - NET Core 3.1 SDK and Runtime
 - Microsoft SQL Server 2019
 
-Go to - `/pims/openshift/4.0/templates/base-images`
+Go to - `/psp/openshift/4.0/templates/base-images`
 
 ```bash
 $ oc project 3cd915-tools
@@ -64,13 +64,8 @@ You are then ready to push the image to the OpenShift internal image registry.
 $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/nginx-base:mainline
 # you should see something like this...
 The push refers to repository [image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/nginx-base]
-075508cf8f04: Layer already exists
-5c865c78bc96: Layer already exists
-134e19b2fac5: Layer already exists
-83634f76e732: Layer already exists
-766fe2c3fc08: Layer already exists
-02c055ef67f5: Layer already exists
-mainline: digest: sha256:61191087790c31e43eb37caa10de1135b002f10c09fdda7fa8a5989db74033aa size: 1570
+...
+mainline: digest: sha256:<_shaDigest_> size: 1570
 ```
 
 Create image stream and associated build configurations for nginx-runtime for **the following environments:**

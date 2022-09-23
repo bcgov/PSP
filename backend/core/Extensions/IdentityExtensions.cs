@@ -19,22 +19,22 @@ namespace Pims.Core.Extensions
         public static Guid GetUserKey(this ClaimsPrincipal user)
         {
             var value = user?.FindFirstValue(ClaimTypes.NameIdentifier);
-            return String.IsNullOrWhiteSpace(value) ? Guid.Empty : new Guid(value);
+            return string.IsNullOrWhiteSpace(value) ? Guid.Empty : new Guid(value);
         }
 
         /// <summary>
-        /// Get the user's list of agencies they have access to.
-        /// Return 'null' if no agencies are found.
+        /// Get the user's list of organizations they have access to.
+        /// Return 'null' if no organizations are found.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static long[] GetAgencies(this ClaimsPrincipal user, string delimiter = ",")
+        public static long[] GetOrganizations(this ClaimsPrincipal user, string delimiter = ",")
         {
-            var agencies = user?.FindAll("agencies");
+            var organizations = user?.FindAll("organizations");
             var results = new List<long>();
 
-            agencies?.ForEach(c =>
+            organizations?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
                 results.AddRange(split.Select(v => long.TryParse(v, out long value) ? value : (long?)null).NotNull().Select(v => (long)v));
@@ -44,18 +44,18 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Get the user's list of agencies they have access to.
-        /// Return 'null' if no agencies are found.
+        /// Get the user's list of organizations they have access to.
+        /// Return 'null' if no organizations are found.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static long?[] GetAgenciesAsNullable(this ClaimsPrincipal user, string delimiter = ",")
+        public static long?[] GetOrganizationsAsNullable(this ClaimsPrincipal user, string delimiter = ",")
         {
-            var agencies = user?.FindAll("agencies");
+            var organizations = user?.FindAll("organizations");
             var results = new List<long?>();
 
-            agencies?.ForEach(c =>
+            organizations?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
                 results.AddRange(split.Select(v => long.TryParse(v, out long value) ? value : (long?)null));
@@ -85,7 +85,7 @@ namespace Pims.Core.Extensions
         public static string GetUserDirectory(this ClaimsPrincipal user)
         {
             var value = user?.FindFirstValue("username");
-            return value?.Contains("@") == true ? value.Split("@").Last() : null;
+            return value?.Contains('@') == true ? value.Split("@").Last() : null;
         }
 
         /// <summary>
@@ -140,8 +140,15 @@ namespace Pims.Core.Extensions
         /// <returns>True if the user has any of the roles.</returns>
         public static bool HasRole(this ClaimsPrincipal user, params string[] role)
         {
-            if (role == null) throw new ArgumentNullException(nameof(role));
-            if (role.Length == 0) throw new ArgumentOutOfRangeException(nameof(role));
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+
+            if (role.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(role));
+            }
 
             return user.Claims.Any(c => c.Type == ClaimTypes.Role && role.Contains(c.Value));
         }
@@ -154,8 +161,15 @@ namespace Pims.Core.Extensions
         /// <returns>True if the user has all of the roles.</returns>
         public static bool HasRoles(this ClaimsPrincipal user, params string[] role)
         {
-            if (role == null) throw new ArgumentNullException(nameof(role));
-            if (role.Length == 0) throw new ArgumentOutOfRangeException(nameof(role));
+            if (role == null)
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+
+            if (role.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(role));
+            }
 
             var count = user.Claims.Count(c => c.Type == ClaimTypes.Role && role.Contains(c.Value));
 

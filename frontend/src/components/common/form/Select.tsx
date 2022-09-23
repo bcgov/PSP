@@ -6,6 +6,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 
+import TooltipIcon from '../TooltipIcon';
 import { DisplayError } from './DisplayError';
 
 type RequiredAttributes = {
@@ -22,7 +23,7 @@ type OptionalAttributes = {
   as?: React.ElementType;
   /** Short hint that describes the expected value of an <input> element */
   placeholder?: string;
-  /** A custom class to add to the input element of the <Select> component */
+  /** class name of the outer form group wrapper */
   className?: string;
   /** Whether the field is required. Makes the field border blue. */
   required?: boolean;
@@ -34,9 +35,10 @@ type OptionalAttributes = {
   custom?: boolean;
   /** change event handler */
   onChange?: React.FormEventHandler;
-  /** Class name of the input wrapper */
-  outerClassName?: string;
-  /** input "type" ie. string, number */
+  /** A custom class to add to the input element of the <Select> component */
+  innerClassName?: string;
+  /** optional tooltip text to display after the label */
+  tooltip?: string;
 };
 
 // only "field" and "options" are required for <Select>, the rest are optional
@@ -62,14 +64,15 @@ export const Select: React.FC<SelectProps> = ({
   as: is, // `as` is reserved in typescript
   placeholder,
   options,
-  className,
   required,
   disabled,
   multiple,
   custom,
   onChange,
   type,
-  outerClassName,
+  className,
+  innerClassName,
+  tooltip,
   ...rest
 }) => {
   const { values, handleBlur, handleChange, setFieldValue, errors, touched } = useFormikContext();
@@ -77,7 +80,6 @@ export const Select: React.FC<SelectProps> = ({
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
   const asElement: any = is || 'select';
-
   const handleMultipleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = e.target.selectedOptions;
     setFieldValue(
@@ -110,13 +112,18 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', outerClassName)}
+      className={classNames(!!required ? 'required' : '', className)}
     >
-      {!!label && <Form.Label>{label}</Form.Label>}
+      {!!label && (
+        <Form.Label>
+          {label} {!!tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+        </Form.Label>
+      )}
+      {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
       <Form.Control
         as={asElement}
         name={field}
-        className={classNames(className, 'form-select')}
+        className={classNames(innerClassName, 'form-select')}
         required={required}
         disabled={disabled}
         custom={custom}
@@ -131,9 +138,15 @@ export const Select: React.FC<SelectProps> = ({
               field,
               value.map((x: any) => +x),
             );
+            return;
           } else if (type === 'number' && !isNaN(parseInt(value))) {
             setFieldValue(field, parseInt(value));
+            return;
+          } else if (type === 'number' && value === '') {
+            setFieldValue(field, undefined);
+            return;
           }
+
           handleBlur(e);
         }}
       >

@@ -8,27 +8,27 @@ namespace Pims.Api.Mapping.User
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Role, Model.RoleModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
+            config.NewConfig<Entity.PimsRole, Model.RoleModel>()
+                .Map(dest => dest.Id, src => src.RoleId)
+                .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Map(dest => dest.Users, src => src.Users)
+                .Map(dest => dest.Users, src => src.GetUsers())
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
-                .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, Models.BaseModel>();
 
-            config.NewConfig<Model.RoleModel, Entity.Role>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
+            config.NewConfig<Model.RoleModel, Entity.PimsRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
+                .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Map(dest => dest.Users, src => src.Users)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
-                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Models.BaseModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Model.RoleModel, Entity.PimsUserRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
+                .Map(dest => dest.Role, src => src);
         }
     }
 }

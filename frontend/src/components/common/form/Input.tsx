@@ -26,15 +26,19 @@ type OptionalAttributes = {
   /** Whether the field is required. Makes the field border blue. */
   required?: boolean;
   /** Specifies that the HTML element should be disabled */
+  defaultValue?: string;
+  /** Used for providing default value to user input */
   disabled?: boolean;
   /** Used for restricting user input */
   pattern?: RegExp;
   /** Use React-Bootstrap's custom form elements to replace the browser defaults */
   custom?: boolean;
-  /** class to apply to entire form group */
-  outerClassName?: string;
+  /** class to apply to the inner input */
+  innerClassName?: string;
   /** formatter to apply during input onblur */
   onBlurFormatter?: Function;
+  /** optional help text to display below the FormControl */
+  helpText?: string;
   /** optional tooltip text to display after the label */
   tooltip?: string;
   /** Display errors in a tooltip instead of in a div */
@@ -55,15 +59,18 @@ export const Input: React.FC<InputProps> = ({
   as: is, // `as` is reserved in typescript
   placeholder,
   className,
-  outerClassName,
+  innerClassName,
   pattern,
   style,
   required,
+  defaultValue,
   disabled,
   custom,
   onBlurFormatter,
+  helpText,
   tooltip,
   displayErrorTooltips,
+  onChange,
   ...rest
 }) => {
   const { handleChange, handleBlur, errors, touched, values, setFieldValue } = useFormikContext<
@@ -74,11 +81,20 @@ export const Input: React.FC<InputProps> = ({
   const value = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const asElement: any = is || 'input';
-  const [restricted, setRestricted] = useState(value);
+  const [restricted, setRestricted] = useState(onBlurFormatter ? onBlurFormatter(value) : value);
   const handleRestrictedChange = (event: any) => {
     let val = event.target.value;
     pattern?.test(val) && setRestricted(val);
     handleChange(event);
+    if (onChange) {
+      onChange(event);
+    }
+  };
+  const handleOnChange = (event: any) => {
+    handleChange(event);
+    if (onChange) {
+      onChange(event);
+    }
   };
   // run the formatter logic when the input field is updated programmatically via formik values
   useEffect(() => {
@@ -96,7 +112,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', outerClassName)}
+      className={classNames(!!required ? 'required' : '', className, 'input')}
     >
       {!!label && (
         <Form.Label>
@@ -105,9 +121,9 @@ export const Input: React.FC<InputProps> = ({
       )}
       {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
-      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+      <TooltipWrapper toolTipId={`${field}-error-tooltip`} toolTip={errorTooltip}>
         <Form.Control
-          className={className}
+          className={innerClassName}
           as={asElement}
           name={field}
           style={style}
@@ -116,8 +132,10 @@ export const Input: React.FC<InputProps> = ({
           isInvalid={!!touch && !!error}
           {...rest}
           isValid={false}
-          value={pattern ? restricted : rest.value ?? value}
+          value={pattern ? restricted : rest.value ?? (value || defaultValue)}
+          title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
+          aria-describedby={helpText ? `${field}-help-text` : undefined}
           onBlur={(e: any) => {
             if (onBlurFormatter) {
               pattern && setRestricted(onBlurFormatter(value));
@@ -125,10 +143,15 @@ export const Input: React.FC<InputProps> = ({
             }
             handleBlur(e);
           }}
-          onChange={pattern ? handleRestrictedChange : handleChange}
+          onChange={pattern ? handleRestrictedChange : handleOnChange}
         />
       </TooltipWrapper>
-      <DisplayError field={field} />
+      {helpText && (
+        <Form.Text id={`${field}-help-text`} muted>
+          {helpText}
+        </Form.Text>
+      )}
+      {!displayErrorTooltips && <DisplayError field={field} />}
     </Form.Group>
   );
 };

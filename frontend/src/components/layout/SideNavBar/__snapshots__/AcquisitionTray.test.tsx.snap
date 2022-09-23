@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcquisitionTray matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 3rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.4rem solid;
+  margin-bottom: 3.2rem;
+  max-width: 28rem;
+}
+
+<h3
+    class="c0"
+  >
+    Acquisition Files
+  </h3>
+  <a
+    href="/acquisition/list"
+  >
+    Manage acquisition files
+  </a>
+</DocumentFragment>
+`;

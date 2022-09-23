@@ -1,4 +1,3 @@
-import { PropertyTypes } from 'constants/propertyTypes';
 import { IProperty } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
@@ -21,12 +20,7 @@ const ViewPropertyCell = (props: CellProps<IProperty, number>) => {
           sidebar: true,
           disabled: true,
           loadDraft: false,
-          parcelId: [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(
-            property.propertyTypeId ?? PropertyTypes.Parcel,
-          )
-            ? property.id
-            : undefined,
-          buildingId: property.propertyTypeId === PropertyTypes.Building ? property.id : undefined,
+          parcelId: property.id,
         }),
       }}
     >

@@ -2,11 +2,20 @@ using System;
 
 namespace Pims.Api.Helpers.Extensions
 {
+    /// <summary>
+    /// DateTimeExtensions static class, provides extension methods for DateTime.
+    /// </summary>
     public static class DateTimeExtensions
     {
-        public static int ToFiscalYear(this DateTime dateTime)
+        /// <summary>
+        /// Convert the specified date to the fiscal year.
+        /// This returns the last year of the fiscal calendar (i.e. 2020/2021 will return 2021).
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static int ToFiscalYear(this DateTime date)
         {
-            return dateTime.Month >= 4 ? dateTime.AddYears(1).Year : dateTime.Year;
+            return date.Month >= 4 ? date.AddYears(1).Year : date.Year;
         }
     }
 }

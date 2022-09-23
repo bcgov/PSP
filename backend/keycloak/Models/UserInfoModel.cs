@@ -8,6 +8,7 @@ namespace Pims.Keycloak.Models
     public class UserInfoModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Unique key to identify the claim.
         /// </summary>
@@ -54,9 +55,9 @@ namespace Pims.Keycloak.Models
         public string[] Groups { get; set; }
 
         /// <summary>
-        /// get/set - An array of agencies the user is a member of.
+        /// get/set - An array of organizations the user is a member of.
         /// </summary>
-        public long[] Agencies { get; set; }
+        public long[] Organizations { get; set; }
         #endregion
     }
 }

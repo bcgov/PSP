@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useCallback, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { FaQuestionCircle } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import HelpModal from '../components/HelpModal';
 
@@ -20,10 +21,7 @@ export function HelpContainer() {
   return keycloak.obj.authenticated ? (
     <Nav.Item>
       <TooltipWrapper toolTipId="help-tooltip" toolTip="Ask for Help">
-        <FaQuestionCircle
-          style={{ cursor: 'pointer', color: '#fff', marginLeft: -145 }}
-          onClick={() => setShowHelp(true)}
-        />
+        <StyledHelpIcon onClick={() => setShowHelp(true)} />
       </TooltipWrapper>
       <HelpModal
         show={showHelp}
@@ -33,5 +31,9 @@ export function HelpContainer() {
     </Nav.Item>
   ) : null;
 }
+
+const StyledHelpIcon = styled(FaQuestionCircle)`
+  cursor: pointer;
+`;
 
 export default HelpContainer;

@@ -9,20 +9,20 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Role, Model.Update.RoleModel>()
+            config.NewConfig<Entity.PimsRole, Model.Update.RoleModel>()
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.BaseAppEntity, BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, BaseModel>();
 
-            config.NewConfig<Model.Update.RoleModel, Entity.Role>()
+            config.NewConfig<Model.Update.RoleModel, Entity.PimsRole>()
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<BaseModel, Entity.IBaseEntity>();
 
-            config.NewConfig<Entity.BaseAppEntity, BaseAppModel>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion);
+            config.NewConfig<Entity.IDisableBaseAppEntity, BaseAppModel>()
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber);
         }
     }
 }

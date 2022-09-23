@@ -1,9 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
 
 namespace Pims.Api.Helpers.Swagger
 {
@@ -15,7 +15,7 @@ namespace Pims.Api.Helpers.Swagger
     /// <see cref="IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        readonly IApiVersionDescriptionProvider provider;
+        private readonly IApiVersionDescriptionProvider provider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
@@ -34,7 +34,7 @@ namespace Pims.Api.Helpers.Swagger
             }
         }
 
-        static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+        private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
         {
             var info = new OpenApiInfo()
             {
@@ -42,7 +42,7 @@ namespace Pims.Api.Helpers.Swagger
                 Version = description.ApiVersion.ToString(),
                 Description = "Property Inventory Management System", // TODO: From configuration
                 Contact = new OpenApiContact() { Name = "Support", Email = "support@pims.gov.bc.ca" }, // TODO: From configuration
-                License = new OpenApiLicense() { Name = "APACHE", Url = new Uri("https://github.com/bcgov/PIMS/blob/dev/LICENSE") } // TODO: From configuration
+                License = new OpenApiLicense() { Name = "APACHE", Url = new Uri("https://github.com/bcgov/PSP/blob/dev/LICENSE") }, // TODO: From configuration
             };
 
             if (description.IsDeprecated)

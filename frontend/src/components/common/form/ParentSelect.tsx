@@ -69,7 +69,7 @@ export const ParentSelect: React.FC<IParentSelect> = ({
   const [clear, setClear] = useState(false);
   /** controls the multi selections displayed to the user */
   const [multiSelections, setMultiSelections] = React.useState<any>([]);
-  /** parent id used to identify parent agencies with no children */
+  /** parent id used to identify parent organizations with no children */
   const CHILDLESS_PARENT_ID = -1;
 
   /** wipe the selection from input on reset */
@@ -102,7 +102,7 @@ export const ParentSelect: React.FC<IParentSelect> = ({
       return [value];
     }
     if (value !== undefined && !_.isEmpty(value?.toString())) {
-      /** select appropriate agency to set the field value to when present */
+      /** select appropriate organization to set the field value to when present */
       const option = options.find(x => x.value === value?.toString() || x.value === value);
       return option ? [option] : [];
     }
@@ -147,8 +147,8 @@ export const ParentSelect: React.FC<IParentSelect> = ({
             p => !results.find(r => Number(r.parentId) === Number(p.value)),
           );
 
-          // This assigns a specific id to childless parent agencies
-          // Headers will not be displayed for these childless parent agencies but they will be displayed as regular options and grouped
+          // This assigns a specific id to childless parent organizations
+          // Headers will not be displayed for these childless parent organizations but they will be displayed as regular options and grouped
           results = results.map(x => {
             return {
               ...x,

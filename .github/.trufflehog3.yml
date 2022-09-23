@@ -1,0 +1,87 @@
+exclude: # exclude matching issues
+  - message: Ignore build directories
+    paths:
+      - build/**
+      - node_modules/**
+      - bin/**
+      - obj/**
+  - message: Ignore test artifacts
+    paths:
+      - coverage/**
+      - tests/**
+      - test/**
+      - .scannerwork/**
+      - .sonarqube/**
+      - zap-report.html
+      - zap-report.xml
+  - message: Ignore auto-generated scan reports
+    paths:
+      - trufflehog_report.*
+  - message: Ignore lockfiles
+    paths:
+      - package-lock.json
+  - message: Ignore local .env files
+    paths:
+      - "*.env"
+  - message: Ignore static assets
+    paths:
+      - "*.jpg"
+      - "*.png"
+      - "*.svg"
+      - "*.webp"
+      - "*.ico"
+      - "*.css"
+      - "*.scss"
+  - message: Ignore integrity hashes on Openshift config files
+    pattern: sha256:.*
+    paths:
+      - "*.yaml"
+      - "*.yml"
+  - message: Ignore integrity hashes on index.html
+    # NOTE pattern is re.Pattern, thus escaping of special characters might be required
+    pattern: sha256-.*
+    paths:
+      - index.html
+      - nginx.conf.template
+  - message: Ignore hashes on badge urls
+    pattern: https://img\.shields\.io/.*
+  - message: Ignore hashes on github gists
+    pattern: https://gist\.github\.com/.*
+  - message: Ignore hashes on gen-env-files.sh
+    pattern: INSTANCE_STRING=.*
+  - message: Ignore local keycloak configuration (for local development only)
+    id: high-entropy
+    paths:
+      - realm-export.json
+  - message: Ignore SSIS .dtsx files (binary content and verifiers)
+    paths:
+      - "*.dtsx"
+  - message: Ignore SSIS .dtproj state
+    pattern: <State>.*?</State>
+    paths:
+      - "*.dtproj"
+  - message: Ignore integrity hashes on Openshift config files
+    paths:
+      - "Test Data/**"
+# NOTE you can also specify IDs or patterns together or without paths, e.g.
+#
+#   - message: Skip ID everywhere
+#     id: high-entropy
+#   - message: Skip ID on specific paths
+#     id: high-entropy
+#     paths:
+#       - tests/data/*
+#
+#   - message: Skip pattern everywhere, case-insensitive
+#     pattern: (?i)not-a-secret
+#   - message: Skip pattern on specific paths, case-insensitive
+#     pattern: (?i)not-a-secret
+#     paths:
+#       - tests/data/*
+
+severity: low # minimum severity filter
+ignore_nosecret: false # ignore inline 'nosecret' annotations
+no_entropy: false # disable entropy checks
+no_pattern: false # disable pattern checks
+
+context: 0 # number of context lines to include

@@ -1,9 +1,7 @@
 import './FilterBar.scss';
 
+import { PlusButton, ResetButton, SearchButton } from 'components/common/buttons';
 import { Form } from 'components/common/form';
-import PlusButton from 'components/common/form/PlusButton';
-import ResetButton from 'components/common/form/ResetButton';
-import SearchButton from 'components/common/form/SearchButton';
 import { Formik } from 'formik';
 import React, { PropsWithChildren } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -28,6 +26,8 @@ interface IProps<T extends object = {}> {
   customReset?: () => void;
   /** custom component field name to clear/reset */
   customResetField?: string;
+  /** type of the search button submit by default */
+  searchButtonType?: string;
 }
 
 const FilterBar = <T extends object = {}>(props: PropsWithChildren<IProps<T>>) => {
@@ -52,6 +52,7 @@ const FilterBar = <T extends object = {}>(props: PropsWithChildren<IProps<T>>) =
             {props.children}
             <Col className="bar-item flex-grow-0">
               <SearchButton
+                type={props.searchButtonType}
                 className={props.searchClassName ? props.searchClassName : 'bg-warning'}
                 disabled={isSubmitting}
               />

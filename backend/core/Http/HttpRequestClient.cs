@@ -1,12 +1,13 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Pims.Core.Exceptions;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Pims.Core.Exceptions;
 
 namespace Pims.Core.Http
 {
@@ -21,6 +22,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The HttpClient use to make requests.
         /// </summary>
@@ -28,6 +30,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a HttpRequestClient class, initializes it with the specified arguments.
         /// </summary>
@@ -41,19 +44,21 @@ namespace Pims.Core.Http
             {
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             _logger = logger;
         }
         #endregion
 
         #region Methods
+
         /// <summary>
-        /// Dispose the HttpClient.
+        /// Dispose managed resources.
         /// </summary>
         public void Dispose()
         {
-            this.Client.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -69,7 +74,9 @@ namespace Pims.Core.Http
             try
             {
                 if (contentType.MediaType.Contains("json", StringComparison.InvariantCultureIgnoreCase))
+                {
                     return JsonSerializer.Deserialize<TModel>(data, _serializeOptions);
+                }
             }
             catch (Exception ex)
             {
@@ -82,6 +89,7 @@ namespace Pims.Core.Http
         }
 
         #region HttpResponseMessage Methods
+
         /// <summary>
         /// Send an HTTP request to the specified 'url'.
         /// </summary>
@@ -118,15 +126,16 @@ namespace Pims.Core.Http
         public virtual async Task<HttpResponseMessage> SendJsonAsync<T>(string url, HttpMethod method, HttpRequestHeaders headers, T data = null)
             where T : class
         {
-            HttpContent content = null;
-
             if (data != null)
             {
                 var json = JsonSerializer.Serialize(data, _serializeOptions);
-                content = new StringContent(json, Encoding.UTF8, "application/json");
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
+                return await SendAsync(url, method, headers, content);
             }
-
-            return await SendAsync(url, method, headers, content);
+            else
+            {
+                return await SendAsync(url, method, headers, null);
+            }
         }
 
         /// <summary>
@@ -137,26 +146,14 @@ namespace Pims.Core.Http
         /// <param name="headers"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        public virtual Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url)) throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
-
-            if (method == null) method = HttpMethod.Get;
-
-            var message = new HttpRequestMessage(method, url);
-            message.Headers.Add("User-Agent", "Pims.Api");
-            message.Content = content;
-
-            if (headers != null)
+            if (string.IsNullOrWhiteSpace(url))
             {
-                foreach (var header in headers)
-                {
-                    message.Headers.Add(header.Key, header.Value);
-                }
+                throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
             }
 
-            _logger.LogInformation($"HTTP request made '{message.RequestUri}'");
-            return await this.Client.SendAsync(message);
+            return this.SendInternalAsync(url, method, headers, content);
         }
 
         /// <summary>
@@ -241,26 +238,26 @@ namespace Pims.Core.Http
         /// <summary>
         /// Send an HTTP request to the specified 'uri'.
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="url"></param>
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> SendJsonAsync<T>(Uri uri, HttpMethod method = null, T data = null)
+        public virtual async Task<HttpResponseMessage> SendJsonAsync<T>(Uri url, HttpMethod method = null, T data = null)
             where T : class
         {
-            return await SendJsonAsync(uri, method, null, data);
+            return await SendJsonAsync(url, method, null, data);
         }
 
         /// <summary>
         /// Send an HTTP request to the specified 'uri'.
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="url"></param>
         /// <param name="method"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> SendAsync(Uri uri, HttpMethod method = null, HttpContent content = null)
+        public virtual async Task<HttpResponseMessage> SendAsync(Uri url, HttpMethod method = null, HttpContent content = null)
         {
-            return await SendAsync(uri, method, null, content);
+            return await SendAsync(url, method, null, content);
         }
 
         /// <summary>
@@ -271,10 +268,10 @@ namespace Pims.Core.Http
         /// <param name="headers"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> SendJsonAsync<T>(Uri uri, HttpMethod method, HttpRequestHeaders headers, T data = null)
+        public virtual async Task<HttpResponseMessage> SendJsonAsync<T>(Uri url, HttpMethod method, HttpRequestHeaders headers, T data = null)
             where T : class
         {
-            return await SendJsonAsync(uri.OriginalString, method, headers, data);
+            return await SendJsonAsync(url.OriginalString, method, headers, data);
         }
 
         /// <summary>
@@ -285,9 +282,9 @@ namespace Pims.Core.Http
         /// <param name="headers"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> SendAsync(Uri uri, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        public virtual async Task<HttpResponseMessage> SendAsync(Uri url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            return await SendAsync(uri.OriginalString, method, headers, content);
+            return await SendAsync(url.OriginalString, method, headers, content);
         }
 
         /// <summary>
@@ -295,9 +292,9 @@ namespace Pims.Core.Http
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> GetAsync(Uri uri)
+        public async Task<HttpResponseMessage> GetAsync(Uri url)
         {
-            return await SendAsync(uri, HttpMethod.Get);
+            return await SendAsync(url, HttpMethod.Get);
         }
 
         /// <summary>
@@ -306,10 +303,10 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PostJsonAsync<T>(Uri uri, T data = null)
+        public async Task<HttpResponseMessage> PostJsonAsync<T>(Uri url, T data = null)
             where T : class
         {
-            return await SendJsonAsync(uri, HttpMethod.Post, data);
+            return await SendJsonAsync(url, HttpMethod.Post, data);
         }
 
         /// <summary>
@@ -318,9 +315,9 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PostAsync(Uri uri, HttpContent content = null)
+        public async Task<HttpResponseMessage> PostAsync(Uri url, HttpContent content = null)
         {
-            return await SendAsync(uri, HttpMethod.Post, content);
+            return await SendAsync(url, HttpMethod.Post, content);
         }
 
         /// <summary>
@@ -329,10 +326,10 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PutJsonAsync<T>(Uri uri, T data = null)
+        public async Task<HttpResponseMessage> PutJsonAsync<T>(Uri url, T data = null)
             where T : class
         {
-            return await SendJsonAsync(uri, HttpMethod.Put, data);
+            return await SendJsonAsync(url, HttpMethod.Put, data);
         }
 
         /// <summary>
@@ -341,9 +338,9 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PutAsync(Uri uri, HttpContent content = null)
+        public async Task<HttpResponseMessage> PutAsync(Uri url, HttpContent content = null)
         {
-            return await SendAsync(uri, HttpMethod.Put, content);
+            return await SendAsync(url, HttpMethod.Put, content);
         }
 
         /// <summary>
@@ -352,10 +349,10 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> DeleteJsonAsync<T>(Uri uri, T data = null)
+        public async Task<HttpResponseMessage> DeleteJsonAsync<T>(Uri url, T data = null)
             where T : class
         {
-            return await SendJsonAsync(uri, HttpMethod.Delete, data);
+            return await SendJsonAsync(url, HttpMethod.Delete, data);
         }
 
         /// <summary>
@@ -364,13 +361,14 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> DeleteAsync(Uri uri, HttpContent content = null)
+        public async Task<HttpResponseMessage> DeleteAsync(Uri url, HttpContent content = null)
         {
-            return await SendAsync(uri, HttpMethod.Delete, content);
+            return await SendAsync(url, HttpMethod.Delete, content);
         }
         #endregion
 
         #region Serialization Methods
+
         /// <summary>
         /// Send an HTTP request to the specified 'url'.
         /// </summary>
@@ -413,15 +411,16 @@ namespace Pims.Core.Http
         public virtual async Task<TModel> SendJsonAsync<TModel, T>(string url, HttpMethod method, HttpRequestHeaders headers, T data = null, Func<HttpResponseMessage, bool> onError = null)
             where T : class
         {
-            StringContent content = null;
-
             if (data != null)
             {
                 var json = JsonSerializer.Serialize(data, _serializeOptions);
-                content = new StringContent(json, Encoding.UTF8, "application/json");
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
+                return await SendAsync<TModel>(url, method, headers, content, onError);
             }
-
-            return await SendAsync<TModel>(url, method, headers, content, onError);
+            else
+            {
+                return await SendAsync<TModel>(url, method, headers, null, onError);
+            }
         }
 
         /// <summary>
@@ -444,7 +443,7 @@ namespace Pims.Core.Http
             }
 
             // If the error handle is not provided, or if it returns false throw an error.
-            if ((onError?.Invoke(response) ?? false) == false)
+            if (!(onError?.Invoke(response) ?? false))
             {
                 var error = new HttpClientRequestException(response);
                 _logger.LogError(error, error.Message);
@@ -549,10 +548,10 @@ namespace Pims.Core.Http
         /// <param name="onError"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public virtual async Task<TModel> SendJsonAsync<TModel, T>(Uri uri, HttpMethod method = null, T data = null, Func<HttpResponseMessage, bool> onError = null)
+        public virtual async Task<TModel> SendJsonAsync<TModel, T>(Uri url, HttpMethod method = null, T data = null, Func<HttpResponseMessage, bool> onError = null)
             where T : class
         {
-            return await SendJsonAsync<TModel, T>(uri, method, null, data, onError);
+            return await SendJsonAsync<TModel, T>(url, method, null, data, onError);
         }
 
         /// <summary>
@@ -564,9 +563,9 @@ namespace Pims.Core.Http
         /// <param name="onError"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public virtual async Task<TModel> SendAsync<TModel>(Uri uri, HttpMethod method = null, HttpContent content = null, Func<HttpResponseMessage, bool> onError = null)
+        public virtual async Task<TModel> SendAsync<TModel>(Uri url, HttpMethod method = null, HttpContent content = null, Func<HttpResponseMessage, bool> onError = null)
         {
-            return await SendAsync<TModel>(uri, method, null, content, onError);
+            return await SendAsync<TModel>(url, method, null, content, onError);
         }
 
         /// <summary>
@@ -579,10 +578,10 @@ namespace Pims.Core.Http
         /// <param name="onError"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public virtual async Task<TModel> SendJsonAsync<TModel, T>(Uri uri, HttpMethod method, HttpRequestHeaders headers, T data = null, Func<HttpResponseMessage, bool> onError = null)
+        public virtual async Task<TModel> SendJsonAsync<TModel, T>(Uri url, HttpMethod method, HttpRequestHeaders headers, T data = null, Func<HttpResponseMessage, bool> onError = null)
             where T : class
         {
-            return await SendJsonAsync<TModel, T>(uri.OriginalString, method, headers, data, onError);
+            return await SendJsonAsync<TModel, T>(url.OriginalString, method, headers, data, onError);
         }
 
         /// <summary>
@@ -595,9 +594,9 @@ namespace Pims.Core.Http
         /// <param name="onError"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public virtual async Task<TModel> SendAsync<TModel>(Uri uri, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null, Func<HttpResponseMessage, bool> onError = null)
+        public virtual async Task<TModel> SendAsync<TModel>(Uri url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null, Func<HttpResponseMessage, bool> onError = null)
         {
-            return await SendAsync<TModel>(uri.OriginalString, method, headers, content, onError);
+            return await SendAsync<TModel>(url.OriginalString, method, headers, content, onError);
         }
 
         /// <summary>
@@ -606,9 +605,9 @@ namespace Pims.Core.Http
         /// <param name="uri"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> GetAsync<TModel>(Uri uri)
+        public async Task<TModel> GetAsync<TModel>(Uri url)
         {
-            return await SendAsync<TModel>(uri, HttpMethod.Get);
+            return await SendAsync<TModel>(url, HttpMethod.Get);
         }
 
         /// <summary>
@@ -618,10 +617,10 @@ namespace Pims.Core.Http
         /// <param name="data"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> PostJsonAsync<TModel, T>(Uri uri, T data = null)
+        public async Task<TModel> PostJsonAsync<TModel, T>(Uri url, T data = null)
             where T : class
         {
-            return await SendJsonAsync<TModel, T>(uri, HttpMethod.Post, data);
+            return await SendJsonAsync<TModel, T>(url, HttpMethod.Post, data);
         }
 
         /// <summary>
@@ -631,9 +630,9 @@ namespace Pims.Core.Http
         /// <param name="content"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> PostAsync<TModel>(Uri uri, HttpContent content = null)
+        public async Task<TModel> PostAsync<TModel>(Uri url, HttpContent content = null)
         {
-            return await SendAsync<TModel>(uri, HttpMethod.Post, content);
+            return await SendAsync<TModel>(url, HttpMethod.Post, content);
         }
 
         /// <summary>
@@ -643,10 +642,10 @@ namespace Pims.Core.Http
         /// <param name="data"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> PutJsonAsync<TModel, T>(Uri uri, T data = null)
+        public async Task<TModel> PutJsonAsync<TModel, T>(Uri url, T data = null)
             where T : class
         {
-            return await SendJsonAsync<TModel, T>(uri, HttpMethod.Put, data);
+            return await SendJsonAsync<TModel, T>(url, HttpMethod.Put, data);
         }
 
         /// <summary>
@@ -656,9 +655,9 @@ namespace Pims.Core.Http
         /// <param name="content"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> PutAsync<TModel>(Uri uri, HttpContent content = null)
+        public async Task<TModel> PutAsync<TModel>(Uri url, HttpContent content = null)
         {
-            return await SendAsync<TModel>(uri, HttpMethod.Put, content);
+            return await SendAsync<TModel>(url, HttpMethod.Put, content);
         }
 
         /// <summary>
@@ -668,10 +667,10 @@ namespace Pims.Core.Http
         /// <param name="data"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> DeleteJsonAsync<TModel, T>(Uri uri, T data = null)
+        public async Task<TModel> DeleteJsonAsync<TModel, T>(Uri url, T data = null)
             where T : class
         {
-            return await SendJsonAsync<TModel, T>(uri, HttpMethod.Delete, data);
+            return await SendJsonAsync<TModel, T>(url, HttpMethod.Delete, data);
         }
 
         /// <summary>
@@ -681,9 +680,53 @@ namespace Pims.Core.Http
         /// <param name="content"></param>
         /// <exception cref="HttpClientRequestException">Response did not return a success status code.</exception>
         /// <returns></returns>
-        public async Task<TModel> DeleteAsync<TModel>(Uri uri, HttpContent content = null)
+        public async Task<TModel> DeleteAsync<TModel>(Uri url, HttpContent content = null)
         {
-            return await SendAsync<TModel>(uri, HttpMethod.Delete, content);
+            return await SendAsync<TModel>(url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Send an HTTP request to the specified 'url'.
+        /// Note: Internal implementation to avoid throw on different threads.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <param name="headers"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private async Task<HttpResponseMessage> SendInternalAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        {
+            if (method == null)
+            {
+                method = HttpMethod.Get;
+            }
+
+            using var message = new HttpRequestMessage(method, url);
+            message.Headers.Add("User-Agent", "Pims.Api");
+            message.Content = content;
+
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    message.Headers.Add(header.Key, header.Value);
+                }
+            }
+
+            _logger.LogInformation($"HTTP request made '{message.RequestUri}'");
+            return await this.Client.SendAsync(message);
         }
         #endregion
         #endregion

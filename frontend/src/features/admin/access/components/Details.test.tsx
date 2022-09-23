@@ -1,6 +1,6 @@
 import { AccessRequestStatus } from 'constants/accessStatus';
-import { mount } from 'enzyme';
 import React from 'react';
+import { render } from 'utils/test-utils';
 
 import { IAccessRequestModel } from '../interfaces';
 import { AccessRequestDetails } from './Details';
@@ -9,22 +9,21 @@ describe('Access request details', () => {
   it('Snapshot matches', () => {
     const request: IAccessRequestModel = {
       id: 1,
-      username: 'idir/bceid',
+      businessIdentifierValue: 'idir/bceid',
       userId: 2,
       firstName: 'firstName',
-      lastName: 'lastName',
+      surname: 'surname',
       email: 'user@email.com',
       position: 'position 1',
       role: 'Role',
-      agency: 'Agency Name',
       note: 'Note here',
-      status: AccessRequestStatus.OnHold,
+      status: AccessRequestStatus.Received,
     };
-    const component = mount(
+    const { asFragment } = render(
       <div>
         <AccessRequestDetails request={request} onClose={() => {}} />
       </div>,
     );
-    expect(component).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -1,0 +1,239 @@
+version: "3.9"
+
+x-mayan-container: &mayan-container
+  env_file: .mayan-env
+  environment:
+    MAYAN_CELERY_BROKER_URL: amqp://${MAYAN_RABBITMQ_USER:-mayan}:${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}@rabbitmq:5672/${MAYAN_RABBITMQ_VHOST:-mayan}
+    MAYAN_CELERY_RESULT_BACKEND: redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/1
+    MAYAN_DATABASES: "{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'${MAYAN_DATABASE_NAME:-mayan}','PASSWORD':'${MAYAN_DATABASE_PASSWORD:-mayandbpass}','USER':'${MAYAN_DATABASE_USER:-mayan}','HOST':'${MAYAN_DATABASE_HOST:-postgresql}'}}"
+    MAYAN_LOCK_MANAGER_BACKEND: mayan.apps.lock_manager.backends.redis_lock.RedisLock
+    MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/2'}"
+  image: ${MAYAN_DOCKER_IMAGE_NAME:-mayanedms/mayanedms}:${MAYAN_DOCKER_IMAGE_TAG:-s4.2}
+  networks:
+    - psp
+  restart: unless-stopped
+  volumes:
+    - ${MAYAN_APP_VOLUME:-app}:/var/lib/mayan
+    # Optional volumes to access external data like staging or watch folders
+    # - /opt/staging_folder:/staging_folder
+    # - /opt/watch_folder:/watch_folder
+
+networks:
+  psp:
+    external: true
+    name: psp-net
+
+services:
+  app:
+    <<: *mayan-container
+    profiles:
+      - all_in_one
+      - all
+    ports:
+      - "7080:8000"
+
+  elasticsearch:
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - http.max_content_length=400mb
+      - xpack.security.enabled=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=${MAYAN_ELASTICSEARCH_PASSWORD:-mayanespassword}
+    image: ${MAYAN_DOCKER_ELASTICSEARCH_IMAGE:-docker.elastic.co/elasticsearch/elasticsearch}:${MAYAN_DOCKER_ELASTICSEARCH_TAG:-7.16.0}
+    networks:
+      - psp
+    # Enable to allow external access to the database.
+    # ports:
+    #  - "9200:9200"
+    profiles:
+      - elasticsearch
+      - all
+    restart: unless-stopped
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ${MAYAN_ELASTICSEARCH_VOLUME:-elasticsearch}:/usr/share/elasticsearch/data
+
+  postgresql:
+    command:
+      - "postgres"
+      - "-c"
+      - "checkpoint_completion_target=0.6"
+      - "-c"
+      - "default_statistics_target=200"
+      - "-c"
+      - "maintenance_work_mem=128MB"
+      - "-c"
+      - "max_connections=150"
+      - "-c"
+      - "shared_buffers=256MB"
+      - "-c"
+      - "work_mem=8MB"
+    environment:
+      POSTGRES_DB: ${MAYAN_DATABASE_NAME:-mayan}
+      POSTGRES_PASSWORD: ${MAYAN_DATABASE_PASSWORD:-mayandbpass}
+      POSTGRES_USER: ${MAYAN_DATABASE_USER:-mayan}
+    image: postgres:${MAYAN_DOCKER_POSTGRES_TAG:-12.9-alpine}
+    networks:
+      - psp
+    # Enable to allow external access to the database.
+    # ports:
+    #  - "5432:5432"
+    profiles:
+      - postgresql
+      - all
+    restart: unless-stopped
+    volumes:
+      - ${MAYAN_POSTGRES_VOLUME:-postgres}:/var/lib/postgresql/data
+
+  redis:
+    command:
+      - redis-server
+      - --appendonly
+      - "no"
+      - --databases
+      - "3"
+      - --maxmemory
+      - "100mb"
+      - --maxclients
+      - "500"
+      - --maxmemory-policy
+      - "allkeys-lru"
+      - --save
+      - ""
+      - --tcp-backlog
+      - "256"
+      - --requirepass
+      - "${MAYAN_REDIS_PASSWORD:-mayanredispassword}"
+    image: redis:${MAYAN_DOCKER_REDIS_TAG:-6.2-alpine}
+    networks:
+      - psp
+    profiles:
+      - redis
+      - all
+    restart: unless-stopped
+    volumes:
+      - ${MAYAN_REDIS_VOLUME:-redis}:/data
+
+  # Enable to run standalone workers
+  mountindex:
+    <<: *mayan-container
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - "/dev/fuse:/dev/fuse"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - 'mkdir --parents /mnt/index && chown mayan:mayan /mnt/index && /usr/local/bin/entrypoint.sh run_command "mountindex --allow-other creation_date /mnt/index"' # Replace "creation_date" with the index of your choice.
+    profiles:
+      - mountindex
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - type: bind
+        source: /mnt/mayan_indexes/creation_date # Host location where the index will show up.
+        target: /mnt/index # Location inside the container where the index will be mounted. Must the same is in the "entrypoint" section.
+        bind:
+          propagation: shared
+
+  # Run a separate class A worker
+  worker_a:
+    <<: *mayan-container
+    command:
+      - run_worker
+      - worker_a
+      - "--prefetch-multiplier=1"
+    profiles:
+      - extra_worker_a
+      - all
+
+  # Run a separate class B worker
+  worker_b:
+    <<: *mayan-container
+    command:
+      - run_worker
+      - worker_b
+      - "--prefetch-multiplier=1"
+    profiles:
+      - extra_worker_b
+      - all
+
+  # Run a separate class C worker
+  worker_c:
+    <<: *mayan-container
+    command:
+      - run_worker
+      - worker_c
+      - "--prefetch-multiplier=1"
+    profiles:
+      - extra_worker_c
+      - all
+
+  # Run a separate class D worker
+  worker_d:
+    <<: *mayan-container
+    command:
+      - run_worker
+      - worker_d
+      - "--concurrency=1 --prefetch-multiplier=1"
+    profiles:
+      - extra_worker_d
+      - all
+
+  worker_custom_queue:
+    <<: *mayan-container
+    command:
+      - /bin/sh
+      - -c
+      - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
+    profiles:
+      - extra_worker_custom
+      - all
+
+  # Run a separate Celery beat container
+  celery_beat:
+    <<: *mayan-container
+    command:
+      - run_celery
+      - "beat --pidfile= --loglevel=ERROR"
+    profiles:
+      - extra_celery_beat
+      - all
+
+  command_initialsetup_or_performupgrade:
+    <<: *mayan-container
+    command:
+      - run_initialsetup_or_performupgrade
+    profiles:
+      - extra_command_initialsetup_or_performupgrade
+    restart: "no"
+
+  rabbitmq:
+    image: rabbitmq:${MAYAN_DOCKER_RABBITMQ_TAG:-3.9-management-alpine}
+    environment:
+      RABBITMQ_DEFAULT_USER: ${MAYAN_RABBITMQ_USER:-mayan}
+      RABBITMQ_DEFAULT_PASS: ${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}
+      RABBITMQ_DEFAULT_VHOST: ${MAYAN_RABBITMQ_VHOST:-mayan}
+    networks:
+      - psp
+    # Enable to allow access to the administration interface.
+    # ports:
+    #   - "15672:15672"
+    profiles:
+      - rabbitmq
+      - all
+    restart: unless-stopped
+    volumes:
+      - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq
+volumes:
+  app:
+  elasticsearch:
+  pgadmin:
+  postgres:
+  mountindex:
+  rabbitmq:
+  redis:

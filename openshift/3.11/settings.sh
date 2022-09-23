@@ -1,6 +1,6 @@
 export PROJECT_NAMESPACE="jcxjin"
 
-export GIT_URI="https://github.com/bcgov/PIMS.git"
+export GIT_URI="https://github.com/bcgov/PSP.git"
 export GIT_REF="dev"
 
 # The templates that should not have their GIT references (uri and ref) over-ridden

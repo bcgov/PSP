@@ -1,5 +1,5 @@
-import { useKeycloak } from '@react-keycloak/web';
 import { waitFor } from '@testing-library/react';
+import AppRouter from 'AppRouter';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Footer, Header } from 'components/layout';
@@ -9,12 +9,10 @@ import { AuthStateContextProvider } from 'contexts/authStateContext';
 import { mount } from 'enzyme';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import Login from 'features/account/Login';
-import ManageAccessRequests from 'features/admin/access/ManageAccessRequests';
+import ManageAccessRequestsPage from 'features/admin/access/ManageAccessRequestsPage';
 import AccessRequestPage from 'features/admin/access-request/AccessRequestPage';
-import EditAgencyPage from 'features/admin/agencies/EditAgencyPage';
-import ManageAgencies from 'features/admin/agencies/ManageAgencies';
 import EditUserPage from 'features/admin/edit-user/EditUserPage';
-import ManageUsers from 'features/admin/users/ManageUsers';
+import ManageUsers from 'features/admin/users/ManageUsersPage';
 import { PropertyListView } from 'features/properties/list';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
@@ -24,7 +22,6 @@ import AccessDenied from 'pages/401/AccessDenied';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
 import Test from 'pages/Test.ignore';
 import { act } from 'react-dom/test-utils';
-import AppRouter from 'router';
 import { flushPromises, mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
@@ -35,7 +32,6 @@ jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 describe('PSP routing', () => {
   beforeEach(() => {
-    mockKeycloak([], []);
     fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
   });
 
@@ -46,13 +42,12 @@ describe('PSP routing', () => {
         history={history}
         store={{
           network: {},
-          properties: { parcels: [], draftParcels: [] },
           keycloakReady: true,
           loadingBar: {},
           lookupCode: { lookupCodes: [] },
           tenants: { config: { settings: {} } },
           users: { pagedUsers: { items: [] }, userDetail: {} },
-          agencies: { pagedAgencies: { items: [] }, agencyDetail: {} },
+          organizations: { pagedOrganizations: { items: [] }, organizationDetail: {} },
           accessRequests: { pagedAccessRequests: { items: [] } },
         }}
       >
@@ -68,6 +63,7 @@ describe('PSP routing', () => {
   describe('unauth routes', () => {
     let wrapper: any;
     beforeEach(() => {
+      mockKeycloak({ authenticated: false });
       mockAxios.onAny().reply(200, {});
     });
     afterEach(() => {
@@ -140,18 +136,10 @@ describe('PSP routing', () => {
 
   describe('auth routes', () => {
     beforeEach(() => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          userInfo: {
-            agencies: [1],
-            groups: [Claims.PROPERTY_VIEW],
-            roles: [Claims.PROPERTY_VIEW, Claims.ADMIN_USERS],
-          },
-          subject: 'test',
-          authenticated: true,
-
-          loadUserInfo: jest.fn().mockResolvedValue({}),
-        },
+      mockKeycloak({
+        claims: [Claims.PROPERTY_VIEW, Claims.ADMIN_USERS],
+        roles: [Claims.PROPERTY_VIEW],
+        authenticated: true,
       });
       mockAxios.onAny().reply(200, {});
       delete (window as any).ResizeObserver;
@@ -182,7 +170,7 @@ describe('PSP routing', () => {
       const wrapper = mount(getRouter('/admin/access/requests'));
       await waitFor(async () => {
         wrapper.update();
-        expect(wrapper.find(ManageAccessRequests)).toHaveLength(1);
+        expect(wrapper.find(ManageAccessRequestsPage)).toHaveLength(1);
       });
     });
 
@@ -207,30 +195,6 @@ describe('PSP routing', () => {
       await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(EditUserPage)).toHaveLength(1);
-      });
-    });
-
-    it('displays the admin agencies page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/agencies'));
-      await waitFor(async () => {
-        wrapper.update();
-        expect(wrapper.find(ManageAgencies)).toHaveLength(1);
-      });
-    });
-
-    it('displays the edit agencies page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/agency/1'));
-      await waitFor(async () => {
-        wrapper.update();
-        expect(wrapper.find(EditAgencyPage)).toHaveLength(1);
-      });
-    });
-
-    it('displays the add agencies page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/agency/new'));
-      await waitFor(async () => {
-        wrapper.update();
-        expect(wrapper.find(EditAgencyPage)).toHaveLength(1);
       });
     });
   });

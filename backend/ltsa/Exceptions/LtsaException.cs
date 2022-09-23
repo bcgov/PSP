@@ -1,15 +1,17 @@
-using Pims.Core.Http;
-using Pims.Ltsa.Models;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Pims.Core.Http;
+using Pims.Ltsa.Models;
 
 namespace Pims.Core.Exceptions
 {
     /// <summary>
     /// LtsaException class, provides a way to express HTTP request exceptions that occur.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "S3925:Conform to the recommended serialization pattern.", Justification = "HttpClientRequestException does not fully implement serialization")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1032: Implement standard exception constructors.", Justification = "Class implements constructors with default options")]
     public class LtsaException : HttpClientRequestException
     {
         #region Properties
@@ -25,6 +27,8 @@ namespace Pims.Core.Exceptions
         #endregion
 
         #region Constructors
+        public LtsaException() { }
+
         /// <summary>
         /// Creates a new instance of an LtsaException class, initializes it with the specified arguments.
         /// </summary>
@@ -84,6 +88,8 @@ namespace Pims.Core.Exceptions
         public LtsaException(HttpResponseMessage response, Exception innerException) : base(response, innerException)
         {
         }
+
+
         #endregion
     }
 }

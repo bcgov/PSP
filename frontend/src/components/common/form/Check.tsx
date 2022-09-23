@@ -23,7 +23,7 @@ type OptionalAttributes = {
   as?: React.ElementType;
   /** Short hint that describes the expected value of an <input> element */
   placeholder?: string;
-  /** Adds a custom class to the input element of the <Input> component */
+  /** style to use for the formgroup wrapping the inner element */
   className?: string;
   /** Whether the field is required. Makes the field border blue. */
   required?: boolean;
@@ -31,8 +31,8 @@ type OptionalAttributes = {
   disabled?: boolean;
   /** Use React-Bootstrap's custom form elements to replace the browser defaults */
   custom?: boolean;
-  /** style to use for the formgroup wrapping the inner element */
-  outerClassName?: string;
+  /** Adds a custom class to the input element of the <Input> component */
+  innerClassName?: string;
   /** override the display of the component, default is checkbox. Select radio to display this checkbox as two radio buttons. */
   type?: string;
   /** label of the first radio button */
@@ -58,7 +58,7 @@ export const Check: React.FC<CheckProps> = ({
   as: is, // `as` is reserved in typescript
   placeholder,
   className,
-  outerClassName,
+  innerClassName,
   required,
   disabled,
   type,
@@ -91,7 +91,7 @@ export const Check: React.FC<CheckProps> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', outerClassName)}
+      className={classNames(!!required ? 'required' : '', className)}
     >
       <div className="check-field">
         {!!label && (
@@ -105,7 +105,7 @@ export const Check: React.FC<CheckProps> = ({
             label={radioLabelOne}
             as={asElement}
             name={field}
-            className={className}
+            className={innerClassName}
             required={required}
             disabled={disabled}
             custom={custom}
@@ -129,7 +129,7 @@ export const Check: React.FC<CheckProps> = ({
               label={radioLabelTwo}
               as={asElement}
               name={field}
-              className={className}
+              className={innerClassName}
               required={required}
               disabled={disabled}
               custom={custom}

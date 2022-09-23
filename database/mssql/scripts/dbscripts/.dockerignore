@@ -1,0 +1,9 @@
+*.env
+*.yml
+*.yaml
+*.md
+Dockerfile
+
+
+
+

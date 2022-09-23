@@ -2,7 +2,7 @@
 
 exports[`Page size selector Snapshot matches 1`] = `
 .c0 {
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 
 <div>
@@ -53,7 +53,7 @@ exports[`Page size selector Snapshot matches 1`] = `
         className="Menu-items top"
         style={
           Object {
-            "width": "60px",
+            "width": "10.0rem",
           }
         }
       >

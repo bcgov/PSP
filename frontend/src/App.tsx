@@ -1,33 +1,38 @@
-import './App.scss';
-import './Stepper.scss';
+import 'assets/scss/App.scss';
+import 'assets/scss/Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import AppRouter from 'AppRouter';
+import { ModalContainer } from 'components/common/ModalContainer';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
+import { useUsers } from 'features/admin/users/hooks/useUsers';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import PublicLayout from 'layouts/PublicLayout';
-import OnLoadActions from 'OnLoadActions';
 import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
-import AppRouter from 'router';
 import { useLookupCodes } from 'store/slices/lookupCodes';
-import { useUsers } from 'store/slices/users';
+import { useSystemConstants } from 'store/slices/systemConstants';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const { fetchLookupCodes } = useLookupCodes();
-  const { activateUser } = useUsers();
+  const { fetchSystemConstants } = useSystemConstants();
+  const {
+    activateUser: { execute: activate },
+  } = useUsers();
   useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
-      activateUser();
+      activate();
       fetchLookupCodes();
+      fetchSystemConstants();
     }
-  }, [keycloak, fetchLookupCodes, activateUser]);
+  }, [keycloak, fetchLookupCodes, fetchSystemConstants, activate]);
 
   return (
     <AuthStateContext.Consumer>
@@ -36,7 +41,7 @@ const App = () => {
           return (
             <PublicLayout>
               <Col>
-                <FilterBackdrop show={true}></FilterBackdrop>
+                <LoadingBackdrop show={true}></LoadingBackdrop>
               </Col>
             </PublicLayout>
           );
@@ -45,7 +50,6 @@ const App = () => {
         return (
           <>
             <AppRouter />
-            <OnLoadActions />
             <ToastContainer
               position="top-right"
               autoClose={5000}
@@ -57,6 +61,7 @@ const App = () => {
               draggable
               pauseOnHover
             />
+            <ModalContainer />
           </>
         );
       }}

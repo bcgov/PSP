@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Core.Test;
-using Pims.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -19,8 +19,8 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> Constructor_02 =>
             new List<object[]>
             {
-                new object[] { new Role(Guid.NewGuid(), "role"), null },
-                new object[] { null, new Claim(Guid.NewGuid(), "claim") },
+                new object[] { new PimsRole(Guid.NewGuid(), "role"), null },
+                new object[] { null, new PimsClaim(Guid.NewGuid(), "claim") },
             };
         #endregion
 
@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var roleClaim = new RoleClaim();
+            var roleClaim = new PimsRoleClaim();
 
             // Assert
             roleClaim.RoleId.Should().Be(0);
@@ -44,7 +44,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var roleClaim = new RoleClaim(1, 2);
+            var roleClaim = new PimsRoleClaim(1, 2);
 
             // Assert
             roleClaim.RoleId.Should().Be(1);
@@ -58,26 +58,26 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var role = EntityHelper.CreateRole(Guid.NewGuid(), "role");
-            var claim = new Claim(Guid.NewGuid(), "claim");
+            var claim = new PimsClaim(Guid.NewGuid(), "claim");
 
             // Act
-            var roleClaim = new RoleClaim(role, claim);
+            var roleClaim = new PimsRoleClaim(role, claim);
 
             // Assert
             roleClaim.RoleId.Should().Be(role.Id);
             roleClaim.Role.Should().Be(role);
-            roleClaim.ClaimId.Should().Be(claim.Id);
+            roleClaim.ClaimId.Should().Be(claim.ClaimId);
             roleClaim.Claim.Should().Be(claim);
         }
 
         [Theory]
         [MemberData(nameof(Constructor_02))]
-        public void RoleClaim_Constructor_02_ArgumentNullException(Role role, Claim claim)
+        public void RoleClaim_Constructor_02_ArgumentNullException(PimsRole role, PimsClaim claim)
         {
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new RoleClaim(role, claim));
+            Assert.Throws<ArgumentNullException>(() => new PimsRoleClaim(role, claim));
         }
         #endregion
     }

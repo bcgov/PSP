@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,10 +9,8 @@ using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
-using Pims.Dal.Services.Admin;
 using Pims.Keycloak;
 using Pims.Keycloak.Configuration;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
@@ -37,18 +36,18 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions
                 {
                     Authority = "test",
-                    Users = "test"
+                    Users = "test",
                 },
                 OpenIdConnect = new OpenIdConnectOptions
                 {
                     Token = "test",
-                    UserInfo = "test"
+                    UserInfo = "test",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
-                    Secret = "test"
-                }
+                    Secret = "test",
+                },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
             services.AddScoped((s) => mockConfig.Object);
@@ -75,10 +74,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             // Arrange
             var services = new ServiceCollection();
 
-            var mockPimsService = new Mock<IPimsService>();
+            var mockPimsService = new Mock<IPimsRepository>();
             services.AddScoped((s) => mockPimsService.Object);
-            var mockPimsAdminService = new Mock<IPimsAdminService>();
-            services.AddScoped((s) => mockPimsAdminService.Object);
             var mockMapper = new Mock<IMapper>();
             services.AddScoped((s) => mockMapper.Object);
             var mockLogger = new Mock<ILogger<IPimsKeycloakService>>();
@@ -95,18 +92,18 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Admin = new KeycloakAdminOptions
                 {
                     Authority = "test",
-                    Users = "test"
+                    Users = "test",
                 },
                 OpenIdConnect = new OpenIdConnectOptions
                 {
                     Token = "test",
-                    UserInfo = "test"
+                    UserInfo = "test",
                 },
                 ServiceAccount = new KeycloakServiceAccountOptions
                 {
                     Client = "test",
-                    Secret = "test"
-                }
+                    Secret = "test",
+                },
             };
             mockConfig.Setup(m => m.Value).Returns(options);
             services.AddScoped((s) => mockConfig.Object);
@@ -122,7 +119,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Assert
             result.Should().NotBeNull();
-            result.Count.Should().Be(9);
+            result.Count.Should().Be(8);
             provider.Should().NotBeNull();
             service.Should().NotBeNull();
         }

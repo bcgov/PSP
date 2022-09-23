@@ -9,25 +9,25 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Role, Model.RoleModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
+            config.NewConfig<Entity.PimsRole, Model.RoleModel>()
+                .Map(dest => dest.Id, src => src.RoleId)
+                .Map(dest => dest.Key, src => src.RoleUid)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
-            config.NewConfig<Model.RoleModel, Entity.Role>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
+            config.NewConfig<Model.RoleModel, Entity.PimsRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
+                .Map(dest => dest.RoleUid, src => src.Key)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Api.Models.BaseModel, Entity.IBaseEntity>();
 
-            config.NewConfig<KModel.GroupModel, Entity.Role>()
+            config.NewConfig<KModel.GroupModel, Entity.PimsRole>()
                 .Map(dest => dest.KeycloakGroupId, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name);
         }

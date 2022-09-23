@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -11,21 +11,11 @@ namespace Pims.Core.Test
         /// <summary>
         /// Create a new instance of an AccessRequest for a default user.
         /// </summary>
-        /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest()
-        {
-            return CreateAccessRequest(1);
-        }
-
-        /// <summary>
-        /// Create a new instance of an AccessRequest for a default user.
-        /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest(int id)
+        public static Entity.PimsAccessRequest CreateAccessRequest(long id)
         {
-            var user = EntityHelper.CreateUser("test");
-            return CreateAccessRequest(id, user);
+            return CreateAccessRequest(id, null, null, null, null, null);
         }
 
         /// <summary>
@@ -33,30 +23,34 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <param name="user"></param>
+        /// <param name="role"></param>
+        /// <param name="organization"></param>
         /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest(int id, Entity.User user)
+        public static Entity.PimsAccessRequest CreateAccessRequest(long id, Entity.PimsUser user = null, Entity.PimsRole role = null, Entity.PimsOrganization organization = null, Entity.PimsRegion region = null, Entity.PimsAccessRequestStatusType status = null)
         {
-            var accessRequest = new Entity.AccessRequest()
+            user ??= EntityHelper.CreateUser("test");
+            role ??= user.PimsUserRoles.FirstOrDefault().Role ?? EntityHelper.CreateRole("test role");
+            region ??= user?.PimsRegionUsers?.FirstOrDefault()?.RegionCodeNavigation ?? new Entity.PimsRegion() { Id = 1 };
+            status ??= new Entity.PimsAccessRequestStatusType() { AccessRequestStatusTypeCode = "Received" };
+            var accessRequest = new Entity.PimsAccessRequest()
             {
-                Id = id,
+                AccessRequestId = id,
                 UserId = user.Id,
-                User = user
+                User = user,
+                RoleId = role.Id,
+                Role = role,
+                RegionCode = region.Code,
+                RegionCodeNavigation = region,
+                AccessRequestStatusTypeCode = status.AccessRequestStatusTypeCode,
+                AccessRequestStatusTypeCodeNavigation = status,
             };
-
-            accessRequest.AgenciesManyToMany.Add(new Entity.AccessRequestAgency()
+            organization ??= user.PimsUserOrganizations.FirstOrDefault().Organization ?? EntityHelper.CreateOrganization(1, "test org");
+            accessRequest.PimsAccessRequestOrganizations.Add(new Entity.PimsAccessRequestOrganization()
             {
                 AccessRequestId = id,
                 AccessRequest = accessRequest,
-                AgencyId = 99,
-                Agency = EntityHelper.CreateAgency(99, "TEST", "access request test agency")
-            });
-
-            accessRequest.RolesManyToMany.Add(new Entity.AccessRequestRole()
-            {
-                AccessRequestId = id,
-                AccessRequest = accessRequest,
-                RoleId = 99,
-                Role = EntityHelper.CreateRole(99, "access request test role")
+                OrganizationId = organization.Id,
+                Organization = organization,
             });
 
             return accessRequest;

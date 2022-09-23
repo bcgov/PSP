@@ -18,62 +18,59 @@ describe('useApiUsers api hook', () => {
     jest.clearAllMocks();
   });
 
-  it('Gets paged users', () => {
-    renderHook(async () => {
-      mockAxios.onPost(`/admin/users/my/agency`).reply(200, {
-        items: [mockAccessRequest],
-        pageIndex: 1,
-        page: 1,
-        quantity: 5,
-        total: 10,
-      } as IPagedItems);
+  const setup = () => {
+    const { result } = renderHook(useApiUsers);
+    return result.current;
+  };
 
-      const api = useApiUsers();
-      const response = await api.getUsersPaged({ page: 1 });
+  it('Gets paged users', async () => {
+    mockAxios.onPost(`/admin/users/filter`).reply(200, {
+      items: [mockAccessRequest],
+      pageIndex: 1,
+      page: 1,
+      quantity: 5,
+      total: 10,
+    } as IPagedItems);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual({
-        items: [mockAccessRequest],
-        pageIndex: 1,
-        page: 1,
-        quantity: 5,
-        total: 10,
-      });
+    const { getUsersPaged } = setup();
+    const response = await getUsersPaged({ page: 1 });
+
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual({
+      items: [mockAccessRequest],
+      pageIndex: 1,
+      page: 1,
+      quantity: 5,
+      total: 10,
     });
   });
-  it('Get detailed user', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f`).reply(200, mockUser);
+  it('Get detailed user', async () => {
+    mockAxios.onGet(`/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f`).reply(200, mockUser);
 
-      const api = useApiUsers();
-      const response = await api.getUser(mockUser.key!);
+    const { getUser } = setup();
+    const response = await getUser(mockUser.guidIdentifierValue!);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockUser);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(mockUser);
   });
 
-  it('Puts an updated user', () => {
+  it('Puts an updated user', async () => {
     const newUser = { ...mockUser, sendEmail: true, addressTo: '' };
-    renderHook(async () => {
-      mockAxios.onPut('/keycloak/users/14c9a273-6f4a-4859-8d59-9264d3cee53f').reply(200, newUser);
-      const api = useApiUsers();
-      const response = await api.putUser(newUser);
+    mockAxios.onPut('/keycloak/users/14c9a273-6f4a-4859-8d59-9264d3cee53f').reply(200, newUser);
+    const { putUser } = setup();
+    const response = await putUser(newUser);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(newUser);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(newUser);
   });
 
-  it('activates a user', () => {
+  it('activates a user', async () => {
     const newUser = { ...mockUser, sendEmail: true, addressTo: '' };
-    renderHook(async () => {
-      mockAxios.onPost('/auth/activate').reply(200, newUser);
-      const api = useApiUsers();
-      const response = await api.activateUser();
+    mockAxios.onPost('/auth/activate').reply(200, newUser);
+    const { activateUser } = setup();
+    const response = await activateUser();
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(newUser);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(newUser);
   });
 });

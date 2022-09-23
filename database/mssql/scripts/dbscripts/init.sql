@@ -1,0 +1,12 @@
+PRINT N'Creating default database'
+CREATE DATABASE pims;
+GO
+USE pims;
+GO
+PRINT N'Adding default admin account'
+CREATE LOGIN $(DB_USER) WITH PASSWORD = '$(DB_PASSWORD)';
+GO
+CREATE USER $(DB_USER) FOR LOGIN $(DB_USER);
+GO
+ALTER SERVER ROLE sysadmin ADD MEMBER [$(DB_USER)];
+GO

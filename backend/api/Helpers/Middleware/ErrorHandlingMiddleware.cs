@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Dal.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Middleware
 {
@@ -31,6 +31,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an ErrorHandlingMiddleware class, and initializes it with the specified arguments.
         /// </summary>
@@ -48,6 +49,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Handle the exception if one occurs.
         /// </summary>
@@ -113,12 +115,12 @@ namespace Pims.Api.Helpers.Middleware
             }
             else if (ex is KeyNotFoundException)
             {
-                code = HttpStatusCode.BadRequest;
+                code = HttpStatusCode.NotFound;
                 message = "Item does not exist.";
 
                 _logger.LogDebug(ex, "Middleware caught unhandled exception.");
             }
-            else if (ex is RowVersionMissingException)
+            else if (ex is ConcurrencyControlNumberMissingException)
             {
                 code = HttpStatusCode.BadRequest;
                 message = "Item cannot be updated without a row version.";
@@ -146,6 +148,13 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "Invalid operation or bad request details.");
             }
+            else if (ex is UserOverrideException)
+            {
+                code = HttpStatusCode.Conflict;
+                message = ex.Message;
+
+                _logger.LogError(ex, "User override required to complete this action.");
+            }
             else if (ex is ApiHttpRequestException)
             {
                 var exception = ex as ApiHttpRequestException;
@@ -166,15 +175,6 @@ namespace Pims.Api.Helpers.Middleware
                     _logger.LogError(streamEx, $"Failed to read the {nameof(ApiHttpRequestException)} error stream.");
                 }
             }
-            else if (ex is ChesException)
-            {
-                var exception = ex as ChesException;
-                code = exception.StatusCode ?? HttpStatusCode.InternalServerError;
-                message = exception.Message;
-                details = exception.Detail;
-
-                _logger.LogError(ex, "CHES unhandled exception.");
-            }
             else if (ex is LtsaException)
             {
                 var exception = ex as LtsaException;
@@ -183,6 +183,13 @@ namespace Pims.Api.Helpers.Middleware
                 details = exception.Detail;
 
                 _logger.LogError(ex, "Ltsa unhandled exception.");
+            }
+            else if (ex is AvException)
+            {
+                code = HttpStatusCode.BadRequest;
+                message = ex.Message;
+
+                _logger.LogError(ex, "clamav unhandled exception.");
             }
             else if (ex is HttpClientRequestException || ex is ProxyRequestException)
             {

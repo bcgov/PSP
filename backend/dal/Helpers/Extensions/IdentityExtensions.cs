@@ -1,11 +1,10 @@
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Security.Claims;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
-using System;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Helpers.Extensions
 {
@@ -22,8 +21,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns>True if the user has any of the permission.</returns>
         public static bool HasPermission(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (permission == null) throw new ArgumentNullException(nameof(permission));
-            if (permission.Length == 0) throw new ArgumentOutOfRangeException(nameof(permission));
+            if (permission == null)
+            {
+                throw new ArgumentNullException(nameof(permission));
+            }
+
+            if (permission.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(permission));
+            }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
             return user.Claims.Any(c => c.Type == ClaimTypes.Role && roles.Contains(c.Value));
@@ -37,8 +43,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns>True if the user has all of the permissions.</returns>
         public static bool HasPermissions(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (permission == null) throw new ArgumentNullException(nameof(permission));
-            if (permission.Length == 0) throw new ArgumentOutOfRangeException(nameof(permission));
+            if (permission == null)
+            {
+                throw new ArgumentNullException(nameof(permission));
+            }
+
+            if (permission.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(permission));
+            }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
             var claims = user.Claims.Where(c => c.Type == ClaimTypes.Role);
@@ -54,7 +67,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, string message = null)
         {
-            if (user == null || !user.Identity.IsAuthenticated) throw new NotAuthorizedException(message);
+            if (user == null || !user.Identity.IsAuthenticated)
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -68,7 +85,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, string role, string message)
         {
-            if (user == null || !user.HasRole(role)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasRole(role))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -82,7 +103,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, Permissions permission, string message = null)
         {
-            if (user == null || !user.HasPermission(permission)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasPermission(permission))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -95,7 +120,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (user == null || !user.HasPermission(permission)) throw new NotAuthorizedException();
+            if (user == null || !user.HasPermission(permission))
+            {
+                throw new NotAuthorizedException();
+            }
+
             return user;
         }
 
@@ -109,7 +138,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAllAuthorized(this ClaimsPrincipal user, Permissions permission, string message = null)
         {
-            if (user == null || !user.HasPermissions(permission)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasPermissions(permission))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -122,7 +155,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAllAuthorized(this ClaimsPrincipal user, params Permissions[] permission)
         {
-            if (user == null || !user.HasPermissions(permission)) throw new NotAuthorizedException();
+            if (user == null || !user.HasPermissions(permission))
+            {
+                throw new NotAuthorizedException();
+            }
+
             return user;
         }
 
@@ -136,7 +173,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ClaimsPrincipal ThrowIfNotAuthorized(this ClaimsPrincipal user, Permissions[] permission, string message = null)
         {
-            if (user == null || !user.HasPermission(permission)) throw new NotAuthorizedException(message);
+            if (user == null || !user.HasPermission(permission))
+            {
+                throw new NotAuthorizedException(message);
+            }
+
             return user;
         }
 
@@ -150,10 +191,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -171,10 +213,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null)
+            where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -183,27 +226,32 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// A user is supposed to only belong to one child agency or one parent agency.
-        /// While in Keycloak these rules can be broken, we have to assume the first parent agency, or the first child agency is the user's primary.
+        /// A user is supposed to only belong to one child organization or one parent organization.
+        /// While in Keycloak these rules can be broken, we have to assume the first parent organization, or the first child organization is the user's primary.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static Agency GetAgency(this ClaimsPrincipal user, PimsContext context)
+        public static PimsOrganization GetOrganization(this ClaimsPrincipal user, PimsContext context)
         {
-            var agencyIds = user.GetAgencies();
+            var organizationIds = user.GetOrganizations();
 
-            if (agencyIds == null || !agencyIds.Any()) return null;
+            if (organizationIds == null || !organizationIds.Any())
+            {
+                return null;
+            }
 
-            var agencies = context.Agencies.Where(a => agencyIds.Contains(a.Id)).OrderBy(a => a.ParentId);
+            var organizations = context.PimsOrganizations.Where(a => organizationIds.Contains(a.OrganizationId)).OrderBy(a => a.PrntOrganizationId);
 
-            // If one of the agencies is a parent, return it.
-            var parentAgency = agencies.FirstOrDefault(a => a.ParentId == null);
-            if (parentAgency != null)
-                return parentAgency;
+            // If one of the organizations is a parent, return it.
+            var parentOrganization = organizations.FirstOrDefault(a => a.PrntOrganizationId == null);
+            if (parentOrganization != null)
+            {
+                return parentOrganization;
+            }
 
-            // Assume the first agency is their primary
-            return agencies.FirstOrDefault();
+            // Assume the first organization is their primary
+            return organizations.FirstOrDefault();
         }
     }
 }

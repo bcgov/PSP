@@ -1,8 +1,3 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Pims.Core.Exceptions;
-using Pims.Core.Extensions;
-using Pims.Core.Http.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,6 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 
 namespace Pims.Core.Http
 {
@@ -24,10 +24,12 @@ namespace Pims.Core.Http
         #endregion
 
         #region Properties
+
         /// <summary>
         /// get - The configuration options.
         /// </summary>
         public AuthClientOptions AuthClientOptions { get; }
+
         /// <summary>
         /// get - The configuration options.
         /// </summary>
@@ -35,6 +37,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a KeycloakRequestClient class, initializes it with the specified arguments.
         /// </summary>
@@ -60,6 +63,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Make a request to fetch the OpenIdConnect endpoints.
         /// </summary>
@@ -88,22 +92,22 @@ namespace Pims.Core.Http
         ///     OpenIdConnect:Authority
         ///     OpenIdConnect:Client
         ///     OpenIdConnect:Secret
-        ///     OpenIdConnect:Audience
+        ///     OpenIdConnect:Audience.
         /// </summary>
         /// <exception type="Helpers.Exceptions.HttpClientRequestException">If the request fails.</exception>
         /// <returns></returns>
         public async Task<string> RequestAccessToken()
         {
             HttpResponseMessage response;
-            if (_accessToken == null || String.IsNullOrWhiteSpace(_accessToken.AccessToken) || (!String.IsNullOrWhiteSpace(_accessToken.RefreshToken) && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo <= DateTime.UtcNow))
+            if (_accessToken == null || string.IsNullOrWhiteSpace(_accessToken.AccessToken) || (!string.IsNullOrWhiteSpace(_accessToken.RefreshToken) && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo <= DateTime.UtcNow))
             {
                 // If there is no access token, or the refresh token has expired.
                 response = await RequestToken();
             }
             else if (_accessToken != null
-                && !String.IsNullOrWhiteSpace(_accessToken.AccessToken)
+                && !string.IsNullOrWhiteSpace(_accessToken.AccessToken)
                 && _tokenHandler.ReadJwtToken(_accessToken.AccessToken).ValidTo <= DateTime.UtcNow
-                && !String.IsNullOrWhiteSpace(_accessToken.RefreshToken)
+                && !string.IsNullOrWhiteSpace(_accessToken.RefreshToken)
                 && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo > DateTime.UtcNow)
             {
                 // If the access token has expired, but not the refresh token has not expired.
@@ -129,13 +133,14 @@ namespace Pims.Core.Http
         }
 
         #region Service Account Requests
+
         /// <summary>
         /// Make a request to the OpenIdConnect token endpoint as the Service Account.
         /// This requires configuration of the following keys.
         ///     OpenIdConnect:Authority
         ///     OpenIdConnect:Client
         ///     OpenIdConnect:Secret
-        ///     OpenIdConnect:Audience
+        ///     OpenIdConnect:Audience.
         /// </summary>
         /// <returns></returns>
         public async Task<HttpResponseMessage> RequestToken()
@@ -151,7 +156,7 @@ namespace Pims.Core.Http
 
             // Use the configuration settings if available, or make a request to Keycloak for the appropriate endpoint URL.
             var keycloakTokenUrl = this.OpenIdConnectOptions.Token;
-            if (String.IsNullOrWhiteSpace(keycloakTokenUrl))
+            if (string.IsNullOrWhiteSpace(keycloakTokenUrl))
             {
                 var endpoints = await GetOpenIdConnectEndpoints();
                 keycloakTokenUrl = endpoints.Token_endpoint;
@@ -163,10 +168,11 @@ namespace Pims.Core.Http
 
             using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
             var p = new Dictionary<string, string>
-                { { "client_id", client },
+                {
+                    { "client_id", client },
                     { "grant_type", "client_credentials" },
                     { "client_secret", clientSecret },
-                    { "audience", audience }
+                    { "audience", audience },
                 };
             var form = new FormUrlEncodedContent(p);
             form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -190,7 +196,7 @@ namespace Pims.Core.Http
 
             // Use the configuration settings if available, or make a request to Keycloak for the appropriate endpoint URL.
             var keycloakTokenUrl = this.OpenIdConnectOptions.Token;
-            if (String.IsNullOrWhiteSpace(keycloakTokenUrl))
+            if (string.IsNullOrWhiteSpace(keycloakTokenUrl))
             {
                 var endpoints = await GetOpenIdConnectEndpoints();
                 keycloakTokenUrl = endpoints.Token_endpoint;
@@ -202,10 +208,11 @@ namespace Pims.Core.Http
 
             using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
             var p = new Dictionary<string, string>
-                { { "client_id", client },
+                {
+                    { "client_id", client },
                     { "grant_type", "refresh_token" },
                     { "client_secret", clientSecret },
-                    { "refresh_token", refreshToken }
+                    { "refresh_token", refreshToken },
                 };
             var form = new FormUrlEncodedContent(p);
             form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
@@ -215,6 +222,7 @@ namespace Pims.Core.Http
         #endregion
 
         #region Send Methods
+
         /// <summary>
         /// Make a request to the specified 'url', with the specified HTTP 'method', with the specified 'content'.
         /// Make a request to the open id connect server for an authentication token if required.
@@ -223,9 +231,9 @@ namespace Pims.Core.Http
         /// <param name="method"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpContent content = null)
+        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null)
         {
-            return await SendAsync(url, method, new HttpRequestMessage().Headers, content);
+            return await SendAsync(url, method, null, content);
         }
 
         /// <summary>
@@ -237,19 +245,55 @@ namespace Pims.Core.Http
         /// <param name="headers"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        public override Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url)) throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
-            method ??= HttpMethod.Get;
-            headers ??= new HttpRequestMessage().Headers;
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
+            }
 
+            return this.SendInternalAsync(url, method, headers, content);
+        }
+
+        /// <summary>
+        /// Make a request to the specified 'url', with the specified HTTP 'method', with the specified 'content'.
+        /// Make a request to the open id connect server for an authentication token if required.
+        /// Note: Internal implementation to avoid throw on different threads.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <param name="headers"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private async Task<HttpResponseMessage> SendInternalAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content)
+        {
+            method ??= HttpMethod.Get;
+            if (headers == null)
+            {
+                using var message = new HttpRequestMessage();
+                headers = message.Headers;
+
+                headers = await AddAuthorizationHeader(headers);
+                return await base.SendAsync(url, method, headers, content);
+            }
+            else
+            {
+                headers = await AddAuthorizationHeader(headers);
+                return await base.SendAsync(url, method, headers, content);
+            }
+        }
+
+        private async Task<HttpRequestHeaders> AddAuthorizationHeader(HttpRequestHeaders headers)
+        {
             var token = await RequestAccessToken();
 
-            if (!String.IsNullOrWhiteSpace(token)) headers.Add("Authorization", token.ToString());
-
-            return await base.SendAsync(url, method, headers, content);
-
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                headers.Add("Authorization", token.ToString());
+            }
+            return headers;
         }
+
         #endregion
         #endregion
     }

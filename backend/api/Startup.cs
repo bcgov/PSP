@@ -1,3 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using HealthChecks.UI.Client;
 using Mapster;
 using Microsoft.AspNetCore.Authentication;
@@ -17,6 +29,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Pims.Api.Handlers;
 using Pims.Api.Helpers;
 using Pims.Api.Helpers.Authorization;
 using Pims.Api.Helpers.Exceptions;
@@ -24,29 +37,17 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
-using Pims.Ches;
+using Pims.Api.Repositories.Mayan;
+using Pims.Api.Services;
+using Pims.Av;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Dal;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
-using Pims.Notifications;
 using Prometheus;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Pims.Api
 {
@@ -57,20 +58,20 @@ namespace Pims.Api
     public class Startup
     {
         #region Properties
+
         /// <summary>
         /// get - The application configuration settings.
         /// </summary>
-        /// <value></value>
         public IConfiguration Configuration { get; }
 
         /// <summary>
         /// get/set - The environment settings for the application.
         /// </summary>
-        /// <value></value>
         public IWebHostEnvironment Environment { get; }
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instances of a Startup class.
         /// </summary>
@@ -84,6 +85,7 @@ namespace Pims.Api
         #endregion
 
         #region Methods
+
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
@@ -106,7 +108,8 @@ namespace Pims.Api
             });
             services.Configure<JsonSerializerOptions>(options =>
             {
-                options.IgnoreNullValues = jsonSerializerOptions.IgnoreNullValues;
+                options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                 options.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                 options.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
                 options.WriteIndented = jsonSerializerOptions.WriteIndented;
@@ -122,7 +125,8 @@ namespace Pims.Api
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.IgnoreNullValues = jsonSerializerOptions.IgnoreNullValues;
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                     options.JsonSerializerOptions.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
@@ -134,7 +138,7 @@ namespace Pims.Api
             services.AddMvcCore()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.IgnoreNullValues = jsonSerializerOptions.IgnoreNullValues;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = jsonSerializerOptions.DefaultIgnoreCondition;
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                     options.JsonSerializerOptions.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
@@ -164,9 +168,14 @@ namespace Pims.Api
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ValidAlgorithms = new List<string>() { "RS256" },
                     };
-                    if (key.Length > 0) options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(key);
+                    if (key.Length > 0)
+                    {
+                        options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(key);
+                    }
+
                     options.Events = new JwtBearerEvents()
                     {
                         OnTokenValidated = context =>
@@ -182,7 +191,7 @@ namespace Pims.Api
                         OnForbidden = context =>
                         {
                             return Task.CompletedTask;
-                        }
+                        },
                     };
                 });
 
@@ -194,19 +203,22 @@ namespace Pims.Api
             // Generate the database connection string.
             var csBuilder = new SqlConnectionStringBuilder(this.Configuration.GetConnectionString("PIMS"));
             var pwd = this.Configuration["DB_PASSWORD"];
-            if (!String.IsNullOrEmpty(pwd))
+            if (!string.IsNullOrEmpty(pwd))
             {
                 csBuilder.Password = pwd;
             }
 
             services.AddHttpClient();
+            services.AddTransient<LoggingHandler>();
+            services.AddHttpClient("Pims.Api.Logging").AddHttpMessageHandler<LoggingHandler>();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
-            services.AddPimsServices();
+            services.AddPimsDalRepositories();
+            AddPimsApiRepositories(services);
+            AddPimsApiServices(services);
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
-            services.AddChesService(this.Configuration.GetSection("Ches"));
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
-            services.AddNotificationsService(this.Configuration.GetSection("Notifications"));
+            services.AddClamAvService(this.Configuration.GetSection("Av"));
             services.AddSingleton<IAuthorizationHandler, RealmAccessRoleHandler>();
             services.AddTransient<IClaimsTransformation, KeycloakClaimTransformer>();
             services.AddHttpContextAccessor();
@@ -223,7 +235,6 @@ namespace Pims.Api
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new HeaderApiVersionReader("api-version");
-                // options.DefaultApiVersion = new ApiVersion(1, 0);
             });
             services.AddVersionedApiExplorer(options =>
             {
@@ -234,7 +245,6 @@ namespace Pims.Api
                 // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
                 // can also be used to control the format of the API version in route templates
                 options.SubstituteApiVersionInUrl = true;
-
             });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, Helpers.Swagger.ConfigureSwaggerOptions>();
 
@@ -249,7 +259,7 @@ namespace Pims.Api
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Description = "Please enter into field the word 'Bearer' following by space and JWT",
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.ApiKey,
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -259,15 +269,14 @@ namespace Pims.Api
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
+                                Id = "Bearer",
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
                             In = ParameterLocation.Header,
-
                         },
                         new List<string>()
-                    }
+                    },
                 });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -297,10 +306,7 @@ namespace Pims.Api
             if (!env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
             }
-
-            app.UpdateDatabase<Startup>();
 
             var baseUrl = this.Configuration.GetValue<string>("BaseUrl");
             app.UsePathBase(baseUrl);
@@ -314,7 +320,7 @@ namespace Pims.Api
             {
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    options.SwaggerEndpoint(String.Format(this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
+                    options.SwaggerEndpoint(string.Format(this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
                 }
                 options.RoutePrefix = this.Configuration.GetValue<string>("Swagger:RoutePrefix");
             });
@@ -323,8 +329,6 @@ namespace Pims.Api
             app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<LogResponseMiddleware>();
             app.UseMiddleware<ErrorHandlingMiddleware>();
-
-            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors();
@@ -336,18 +340,50 @@ namespace Pims.Api
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Name.Contains("liveliness"),
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Tags.Contains("services"),
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
 
             app.UseEndpoints(config =>
             {
                 config.MapControllers();
             });
+        }
+
+        private static void AddPimsApiRepositories(IServiceCollection services)
+        {
+            services.AddSingleton<IEdmsAuthRepository, MayanAuthRepository>();
+            services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
+            services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
+        }
+
+        /// <summary>
+        /// Add PimsService objects to the dependency injection service collection.
+        /// </summary>
+        /// <param name="services"></param>
+        private static void AddPimsApiServices(IServiceCollection services)
+        {
+            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IDocumentSyncService, DocumentSyncService>();
+            services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
+            services.AddScoped<IPimsService, PimsService>();
+            services.AddScoped<ILeaseService, LeaseService>();
+            services.AddScoped<ILeaseReportsService, LeaseReportsService>();
+            services.AddScoped<ILeaseTermService, LeaseTermService>();
+            services.AddScoped<ILeasePaymentService, LeasePaymentService>();
+            services.AddScoped<ISecurityDepositService, SecurityDepositService>();
+            services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IResearchFileService, ResearchFileService>();
+            services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
         }
         #endregion
     }

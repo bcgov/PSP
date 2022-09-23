@@ -1,9 +1,8 @@
-using ClosedXML.Excel;
-using Pims.Core.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using ClosedXML.Excel;
+using Pims.Core.Helpers;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -23,11 +22,11 @@ namespace Pims.Api.Test.Helpers
                 new object[]
                 {
                     new[] {
-                        new Entity.PropertyType("test1") { Id = 1 },
-                        new Entity.PropertyType("test2") { Id = 2 }
+                        new Entity.PimsPropertyType("test1"),
+                        new Entity.PimsPropertyType("test2"),
                     },
-                    5
-                }
+                    10,
+                },
             };
         #endregion
 

@@ -1,12 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IO;
 using Pims.Core.Extensions;
 using Serilog;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Middleware
 {
@@ -23,6 +22,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of an LogResponseMiddleware class, and initializes it with the specified arguments.
         /// </summary>
@@ -37,6 +37,7 @@ namespace Pims.Api.Helpers.Middleware
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Add a log message for the request.
         /// </summary>
@@ -61,13 +62,18 @@ namespace Pims.Api.Helpers.Middleware
             await _next(context);
 
             context.Response.Body.Seek(0, SeekOrigin.Begin);
-            var body = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            using var reader = new StreamReader(context.Response.Body);
+            var body = await reader.ReadToEndAsync();
             context.Response.Body.Seek(0, SeekOrigin.Begin);
 
             using (_logger.BeginScope("HTTP Response"))
             {
-                if (!Log.IsEnabled(Serilog.Events.LogEventLevel.Debug)) _logger.LogInformation($"HTTP Response {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}{System.Environment.NewLine}");
-                _logger.LogDebug($"HTTP Response {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}" + (String.IsNullOrEmpty(body) ? String.Empty : $"{System.Environment.NewLine}Body: {body}"));
+                if (!Log.IsEnabled(Serilog.Events.LogEventLevel.Debug))
+                {
+                    _logger.LogInformation($"HTTP Response {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}{System.Environment.NewLine}");
+                }
+                _logger.LogDebug($"HTTP Response {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
+                _logger.LogTrace(string.IsNullOrEmpty(body) ? string.Empty : $"{System.Environment.NewLine}Body: {body}");
             }
 
             await responseBody.CopyToAsync(originalBodyStream);

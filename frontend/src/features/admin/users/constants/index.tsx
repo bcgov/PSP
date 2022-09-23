@@ -1,19 +1,35 @@
+import { ReactComponent as Active } from 'assets/images/active.svg';
+import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
 import { ColumnWithProps } from 'components/Table';
-import * as React from 'react';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { DateTimeCell } from 'components/Table/DateCell';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { RowActions } from '../components/RowActions';
-import { IUserRecord } from '../interfaces/IUserRecord';
+import { FormUser } from '../models';
 
-export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
+export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[] => [
+  {
+    Header: 'Active',
+    accessor: 'isDisabled',
+    align: 'left',
+    clickable: true,
+    sortable: true,
+    width: 60,
+    Cell: (props: CellProps<FormUser>) =>
+      props.row.original.isDisabled ? <Inactive /> : <Active />,
+  },
   {
     Header: 'IDIR/BCeID',
-    accessor: 'username',
+    accessor: 'businessIdentifierValue',
     align: 'left',
-    Cell: (props: CellProps<IUserRecord>) => {
-      return <Link to={`/admin/user/${props.row.original.id}`}>{props.row.original.username}</Link>;
+    minWidth: 150,
+    Cell: (props: CellProps<FormUser>) => {
+      return (
+        <Link to={`/admin/user/${props.row.original.id}`}>
+          {props.row.original.businessIdentifierValue}
+        </Link>
+      );
     },
     sortable: true,
   },
@@ -26,7 +42,7 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
   },
   {
     Header: 'Last name',
-    accessor: 'lastName',
+    accessor: 'surname',
     align: 'left',
     clickable: true,
     sortable: true,
@@ -46,49 +62,44 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
     clickable: true,
     sortable: true,
   },
-  {
-    Header: 'Active',
-    accessor: 'isDisabled',
-    align: 'left',
-    clickable: true,
-    sortable: true,
-    width: 100,
-    Cell: (props: CellProps<IUserRecord>) =>
-      props.row.original.isDisabled ? <FaTimes /> : <FaCheck />,
-  },
-  {
-    Header: 'Agency',
-    accessor: 'agency',
-    align: 'left',
-    sortable: true,
-    clickable: true,
-    minWidth: 200,
-  },
+
   {
     Header: 'Roles',
     accessor: 'roles',
     align: 'left',
     clickable: true,
     minWidth: 200,
+    Cell: (props: CellProps<FormUser>) => {
+      const rolesString = props.row?.original?.roles?.map(userRole => userRole?.name);
+      return rolesString?.join(', ');
+    },
   },
   {
-    Header: 'Last Login',
+    Header: 'MoTI region(s)',
+    accessor: 'regions',
+    align: 'left',
+    clickable: true,
+    minWidth: 200,
+    Cell: (props: CellProps<FormUser>) => {
+      const regionsString = props.row?.original?.regions?.map(
+        regionUser => regionUser?.description,
+      );
+      return regionsString?.join(', ');
+    },
+  },
+  {
+    Header: 'Last login',
     accessor: 'lastLogin',
     align: 'left',
     clickable: true,
     minWidth: 100,
-  },
-  {
-    Header: 'Created On',
-    accessor: 'createdOn',
-    align: 'left',
-    clickable: true,
-    sortable: true,
-    minWidth: 100,
+    Cell: DateTimeCell,
   },
   {
     Header: ' ',
-    Cell: RowActions,
+    Cell: (props: CellProps<FormUser>) => {
+      return <RowActions {...props} refresh={refresh} />;
+    },
     width: 75,
   },
 ];

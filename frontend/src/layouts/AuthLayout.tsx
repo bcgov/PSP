@@ -1,18 +1,13 @@
-import './AuthLayout.scss';
-
-import { AppNavBar } from 'components/layout';
+import { SideNavBar } from 'components/layout';
+import { SidebarStateContextProvider } from 'components/layout/SideNavBar/SideNavbarContext';
 import { AuthStateContext } from 'contexts/authStateContext';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
+import styled from 'styled-components';
 
 import PublicLayout from './PublicLayout';
 
 const AuthLayout: React.FC = ({ children }) => {
-  const { obj: keycloak } = useKeycloakWrapper();
   return (
     <AuthStateContext.Consumer>
       {context => {
@@ -21,24 +16,24 @@ const AuthLayout: React.FC = ({ children }) => {
         }
 
         return (
-          <PublicLayout>
-            {!!keycloak?.authenticated && (
-              <Container fluid className="App-navbar px-0">
-                <Container className="px-0">
-                  <AppNavBar />
-                </Container>
-              </Container>
-            )}
-            <Container fluid className="d-flex flex-column flex-grow-1" style={{ padding: 0 }}>
-              <Row className="w-100 h-100" noGutters>
-                <Col>{children}</Col>
-              </Row>
-            </Container>
-          </PublicLayout>
+          <SidebarStateContextProvider>
+            <PublicLayout className="authenticated">
+              <SideNavBar />
+              <Content className="content">{children}</Content>
+            </PublicLayout>
+          </SidebarStateContextProvider>
         );
       }}
     </AuthStateContext.Consumer>
   );
 };
+
+const Content = styled.div`
+  grid-area: content;
+  overflow: hidden;
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
+`;
 
 export default AuthLayout;

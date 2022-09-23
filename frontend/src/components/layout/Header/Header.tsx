@@ -1,12 +1,12 @@
 import { BCGovLogo } from 'components/common/BCGovLogo';
 import { VerticalBar } from 'components/common/VerticalBar';
+import HelpContainer from 'features/help/containers/HelpContainer';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import values from 'lodash/values';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaBomb } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { useTenant } from 'tenants';
@@ -21,27 +21,23 @@ import { UserProfile } from './UserProfile';
  * @returns Header component.
  */
 export const Header = () => {
-  const history = useHistory();
   const keycloak = useKeycloakWrapper();
-  if (history.location.pathname === '/') {
-    history.replace('/mapview');
-  }
   const [show, setShow] = React.useState(false);
   const handleShow = () => setShow(true);
   const tenant = useTenant();
 
   const errors = useAppSelector(state => {
-    const errors: IGenericNetworkAction[] = [];
+    const networkErrors: IGenericNetworkAction[] = [];
     values(state).forEach(reducer => {
       values(reducer)
         .filter(x => x instanceof Object)
         .forEach(action => {
           if (isNetworkError(action)) {
-            errors.push(action);
+            networkErrors.push(action);
           }
         });
     });
-    return errors;
+    return networkErrors;
   });
   return (
     <HeaderStyled expand className="App-header">
@@ -58,6 +54,7 @@ export const Header = () => {
           <h1 className="shortAppName">{tenant.shortName}</h1>
         </Nav.Item>
       </Nav>
+      <HelpContainer />
       {keycloak.obj.authenticated && <UserProfile />}
       <Nav className="other">
         {errors && errors.length ? (

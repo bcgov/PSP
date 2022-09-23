@@ -1,11 +1,11 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Helpers.Extensions
@@ -25,11 +25,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
-            parcel.ThrowIfNotAllowedToEdit("paramName", user, "role");
+            property.ThrowIfNotAllowedToEdit("paramName", user, "role");
 
             // Assert
             Assert.True(true); // It didn't throw a NotAuthorizedException.
@@ -41,12 +41,12 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Parcel)null, "paramName", user, "role"));
+            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((PimsProperty)null, "paramName", user, "role"));
         }
 
         [Fact]
@@ -55,12 +55,12 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, "test"));
+            Assert.Throws<NotAuthorizedException>(() => property.ThrowIfNotAllowedToEdit("paramName", user, "test"));
         }
         #endregion
 
@@ -71,11 +71,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
-            parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.PropertyEdit);
+            property.ThrowIfNotAllowedToEdit("paramName", user, Permissions.PropertyEdit);
 
             // Assert
             Assert.True(true); // It didn't throw a NotAuthorizedException.
@@ -87,12 +87,12 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Parcel)null, "paramName", user, Permissions.PropertyEdit));
+            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((PimsProperty)null, "paramName", user, Permissions.PropertyEdit));
         }
 
         [Fact]
@@ -101,12 +101,12 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.AdminProjects));
+            Assert.Throws<NotAuthorizedException>(() => property.ThrowIfNotAllowedToEdit("paramName", user, Permissions.AdminProjects));
         }
         #endregion
 
@@ -117,11 +117,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
-            parcel.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd });
+            property.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd });
 
             // Assert
             Assert.True(true); // It didn't throw a NotAuthorizedException.
@@ -133,12 +133,12 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Parcel)null, "paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }));
+            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((PimsProperty)null, "paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }));
         }
 
         [Fact]
@@ -147,12 +147,12 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyView, Permissions.PropertyAdd }));
+            Assert.Throws<NotAuthorizedException>(() => property.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyView, Permissions.PropertyAdd }));
         }
 
         [Fact]
@@ -161,33 +161,33 @@ namespace Pims.Dal.Test.Helpers.Extensions
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = 1;
+            var property = EntityHelper.CreateProperty(123);
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }, true));
+            Assert.Throws<NotAuthorizedException>(() => property.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }, true));
         }
         #endregion
 
-        #region SetOriginalRowVersion
+        #region SetOriginalConcurrencyControlNumber
         [Fact]
-        public void SetOriginalRowVersion_Success()
+        public void SetOriginalConcurrencyControlNumber_Success()
         {
             // Arrange
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var context = helper.InitializeDatabase(user);
-            var parcel = context.CreateParcel(123);
+            var property = context.CreateProperty(123);
             context.SaveChanges();
-            parcel.RowVersion = 2;
+            property.ConcurrencyControlNumber = 2;
 
             // Act
-            parcel.SetOriginalRowVersion(context);
+            property.SetOriginalConcurrencyControlNumber(context);
 
             // Assert
-            context.Entry(parcel).OriginalValues[nameof(BaseEntity.RowVersion)].Should().BeEquivalentTo(parcel.RowVersion);
-            context.Entry(parcel).CurrentValues[nameof(BaseEntity.RowVersion)].Should().BeEquivalentTo(parcel.RowVersion);
+            context.Entry(property).OriginalValues[nameof(IBaseEntity.ConcurrencyControlNumber)].Should().BeEquivalentTo(property.ConcurrencyControlNumber);
+            context.Entry(property).CurrentValues[nameof(IBaseEntity.ConcurrencyControlNumber)].Should().BeEquivalentTo(property.ConcurrencyControlNumber);
         }
         #endregion
         #endregion

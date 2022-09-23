@@ -1,14 +1,14 @@
-import { ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
+import { LtsaOrders, ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import React from 'react';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the ltsa endpoints.
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiLtsa = () => {
-  const api = useApi();
+  const api = useAxiosApi();
 
   return React.useMemo(
     () => ({
@@ -16,6 +16,7 @@ export const useApiLtsa = () => {
         api.get<TitleSummary[]>(`/tools/ltsa/summaries?pid=${pid}`),
       getParcelInfo: (pid: string) =>
         api.post<ParcelInfoOrder>(`/tools/ltsa/order/parcelInfo?pid=${pid}`),
+      getLtsaOrders: (pid: string) => api.post<LtsaOrders>(`/tools/ltsa/all?pid=${pid}`),
     }),
     [api],
   );

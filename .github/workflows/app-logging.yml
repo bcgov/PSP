@@ -2,15 +2,17 @@ name: PIMS Logging CI
 
 on:
   push:
-    branches: [master, dev, test]
+    branches: [master, test, dev]
   pull_request:
-    branches: [master, dev, test]
+    branches: [master, test, dev]
+
 
 jobs:
 
   build:
 
-    name: pims-logging
+    name: build-logging
+    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test' || github.event.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     env:
       SLEEP_TIME: 60
@@ -31,6 +33,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Set ENV variable
+      run: |
+        if [[ ${{github.event.ref}} == 'refs/heads/test' ]]; then
+            echo "FRONTEND_APP_NAME=pims-app-test" >> $GITHUB_ENV
+            echo "API_NAME=pims-api-test" >> $GITHUB_ENV
+        elif [[ ${{github.event.ref}} == 'refs/heads/master' ]]; then
+           echo "FRONTEND_APP_NAME=pims-app-uat" >> $GITHUB_ENV
+           echo "API_NAME=pims-api-uat" >> $GITHUB_ENV
+           echo "PROJECT_NAMESPACE=3cd915-test" >> $GITHUB_ENV
+        else
+            echo "FRONTEND_APP_NAME=pims-app" >> $GITHUB_ENV
+            echo "API_NAME=pims-api" >> $GITHUB_ENV
+        fi
     - name: Build the pims-logging docker-compose stack
       run: docker-compose -f docker-compose.yml up -d
       working-directory: ${{env.working-directory}}
@@ -41,14 +56,18 @@ jobs:
     - name: Check Extracted Logs
       run: |
         docker cp pims-logging:/logging/. . 
+        exitcode=$(docker inspect pims-logging --format='{{.State.ExitCode}}')
         if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A pims* && rm -f pims*
+        elif [[ $exitcode == 0 ]]; then
+            echo "Info: No log captured between sleep time"
         else
             echo "There's an error capturing pims logs" && exit 1
         fi
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
+      if: always()
       run: docker logs pims-logging
     - name: Stop containers
       if: always()

@@ -16,12 +16,7 @@ def RELEASE_VERSION = ''
 
 pipeline {
   agent any
-  options {
-    disableResume()
-	disableConcurrentBuilds()
-    buildDiscarder(logRotator(numToKeepStr: '5')) // keep 5 builds only
-  }
-  environment {
+    environment {
     CI = 'true'
 
     // The name of the project namespace(s).
@@ -32,11 +27,6 @@ pipeline {
     FRONTEND_DIRECTORY = 'frontend'
     MAINTENANCE_DIRECTORY = 'maintenance'
     DEVOPS_DIRECTORY = 'openshift/4.0'
-
-    // SonarQube configuration
-    SONARQUBE_URL_INT = 'http://sonarqube:9000'
-    SONARQUBE_TOKEN_SECRET = 'sonarqube-token'
-    SONARQUBE_TOKEN_KEY = 'token'
 
     // Rocket.Chat Configuration
     ROCKET_CHAT_SECRET = 'rocket-chat-secrets'
@@ -81,6 +71,18 @@ pipeline {
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-false}"', returnStdout: true).trim()
   }
 
+  options {
+    disableResume()
+	disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '5')) // keep 5 builds only
+        office365ConnectorWebhooks([
+      [
+        startNotification: true //send notification on job start
+      ]
+    ])
+  }
+
+
   stages {
     stage('Initialize') {
       steps {
@@ -99,10 +101,13 @@ pipeline {
           // [add more secrets here if needed...]
           // env.ROCKET_DEPLOY_WEBHOOK = sh(script: "oc extract --to=- --keys=${ROCKET_CHAT_WEBHOOK_KEY} secret/${ROCKET_CHAT_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
           env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/${MS_TEAMS_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
-          env.SONAR_TOKEN = sh(script: "oc extract --to=- --keys=${SONARQUBE_TOKEN_KEY} secret/${SONARQUBE_TOKEN_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
 
           // initialize CI environment values
           env.CHANGELOG = commonPipeline.getChangeLog()
+
+          //get branch and triggered by name
+          BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
+          env.BRANCH_NAME = "${env.GIT_BRANCH.replaceFirst(/^.*\//, '')}"
 
           // whether Build and Deploy stage should be skipped
           def api_changes = commonPipeline.hasDirectoryChanged('backend').toString()
@@ -125,138 +130,30 @@ pipeline {
         }
       }
     }
-
-    stage('Approval Prompt') {
-      when {
-        beforeInput true
-        expression { new Boolean(env.APPROVAL_REQUIRED) }
-      }
-      options { timeout(time: 1, unit: 'HOURS') }
-      input {
-        message "Proceed with deployment to [${DESTINATION}] ?"
-        ok 'Yes, go ahead'
-      }
-      steps {
-        echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
-      }
-    }
-
-    stage('Version Prompt') {
-      when {
-        expression { new Boolean(env.ENABLE_VERSION_PROMPT) }
-      }
+  stage('Release Version') {
       steps {
         script {
-          timeout(time: 5, unit: 'MINUTES') {
-            def version = input(message: 'Enter the version tag for this release', parameters: [
-              string(name: 'RELEASE VERSION', defaultValue: '', description: '')
-            ])
-            if (version != '') {
-              RELEASE_VERSION = version
-            } else {
-              error '***  No release version specified. Aborting pipeline.  ***'
+          if (env.BRANCH_NAME  != 'dev') {
+            version = sh(
+              returnStdout: true,
+              script: 'git describe --tags `git rev-list --tags --max-count=1`'
+            ).trim()
+            if (version != ''){
+              RELEASE_VERSION = version  + "-" + OC_JOB_NAME //release version convention e.g Release-OC_JOB_NAME pims-api:v0.2.0.7.3-test or pims-api:v0.2.0.7.3-master
             }
+            else{
+              error('***  No release version found. Aborting pipeline.  ***') //abort build if no release version is found for test, uat and prod
+            }
+
+          } else {
+            RELEASE_VERSION = 'latest-dev' //dev will use latest as there's no release version for developement
           }
+          
         }
       }
     }
 
-    // stage('Force Build?') {
-    //   when {
-    //     expression { new Boolean(env.SKIP_BUILD) == true }
-    //   }
-    //   steps {
-    //     script {
-    //       try {
-    //         timeout(time: 2, unit: 'MINUTES') {
-    //           input(message: 'No code changes detected. Should we force the Build?', ok: 'Yes, we should')
-    //         }
-    //         env.SKIP_BUILD = 'false'
-    //       } catch (err) {
-    //         echo '[ci/cd]  No code changes. Skipping the Build stage...'
-    //         env.SKIP_BUILD = 'true'
-    //       }
-    //     }
-    //   }
-    // }
-
-    // The ZAP scripts are installed on the root of the jenkins-slave-zap image.
-    // When running ZAP from there the reports will be created in /zap/wrk/ by default.
-    // ZAP has problems with creating the reports directly in the Jenkins
-    // working directory, so they have to be copied over after the fact.
-
-    stage('OWASP Scan') {
-      agent { label 'owasp-zap' }
-      steps {
-        script {
-          sh 'mkdir -p zap-output'
-          def return_code = sh returnStatus: true, script: "/zap/zap-baseline.py -x zap-report.xml -r zap-report.html -t $VANITY_URL -j"
-          sh 'cp /zap/wrk/zap-report.* ./zap-output/'
-          echo "Exit value was - $return_code"
-        }
-      }
-      post {
-        always {
-          publishHTML([
-            allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true,
-            reportDir: '/zap/wrk', reportFiles: 'zap-report.html', reportName: 'OWASP ZAP Scan', reportTitles: 'OWASP ZAP Scan'
-          ])
-          stash name: 'zap', includes: 'zap-output/*'
-        }
-      }
-    }
-
-
-    // stage('Tests') {
-      // when {
-      //   expression { new Boolean(env.SKIP_BUILD) == false }
-      // }
-      // options { timeout(time: 20, unit: 'MINUTES') }
-      // failFast true
-      // parallel {
-      //   stage('Test Frontend') {
-      //     agent { label 'jenkins-slave-npm' }
-      //     steps {
-      //       script {
-      //         // pull code
-      //         checkout scm
-
-      //         echo 'Preparing the report for the publishing ...'
-      //         unstash name: 'zap'
-
-      //         commonPipeline.runFrontendTests()
-
-      //         dir(DEVOPS_DIRECTORY) {
-      //           sh "ZAP_REPORT=${WORKSPACE}/zap-output/zap-report.xml HTML_ZAP_REPORT=${WORKSPACE}/zap-output/zap-report.html ./player.sh scan ${OC_JOB_NAME} -apply"
-      //         }
-      //         echo 'Frontend lint checks and tests passed'
-      //       }
-      //     }
-      //     post {
-      //       failure {
-      //         error '*** Frontend lint checks and tests failed ***'
-      //       }
-      //     }
-      //   }
-      //   stage('Test Backend') {
-      //     agent { label 'jenkins-slave-dotnet' }
-      //     steps {
-      //       script {
-      //         dir(DEVOPS_DIRECTORY) {
-      //           sh "./player.sh scan-dotnet ${OC_JOB_NAME} -apply"
-      //         }
-      //         echo 'Backend tests passed'
-      //       }
-      //     }
-      //     post {
-      //       failure {
-      //         error '*** Backend tests failed ***'
-      //       }
-      //     }
-      //   }
-      // }
-    // }
-
+    //Test stage is perform using github action
     stage('Build') {
       when {
         expression { new Boolean(env.SKIP_BUILD) == false }
@@ -296,7 +193,23 @@ pipeline {
         echo '...'
       }
     }
+    stage('Approve Deployment') {
+      when {
+        beforeInput true
+         expression { 
+             DESTINATION == 'uat' //only ask for approval for UAT and PROD DESTINATION
+             }
+      }
+      steps {
+        script {
+          timeout(time: 20, unit: 'MINUTES') {
+            def val = input(message: "Deploy Release version $RELEASE_VERSION to $DESTINATION?" , ok: 'Yes, go ahead')
+            echo "${RELEASE_VERSION} has been approved for deployment. Proceeding..."
+          }
 
+        }
+      }
+    }
     stage('Deploy') {
       when {
         expression { new Boolean(env.SKIP_BUILD) == false }
@@ -306,14 +219,15 @@ pipeline {
         script {
           def img_backend = "${APP_NAME}-api"
           def img_frontend = "${APP_NAME}-app"
+          def img_tag = "latest-${DESTINATION}" // image tag on build config is based on environment, e.g. latest-dev, latest-test, latest-uat
 
-          // tag release version (if provided)
+          // tag release version (if found)
           if (RELEASE_VERSION != '') {
-            echo "Tagging images - ${img_backend}:latest, ${img_frontend}:latest..."
-            sh "oc tag ${img_backend}:latest ${img_backend}:${RELEASE_VERSION}"
-            sh "oc tag ${img_frontend}:latest ${img_frontend}:${RELEASE_VERSION}"
+            echo "Tagging images - ${img_backend}:latest-env, ${img_frontend}:latest-env"
+            sh "oc tag ${img_backend}:${img_tag} ${img_backend}:${RELEASE_VERSION}"
+            sh "oc tag ${img_frontend}:${img_tag} ${img_frontend}:${RELEASE_VERSION}"
           } else {
-            RELEASE_VERSION = 'latest'
+            RELEASE_VERSION="${img_tag}"
           }
 
           dir(DEVOPS_DIRECTORY) {
@@ -334,13 +248,24 @@ pipeline {
     success {
       script {
         if (new Boolean(env.SKIP_BUILD) == false) {
-          notify.success(APP_NAME.toUpperCase(), RELEASE_VERSION, DESTINATION.toUpperCase(), NOTIFICATION_WEBHOOK_URL)
+		  def upperDestination = "${DESTINATION}".toString().toUpperCase()
+          office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
+          message: "Application has been [deployed to ${upperDestination}](${VANITY_URL})",
+          status: 'Success',
+          color: '#00FF00', //green
+          factDefinitions: [
+            [name: "Release version", template: "${RELEASE_VERSION}"],
+            [name: "Remarks", template: "${BUILD_TRIGGER_BY}"]
+          ]
         }
       }
     }
     failure {
       script {
-        notify.failure(APP_NAME.toUpperCase(), RELEASE_VERSION, DESTINATION.toUpperCase(), NOTIFICATION_WEBHOOK_URL)
+          office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
+          factDefinitions: [
+            [name: "Release version", template: "${RELEASE_VERSION}"]
+          ]
       }
     }
   } // post-stages

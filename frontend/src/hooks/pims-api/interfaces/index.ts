@@ -7,3 +7,6 @@ export * from './IHealthReady';
 // Tenants
 export * from './IApiTenants';
 export * from './ITenantConfig';
+
+// API pagination endpoints (search, etc)
+export * from './IPaginateRequest';

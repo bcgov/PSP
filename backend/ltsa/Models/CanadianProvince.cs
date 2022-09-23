@@ -16,9 +16,11 @@ namespace Pims.Ltsa.Models
     /// Canadian Province
     /// </summary>
     /// <value>Canadian Province</value>
+    [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum CanadianProvince
     {
+        Unknown = 0,
         /// <summary>
         /// Enum ABALBERTA for value: AB - ALBERTA
         /// </summary>

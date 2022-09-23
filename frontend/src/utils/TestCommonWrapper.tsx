@@ -1,7 +1,9 @@
 import { useKeycloak } from '@react-keycloak/web';
+import ModalContainer from 'components/common/ModalContainer';
+import { ModalContextProvider } from 'contexts/modalContext';
 import { MemoryHistory } from 'history';
-import { IRole } from 'interfaces';
-import { IAgency } from 'interfaces/agency';
+import { IOrganization } from 'interfaces';
+import noop from 'lodash/noop';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -14,8 +16,9 @@ jest.mock('@react-keycloak/web');
 
 interface TestProviderWrapperParams {
   store?: any;
-  agencies?: IAgency[];
-  roles?: IRole[];
+  organizations?: IOrganization[];
+  claims?: string[];
+  roles?: string[];
   history?: MemoryHistory;
 }
 
@@ -26,16 +29,18 @@ interface TestProviderWrapperParams {
 const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
   children,
   store,
+  claims,
   roles,
-  agencies,
+  organizations,
   history,
 }) => {
-  if (!!roles || !!agencies) {
+  if (!!roles || !!claims || !!organizations) {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
-          agencies: agencies ?? [1],
-          roles: roles ?? [],
+          organizations: organizations ?? [1],
+          roles: claims ?? [],
+          groups: roles ?? [],
           email: 'test@test.com',
           name: 'Chester Tester',
         },
@@ -52,15 +57,18 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
           <TestProviderWrapper store={store}>
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css: {} }}>
-                <ToastContainer
-                  autoClose={5000}
-                  hideProgressBar
-                  newestOnTop={false}
-                  closeOnClick={false}
-                  rtl={false}
-                  pauseOnFocusLoss={false}
-                />
-                {children}
+                <ModalContextProvider setModalProps={noop} setDisplayModal={noop}>
+                  <ToastContainer
+                    autoClose={5000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                  />
+                  <ModalContainer />
+                  {children}
+                </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>
           </TestProviderWrapper>

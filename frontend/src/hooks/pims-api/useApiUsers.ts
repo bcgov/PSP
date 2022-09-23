@@ -1,10 +1,11 @@
 import { IPaginateParams } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
-import { IPagedItems, IUser, IUserDetails } from 'interfaces';
+import { IPagedItems, IUser } from 'interfaces';
 import React from 'react';
 
-import { useApi } from '.';
+import { Api_User } from './../../models/api/User';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the user endpoints.
@@ -18,17 +19,18 @@ const userToasts: LifecycleToasts = {
 };
 
 export const useApiUsers = () => {
-  const api = useApi();
-  const apiWithToasts = useApi({ lifecycleToasts: userToasts });
+  const api = useAxiosApi();
+  const apiWithToasts = useAxiosApi({ lifecycleToasts: userToasts });
 
   return React.useMemo(
     () => ({
-      activateUser: () => api.post('/auth/activate'),
-      getUser: (key: string) => api.get<IUserDetails>(`/admin/users/${key}`),
+      activateUser: () => api.post<IUser>('/auth/activate'),
+      getUser: (key: string) => api.get<Api_User>(`/admin/users/${key}`),
+      getUserInfo: (key: string) => api.get<Api_User>(`/users/info/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
-        api.post<IPagedItems<IUser>>(`/admin/users/my/agency`, params),
-      putUser: (user: IUserDetails) =>
-        apiWithToasts.put<IUser>(`/keycloak/users/${user.key}`, user),
+        api.post<IPagedItems<Api_User>>(`/admin/users/filter`, params),
+      putUser: (user: Api_User) =>
+        apiWithToasts.put<Api_User>(`/keycloak/users/${user.guidIdentifierValue}`, user),
     }),
     [api, apiWithToasts],
   );

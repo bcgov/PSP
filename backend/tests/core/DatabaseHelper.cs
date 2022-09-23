@@ -1,18 +1,17 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Options;
-using Moq;
-using Pims.Core.Extensions;
-using Pims.Core.Helpers;
-using Pims.Dal;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Options;
+using Moq;
+using Pims.Core.Helpers;
+using Pims.Dal;
+using Pims.Dal.Security;
 
 namespace Pims.Core.Test
 {
@@ -35,7 +34,6 @@ namespace Pims.Core.Test
         {
             return helper.CreatePimsContext(StringHelper.Generate(10), permission, ensureDeleted);
         }
-
 
         /// <summary>
         /// Creates an instance of a PimsContext and initializes it with the specified 'user'.
@@ -77,7 +75,10 @@ namespace Pims.Core.Test
         public static PimsContext CreatePimsContext(this TestHelper helper, string dbName, ClaimsPrincipal user, bool ensureDeleted = false)
         {
             // Generate a randome database name.
-            if (String.IsNullOrWhiteSpace(dbName)) dbName = StringHelper.Generate(10);
+            if (string.IsNullOrWhiteSpace(dbName))
+            {
+                dbName = StringHelper.Generate(10);
+            }
 
             helper.AddSingleton(user);
             var options = new DbContextOptionsBuilder<PimsContext>()
@@ -95,7 +96,11 @@ namespace Pims.Core.Test
 
             var context = new PimsContext(options, contextAccessor.Object, serializerOptions.Object);
 
-            if (ensureDeleted) context.Database.EnsureDeleted();
+            if (ensureDeleted)
+            {
+                context.Database.EnsureDeleted();
+            }
+
             helper.AddSingleton(context);
 
             return context;
@@ -134,14 +139,27 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static PimsContext SeedDatabase(this PimsContext context)
         {
-            context.AddRange(EntityHelper.CreateDefaultPropertyClassifications());
-            context.AddRange(EntityHelper.CreateDefaultProvinces());
-            context.AddRange(EntityHelper.CreateDefaultAdministrativeAreas());
+            var countries = EntityHelper.CreateDefaultCountries();
+            var regions = EntityHelper.CreateDefaultRegions();
+            var organizationTypes = EntityHelper.CreateDefaultOrganizationTypes();
+            var organizationIdentifierTypes = EntityHelper.CreateDefaultOrganizationIdentifierTypes();
+            context.AddRange(countries);
+            context.AddRange(regions);
+            context.AddRange(organizationTypes);
+            context.AddRange(organizationIdentifierTypes);
             context.AddRange(EntityHelper.CreateDefaultRoles());
-            context.AddRange(EntityHelper.CreateDefaultBuildingPredominateUses());
-            context.AddRange(EntityHelper.CreateDefaultBuildingConstructionTypes());
-            context.AddRange(EntityHelper.CreateDefaultBuildingOccupantTypes());
-            context.AddRange(EntityHelper.CreateDefaultAgencies());
+            context.AddRange(EntityHelper.CreateDefaultPropertyTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyClassificationTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyTenureTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyStatusTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyAreaUnitTypes());
+            context.AddRange(EntityHelper.CreateDefaultDataSourceTypes());
+            context.AddRange(EntityHelper.CreateDefaultContactMethodTypes());
+            context.AddRange(EntityHelper.CreateDefaultAcquisitionFileStatusTypes());
+            context.AddRange(EntityHelper.CreateDefaultAcquisitionTypes());
+            context.AddRange(EntityHelper.CreateDefaultProvinces(countries.First()));
+            context.AddRange(EntityHelper.CreateDefaultDistricts(regions.First()));
+            context.AddRange(EntityHelper.CreateDefaultOrganizations(organizationTypes.First(), organizationIdentifierTypes.First()));
             context.SaveChanges();
             return context;
         }

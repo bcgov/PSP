@@ -6,7 +6,7 @@
 
 ### Application (`cicd-pipeline`)
 
-This GitHub webhook triggered pipeline is the main CI/CD pipeline for the project.  It is triggered by each commit to the `dev` branch of the [Property Inventory Management System](https://github.com/bcgov/PIMS) GitHub repository.
+This GitHub webhook triggered pipeline is the main CI/CD pipeline for the project.  It is triggered by each commit to the `dev` branch of the [Property Inventory Management System](https://github.com/bcgov/PSP) GitHub repository.
 
 This pipeline performs the following operations in sequential order;
 - Builds the PIMS application container image which includes `frontend`, `backend`, `database` and other components within a microservices architecture.
@@ -31,7 +31,7 @@ This manually triggered pipeline promotes deployments from the `test` environmen
 
 > :bulb: This section is in progress
 
-This GitHub webhook triggered pipeline is the **static** code quality pipeline for the project.  It is triggered by each commit to the `master` branch of the [Property Inventory Management System](https://github.com/bcgov/PIMS) GitHub repository.
+This GitHub webhook triggered pipeline is the **static** code quality pipeline for the project.  It is triggered by each commit to the `master` branch of the [Property Inventory Management System](https://github.com/bcgov/PSP) GitHub repository.
 
 This pipeline performs the following operations in sequential order;
 

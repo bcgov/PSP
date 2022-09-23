@@ -92,6 +92,7 @@ parameters:
     required: true
     value: "172.51.0.0/16"
 
+    
   - name: API_URL
     description:
       "The default URL to use when proxying requests to the application's
@@ -109,6 +110,20 @@ parameters:
     displayName: "API Path"
     required: true
     value: "pims-api"
+
+  - name: GEOSERVER_URL
+    description:
+      "The URL to use when proxying requests to the application's
+      Geoserver instance."
+    displayName: "GEOSERVER URL"
+    required: false
+    value: ""
+  - name: CSP
+    description:
+      "The string content of the desired CSP that should be applied to the frontend application."
+    displayName: "CSP"
+    required: false
+    value: ""
 
   - name: REPLICAS
     displayName: "Pod Replicas"
@@ -306,6 +321,10 @@ objects:
                   value: ${REAL_IP_FROM}
                 - name: TZ
                   value: ${TIME_ZONE}
+                - name: GEOSERVER_URL
+                  value: ${GEOSERVER_URL}
+                - name: CSP
+                  value: ${CSP}
               resources:
                 requests:
                   cpu: ${CPU_REQUEST}

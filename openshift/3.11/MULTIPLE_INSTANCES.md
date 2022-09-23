@@ -74,7 +74,7 @@ OUTPUT_IMAGE_TAG={TAG FOR INSTANCE}
 
 DOTNET_STARTUP_PROJECT=api/Pims.Api.csproj
 DOTNET_PUBLISH_READYTORUN=true
-DOTNET_TEST_PROJECTS=tests/unit/api/Pims.Api.Test.csproj tests/unit/dal/Pims.Dal.Test.csproj
+DOTNET_TEST_PROJECTS=tests/unit/api/Pims.Api.Test.csproj tests/unit/dal/Pims.Dal.Test.csproj tests/unit/mockdal/Pims.Dal.Mock.Test.csproj
 DOTNET_CONFIGURATION=Release
 
 CPU_LIMIT=1

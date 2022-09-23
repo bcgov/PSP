@@ -9,7 +9,7 @@ namespace Pims.Ltsa.Configuration
         /// <summary>
         /// get/set - The URI to the Ltsa API service.
         /// </summary>
-        public string HostUri { get; } = "https://tdtest3-x42b.ltsa.ca/titledirect/search/api";
+        public string HostUri { get; } = "https://tduat-x42b.ltsa.ca/titledirect/search/api";
 
         /// <summary>
         /// get/set - API endpoint for title summaries endpoint
@@ -23,7 +23,7 @@ namespace Pims.Ltsa.Configuration
         /// <summary>
         /// get/set - API root url for auth requests
         /// </summary>
-        public string AuthUrl { get; } = "https://appstest3.ltsa.ca/iam/api/auth";
+        public string AuthUrl { get; } = "https://appsuat.ltsa.ca/iam/api/auth";
 
         /// <summary>
         /// get/set - API endpoint for auth refresh token endpoint
@@ -54,6 +54,11 @@ namespace Pims.Ltsa.Configuration
         /// get/set - My LTSA Password.
         /// </summary>
         public string MyLtsaUserPassword { get; set; }
+
+        /// <summary>
+        /// get/set - Max retries when contacting ltsa service.
+        /// </summary>
+        public int MaxRetries { get; set; }
         #endregion
     }
 }

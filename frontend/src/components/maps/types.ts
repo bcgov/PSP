@@ -1,4 +1,3 @@
-import { PropertyTypes } from 'constants/index';
 import { GeoJsonProperties } from 'geojson';
 import Supercluster from 'supercluster';
 
@@ -12,7 +11,6 @@ export type ICluster<
  */
 export type PointFeature = Supercluster.PointFeature<{
   id: number;
-  propertyTypeId: PropertyTypes;
-  agencyId?: number;
+  organizationId?: number;
   name?: string;
 }>;

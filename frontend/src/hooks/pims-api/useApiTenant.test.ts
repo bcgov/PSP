@@ -15,14 +15,17 @@ describe('useApiTenants testing suite', () => {
     jest.restoreAllMocks();
   });
 
-  it('Get Tenant Configuration Settings', () => {
-    renderHook(async () => {
-      const api = useApiTenants();
-      const response = await api.getSettings();
+  const setup = () => {
+    const { result } = renderHook(useApiTenants);
+    return result.current;
+  };
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultTenant);
-    });
+  it('Get Tenant Configuration Settings', async () => {
+    const { getSettings } = setup();
+    const response = await getSettings();
+
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultTenant);
   });
 });
 

@@ -15,20 +15,22 @@ import useActiveFeatureLayer from './useActiveFeatureLayer';
 const mapRef = { current: { leafletMap: {} } };
 jest.mock('leaflet');
 jest.mock('components/maps/leaflet/LayerPopup');
+
 let clearLayers = jest.fn();
 let addData = jest.fn();
-let findOneWhereContains = jest.fn();
-
 (geoJSON as jest.Mock).mockReturnValue({
   addTo: () => ({ clearLayers, addData } as any),
 });
-(useLayerQuery as jest.Mock).mockReturnValue({
-  findOneWhereContains: findOneWhereContains,
-});
+
+const useLayerQueryMock = {
+  findOneWhereContains: jest.fn(),
+  findMetadataByLocation: jest.fn(),
+};
+(useLayerQuery as jest.Mock).mockReturnValue(useLayerQueryMock);
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
-const getStore = (values?: any) => mockStore(values ?? { properties: { draftParcels: [] } });
+const getStore = (values?: any) => mockStore(values ?? { properties: {} });
 const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>
     <Router history={history}>{children}</Router>
@@ -37,35 +39,27 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useActiveFeatureLayer hook tests', () => {
   beforeEach(() => {
+    useLayerQueryMock.findMetadataByLocation.mockResolvedValue({
+      REGION_NUMBER: 2,
+      REGION_NAME: 'South Coast',
+      DISTRICT_NUMBER: 2,
+      DISTRICT_NAME: 'Vancouver Island',
+    });
+  });
+  afterEach(() => {
     clearLayers.mockClear();
     addData.mockClear();
-    findOneWhereContains.mockClear();
-  });
-  afterEach(() => {});
-  it('sets the active feature when layerPopup information is set', () => {
-    renderHook(
-      () =>
-        useActiveFeatureLayer({
-          mapRef: mapRef as any,
-          selectedProperty: undefined,
-          layerPopup: { feature: {} } as any,
-          setLayerPopup: noop,
-        }),
-      {
-        wrapper: getWrapper(getStore()),
-      },
-    );
-    expect(clearLayers).toHaveBeenCalled();
-    expect(addData).toHaveBeenCalledTimes(1);
+    useLayerQueryMock.findOneWhereContains.mockClear();
+    useLayerQueryMock.findMetadataByLocation.mockClear();
   });
 
-  it('sets the active feature when there is a selected property', async () => {
-    findOneWhereContains.mockResolvedValue({ features: [{}] });
+  it('sets the active feature only when there is a selected property', async () => {
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({ features: [{ properties: [{}] }] });
     renderHook(
       () =>
         useActiveFeatureLayer({
           mapRef: mapRef as any,
-          selectedProperty: { parcelDetail: { latitude: 1, longitude: 1 } } as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
           layerPopup: undefined,
           setLayerPopup: noop,
         }),
@@ -74,19 +68,32 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
+    // call to parcelmap BC
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    // calls to region and district layers
+    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
+      expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledWith(
+        expect.objectContaining({
+          properties: expect.objectContaining({
+            REGION_NUMBER: 2,
+            REGION_NAME: 'South Coast',
+            DISTRICT_NUMBER: 2,
+            DISTRICT_NAME: 'Vancouver Island',
+          }),
+        }),
+      );
     });
   });
 
   it('does not set the active parcel when the selected property has no matching parcel data', async () => {
-    findOneWhereContains.mockResolvedValue({});
+    useLayerQueryMock.findOneWhereContains.mockResolvedValue({});
     renderHook(
       () =>
         useActiveFeatureLayer({
           mapRef: mapRef as any,
-          selectedProperty: { parcelDetail: { latitude: 1, longitude: 1 } } as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
           layerPopup: undefined,
           setLayerPopup: noop,
         }),
@@ -95,53 +102,10 @@ describe('useActiveFeatureLayer hook tests', () => {
       },
     );
     expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await waitFor(() => {
-      expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
-    });
-  });
-
-  it('sets the active feature based on draft parcels', async () => {
-    findOneWhereContains.mockResolvedValue({ features: [{}] });
-    renderHook(
-      () =>
-        useActiveFeatureLayer({
-          mapRef: mapRef as any,
-          selectedProperty: undefined,
-          layerPopup: undefined,
-          setLayerPopup: noop,
-        }),
-      {
-        wrapper: getWrapper(
-          getStore({ properties: { draftParcels: [{ geometry: { coordinates: [-122, 56] } }] } }),
-        ),
-      },
-    );
-    expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await waitFor(() => {
-      expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  it('does not set the active parcel when the draft property has no matching parcel data', async () => {
-    findOneWhereContains.mockResolvedValue({});
-    renderHook(
-      () =>
-        useActiveFeatureLayer({
-          mapRef: mapRef as any,
-          selectedProperty: undefined,
-          layerPopup: undefined,
-          setLayerPopup: noop,
-        }),
-      {
-        wrapper: getWrapper(
-          getStore({ properties: { draftParcels: [{ geometry: { coordinates: [-122, 56] } }] } }),
-        ),
-      },
-    );
-    expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
+    // call to parcelmap BC
+    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenCalledTimes(1);
+    // calls to region and district layers
+    expect(useLayerQueryMock.findMetadataByLocation).toHaveBeenCalledTimes(2);
     await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });

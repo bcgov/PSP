@@ -1,9 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Areas.Property.Models.Search;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Security;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Api.Test.Routes
@@ -64,32 +64,6 @@ namespace Pims.Api.Test.Routes
             // Assert
             Assert.NotNull(endpoint);
             endpoint.HasPost("filter");
-            endpoint.HasPermissions(Permissions.PropertyView);
-        }
-
-        [Fact]
-        public void GetPropertiesPage_Query_Route()
-        {
-            // Arrange
-            var endpoint = typeof(SearchController).FindMethod(nameof(SearchController.GetPropertiesPage));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasGet("page");
-            endpoint.HasPermissions(Permissions.PropertyView);
-        }
-
-        [Fact]
-        public void GetPropertiesPage_Filter_Route()
-        {
-            // Arrange
-            var endpoint = typeof(SearchController).FindMethod(nameof(SearchController.GetPropertiesPage), typeof(PropertyFilterModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost("page/filter");
             endpoint.HasPermissions(Permissions.PropertyView);
         }
         #endregion

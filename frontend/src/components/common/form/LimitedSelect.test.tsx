@@ -1,4 +1,4 @@
-import { Classifications } from 'constants/classifications';
+import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { mount } from 'enzyme';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
@@ -10,7 +10,7 @@ jest.mock('formik');
 
 (useFormikContext as jest.Mock).mockReturnValue({
   values: {
-    classificationId: Classifications.CoreOperational,
+    classificationId: PropertyClassificationTypes.CoreOperational,
     classification: 'zero',
   },
   registerField: jest.fn(),

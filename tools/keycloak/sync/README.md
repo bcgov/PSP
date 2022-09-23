@@ -112,7 +112,7 @@ First login to Keycloak, create the `pims-service-account` Client and apply the 
    dotnet run
    ```
 
-> NOTE - If you have users in your pims database that have `agencies` attributes of non-existing agencies, you will receive errors in the last portion of the sync when attempting to reconcile users. You can ignore these errors for the most part, but realize that the users will need to be manually updated with correct agency values when you login to PIMS (using a **System Administrator** account).
+> NOTE - If you have users in your pims database that have `organizations` attributes of non-existing organizations, you will receive errors in the last portion of the sync when attempting to reconcile users. You can ignore these errors for the most part, but realize that the users will need to be manually updated with correct organization values when you login to PIMS (using a **System Administrator** account).
 
 6. Add users to Keycloak
 

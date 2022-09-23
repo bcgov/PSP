@@ -1,12 +1,13 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 using CommandLine.Text;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Pims.Api.Configuration;
 using Serilog;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Api
 {
@@ -14,7 +15,7 @@ namespace Pims.Api
     /// Program class, provides the main program starting point for the Geo-spatial application.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// The primary entry point for the application.
@@ -31,12 +32,23 @@ namespace Pims.Api
                 })
                 .WithNotParsed((errors) =>
                 {
-                    var helpText = HelpText.AutoBuild(results, h =>
-                    {
-                        return HelpText.DefaultParsingErrorsHandler(results, h);
-                    }, e => e);
+                    var helpText = HelpText.AutoBuild(
+                    results,
+                    h => { return HelpText.DefaultParsingErrorsHandler(results, h); },
+                    e => e);
                     Console.WriteLine(helpText);
                 });
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            DotNetEnv.Env.Load();
+            return Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                config.AddEnvironmentVariables();
+                config.AddCommandLine(args);
+            });
         }
 
         /// <summary>
@@ -44,7 +56,7 @@ namespace Pims.Api
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
+        private static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
         {
             var args = options.ToArgs();
             DotNetEnv.Env.Load();
@@ -63,8 +75,10 @@ namespace Pims.Api
                     config.AddJsonFile($"connectionstrings.{env}.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile("geocoder.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"geocoder.{env}.json", optional: true, reloadOnChange: true);
-                    config.AddJsonFile("ches.json", optional: false, reloadOnChange: true);
-                    config.AddJsonFile($"ches.{env}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("ltsa.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile($"ltsa.{env}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("av.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile($"av.{env}.json", optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
                     config.AddCommandLine(args);
                 })

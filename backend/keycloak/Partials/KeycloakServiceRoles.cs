@@ -1,20 +1,21 @@
-using Pims.Core.Extensions;
-using Pims.Keycloak.Extensions;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Pims.Core.Extensions;
+using Pims.Keycloak.Extensions;
 
 namespace Pims.Keycloak
 {
     /// <summary>
     /// KeycloakAdmin class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview
+    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
         #region Methods
         #region By ID
+
         /// <summary>
         /// Get the role for the specified 'key'.
         /// </summary>
@@ -35,7 +36,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> UpdateRoleAsync(Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"{this.Options.Admin.Authority}/roles-by-id/{role.Id}", content);
 
             return response.HandleResponse(role);
@@ -62,7 +63,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel[]> CreateCompositeRolesAsync(Guid parentKey, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites", content);
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
@@ -89,7 +90,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel[]> DeleteCompositeRolesAsync(Guid parentKey, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites", content);
 
             return response.HandleResponse(roles);
@@ -122,6 +123,7 @@ namespace Pims.Keycloak
         #endregion
 
         #region Realm
+
         /// <summary>
         /// Get an array of realm roles.
         /// </summary>
@@ -153,7 +155,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> CreateRoleAsync(Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/roles", content);
 
             return await response.HandleResponseAsync<Models.RoleModel>();
@@ -168,7 +170,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> UpdateRoleAsync(string name, Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"{this.Options.Admin.Authority}/roles/{name}", content);
 
             return response.HandleResponse(role);
@@ -195,7 +197,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> CreateCompositeRoleAsync(string parentName, Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/roles/{parentName}/composites", content);
 
             return await response.HandleResponseAsync<Models.RoleModel>();
@@ -222,7 +224,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel[]> DeleteCompositeRolesAsync(string parentName, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/roles/{parentName}/composites", content);
 
             return response.HandleResponse(roles);
@@ -254,22 +256,23 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get an array of users that belong to role for the specified 'name'.
+        /// Get an array of users that belong to role for the specified 'parentName'.
         /// This method support paging.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="first"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public async Task<Models.UserModel[]> GetRoleMembersAsync(string name, int first = 0, int max = 10)
+        public async Task<Models.UserModel[]> GetRoleMembersAsync(string parentName, int first = 0, int max = 10)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles/{name}/users?first={first}&max={max}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles/{parentName}/users?first={first}&max={max}");
 
             return await response.HandleResponseAsync<Models.UserModel[]>();
         }
         #endregion
 
         #region Client
+
         /// <summary>
         /// Get an array of roles for the client specified by the 'clientKey'.
         /// </summary>
@@ -283,7 +286,7 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get the role specified by the 'name', within the client specified by the 'clientKey'
+        /// Get the role specified by the 'name', within the client specified by the 'clientKey'.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="name"></param>
@@ -304,7 +307,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> CreateRoleAsync(Guid clientKey, Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles", content);
 
             return await response.HandleResponseAsync<Models.RoleModel>();
@@ -319,7 +322,7 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> UpdateRoleAsync(Guid clientKey, Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{role.Name}", content);
 
             return response.HandleResponse(role);
@@ -348,14 +351,14 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel> CreateCompositeRoleAsync(Guid clientKey, string parentName, Models.RoleModel role)
         {
             var json = role.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites", content);
 
             return await response.HandleResponseAsync<Models.RoleModel>();
         }
 
         /// <summary>
-        /// Get an array of composite roles
+        /// Get an array of composite roles.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
@@ -377,14 +380,14 @@ namespace Pims.Keycloak
         public async Task<Models.RoleModel[]> DeleteCompositeRoleAsync(Guid clientKey, string parentName, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites", content);
 
             return response.HandleResponse(roles);
         }
 
         /// <summary>
-        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'
+        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
@@ -398,7 +401,7 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'
+        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'.
         /// </summary>
         /// <param name="clientKey"></param>
         /// <param name="parentName"></param>

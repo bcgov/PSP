@@ -15,6 +15,7 @@ namespace Pims.Core.Extensions
     public static class TypeExtensions
     {
         #region Variables
+
         /// <summary>
         /// To speed things up so that we don't have to use reflection to gather properties every time we cache them after doing it the first time.
         /// </summary>
@@ -23,6 +24,7 @@ namespace Pims.Core.Extensions
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Creates a basic new instance of the specified type.
         /// </summary>
@@ -31,7 +33,7 @@ namespace Pims.Core.Extensions
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Argument is required for extension method.")]
         public static T CreateInstance<T>(this Type type)
         {
-            return (T)Activator.CreateInstance<T>();
+            return Activator.CreateInstance<T>();
         }
 
         /// <summary>
@@ -114,10 +116,22 @@ namespace Pims.Core.Extensions
         /// <returns>True if the type/object is nullable.</returns>
         public static bool IsNullable<T>(this T obj)
         {
-            if (obj == null) return true;
+            if (obj == null)
+            {
+                return true;
+            }
+
             var type = typeof(T);
-            if (!type.IsValueType) return true;
-            if (Nullable.GetUnderlyingType(type) != null) return true;
+            if (!type.IsValueType)
+            {
+                return true;
+            }
+
+            if (Nullable.GetUnderlyingType(type) != null)
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -144,7 +158,9 @@ namespace Pims.Core.Extensions
         public static bool IsType<T>(this T obj, Type type)
         {
             if (type == null)
+            {
                 throw new ArgumentNullException(nameof(type));
+            }
 
             return typeof(T) == type || obj?.GetType() == type;
         }
@@ -171,7 +187,10 @@ namespace Pims.Core.Extensions
             if (!type.IsGenericType)
             {
                 if (type.IsEnumerable())
+                {
                     return type.GetElementType();
+                }
+
                 return type;
             }
             return type.GetGenericArguments()[0];
@@ -187,7 +206,10 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static MethodInfo FindMethod(this Type type, string name, BindingFlags bindingFlags, params Type[] parameterTypes)
         {
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument cannot be null, empty or whitespace.", nameof(name));
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException($"Argument cannot be null, empty or whitespace.", nameof(name));
+            }
 
             return type.GetMethod(name, bindingFlags, null, CallingConventions.Any, parameterTypes, null);
         }
@@ -202,7 +224,11 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static MethodInfo FindMethod(this Type type, string name, params Type[] parameterTypes)
         {
-            if (!parameterTypes.Any()) parameterTypes = new Type[0];
+            if (!parameterTypes.Any())
+            {
+                parameterTypes = new Type[0];
+            }
+
             return type.FindMethod(name, BindingFlags.Instance | BindingFlags.Public, parameterTypes);
         }
 
@@ -214,7 +240,9 @@ namespace Pims.Core.Extensions
         public static bool IsAnonymousType(this Type type)
         {
             if (type == null)
+            {
                 throw new ArgumentNullException("type");
+            }
 
             // HACK: The only way to detect anonymous types right now.
             return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
@@ -231,7 +259,10 @@ namespace Pims.Core.Extensions
         public static object GetDefault(this Type type)
         {
             if (type.IsValueType)
+            {
                 return Activator.CreateInstance(type);
+            }
+
             return null;
         }
         #endregion

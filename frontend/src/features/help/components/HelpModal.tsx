@@ -1,7 +1,7 @@
-import variables from '_variables.module.scss';
+import variables from 'assets/scss/_variables.module.scss';
+import { Button } from 'components/common/buttons/Button';
 import TooltipIcon from 'components/common/TooltipIcon';
 import React, { FunctionComponent } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import ModalDialog from 'react-bootstrap/ModalDialog';
@@ -36,7 +36,7 @@ const HelpModal: FunctionComponent<IModalProps> = ({ handleCancel, handleSubmit,
   const tenantsState = useAppSelector(state => state.tenants);
   const { getSettings } = useTenants();
   const [mailto, setMailto] = React.useState<IMailMessage | undefined>(undefined);
-  const config = tenantsState.config;
+  const config = tenantsState?.config;
 
   React.useEffect(() => {
     const update = async () => {
@@ -49,12 +49,7 @@ const HelpModal: FunctionComponent<IModalProps> = ({ handleCancel, handleSubmit,
 
   return (
     <Container>
-      <ModalStyled
-        dialogAs={DraggableModalDialog}
-        show={show}
-        onHide={handleCancel}
-        dialogClassName="help-modal"
-      >
+      <ModalStyled dialogAs={DraggableModalDialog} show={show} onHide={handleCancel}>
         <ModalHeader closeButton>
           <DraggableTitle>
             Help Desk&nbsp;
@@ -105,8 +100,12 @@ const DraggableModalDialog = (props: any) => {
 const ModalStyled = styled(Modal)`
   .close {
     color: white;
-    text-shadow: 0 1px 0 #000;
+    text-shadow: 0 0.1rem 0 #000;
     opacity: 0.9;
+  }
+  .modal-body {
+    max-height: calc(100vh - 20rem);
+    overflow-y: auto;
   }
 `;
 
@@ -118,12 +117,12 @@ const DraggableTitle = styled(Modal.Title)`
 
 const ModalHeader = styled(Modal.Header)`
   background-color: ${variables.primaryColor};
-  padding: 5px;
+  padding: 0.5rem;
 `;
 
 const StyledTooltip = styled(TooltipIcon)`
-  margin-left: 5px;
-  margin-bottom: 5px;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 export default HelpModal;

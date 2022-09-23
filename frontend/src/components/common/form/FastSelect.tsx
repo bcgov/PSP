@@ -176,11 +176,11 @@ export const FastSelect: React.FC<FastSelectProps> = memo(
               multiple
                 ? handleMultipleChange
                 : (e: any) => {
-                    let value = e.currentTarget.value;
-                    if (type === 'number' && !isNaN(parseInt(value))) {
-                      value = parseInt(value);
+                    let changedValue = e.currentTarget.value;
+                    if (type === 'number' && !isNaN(parseInt(changedValue))) {
+                      changedValue = parseInt(changedValue);
                     }
-                    setFieldValue(field, value);
+                    setFieldValue(field, changedValue);
                   }
             }
             type={type}

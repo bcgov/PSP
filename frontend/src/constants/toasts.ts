@@ -72,72 +72,23 @@ export const parcel = {
   PARCEL_DELETING_ERROR,
 };
 
-/** These toasts are used by the building apis */
-//creating
-const BUILDING_CREATING_TOAST_ID = 'CREATING_BUILDING';
-const BUILDING_CREATING = () =>
-  toast.dark('Creating Building...', { toastId: BUILDING_CREATING_TOAST_ID });
-const BUILDING_CREATED_TOAST_ID = 'CREATED_BUILDING';
-const BUILDING_CREATED = () =>
-  toast.dark('Building created.', { toastId: BUILDING_CREATED_TOAST_ID });
-const BUILDING_CREATING_ERROR_TOAST_ID = 'BUILDING_CREATING_ERROR';
-const BUILDING_CREATING_ERROR = () =>
-  toast.error('Failed to create Building.', { toastId: BUILDING_CREATING_ERROR_TOAST_ID });
-const BUILDING_UPDATING_TOAST_ID = 'UPDATING_BUILDING';
-const BUILDING_UPDATING = () =>
-  toast.dark('Updating Building...', { toastId: BUILDING_UPDATING_TOAST_ID });
-const BUILDING_UPDATED_TOAST_ID = 'UPDATED_BUILDING';
-const BUILDING_UPDATED = () =>
-  toast.dark('Building updated.', { toastId: BUILDING_UPDATED_TOAST_ID });
-const BUILDING_UPDATING_ERROR_TOAST_ID = 'BUILDING_UPDATING_ERROR';
-const BUILDING_UPDATING_ERROR = () =>
-  toast.error('Failed to update Building.', { toastId: BUILDING_UPDATING_ERROR_TOAST_ID });
-//deleting
-const BUILDING_DELETING_TOAST_ID = 'DELETING_BUILDING';
-const BUILDING_DELETING = () =>
-  toast.dark('Deleting Building...', { toastId: BUILDING_DELETING_TOAST_ID });
-const BUILDING_DELETED_TOAST_ID = 'DELETED_BUILDING';
-const BUILDING_DELETED = () =>
-  toast.dark('Building deleted.', { toastId: BUILDING_DELETED_TOAST_ID });
-const BUILDING_DELETING_ERROR_TOAST_ID = 'BUILDING_DELETING_ERROR';
-const BUILDING_DELETING_ERROR = () =>
-  toast.error('Failed to delete Building.', { toastId: BUILDING_DELETING_ERROR_TOAST_ID });
-export const building = {
-  BUILDING_CREATING_TOAST_ID,
-  BUILDING_CREATING,
-  BUILDING_CREATED_TOAST_ID,
-  BUILDING_CREATED,
-  BUILDING_CREATING_ERROR_TOAST_ID,
-  BUILDING_CREATING_ERROR,
-  BUILDING_UPDATING_TOAST_ID,
-  BUILDING_UPDATING,
-  BUILDING_UPDATED_TOAST_ID,
-  BUILDING_UPDATED,
-  BUILDING_UPDATING_ERROR_TOAST_ID,
-  BUILDING_UPDATING_ERROR,
-  BUILDING_DELETING_TOAST_ID,
-  BUILDING_DELETING,
-  BUILDING_DELETED_TOAST_ID,
-  BUILDING_DELETED,
-  BUILDING_DELETING_ERROR_TOAST_ID,
-  BUILDING_DELETING_ERROR,
-};
-
-/** These toasts are used by the update agency api */
-const AGENCY_UPDATING_TOAST_ID = 'UPDATING_AGENCY';
-const AGENCY_UPDATING = () =>
-  toast.dark('Updating Agency...', { toastId: AGENCY_UPDATING_TOAST_ID });
-const AGENCY_UPDATED_TOAST_ID = 'AGENCY_UPDATED';
-const AGENCY_UPDATED = () => toast.dark('Agency updated', { toastId: AGENCY_UPDATED_TOAST_ID });
-const AGENCY_ERROR_TOAST_ID = 'AGENCY_ERROR';
-const AGENCY_ERROR = () => toast.error('Failed to update Agency', { toastId: USER_ERROR_TOAST_ID });
-export const agency = {
-  AGENCY_UPDATING_TOAST_ID,
-  AGENCY_UPDATING,
-  AGENCY_UPDATED_TOAST_ID,
-  AGENCY_UPDATED,
-  AGENCY_ERROR_TOAST_ID,
-  AGENCY_ERROR,
+/** These toasts are used by the update organization api */
+const ORGANIZATION_UPDATING_TOAST_ID = 'UPDATING_ORGANIZATION';
+const ORGANIZATION_UPDATING = () =>
+  toast.dark('Updating Organization...', { toastId: ORGANIZATION_UPDATING_TOAST_ID });
+const ORGANIZATION_UPDATED_TOAST_ID = 'ORGANIZATION_UPDATED';
+const ORGANIZATION_UPDATED = () =>
+  toast.dark('Organization updated', { toastId: ORGANIZATION_UPDATED_TOAST_ID });
+const ORGANIZATION_ERROR_TOAST_ID = 'ORGANIZATION_ERROR';
+const ORGANIZATION_ERROR = () =>
+  toast.error('Failed to update Organization', { toastId: USER_ERROR_TOAST_ID });
+export const organization = {
+  ORGANIZATION_UPDATING_TOAST_ID,
+  ORGANIZATION_UPDATING,
+  ORGANIZATION_UPDATED_TOAST_ID,
+  ORGANIZATION_UPDATED,
+  ORGANIZATION_ERROR_TOAST_ID,
+  ORGANIZATION_ERROR,
 };
 
 /** These toasts are used to display bc data warehouse loading */

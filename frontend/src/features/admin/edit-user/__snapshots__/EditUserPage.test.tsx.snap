@@ -1,272 +1,652 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Edit user page EditUserPage renders 1`] = `
-<div>
-  <nav
-    class="navBar navbar navbar-expand-sm navbar-light bg-light"
-  >
-    <a
-      class="navbar-brand"
-      href="#"
-    >
-      User Information
-    </a>
-  </nav>
+<DocumentFragment>
   <div
-    class="container-fluid"
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c6.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c6.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c6.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c6.btn.btn-primary {
+  border: none;
+}
+
+.c6.btn.btn-secondary {
+  background: none;
+}
+
+.c6.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  background: none;
+}
+
+.c6.btn.btn-light {
+  border: none;
+}
+
+.c6.btn.btn-dark {
+  border: none;
+}
+
+.c6.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c6.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c6.Button--icon-only:focus {
+  outline: none;
+}
+
+.c6.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c4 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c5 {
+  position: absolute;
+  top: 1rem;
+  right: -0.5rem;
+}
+
+.c0 {
+  width: 100%;
+  overflow-y: auto;
+  padding: 3rem;
+}
+
+.c0 > .row {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c0 form {
+  text-align: left;
+}
+
+<div
+    class="c0 EditUserPage"
   >
     <div
-      class="user-edit-form-container row"
+      class="row"
     >
-      <form
-        class="userInfo"
-        novalidate=""
+      <div
+        class="col-md-7"
       >
-        <p
-          class="label"
+        <h1
+          class="c1"
         >
-          IDIR/BCeID
-        </p>
-        <div
-          class="form-group"
-        >
-          <input
-            class="form-control"
-            data-testid="username"
-            id="input-username"
-            name="username"
-            readonly=""
-            type="text"
-            value="admin"
-          />
-        </div>
-        <p
-          class="label"
-        >
-          Last Login
-        </p>
-        <div
-          class="form-group"
-        >
-          <input
-            class="form-control"
-            data-testid="lastLogin"
-            id="input-lastLogin"
-            name="lastLogin"
-            readonly=""
-            type="text"
-            value=""
-          />
-        </div>
-        <div
-          class="row"
+          User Information
+        </h1>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-7"
+      >
+        <form
+          class="userInfo"
+          novalidate=""
         >
           <div
-            class="col"
+            class="pb-2 row"
           >
-            <p
-              class="label"
-            >
-              First Name
-            </p>
             <div
-              class="form-group"
+              class="pr-0 text-left col-2"
             >
-              <input
-                class="form-control"
-                data-testid="firstName"
-                id="input-firstName"
-                name="firstName"
-                placeholder="George"
-                type="text"
-                value="George"
-              />
+              <label
+                class="c2"
+              >
+                IDIR/BCeID:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  data-testid="businessIdentifier"
+                  id="input-businessIdentifier"
+                  name="businessIdentifier"
+                  readonly=""
+                  title="desmith@idir"
+                  type="text"
+                  value="desmith@idir"
+                />
+              </div>
             </div>
           </div>
           <div
-            class="col"
+            class="pb-2 row"
           >
-            <p
-              class="label"
-            >
-              Last Name
-            </p>
             <div
-              class="form-group"
+              class="pr-0 text-left col-2"
             >
-              <input
-                class="form-control"
-                data-testid="lastName"
-                id="input-lastName"
-                name="lastName"
-                placeholder="User"
-                type="text"
-                value="User"
-              />
+              <label
+                class="c2"
+              >
+                First name:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  data-testid="firstName"
+                  id="input-firstName"
+                  name="firstName"
+                  placeholder="Devin"
+                  title="Devin"
+                  type="text"
+                  value="Devin"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <p
-          class="label"
-        >
-          Email
-        </p>
-        <div
-          class="form-group"
-        >
-          <input
-            class="form-control"
-            data-testid="email"
-            id="input-email"
-            name="email"
-            placeholder="admin@pims.gov.bc.ca"
-            type="email"
-            value="admin@pims.gov.bc.ca"
-          />
-        </div>
-        <div
-          class="required form-group"
-        >
-          <label
-            class="form-label"
-            for="input-agency"
-          >
-            Agency
-          </label>
-          <select
-            class="form-select form-control"
-            data-testid="agency"
-            id="input-agency"
-            name="agency"
-            required=""
-          >
-            <option
-              value=""
-            >
-              Please Select
-            </option>
-            <option
-              class="option"
-              value="1"
-            >
-              agencyVal
-            </option>
-          </select>
-        </div>
-        <p
-          class="label"
-        >
-          Position
-        </p>
-        <div
-          class="form-group"
-        >
-          <input
-            class="form-control"
-            data-testid="position"
-            id="input-position"
-            name="position"
-            placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
-            type="text"
-            value=""
-          />
-        </div>
-        <div
-          class="check-roles form-group"
-        >
-          <label
-            class="form-label"
-          >
-            Roles
-             
-            <a
-              href="https://github.com/bcgov/PIMS/wiki/Architecture-Security"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Role Descriptions
-            </a>
-          </label>
           <div
-            class="required form-group"
+            class="pb-2 row"
           >
-            <select
-              class="form-select form-control"
-              data-testid="role"
-              id="input-roles"
-              multiple=""
-              name="roles"
-              required=""
+            <div
+              class="pr-0 text-left col-2"
             >
-              <option
-                value=""
+              <label
+                class="c2"
               >
-                Please Select
-              </option>
-              <option
-                class="option"
-                value="1"
+                Last name:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="input form-group"
               >
-                roleVal
-              </option>
-            </select>
+                <input
+                  class="form-control"
+                  data-testid="surname"
+                  id="input-surname"
+                  name="surname"
+                  placeholder="Smith"
+                  title="Smith"
+                  type="text"
+                  value="Smith"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <p
-          class="label"
-        >
-          Notes
-        </p>
-        <div
-          class="form-group"
-        >
-          <textarea
-            class="form-control"
-            data-testid="note"
-            id="input-note"
-            name="note"
-            placeholder="A note about this user"
-            type="text"
-          />
-        </div>
-        <div
-          class="is-disabled form-group"
-        >
-          <label
-            class="form-label"
-          >
-            Disable Account? 
-          </label>
-          <input
-            data-testid="isDisabled"
-            name="isDisabled"
-            type="checkbox"
-            value="false"
-          />
-        </div>
-        <div
-          class="justify-content-md-center row"
-        >
           <div
-            class="cancelSave btn-toolbar"
-            role="toolbar"
+            class="pb-2 row"
           >
-            <button
-              class="mr-5 btn btn-secondary"
-              type="button"
+            <div
+              class="pr-0 text-left col-2"
             >
-              Cancel
-            </button>
-            <button
-              class="mr-5 btn btn-primary"
-              type="submit"
+              <label
+                class="c2"
+              >
+                Email:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
             >
-              Save
-            </button>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  data-testid="email"
+                  id="input-email"
+                  name="email"
+                  placeholder="devin.smith@gov.bc.ca"
+                  title="devin.smith@gov.bc.ca"
+                  type="email"
+                  value="devin.smith@gov.bc.ca"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Position:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  data-testid="position"
+                  id="input-position"
+                  name="position"
+                  placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
+                  title="pos"
+                  type="text"
+                  value="pos"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Role(s):
+              </label>
+            </div>
+            <div
+              class="c3 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  "
+                    id="multiselect-roles"
+                    style="width: auto; color: black;"
+                  >
+                    <div
+                      class="search-wrapper searchWrapper "
+                      style="background: white; border: 1px solid #606060;"
+                    >
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                      >
+                        Functional
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="c4"
+                            fill="currentColor"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                      >
+                        System Administrator
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="c4"
+                            fill="currentColor"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="multiselect-roles_input"
+                        name="search_name_input"
+                        placeholder=""
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <li
+                          class="option  highlightOption highlight  "
+                        >
+                          roleVal
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <svg
+                class="c5 tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                MoTI Region(s):
+              </label>
+            </div>
+            <div
+              class="c3 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  "
+                    id="multiselect-regions"
+                    style="width: auto; color: black;"
+                  >
+                    <div
+                      class="search-wrapper searchWrapper "
+                      style="background: white; border: 1px solid #606060;"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="multiselect-regions_input"
+                        name="search_name_input"
+                        placeholder=""
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <span
+                          class="notFound"
+                        >
+                          No Options Available
+                        </span>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Notes:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <textarea
+                  class="form-control"
+                  data-testid="note"
+                  id="input-note"
+                  name="note"
+                  placeholder="A note about this user"
+                  title=""
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-flex row"
+          >
+            <div
+              class="pr-0 text-left col-2"
+            >
+              <label
+                class="c2"
+              >
+                Disable account?:
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="check-field"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input position-static"
+                      data-testid="isDisabled"
+                      id="input-isDisabled"
+                      name="isDisabled"
+                      type="checkbox"
+                      value="false"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="justify-content-md-center row"
+          >
+            <div
+              class="cancelSave btn-toolbar"
+              role="toolbar"
+            >
+              <button
+                class="c6 Button mr-5 btn btn-secondary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Cancel
+                </div>
+              </button>
+              <button
+                class="c6 Button mr-5 btn btn-primary"
+                type="submit"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Save
+                </div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+  ,
+</DocumentFragment>
 `;

@@ -26,7 +26,7 @@ export const ApiVersionInfo = () => {
 
   return (
     <div className="version" data-testid="version">
-      {version?.version ? `v${version.version ?? ''}` : 'api unavailable'}
+      {version?.informationalVersion ? `v${version.informationalVersion ?? ''}` : 'api unavailable'}
     </div>
   );
 };

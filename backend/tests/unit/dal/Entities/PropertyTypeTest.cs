@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Pims.Dal.Entities;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -18,12 +18,12 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var type = new PropertyType();
+            var type = new PimsPropertyType();
 
             // Assert
-            type.Id.Should().Be(0);
-            type.Name.Should().BeNull();
-            type.SortOrder.Should().Be(0);
+            type.Id.Should().BeNull();
+            type.Description.Should().BeNull();
+            type.DisplayOrder.Should().BeNull();
         }
 
         [Fact]
@@ -31,12 +31,12 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var type = new PropertyType("name") { Id = 1 };
+            var type = new PimsPropertyType("name");
 
             // Assert
-            type.Id.Should().Be(1);
-            type.Name.Should().Be("name");
-            type.SortOrder.Should().Be(0);
+            type.Id.Should().Be("name");
+            type.Description.Should().BeNull();
+            type.DisplayOrder.Should().BeNull();
         }
         #endregion
     }

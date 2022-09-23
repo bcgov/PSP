@@ -1,0 +1,314 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LtsaLegalNotationsSubForm component renders legal notations form 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c0 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+        >
+          Legal notations: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.legalNotationNumber"
+          title="CV1442411"
+          value="CV1442411"
+        />
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+        >
+          Status: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.status"
+          title="ACTIVE"
+          value="ACTIVE"
+        />
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+        >
+          Cancellation date: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.0.cancellationDate"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="pb-2 row"
+  >
+    <div
+      class="col-4"
+    />
+    <div
+      class="col"
+    >
+      <p>
+        THIS CERTIFICATE OF TITLE MAY BE AFFECTED BY THE AGRICULTURAL LAND
+COMMISSION ACT, SEE AGRICULTURAL LAND RESERVE PLAN NO. 2
+DEPOSITED JULY 30TH, 1974.
+      </p>
+    </div>
+  </div>
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c0 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+        >
+          Legal notations: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.legalNotationNumber"
+          title="CV1442412"
+          value="CV1442412"
+        />
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+        >
+          Status: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.status"
+          title="ACTIVE"
+          value="ACTIVE"
+        />
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+        >
+          Cancellation date: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.1.cancellationDate"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="pb-2 row"
+  >
+    <div
+      class="col-4"
+    />
+    <div
+      class="col"
+    >
+      <p>
+        ZONING REGULATION AND PLAN UNDER THE AERONAUTICS ACT (CANADA) FILED
+10.2.1981 UNDER NO. T17084 PLAN NO. 61216
+      </p>
+    </div>
+  </div>
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c0 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+        >
+          Legal notations: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.legalNotationNumber"
+          title="CV1442414"
+          value="CV1442414"
+        />
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+        >
+          Status: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.status"
+          title="ACTIVE"
+          value="ACTIVE"
+        />
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c0 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+        >
+          Cancellation date: 
+        </label>
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+          name="titleOrders.0.orderedProduct.fieldedData.legalNotationsOnTitle.2.cancellationDate"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="pb-2 row"
+  >
+    <div
+      class="col-4"
+    />
+    <div
+      class="col"
+    >
+      <p>
+        LAND HEREIN CHARGED UNDER THE
+MUNICIPAL ACT, PART 25
+D.F. D21890
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,5 +1,4 @@
 import { TableSort } from 'components/Table/TableSort';
-import { PropertyTypeNames } from 'constants/propertyTypeNames';
 import _ from 'lodash';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -36,20 +35,9 @@ const extractProps = (props: string[], source: any): any => {
 
 const defaultFilter = {
   address: '',
-  administrativeArea: '',
-  agencies: '',
-  classificationId: '',
-  includeAllProperties: '',
-  maxAssessedValue: '',
-  maxLotSize: '',
-  maxMarketValue: '',
-  maxNetBookValue: '',
-  minLotSize: '',
-  name: '',
   pid: '',
-  propertyType: '',
-  rentableArea: '',
-  searchBy: 'address',
+  pin: '',
+  searchBy: 'pid',
 };
 
 /**
@@ -69,7 +57,7 @@ export interface IRouterFilterProps<T> {
 /**
  * A generic hook that will extract the query parameters from the URL, store them in a redux store
  * and update the URL any time the specified 'filter' is updated.
- * On Mount it will extract the URL query parameters or pull from the redux store and set the specied 'filter'.
+ * On Mount it will extract the URL query parameters or pull from the redux store and set the specified 'filter'.
  *
  * The filter type of 'T' should be a flat object with properties that are only string.
  * NOTE: URLSearchParams not supported by IE.
@@ -96,28 +84,20 @@ export const useRouterFilter = <T extends object>({
       const filterProps = Object.keys(filter);
       if (_.intersection(Object.keys(params), filterProps).length) {
         let merged = { ...defaultFilter, ...extractProps(filterProps, params) };
-        if (!merged.propertyType) {
-          merged = { ...merged, propertyType: PropertyTypeNames.Land };
-        }
         // Only change state if the query parameters are different than the default filter.
-        if (!_.isEqual(_.omit(merged, 'propertyType'), _.omit(filter, 'propertyType')))
-          setFilter(merged);
+        if (!_.isEqual(merged, filter)) setFilter(merged);
       } else if (savedFilter?.hasOwnProperty(key)) {
         let merged = { ...defaultFilter, ...extractProps(filterProps, savedFilter[key]) };
-        if (!merged.propertyType) {
-          merged = { ...merged, propertyType: PropertyTypeNames.Land };
-        }
         // Only change state if the saved filter is different than the default filter.
-        if (!_.isEqual(_.omit(merged, 'propertyType'), _.omit(filter, 'propertyType')))
-          setFilter(merged);
+        if (!_.isEqual(merged, filter)) setFilter(merged);
       }
 
       if (params.sorting && setSorting) {
-        const sort = resolveSortCriteriaFromUrl(
+        const urlSort = resolveSortCriteriaFromUrl(
           typeof params.sorting === 'string' ? [params.sorting] : params.sorting,
         );
-        if (!_.isEmpty(sort)) {
-          setSorting(sort as any);
+        if (!_.isEmpty(urlSort)) {
+          setSorting(urlSort as any);
         }
       }
       setLoaded(true);

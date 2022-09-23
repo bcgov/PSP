@@ -29,7 +29,7 @@ describe('HelpContainer tests', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     const tree = renderer
       .create(
-        <TestCommonWrapper store={store} roles={[{ id: '1', name: 'test' }]}>
+        <TestCommonWrapper store={store} claims={['test']}>
           <HelpContainer />
         </TestCommonWrapper>,
       )

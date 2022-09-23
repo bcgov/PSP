@@ -31,7 +31,7 @@ describe('useApi hook', () => {
       mockAxios.onGet().reply(200, {});
 
       const api = getUseApiHook({ store });
-      await api.current.isPidAvailable(undefined, '123-456-789');
+      await api.current.searchAddress('1234 Fake st.');
       expect(mockAxios.history.get[0]).toMatchObject({
         headers: {
           Accept: 'application/json, text/plain, */*',
@@ -45,7 +45,7 @@ describe('useApi hook', () => {
       mockAxios.onGet().reply(200, {});
 
       const api = getUseApiHook({ store });
-      await api.current.isPidAvailable(undefined, '123-456-789');
+      await api.current.searchAddress('1234 Fake st.');
       expect(realStore.getState().loadingBar).toStrictEqual({});
     });
     it('dispatches hide loading bar action on error response', async () => {
@@ -54,7 +54,7 @@ describe('useApi hook', () => {
 
       const api = getUseApiHook({ store });
       try {
-        await api.current.isPidAvailable(undefined, '123-456-789');
+        await api.current.searchAddress('1234 Fake st.');
       } catch (e) {}
       expect(realStore.getState().loadingBar).toStrictEqual({});
     });
@@ -63,24 +63,6 @@ describe('useApi hook', () => {
     afterEach(() => {
       jest.clearAllMocks();
       mockAxios.resetHistory();
-    });
-
-    it('calls isPidAvailable with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.isPidAvailable(undefined, '123-456-789');
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/parcels/check/pid-available?pid=123456789',
-      });
-    });
-
-    it('calls isPinAvailable with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.isPinAvailable(undefined, 123456789);
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/parcels/check/pin-available?pin=123456789',
-      });
     });
 
     it('calls searchAddress with expected parameters', async () => {
@@ -116,72 +98,6 @@ describe('useApi hook', () => {
       await api.current.getNearAddresses({ lat: 1, lng: 2 });
       expect(mockAxios.history.get[0]).toMatchObject({
         url: '/api/tools/geocoder/near?point=2,1',
-      });
-    });
-
-    it('calls loadProperties with undefined parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.loadProperties(undefined);
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/search/wfs?',
-      });
-    });
-
-    it('calls loadProperties with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.loadProperties({ bbox: 'test' });
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/search/wfs?bbox=test',
-      });
-    });
-
-    it('calls loadProperties and throws error if request fails', async () => {
-      mockAxios.onGet().reply(400, {});
-      const api = getUseApiHook();
-      expect(async () => await api.current.loadProperties({ bbox: 'test' })).rejects.toThrow(
-        'An error occured while fetching properties in inventory.',
-      );
-    });
-
-    it('calls getBuilding with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.getBuilding(1);
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/buildings/1',
-      });
-    });
-
-    it('calls getParcel with expected parameters', async () => {
-      mockAxios.onGet().reply(200, {});
-      const api = getUseApiHook();
-      await api.current.getParcel(1);
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: '/api/properties/parcels/1',
-      });
-    });
-
-    it('calls updateParcel with expected parameters', async () => {
-      mockAxios.onPut().reply(200, {});
-      const api = getUseApiHook();
-      const parcel = { name: 'test' } as any;
-      await api.current.updateParcel(1, parcel);
-      expect(mockAxios.history.put[0]).toMatchObject({
-        url: '/api/properties/parcels/1/financials',
-        data: '{"name":"test"}',
-      });
-    });
-
-    it('calls updateBuilding with expected parameters', async () => {
-      mockAxios.onPut().reply(200, {});
-      const api = getUseApiHook();
-      const building = { name: 'test' } as any;
-      await api.current.updateBuilding(1, building);
-      expect(mockAxios.history.put[0]).toMatchObject({
-        url: '/api/properties/buildings/1/financials',
-        data: '{"name":"test"}',
       });
     });
   });

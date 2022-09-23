@@ -119,13 +119,13 @@
       {
         "id": "f6bccb77-b677-43f9-8e60-a458d08b0fbe",
         "name": "system-administrator",
-        "description": "Agency Administrator of the users agency.",
+        "description": "Organization Administrator of the users organization.",
         "composite": true,
         "composites": {
           "realm": [
-            "agency-administrator",
+            "organization-administrator",
             "admin-roles",
-            "admin-agencies",
+            "admin-organizations",
             "admin-properties",
             "admin-projects"
           ]
@@ -136,8 +136,8 @@
       },
       {
         "id": "84b2f2b5-2d67-4ff8-b408-6611ed502736",
-        "name": "agency-administrator",
-        "description": "Agency Administrator of the users agency.",
+        "name": "organization-administrator",
+        "description": "Organization Administrator of the users organization.",
         "composite": true,
         "composites": {
           "realm": [
@@ -154,8 +154,8 @@
       },
       {
         "id": "3b150a49-d150-4081-b848-f048ae98520b",
-        "name": "admin-agencies",
-        "description": "Ability to administrate agencies.",
+        "name": "admin-organizations",
+        "description": "Ability to administrate organizations.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
@@ -495,10 +495,10 @@
   "groups": [
     {
       "id": "8012be39-9e09-46ad-a137-d5631aa52777",
-      "name": "Agency Administrator",
-      "path": "/Agency Administrator",
+      "name": "Organization Administrator",
+      "path": "/Organization Administrator",
       "attributes": {},
-      "realmRoles": ["agency-administrator"],
+      "realmRoles": ["organization-administrator"],
       "clientRoles": {},
       "subGroups": []
     },
@@ -579,10 +579,10 @@
       "emailVerified": false,
       "firstName": "Admin",
       "lastName": "User",
-      "email": "admin@pims.gov.bc.ca",
+      "email": "admin@test.com",
       "attributes": {
         "displayName": ["User, Admin"],
-        "agencies": ["1", "2", "3"]
+        "organizations": ["1", "2", "3"]
       },
       "credentials": [
         {
@@ -611,10 +611,10 @@
       "emailVerified": false,
       "firstName": "Real Estate",
       "lastName": "Manager",
-      "email": "rem@pims.gov.bc.ca",
+      "email": "rem@test.com",
       "attributes": {
         "displayName": ["Manager, Real Estate"],
-        "agencies": ["1", "2", "3"]
+        "organizations": ["1", "2", "3"]
       },
       "credentials": [
         {
@@ -693,7 +693,7 @@
       "email": "rea@test.com",
       "attributes": {
         "displayName": ["Analyst, Real Estate"],
-        "agencies": ["1", "2", "3"]
+        "organizations": ["1", "2", "3"]
       },
       "credentials": [
         {
@@ -1094,17 +1094,17 @@
         },
         {
           "id": "460764c4-472d-4550-92ab-4985c06a064d",
-          "name": "agencies",
+          "name": "organizations",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usermodel-attribute-mapper",
           "consentRequired": false,
           "config": {
             "multivalued": "true",
             "userinfo.token.claim": "true",
-            "user.attribute": "agencies",
+            "user.attribute": "organizations",
             "id.token.claim": "false",
             "access.token.claim": "true",
-            "claim.name": "agencies",
+            "claim.name": "organizations",
             "jsonType.label": "int"
           }
         },
@@ -1348,17 +1348,17 @@
       "protocolMappers": [
         {
           "id": "f1559ec3-f0bb-4eb3-a2dd-bae6d2f0ab82",
-          "name": "agencies",
+          "name": "organizations",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usermodel-attribute-mapper",
           "consentRequired": false,
           "config": {
             "multivalued": "true",
             "userinfo.token.claim": "true",
-            "user.attribute": "agencies",
+            "user.attribute": "organizations",
             "id.token.claim": "false",
             "access.token.claim": "true",
-            "claim.name": "agencies",
+            "claim.name": "organizations",
             "jsonType.label": "int"
           }
         },

@@ -1,20 +1,16 @@
-import './InputGroup.scss';
-
 import classNames from 'classnames';
-import { FormikProps } from 'formik';
 import React, { CSSProperties } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import BootstrapInputGroup from 'react-bootstrap/InputGroup';
+import styled from 'styled-components';
 
 import { Label } from '../Label';
-import { FastInput } from './FastInput';
 import { Input } from './Input';
 
 type RequiredAttributes = {
   /** The field name */
   field: string;
-  /** formik state used for context and memo calculations */
-  formikProps: FormikProps<any>;
 };
 
 type OptionalAttributes = {
@@ -22,6 +18,8 @@ type OptionalAttributes = {
   label?: string;
   /** The underlying HTML element to use when rendering the FormControl */
   as?: React.ElementType;
+  /** optional help text to display below the FormControl */
+  helpText?: string;
   /** Short hint that describes the expected value of an <input> element */
   placeholder?: string;
   /** Adds a custom class to the input element of the <Input> component */
@@ -35,8 +33,8 @@ type OptionalAttributes = {
   preText?: string;
   prepend?: React.ReactNode;
   postText?: string;
-  fast?: boolean;
-  outerClassName?: string;
+  content?: React.ReactNode;
+  innerClassName?: string;
   displayErrorTooltips?: boolean;
   /** style to pass down to the FastInput or Input */
   style?: CSSProperties;
@@ -64,26 +62,24 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   preText,
   prepend: PrependComponent,
   postText,
-  outerClassName,
+  innerClassName,
   className,
-  fast,
-  formikProps,
+  content,
   options,
   autoComplete,
   displayErrorTooltips,
   ...rest
 }) => {
   return (
-    <div
+    <Row
       className={classNames(
-        'input-group',
         !!required ? 'required' : '',
-        outerClassName,
+        className,
         disabled ? 'disabled' : '',
+        'flex-nowrap',
       )}
     >
-      {!!label && !required && <Label>{label}</Label>}
-      {!!label && required && <Label required>{label}</Label>}
+      {!!label && required && <Label required={required}>{label}</Label>}
 
       {preText && (
         <BootstrapInputGroup.Prepend>
@@ -91,32 +87,26 @@ export const InputGroup: React.FC<InputGroupProps> = ({
         </BootstrapInputGroup.Prepend>
       )}
       {PrependComponent && (
-        <BootstrapInputGroup.Prepend>{PrependComponent}</BootstrapInputGroup.Prepend>
+        <ColPrepend xs="auto">
+          <BootstrapInputGroup.Prepend>{PrependComponent}</BootstrapInputGroup.Prepend>
+        </ColPrepend>
       )}
-      <div className="input-group-content">
-        {fast ? (
-          <FastInput
-            formikProps={formikProps}
-            disabled={disabled}
-            style={style}
-            field={field}
-            className={className}
-            placeholder={placeholder}
-            displayErrorTooltips={displayErrorTooltips}
-            {...rest}
-          />
+      <ColContent>
+        {content ? (
+          content
         ) : (
           <Input
+            as={is}
             disabled={disabled}
             field={field}
-            className={className}
+            className={innerClassName}
             style={style}
             placeholder={placeholder}
             displayErrorTooltips={displayErrorTooltips}
             {...rest}
           />
         )}
-      </div>
+      </ColContent>
       {postText && (
         <BootstrapInputGroup.Append>
           <BootstrapInputGroup.Text className={disabled ? 'append-disabled' : ''}>
@@ -124,6 +114,24 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           </BootstrapInputGroup.Text>
         </BootstrapInputGroup.Append>
       )}
-    </div>
+    </Row>
   );
 };
+
+const ColPrepend = styled(Col)`
+  padding-right: 0;
+  .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`;
+
+const ColContent = styled(Col)`
+  &:not(:first-child) {
+    padding-left: 0;
+    .form-control {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+`;

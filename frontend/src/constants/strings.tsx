@@ -28,9 +28,10 @@ export const DEFAULT_LONG = -127.6476;
 export const DEFAULT_ZOOM = 6;
 export const HIGH_ZOOM = 14;
 
-// max zoom level when clicking on parcel/building pins
+// max zoom level when clicking on pins
 export const MAX_ZOOM = 16;
-export const MAP_MAX_ZOOM = 17;
+export const MAP_MAX_ZOOM = 20;
+export const MAP_MAX_NATIVE_ZOOM = 17;
 
 // default url values
 export const DEFAULT_PAGE = '1';
@@ -42,7 +43,7 @@ export const DISCLAIMER_URL = 'https://www2.gov.bc.ca//gov/content/home/disclaim
 export const PRIVACY_POLICY_URL = 'http://www.gov.bc.ca/gov/content/home/privacy';
 export const HARMFUL_DISCLOSURE_URL =
   'https://www2.gov.bc.ca/gov/content/governments/services-for-government/policies-procedures/foippa-manual/disclosure-harmful-individual-public-safety';
-export const AUTHORIZATION_URL = 'https://github.com/bcgov/PIMS/wiki/Architecture-Security';
+export const AUTHORIZATION_URL = 'https://github.com/bcgov/PSP/wiki/Architecture-Security';
 export const INVENTORY_POLICY_URL =
   'https://www2.gov.bc.ca/gov/content/governments/services-for-government/real-estate-space/asset-management-services/inventory-policy';
 

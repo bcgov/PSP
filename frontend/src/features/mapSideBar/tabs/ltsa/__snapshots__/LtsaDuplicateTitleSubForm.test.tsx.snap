@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LtsaDuplicateTitleSubForm component renders charge sub form 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        To:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+          name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+          title="last"
+          value="last"
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Application #:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+          name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+          title="12345"
+          value="12345"
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Document district code:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+          name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+          title="test district code"
+          value="test district code"
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Certificate text:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+          name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+          title="certificate text"
+          value="certificate text"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

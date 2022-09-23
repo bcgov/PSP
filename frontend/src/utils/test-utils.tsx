@@ -13,23 +13,48 @@ import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import TestProviderWrapper from './TestProviderWrapper';
-import TestRouterWrapper from './TestRouterWrapper';
+import TestCommonWrapper from './TestCommonWrapper';
 
-export const mockKeycloak = (claims: string[], agencies: number[], authenticated = false) => {
+// re-export everything from RTL
+export * from '@testing-library/react';
+export { default as userEvent } from '@testing-library/user-event';
+
+export const mockKeycloak = (
+  props: {
+    claims?: string[];
+    roles?: string[];
+    organizations?: number[];
+    authenticated?: boolean;
+  } = {},
+) => {
+  const { claims, roles, organizations, authenticated = true } = props;
+  // mock what would be returned by keycloak userinfo endpoint
+  const userInfo = {
+    organizations: organizations ?? [1],
+    roles: claims ?? [],
+    groups: roles ?? [],
+    email: 'test@test.com',
+    name: 'Chester Tester',
+  };
+
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
-      userInfo: {
-        agencies: agencies,
-        roles: claims,
-        email: 'test@test.com',
-        name: 'Chester Tester',
-      },
+      userInfo,
       subject: 'test',
       authenticated,
+      loadUserInfo: jest.fn().mockResolvedValue(userInfo),
     },
   });
 };
+
+/**
+ * Generates fake text data to aid testing input form validation.
+ * @param length The length of the text to generate.
+ * @returns A string with as many 'x' as the supplied length
+ */
+export function fakeText(length = 50): string {
+  return 'x'.repeat(length);
+}
 
 export const fillInput = async (
   container: HTMLElement,
@@ -51,7 +76,6 @@ export const fillInput = async (
 
   // abort early if no input field found
   if (!input) return { input };
-
   if (type === 'input') {
     fireEvent.change(input, {
       target: {
@@ -81,14 +105,13 @@ export const fillInput = async (
     fireEvent.click(input);
     fireEvent.focusOut(input);
   } else {
-    fireEvent.change(input!, {
+    fireEvent.change(input, {
       target: {
         value: value,
       },
     });
-    fireEvent.focusOut(input);
   }
-  fireEvent.blur(input!);
+  fireEvent.blur(input);
 
   return { input };
 };
@@ -159,15 +182,13 @@ export function createMapContainer(
   };
 }
 
-// re-export everything from RTL
-export * from '@testing-library/react';
-
 // override RenderOptions interface
 export interface RenderOptions extends RtlRenderOptions {
   store?: any;
   history?: MemoryHistory;
   useMockAuthentication?: boolean;
-  agencies?: number[];
+  organizations?: number[];
+  claims?: string[];
   roles?: string[];
 }
 
@@ -179,38 +200,85 @@ function render(
     store,
     history,
     useMockAuthentication = false,
-    agencies,
+    organizations,
+    claims,
     roles,
     ...renderOptions
   } = options;
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
-  if (!!useMockAuthentication || !!roles || !!agencies) {
+  if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
     if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
-      mockKeycloak(roles ?? [], agencies ?? [1], true);
+      mockKeycloak({
+        claims: claims ?? [],
+        roles: roles ?? [],
+        organizations: organizations ?? [1],
+        authenticated: true,
+      });
     }
   }
 
-  // IMPORTANT: new context providers need to be added here
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
-      <TestProviderWrapper store={store}>
-        <TestRouterWrapper history={history}>
-          <ToastContainer
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-          />
-          <FilterProvider>{children}</FilterProvider>
-        </TestRouterWrapper>
-      </TestProviderWrapper>
+      <TestCommonWrapper store={store} history={history}>
+        <ToastContainer
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+        />
+        <FilterProvider>{children}</FilterProvider>
+      </TestCommonWrapper>
     );
   }
   return rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });
 }
 
+async function renderAsync(
+  ui: React.ReactElement,
+  options: Omit<RenderOptions, 'wrapper'> = {},
+): Promise<RenderResult> {
+  const {
+    store,
+    history,
+    useMockAuthentication = false,
+    organizations,
+    claims,
+    roles,
+    ...renderOptions
+  } = options;
+
+  // mock authentication state prior to rendering. Check first that keycloak has been mocked!
+  if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
+    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
+      mockKeycloak({
+        claims: claims ?? [],
+        roles: roles ?? [],
+        organizations: organizations ?? [1],
+        authenticated: true,
+      });
+    }
+  }
+
+  function AllTheProviders({ children }: PropsWithChildren) {
+    return (
+      <TestCommonWrapper store={store} history={history}>
+        <ToastContainer
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+        />
+        <FilterProvider>{children}</FilterProvider>
+      </TestCommonWrapper>
+    );
+  }
+  return await rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });
+}
+
 // override render method
-export { render };
+export { render, renderAsync };

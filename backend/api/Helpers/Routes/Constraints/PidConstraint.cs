@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
 namespace Pims.Api.Helpers.Routes.Constraints
 {
@@ -16,6 +16,7 @@ namespace Pims.Api.Helpers.Routes.Constraints
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PidConstraint object.
         /// </summary>
@@ -26,6 +27,7 @@ namespace Pims.Api.Helpers.Routes.Constraints
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Determines if the constraint matches the PID format (i.e. 123-123-123).
         /// </summary>
@@ -40,7 +42,11 @@ namespace Pims.Api.Helpers.Routes.Constraints
             if (values.TryGetValue(routeKey, out object value))
             {
                 var parameterValueString = Convert.ToString(value, CultureInfo.InvariantCulture);
-                if (parameterValueString == null) return false;
+                if (parameterValueString == null)
+                {
+                    return false;
+                }
+
                 return _regex.IsMatch(parameterValueString);
             }
 

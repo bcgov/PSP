@@ -1,9 +1,10 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics.CodeAnalysis;
+using Pims.Dal.Services;
 
 namespace Pims.Dal
 {
@@ -15,79 +16,65 @@ namespace Pims.Dal
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Add PimsService and PimsAdminService objects to dependency injection service collection.
+        /// Add PimsRepository objects to the dependency injection service collection.
         /// </summary>
-        /// <param name="services"></param>
+        /// <param name="repositories"></param>
         /// <returns></returns>
-        public static IServiceCollection AddPimsServices(this IServiceCollection services)
+        public static IServiceCollection AddPimsDalRepositories(this IServiceCollection repositories)
         {
-            return services
-                .AddPimsService()
-                .AddPimsAdminService();
+            repositories.AddScoped<IPimsRepository, PimsRepository>();
+            repositories.AddScoped<Repositories.IPropertyRepository, Repositories.PropertyRepository>();
+            repositories.AddScoped<Repositories.IProvinceService, Repositories.ProvinceService>();
+            repositories.AddScoped<Repositories.ILookupService, Repositories.LookupService>();
+            repositories.AddScoped<Repositories.ISystemConstantService, Repositories.SystemConstantService>();
+            repositories.AddScoped<Repositories.IPersonRepository, Repositories.PersonRepository>();
+            repositories.AddScoped<Repositories.IUserRepository, Repositories.UserRepository>();
+            repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
+            repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();
+            repositories.AddScoped<Repositories.IAccessRequestRepository, Repositories.AccessRequestRepository>();
+            repositories.AddScoped<Repositories.ITenantRepository, Repositories.TenantRepository>();
+            repositories.AddScoped<Repositories.ILeaseRepository, Repositories.LeaseRepository>();
+            repositories.AddScoped<Repositories.IContactRepository, Repositories.ContactRepository>();
+            repositories.AddScoped<Repositories.IInsuranceRepository, Repositories.InsuranceRepository>();
+            repositories.AddScoped<Repositories.IAutocompleteService, Repositories.AutocompleteService>();
+            repositories.AddScoped<Repositories.IOrganizationRepository, Repositories.OrganizationRepository>();
+            repositories.AddScoped<Repositories.ILeaseTermRepository, Repositories.LeaseTermRepository>();
+            repositories.AddScoped<Repositories.ISecurityDepositRepository, Repositories.SecurityDepositRepository>();
+            repositories.AddScoped<Repositories.ILeasePaymentRepository, Repositories.LeasePaymentRepository>();
+            repositories.AddScoped<Repositories.ISecurityDepositReturnRepository, Repositories.SecurityDepositReturnRepository>();
+            repositories.AddScoped<Repositories.IResearchFileRepository, Repositories.ResearchFileRepository>();
+            repositories.AddScoped<Repositories.IResearchFilePropertyRepository, Repositories.ResearchFilePropertyRepository>();
+            repositories.AddScoped<Repositories.IDocumentTypeRepository, Repositories.DocumentTypeRepository>();
+            repositories.AddScoped<Repositories.INoteRepository, Repositories.NoteRepository>();
+            repositories.AddScoped<Repositories.IEntityNoteRepository, Repositories.EntityNoteRepository>();
+            repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
+            repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
+            repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
+            repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
+            repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
+            return repositories; // TODO: Use reflection to find all Repositories.
         }
 
         /// <summary>
-        /// Add PimsService objects to the dependency injection service collection.
+        /// Add the PIMS DB Context to the repository collection.
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddPimsService(this IServiceCollection services)
-        {
-            services.AddScoped<IPimsService, PimsService>();
-            services.AddScoped<Services.IPropertyService, Services.PropertyService>();
-            services.AddScoped<Services.ILookupService, Services.LookupService>();
-            services.AddScoped<Services.IBuildingService, Services.BuildingService>();
-            services.AddScoped<Services.IParcelService, Services.ParcelService>();
-            services.AddScoped<Services.IUserService, Services.UserService>();
-            services.AddScoped<Services.INotificationTemplateService, Services.NotificationTemplateService>();
-            services.AddScoped<Services.INotificationQueueService, Services.NotificationQueueService>();
-            services.AddScoped<Services.ITenantService, Services.TenantService>();
-            return services; // TODO: Use reflection to find all services.
-        }
-
-        /// <summary>
-        /// Add PimsAdminService objects to the dependency injection service collection.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddPimsAdminService(this IServiceCollection services)
-        {
-            services.AddScoped<Services.Admin.IPimsAdminService, Services.Admin.PimsAdminService>();
-            services.AddScoped<Services.Admin.IClaimService, Services.Admin.ClaimService>();
-            services.AddScoped<Services.Admin.IAgencyService, Services.Admin.AgencyService>();
-            services.AddScoped<Services.Admin.IAddressService, Services.Admin.AddressService>();
-            services.AddScoped<Services.Admin.IBuildingService, Services.Admin.BuildingService>();
-            services.AddScoped<Services.Admin.IAdministrativeAreaService, Services.Admin.AdministrativeAreaService>();
-            services.AddScoped<Services.Admin.IParcelService, Services.Admin.ParcelService>();
-            services.AddScoped<Services.Admin.IProvinceService, Services.Admin.ProvinceService>();
-            services.AddScoped<Services.Admin.IRoleService, Services.Admin.RoleService>();
-            services.AddScoped<Services.Admin.IUserService, Services.Admin.UserService>();
-            services.AddScoped<Services.Admin.IBuildingConstructionTypeService, Services.Admin.BuildingConstructionTypeService>();
-            services.AddScoped<Services.Admin.IBuildingOccupantTypeService, Services.Admin.BuildingOccupantTypeService>();
-            services.AddScoped<Services.Admin.IBuildingPredominateUseService, Services.Admin.BuildingPredominateUseService>();
-            services.AddScoped<Services.Admin.IPropertyClassificationService, Services.Admin.PropertyClassificationService>();
-            services.AddScoped<Services.Admin.IPropertyTypeService, Services.Admin.PropertyTypeService>();
-            return services; // TODO: Use reflection to find all services.
-        }
-
-        /// <summary>
-        /// Add the PIMS DB Context to the service collection.
-        /// </summary>
-        /// <param name="services"></param>
+        /// <param name="repositories"></param>
         /// <param name="env"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static IServiceCollection AddPimsContext(this IServiceCollection services, IHostEnvironment env, string connectionString)
+        public static IServiceCollection AddPimsContext(this IServiceCollection repositories, IHostEnvironment env, string connectionString)
         {
-            if (String.IsNullOrWhiteSpace(connectionString)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(connectionString));
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(connectionString));
+            }
 
-            services.AddDbContext<PimsContext>(options =>
+            repositories.AddDbContext<PimsContext>(options =>
             {
                 var sql = options.UseSqlServer(connectionString, options =>
                 {
                     options.CommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
                     options.UseNetTopologySuite();
-                    // options.MigrationsHistoryTable("PIMS_MIGRATION_HISTORY"); // TODO: This doesn't work in .NET 5.0 currently.
                 });
                 if (!env.IsProduction())
                 {
@@ -98,7 +85,7 @@ namespace Pims.Dal
                 }
             });
 
-            return services;
+            return repositories;
         }
     }
 }

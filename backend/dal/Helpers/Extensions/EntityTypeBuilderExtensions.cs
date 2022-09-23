@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pims.Dal.Entities;
 
 namespace Pims.Dal.Extensions
 {
@@ -14,37 +13,6 @@ namespace Pims.Dal.Extensions
     public static class EntityTypeBuilderExtensions
     {
         /// <summary>
-        /// Adds the configured table name
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static EntityTypeBuilder<T> ToMotiTable<T>(this EntityTypeBuilder<T> builder)
-            where T : class
-        {
-            var type = typeof(T);
-            var table = type.GetCustomAttribute<MotiTableAttribute>() ?? throw new InvalidOperationException($"Entity '{type.Name}' model requires MotiAttribute defined.");
-            builder.ToTable(table.Name);
-            return builder;
-        }
-
-        /// <summary>
-        /// Add the primary key to the table and name it with the abbreviation configured.
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <param name="keyExpression"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static KeyBuilder HasMotiKey<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, object>> keyExpression)
-            where T : class
-        {
-            var type = typeof(T);
-            var table = type.GetCustomAttribute<MotiTableAttribute>() ?? throw new InvalidOperationException($"Entity '{type.Name}' model requires MotiAttribute defined.");
-            var primaryKeyName = $"{table.Abbreviation}_PK";
-            return builder.HasKey(keyExpression).HasName(primaryKeyName);
-        }
-
-        /// <summary>
         /// Add a sequence property to the table with the appropriate naming convention.
         /// </summary>
         /// <param name="builder"></param>
@@ -53,11 +21,11 @@ namespace Pims.Dal.Extensions
         /// <param name="sequenceName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static EntityTypeBuilder<T> HasMotiSequence<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, object>> propertyExpression, bool isRequired = true, string sequenceName = null)
+        public static PropertyBuilder<object> HasMotiSequence<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, object>> propertyExpression, bool isRequired = true, string sequenceName = null)
             where T : class
         {
             // Generate a sequence name based on the column name.
-            if (String.IsNullOrWhiteSpace(sequenceName))
+            if (string.IsNullOrWhiteSpace(sequenceName))
             {
                 var propInfo = GetPropertyInfo(propertyExpression);
                 var type = typeof(T);
@@ -66,13 +34,11 @@ namespace Pims.Dal.Extensions
                 sequenceName = $"PIMS_{column}_SEQ";
             }
 
-            builder.Property(propertyExpression)
+            return builder.Property(propertyExpression)
                 .HasColumnType("BIGINT")
                 .IsRequired(isRequired)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql($"NEXT VALUE FOR {sequenceName}");
-
-            return builder;
         }
 
         /// <summary>
@@ -97,16 +63,20 @@ namespace Pims.Dal.Extensions
 
             var propInfo = member.Member as PropertyInfo;
             if (propInfo == null)
+            {
                 throw new ArgumentException(string.Format(
                     "Expression '{0}' refers to a field, not a property.",
                     propertyLambda.ToString()));
+            }
 
             if (type != propInfo.ReflectedType &&
                 !type.IsSubclassOf(propInfo.ReflectedType))
+            {
                 throw new ArgumentException(string.Format(
                     "Expression '{0}' refers to a property that is not from type {1}.",
                     propertyLambda.ToString(),
                     type));
+            }
 
             return propInfo;
         }

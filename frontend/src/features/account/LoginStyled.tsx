@@ -6,99 +6,111 @@ import styled from 'styled-components';
  * Provides css for the login page and applies the tenant configuration styling (background image and color).
  */
 export const LoginStyled = styled(Container)`
-  height: ${props =>
-    `calc(100vh - ${props.theme.css.footerHeight} - ${props.theme.css.headerHeight})`};
+  position: relative;
   background-image: ${props =>
     props.theme.tenant.login.backgroundImage
       ? `url("${props.theme.tenant.login.backgroundImage}")`
       : ''};
   background-size: cover;
-  background-position: center top;
+  background-position: center;
   overflow: auto;
+  grid-area: content;
+
+  .btn.btn-primary {
+    display: inline-block;
+  }
+
+  .btn.btn-primary {
+    display: inline-block;
+  }
+
+  .btn.btn-primary {
+    display: inline-block;
+  }
 
   .unauth {
-    font-size: 24px;
-    margin: 91px auto;
+    font-size: 2.4rem;
+    margin: 9.1rem auto;
     background-color: rgba(250, 250, 250, 0.9); //allows for slight transparency
-    padding-top: 15px;
-    padding-bottom: 20px;
-    max-width: 750px;
-    border-radius: 4px;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    max-width: 75rem;
+    border-radius: 0.4rem;
     .sign-in {
       justify-content: center;
     }
     .block {
       background-color: ${props => props.theme.css.filterBackgroundColor};
-      padding: 20px 0;
-      max-width: 650px;
-      max-height: 475px;
+      padding: 2rem 0;
+      max-width: 65rem;
+      max-height: 47.5rem;
       text-align: center;
-      border-radius: 4px;
+      border-radius: 0.4rem;
       min-width: 90%;
     }
     h1 {
-      padding-bottom: 18px;
+      padding-bottom: 1.8rem;
       font-family: 'BCSans', Fallback, sans-serif;
       font-weight: 700;
-      font-size: 24px;
+      font-size: 2.4rem;
       font-style: italic;
       color: ${props => props.theme.css.primaryColor};
     }
     h6 {
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
     }
     p {
-      font-size: 12px;
+      font-size: 1.2rem;
       color: ${props => props.theme.css.textColor};
       font-family: 'BCSans', Fallback, sans-serif;
       line-height: 130%;
-      margin-left: 30px;
-      margin-right: 30px;
-      margin-bottom: 2px;
+      margin-left: 3rem;
+      margin-right: 3rem;
+      margin-bottom: 0.2rem;
     }
     .btn {
-      margin-top: 30px;
-      margin-bottom: 30px;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
     }
     .btn-link {
-      margin-left: 30px;
-      margin-top: 10px;
-      font-size: 12px;
+      margin-left: 3rem;
+      margin-top: 1rem;
+      font-size: 1.2rem;
     }
     .btn-link:focus,
     .btn-link:active {
       background: none !important;
     }
     .bceid {
-      margin-bottom: -30px;
+      margin-bottom: -3rem;
     }
     .jumbotron {
       background-color: white;
-      padding: 20px;
-      margin-left: 40px;
-      margin-right: 40px;
+      padding: 2rem;
+      margin-left: 4rem;
+      margin-right: 4rem;
       width: 90%;
       justify-content: left;
-      border: 1px;
+      border: 0.1rem;
       border-style: solid;
       border-color: #707070;
       text-align: left;
       p {
-        margin: 10px;
+        margin: 1rem;
       }
     }
     .blockText {
-      margin: 0 auto 38px auto;
+      margin: 0 auto 3.8rem auto;
     }
     .or {
-      margin: 20px auto;
+      margin: 2rem auto;
     }
     .border-dark {
       border-color: ${props => props.theme.css.primaryColor} !important;
       color: ${props => props.theme.css.textColor} !important;
     }
     .pims-logo {
-      margin-bottom: 10px;
+      margin-bottom: 1rem;
     }
   }
 `;

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Pims.Dal;
 using Entity = Pims.Dal.Entities;
@@ -13,18 +14,61 @@ namespace Pims.Core.Test
         /// Create a new instance of an Address.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="address1"></param>
-        /// <param name="address2"></param>
-        /// <param name="administrativeArea"></param>
+        /// <returns></returns>
+        public static Entity.PimsAddress CreateAddress(long id)
+        {
+            return CreateAddress(id, "1234 St", string.Empty, string.Empty, null, null, "V9V9V9");
+        }
+
+        /// <summary>
+        /// Create a new instance of an Address.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="address"></param>
+        /// <param name="unitNumber"></param>
+        /// <param name="municipality"></param>
+        /// <param name="postal"></param>
+        /// <returns></returns>
+        public static Entity.PimsAddress CreateAddress(long id, string address, string unitNumber, string municipality, string postal)
+        {
+            return CreateAddress(id, address, unitNumber, municipality, null, null, postal);
+        }
+
+        /// <summary>
+        /// Create a new instance of an Address.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="address"></param>
+        /// <param name="unitNumber"></param>
         /// <param name="province"></param>
+        /// <param name="district"></param>
         /// <param name="postal"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(long id, string address1, string address2, string administrativeArea, Entity.Province province, string postal)
+        public static Entity.PimsAddress CreateAddress(long id, string address, Entity.PimsProvinceState province = null, Entity.PimsDistrict district = null, string postal = "V9V9V9")
         {
-            return new Entity.Address(address1, address2, administrativeArea, province, postal)
+            return CreateAddress(id, address, null, null, province, district, postal);
+        }
+
+        /// <summary>
+        /// Create a new instance of an Address.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="address"></param>
+        /// <param name="unitNumber"></param>
+        /// <param name="municipality"></param>
+        /// <param name="province"></param>
+        /// <param name="district"></param>
+        /// <param name="postal"></param>
+        /// <returns></returns>
+        public static Entity.PimsAddress CreateAddress(long id, string address, string unitNumber, string municipality, Entity.PimsProvinceState province = null, Entity.PimsDistrict district = null, string postal = "V9V9V9")
+        {
+            province ??= EntityHelper.CreateProvince((short)id, "BC", EntityHelper.CreateCountry((short)id, "CAN"));
+            district ??= EntityHelper.CreateDistrict((short)id, "District 1");
+            municipality ??= "municipality";
+            return new Entity.PimsAddress(address, unitNumber, municipality, province, district, postal)
             {
-                Id = id,
-                RowVersion = 1
+                AddressId = id,
+                ConcurrencyControlNumber = 1,
             };
         }
 
@@ -32,40 +76,20 @@ namespace Pims.Core.Test
         /// Create a new instance of an Address.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="address1"></param>
-        /// <param name="address2"></param>
+        /// <param name="address"></param>
+        /// <param name="province"></param>
+        /// <param name="district"></param>
         /// <param name="postal"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(long id, string address1, string address2, string postal, Entity.Province province = null)
+        public static Entity.PimsAddress CreateAddress(this PimsContext context, long id, string address, Entity.PimsProvinceState province = null, Entity.PimsDistrict district = null, string postal = "")
         {
-            if (province == null)
+            province ??= context.PimsProvinceStates.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a province.");
+            district ??= context.PimsDistricts.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a district.");
+            return new Entity.PimsAddress(address, null, "municipality", province, district, postal)
             {
-                province = EntityHelper.CreateProvince(id, "BC", "British Columbia");
-            }
-            return new Entity.Address(address1, address2, "Victoria", province, postal)
-            {
-                Id = id,
-                RowVersion = 1
-            };
-        }
-
-        /// <summary>
-        /// Create a new instance of an Address.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="address1"></param>
-        /// <param name="address2"></param>
-        /// <param name="postal"></param>
-        /// <returns></returns>
-        public static Entity.Address CreateAddress(this PimsContext context, long id, string address1, string address2, string postal)
-        {
-            var province = context.Provinces.FirstOrDefault(p => p.Code == "BC") ?? EntityHelper.CreateProvince(id, "BC", "British Columbia");
-            return new Entity.Address(address1, address2, "Victoria", province, postal)
-            {
-                Id = id,
-                RowVersion = 1
+                AddressId = id,
+                ConcurrencyControlNumber = 1,
             };
         }
     }
 }
-

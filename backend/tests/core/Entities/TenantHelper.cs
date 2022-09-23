@@ -14,15 +14,16 @@ namespace Pims.Core.Test
         /// <param name="code"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static Entity.Tenant CreateTenant(int id = 1, string code = "TEST", string name = "Test Tenant")
+        public static Entity.PimsTenant CreateTenant(long id = 1, string code = "TEST", string name = "Test Tenant")
         {
-            var tenant = new Entity.Tenant(code, name)
+            var tenant = new Entity.PimsTenant()
             {
-                Id = id
+                Code = code,
+                Name = name,
+                TenantId = id,
             };
 
             return tenant;
         }
     }
 }
-

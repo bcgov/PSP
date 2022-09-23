@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "Chrome",
-      "type": "chrome",
+      "type": "pwa-chrome",
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/src",
@@ -13,19 +13,33 @@
       }
     },
     {
-      "name": "Debug CRA Tests",
       "type": "node",
+      "name": "Debug tests watch mode",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-app-rewired",
+      "args": ["test", "--env=jsdom", "--runInBand", "--no-cache", "--watchAll"],
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "env": {
-        "CI": "true"
-      },
-      "disableOptimisticBPs": true
+      "protocol": "inspector",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "name": "Debug tests opened file",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-app-rewired",
+      "args": [
+        "test",
+        "${fileBasenameNoExtension}",
+        "--env=jsdom",
+        "--runInBand",
+        "--no-cache",
+        "--watchAll"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

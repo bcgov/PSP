@@ -3,7 +3,7 @@ import { Cell, Column, ColumnInstance } from 'react-table';
 // Mixed bag of optional properties to supply to the ColumnDefinitions below
 // NOTE - make sure you all properties below are optional!
 interface IExtraColumnProps {
-  align?: 'left' | 'right';
+  align?: 'left' | 'right' | 'center';
   clickable?: boolean;
   sortable?: boolean;
   // Whether to use width percentages vs hard-coded widths in pixels. Percentages support responsive design.
@@ -14,6 +14,7 @@ interface IExtraColumnProps {
     component?: React.ComponentType | React.FC<any>;
     props?: { [key: string]: any } | (() => { [key: string]: any });
   };
+  Footer?: Function;
 }
 
 // Typings for configuration sent to `react-table`

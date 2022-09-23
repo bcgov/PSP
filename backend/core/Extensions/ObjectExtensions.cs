@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using NetTopologySuite.Geometries;
 
 namespace Pims.Core.Extensions
 {
@@ -16,20 +17,25 @@ namespace Pims.Core.Extensions
         /// </summary>
         /// <param name="source"></param>
         /// <param name="destination"></param>
-        /// <typeparam name="ST"></typeparam>
-        /// <typeparam name="DT"></typeparam>
-        public static DT CopyValues<ST, DT>(this ST source, DT destination)
-            where ST : class
-            where DT : class
+        /// <typeparam name="T_Source"></typeparam>
+        /// <typeparam name="T_Destination"></typeparam>
+        public static T_Destination CopyValues<T_Source, T_Destination>(this T_Source source, T_Destination destination)
+            where T_Source : class
+            where T_Destination : class
         {
-            if (destination == null) throw new ArgumentNullException(nameof(destination));
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
 
-            var type = typeof(DT);
-            var sProps = typeof(ST)
+            var type = typeof(T_Destination);
+            var sProps = typeof(T_Source)
                 .GetCachedProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => p.PropertyType.IsPrimitive
                     || p.PropertyType.IsEnum
                     || p.PropertyType == typeof(string)
+                    || p.PropertyType == typeof(Point)
+                    || p.PropertyType == typeof(Geometry)
                     || (p.PropertyType.IsGenericType
                         && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)
                         && Nullable.GetUnderlyingType(p.PropertyType).IsPrimitive)
@@ -39,7 +45,11 @@ namespace Pims.Core.Extensions
 
             foreach (var dProp in dProps)
             {
-                if (!sProps.ContainsKey(dProp.Name)) continue;
+                if (!sProps.ContainsKey(dProp.Name))
+                {
+                    continue;
+                }
+
                 var sProp = sProps[dProp.Name];
 
                 if (sProp.PropertyType == dProp.PropertyType && dProp.GetSetMethod() != null)

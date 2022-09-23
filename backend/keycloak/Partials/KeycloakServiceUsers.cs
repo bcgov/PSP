@@ -1,19 +1,20 @@
-using Pims.Core.Extensions;
-using Pims.Keycloak.Extensions;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Pims.Core.Extensions;
+using Pims.Keycloak.Extensions;
 
 namespace Pims.Keycloak
 {
     /// <summary>
     /// KeycloakAdmin class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview
+    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
         #region Methods
+
         /// <summary>
         /// Get the total number of users.
         /// </summary>
@@ -61,7 +62,7 @@ namespace Pims.Keycloak
         public async Task<Models.UserModel> CreateUserAsync(Models.UserModel user)
         {
             var json = user.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/users", content);
 
             return await response.HandleResponseAsync<Models.UserModel>();
@@ -75,7 +76,7 @@ namespace Pims.Keycloak
         public async Task<Guid> UpdateUserAsync(Models.UserModel user)
         {
             var json = user.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"{this.Options.Admin.Authority}/users/{user.Id}", content);
 
             return response.HandleResponse(user.Id);

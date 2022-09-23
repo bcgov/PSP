@@ -3,12 +3,14 @@ import './Table.scss';
 import classnames from 'classnames';
 import classNames from 'classnames';
 import clsx from 'classnames';
-import { Button } from 'components/common/form/Button';
+import { Button } from 'components/common/buttons/Button';
+import { SelectedText } from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Form, Formik, FormikProps } from 'formik';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
+import { handleSortChange } from 'hooks/useSearch';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import remove from 'lodash/remove';
@@ -21,13 +23,13 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { Col as ColBootstrap, Row as RowBootstrap } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
 import Spinner from 'react-bootstrap/Spinner';
 import { FaAngleDown, FaAngleRight, FaUndo } from 'react-icons/fa';
 import {
   Cell,
   HeaderGroup,
-  IdType,
   Row,
   TableOptions,
   useFlexLayout,
@@ -36,7 +38,6 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import styled from 'styled-components';
 
 import { TablePagination } from '.';
 import ColumnFilter from './ColumnFilter';
@@ -46,28 +47,34 @@ import { TablePageSizeSelector } from './PageSizeSelector';
 import { SortDirection, TableSort } from './TableSort';
 import { CellWithProps, ColumnInstanceWithProps } from './types';
 
-const TableToolbarText = styled.p`
-  flex: auto;
-  text-align: left;
-`;
-
 // these provide a way to inject custom CSS into table headers and cells
-const headerProps = <T extends object>(
+const headerPropsGetter = <T extends object>(
   props: any,
   { column }: { column: ColumnInstanceWithProps<T> },
 ) => {
   return getStyles(props, true, column);
 };
 
-const noHeaders = <T extends object>(
+const noHeadersGetter = <T extends object>(
   props: any,
   { column }: { column: ColumnInstanceWithProps<T> },
 ) => {
   return getStyles(props, true, column, true);
 };
 
-const cellProps = <T extends object>(props: any, { cell }: { cell: Cell<T> }) => {
+const cellPropsGetter = <T extends object>(props: any, { cell }: { cell: Cell<T> }) => {
   return getStyles(props, false, cell.column);
+};
+
+const getJustify = (align?: string) => {
+  switch (align) {
+    case 'center':
+      return 'center';
+    case 'right':
+      return 'right';
+    default:
+      return 'left';
+  }
 };
 
 const getStyles = <T extends object>(
@@ -87,9 +94,10 @@ const getStyles = <T extends object>(
     props,
     {
       style: {
-        justifyContent: column?.align === 'right' ? 'flex-end' : 'flex-start',
-        textAlign: column?.align === 'right' ? 'right' : 'left',
-        alignItems: isHeader ? 'center' : 'flex-start',
+        justifyContent: getJustify(column?.align),
+        textAlign: column?.align ?? 'left',
+        flexWrap: 'wrap',
+        alignItems: 'center',
         display: isHeader && hideHeaders ? 'none' : 'flex',
         ...colSize,
       },
@@ -106,30 +114,38 @@ interface DetailsOptions<T extends object> {
   getRowId: (row: T) => any;
 }
 
+interface ExternalSort<T extends object> {
+  sort: TableSort<T>;
+  setSort: (sort: TableSort<T>) => void;
+}
+
 export interface TableProps<T extends object = {}, TFilter extends object = {}>
   extends TableOptions<T> {
   name: string;
+  showSelectedRowCount?: boolean;
   hideHeaders?: boolean;
   onRequestData?: (props: { pageIndex: number; pageSize: number }) => void;
   loading?: boolean; // TODO: Show loading indicator while fetching data from server
+  totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageSizeOptions?: number[];
   pageIndex?: number;
   onRowClick?: (data: T) => void;
   clickableTooltip?: string;
-  onSortChange?: (field: IdType<T>, directions: SortDirection) => void;
   onPageSizeChange?: (size: number) => void;
-  sort?: TableSort<T>;
+  externalSort?: ExternalSort<T>;
   noRowsMessage?: string;
   selectedRows?: T[];
   setSelectedRows?: Function;
   lockPageSize?: boolean;
   detailsPanel?: DetailsOptions<T>;
   footer?: boolean;
+  hidePagination?: boolean;
   hideToolbar?: boolean;
   tableToolbarText?: string;
   manualPagination?: boolean;
+  isSingleSelect?: boolean;
   // Limit where you would like an expansion button to appear based off this props criteria
   canRowExpand?: (val: any) => boolean;
   className?: string;
@@ -152,12 +168,24 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
 }
 
 const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, setSelected, selectedRef, allDataRef, checked, row, ...rest }: any, ref) => {
+  (
+    {
+      indeterminate,
+      setSelected,
+      selectedRef,
+      allDataRef,
+      checked,
+      row,
+      isSingleSelect,
+      ...rest
+    }: any,
+    ref,
+  ) => {
     const defaultRef = React.useRef();
     const resolvedRef: any = ref || defaultRef;
     const isHeaderCheck = !!allDataRef?.current;
     if (isHeaderCheck) {
-      rest.title = 'Click to deselect all properties.';
+      rest.title = 'Click to deselect all.';
     }
 
     React.useEffect(() => {
@@ -178,10 +206,18 @@ const IndeterminateCheckbox = React.forwardRef(
       if (isHeaderCheck) {
         setSelected([]);
       } else {
-        if (currentSelected.find(selected => selected.id === row.original.id)) {
-          remove(currentSelected, row.original);
-        } else {
+        if (isSingleSelect === true) {
+          currentSelected.splice(0, currentSelected.length);
           currentSelected.push(row.original);
+        } else {
+          if (currentSelected.find(selected => selected.id === row.original.id)) {
+            remove(
+              currentSelected,
+              currentSelected.find(selected => selected.id === row.original.id),
+            );
+          } else {
+            currentSelected.push(row.original);
+          }
         }
         setSelected(uniq([...currentSelected]));
       }
@@ -193,7 +229,7 @@ const IndeterminateCheckbox = React.forwardRef(
     return (
       <>
         <input
-          type="checkbox"
+          type={isSingleSelect === true ? 'radio' : 'checkbox'}
           ref={resolvedRef}
           {...rest}
           disabled={isHeaderCheck && rest.checked === false && !indeterminate}
@@ -205,7 +241,7 @@ const IndeterminateCheckbox = React.forwardRef(
   },
 );
 
-interface IIdentifiedObject {
+export interface IIdentifiedObject {
   id?: number | string;
 }
 
@@ -213,7 +249,7 @@ interface IIdentifiedObject {
  * A table component. Supports sorting, filtering and paging.
  * Uses `react-table` to handle table logic.
  */
-const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
+export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   props: PropsWithChildren<TableProps<T, TFilter>>,
 ): ReactElement => {
   const filterFormRef = useRef<FormikProps<any>>();
@@ -233,21 +269,26 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     columns,
     data,
     onRequestData,
-    pageCount,
+    totalItems: externalTotalItems,
+    pageCount: externalPageCount,
     selectedRows: externalSelectedRows,
     setSelectedRows: setExternalSelectedRows,
     footer,
     pageSize: pageSizeProp,
     pageIndex: pageIndexProp,
     manualPagination,
-    sort,
     filterable,
     renderBodyComponent,
+    externalSort,
+    isSingleSelect,
   } = props;
+  const manualSortBy = !!externalSort || props.manualSortBy;
+  const totalItems = externalTotalItems ?? data?.length;
+  const pageCount =
+    pageSizeProp !== undefined
+      ? externalPageCount ?? Math.ceil(totalItems / pageSizeProp)
+      : undefined;
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
-  React.useEffect(() => {
-    selectedRowsRef.current = externalSelectedRows ?? [];
-  }, [externalSelectedRows]);
 
   const dataRef = React.useRef<T[]>(data ?? []);
   React.useEffect(() => {
@@ -261,20 +302,29 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   }, [filterFormRef, props.filter]);
 
   const sortBy = useMemo(() => {
-    return !!sort ? keys(sort).map(key => ({ id: key, desc: (sort as any)[key] === 'desc' })) : [];
-  }, [sort]);
-  // Use the useTable hook to create your table configuration
+    return !!externalSort?.sort
+      ? keys(externalSort.sort).map(key => ({
+          id: key,
+          desc: (externalSort.sort as any)[key] === 'desc',
+        }))
+      : [];
+  }, [externalSort?.sort]);
 
-  const instance = useTable(
+  // Use the useTable hook to create your table configuration
+  const instance = useTable<T>(
     {
       columns,
       data,
       defaultColumn,
       initialState: pageSizeProp
-        ? { sortBy, pageIndex: pageIndexProp ?? 0, pageSize: pageSizeProp }
+        ? {
+            sortBy,
+            pageIndex: pageIndexProp ?? 0,
+            pageSize: pageSizeProp,
+          }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
       manualPagination: manualPagination ?? true, // Tell the usePagination hook
-      manualSortBy: false,
+      manualSortBy: manualSortBy,
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
       // pageCount.
@@ -287,7 +337,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     useRowSelect,
     hooks => {
       hooks.visibleColumns.push(columns => {
-        return setExternalSelectedRows
+        return props.showSelectedRowCount
           ? [
               {
                 id: 'selection',
@@ -296,16 +346,18 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                 groupByBoundary: true,
                 // The header can use the table's getToggleAllRowsSelectedProps method
                 // to render a checkbox
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                  <div>
-                    <IndeterminateCheckbox
-                      {...getToggleAllRowsSelectedProps()}
-                      setSelected={setExternalSelectedRows}
-                      selectedRef={selectedRowsRef}
-                      allDataRef={dataRef}
-                    />
-                  </div>
-                ),
+                Header: ({ getToggleAllRowsSelectedProps }) =>
+                  isSingleSelect !== true && (
+                    <div>
+                      <IndeterminateCheckbox
+                        {...getToggleAllRowsSelectedProps()}
+                        isSingleSelect={isSingleSelect}
+                        setSelected={setExternalSelectedRows}
+                        selectedRef={selectedRowsRef}
+                        allDataRef={dataRef}
+                      />
+                    </div>
+                  ),
                 // The cell can use the individual row's getToggleRowSelectedProps method
                 // to the render a checkbox
                 Cell: ({ row }: { row: any }) => (
@@ -313,12 +365,30 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     <IndeterminateCheckbox
                       {...row.getToggleRowSelectedProps()}
                       row={row}
-                      setSelected={setExternalSelectedRows}
+                      setSelected={(values: T[]) => {
+                        const allPreviouslySelected = instance.rows
+                          .filter(row => row.isSelected)
+                          .map(row => row.original);
+                        const previouslySelected = allPreviouslySelected.find(
+                          row => values.length === 1 && row.id === values[0].id,
+                        );
+                        if (previouslySelected) {
+                          setExternalSelectedRows &&
+                            setExternalSelectedRows(
+                              allPreviouslySelected.filter(row => row !== previouslySelected),
+                            );
+                        } else {
+                          setExternalSelectedRows &&
+                            setExternalSelectedRows([...allPreviouslySelected, ...values]);
+                        }
+                      }}
                       selectedRef={selectedRowsRef}
+                      isSingleSelect={isSingleSelect}
                     />
                   </div>
                 ),
-                maxWidth: 40,
+                maxWidth: 10,
+                minWidth: 10,
               },
               ...columns,
             ]
@@ -364,9 +434,9 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   }, [page, externalSelectedRows]);
 
   const getNextSortDirection = (column: ColumnInstanceWithProps<T>): SortDirection => {
-    if (!(props.sort as any)[column.id]) return 'asc';
+    if (!(props.externalSort?.sort as any)[column.id]) return 'asc';
 
-    if ((props.sort as any)[column.id] === 'desc') {
+    if ((props.externalSort?.sort as any)[column.id] === 'desc') {
       return undefined;
     }
 
@@ -390,11 +460,11 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ) : (
           column.render('Header')
         )}
-        <span style={{ flex: '1 1 auto' }} />
-        <ColumnSort
+        <ColumnSort<T>
           onSort={() => {
             const next = getNextSortDirection(column);
-            props.onSortChange!(column.id, next);
+            !!externalSort &&
+              handleSortChange(column.id, next, externalSort.sort, externalSort.setSort);
             if (!!next) {
               toggleSortBy(column.id, next === 'desc', true);
             } else {
@@ -402,6 +472,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             }
           }}
           column={column}
+          sort={externalSort?.sort}
         />
       </div>
     );
@@ -425,7 +496,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     }
                   }
 
-                  actions!.resetForm(nextState);
+                  actions.resetForm(nextState);
                   if (!!props.onFilterChange) {
                     props.onFilterChange(nextState);
                   }
@@ -437,17 +508,17 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             </TooltipWrapper>
           </div>
         )}
-        {headerGroup.headers.map((column: ColumnInstanceWithProps<T>) => (
+        {headerGroup.headers.map((columnProps: ColumnInstanceWithProps<T>) => (
           <div
             {...(props.hideHeaders
-              ? column.getHeaderProps(noHeaders)
-              : column.getHeaderProps(headerProps))}
+              ? columnProps.getHeaderProps(noHeadersGetter)
+              : columnProps.getHeaderProps(headerPropsGetter))}
             className={classnames(
               'th',
-              column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : '',
+              columnProps.isSorted ? (columnProps.isSortedDesc ? 'sort-desc' : 'sort-asc') : '',
             )}
           >
-            {renderHeaderCell(column)}
+            {renderHeaderCell(columnProps)}
           </div>
         ))}
       </>
@@ -461,7 +532,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderLoading = () => {
     return (
       <div className="table-loading">
-        <Spinner animation="border"></Spinner>
+        <Spinner animation="border" role="status" title="table-loading"></Spinner>
       </div>
     );
   };
@@ -513,7 +584,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
           <div {...footerGroup.getHeaderGroupProps()} className="tr">
             {footerGroup.headers.map(
               (column: ColumnInstanceWithProps<T> & { Footer?: Function }) => (
-                <div {...column.getHeaderProps(headerProps)} className="th">
+                <div {...column.getHeaderProps(headerPropsGetter)} className="th">
                   {column.Footer ? <column.Footer properties={map(page, 'original')} /> : null}
                 </div>
               ),
@@ -533,18 +604,18 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       return <div className="no-rows-message">{props.noRowsMessage || 'No rows to display'}</div>;
     }
 
-    const handleExpandClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data: T) => {
+    const handleExpandClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, rowData: T) => {
       e.preventDefault();
-      let expanded = expandedRows;
+      let expanded;
       if (
         props.detailsPanel !== undefined &&
-        props.detailsPanel.checkExpanded(data, expandedRows)
+        props.detailsPanel.checkExpanded(rowData, expandedRows)
       ) {
         expanded = expandedRows.filter(
-          x => props.detailsPanel?.getRowId(x) !== props.detailsPanel?.getRowId(data),
+          x => props.detailsPanel?.getRowId(x) !== props.detailsPanel?.getRowId(rowData),
         );
       } else {
-        expanded = [...expandedRows, data];
+        expanded = [...expandedRows, rowData];
       }
       setExpandedRows(expanded);
       if (props.detailsPanel && props.detailsPanel.onExpand && expanded.length > 0) {
@@ -566,12 +637,12 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
               )}
             {props.canRowExpand && !props.canRowExpand(row) ? (
               <div className="td">
-                <div style={{ width: '20px' }}>&nbsp;</div>
+                <div style={{ width: '2.0rem' }}>&nbsp;</div>
               </div>
             ) : null}
             {filterable ? (
               <div className="td">
-                <div style={{ width: '30px' }}>&nbsp;</div>
+                <div style={{ width: '3.0rem' }}>&nbsp;</div>
               </div>
             ) : null}
             {/* Expansion button shown on every row by default */}
@@ -584,7 +655,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             {row.cells.map((cell: CellWithProps<T>) => {
               return (
                 <div
-                  {...cell.getCellProps(cellProps)}
+                  {...cell.getCellProps(cellPropsGetter)}
                   title={cell.column.clickable && clickableTooltip ? clickableTooltip : ''}
                   className={classnames('td', cell.column.clickable ? 'clickable' : '')}
                   onClick={() =>
@@ -626,12 +697,22 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     props.noRowsMessage,
     props.columns,
     renderExpandRowStateButton,
-    cellProps,
+    cellPropsGetter,
     expandedRows,
     clickableTooltip,
     externalSelectedRows,
     selectedFlatRows,
+    page,
   ]);
+
+  var canShowTotals: boolean = false;
+  var initialCount: number = -1;
+  var finalCount: number = -1;
+  if (totalItems !== undefined && pageSize !== undefined && pageIndex !== undefined) {
+    canShowTotals = true;
+    initialCount = pageSize * pageIndex + 1;
+    finalCount = Math.min(pageSize * (pageIndex + 1), totalItems);
+  }
 
   // Render the UI for your table
   return (
@@ -639,6 +720,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       <div
         {...getTableProps({ style: { minWidth: undefined } })}
         className={classNames('table', props.className ?? '')}
+        data-testid={`${props.name}`}
       >
         <div className="thead thead-light">
           {headerGroups.map(headerGroup => (
@@ -668,21 +750,37 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         {renderBody}
         {renderFooter()}
       </div>
+
       {!props.hideToolbar && (
-        <div className="table-toolbar">
-          {props.pageSize !== -1 && <TablePagination<T> instance={instance} />}
-          {!props.lockPageSize && props.data.length > 0 && !props.lockPageSize && (
-            <TablePageSizeSelector
-              options={props.pageSizeOptions || DEFAULT_PAGE_SELECTOR_OPTIONS}
-              value={props.pageSize || DEFAULT_PAGE_SIZE}
-              onChange={onPageSizeChange}
-              alignTop={
-                props.pageSizeMenuDropUp ? props.pageSizeMenuDropUp : props.data.length >= 20
-              }
-            />
+        <RowBootstrap>
+          <ColBootstrap xs="auto" className="align-self-center">
+            {canShowTotals && props.data.length > 0 && (
+              <span>{`${initialCount} - ${finalCount} of  ${totalItems}`}</span>
+            )}
+          </ColBootstrap>
+          <ColBootstrap xs="auto" className="ml-auto align-self-center">
+            {!!props.showSelectedRowCount && (
+              <SelectedText>{props.selectedRows?.length ?? '0'} selected</SelectedText>
+            )}
+            {props.tableToolbarText && <span>{props.tableToolbarText}</span>}
+          </ColBootstrap>
+
+          {!props.lockPageSize && props.data.length > 0 && (
+            <ColBootstrap xs="auto" className="align-self-center">
+              <TablePageSizeSelector
+                options={props.pageSizeOptions || DEFAULT_PAGE_SELECTOR_OPTIONS}
+                value={props.pageSize || DEFAULT_PAGE_SIZE}
+                onChange={onPageSizeChange}
+                alignTop={
+                  props.pageSizeMenuDropUp ? props.pageSizeMenuDropUp : props.data.length >= 20
+                }
+              />
+            </ColBootstrap>
           )}
-          {props.tableToolbarText && <TableToolbarText>{props.tableToolbarText}</TableToolbarText>}
-        </div>
+          <ColBootstrap xs="auto" className="align-self-center">
+            {!props.hidePagination && <TablePagination<T> instance={instance} />}
+          </ColBootstrap>
+        </RowBootstrap>
       )}
     </>
   );

@@ -71,8 +71,10 @@ echo "---> Replacing Configuration ..."
 echo "Setting:"
 echo "RealIpFrom = ${RealIpFrom:-172.51.0.0/16}"
 echo "API_URL = ${API_URL}"
+echo "GEOSERVER_URL = ${GEOSERVER_URL}"
+echo "CSP = ${CSP}"
 
-sed "s~%RealIpFrom%~${RealIpFrom:-172.51.0.0/16}~g; s~%API_URL%~${API_URL}~g;" /tmp/nginx.conf.template > /etc/nginx/nginx.conf
-sed "s~%RealIpFrom%~${RealIpFrom:-172.51.0.0/16}~g; s~%API_URL%~${API_URL}~g;" /tmp/nginx.conf.template
+sed "s~%RealIpFrom%~${RealIpFrom:-172.51.0.0/16}~g; s~%API_URL%~${API_URL}~g; s~%GEOSERVER_URL%~${GEOSERVER_URL}~g; s~%CSP%~${CSP}~g;" /tmp/nginx.conf.template > /etc/nginx/nginx.conf
+sed "s~%RealIpFrom%~${RealIpFrom:-172.51.0.0/16}~g; s~%API_URL%~${API_URL}~g; s~%GEOSERVER_URL%~${GEOSERVER_URL}~g; s~%CSP%~${CSP}~g;" /tmp/nginx.conf.template
 echo "---> Starting nginx ..."
 /usr/sbin/nginx -g "daemon off;"

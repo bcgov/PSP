@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -13,24 +16,41 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <param name="code"></param>
-        /// <param name="name"></param>
+        /// <param name="country"></param>
         /// <returns></returns>
-        public static Entity.Province CreateProvince(long id, string code, string name)
+        public static Entity.PimsProvinceState CreateProvince(short id, string code, Entity.PimsCountry country = null)
         {
-            return new Entity.Province(code, name) { Id = id, RowVersion = 1 };
+            country ??= EntityHelper.CreateCountry(1, "CAN");
+            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of Province.
         /// </summary>
+        /// <param name="country"></param>
         /// <returns></returns>
-        public static List<Entity.Province> CreateDefaultProvinces()
+        public static List<Entity.PimsProvinceState> CreateDefaultProvinces(Entity.PimsCountry country = null)
         {
-            return new List<Entity.Province>()
+            country ??= EntityHelper.CreateCountry(1, "CAN");
+            return new List<Entity.PimsProvinceState>()
             {
-                new Entity.Province("ON", "Ontario") { Id = 1, RowVersion = 1 },
-                new Entity.Province("BC", "British Columbia") { Id = 2,  RowVersion = 1 },
+                new Entity.PimsProvinceState("ON", country) { ProvinceStateId = 1, ConcurrencyControlNumber = 1 },
+                new Entity.PimsProvinceState("BC", country) { ProvinceStateId = 2,  ConcurrencyControlNumber = 1 },
             };
+        }
+
+        /// <summary>
+        /// Create a new instance of a Province.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id"></param>
+        /// <param name="code"></param>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        public static Entity.PimsProvinceState CreateProvince(this PimsContext context, short id, string code, Entity.PimsCountry country = null)
+        {
+            country ??= context.PimsCountries.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a country.");
+            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
         }
     }
 }

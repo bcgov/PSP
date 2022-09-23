@@ -1,11 +1,14 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/bcgov/pims/issues)
-![API (.Net Core)](<https://github.com/bcgov/PIMS/workflows/API%20(.NET%20Core)/badge.svg?branch=dev>)
-![APP (React)](<https://github.com/bcgov/PIMS/workflows/APP%20(React)/badge.svg?branch=dev>)
-[![codecov](https://codecov.io/gh/bcgov/PIMS/branch/dev/graph/badge.svg)](https://codecov.io/gh/bcgov/PIMS)
+![API (.Net Core)](<https://github.com/bcgov/PSP/workflows/API%20(.NET%20Core)/badge.svg?branch=dev>)
+![APP (React)](<https://github.com/bcgov/PSP/workflows/APP%20(React)/badge.svg?branch=dev>)
+[![codecov](https://codecov.io/gh/bcgov/PSP/branch/dev/graph/badge.svg)](https://codecov.io/gh/bcgov/PSP)
 
 ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m784832378-1d844c019bc2900c17c826cb)
 [![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+![Site Security Scan](<https://github.com/bcgov/psp/actions/workflows/zap-scan.yml/badge.svg?branch=dev>)
+[![Image Security Scan](https://github.com/bcgov/PSP/actions/workflows/image-scan-analysis.yml/badge.svg)](https://github.com/bcgov/PSP/actions/workflows/image-scan-analysis.yml)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bcgov/psp/master)
 
 # PIMS
 
@@ -60,12 +63,12 @@ Objectives include:
 
 > We are actively adding new features and enhancements.
 
-Read the documentation [here](https://github.com/bcgov/PIMS/wiki)
+Read the documentation [here](https://github.com/bcgov/PSP/wiki)
 
 ## License
 
 ```
-Copyright 2020 Province of British Columbia
+Copyright 2021 Province of British Columbia
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

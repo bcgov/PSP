@@ -30,40 +30,6 @@ exports[`Map Legend View renders correctly 1`] = `
           Parcel
         </div>
       </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col-2"
-        >
-          <img
-            class=""
-            height="25"
-          />
-        </div>
-        <div
-          class="label col"
-        >
-          Building
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="col-2"
-        >
-          <img
-            class=""
-            height="25"
-          />
-        </div>
-        <div
-          class="label col"
-        >
-          Proposed Subdivision
-        </div>
-      </div>
     </div>
   </div>
 </DocumentFragment>

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lease Surplus Declaration renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+<div
+    class="c0"
+  >
+    <p>
+      Data shown is from the Surplus Declaration workflow on the property screen and is not directly editable on this screen.
+    </p>
+    <br />
+    <div
+      class="table"
+      data-testid="leasesTable"
+      role="table"
+    >
+      <div
+        class="thead thead-light"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+        >
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              PID / Identifier
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Surplus Declaration
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Declaration Date
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Declaration Comments
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="no-rows-message"
+      >
+        Lease / Surplus Declaration details do not exist in PIMS inventory
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

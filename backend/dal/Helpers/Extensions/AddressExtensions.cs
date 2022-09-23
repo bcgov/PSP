@@ -12,9 +12,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="address"></param>
         /// <returns></returns>
-        public static string FormatAddress(this Address address)
+        public static string FormatAddress(this PimsAddress address, bool includeMunicipality = false)
         {
-            return address != null ? $"{address.Address1} {address.Address2}".Trim() : "";
+            string municipality = includeMunicipality ? address.MunicipalityName : string.Empty;
+            return address != null ? $"{address.StreetAddress1} {address.StreetAddress2} {address.StreetAddress3} {municipality}".Trim() : string.Empty;
         }
     }
 }

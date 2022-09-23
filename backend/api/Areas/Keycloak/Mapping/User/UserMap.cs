@@ -1,6 +1,6 @@
-using Mapster;
-using System;
 using System.Linq;
+using Mapster;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
 using Model = Pims.Api.Areas.Keycloak.Models.User;
@@ -11,61 +11,38 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.User, Model.UserModel>()
+            config.NewConfig<Entity.PimsUser, Model.UserModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
+                .Map(dest => dest.KeycloakUserId, src => src.GuidIdentifierValue)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Username, src => src.Username)
-                .Map(dest => dest.Position, src => src.Position)
-                .Map(dest => dest.DisplayName, src => src.DisplayName)
-                .Map(dest => dest.FirstName, src => src.FirstName)
-                .Map(dest => dest.MiddleName, src => src.MiddleName)
-                .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany.OrderBy(a => a.Agency.ParentId))
-                .Map(dest => dest.Roles, src => src.RolesManyToMany)
-                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+                .Map(dest => dest.BusinessIdentifier, src => src.BusinessIdentifierValue)
+                .Map(dest => dest.FirstName, src => src.Person.FirstName)
+                .Map(dest => dest.MiddleNames, src => src.Person.MiddleNames)
+                .Map(dest => dest.Surname, src => src.Person.Surname)
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
+                .Map(dest => dest.Organizations, src => src.PimsUserOrganizations.OrderBy(o => o.Organization != null ? o.Organization.PrntOrganizationId : null))
+                .Map(dest => dest.Roles, src => src.PimsUserRoles)
+                .Inherits<Entity.IDisableBaseAppEntity, Api.Models.BaseAppModel>();
 
-            config.NewConfig<Model.UserModel, Entity.User>()
+            config.NewConfig<Model.UserModel, Entity.PimsUser>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
+                .Map(dest => dest.GuidIdentifierValue, src => src.KeycloakUserId)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Username, src => src.Username)
-                .Map(dest => dest.Position, src => src.Position)
-                .Map(dest => dest.DisplayName, src => src.DisplayName)
-                .Map(dest => dest.FirstName, src => src.FirstName)
-                .Map(dest => dest.MiddleName, src => src.MiddleName)
-                .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.AgenciesManyToMany, src => src.Agencies)
-                .Map(dest => dest.RolesManyToMany, src => src.Roles)
-                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Map(dest => dest.BusinessIdentifierValue, src => src.BusinessIdentifier)
+                .Map(dest => dest.Person.FirstName, src => src.FirstName)
+                .Map(dest => dest.Person.MiddleNames, src => src.MiddleNames)
+                .Map(dest => dest.Person.Surname, src => src.Surname)
+                .Map(dest => dest.PimsUserOrganizations, src => src.Organizations)
+                .Map(dest => dest.PimsUserRoles, src => src.Roles)
+                .Inherits<Api.Models.BaseAppModel, Entity.IDisableBaseAppEntity>();
 
-
-            config.NewConfig<Entity.User, KModel.UserModel>()
-                .Map(dest => dest.Id, src => src.Key)
-                .Map(dest => dest.Username, src => src.Username)
-                .Map(dest => dest.FirstName, src => src.FirstName)
-                .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.Enabled, src => !src.IsDisabled)
-                .Inherits<Entity.BaseAppEntity, Object>();
-
-            config.NewConfig<Entity.User, Entity.User>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Key, src => src.Key)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Username, src => src.Username)
-                .Map(dest => dest.Position, src => src.Position)
-                .Map(dest => dest.DisplayName, src => src.DisplayName)
-                .Map(dest => dest.FirstName, src => src.FirstName)
-                .Map(dest => dest.MiddleName, src => src.MiddleName)
-                .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Entity.BaseAppEntity, Entity.BaseAppEntity>();
+            config.NewConfig<Entity.PimsUser, KModel.UserModel>()
+                .Map(dest => dest.Id, src => src.GuidIdentifierValue)
+                .Map(dest => dest.Username, src => src.BusinessIdentifierValue)
+                .Map(dest => dest.FirstName, src => src.Person.FirstName)
+                .Map(dest => dest.LastName, src => src.Person.Surname)
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
+                .Map(dest => dest.Enabled, src => !src.IsDisabled);
         }
     }
 }

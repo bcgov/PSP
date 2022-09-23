@@ -13,6 +13,7 @@ namespace Pims.Core.Helpers
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Generate a random set of characters to the specified 'length'.
         /// The longer the length, the more random the value.
@@ -21,7 +22,10 @@ namespace Pims.Core.Helpers
         /// <returns></returns>
         public static string Generate(int length)
         {
-            if (length < 2) throw new ArgumentException("Length must be greater than or equal to 2.", nameof(length));
+            if (length < 2)
+            {
+                throw new ArgumentException("Length must be greater than or equal to 2.", nameof(length));
+            }
 
             var constonants = new[] { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "t", "v", "w", "x" };
             var vowels = new[] { "a", "e", "i", "o", "u", "y" };
@@ -29,10 +33,10 @@ namespace Pims.Core.Helpers
             var symbols = new[] { "_", "+", "-", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "?" };
             var all = constonants.Concat(vowels).Concat(numbers).Concat(symbols).ToArray();
 
-            string value = "";
+            string value = string.Empty;
             value += constonants[rand.Next(constonants.Length)].ToUpper();
             value += vowels[rand.Next(vowels.Length)];
-            int b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
+            int b = 2; // b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
             while (b < length)
             {
                 value += all[rand.Next(all.Length)];

@@ -1,0 +1,1123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReturnDepositForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="py-3 mb-4 pl-3"
+  >
+    <div
+      class="pb-3 row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit type:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        Pet deposit
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit amount:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        $1,234.00
+      </div>
+    </div>
+  </div>
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c2.c2.form-control.is-valid {
+  background-image: none;
+}
+
+.c2.c2.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c6 {
+  border-radius: 0.3rem;
+  padding: 12px 6px 6px 12px;
+  min-height: 2.5em;
+  background-image: none;
+  border: #606060 solid 0.1rem;
+}
+
+.c6.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group .form-label {
+  font-weight: bold;
+}
+
+.c0 .form-group input {
+  width: 90%;
+}
+
+.c4 {
+  font-size: 1.3rem;
+}
+
+.c3 {
+  margin-top: 3.5rem;
+}
+
+.c5 {
+  height: 0.7em;
+  margin-left: 1rem;
+}
+
+<form
+    class="c0 mx-3"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-terminationDate"
+          >
+            Termination or surrender date:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-terminationDate"
+                name="terminationDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="align-items-end d-flex col"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-claimsAgainst"
+          >
+            Claims against deposit ($): 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-claimsAgainst"
+              inputmode="numeric"
+              name="claimsAgainst"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="input-returnAmount"
+          >
+            Returned amount ($) without interest: 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-returnAmount"
+              inputmode="numeric"
+              name="returnAmount"
+              placeholder=""
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-interestPaid"
+          >
+            Interest paid ($): 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="interestPaid-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-interestPaid"
+              inputmode="numeric"
+              name="interestPaid"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <p
+          class="c3"
+        >
+          <a
+            class="c4"
+            href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+            target="_blank"
+          >
+            Returning deposits in BC
+          </a>
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+            />
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-returnDate"
+          >
+            Returned date:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-returnDate"
+                name="returnDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-contactHolder"
+          >
+            Payee name:
+          </label>
+          <div
+            class="align-items-center row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="c6"
+              />
+              <div
+                class="d-none input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-contactHolder.id"
+                  name="contactHolder.id"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="pl-0 align-self-center col-auto"
+            >
+              <button
+                class="c7 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
+                disabled=""
+                type="button"
+              >
+                <div
+                  class="Button__icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="pl-0 col-auto"
+            >
+              <button
+                class="c7 Button Button--icon-only px-2 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="container"
+    />
+  </form>
+</DocumentFragment>
+`;
+
+exports[`ReturnDepositForm component renders with data as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="py-3 mb-4 pl-3"
+  >
+    <div
+      class="pb-3 row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit type:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        Pet deposit
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit amount:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        $1,234.00
+      </div>
+    </div>
+  </div>
+  .c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  border: none;
+}
+
+.c7.btn.btn-secondary {
+  background: none;
+}
+
+.c7.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  background: none;
+}
+
+.c7.btn.btn-light {
+  border: none;
+}
+
+.c7.btn.btn-dark {
+  border: none;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c2.c2.form-control.is-valid {
+  background-image: none;
+}
+
+.c2.c2.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c6 {
+  border-radius: 0.3rem;
+  padding: 12px 6px 6px 12px;
+  min-height: 2.5em;
+  background-image: none;
+  border: #606060 solid 0.1rem;
+}
+
+.c6.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group .form-label {
+  font-weight: bold;
+}
+
+.c0 .form-group input {
+  width: 90%;
+}
+
+.c4 {
+  font-size: 1.3rem;
+}
+
+.c3 {
+  margin-top: 3.5rem;
+}
+
+.c5 {
+  height: 0.7em;
+  margin-left: 1rem;
+}
+
+<form
+    class="c0 mx-3"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-terminationDate"
+          >
+            Termination or surrender date:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-terminationDate"
+                name="terminationDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="align-items-end d-flex col"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-claimsAgainst"
+          >
+            Claims against deposit ($): 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-claimsAgainst"
+              inputmode="numeric"
+              name="claimsAgainst"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="input-returnAmount"
+          >
+            Returned amount ($) without interest: 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-returnAmount"
+              inputmode="numeric"
+              name="returnAmount"
+              placeholder=""
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-interestPaid"
+          >
+            Interest paid ($): 
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon"
+              id="interestPaid-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-interestPaid"
+              inputmode="numeric"
+              name="interestPaid"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <p
+          class="c3"
+        >
+          <a
+            class="c4"
+            href="https://www2.gov.bc.ca/gov/content/housing-tenancy/residential-tenancies/ending-a-tenancy/returning-deposits"
+            target="_blank"
+          >
+            Returning deposits in BC
+          </a>
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+            />
+          </svg>
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-returnDate"
+          >
+            Returned date:
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-returnDate"
+                name="returnDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-contactHolder"
+          >
+            Payee name:
+          </label>
+          <div
+            class="align-items-center row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="c6"
+              />
+              <div
+                class="d-none input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-contactHolder.id"
+                  name="contactHolder.id"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="pl-0 align-self-center col-auto"
+            >
+              <button
+                class="c7 Button Button--disabled Button--icon-only px-2 btn btn-secondary"
+                disabled=""
+                type="button"
+              >
+                <div
+                  class="Button__icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="pl-0 col-auto"
+            >
+              <button
+                class="c7 Button Button--icon-only px-2 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="container"
+    />
+  </form>
+</DocumentFragment>
+`;

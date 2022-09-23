@@ -1,7 +1,7 @@
-using FluentAssertions;
-using Pims.Ltsa.Models;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
@@ -21,9 +21,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            TitleIdentifier obj = new("titleNumber", LandTitleDistrict.KAMLOOPS);
+            TitleIdentifier obj = new("titleNumber", "KAMLOOPS");
             obj.TitleNumber.Should().Be("titleNumber");
-            obj.LandLandDistrict.Should().Be(LandTitleDistrict.KAMLOOPS);
+            obj.LandTitleDistrict.Should().Be("KAMLOOPS");
         }
     }
 }

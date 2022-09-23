@@ -1,21 +1,23 @@
-import { PropertyTypes } from 'constants/index';
+import {
+  PropertyAreaUnitTypes,
+  PropertyClassificationTypes,
+  PropertyDataSourceTypes,
+  PropertyStatusTypes,
+  PropertyTenureTypes,
+} from 'constants/index';
 import { IProperty } from 'interfaces';
 import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 
 import { ICluster, PointFeature } from '../types';
 import {
   asProperty,
-  buildingIcon,
-  buildingIconSelect,
   createClusterMarker,
   createPoints,
-  draftBuildingIcon,
-  draftParcelIcon,
   generateKey,
   getMarkerIcon,
+  parcelIcon,
   parcelIconSelect,
   pointToLayer,
-  subdivisionIconSelect,
 } from './mapUtils';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
@@ -31,7 +33,7 @@ describe('mapUtils tests', () => {
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
-      expect(pointToLayer(feature, latlng)).toEqual(new Marker(latlng, { icon: buildingIcon }));
+      expect(pointToLayer(feature, latlng)).toEqual(new Marker(latlng, { icon: parcelIcon }));
     });
 
     it('converts a cluster and latlng expression into a layer', () => {
@@ -80,48 +82,14 @@ describe('mapUtils tests', () => {
       properties: {
         cluster: false,
         point_count_abbreviated: 100,
-        propertyTypeId: PropertyTypes.DraftParcel,
       },
     };
-    it('returns a draft parcel icon', () => {
-      expect(
-        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DraftParcel } }),
-      ).toEqual(draftParcelIcon);
-    });
-    it('returns a draft building icon', () => {
-      expect(
-        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DraftBuilding } }),
-      ).toEqual(draftBuildingIcon);
-    });
-
-    it('returns a selected default subdivision icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.Subdivision },
-          },
-          true,
-        ),
-      ).toEqual(subdivisionIconSelect);
-    });
-    it('returns a default building icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.Building },
-          },
-          true,
-        ),
-      ).toEqual(buildingIconSelect);
-    });
     it('returns a default parcel icon', () => {
       expect(
         getMarkerIcon(
           {
             ...feature,
-            properties: { propertyTypeId: PropertyTypes.Parcel },
+            properties: {},
           },
           true,
         ),
@@ -130,18 +98,29 @@ describe('mapUtils tests', () => {
     describe('convert feature to property', () => {
       const property: IProperty = {
         id: 1,
-        agency: 'test agency',
-        agencyId: 1,
+        pid: '000-000-0001',
+        statusId: PropertyStatusTypes.UnderAdmin,
+        classificationId: PropertyClassificationTypes.CoreOperational,
+        tenureId: PropertyTenureTypes.HighwayRoad,
+        dataSourceId: PropertyDataSourceTypes.PAIMS,
+        dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
         latitude: 1,
         longitude: 2,
         isSensitive: false,
+        address: {
+          streetAddress1: '1243 St',
+          provinceId: 1,
+          municipality: '',
+          postal: '',
+        },
+        regionId: 1,
+        districtId: 1,
+        areaUnitId: PropertyAreaUnitTypes.Hectare,
+        landArea: 0,
+        landLegalDescription: '',
       };
-      it('generates building keys', () => {
-        const building: IProperty = { ...property, propertyTypeId: PropertyTypes.Building };
-        expect(generateKey(building)).toEqual('building-1');
-      });
       it('generates parcel keys', () => {
-        const parcel: IProperty = { ...property, propertyTypeId: PropertyTypes.Parcel };
+        const parcel: IProperty = { ...property };
         expect(generateKey(parcel)).toEqual('parcel-1');
       });
     });
@@ -150,7 +129,7 @@ describe('mapUtils tests', () => {
       const property: PointFeature = {
         type: 'Feature',
         geometry: { coordinates: [1, 2] } as any,
-        properties: { id: 1, propertyTypeId: PropertyTypes.Parcel, name: 'name' },
+        properties: { id: 1, name: 'name' },
       };
       it('does the conversion', () => {
         expect(asProperty(property)).toEqual({
@@ -158,7 +137,6 @@ describe('mapUtils tests', () => {
           latitude: 2,
           longitude: 1,
           name: 'name',
-          propertyTypeId: PropertyTypes.Parcel,
         });
       });
     });
@@ -166,8 +144,23 @@ describe('mapUtils tests', () => {
     describe('create points function', () => {
       const property: IProperty = {
         id: 1,
-        agency: 'test agency',
-        agencyId: 1,
+        pid: '000-000-001',
+        statusId: PropertyStatusTypes.UnderAdmin,
+        classificationId: PropertyClassificationTypes.CoreOperational,
+        tenureId: PropertyTenureTypes.HighwayRoad,
+        dataSourceId: PropertyDataSourceTypes.PAIMS,
+        dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
+        address: {
+          streetAddress1: '1243 St',
+          provinceId: 1,
+          municipality: '',
+          postal: '',
+        },
+        regionId: 1,
+        districtId: 1,
+        areaUnitId: PropertyAreaUnitTypes.Hectare,
+        landArea: 0,
+        landLegalDescription: '',
         latitude: 1,
         longitude: 2,
         isSensitive: false,
@@ -177,26 +170,58 @@ describe('mapUtils tests', () => {
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: {
-              agency: 'test agency',
-              agencyId: 1,
+              PROPERTY_ID: 1,
+              address: {
+                streetAddress1: '1243 St',
+                provinceId: 1,
+                municipality: '',
+                postal: '',
+              },
+              areaUnitId: PropertyAreaUnitTypes.Hectare,
+              classificationId: PropertyClassificationTypes.CoreOperational,
+              dataSourceId: PropertyDataSourceTypes.PAIMS,
+              dataSourceEffectiveDate: property.dataSourceEffectiveDate,
+              districtId: 1,
               cluster: false,
               id: 1,
               isSensitive: false,
               latitude: 1,
               longitude: 2,
+              tenureId: PropertyTenureTypes.HighwayRoad,
+              statusId: PropertyStatusTypes.UnderAdmin,
+              regionId: 1,
+              landArea: 0,
+              landLegalDescription: '',
+              pid: '000-000-001',
             },
             type: 'Feature',
           },
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: {
-              agency: 'test agency',
-              agencyId: 1,
+              PROPERTY_ID: 1,
+              address: {
+                streetAddress1: '1243 St',
+                provinceId: 1,
+                municipality: '',
+                postal: '',
+              },
+              areaUnitId: PropertyAreaUnitTypes.Hectare,
+              classificationId: PropertyClassificationTypes.CoreOperational,
+              dataSourceId: PropertyDataSourceTypes.PAIMS,
+              dataSourceEffectiveDate: property.dataSourceEffectiveDate,
+              districtId: 1,
               cluster: false,
               id: 1,
               isSensitive: false,
               latitude: 1,
               longitude: 2,
+              tenureId: PropertyTenureTypes.HighwayRoad,
+              statusId: PropertyStatusTypes.UnderAdmin,
+              regionId: 1,
+              landArea: 0,
+              landLegalDescription: '',
+              pid: '000-000-001',
             },
             type: 'Feature',
           },

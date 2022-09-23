@@ -1,13 +1,24 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
 import _ from 'lodash';
 import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
-import moment from 'moment-timezone';
+import moment, { Moment } from 'moment-timezone';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
+
+/**
+ * Rounds the supplied number to a certain number of decimal places
+ * @param value The number to round
+ * @param decimalPlaces The number of decimal places. Defaults to 2
+ * @returns The rounded number
+ */
+export function round(value: number, decimalPlaces = 2): number {
+  const factorOfTen = Math.pow(10, decimalPlaces);
+  return Math.round((value + Number.EPSILON) * factorOfTen) / factorOfTen;
+}
 
 /**
  * Convert the specified 'input' value into a decimal or undefined.
@@ -42,7 +53,7 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
   return !isNaN(Number(input)) && Number(input) > -1;
 };
 
-/** used for filters that need to display the string value of a parent agency agency */
+/** used for filters that need to display the string value of a parent organization organization */
 export const mapLookupCodeWithParentString = (
   code: ILookupCode,
   /** the list of lookup codes to look for parent */
@@ -55,7 +66,7 @@ export const mapLookupCodeWithParentString = (
   parent: options.find((a: ILookupCode) => a.id.toString() === code.parentId?.toString())?.name,
 });
 
-/** used for inputs that need to display the string value of a parent agency agency */
+/** used for inputs that need to display the string value of a parent organization organization */
 export const mapSelectOptionWithParent = (
   code: SelectOption,
   /** the list of lookup codes to look for parent */
@@ -113,23 +124,29 @@ export const formikFieldMemo = (
  * @param actionType All dispatched GenericNetworkActions will use this action type.
  * @param axiosPromise The result of an axios.get, .put, ..., call.
  */
-export const handleAxiosResponse = (
+export const handleAxiosResponse = <ResponseType>(
   dispatch: Function,
   actionType: string,
-  axiosPromise: Promise<any>,
-): Promise<any> => {
+  axiosPromise: Promise<AxiosResponse<ResponseType>>,
+  skipErrorLogCodes?: number[],
+): Promise<ResponseType> => {
   dispatch(logRequest(actionType));
   dispatch(showLoading());
   return axiosPromise
-    .then((response: any) => {
+    .then((response: AxiosResponse<ResponseType>) => {
       dispatch(logSuccess({ name: actionType }));
       dispatch(hideLoading());
-      return response.data ?? response.payload;
+      return response?.data;
     })
     .catch((axiosError: AxiosError) => {
-      dispatch(
-        logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
-      );
+      if (
+        !skipErrorLogCodes ||
+        (axiosError?.response?.status && !skipErrorLogCodes.includes(axiosError?.response?.status))
+      ) {
+        dispatch(
+          logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
+        );
+      }
       throw axiosError;
     })
     .finally(() => {
@@ -146,7 +163,7 @@ export const generateMultiSortCriteria = (sort: TableSort<any>) => {
     return '';
   }
 
-  return keys(sort).map(key => `${startCase(key).replace(' ', '')} ${sort[key]}`);
+  return keys(sort).map(key => `${startCase(key).replaceAll(' ', '')} ${sort[key]}`);
 };
 
 /**
@@ -176,8 +193,21 @@ export const getCurrentFiscalYear = (): number => {
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
-export const formatDate = (date?: string | Date) => {
+export const formatDate = (date?: string | Date | Moment) => {
   return !!date ? moment(date).format('YYYY-MM-DD') : '';
+};
+
+export const prettyFormatDate = (date?: string | Date | Moment) => {
+  return !!date ? moment(date).format('MMM D, YYYY') : '';
+};
+
+export const prettyFormatDateTime = (date?: string | Date | Moment) => {
+  return !!date
+    ? moment
+        .utc(date)
+        .local()
+        .format('MMM D, YYYY hh:mm a')
+    : '';
 };
 
 /**
@@ -185,7 +215,12 @@ export const formatDate = (date?: string | Date) => {
  * Returns a date formatted for display in the current time zone of the user.
  * @param date utc date/time string.
  */
-export const formatApiDateTime = (date: string | undefined) => {
+export const formatApiDateTime = (date?: string | Date | Moment) => {
+  if (typeof date === 'string')
+    return moment
+      .utc(date)
+      .local()
+      .format('YYYY-MM-DD hh:mm a');
   return !!date
     ? moment
         .utc(date)
@@ -246,3 +281,22 @@ export const getAdminAreaFromLayerData = (
     }
   }
 };
+
+/**
+ * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
+ * @param lazyComponent
+ * @param attemptsLeft
+ */
+export default function componentLoader(lazyComponent: Promise<any>, attemptsLeft: number) {
+  return new Promise<any>((resolve, reject) => {
+    lazyComponent.then(resolve).catch((error: any) => {
+      setTimeout(() => {
+        if (attemptsLeft === 0) {
+          reject(error);
+          return;
+        }
+        componentLoader(lazyComponent, attemptsLeft - 1).then(resolve, reject);
+      }, 500);
+    });
+  });
+}

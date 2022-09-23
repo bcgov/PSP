@@ -1,11 +1,11 @@
-using FluentAssertions;
-using Pims.Core.Test;
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using FluentAssertions;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -23,7 +23,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var paged = new Paged<User>();
+            var paged = new Paged<PimsUser>();
 
             // Assert
             paged.Page.Should().Be(1);
@@ -63,7 +63,7 @@ namespace Pims.Dal.Test.Entities
             // Act
             // Assert
             Assert.Throws<ArgumentNullException>(() => new Paged<object>(null, page, quantity, total));
-            Assert.Throws<ArgumentNullException>(() => new Paged<User>(null, page, quantity, total));
+            Assert.Throws<ArgumentNullException>(() => new Paged<PimsUser>(null, page, quantity, total));
         }
 
         [Fact]
@@ -113,11 +113,11 @@ namespace Pims.Dal.Test.Entities
         public void Paged_To()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             var result = paged.To((items) => items.Select(i => new { Key = $"{i.Id}" }));
@@ -134,15 +134,15 @@ namespace Pims.Dal.Test.Entities
         public void Paged_To_ArgumentNullException()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => paged.To((Func<IEnumerable<User>, IEnumerable<object>>)null));
+            Assert.Throws<ArgumentNullException>(() => paged.To((Func<IEnumerable<PimsUser>, IEnumerable<object>>)null));
         }
         #endregion
 
@@ -151,11 +151,11 @@ namespace Pims.Dal.Test.Entities
         public void Paged_GetEnumerator()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             var weak = paged.AsWeakEnumerable();
@@ -171,14 +171,14 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Add()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
-            paged.Add(new User(Guid.NewGuid(), "three", "three"));
+            paged.Add(EntityHelper.CreateUser("three"));
 
             // Assert
             paged.Count().Should().Be(3);
@@ -190,11 +190,11 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Clear()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             paged.Clear();
@@ -209,11 +209,11 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Contains()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             var result = paged.Contains(items.First());
@@ -228,12 +228,12 @@ namespace Pims.Dal.Test.Entities
         public void Paged_CopyTo()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
-            var result = new User[3];
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
+            var result = new PimsUser[3];
 
             // Act
             paged.CopyTo(result, 1);
@@ -251,11 +251,11 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Remove()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             paged.Remove(items.First());

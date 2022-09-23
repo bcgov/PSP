@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
 using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Model = Pims.Api.Models.Auth;
 
 namespace Pims.Api.Controllers
@@ -22,16 +22,17 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a AuthController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="optionsKeycloak"></param>
         /// <param name="pimsService"></param>
-        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IPimsService pimsService)
+        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IPimsRepository pimsService)
         {
             _optionsKeycloak = optionsKeycloak.CurrentValue;
             _pimsService = pimsService;
@@ -39,6 +40,7 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Activates the new authenticated user with PIMS.
         /// If the user is new it will return 201 if successful.
@@ -59,10 +61,10 @@ namespace Pims.Api.Controllers
             var user = _pimsService.User.Activate();
             if (!exists)
             {
-                return new CreatedResult($"{user.Key}", new Model.UserModel(user));
+                return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user));
             }
 
-            return new JsonResult(new Model.UserModel(user.Id, user.Key));
+            return new JsonResult(new Model.UserModel(user.Id, user.GuidIdentifierValue.Value));
         }
 
         /// <summary>

@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Nature:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+          name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+          title="disposition text"
+          value="disposition text"
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Registration #:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+          name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Registered date:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+          name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+          title="54321"
+          value="54321"
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Registered date:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+          name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+          title="district"
+          value="district"
+        />
+      </div>
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Pending applications:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          disabled=""
+          id="input-parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+          name="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+          title="0"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

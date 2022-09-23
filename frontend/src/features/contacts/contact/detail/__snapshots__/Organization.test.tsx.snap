@@ -1,0 +1,280 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact OrganizationView component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c2 {
+  text-align: left;
+}
+
+.c1 {
+  text-align: left;
+}
+
+.c3 {
+  border-radius: 1rem;
+  background-color: white;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+}
+
+.c3.active {
+  border: 1px solid;
+}
+
+<div
+    class="c0 mb-4"
+  >
+    <div
+      class="c1 row"
+    >
+      <div
+        class="col"
+      >
+        <h2
+          class="c2"
+        >
+          <svg
+            class="mr-2"
+            fill="currentColor"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 448 512"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+            />
+          </svg>
+          <span
+            data-testid="contact-organization-fullname"
+          >
+            Fake Corp Incorporated
+          </span>
+        </h2>
+      </div>
+      <div
+        class="ml-auto col-md-auto"
+      >
+        <div
+          class="c3 active"
+        >
+          <svg
+            class="mr-2"
+            fill="currentColor"
+            height="7"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="7"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+            />
+          </svg>
+          <span
+            data-testid="contact-organization-status"
+          >
+            ACTIVE
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 row"
+    >
+      <div
+        class="ml-5 col"
+      >
+        <div>
+          <strong>
+            Alias:
+          </strong>
+        </div>
+        <div>
+          <span
+            data-testid="contact-organization-alias"
+          >
+            Fake Inc
+          </span>
+        </div>
+        <div>
+          <strong>
+            Incorporation Number:
+          </strong>
+        </div>
+        <div>
+          <span
+            data-testid="contact-organization-incorporationNumber"
+          >
+            987
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1 {
+  text-align: left;
+}
+
+.c2 {
+  text-align: left;
+}
+
+<div
+    class="c0 mb-4"
+  >
+    <h2
+      class="c1"
+    >
+      Contact info
+    </h2>
+    <div
+      class="c2 pb-4 row"
+    >
+      <div
+        class="col-md-2"
+      >
+        <strong>
+          Email:
+        </strong>
+      </div>
+      <div
+        class="col-md-10"
+      >
+        <span>
+          N.A
+        </span>
+      </div>
+    </div>
+    <div
+      class="c2 row"
+    >
+      <div
+        class="col-md-2"
+      >
+        <strong>
+          Phone:
+        </strong>
+      </div>
+      <div
+        class="col-md-10"
+      >
+        <span>
+          N.A
+        </span>
+      </div>
+    </div>
+  </div>
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1 {
+  text-align: left;
+}
+
+<div
+    class="c0 mb-4"
+  >
+    <h2
+      class="c1"
+    >
+      Address
+    </h2>
+  </div>
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c2 {
+  text-align: left;
+}
+
+.c1 {
+  text-align: left;
+}
+
+<div
+    class="c0 mb-4"
+  >
+    <div
+      class="c1 row"
+    >
+      <div
+        class="col"
+      >
+        <h2
+          class="c2"
+        >
+          Individual Contacts
+        </h2>
+      </div>
+    </div>
+    <div
+      class="c1 row"
+    >
+      <div
+        class="col"
+      />
+    </div>
+  </div>
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1 {
+  text-align: left;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 row"
+    >
+      <div
+        class="col"
+      >
+        <div>
+          <strong>
+            Comments:
+          </strong>
+        </div>
+        <div
+          data-testid="contact-organization-comment"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

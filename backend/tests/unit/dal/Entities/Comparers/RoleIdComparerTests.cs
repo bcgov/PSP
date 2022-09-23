@@ -1,9 +1,9 @@
-using FluentAssertions;
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Comparers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Comparers;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities
@@ -19,12 +19,12 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> Roles =>
             new List<object[]>
             {
-                new object[] { new Role(), new Role(), true },
-                new object[] { new Role(Guid.Empty, "name"), new Role(Guid.Empty, "name"), true },
-                new object[] { new Role() { Id = 1 }, new Role() { Id = 1 }, true },
-                new object[] { new Role() { Id = 1 }, new Role() { Id = 2 }, false },
-                new object[] { null, new Role(), false },
-                new object[] { new Role(), null, false },
+                new object[] { new PimsRole(), new PimsRole(), true },
+                new object[] { new PimsRole(Guid.Empty, "name"), new PimsRole(Guid.Empty, "name"), true },
+                new object[] { new PimsRole() { Id = 1 }, new PimsRole() { Id = 1 }, true },
+                new object[] { new PimsRole() { Id = 1 }, new PimsRole() { Id = 2 }, false },
+                new object[] { null, new PimsRole(), false },
+                new object[] { new PimsRole(), null, false },
                 new object[] { null, null, false },
             };
         #endregion
@@ -32,7 +32,7 @@ namespace Pims.Dal.Test.Entities
         #region Tests
         [Theory]
         [MemberData(nameof(Roles))]
-        public void RoleIdComparer_Equal(Role val1, Role val2, bool expectedResult)
+        public void RoleIdComparer_Equal(PimsRole val1, PimsRole val2, bool expectedResult)
         {
             // Arrange
             var comparer = new RoleIdComparer();

@@ -15,8 +15,8 @@ namespace Pims.Dal.Security
         [Display(GroupName = "admin", Name = "system-administrator", Description = "Can administer application settings.")]
         SystemAdmin = 1,
 
-        [Display(GroupName = "admin", Name = "agency-administrator", Description = "Can administer agencies.")]
-        AgencyAdmin = 2,
+        [Display(GroupName = "admin", Name = "organization-administrator", Description = "Can administer organizations.")]
+        OrganizationAdmin = 2,
 
         [Display(GroupName = "admin", Name = "admin-users", Description = "Can administer user accounts.")]
         AdminUsers = 3,
@@ -24,8 +24,8 @@ namespace Pims.Dal.Security
         [Display(GroupName = "admin", Name = "admin-roles", Description = "Can administer application roles.")]
         AdminRoles = 4,
 
-        [Display(GroupName = "admin", Name = "admin-agencies", Description = "Can administer application roles.")]
-        AdminAgencies = 5,
+        [Display(GroupName = "admin", Name = "admin-organizations", Description = "Can administer application roles.")]
+        AdminOrganizations = 5,
 
         [Display(GroupName = "admin", Name = "admin-properties", Description = "Can administer properties.")]
         AdminProperties = 6,
@@ -46,6 +46,93 @@ namespace Pims.Dal.Security
         PropertyDelete = 13,
 
         [Display(GroupName = "property", Name = "sensitive-view", Description = "Can view sensitive properties in inventory.")]
-        SensitiveView = 14
+        SensitiveView = 14,
+
+        [Display(GroupName = "contact", Name = "contact-view", Description = "Can view contacts.")]
+        ContactView = 15,
+
+        [Display(GroupName = "contact", Name = "contact-add", Description = "Can add new contacts.")]
+        ContactAdd = 16,
+
+        [Display(GroupName = "contact", Name = "contact-edit", Description = "Can edit existing contacts.")]
+        ContactEdit = 17,
+
+        [Display(GroupName = "contact", Name = "contact-delete", Description = "Can delete existing contacts.")]
+        ContactDelete = 18,
+
+        [Display(GroupName = "lease", Name = "lease-view", Description = "Can view leases.")]
+        LeaseView = 19,
+
+        [Display(GroupName = "lease", Name = "lease-add", Description = "Can add new leases.")]
+        LeaseAdd = 20,
+
+        [Display(GroupName = "lease", Name = "lease-edit", Description = "Can edit existing leases.")]
+        LeaseEdit = 21,
+
+        [Display(GroupName = "lease", Name = "lease-delete", Description = "Can delete existing leases.")]
+        LeaseDelete = 22,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-view", Description = "Can view research files.")]
+        ResearchFileView = 23,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-add", Description = "Can add new research files.")]
+        ResearchFileAdd = 24,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-edit", Description = "Can edit existing research files.")]
+        ResearchFileEdit = 25,
+
+        [Display(GroupName = "researchfile", Name = "researchfile-delete", Description = "Can delete existing research files.")]
+        ResearchFileDelete = 26,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-view", Description = "Can view acquisition files.")]
+        AcquisitionFileView = 27,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-add", Description = "Can add new acquisition files.")]
+        AcquisitionFileAdd = 28,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-edit", Description = "Can edit existing acquisition files.")]
+        AcquisitionFileEdit = 29,
+
+        [Display(GroupName = "acquisitionfile", Name = "acquisitionfile-delete", Description = "Can delete existing acquisition files.")]
+        AcquisitionFileDelete = 30,
+
+        [Display(GroupName = "note", Name = "note-view", Description = "Can view notes.")]
+        NoteView = 31,
+
+        [Display(GroupName = "note", Name = "note-add", Description = "Can add new notes.")]
+        NoteAdd = 32,
+
+        [Display(GroupName = "note", Name = "note-edit", Description = "Can update existing notes.")]
+        NoteEdit = 33,
+
+        [Display(GroupName = "note", Name = "note-delete", Description = "Can delete existing notes.")]
+        NoteDelete = 34,
+
+        [Display(GroupName = "document", Name = "document-view", Description = "Can view documents.")]
+        DocumentView = 35,
+
+        [Display(GroupName = "document", Name = "document-add", Description = "Can add new documents.")]
+        DocumentAdd = 36,
+
+        [Display(GroupName = "document", Name = "document-edit", Description = "Can update existing documents.")]
+        DocumentEdit = 37,
+
+        [Display(GroupName = "document", Name = "document-delete", Description = "Can delete existing documents.")]
+        DocumentDelete = 38,
+
+        [Display(GroupName = "document", Name = "document-admin", Description = "Can perform admin functions on documents.")]
+        DocumentAdmin = 39,
+
+        [Display(GroupName = "activity", Name = "activity-view", Description = "Can view activities.")]
+        ActivityView = 40,
+
+        [Display(GroupName = "activity", Name = "activity-add", Description = "Can add new activities.")]
+        ActivityAdd = 41,
+
+        [Display(GroupName = "activity", Name = "activity-edit", Description = "Can update existing activities.")]
+        ActivityEdit = 42,
+
+        [Display(GroupName = "activity", Name = "activity-delete", Description = "Can delete existing activities.")]
+        ActivityDelete = 43
     }
 }

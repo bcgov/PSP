@@ -10,6 +10,30 @@ namespace Pims.Core.Extensions
     public static class DictionaryExtensions
     {
         /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as a short.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static short GetShortValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, short defaultValue = 0)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && short.TryParse(dValue, out short value) ? value : defaultValue;
+        }
+
+        /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as a short.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static short? GetShortNullValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, short? defaultValue = null)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && short.TryParse(dValue, out short value) ? value : defaultValue;
+        }
+
+        /// <summary>
         /// Get the value from the dictionary for the specified 'key' and return it as an int.
         /// </summary>
         /// <param name="dict"></param>
@@ -275,7 +299,9 @@ namespace Pims.Core.Extensions
         public static NetTopologySuite.Geometries.Envelope GetEnvelopNullValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, NetTopologySuite.Geometries.Envelope defaultValue = null)
         {
             if (!dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value))
+            {
                 return defaultValue;
+            }
 
             var values = value.ToString().Split(',');
             return NetTopologySuite.Geometries.Envelope.Parse($"Env[{values[0]}:{values[1]},{values[2]}:{values[3]}]");
@@ -296,7 +322,10 @@ namespace Pims.Core.Extensions
             var baseType = nullabletype ?? type;
             var found = dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value);
 
-            if (!found) return defaultValue;
+            if (!found)
+            {
+                return defaultValue;
+            }
 
             try
             {
@@ -317,7 +346,8 @@ namespace Pims.Core.Extensions
         /// <param name="defaultValue"></param>
         /// <returns></returns>
         public static bool? GetBoolNullValue(
-            this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key,
+            this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict,
+            string key,
             bool? defaultValue = null)
         {
             return dict.GetValue(key, defaultValue);

@@ -1,19 +1,20 @@
-using Pims.Core.Extensions;
-using Pims.Keycloak.Extensions;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Pims.Core.Extensions;
+using Pims.Keycloak.Extensions;
 
 namespace Pims.Keycloak
 {
     /// <summary>
     /// KeycloakAdmin class, provides a service for sending HTTP requests to the keycloak admin API.
-    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview
+    ///     - https://www.keycloak.org/docs-api/5.0/rest-api/index.html#_overview.
     /// </summary>
     public partial class KeycloakService : IKeycloakService
     {
         #region Methods
+
         /// <summary>
         /// Get the total number of groups.
         /// </summary>
@@ -61,7 +62,7 @@ namespace Pims.Keycloak
         public async Task<Models.GroupModel> CreateGroupAsync(Models.GroupModel group)
         {
             var json = group.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/groups", content);
 
             return await response.HandleResponseAsync<Models.GroupModel>();
@@ -76,7 +77,7 @@ namespace Pims.Keycloak
         public async Task<Models.GroupModel> CreateSubGroupAsync(Guid parentKey, Models.GroupModel group)
         {
             var json = group.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/groups/{parentKey}/children", content);
 
             return await response.HandleResponseAsync<Models.GroupModel>();
@@ -90,7 +91,7 @@ namespace Pims.Keycloak
         public async Task<Models.GroupModel> UpdateGroupAsync(Models.GroupModel group)
         {
             var json = group.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"{this.Options.Admin.Authority}/groups/{group.Id}", content);
 
             return response.HandleResponse(group);

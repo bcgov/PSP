@@ -1,4 +1,4 @@
-import { AGENCY_CODE_SET_NAME } from 'constants/API';
+import { ORGANIZATION_TYPES } from 'constants/API';
 
 import { initialState, lookupCodesSlice } from './lookupCodesSlice';
 describe('lookup code slice reducer functionality', () => {
@@ -12,7 +12,7 @@ describe('lookup code slice reducer functionality', () => {
           id: '1',
           isDisabled: false,
           name: 'Ministry of Advanced Education',
-          type: AGENCY_CODE_SET_NAME,
+          type: ORGANIZATION_TYPES,
         },
       ],
     });
@@ -24,7 +24,7 @@ describe('lookup code slice reducer functionality', () => {
           id: '1',
           isDisabled: false,
           name: 'Ministry of Advanced Education',
-          type: AGENCY_CODE_SET_NAME,
+          type: ORGANIZATION_TYPES,
         },
       ],
     });

@@ -1,0 +1,28 @@
+<settings>
+  <id>SettingsInfoImpl-7e0faa3c:17c208de014:-7ff4</id>
+  <workspace>
+    <id>WorkspaceInfoImpl-7e0faa3c:17c208de014:-7ff6</id>
+    <name>psp</name>
+    <isolated>false</isolated>
+    <dateCreated>2021-09-26 05:23:31.817 UTC</dateCreated>
+    <dateModified>2021-09-26 05:23:43.226 UTC</dateModified>
+  </workspace>
+  <contact>
+    <id>contact</id>
+  </contact>
+  <charset>UTF-8</charset>
+  <numDecimals>4</numDecimals>
+  <verbose>true</verbose>
+  <verboseExceptions>false</verboseExceptions>
+  <metadata>
+    <map>
+      <entry>
+        <string>quietOnNotFound</string>
+        <boolean>false</boolean>
+      </entry>
+    </map>
+  </metadata>
+  <localWorkspaceIncludesPrefix>false</localWorkspaceIncludesPrefix>
+  <showCreatedTimeColumnsInAdminList>false</showCreatedTimeColumnsInAdminList>
+  <showModifiedTimeColumnsInAdminList>false</showModifiedTimeColumnsInAdminList>
+</settings>

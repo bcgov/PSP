@@ -25,9 +25,11 @@ namespace Pims.Ltsa.Models
         /// State of the Legal Notation on Title.  Only active Legal Notation are presented on Current View of Title. 
         /// </summary>
         /// <value>State of the Legal Notation on Title.  Only active Legal Notation are presented on Current View of Title. </value>
+        [JsonStringEnumMemberConverterOptions(deserializationFailureFallbackValue: 0)]
         [JsonConverter(typeof(JsonStringEnumMemberConverter))]
         public enum StatusEnum
         {
+            Unknown = 0,
             /// <summary>
             /// Enum ACTIVE for value: ACTIVE
             /// </summary>

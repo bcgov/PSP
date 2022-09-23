@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Setup git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Get previous tag
+        run: |
+          PREV_TAG=$(git describe --abbrev=0 --tags "${{ github.ref }}^")
+          echo "Previous release found: $PREV_TAG"
+          echo "PREV_TAG=$PREV_TAG" >> $GITHUB_ENV
+
+      - name: Create release
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/{owner}/{repo}/releases/generate-notes -f tag_name='${{ github.ref_name }}' -f previous_tag_name='${{ env.PREV_TAG }}' --jq '.body' > changelog.md
+          make release tag="${{ github.ref_name }}" changelog=changelog.md
+
+          RELEASE_VERSION=${{ github.ref_name }}
+          RELEASE_URL=$(gh release view ${{ github.ref_name }} --json url --jq '.url')
+
+          echo "::set-output name=release_version::$RELEASE_VERSION"
+          echo "::set-output name=release_url::$RELEASE_URL"
+
+      # This is so we can use a "Card Message" template for notifications and replace it with relevant values; e.g. __RELEASEVERSION__ etc
+      # Template found in: .github/notifications/
+      - uses: bluwy/substitute-string-action@v1
+        id: sub
+        with:
+          _input-file: .github/notifications/release_template.json
+          _format-key: __key__
+          _output-file: release_notification.json
+        env:
+          INPUT_REPO: ${{ github.repository }}
+          INPUT_RELEASEVERSION: ${{ steps.create_release.outputs.release_version }}
+          INPUT_RELEASEURL: ${{ steps.create_release.outputs.release_url }}
+
+      # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
+      - name: Post notification to MS Teams
+        env:
+          MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
+        if: env.MS_TEAMS_NOTIFY_URL != ''
+        run: |
+          curl -H 'Content-Type: application/json' ${{ secrets.MS_TEAMS_NOTIFY_URL }} --data @release_notification.json

@@ -15,15 +15,18 @@ describe('useApiLookupCodes.test.ts api hook', () => {
     jest.restoreAllMocks();
   });
 
-  it('Gets paged agencies', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/lookup/all`).reply(200, []);
+  const setup = () => {
+    const { result } = renderHook(useApiLookupCodes);
+    return result.current;
+  };
 
-      const api = useApiLookupCodes();
-      const response = await api.getLookupCodes();
+  it('Gets paged organizations', async () => {
+    mockAxios.onGet(`/lookup/all`).reply(200, []);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual([]);
-    });
+    const { getLookupCodes } = setup();
+    const response = await getLookupCodes();
+
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual([]);
   });
 });

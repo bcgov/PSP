@@ -1,10 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HelpContainer renders correctly... 1`] = `
-Array [
+<DocumentFragment>
   <div
-    className="Toastify"
-  />,
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
   .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -17,20 +20,20 @@ Array [
 }
 
 <div
-    className="c0 help-box"
+    class="c0 help-box"
   >
     <div
-      className="col-md-4 btn-group-vertical"
+      class="col-md-4 btn-group-vertical"
       role="group"
     />
     <span
-      className="col-md-8"
+      class="col-md-8"
     />
-  </div>,
-  <hr />,
+  </div>
+  <hr />
   <h5>
     Submit
-  </h5>,
+  </h5>
   .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -39,63 +42,55 @@ Array [
 }
 
 <div
-    className="c0 help-submit-box"
+    class="c0 help-submit-box"
   >
     <span
-      className="col-md-4"
+      class="col-md-4"
     >
       <div
-        className="form-check"
+        class="form-check"
       >
         <input
-          checked={true}
-          className="form-check-input"
-          disabled={false}
+          checked=""
+          class="form-check-input"
           id="ticket-Question"
-          onChange={[Function]}
           type="radio"
         />
         <label
-          className="form-check-label"
-          htmlFor="ticket-Question"
+          class="form-check-label"
+          for="ticket-Question"
           title=""
         >
           Question
         </label>
       </div>
       <div
-        className="form-check"
+        class="form-check"
       >
         <input
-          checked={false}
-          className="form-check-input"
-          disabled={false}
+          class="form-check-input"
           id="ticket-Bug"
-          onChange={[Function]}
           type="radio"
         />
         <label
-          className="form-check-label"
-          htmlFor="ticket-Bug"
+          class="form-check-label"
+          for="ticket-Bug"
           title=""
         >
           Bug
         </label>
       </div>
       <div
-        className="form-check"
+        class="form-check"
       >
         <input
-          checked={false}
-          className="form-check-input"
-          disabled={false}
+          class="form-check-input"
           id="ticket-Feature Request"
-          onChange={[Function]}
           type="radio"
         />
         <label
-          className="form-check-label"
-          htmlFor="ticket-Feature Request"
+          class="form-check-label"
+          for="ticket-Feature Request"
           title=""
         >
           Feature Request
@@ -103,101 +98,80 @@ Array [
       </div>
     </span>
     <span
-      className="col-md-8"
+      class="col-md-8"
     >
       <form
-        className=""
+        class=""
       >
         <div
-          className="form-group"
+          class="input form-group"
         >
           <label
-            className="form-label"
-            htmlFor="input-user"
+            class="form-label"
+            for="input-user"
           >
-            User
-             
+            User 
           </label>
           <input
-            className="form-control"
+            class="form-control"
             id="input-user"
             name="user"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
+            title="Chester Tester"
             value="Chester Tester"
           />
         </div>
         <div
-          className="form-group"
+          class="input form-group"
         >
           <label
-            className="form-label"
-            htmlFor="input-email"
+            class="form-label"
+            for="input-email"
           >
-            Email
-             
+            Email 
           </label>
           <input
-            className="form-control"
+            class="form-control"
             id="input-email"
             name="email"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
+            title="test@test.com"
             value="test@test.com"
           />
         </div>
         <div
-          className="form-group"
+          class="input form-group"
         >
           <label
-            className="form-label"
-            htmlFor="input-page"
+            class="form-label"
+            for="input-page"
           >
-            Page
-             
+            Page 
           </label>
           <input
-            className="form-control"
+            class="form-control"
             id="input-page"
             name="page"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
+            title="/"
             value="/"
           />
         </div>
         <div
-          className="form-group"
+          class="textarea input form-group"
         >
           <label
-            className="form-label"
-            htmlFor="input-question"
+            class="form-label"
+            for="input-question"
           >
-            Question
-             
+            Question 
           </label>
           <textarea
-            className="form-control"
+            class="form-control"
             id="input-question"
             name="question"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
-            value=""
+            title=""
           />
         </div>
       </form>
     </span>
-  </div>,
-]
+  </div>
+</DocumentFragment>
 `;

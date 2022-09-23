@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactTypeSelector component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  gap: 5rem;
+  padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+  margin-right: 2.5rem;
+}
+
+.c1 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
+}
+
+<div
+    class="c0 c1"
+  >
+    <div
+      class="form-check"
+    >
+      <input
+        checked=""
+        class="form-check-input"
+        id="contact-individual"
+        type="radio"
+      />
+      <label
+        class="form-check-label"
+        for="contact-individual"
+        title=""
+      >
+        Individual
+      </label>
+    </div>
+    <div
+      class="form-check"
+    >
+      <input
+        class="form-check-input"
+        id="contact-organization"
+        type="radio"
+      />
+      <label
+        class="form-check-label"
+        for="contact-organization"
+        title=""
+      >
+        Organization
+      </label>
+    </div>
+  </div>
+</DocumentFragment>
+`;

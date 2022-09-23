@@ -18,10 +18,13 @@ services:
 
   ####################### Database #######################
   database:
+    environment:
+      - TARGET_SPRINT
+      - SEED
     restart: on-failure:1
     container_name: psp-db
     build:
-      context: database/mssql
+      context: database/mssql/scripts/dbscripts
     env_file:
       - database/mssql/.env
     ports:
@@ -46,6 +49,7 @@ services:
     depends_on:
       - database
       - keycloak
+      - geoserver
     networks:
       - psp
 
@@ -66,6 +70,39 @@ services:
     depends_on:
       - backend
     env_file: ./frontend/.env
+    networks:
+      - psp
+
+  ####################### GeoServer #######################
+  geoserver:
+    image: kartoza/geoserver:2.19.2
+    volumes:
+      - ./geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
+    ports:
+      - 8600:8080
+    restart: on-failure
+    env_file: ./geoserver/.env
+    healthcheck:
+      test: curl --fail -s http://localhost:8080/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - psp
+
+  ####################### Clam AV #######################
+  # example av test file here: https://serverfault.com/questions/484082/how-should-i-test-clam-anti-virus
+  clamav:
+    image: mkodockx/docker-clamav:alpine-idb-amd64
+    ports:
+      - 3310:3310
+    restart: on-failure
+    container_name: psp-clamav
+    healthcheck:
+      test: [ "CMD", "./check.sh" ]
+      interval: 60s
+      retries: 3
+      start_period: 120s
     networks:
       - psp
 

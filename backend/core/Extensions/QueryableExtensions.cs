@@ -15,18 +15,6 @@ namespace Pims.Core.Extensions
         private static readonly MethodInfo OrderByMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderBy" && method.GetParameters().Length == 2);
         private static readonly MethodInfo OrderByDescendingMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderByDescending" && method.GetParameters().Length == 2);
         private static readonly MethodInfo GeneratePropertyPathLambdaMethod = typeof(QueryableExtensions).GetMethod(nameof(GeneratePropertyPathLambda), BindingFlags.NonPublic | BindingFlags.Static);
-        #endregion
-
-        /// <summary>
-        /// Check if the specified property exists in the specified type.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        private static bool PropertyExists<T>(string propertyName)
-        {
-            return typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
-        }
 
         /// <summary>
         /// Order the query results by the specified property names.
@@ -38,13 +26,21 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static IQueryable<T> OrderByProperty<T>(this IQueryable<T> source, params string[] propertyName)
         {
-            if (propertyName == null) return source;
+            if (propertyName == null)
+            {
+                return source;
+            }
+
             var query = source;
             foreach (var prop in propertyName)
             {
                 var parts = prop?.Split(' ') ?? throw new ArgumentNullException(nameof(propertyName));
 
-                if (parts.Length > 2) throw new ArgumentOutOfRangeException(nameof(propertyName), "Argument 'propertyName' must not have more than two parts (i.e. 'Name asc' or 'Name desc')");
+                if (parts.Length > 2)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(propertyName), "Argument 'propertyName' must not have more than two parts (i.e. 'Name asc' or 'Name desc')");
+                }
+
                 if (parts.Length == 2 && _orderByDescending.Contains(parts[1].ToLower()))
                 {
                     query = query.OrderByPropertyDescending(parts[0]);
@@ -61,7 +57,11 @@ namespace Pims.Core.Extensions
                     }
                     else
                     {
-                        if (!PropertyExists<T>(parts[0])) continue;
+                        if (!PropertyExists<T>(parts[0]))
+                        {
+                            continue;
+                        }
+
                         ParameterExpression parameterExpression = Expression.Parameter(typeof(T));
                         Expression orderByProperty = Expression.Property(parameterExpression, parts[0]);
                         LambdaExpression lambda = Expression.Lambda(orderByProperty, parameterExpression);
@@ -69,7 +69,6 @@ namespace Pims.Core.Extensions
                         query = (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, lambda });
                     }
                 }
-
             }
             return query;
         }
@@ -84,7 +83,11 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static IQueryable<T> OrderByPropertyDescending<T>(this IQueryable<T> source, params string[] propertyName)
         {
-            if (propertyName == null) return source;
+            if (propertyName == null)
+            {
+                return source;
+            }
+
             var query = source;
             foreach (var prop in propertyName)
             {
@@ -98,7 +101,11 @@ namespace Pims.Core.Extensions
                 }
                 else
                 {
-                    if (!PropertyExists<T>(prop)) return query;
+                    if (!PropertyExists<T>(prop))
+                    {
+                        return query;
+                    }
+
                     ParameterExpression parameterExpression = Expression.Parameter(typeof(T));
                     Expression orderByProperty = Expression.Property(parameterExpression, prop);
                     LambdaExpression lambda = Expression.Lambda(orderByProperty, parameterExpression);
@@ -107,6 +114,32 @@ namespace Pims.Core.Extensions
                 }
             }
             return query;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Generates a LambdaExpression for the specified 'Type' and 'path'.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static LambdaExpression MakeSelector(this Type objectType, string path)
+        {
+            var parameter = Expression.Parameter(objectType, "x");
+            var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
+            return Expression.Lambda(body, parameter);
+        }
+
+        /// <summary>
+        /// Check if the specified property exists in the specified type.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        private static bool PropertyExists<T>(string propertyName)
+        {
+            return typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null;
         }
 
         /// <summary>
@@ -129,33 +162,22 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Generates a LambdaExpression for the specified 'Type' and 'path'.
-        /// </summary>
-        /// <param name="objectType"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static LambdaExpression MakeSelector(this Type objectType, string path)
-        {
-            var parameter = Expression.Parameter(objectType, "x");
-            var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
-            return Expression.Lambda(body, parameter);
-        }
-
-        /// <summary>
         /// Generates an Expression for the specified 'path'.
         /// </summary>
-        /// <param name="entity"></param>
         /// <param name="path"></param>
         /// <typeparam name="T"></typeparam>
-        /// <typeparam name="RT"></typeparam>
+        /// <typeparam name="TR"></typeparam>
         /// <returns></returns>
-        private static Expression<Func<T, RT>> GeneratePropertyPathLambda<T, RT>(string path)
+        private static Expression<Func<T, TR>> GeneratePropertyPathLambda<T, TR>(string path)
             where T : class
         {
-            if (!path.Contains('.')) return null;
+            if (!path.Contains('.'))
+            {
+                return null;
+            }
 
             var parameter = Expression.Parameter(typeof(T), "x");
-            return Expression.Lambda<Func<T, RT>>(path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField), parameter);
+            return Expression.Lambda<Func<T, TR>>(path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField), parameter);
         }
     }
 }

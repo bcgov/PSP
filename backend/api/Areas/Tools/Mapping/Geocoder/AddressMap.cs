@@ -1,6 +1,5 @@
-using Mapster;
-using System;
 using System.Text;
+using Mapster;
 using GModel = Pims.Geocoder.Models;
 using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
@@ -29,29 +28,44 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        private string GetAddress1(GModel.PropertyModel properties)
+        private static string GetAddress1(GModel.PropertyModel properties)
         {
             var address = new StringBuilder();
-            if (!String.IsNullOrWhiteSpace($"{ properties.CivicNumber}"))
+            if (!string.IsNullOrWhiteSpace($"{properties.CivicNumber}"))
+            {
                 address.Append($"{properties.CivicNumber} ");
+            }
 
-            if (properties.IsStreetTypePrefix && !String.IsNullOrWhiteSpace(properties.StreetType))
+            if (properties.IsStreetTypePrefix && !string.IsNullOrWhiteSpace(properties.StreetType))
+            {
                 address.Append($"{properties.StreetType} ");
+            }
 
-            if (properties.IsStreetDirectionPrefix && !String.IsNullOrWhiteSpace(properties.StreetDirection))
+            if (properties.IsStreetDirectionPrefix && !string.IsNullOrWhiteSpace(properties.StreetDirection))
+            {
                 address.Append($"{properties.StreetDirection} ");
+            }
 
-            if (!String.IsNullOrWhiteSpace(properties.StreetName))
+            if (!string.IsNullOrWhiteSpace(properties.StreetName))
+            {
                 address.Append(properties.StreetName);
+            }
 
-            if (!String.IsNullOrWhiteSpace(properties.StreetQualifier))
+            if (!string.IsNullOrWhiteSpace(properties.StreetQualifier))
+            {
                 address.Append($" {properties.StreetQualifier}");
+            }
 
-            if (!properties.IsStreetDirectionPrefix && !String.IsNullOrWhiteSpace(properties.StreetDirection))
+            if (!properties.IsStreetDirectionPrefix && !string.IsNullOrWhiteSpace(properties.StreetDirection))
+            {
                 address.Append($" {properties.StreetDirection}");
+            }
 
-            if (!properties.IsStreetTypePrefix && !String.IsNullOrWhiteSpace(properties.StreetType))
+            if (!properties.IsStreetTypePrefix && !string.IsNullOrWhiteSpace(properties.StreetType))
+            {
                 address.Append($" {properties.StreetType}");
+            }
+
             return address.ToString();
         }
 
@@ -60,7 +74,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        private string GetAdministrativeArea(GModel.PropertyModel properties)
+        private static string GetAdministrativeArea(GModel.PropertyModel properties)
         {
             return properties.LocalityName;
         }
@@ -70,9 +84,13 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="geometry"></param>
         /// <returns></returns>
-        private double GetLatitude(GModel.GeometryModel geometry)
+        private static double GetLatitude(GModel.GeometryModel geometry)
         {
-            if (geometry.Coordinates?.Length == 2) return geometry.Coordinates[1];
+            if (geometry.Coordinates?.Length == 2)
+            {
+                return geometry.Coordinates[1];
+            }
+
             return 0;
         }
 
@@ -81,9 +99,13 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="geometry"></param>
         /// <returns></returns>
-        private double GetLongtitude(GModel.GeometryModel geometry)
+        private static double GetLongtitude(GModel.GeometryModel geometry)
         {
-            if (geometry.Coordinates?.Length >= 1) return geometry.Coordinates[0];
+            if (geometry.Coordinates?.Length >= 1)
+            {
+                return geometry.Coordinates[0];
+            }
+
             return 0;
         }
     }

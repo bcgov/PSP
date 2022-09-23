@@ -1,12 +1,11 @@
-using FluentAssertions;
-using NetTopologySuite.Geometries;
-using Pims.Ches.Models;
-using Pims.Core.Converters;
-using Pims.Dal.Security;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using FluentAssertions;
+using NetTopologySuite.Geometries;
+using Pims.Core.Converters;
+using Pims.Dal.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Core.Converters
@@ -21,13 +20,13 @@ namespace Pims.Dal.Test.Core.Converters
         public readonly static IEnumerable<object[]> WriteData = new List<object[]>()
         {
             new object[] { new Point(new Coordinate(1, 1)), "{\"test\":[1,1]}" },
-            new object[] { new Polygon(new LinearRing(new Coordinate[] { new Coordinate(1, 1), new Coordinate(1, 2), new Coordinate(1, 3), new Coordinate(1, 1)})), "{\"test\":[[1,1],[1,2],[1,3],[1,1]]}" }
+            new object[] { new Polygon(new LinearRing(new Coordinate[] { new Coordinate(1, 1), new Coordinate(1, 2), new Coordinate(1, 3), new Coordinate(1, 1) })), "{\"test\":[[1,1],[1,2],[1,3],[1,1]]}" },
         };
 
         public readonly static IEnumerable<object[]> ReadData = new List<object[]>()
         {
             new object[] { "1,1", new Point(new Coordinate(1, 1)), typeof(Point) },
-            new object[] { "[[1,1],[1,2],[1,3],[1,1]]", null, typeof(Polygon) }
+            new object[] { "[[1,1],[1,2],[1,3],[1,1]]", null, typeof(Polygon) },
         };
         #endregion
 
@@ -59,22 +58,6 @@ namespace Pims.Dal.Test.Core.Converters
             converter.Should().NotBeNull();
             converter.Should().BeAssignableTo<JsonConverter<Permissions>>();
             converter.GetType().Name.Should().Be("EnumConverter`1");
-        }
-
-        [Fact]
-        public void CreateConverter_WithEnumValueAttribute()
-        {
-            // Arrange
-            var factory = new JsonEnumValueConverter(JsonNamingPolicy.CamelCase);
-            var jsonOptions = new JsonSerializerOptions();
-
-            // Act
-            var converter = factory.CreateConverter(typeof(EmailBodyTypes), jsonOptions);
-
-            // Assert
-            converter.Should().NotBeNull();
-            converter.Should().BeAssignableTo<EnumValueJsonConverter<EmailBodyTypes>>();
-            converter.GetType().Name.Should().Be("EnumValueJsonConverter`1");
         }
         #endregion
     }

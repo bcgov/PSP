@@ -1,5 +1,5 @@
+import { Button } from 'components/common/buttons/Button';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
@@ -38,7 +38,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
         <Modal.Title>Errors</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+      <Modal.Body style={{ maxHeight: '50.0rem', overflowY: 'scroll' }}>
         {errors.map((error: IGenericNetworkAction, index: number) => (
           <Row key={index} style={{ wordBreak: 'break-all' }}>
             {process.env.NODE_ENV === 'development' ? (
@@ -55,7 +55,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
                   {error.error?.response?.config?.url?.substr(0, 20)}
                 </abbr>
                 : ({error.error?.response?.statusText ?? 'unknown'}){' '}
-                {error.error?.response?.data?.error}
+                {(error.error?.response?.data as unknown & { error: string }).error}
               </Col>
             )}
           </Row>

@@ -11,67 +11,32 @@ Yup.addMethod(Yup.string, 'optional', function optional() {
 });
 
 export const AccessRequestSchema = Yup.object().shape({
-  showAgency: Yup.boolean(),
-  agency: Yup.number().when('showAgency', {
-    is: true,
-    then: Yup.number()
-      .min(1, 'Invalid Agency')
-      .required('Required'),
-  }),
-  role: Yup.string()
-    .min(1, 'Invalid Role')
+  showOrganization: Yup.boolean(),
+  roleId: Yup.number()
+    .min(0, 'Invalid Role')
     .required('Required'),
-  note: Yup.string().max(1000, 'Note must be less than 1000 characters'),
-  user: Yup.object().shape({
-    position: Yup.string().max(100, 'Note must be less than 100 characters'),
-  }),
+  regionCodeId: Yup.number()
+    .min(0, 'Invalid Region')
+    .required('Required'),
+  note: Yup.string().max(4000, 'Note must be less than 4000 characters'),
+  position: Yup.string().max(100, 'Position must be less than 100 characters'),
 });
 
 export const UserUpdateSchema = Yup.object().shape({
   email: Yup.string()
     .email()
-    .max(100, 'Email must be less than 100 characters'),
-  firstName: Yup.string().max(100, 'First Name must be less than 100 characters'),
-  middleName: Yup.string().max(100, 'Middle Name must be less than 100 characters'),
-  lastName: Yup.string().max(100, 'Last Name must be less than 100 characters'),
-});
-
-export const AgencyEditSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Please enter a valid email.')
-    .max(100, 'Email must be less than 100 characters')
-    .when('sendEmail', (sendEmail: boolean, schema: any) =>
-      sendEmail ? schema.required('Email address is required') : schema,
-    ),
-  name: Yup.string()
-    .max(100, 'Agency name must be less than 100 characters')
-    .required('An agency name is required.'),
-  addressTo: Yup.string()
-    .max(100, 'Email addressed to must be less than 100 characters')
-    .when('sendEmail', (sendEmail: boolean, schema: any) =>
-      sendEmail ? schema.required('Email addressed to is required (i.e. Good Morning)') : schema,
-    ),
-  code: Yup.string().required('An agency code is required.'),
-});
-
-export const UserSchema = Yup.object().shape({
-  email: Yup.string()
-    .email()
-    .max(100, 'Email must be less than 100 characters')
-    .required('Required'),
+    .max(200, 'Email must be less than 200 characters'),
   firstName: Yup.string()
-    .max(100, 'First Name must be less than 100 characters')
-    .required('Required'),
-  middleName: Yup.string().max(100, 'Middle Name must be less than 100 characters'),
-  lastName: Yup.string()
-    .max(100, 'Last Name must be less than 100 characters')
-    .required('Required'),
-  role: Yup.number()
-    .min(1, 'Invalid Role')
-    .nullable(),
-  agency: Yup.number()
-    .min(1, 'Invalid Agency')
-    .nullable(),
+    .required('First Name is required')
+    .max(50, 'First Name must be less than 50 characters'),
+  surname: Yup.string()
+    .required('Last Name is required')
+    .max(50, 'Last Name must be less than 50 characters'),
+  note: Yup.string().max(1000, 'Note must be less than 1000 characters'),
+  position: Yup.string().max(100, 'Position must be less than 100 characters'),
+  middleName: Yup.string().max(400, 'Middle Name must be less than 400 characters'),
+  regions: Yup.array().min(1, 'A user must have at least one region'),
+  roles: Yup.array().min(1, 'A user must have at least one role'),
 });
 
 export const FilterBarSchema = Yup.object().shape({

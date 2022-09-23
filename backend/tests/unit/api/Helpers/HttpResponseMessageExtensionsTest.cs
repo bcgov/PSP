@@ -1,17 +1,17 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Pims.Api.Helpers.Extensions;
-using Pims.Core.Comparers;
-using Pims.Core.Test;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Pims.Api.Helpers.Extensions;
+using Pims.Core.Test;
 using Xunit;
-using Model = Pims.Api.Models.Parcel;
+using Model = Pims.Api.Areas.Property.Models.Search;
 
 namespace Pims.Api.Test.Helpers
 {
@@ -26,7 +26,7 @@ namespace Pims.Api.Test.Helpers
             new List<object[]>
             {
                 new object[] { HttpStatusCode.OK },
-                new object[] { HttpStatusCode.Created }
+                new object[] { HttpStatusCode.Created },
             };
 
         public static IEnumerable<object[]> FailureCodes =
@@ -36,7 +36,7 @@ namespace Pims.Api.Test.Helpers
                 new object[] { HttpStatusCode.InternalServerError, new Exception("InternalServerError") },
                 new object[] { HttpStatusCode.Unauthorized, new Exception("Unauthorized") },
                 new object[] { HttpStatusCode.NotFound, new Exception("NotFound") },
-                new object[] { HttpStatusCode.Forbidden, new Exception("Forbidden") }
+                new object[] { HttpStatusCode.Forbidden, new Exception("Forbidden") },
             };
         #endregion
 
@@ -48,22 +48,22 @@ namespace Pims.Api.Test.Helpers
             // Arrange
             var helper = new TestHelper();
             var mapper = helper.GetMapper();
-            var model = mapper.Map<Model.ParcelModel>(EntityHelper.CreateParcel(1));
+            var model = mapper.Map<Model.PropertyModel>(EntityHelper.CreateProperty(1));
             var json = System.Text.Json.JsonSerializer.Serialize(model);
             var response = new HttpResponseMessage
             {
                 StatusCode = code,
-                Content = new StringContent(json)
+                Content = new StringContent(json),
             };
 
             // Act
-            var actionResult = await response.HandleResponseAsync<Model.ParcelModel>();
+            var actionResult = await response.HandleResponseAsync<Model.PropertyModel>();
 
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
             Assert.Equal((int)code, jsonResult.StatusCode);
-            var actualResult = Assert.IsType<Model.ParcelModel>(jsonResult.Value);
-            Assert.Equal(model, actualResult, new DeepPropertyCompare());
+            var actualResult = Assert.IsType<Model.PropertyModel>(jsonResult.Value);
+            model.Should().BeEquivalentTo(actualResult);
         }
 
         [Theory]
@@ -78,11 +78,11 @@ namespace Pims.Api.Test.Helpers
             var response = new HttpResponseMessage
             {
                 StatusCode = code,
-                Content = new StringContent(json)
+                Content = new StringContent(json),
             };
 
             // Act
-            var actionResult = await response.HandleResponseAsync<Model.ParcelModel>();
+            var actionResult = await response.HandleResponseAsync<Model.PropertyModel>();
 
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
@@ -103,12 +103,12 @@ namespace Pims.Api.Test.Helpers
             var response = new HttpResponseMessage
             {
                 StatusCode = code,
-                Content = new StringContent(json)
+                Content = new StringContent(json),
             };
             response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             // Act
-            var actionResult = await response.HandleResponseAsync<Model.ParcelModel>();
+            var actionResult = await response.HandleResponseAsync<Model.PropertyModel>();
 
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);

@@ -1,8 +1,8 @@
-using FluentAssertions;
-using Pims.Ltsa.Models;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
@@ -16,13 +16,13 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_Number()
         {
-            Assert.Throws<InvalidDataException>(() => new Altos1TitleCorrection(null, ""));
+            Assert.Throws<InvalidDataException>(() => new Altos1TitleCorrection(null, string.Empty));
         }
 
         [Fact]
         public void TestConstructor_Null_ReferenceDescription()
         {
-            Assert.Throws<InvalidDataException>(() => new Altos1TitleCorrection("", null));
+            Assert.Throws<InvalidDataException>(() => new Altos1TitleCorrection(string.Empty, null));
         }
 
         [Fact]

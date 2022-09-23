@@ -1,19 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tenant configuration Tenant returns correct MOTI configuration 1`] = `
-<div>
-  {"id":"MOTI","title":"Property Information Management System","shortName":"PIMS","colour":"#003366","logo":{"favicon":"/tenants/MOTI/favicon.ico","image":"/tenants/MOTI/PIMS-logo.png","imageWithText":"/tenants/MOTI/PIMS-logo-with-text.png"},"login":{"title":"TRAN Property Information Management System (PIMS)","heading":"PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure","body":"WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.","backgroundImage":"/tenants/MOTI/background-image.jpg"}}
-</div>
+<DocumentFragment>
+  <div>
+    {"id":"MOTI","title":"Property Information Management System","shortName":"PIMS","colour":"#003366","logo":{"favicon":"/tenants/MOTI/favicon.ico","image":"/tenants/MOTI/PIMS-logo.png","imageWithText":"/tenants/MOTI/PIMS-logo-with-text.png"},"login":{"title":"TRAN Property Information Management System (PIMS)","heading":"PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure","body":"WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.","backgroundImage":"/tenants/MOTI/background-image.jpg"},"layers":[],"propertiesUrl":"ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&","parcelMapFullyAttributed":{"url":"https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows","name":"pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW"}}
+  </div>
+</DocumentFragment>
 `;
 
 exports[`Tenant configuration Tenant returns correct default configuration 1`] = `
-<div>
-  {"0":"{","1":"\\"","2":"i","3":"d","4":"\\"","5":":","6":"\\"","7":"D","8":"F","9":"L","10":"T","11":"\\"","12":",","13":"\\"","14":"t","15":"i","16":"t","17":"l","18":"e","19":"\\"","20":":","21":"\\"","22":"D","23":"e","24":"f","25":"a","26":"u","27":"l","28":"t","29":" ","30":"T","31":"e","32":"n","33":"a","34":"n","35":"t","36":" ","37":"N","38":"a","39":"m","40":"e","41":"\\"","42":",","43":"\\"","44":"s","45":"h","46":"o","47":"r","48":"t","49":"N","50":"a","51":"m","52":"e","53":"\\"","54":":","55":"\\"","56":"P","57":"I","58":"M","59":"S","60":"\\"","61":",","62":"\\"","63":"c","64":"o","65":"l","66":"o","67":"u","68":"r","69":"\\"","70":":","71":"\\"","72":"#","73":"0","74":"0","75":"3","76":"3","77":"6","78":"6","79":"\\"","80":",","81":"\\"","82":"l","83":"o","84":"g","85":"o","86":"\\"","87":":","88":"{","89":"\\"","90":"f","91":"a","92":"v","93":"i","94":"c","95":"o","96":"n","97":"\\"","98":":","99":"\\"","100":"\\"","101":",","102":"\\"","103":"i","104":"m","105":"a","106":"g","107":"e","108":"\\"","109":":","110":"\\"","111":"\\"","112":",","113":"\\"","114":"i","115":"m","116":"a","117":"g","118":"e","119":"W","120":"i","121":"t","122":"h","123":"T","124":"e","125":"x","126":"t","127":"\\"","128":":","129":"\\"","130":"\\"","131":"}","132":",","133":"\\"","134":"l","135":"o","136":"g","137":"i","138":"n","139":"\\"","140":":","141":"{","142":"\\"","143":"t","144":"i","145":"t","146":"l","147":"e","148":"\\"","149":":","150":"\\"","151":"\\"","152":",","153":"\\"","154":"h","155":"e","156":"a","157":"d","158":"i","159":"n","160":"g","161":"\\"","162":":","163":"\\"","164":"\\"","165":",","166":"\\"","167":"b","168":"o","169":"d","170":"y","171":"\\"","172":":","173":"\\"","174":"\\"","175":"}","176":"}","id":"DFLT","title":"Default Tenant Name","shortName":"PIMS","colour":"#003366","logo":{"favicon":"","image":"","imageWithText":""},"login":{"title":"","heading":"","body":""}}
-</div>
+<DocumentFragment>
+  <div>
+    {"id":"DFLT","title":"Default Tenant Name","shortName":"PIMS","colour":"#003366","logo":{"favicon":"","image":"","imageWithText":""},"login":{"title":"","heading":"","body":""},"layers":[],"propertiesUrl":"ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&","parcelMapFullyAttributed":{"url":"https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows","name":"pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW"}}
+  </div>
+</DocumentFragment>
 `;
 
 exports[`Tenant configuration Tenant returns correct non-existing configuration 1`] = `
-<div>
-  {"id":"DFLT","title":"Default Tenant Name","shortName":"PIMS","colour":"#003366","logo":{"favicon":"","image":"","imageWithText":""},"login":{"title":"","heading":"","body":""}}
-</div>
+<DocumentFragment>
+  <div>
+    {"id":"DFLT","title":"Default Tenant Name","shortName":"PIMS","colour":"#003366","logo":{"favicon":"","image":"","imageWithText":""},"login":{"title":"","heading":"","body":""},"layers":[],"propertiesUrl":"ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&","parcelMapFullyAttributed":{"url":"https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows","name":"pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW"}}
+  </div>
+</DocumentFragment>
 `;

@@ -2,9 +2,10 @@ using System;
 
 namespace Pims.Api.Models.Lookup
 {
-    public class RoleModel : BaseAppModel
+    public class RoleModel : BaseModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - Primary key to identify the role.
         /// </summary>
@@ -38,7 +39,7 @@ namespace Pims.Api.Models.Lookup
         /// <summary>
         /// get/set - The item's sort order.
         /// </summary>
-        public int SortOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
         /// <summary>
         /// get/set - The item's type.

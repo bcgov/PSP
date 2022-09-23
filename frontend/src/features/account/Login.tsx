@@ -1,18 +1,14 @@
+import { Button } from 'components/common/buttons';
 import * as actionTypes from 'constants/actionTypes';
+import { Roles } from 'constants/roles';
 import { useQuery } from 'hooks/use-query';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Redirect } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
-import { NEW_PIMS_USER } from 'store/slices/users';
 import { Logo, useTenant } from 'tenants';
 
 import { LoginStyled } from './LoginStyled';
@@ -23,23 +19,22 @@ import { LoginStyled } from './LoginStyled';
  */
 const Login = () => {
   const { redirect } = useQuery();
-  const [showInstruction, setShowInstruction] = useState(false);
   const keyCloakWrapper = useKeycloakWrapper();
   const keycloak = keyCloakWrapper.obj;
   const isIE = usingIE();
-  const activated = useAppSelector(
-    state => state.network[actionTypes.ADD_ACTIVATE_USER] as IGenericNetworkAction,
-  );
+  const activated = useAppSelector(state => state.network[actionTypes.ADD_ACTIVATE_USER]);
   const tenant = useTenant();
 
   if (!keycloak) {
     return <Spinner animation="border"></Spinner>;
   }
   if (keycloak?.authenticated) {
-    if (activated?.status === NEW_PIMS_USER || !keyCloakWrapper?.roles?.length) {
+    if (activated?.status === 201 || !keyCloakWrapper?.roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
+    } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
+      return <Redirect to="/lease/list" />;
     }
-    return <Redirect to={redirect || '/mapview'} />;
+    return <Redirect to={{ pathname: (redirect as string) || '/mapview' }} />;
   }
   if (isIE) {
     return <Redirect to={{ pathname: '/ienotsupported' }} />;
@@ -58,40 +53,7 @@ const Login = () => {
             <Button variant="primary" onClick={() => keycloak.login()}>
               Sign In
             </Button>
-            <p>Sign into PIMS with your government issued IDIR or with your Business BCeID.</p>
-            <Row className="bceid">
-              <Button variant="link" onClick={() => setShowInstruction(!showInstruction)}>
-                Don't have a Business BCeID?
-              </Button>
-            </Row>
-            <Row>
-              {showInstruction && (
-                <Jumbotron>
-                  <p>
-                    1. Search to see if your entity is{' '}
-                    <a
-                      href="https://www.bceid.ca/directories/whitepages"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      already registered
-                    </a>{' '}
-                    <FaExternalLinkAlt />
-                  </p>
-                  <p>
-                    If you're not yet registered, <br></br>2.{' '}
-                    <a
-                      href="https://www.bceid.ca/os/?7169"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Register for your Business BCeID
-                    </a>{' '}
-                    <FaExternalLinkAlt />
-                  </p>
-                </Jumbotron>
-              )}
-            </Row>
+            <p>Sign into PIMS with your government issued IDIR</p>
           </Col>
           <Col xs={1} md={3} />
         </Row>

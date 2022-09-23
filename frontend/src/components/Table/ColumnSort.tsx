@@ -1,12 +1,14 @@
-import variables from '_variables.module.scss';
-import * as React from 'react';
+import variables from 'assets/scss/_variables.module.scss';
+import { has } from 'lodash';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import styled from 'styled-components';
 
 import { ColumnInstanceWithProps } from '.';
+import { TableSort } from './TableSort';
 
 interface IColumnSortProps<T extends object = {}> {
   column: ColumnInstanceWithProps<T>;
+  sort?: TableSort<T>;
   onSort: () => void;
 }
 
@@ -14,31 +16,41 @@ const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
 `;
 
-const DescIcon = styled(IoMdArrowDropdown)`
-  color: ${variables.activeColor};
+interface Props {
+  $active?: boolean;
+}
+
+const Down = styled(IoMdArrowDropdown)<Props>`
+  color: ${props => (props.$active ? variables.activeColor : undefined)};
+  width: 1.6rem;
+  height: 1.6rem;
 `;
 
-const AscIcon = styled(IoMdArrowDropup)`
-  color: ${variables.activeColor};
+const Up = styled(IoMdArrowDropup)<Props>`
+  color: ${props => (props.$active ? variables.activeColor : undefined)};
+  width: 1.6rem;
+  height: 1.6rem;
 `;
 
-function ColumnSort<T extends object = {}>({ column, onSort }: IColumnSortProps<T>) {
+function ColumnSort<T extends object = {}>({ column, onSort, sort }: IColumnSortProps<T>) {
   if (!column.sortable) {
     return null;
   }
 
+  const overrideSort = has(sort, column.id);
   return (
     <Wrapper onClick={onSort}>
-      {column.isSorted && !column.isSortedDesc && <AscIcon />}
-      {column.isSorted && column.isSortedDesc && <DescIcon />}
+      {overrideSort && column.isSorted && !column.isSortedDesc && <Up $active={true} />}
+      {overrideSort && column.isSorted && column.isSortedDesc && <Down $active={true} />}
 
-      {!column.isSorted && (
+      {(!column.isSorted || !overrideSort) && (
         <>
-          <IoMdArrowDropup style={{ marginBottom: -5 }} />
-          <IoMdArrowDropdown />
+          <Up style={{ marginBottom: -8 }} />
+          <Down />
         </>
       )}
     </Wrapper>

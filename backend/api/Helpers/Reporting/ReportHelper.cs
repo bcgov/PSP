@@ -1,8 +1,9 @@
+using System.Collections.Generic;
+using System.IO;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Constants;
 using Pims.Core.Helpers;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Pims.Api.Helpers.Reporting
 {
@@ -12,6 +13,7 @@ namespace Pims.Api.Helpers.Reporting
     public static class ReportHelper
     {
         #region Methods
+
         /// <summary>
         /// Generates a CSV file for the specified 'items'.
         /// </summary>
@@ -24,7 +26,7 @@ namespace Pims.Api.Helpers.Reporting
             var result = new ContentResult
             {
                 Content = csv,
-                ContentType = ContentTypes.CONTENT_TYPE_CSV
+                ContentType = ContentTypes.CONTENT_TYPE_CSV,
             };
             return result;
         }
@@ -44,6 +46,31 @@ namespace Pims.Api.Helpers.Reporting
             excel.SaveAs(stream);
             stream.Position = 0;
 
+            return new FileStreamResult(stream, ContentTypes.CONTENT_TYPE_EXCELX);
+        }
+
+        /// <summary>
+        /// Generates an Excel document for the specified 'items'.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="itemArray"></param>
+        /// <param name="sheetName"></param>
+        /// <returns></returns>
+        public static FileStreamResult GenerateExcel<T>(IEnumerable<IEnumerable<T>> itemArray, string sheetName)
+        {
+            var stream = new MemoryStream();
+            using (var wb = new XLWorkbook())
+            {
+
+                foreach (var items in itemArray)
+                {
+                    var data = items.ConvertToDataTable(sheetName);
+                    wb.Worksheets.Add(data, sheetName);
+                }
+
+                wb.SaveAs(stream);
+                stream.Position = 0;
+            }
             return new FileStreamResult(stream, ContentTypes.CONTENT_TYPE_EXCELX);
         }
         #endregion

@@ -32,8 +32,8 @@ export const TenantProvider: React.FC = props => {
     if (process.env.REACT_APP_TENANT) {
       // If it's a JSON string parse it.
       if (process.env.REACT_APP_TENANT.startsWith('{')) {
-        const config = JSON.parse(process.env.REACT_APP_TENANT);
-        setTenant({ ...defaultTenant, ...config });
+        const envTenantConfig = JSON.parse(process.env.REACT_APP_TENANT);
+        setTenant({ ...defaultTenant, ...envTenantConfig });
       } else {
         setTenant(
           config[process.env.REACT_APP_TENANT]
@@ -44,8 +44,8 @@ export const TenantProvider: React.FC = props => {
     } else {
       // Fetch the configuration file generated for the environment.
       const r = await fetch(`${process.env.PUBLIC_URL}/tenants/tenant.json`);
-      const config = await r.json();
-      setTenant({ ...defaultTenant, ...config });
+      const fileTenantConfig = await r.json();
+      setTenant({ ...defaultTenant, ...fileTenantConfig });
     }
   }, []);
   return (

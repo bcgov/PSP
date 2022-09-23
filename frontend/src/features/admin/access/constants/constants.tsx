@@ -1,20 +1,24 @@
 import { ColumnWithProps } from 'components/Table';
-import { AccessStatusDisplayMapper } from 'constants/accessStatus';
+import { AccessRequestStatus, AccessStatusDisplayMapper } from 'constants/accessStatus';
+import { FormAccessRequest } from 'features/admin/access-request/models';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { RowActions } from '../components/RowActions';
-import { IAccessRequestModel } from '../interfaces';
 
-export const columnDefinitions: ColumnWithProps<IAccessRequestModel>[] = [
+export const getAccessRequestColumns = (
+  refresh: () => void,
+): ColumnWithProps<FormAccessRequest>[] => [
   {
     Header: 'IDIR/BCeID',
-    accessor: 'username',
+    accessor: 'businessIdentifierValue',
     align: 'left',
-    Cell: (props: CellProps<IAccessRequestModel>) => {
+    Cell: (props: CellProps<FormAccessRequest>) => {
       return (
-        <Link to={`/admin/user/${props.row.original.userId}`}>{props.row.original.username}</Link>
+        <Link to={`/admin/access/request/${props.row.original.id}`}>
+          {props.row.original.businessIdentifierValue}
+        </Link>
       );
     },
   },
@@ -22,53 +26,52 @@ export const columnDefinitions: ColumnWithProps<IAccessRequestModel>[] = [
     Header: 'First name',
     accessor: 'firstName',
     align: 'left',
-    clickable: true,
   },
   {
     Header: 'Last name',
-    accessor: 'lastName',
+    accessor: 'surname',
     align: 'left',
-    clickable: true,
   },
   {
     Header: 'Email',
     accessor: 'email',
     align: 'left',
-    clickable: true,
     minWidth: 200,
+    maxWidth: 300,
   },
   {
     Header: 'Position',
     accessor: 'position',
     align: 'left',
-    clickable: true,
   },
   {
     Header: 'Status',
-    accessor: 'status',
+    accessor: 'accessRequestStatusTypeCodeId',
     align: 'left',
-    clickable: true,
     width: 100,
-    Cell: (props: CellProps<IAccessRequestModel>) =>
-      AccessStatusDisplayMapper[props.row.original.status],
-  },
-  {
-    Header: 'Agency',
-    accessor: 'agency',
-    align: 'left',
-    clickable: true,
-    minWidth: 200,
+    Cell: (props: CellProps<FormAccessRequest>) => {
+      return AccessStatusDisplayMapper[
+        props.row.original.accessRequestStatusTypeCodeId as AccessRequestStatus
+      ];
+    },
   },
   {
     Header: 'Role',
-    accessor: 'role',
+    accessor: 'roleName',
     align: 'left',
-    clickable: true,
     minWidth: 200,
   },
   {
-    Header: ' ',
-    Cell: RowActions,
+    Header: 'MoTI Region',
+    accessor: 'regionName',
+    align: 'left',
+    minWidth: 200,
+  },
+  {
+    Header: 'Actions',
+    Cell: (props: CellProps<FormAccessRequest>) => {
+      return <RowActions {...props} refresh={refresh} />;
+    },
     width: 75,
   },
 ];

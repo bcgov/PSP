@@ -8,6 +8,7 @@ namespace Pims.Api.Areas.Reports.Models.User
     public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
+
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>
@@ -16,22 +17,12 @@ namespace Pims.Api.Areas.Reports.Models.User
         /// <summary>
         /// get/set - Unique key to identify the claim.
         /// </summary>
-        public Guid Key { get; set; }
+        public Guid KeycloakUserId { get; set; }
 
         /// <summary>
         /// get/set - The user's unique identity.
         /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        /// get/set - The user's position title.
-        /// </summary>
-        public string Position { get; set; }
-
-        /// <summary>
-        /// get/set - The user's display name.
-        /// </summary>
-        public string DisplayName { get; set; }
+        public string BusinessIdentifier { get; set; }
 
         /// <summary>
         /// get/set - The user's given name.
@@ -39,14 +30,9 @@ namespace Pims.Api.Areas.Reports.Models.User
         public string FirstName { get; set; }
 
         /// <summary>
-        /// get/set - The user's middlename.
-        /// </summary>
-        public string MiddleName { get; set; }
-
-        /// <summary>
         /// get/set - The user's surname.
         /// </summary>
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
         /// <summary>
         /// get/set - The user's email.
@@ -56,24 +42,7 @@ namespace Pims.Api.Areas.Reports.Models.User
         /// <summary>
         /// get/set - Whether the user is disabled.
         /// </summary>
-        /// <value></value>
         public bool IsDisabled { get; set; }
-
-        /// <summary>
-        /// get/set - Whether the email has been verified.
-        /// </summary>
-        /// <value></value>
-        public bool EmailVerified { get; set; }
-
-        /// <summary>
-        /// get/set - A note about the user.
-        /// </summary>
-        public string Note { get; set; }
-
-        /// <summary>
-        /// get/set - User's last login timestamp
-        /// </summary>
-        public DateTime? LastLogin { get; set; }
 
         /// <summary>
         /// get/set - Who approved this user.
@@ -83,12 +52,12 @@ namespace Pims.Api.Areas.Reports.Models.User
         /// <summary>
         /// get/set - When this user was approved on.
         /// </summary>
-        public DateTime? ApprovedOn { get; set; }
+        public DateTime? IssueOn { get; set; }
 
         /// <summary>
-        /// get/set - A comma-separated list of agencies the user belongs to.
+        /// get/set - A comma-separated list of regions the user belongs to.
         /// </summary>
-        public string Agencies { get; set; }
+        public string Regions { get; set; }
 
         /// <summary>
         /// get/set - A comma-separated list of roles the user is a member of.

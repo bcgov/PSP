@@ -12,6 +12,11 @@ bash.exe.stackdump
 .DS_Store
 auth/keycloak/config/hsperfdata_jboss/
 auth/keycloak/config/*.log
-
-
+trufflehog_report.*
+datastore.xml
+**/.vscode/
+etl/**/obj
+*.database
+*.bak
+*._*
 

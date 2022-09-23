@@ -1,46 +1,29 @@
 import './Filter.scss';
 
-import { Button } from 'components/common/form/Button';
+import { SearchButton } from 'components/common/buttons';
+import { Button } from 'components/common/buttons/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { IMenuItemProps, Menu } from 'components/menu/Menu';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { IAccessRequestsFilterData } from 'features/admin/access-request/IAccessRequestsFilterData';
 import * as React from 'react';
+import { Form } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { FaCaretDown, FaSearch, FaUndo } from 'react-icons/fa';
-import { IAccessRequestsFilterData } from 'store/slices/accessRequests';
-import { useLookupCodes } from 'store/slices/lookupCodes';
+import { FaUndo } from 'react-icons/fa';
+import styled from 'styled-components';
 
 interface IProps {
   initialValues?: IAccessRequestsFilterData;
   applyFilter: (filter: IAccessRequestsFilterData) => void;
 }
 
-export const defaultFilter: IAccessRequestsFilterData = { searchText: '', role: '', agency: '' };
+export const defaultFilter: IAccessRequestsFilterData = {
+  searchText: '',
+  role: '',
+  organization: '',
+};
 
 export const AccessRequestFilter = (props: IProps) => {
   const [filterState, setFilterState] = React.useState(props.initialValues || defaultFilter);
-  const lookupCodes = useLookupCodeHelpers();
-  const { fetchLookupCodes } = useLookupCodes();
-  React.useEffect(() => {
-    fetchLookupCodes();
-  }, [fetchLookupCodes]);
-
-  const agencies: IMenuItemProps[] = lookupCodes.getByType('Agency').map(value => {
-    return {
-      label: value.name,
-      onClick: () => setFilterState({ ...filterState, agency: value.name }),
-    };
-  });
-
-  const roles: IMenuItemProps[] = lookupCodes.getByType('Role').map(value => {
-    return {
-      label: value.name,
-      onClick: () => setFilterState({ ...filterState, role: value.name }),
-    };
-  });
 
   const reset = () => {
     setFilterState(defaultFilter);
@@ -55,57 +38,38 @@ export const AccessRequestFilter = (props: IProps) => {
     setFilterState({ ...filterState, searchText: event.target.value });
 
   return (
-    <Container className="Access-Requests-filter">
+    <FilterBoxForm className="p-3" onSubmit={(e: any) => e.preventDefault()}>
       <Row className="filters">
-        <Col className="filter">
-          <Menu
-            searchPlaceholder="Filter agencies"
-            enableFilter={true}
-            alignLeft={true}
-            width="260px"
-            options={agencies}
-            disableScrollToMenuElement={true}
-          >
-            {`Agency: ${filterState.agency || 'Show all'}`}&nbsp;&nbsp;
-            <FaCaretDown />
-          </Menu>
-        </Col>
-        <Col>
-          <Menu
-            disableScrollToMenuElement={true}
-            searchPlaceholder="Filter roles"
-            enableFilter={true}
-            alignLeft={true}
-            width="200px"
-            options={roles}
-          >
-            {`Role: ${filterState.role || 'Show all'}`}&nbsp;&nbsp;
-            <FaCaretDown />
-          </Menu>
-        </Col>
-        <Col>
+        <Col className="d-flex" md={4}>
+          <Form.Label className="mr-4 font-weight-bold">Search:</Form.Label>
           <Form.Control
+            title="Search by IDIR/Last Name"
             type="text"
-            placeholder="Search"
+            placeholder="IDIR/Last Name"
             value={filterState.searchText}
             onChange={handleSearchTextChange}
           />
         </Col>
-        <Col className="actions">
-          <TooltipWrapper toolTipId="map-filter-search-tooltip" toolTip="Search">
-            <Button
-              variant="warning"
-              size="sm"
-              onClick={search}
-              className="bg-warning"
-              icon={<FaSearch size={20} />}
-            />
+        <Col className="actions d-flex" md={1}>
+          <TooltipWrapper toolTipId="access-filter-search-tooltip" toolTip="Search">
+            <SearchButton type="submit" onClick={search} />
           </TooltipWrapper>
-          <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
-            <Button variant="secondary" size="sm" onClick={reset} icon={<FaUndo size={20} />} />
+          <TooltipWrapper toolTipId="access-filter-reset-tooltip" toolTip="Reset Filter">
+            <Button
+              title="reset"
+              variant="info"
+              size="sm"
+              onClick={reset}
+              icon={<FaUndo size={20} />}
+            />
           </TooltipWrapper>
         </Col>
       </Row>
-    </Container>
+    </FilterBoxForm>
   );
 };
+
+export const FilterBoxForm = styled(Form)`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  border-radius: 0.5rem;
+`;

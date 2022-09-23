@@ -31,11 +31,11 @@ parameters:
   - name: BUILDIMAGE_NAME
     displayName: "Source Image Name"
     description: "The image to use as the Builder Image."
-    value: "nodejs-14-ubi8"
+    value: "nodejs-16"
   - name: BUILDIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."
-    value: "1-30"
+    value: "1-1"
 
   - name: RUNTIMEIMAGE_NAME
     displayName: "Source Image Name"
@@ -64,9 +64,9 @@ parameters:
 
   - name: OUTPUT_IMAGE_TAG
     displayName: "Output Image Tag"
-    description: "The tag given to the built image."
+    description: "The tag given to the built image based on environment. Expected values are (latest-dev, latest-test or latest-uat)"
     required: true
-    value: "latest"
+    value: "latest-dev"
 
   - name: CPU_LIMIT
     displayName: "Resources CPU Limit"

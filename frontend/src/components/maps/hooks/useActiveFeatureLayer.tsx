@@ -1,19 +1,28 @@
-import { GeoJsonObject } from 'geojson';
+import { DistrictCodes, RegionCodes } from 'constants/index';
+import { Feature, GeoJsonObject, GeoJsonProperties } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { GeoJSON, geoJSON, LatLng, Map as LeafletMap } from 'leaflet';
-import { useState } from 'react';
-import { useAppSelector } from 'store/hooks';
-import { IPropertyDetail } from 'store/slices/properties';
+import { IProperty } from 'interfaces';
+import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
+import { isEmpty, isNumber } from 'lodash';
+import { useContext, useState } from 'react';
 
-import { parcelLayerPopupConfig, PARCELS_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
-import { LayerPopupInformation } from '../leaflet/Map';
-import { PointFeature } from '../types';
+import {
+  HWY_DISTRICT_LAYER_URL,
+  LayerPopupInformation,
+  MOTI_REGION_LAYER_URL,
+  MUNICIPALITY_LAYER_URL,
+  municipalityLayerPopupConfig,
+  parcelLayerPopupConfig,
+  PARCELS_LAYER_URL,
+  useLayerQuery,
+} from '../leaflet/LayerPopup';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
   mapRef: React.RefObject<LeafletMap>;
   /** The currently selected property on the map */
-  selectedProperty?: IPropertyDetail | null;
+  selectedProperty?: IProperty | null;
   /** the currently displayed layer popup information */
   layerPopup?: LayerPopupInformation;
   /** set the display of the layer popup imperatively */
@@ -29,115 +38,109 @@ interface IUseActiveParcelMapLayer {
 const useActiveFeatureLayer = ({
   selectedProperty,
   mapRef,
-  layerPopup,
   setLayerPopup,
-  parcelLayerFeature,
 }: IUseActiveParcelMapLayer) => {
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
+  const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
+  const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
+  const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
+  const { isSelecting, setSelectedFeature } = useContext(SelectedPropertyContext);
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
     setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
   }
 
-  /**
-   * if the layerPopup is currently being displayed, set the active feature to be the data displayed by the layerPopup.
-   */
-  useDeepCompareEffect(() => {
-    if (!!activeFeatureLayer) {
-      activeFeatureLayer.clearLayers();
-      layerPopup?.feature && activeFeatureLayer.addData(layerPopup.feature);
-    }
-  }, [layerPopup, activeFeatureLayer]);
+  const showLocationDetails = async (latLng: LatLng) => {
+    activeFeatureLayer?.clearLayers();
+    let properties: GeoJsonProperties | undefined = undefined;
+    let center: LatLng | undefined;
+    let mapBounds: LatLngBounds | undefined;
+    let displayConfig = {};
+    let title = 'Municipality Information';
+    let feature: Feature | undefined = undefined;
 
-  /**
-   * Other areas of the application may kick off parcel layer requests, if so, display the last request tracked in redux.
-   */
-  useDeepCompareEffect(() => {
-    if (!!activeFeatureLayer && !!parcelLayerFeature) {
-      activeFeatureLayer.clearLayers();
-      activeFeatureLayer.addData(parcelLayerFeature);
-      let coords = (parcelLayerFeature as any)?.geometry?.coordinates;
-      if (coords && coords.length === 1 && coords[0].length > 1 && coords[0][0].length > 1) {
-        const latLng = {
-          lat: (parcelLayerFeature as any)?.geometry?.coordinates[0][0][1],
-          lng: (parcelLayerFeature as any)?.geometry?.coordinates[0][0][0],
-        };
-        const center = geoJSON((parcelLayerFeature as any).geometry)
-          .getBounds()
-          .getCenter();
+    // call these APIs in parallel - notice there is no "await"
+    const task1 = parcelsService.findOneWhereContains(latLng);
+    const task2 = regionService.findMetadataByLocation(latLng, 'GEOMETRY');
+    const task3 = districtService.findMetadataByLocation(latLng, 'GEOMETRY');
 
-        mapRef.current?.panTo(latLng);
-        setLayerPopup({
-          title: 'Parcel Information',
-          data: (parcelLayerFeature as any).properties,
-          config: parcelLayerPopupConfig,
-          latlng: latLng,
-          center,
-          parcelLayerFeature,
-        } as any);
+    const parcel = await task1;
+    const region = await task2;
+    const district = await task3;
+
+    if (!isSelecting) {
+      const municipality = await municipalitiesService.findOneWhereContains(latLng);
+
+      if (municipality?.features?.length === 1) {
+        properties = municipality.features[0].properties!;
+        displayConfig = municipalityLayerPopupConfig;
+        feature = municipality.features[0];
+        mapBounds = municipality.features[0]?.geometry
+          ? geoJSON(municipality.features[0].geometry).getBounds()
+          : undefined;
       }
     }
-  }, [parcelLayerFeature, activeFeatureLayer]);
+
+    if (parcel?.features?.length === 1) {
+      displayConfig = parcelLayerPopupConfig;
+      properties = parcel.features[0].properties!;
+      feature = parcel.features[0];
+      title = 'LTSA ParcelMap data';
+      mapBounds = parcel.features[0]?.geometry
+        ? geoJSON(parcel.features[0].geometry).getBounds()
+        : undefined;
+    } else if (parcel?.features?.length === 0 && isSelecting) {
+      feature = {
+        geometry: { coordinates: [latLng.lng, latLng.lat], type: 'Point' },
+        type: 'Feature',
+        properties: {},
+      };
+    }
+
+    if ((!isEmpty(properties) || isSelecting) && feature) {
+      if (!isSelecting) {
+        setLayerPopup({
+          title,
+          data: properties as any,
+          config: displayConfig as any,
+          latlng: latLng,
+          center,
+          bounds: mapBounds,
+          feature,
+        } as any);
+      }
+      feature.properties = {
+        ...feature.properties,
+        IS_SELECTED: isSelecting,
+        CLICK_LAT_LNG: latLng,
+        REGION_NUMBER: isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown,
+        REGION_NAME: region.REGION_NAME ?? 'Cannot determine',
+        DISTRICT_NUMBER: isNumber(district.DISTRICT_NUMBER)
+          ? district.DISTRICT_NUMBER
+          : DistrictCodes.Unknown,
+        DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
+      };
+      activeFeatureLayer?.addData(feature);
+      setSelectedFeature(feature);
+    }
+  };
 
   /**
    * If there is a selected property on the map, attempt to retrieve the corresponding parcel. If we find matching parcel data, use that to draw the active parcel.
-   * Note: currently this is limited to finding one parent in the case of a building. in the future, we may need to find/display all matching parcels.
    */
   useDeepCompareEffect(() => {
-    const highlightSelectedProperty = async (latLng: LatLng) => {
-      const parcelLayerData = await parcelsService.findOneWhereContains(latLng);
-      if (parcelLayerData?.features?.length > 0) {
-        activeFeatureLayer?.addData(parcelLayerData.features[0]);
-      }
-    };
-    if (
-      !!activeFeatureLayer &&
-      !!selectedProperty?.parcelDetail?.latitude &&
-      !!selectedProperty?.parcelDetail?.longitude
-    ) {
+    if (!!activeFeatureLayer && !!selectedProperty?.latitude && !!selectedProperty?.longitude) {
       activeFeatureLayer.clearLayers();
-      highlightSelectedProperty({
-        lat: selectedProperty.parcelDetail?.latitude as number,
-        lng: selectedProperty.parcelDetail?.longitude as number,
+      showLocationDetails({
+        lat: selectedProperty?.latitude,
+        lng: selectedProperty?.longitude,
       } as LatLng);
-      if (!!selectedProperty.parcelDetail?.parcels?.length) {
-        selectedProperty.parcelDetail.parcels.forEach(parcel => {
-          if (!!parcel?.longitude && !!parcel.latitude) {
-            highlightSelectedProperty({
-              lat: parcel?.latitude as number,
-              lng: parcel?.longitude as number,
-            } as LatLng);
-          }
-        });
-      }
     }
   }, [selectedProperty, activeFeatureLayer]);
 
-  /**
-   * If there is a draft property on the map, attempt to retrieve the corresponding parcel. If we find matching parcel data, use that to draw the active parcel.
-   * Note: currently this is limited to finding one parent in the case of a building. in the future, we may need to find/display all matching parcels.
-   */
-  useDeepCompareEffect(() => {
-    const highlightSelectedProperty = async () => {
-      const draftProperty = draftProperties[0];
-      const parcelLayerData = await parcelsService.findOneWhereContains({
-        lat: draftProperty.geometry.coordinates[1] || 0,
-        lng: draftProperty.geometry.coordinates[0] || 0,
-      } as LatLng);
-      if (parcelLayerData?.features?.length > 0) {
-        activeFeatureLayer?.addData(parcelLayerData.features[0]);
-      }
-    };
-    if (!!activeFeatureLayer && draftProperties.length) {
-      activeFeatureLayer.clearLayers();
-      highlightSelectedProperty();
-    }
-  }, [draftProperties, activeFeatureLayer]);
-
-  return { activeFeatureLayer };
+  return { showLocationDetails };
 };
 
 export default useActiveFeatureLayer;

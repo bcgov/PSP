@@ -18,9 +18,12 @@ namespace Pims.Core.Extensions
         /// <param name="addIfEmpty"></param>
         public static void AppendQuery(this UriBuilder builder, string key, string value, bool addIfEmpty = false)
         {
-            if (String.IsNullOrWhiteSpace(key)) throw new ArgumentException("Argument cannot be null, empty or whitespace", nameof(key));
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Argument cannot be null, empty or whitespace", nameof(key));
+            }
 
-            if (addIfEmpty || !String.IsNullOrWhiteSpace(value))
+            if (addIfEmpty || !string.IsNullOrWhiteSpace(value))
             {
                 var query = HttpUtility.ParseQueryString(builder.Query);
                 query[key] = value;

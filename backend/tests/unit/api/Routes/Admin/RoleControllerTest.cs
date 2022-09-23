@@ -1,11 +1,11 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Security;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Model = Pims.Api.Areas.Admin.Models.Role;
+using Model = Pims.Api.Models.Concepts;
 
 namespace Pims.Api.Test.Routes.Admin
 {
@@ -66,18 +66,6 @@ namespace Pims.Api.Test.Routes.Admin
             // Assert
             Assert.NotNull(endpoint);
             endpoint.HasGet("{key}");
-        }
-
-        [Fact]
-        public void GetRoleByName_Route()
-        {
-            // Arrange
-            var endpoint = typeof(RoleController).FindMethod(nameof(RoleController.GetRoleByName), typeof(string));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasGet("name/{name}");
         }
 
         [Fact]

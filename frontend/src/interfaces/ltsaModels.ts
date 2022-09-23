@@ -312,7 +312,7 @@ export interface CertificateDelivery {
    * @type {string}
    * @memberof CertificateDelivery
    */
-  intendedRecipientLastName: string;
+  intendedRecipientsurname: string;
   /**
    * The Given Name of the person who is going to hold (be responsible for) the certificate.
    * @type {string}
@@ -632,13 +632,13 @@ export interface ChargeOwnershipGroupChargeOwner {
    * @type {string}
    * @memberof ChargeOwnershipGroupChargeOwner
    */
-  lastNameOrCorpName1: string;
+  surnameOrCorpName1: string;
   /**
    * Provides additional space for storing the Owner Last Name or the Corporate Name
    * @type {string}
    * @memberof ChargeOwnershipGroupChargeOwner
    */
-  lastNameOrCorpName2?: string;
+  surnameOrCorpName2?: string;
   /**
    * Owner Given Name; this attribute is empty if the Owner is a corporation.
    * @type {string}
@@ -2381,4 +2381,9 @@ export interface UnsubdividedShortLegalDescription {
    * @memberof UnsubdividedShortLegalDescription
    */
   marginalNotes?: string;
+}
+
+export interface LtsaOrders {
+  parcelInfo: ParcelInfoOrder;
+  titleOrders: TitleOrder[];
 }

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +10,6 @@ using Pims.Geocoder;
 using Pims.Geocoder.Extensions;
 using Pims.Geocoder.Parameters;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
 namespace Pims.Api.Areas.Tools.Controllers
@@ -19,7 +19,7 @@ namespace Pims.Api.Areas.Tools.Controllers
     /// - https://www2.gov.bc.ca/gov/content/data/geographic-data-services/location-services/geocoder
     /// - https://catalogue.data.gov.bc.ca/dataset/bc-address-geocoder-web-service
     /// - https://catalogue.data.gov.bc.ca/dataset/bc-address-geocoder-web-service/resource/40d6411e-ab98-4df9-a24e-67f81c45f6fa/view/1d3c42fc-53dc-4aab-ae3b-f4d056cb00e0
-    /// - https://bcgov.github.io/ols-devkit/widget/
+    /// - https://bcgov.github.io/ols-devkit/widget/.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -35,6 +35,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a GeocoderController class.
         /// </summary>
@@ -48,6 +49,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
         /// Make a request to Data BC Geocoder for addresses that match the specified `search`.
         /// </summary>
@@ -87,7 +89,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Make a request to Data BC Geocoder for the property that is the closest to the given lat/lng point.
         /// </summary>
-        /// <param name="point">The lat/lng of the desired property.</param>
+        /// <param name="point">The lat/lng of the desired property in the format 'lng,lat'.</param>
         /// <returns>A single address match.</returns>
         [HttpGet("nearest")]
         [Produces("application/json")]

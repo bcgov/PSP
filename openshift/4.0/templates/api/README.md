@@ -7,16 +7,13 @@ Go to - `/pims/openshift/4.0/templates/api`
 Create a build configuration file here - `build.dev.env`
 Update the configuration file and set the appropriate parameters.
 
-**NOTE -** the following configuration references a custom Dockerfile for building .NET 5 code on OpenShift
+**NOTE -** the following configuration references the official Red Hat base image for building .NET 6 code on OpenShift
 
 **Example**
 
 ```conf
 GIT_REF=dev
-OUTPUT_IMAGE_TAG=latest
-DOCKERFILE_PATH=Dockerfile.ocp
-CPU_LIMIT=1
-MEMORY_LIMIT=2Gi
+OUTPUT_IMAGE_TAG=latest-dev
 ```
 
 Create the api build and save the template.
@@ -29,7 +26,7 @@ oc process -f build.yaml --param-file=build.dev.env | oc create --save-config=tr
 Tag the image so that the appropriate environment can pull the image.
 
 ```bash
-oc tag pims-api:latest pims-api:dev
+oc tag pims-api:latest-dev pims-api:dev
 ```
 
 Create a deployment configuration file here - `deploy.dev.env`

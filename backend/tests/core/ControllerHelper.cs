@@ -1,10 +1,10 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Dal;
 using Pims.Dal.Security;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Security.Claims;
 
 namespace Pims.Core.Test
 {
@@ -25,7 +25,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateController<T>(this TestHelper helper, ClaimsPrincipal user, params object[] args) where T : ControllerBase
+        public static T CreateController<T>(this TestHelper helper, ClaimsPrincipal user, params object[] args)
+            where T : ControllerBase
         {
             return helper.CreateController<T>(user, null, args);
         }
@@ -41,7 +42,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateController<T>(this TestHelper helper, Permissions permission, params object[] args) where T : ControllerBase
+        public static T CreateController<T>(this TestHelper helper, Permissions permission, params object[] args)
+            where T : ControllerBase
         {
             var user = PrincipalHelper.CreateForPermission(permission);
             return helper.CreateController<T>(user, null, args);
@@ -58,7 +60,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateController<T>(this TestHelper helper, Permissions permission, Uri uri, params object[] args) where T : ControllerBase
+        public static T CreateController<T>(this TestHelper helper, Permissions permission, Uri uri, params object[] args)
+            where T : ControllerBase
         {
             var user = PrincipalHelper.CreateForPermission(permission);
             return helper.CreateController<T>(user, uri, args);
@@ -75,7 +78,8 @@ namespace Pims.Core.Test
         /// <param name="args"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateController<T>(this TestHelper helper, ClaimsPrincipal user, Uri uri, params object[] args) where T : ControllerBase
+        public static T CreateController<T>(this TestHelper helper, ClaimsPrincipal user, Uri uri, params object[] args)
+            where T : ControllerBase
         {
             helper.MockConstructorArguments<T>(args);
             var context = helper.CreateControllerContext(user, uri);
@@ -97,7 +101,7 @@ namespace Pims.Core.Test
         {
             return new ControllerContext()
             {
-                HttpContext = helper.CreateHttpContext(user, uri)
+                HttpContext = helper.CreateHttpContext(user, uri),
             };
         }
 
@@ -114,8 +118,8 @@ namespace Pims.Core.Test
                 {
                     Uri = new Uri("http://localhost:3000"),
                     Name = "Testing",
-                    Title = "Property Inventory Management System"
-                }
+                    Title = "Property Inventory Management System",
+                },
             });
         }
 
@@ -140,7 +144,7 @@ namespace Pims.Core.Test
             {
                 DraftFormat = "DRAFT-{0:00000}",
                 NumberFormat = "SPP-{0:00000}",
-                DraftWorkflows = new[] { "SUBMIT-DISPOSAL" }
+                DraftWorkflows = new[] { "SUBMIT-DISPOSAL" },
             });
         }
         #endregion

@@ -1,78 +1,32 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Options;
-using Pims.Core.Extensions;
-using Pims.Dal.Configuration;
-using Pims.Dal.Entities;
-using Pims.Dal.Extensions;
-using Pims.Dal.Helpers.Migrations;
 using System.Linq;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Pims.Core.Extensions;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal
 {
     /// <summary>
     /// PimsContext class, provides a data context to manage the datasource for the PIMS application.
     /// </summary>
-    public class PimsContext : DbContext
+    public class PimsContext : PimsBaseContext
     {
         #region Variables
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JsonSerializerOptions _serializerOptions;
         #endregion
 
-        #region Properties
-        #region Tables
-        public DbSet<AccessRequest> AccessRequests { get; set; }
-        public DbSet<Agency> Agencies { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<Claim> Claims { get; set; }
-
-        #region Properties
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Building> Buildings { get; set; }
-        public DbSet<BuildingEvaluation> BuildingEvaluations { get; set; }
-        public DbSet<BuildingFiscal> BuildingFiscals { get; set; }
-        public DbSet<BuildingConstructionType> BuildingConstructionTypes { get; set; }
-        public DbSet<BuildingPredominateUse> BuildingPredominateUses { get; set; }
-        public DbSet<BuildingOccupantType> BuildingOccupantTypes { get; set; }
-        public DbSet<Parcel> Parcels { get; set; }
-        public DbSet<ParcelParcel> ParcelParcels { get; set; }
-        public DbSet<ParcelEvaluation> ParcelEvaluations { get; set; }
-        public DbSet<ParcelFiscal> ParcelFiscals { get; set; }
-        public DbSet<PropertyClassification> PropertyClassifications { get; set; }
-        public DbSet<PropertyType> PropertyTypes { get; set; }
-        public DbSet<Province> Provinces { get; set; }
-        public DbSet<AdministrativeArea> AdministrativeAreas { get; set; }
-        public DbSet<ParcelBuilding> ParcelBuildings { get; set; }
-        #endregion
-
-        #region Projects
-        public DbSet<ProjectNumber> ProjectNumbers { get; set; }
-
-        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
-
-        public DbSet<NotificationQueue> NotificationQueue { get; set; }
-        #endregion
-        #endregion
-
-        #region Views
-        public DbSet<Entities.Views.Property> Properties { get; set; }
-        #endregion
-
-        #region Configuration
-        public DbSet<Tenant> Tenants { get; set; }
-        #endregion
-        #endregion
-
         #region Constructors
+
         /// <summary>
         /// Creates a new instance of a PimsContext class.
         /// </summary>
-        /// <returns></returns>
-        public PimsContext() { }
+        public PimsContext()
+            : base()
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of a PimsContext class.
@@ -81,40 +35,11 @@ namespace Pims.Dal
         /// <param name="httpContextAccessor"></param>
         /// <param name="serializerOptions"></param>
         /// <returns></returns>
-        public PimsContext(DbContextOptions<PimsContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null) : base(options)
+        public PimsContext(DbContextOptions<PimsContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null)
+            : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
             _serializerOptions = serializerOptions.Value;
-        }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// Configures the DbContext with the specified options.
-        /// </summary>
-        /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.EnableSensitiveDataLogging();
-            }
-
-            optionsBuilder.ReplaceService<IMigrationsSqlGenerator, PimsMigrationSqlGenerator>();
-            optionsBuilder.ReplaceService<IHistoryRepository, PimsHistoryRepository>();
-
-            base.OnConfiguring(optionsBuilder);
-        }
-
-        /// <summary>
-        /// Creates the datasource.
-        /// </summary>
-        /// <param name="modelBuilder"></param>
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyAllConfigurations(typeof(AddressConfiguration), this);
-
-            base.OnModelCreating(modelBuilder);
         }
 
         /// <summary>
@@ -130,7 +55,7 @@ namespace Pims.Dal
             // Default values are provided because depending on the claim source it may or may not have these values.
             var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "service";
             var key = _httpContextAccessor.HttpContext.User.GetUserKey();
-            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? "";
+            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? string.Empty;
             foreach (var entry in modifiedEntries)
             {
                 entry.UpdateAppAuditProperties(username, key, directory);
@@ -182,6 +107,24 @@ namespace Pims.Dal
         public string Serialize<T>(T item)
         {
             return JsonSerializer.Serialize(item, _serializerOptions);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Configures the DbContext with the specified options.
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.EnableSensitiveDataLogging();
+            }
+
+            base.OnConfiguring(optionsBuilder);
         }
         #endregion
     }

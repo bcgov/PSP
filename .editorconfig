@@ -7,13 +7,13 @@ end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.ts]
+[{*.ts,*js]
 indent_style = space
 
 [*.cs]
 indent_size = 4
 
-[{*.json,*.md,*.yml,*.groovy,Jenkinsfile*}]
+[{*.json,*.md,*.yml,*.groovy,Jenkinsfile*,*.sh}]
 indent_style = space
 indent_size = 2
 

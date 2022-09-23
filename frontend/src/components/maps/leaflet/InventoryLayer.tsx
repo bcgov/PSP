@@ -1,23 +1,18 @@
 import { IGeoSearchParams } from 'constants/API';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { BBox } from 'geojson';
-import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IBuilding, IParcel } from 'interfaces';
-import { GeoJSON, LatLngBounds } from 'leaflet';
-import { flatten, uniqBy } from 'lodash';
-import React, { useEffect, useMemo, useState } from 'react';
+import { IProperty } from 'interfaces';
+import { LatLngBounds } from 'leaflet';
+import React, { useEffect, useMemo } from 'react';
+import { useContext } from 'react';
 import { useMap } from 'react-leaflet';
-import { toast } from 'react-toastify';
-import { useAppSelector } from 'store/hooks';
-import { IPropertyDetail } from 'store/slices/properties';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
+import { useMapSearch } from '../hooks/useMapSearch';
 import { useFilterContext } from '../providers/FIlterProvider';
+import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { PointFeature } from '../types';
-import { MUNICIPALITY_LAYER_URL, useLayerQuery } from './LayerPopup';
 import PointClusterer from './PointClusterer';
 
 export type InventoryLayerProps = {
@@ -31,12 +26,8 @@ export type InventoryLayerProps = {
   maxZoom?: number;
   /** Search filter to apply to properties. */
   filter?: IGeoSearchParams;
-  /** Callback function to display/hide backdrop*/
-  onRequestData: (showBackdrop: boolean) => void;
   /** What to do when the marker is clicked. */
-  onMarkerClick: () => void;
-
-  selected?: IPropertyDetail | null;
+  onMarkerClick: (property: IProperty) => void;
 };
 
 /**
@@ -114,7 +105,7 @@ export const getTiles = (bounds: LatLngBounds, zoom: number): ITile[] => {
 
     return {
       key: `${x}:${y}:${z}`,
-      bbox: SW_long + ',' + NE_long + ',' + SW_lat + ',' + NE_lat,
+      bbox: SW_long + ',' + SW_lat + ',' + NE_long + ',' + NE_lat + ',EPSG:4326',
       point: { x, y, z },
       datum: [],
       latlngBounds: new LatLngBounds({ lat: SW_lat, lng: SW_long }, { lat: NE_lat, lng: NE_long }),
@@ -135,22 +126,13 @@ export const defaultBounds = new LatLngBounds(
 export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   bounds,
   zoom,
-  minZoom,
-  maxZoom,
   filter,
   onMarkerClick,
-  selected,
-  onRequestData,
 }) => {
-  const keycloak = useKeycloakWrapper();
   const mapInstance = useMap();
-  const [features, setFeatures] = useState<PointFeature[]>([]);
-  const [loadingTiles, setLoadingTiles] = useState(false);
-  const { loadProperties } = useApi();
+  const { search, properties, loading } = useMapSearch();
   const { changed: filterChanged } = useFilterContext();
-  const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
-
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
+  const { draftProperties } = useContext(SelectedPropertyContext);
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -167,105 +149,33 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     fit();
   }, [mapInstance, filter, filterChanged]);
 
-  minZoom = minZoom ?? 0;
-  maxZoom = maxZoom ?? 18;
-
   const params = useMemo((): any => {
     const tiles = getTiles(defaultBounds, 5);
 
     return tiles.map(tile => ({
-      bbox: tile.bbox,
-      address: filter?.address,
-      administrativeArea: filter?.administrativeArea,
-      pid: filter?.pid,
-      agencies: filter?.agencies,
-      classificationId: filter?.classificationId,
-      minLandArea: filter?.minLandArea,
-      maxLandArea: filter?.maxLandArea,
-      floorCount: filter?.floorCount,
-      predominateUseId: Number(filter?.predominateUseId),
-      constructionTypeId: filter?.constructionTypeId,
-      name: filter?.name,
-      bareLandOnly: filter?.bareLandOnly,
-      rentableArea: filter?.rentableArea,
-      includeAllProperties: filter?.includeAllProperties,
+      STREET_ADDRESS_1: filter?.STREET_ADDRESS_1,
+      PID: filter?.PID,
+      PIN: filter?.PIN,
+      BBOX: tile.bbox,
     }));
   }, [filter]);
-
-  const loadTile = async (filter: IGeoSearchParams) => {
-    return loadProperties(filter);
-  };
-
-  const search = async (filters: IGeoSearchParams[]) => {
-    try {
-      onRequestData(true);
-      const data = flatten(await Promise.all(filters.map(x => loadTile(x)))).map(f => {
-        return {
-          ...f,
-        } as PointFeature;
-      });
-
-      const items = uniqBy(
-        data,
-        point => `${point?.properties?.id}-${point?.properties?.propertyTypeId}`,
-      );
-
-      /**
-       * Whether the land has buildings on it.
-       * @param property PIMS property
-       */
-      const hasBuildings = (property: IParcel | IBuilding) => false;
-
-      let results = items.filter(({ properties }: any) => {
-        return (
-          properties?.propertyTypeId === PropertyTypes.Building ||
-          !hasBuildings(properties) ||
-          (properties?.propertyTypeId === PropertyTypes.Subdivision &&
-            keycloak.canUserEditProperty(properties))
-        );
-      }) as any;
-
-      // Fit to municipality bounds
-      const administrativeArea = filter?.administrativeArea;
-      if (results.length === 0 && !!administrativeArea) {
-        const municipality = await municipalitiesService.findByAdministrative(administrativeArea);
-        if (municipality) {
-          const bounds = (GeoJSON.geometryToLayer(municipality) as any)._bounds;
-          mapInstance.fitBounds(bounds, { maxZoom: 11 });
-        }
-      }
-      setFeatures(results);
-      setLoadingTiles(false);
-      if (results.length === 0) {
-        toast.info('No search results found');
-      } else {
-        toast.info(`${results.length} properties found`);
-      }
-    } catch (error) {
-      toast.error((error as Error).message, { autoClose: 7000 });
-      console.error(error);
-    } finally {
-      onRequestData(false);
-    }
-  };
-
   useMapRefreshEvent(() => search(params));
   useDeepCompareEffect(() => {
-    setLoadingTiles(true);
-    search(params);
-  }, [params]);
+    if (filterChanged || !properties?.length) {
+      search(params);
+    }
+  }, [params, filterChanged]);
 
   return (
     <PointClusterer
-      points={features}
       draftPoints={draftProperties}
+      points={properties}
       zoom={zoom}
       bounds={bbox}
       onMarkerClick={onMarkerClick}
       zoomToBoundsOnClick={true}
       spiderfyOnMaxZoom={true}
-      selected={selected}
-      tilesLoaded={!loadingTiles}
+      tilesLoaded={!loading}
     />
   );
 };

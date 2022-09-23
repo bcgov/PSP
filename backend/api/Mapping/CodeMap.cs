@@ -7,20 +7,27 @@ namespace Pims.Api.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.CodeEntity, Models.CodeModel>()
+            config.NewConfig<Entity.ICodeEntity<string>, Models.CodeModel>()
                 .Map(dest => dest.Code, src => src.Code)
-                .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
-                .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name);
 
-            config.NewConfig<Models.CodeModel, Entity.CodeEntity>()
+            config.NewConfig<Models.CodeModel, Entity.ICodeEntity<string>>()
                 .Map(dest => dest.Code, src => src.Code)
-                .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
-                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
+
+            config.NewConfig<Entity.ICodeEntity<short>, Models.CodeModel>()
+                .Map(dest => dest.Code, src => src.Code)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name);
+
+            config.NewConfig<Models.CodeModel, Entity.ICodeEntity<short>>()
+                .Map(dest => dest.Code, src => src.Code)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
         }
     }
 }

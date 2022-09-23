@@ -1,7 +1,7 @@
 import './HelpBox.scss';
 
-import * as React from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button } from 'components/common/buttons/Button';
+import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import styled from 'styled-components';
 
@@ -23,8 +23,9 @@ const Box = styled.div`
 `;
 
 const TopicButton = styled(Button)`
-  max-height: 40px;
+  max-height: 4rem;
   background-color: white;
+  display: flex;
 `;
 
 const TopicSelector = styled(ButtonGroup)``;

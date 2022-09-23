@@ -1,4 +1,4 @@
-FROM registry.redhat.io/ubi8/dotnet-50
+FROM registry.redhat.io/ubi8/dotnet-50:5.0-23
 
 LABEL \
     io.k8s.display-name="DotNet 5.0" \

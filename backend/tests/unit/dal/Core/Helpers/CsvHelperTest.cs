@@ -1,9 +1,9 @@
-using Pims.Core.Helpers;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Core.Helpers;
+using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -23,10 +23,9 @@ namespace Pims.Api.Test.Helpers
                 new object[] { new[] { new { Id = 1, Name = "test,1" }, new { Id = 2, Name = "test,2" } }, "Id,Name\r\n1,\"test,1\"\r\n2,\"test,2\"\r\n" },
                 new object[]
                 {
-                    new[] { new Entity.PropertyType("test1") { Id = 1 }, new Entity.PropertyType("test2") { Id = 2 } },
-                    "Id,Name,IsDisabled,SortOrder,RowVersion\r\n1,test1,False,0,0\r\n2,test2,False,0,0\r\n"
-
-                }
+                    new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") },
+                    "PropertyTypeCode,Description,IsDisabled,DisplayOrder,ConcurrencyControlNumber,DbCreateTimestamp,DbCreateUserid,DbLastUpdateTimestamp,DbLastUpdateUserid,Id\r\ntest1,,,,0,01/01/0001 00:00:00,,01/01/0001 00:00:00,,test1\r\ntest2,,,,0,01/01/0001 00:00:00,,01/01/0001 00:00:00,,test2\r\n",
+                },
             };
 
         public static IEnumerable<object[]> DataWithDelimiter =>
@@ -36,10 +35,10 @@ namespace Pims.Api.Test.Helpers
                 new object[] { new[] { new { Id = 1, Name = "test;1" }, new { Id = 2, Name = "test;2" } }, ";", "Id;Name\r\n1;\"test;1\"\r\n2;\"test;2\"\r\n" },
                 new object[]
                 {
-                    new[] { new Entity.PropertyType("test1") { Id = 1 }, new Entity.PropertyType("test2") { Id = 2 } },
+                    new[] { new Entity.PimsPropertyType("test1"), new Entity.PimsPropertyType("test2") },
                     "-",
-                    "Id-Name-IsDisabled-SortOrder-RowVersion\r\n1-test1-False-0-0\r\n2-test2-False-0-0\r\n"
-                }
+                    "PropertyTypeCode-Description-IsDisabled-DisplayOrder-ConcurrencyControlNumber-DbCreateTimestamp-DbCreateUserid-DbLastUpdateTimestamp-DbLastUpdateUserid-Id\r\ntest1----0-01/01/0001 00:00:00--01/01/0001 00:00:00--test1\r\ntest2----0-01/01/0001 00:00:00--01/01/0001 00:00:00--test2\r\n",
+                },
             };
         #endregion
 

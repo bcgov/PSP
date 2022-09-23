@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 /** align text to middle of size input */
 const StyledText = styled.span`
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 `;
 
 interface IProps {
@@ -32,7 +32,7 @@ export const TablePageSizeSelector: React.FC<IProps> = ({ options, value, onChan
     onClick: () => handleValueChange(option),
   }));
   return (
-    <Menu options={pageSizeOptions} width="60px" alignTop={alignTop}>
+    <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div style={{ display: 'flex' }}>
         <StyledText>Show</StyledText>
         <Form.Control

@@ -1,13 +1,13 @@
-using Mapster;
-using MapsterMapper;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Pims.Dal;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using Mapster;
+using MapsterMapper;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Pims.Dal;
 
 namespace Pims.Api.Helpers.Mapping
 {
@@ -63,13 +63,20 @@ namespace Pims.Api.Helpers.Mapping
                     registerTypes.Select(registerType =>
                     {
                         var constructor = registerType.GetConstructor(Type.EmptyTypes);
-                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType);
+                        if (constructor != null)
+                        {
+                            return (IRegister)Activator.CreateInstance(registerType);
+                        }
+
                         constructor = registerType.GetConstructor(new[] { typeof(IOptions<JsonSerializerOptions>), typeof(IOptions<PimsOptions>) });
-                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType, new object[] { optionsSerializer, optionsPims });
+                        if (constructor != null)
+                        {
+                            return (IRegister)Activator.CreateInstance(registerType, new object[] { optionsSerializer, optionsPims });
+                        }
+
                         // Default to providing serializer options.
                         return (IRegister)Activator.CreateInstance(registerType, new[] { optionsSerializer });
-                    }
-                        )).ToList();
+                    })).ToList();
 
             config.Apply(registers);
 

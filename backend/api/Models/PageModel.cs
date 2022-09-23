@@ -1,7 +1,7 @@
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Models
 {
@@ -12,6 +12,7 @@ namespace Pims.Api.Models
     public class PageModel<T>
     {
         #region Properties
+
         /// <summary>
         /// get/set - The items on the page.
         /// </summary>
@@ -34,10 +35,13 @@ namespace Pims.Api.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Create a new instance of a PageModel of type 'T'.
         /// </summary>
-        public PageModel() { }
+        public PageModel()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PageModel of type 'T', initialize with specified arguments.
@@ -59,9 +63,20 @@ namespace Pims.Api.Models
         /// <param name="total"></param>
         public PageModel(IEnumerable<T> items, int page, int quantity, int total)
         {
-            if (page < 1) throw new ArgumentException("Must be greater than or equal to 1.", nameof(page));
-            if (quantity < 1) throw new ArgumentException("Must be greater than or equal to 1.", nameof(quantity));
-            if (total < 0) throw new ArgumentException("Must be greater than or equal to 0.", nameof(total));
+            if (page < 1)
+            {
+                throw new ArgumentException("Must be greater than or equal to 1.", nameof(page));
+            }
+
+            if (quantity < 1)
+            {
+                throw new ArgumentException("Must be greater than or equal to 1.", nameof(quantity));
+            }
+
+            if (total < 0)
+            {
+                throw new ArgumentException("Must be greater than or equal to 0.", nameof(total));
+            }
 
             this.Items = items ?? throw new ArgumentNullException(nameof(items));
             this.Page = page;

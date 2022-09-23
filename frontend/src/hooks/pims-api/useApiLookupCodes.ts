@@ -1,7 +1,7 @@
 import React from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lookup code endpoints.
@@ -9,11 +9,11 @@ import { useApi } from '.';
  */
 
 export const useApiLookupCodes = () => {
-  const api = useApi();
+  const api = useAxiosApi();
 
   return React.useMemo(
     () => ({
-      getLookupCodes: () => api.get<ILookupCode>(`/lookup/all`),
+      getLookupCodes: () => api.get<ILookupCode[]>(`/lookup/all`),
     }),
     [api],
   );

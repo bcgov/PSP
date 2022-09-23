@@ -1,101 +1,77 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { config, TenantProvider } from 'tenants';
+import { tenantsSlice, useTenants } from 'store/slices/tenants';
+import { config } from 'tenants';
+import { defaultTenant } from 'tenants';
+import { cleanup, mockKeycloak, render } from 'utils/test-utils';
 
 import Header from './Header';
 
 jest.mock('@react-keycloak/web');
-afterEach(() => {
-  cleanup();
-});
+
+jest.mock('store/slices/tenants/useTenants');
+(useTenants as any).mockImplementation(() => ({
+  getSettings: jest.fn(),
+}));
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: 2, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { name: 'roleVal', id: 2, isDisabled: false, type: API.ROLE_TYPES },
   ] as ILookupCode[],
 };
 
 const store = mockStore({
   [lookupCodesSlice.name]: lCodes,
+  [tenantsSlice.name]: { defaultTenant },
 });
 
-describe('Header tests', () => {
-  const OLD_ENV = process.env;
+const setup = () => {
+  const utils = render(<Header />, { store, history });
+  return { ...utils };
+};
 
+const mockAxios = new MockAdapter(axios);
+
+const ORIG_ENV = process.env;
+
+describe('App Header', () => {
   beforeEach(() => {
-    jest.resetModules();
-    process.env = {
-      ...OLD_ENV,
-      REACT_APP_TENANT: 'TEST',
-    };
+    process.env = { ...ORIG_ENV };
+    mockAxios.onGet('/tenants/tenant.json').reply(200, config['MOTI']);
+  });
+
+  afterEach(() => {
+    mockAxios.reset();
+    cleanup();
   });
 
   afterAll(() => {
-    process.env = OLD_ENV;
+    process.env = ORIG_ENV;
   });
 
-  it('Header renders correctly', () => {
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const tree = renderer
-      .create(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+  it('renders correctly', async () => {
+    mockKeycloak({ authenticated: false });
+    const { asFragment } = setup();
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Header renders for MOTI tenant', async () => {
+  it('renders for MOTI tenant', async () => {
     process.env.REACT_APP_TENANT = 'MOTI';
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const header = render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
-    const result = await header.findByText(config['MOTI'].title);
-    expect(result.innerHTML).toBe(config['MOTI'].title);
+    mockKeycloak({ authenticated: false });
+    const { findByText } = setup();
+    expect(await findByText(config['MOTI'].title)).toBeInTheDocument();
   });
 
-  it('Header renders for CITZ tenant', async () => {
-    process.env.REACT_APP_TENANT = 'CITZ';
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const header = render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
-    const result = await header.findByText(config['CITZ'].title);
-    expect(result.innerHTML).toBe(config['CITZ'].title);
-  });
-
-  it('User displays default if no user name information found', () => {
+  it('User displays default if no user name information found', async () => {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         subject: 'test',
@@ -106,21 +82,12 @@ describe('Header tests', () => {
       },
     });
 
-    const { getByText } = render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
-    const name = getByText('default');
-    expect(name).toBeVisible();
+    const { findByText } = setup();
+    expect(await findByText('default')).toBeVisible();
   });
 
   describe('UserProfile user name display', () => {
-    it('Displays keycloak display name if available', () => {
+    it('Displays keycloak display name if available', async () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
@@ -133,20 +100,11 @@ describe('Header tests', () => {
         },
       });
 
-      const { getByText } = render(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      );
-      const name = getByText('display name');
-      expect(name).toBeVisible();
+      const { findByText } = setup();
+      expect(await findByText('display name')).toBeVisible();
     });
 
-    it('Displays first last name if no display name', () => {
+    it('Displays first last name if no display name', async () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
@@ -154,47 +112,13 @@ describe('Header tests', () => {
           userInfo: {
             roles: [],
             firstName: 'firstName',
-            lastName: 'lastName',
+            surname: 'surname',
           },
         },
       });
 
-      const { getByText } = render(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      );
-      const name = getByText('firstName lastName');
-      expect(name).toBeVisible();
-    });
-
-    it('displays appropriate agency', () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          authenticated: true,
-          userInfo: {
-            agencies: ['1'],
-            firstName: 'test',
-            lastName: 'user',
-          },
-        },
-      });
-      const { getByText } = render(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      );
-      fireEvent.click(getByText(/test user/i));
-      expect(getByText(/agencyVal/i)).toBeInTheDocument();
+      const { findByText } = setup();
+      expect(await findByText('firstName surname')).toBeVisible();
     });
   });
 });

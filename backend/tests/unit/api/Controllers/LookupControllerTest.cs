@@ -1,19 +1,19 @@
-using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Pims.Api.Controllers;
-using Pims.Core.Comparers;
-using Pims.Core.Extensions;
-using Pims.Core.Test;
-using Pims.Dal;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using MapsterMapper;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Pims.Api.Controllers;
+using Pims.Core.Extensions;
+using Pims.Core.Test;
+using Pims.Dal;
+using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Lookup;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers
 {
@@ -33,56 +33,30 @@ namespace Pims.Api.Test.Controllers
         #endregion
 
         #region Tests
+
         [Fact]
-        public void GetAgencyCodes()
+        public void GetPropertyClassificationTypeCodes()
         {
             // Arrange
             var helper = new TestHelper();
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
-            var agency = new Entity.Agency
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var propertyClassification = new Entity.PimsPropertyClassificationType
             {
-                Code = "MOH",
-                Name = "Ministry of Health",
-                Description = "The Ministry of Health"
+                Id = "Surplus Active",
             };
-            service.Setup(m => m.Lookup.GetAgencies()).Returns(new[] { agency });
+            service.Setup(m => m.Lookup.GetPropertyClassificationTypes()).Returns(new[] { propertyClassification });
 
             // Act
-            var result = controller.GetAgencies();
+            var result = controller.GetPropertyClassificationTypes();
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.Lookup.AgencyModel[]>(actionResult.Value);
-            Assert.Equal(new[] { mapper.Map<Models.Lookup.AgencyModel>(agency) }, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Lookup.GetAgencies(), Times.Once());
-        }
-
-        [Fact]
-        public void GetPropertyClassificationCodes()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
-
-            var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
-            var propertyClassification = new Entity.PropertyClassification
-            {
-                Name = "Surplus Active",
-            };
-            service.Setup(m => m.Lookup.GetPropertyClassifications()).Returns(new[] { propertyClassification });
-
-            // Act
-            var result = controller.GetPropertyClassifications();
-
-            // Assert
-            var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.LookupModel[]>(actionResult.Value);
-            Assert.Equal(new[] { mapper.Map<Models.LookupModel>(propertyClassification) }, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Lookup.GetPropertyClassifications(), Times.Once());
+            var actualResult = Assert.IsType<Model.LookupModel[]>(actionResult.Value);
+            (new[] { mapper.Map<Model.LookupModel>(propertyClassification) }).Should().BeEquivalentTo(actualResult);
+            service.Verify(m => m.Lookup.GetPropertyClassificationTypes(), Times.Once());
         }
 
         [Fact]
@@ -93,13 +67,13 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
-            var role = new Entity.Role
+            var service = helper.GetService<Mock<IPimsRepository>>();
+            var role = new Entity.PimsRole
             {
                 Id = 1,
-                Key = Guid.NewGuid(),
+                RoleUid = Guid.NewGuid(),
                 Name = "Ministry of Health",
-                Description = "The Ministry of Health"
+                Description = "The Ministry of Health",
             };
             service.Setup(m => m.Lookup.GetRoles()).Returns(new[] { role });
 
@@ -109,7 +83,7 @@ namespace Pims.Api.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.RoleModel[]>(actionResult.Value);
-            Assert.Equal(new[] { mapper.Map<Model.RoleModel>(role) }, actualResult, new DeepPropertyCompare());
+            (new[] { mapper.Map<Model.RoleModel>(role) }).Should().BeEquivalentTo(actualResult);
             service.Verify(m => m.Lookup.GetRoles(), Times.Once());
         }
 
@@ -121,30 +95,37 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
-            var role = EntityHelper.CreateRole("admin");
-            service.Setup(m => m.Lookup.GetRoles()).Returns(new[] { role });
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
-            var agency = EntityHelper.CreateAgency();
-            service.Setup(m => m.Lookup.GetAgencies()).Returns(new[] { agency });
+            var areaUnitTypes = EntityHelper.CreatePropertyAreaUnitType("area");
+            service.Setup(m => m.Lookup.GetPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
 
-            var propertyClassification = EntityHelper.CreatePropertyClassification("class", true);
-            service.Setup(m => m.Lookup.GetPropertyClassifications()).Returns(new[] { propertyClassification });
+            var classificationTypes = EntityHelper.CreatePropertyClassificationType("classification");
+            service.Setup(m => m.Lookup.GetPropertyClassificationTypes()).Returns(new[] { classificationTypes });
 
-            var province = EntityHelper.CreateProvince(1, "BC", "British Columbia");
-            service.Setup(m => m.Lookup.GetProvinces()).Returns(new[] { province });
+            var countries = EntityHelper.CreateCountry(1, "CAN");
+            service.Setup(m => m.Lookup.GetCountries()).Returns(new[] { countries });
 
-            var administrativeArea = EntityHelper.CreateAdministrativeArea("VIC", "Victoria");
-            service.Setup(m => m.Lookup.GetAdministrativeAreas()).Returns(new[] { administrativeArea });
+            var districts = EntityHelper.CreateDistrict(1, "district");
+            service.Setup(m => m.Lookup.GetDistricts()).Returns(new[] { districts });
 
-            var buildingConstructionType = EntityHelper.CreateBuildingConstructionType("type");
-            service.Setup(m => m.Lookup.GetBuildingConstructionTypes()).Returns(new[] { buildingConstructionType });
+            var organizationTypes = EntityHelper.CreateOrganizationType("orgtype");
+            service.Setup(m => m.Lookup.GetOrganizationTypes()).Returns(new[] { organizationTypes });
 
-            var buildingPredominateUse = EntityHelper.CreateBuildingPredominateUse("use");
-            service.Setup(m => m.Lookup.GetBuildingPredominateUses()).Returns(new[] { buildingPredominateUse });
+            var propertyTypes = EntityHelper.CreatePropertyType("property");
+            service.Setup(m => m.Lookup.GetPropertyTypes()).Returns(new[] { propertyTypes });
 
-            var buildingOccupantType = EntityHelper.CreateBuildingOccupantType("occupant");
-            service.Setup(m => m.Lookup.GetBuildingOccupantTypes()).Returns(new[] { buildingOccupantType });
+            var provinces = EntityHelper.CreateProvince(1, "BC");
+            service.Setup(m => m.Lookup.GetProvinces()).Returns(new[] { provinces });
+
+            var regions = EntityHelper.CreateRegion(1, "region");
+            service.Setup(m => m.Lookup.GetRegions()).Returns(new[] { regions });
+
+            var roleCodes = EntityHelper.CreateRole("admin");
+            service.Setup(m => m.Lookup.GetRoles()).Returns(new[] { roleCodes });
+
+            var tenureTypes = EntityHelper.CreatePropertyTenureType("tenure");
+            service.Setup(m => m.Lookup.GetPropertyTenureTypes()).Returns(new[] { tenureTypes });
 
             // Act
             var result = controller.GetAll();
@@ -152,14 +133,16 @@ namespace Pims.Api.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsAssignableFrom<IEnumerable<object>>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult.First(), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.Lookup.AgencyModel>(agency), actualResult.Next(1), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.LookupModel>(propertyClassification), actualResult.Next(2), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.LookupModel>(province), actualResult.Next(3), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.LookupModel>(administrativeArea), actualResult.Next(4), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.LookupModel>(buildingConstructionType), actualResult.Next(5), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.LookupModel>(buildingPredominateUse), actualResult.Next(6), new ShallowPropertyCompare());
-            Assert.Equal(mapper.Map<Models.LookupModel>(buildingOccupantType), actualResult.Next(7), new ShallowPropertyCompare());
+            mapper.Map<Model.LookupModel>(areaUnitTypes).Should().BeEquivalentTo(actualResult.Next(0));
+            mapper.Map<Model.LookupModel>(classificationTypes).Should().BeEquivalentTo(actualResult.Next(1));
+            mapper.Map<Model.LookupModel>(countries).Should().BeEquivalentTo(actualResult.Next(2));
+            mapper.Map<Model.LookupModel>(districts).Should().BeEquivalentTo(actualResult.Next(3));
+            mapper.Map<Model.LookupModel>(organizationTypes).Should().BeEquivalentTo(actualResult.Next(4));
+            mapper.Map<Model.LookupModel>(propertyTypes).Should().BeEquivalentTo(actualResult.Next(5));
+            mapper.Map<Model.LookupModel>(provinces).Should().BeEquivalentTo(actualResult.Next(6));
+            mapper.Map<Model.LookupModel<short>>(regions).Should().BeEquivalentTo(actualResult.Next(7));
+            mapper.Map<Model.RoleModel>(roleCodes).Should().BeEquivalentTo(actualResult.Next(8));
+            mapper.Map<Model.LookupModel>(tenureTypes).Should().BeEquivalentTo(actualResult.Next(9));
         }
         #endregion
     }

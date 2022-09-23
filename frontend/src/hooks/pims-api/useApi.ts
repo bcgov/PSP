@@ -6,7 +6,7 @@ import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
  * Common hook to make requests to the PIMS APi.
  * @returns CustomAxios object setup for the PIMS API.
  */
-export const useApi = (
+export const useAxiosApi = (
   axiosOptions: {
     lifecycleToasts?: LifecycleToasts;
     selector?: Function;
@@ -20,4 +20,4 @@ export const useApi = (
   );
 };
 
-export default useApi;
+export default useAxiosApi;

@@ -1,11 +1,145 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty Header CITZ Login Loading 1`] = `
+.c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  border: none;
+}
+
+.c2.btn.btn-secondary {
+  background: none;
+}
+
+.c2.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  background: none;
+}
+
+.c2.btn.btn-light {
+  border: none;
+}
+
+.c2.btn.btn-dark {
+  border: none;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
 .c1 {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 999;
+  top: 0;
   left: 0;
   background-color: rgba(0,0,0,0.4);
   display: -webkit-box;
@@ -27,21 +161,34 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 }
 
 .c0 {
-  height: calc(100vh - undefined - undefined);
+  position: relative;
   background-image: url("/tenants/CITZ/background-image.png");
   background-size: cover;
-  background-position: center top;
+  background-position: center;
   overflow: auto;
+  grid-area: content;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
 }
 
 .c0 .unauth {
-  font-size: 24px;
-  margin: 91px auto;
+  font-size: 2.4rem;
+  margin: 9.1rem auto;
   background-color: rgba(250,250,250,0.9);
-  padding-top: 15px;
-  padding-bottom: 20px;
-  max-width: 750px;
-  border-radius: 4px;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  max-width: 75rem;
+  border-radius: 0.4rem;
 }
 
 .c0 .unauth .sign-in {
@@ -52,44 +199,44 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 }
 
 .c0 .unauth .block {
-  padding: 20px 0;
-  max-width: 650px;
-  max-height: 475px;
+  padding: 2rem 0;
+  max-width: 65rem;
+  max-height: 47.5rem;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   min-width: 90%;
 }
 
 .c0 .unauth h1 {
-  padding-bottom: 18px;
+  padding-bottom: 1.8rem;
   font-family: 'BCSans',Fallback,sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 2.4rem;
   font-style: italic;
 }
 
 .c0 .unauth h6 {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .c0 .unauth p {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-family: 'BCSans',Fallback,sans-serif;
   line-height: 130%;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 2px;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-bottom: 0.2rem;
 }
 
 .c0 .unauth .btn {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .c0 .unauth .btn-link {
-  margin-left: 30px;
-  margin-top: 10px;
-  font-size: 12px;
+  margin-left: 3rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
 }
 
 .c0 .unauth .btn-link:focus,
@@ -98,35 +245,35 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 }
 
 .c0 .unauth .bceid {
-  margin-bottom: -30px;
+  margin-bottom: -3rem;
 }
 
 .c0 .unauth .jumbotron {
   background-color: white;
-  padding: 20px;
-  margin-left: 40px;
-  margin-right: 40px;
+  padding: 2rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
   width: 90%;
   -webkit-box-pack: left;
   -webkit-justify-content: left;
   -ms-flex-pack: left;
   justify-content: left;
-  border: 1px;
+  border: 0.1rem;
   border-style: solid;
   border-color: #707070;
   text-align: left;
 }
 
 .c0 .unauth .jumbotron p {
-  margin: 10px;
+  margin: 1rem;
 }
 
 .c0 .unauth .blockText {
-  margin: 0 auto 38px auto;
+  margin: 0 auto 3.8rem auto;
 }
 
 .c0 .unauth .or {
-  margin: 20px auto;
+  margin: 2rem auto;
 }
 
 .c0 .unauth .border-dark {
@@ -135,7 +282,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 }
 
 .c0 .unauth .pims-logo {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 <div
@@ -173,21 +320,22 @@ exports[`Empty Header CITZ Login Loading 1`] = `
           PIMS enables you to search properties owned by the Government of British Columbia
         </h6>
         <p>
-          The data provided can assist your agency in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.
+          The data provided can assist your organization in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.
         </p>
         <button
-          class="btn btn-primary"
+          class="c2 Button Button--disabled btn btn-primary"
           disabled=""
           type="button"
         >
-          Sign In
+          <div
+            class="Button__value"
+          >
+            Sign In
+          </div>
         </button>
         <p>
-          Sign into PIMS with your government issued IDIR or with your Business BCeID.
+          Sign into PIMS with your government issued IDIR
         </p>
-        <div
-          class="row"
-        />
       </div>
       <div
         class="col-md-3 col-1"
@@ -198,11 +346,145 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 `;
 
 exports[`Empty Header MOTI Login Loading 1`] = `
+.c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  border: none;
+}
+
+.c2.btn.btn-secondary {
+  background: none;
+}
+
+.c2.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  background: none;
+}
+
+.c2.btn.btn-light {
+  border: none;
+}
+
+.c2.btn.btn-dark {
+  border: none;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  padding: 0;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
 .c1 {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 999;
+  top: 0;
   left: 0;
   background-color: rgba(0,0,0,0.4);
   display: -webkit-box;
@@ -224,21 +506,34 @@ exports[`Empty Header MOTI Login Loading 1`] = `
 }
 
 .c0 {
-  height: calc(100vh - undefined - undefined);
+  position: relative;
   background-image: url("/tenants/MOTI/background-image.jpg");
   background-size: cover;
-  background-position: center top;
+  background-position: center;
   overflow: auto;
+  grid-area: content;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
 }
 
 .c0 .unauth {
-  font-size: 24px;
-  margin: 91px auto;
+  font-size: 2.4rem;
+  margin: 9.1rem auto;
   background-color: rgba(250,250,250,0.9);
-  padding-top: 15px;
-  padding-bottom: 20px;
-  max-width: 750px;
-  border-radius: 4px;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  max-width: 75rem;
+  border-radius: 0.4rem;
 }
 
 .c0 .unauth .sign-in {
@@ -249,44 +544,44 @@ exports[`Empty Header MOTI Login Loading 1`] = `
 }
 
 .c0 .unauth .block {
-  padding: 20px 0;
-  max-width: 650px;
-  max-height: 475px;
+  padding: 2rem 0;
+  max-width: 65rem;
+  max-height: 47.5rem;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   min-width: 90%;
 }
 
 .c0 .unauth h1 {
-  padding-bottom: 18px;
+  padding-bottom: 1.8rem;
   font-family: 'BCSans',Fallback,sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 2.4rem;
   font-style: italic;
 }
 
 .c0 .unauth h6 {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .c0 .unauth p {
-  font-size: 12px;
+  font-size: 1.2rem;
   font-family: 'BCSans',Fallback,sans-serif;
   line-height: 130%;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 2px;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-bottom: 0.2rem;
 }
 
 .c0 .unauth .btn {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .c0 .unauth .btn-link {
-  margin-left: 30px;
-  margin-top: 10px;
-  font-size: 12px;
+  margin-left: 3rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
 }
 
 .c0 .unauth .btn-link:focus,
@@ -295,35 +590,35 @@ exports[`Empty Header MOTI Login Loading 1`] = `
 }
 
 .c0 .unauth .bceid {
-  margin-bottom: -30px;
+  margin-bottom: -3rem;
 }
 
 .c0 .unauth .jumbotron {
   background-color: white;
-  padding: 20px;
-  margin-left: 40px;
-  margin-right: 40px;
+  padding: 2rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
   width: 90%;
   -webkit-box-pack: left;
   -webkit-justify-content: left;
   -ms-flex-pack: left;
   justify-content: left;
-  border: 1px;
+  border: 0.1rem;
   border-style: solid;
   border-color: #707070;
   text-align: left;
 }
 
 .c0 .unauth .jumbotron p {
-  margin: 10px;
+  margin: 1rem;
 }
 
 .c0 .unauth .blockText {
-  margin: 0 auto 38px auto;
+  margin: 0 auto 3.8rem auto;
 }
 
 .c0 .unauth .or {
-  margin: 20px auto;
+  margin: 2rem auto;
 }
 
 .c0 .unauth .border-dark {
@@ -332,7 +627,7 @@ exports[`Empty Header MOTI Login Loading 1`] = `
 }
 
 .c0 .unauth .pims-logo {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 <div
@@ -373,18 +668,19 @@ exports[`Empty Header MOTI Login Loading 1`] = `
           WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.
         </p>
         <button
-          class="btn btn-primary"
+          class="c2 Button Button--disabled btn btn-primary"
           disabled=""
           type="button"
         >
-          Sign In
+          <div
+            class="Button__value"
+          >
+            Sign In
+          </div>
         </button>
         <p>
-          Sign into PIMS with your government issued IDIR or with your Business BCeID.
+          Sign into PIMS with your government issued IDIR
         </p>
-        <div
-          class="row"
-        />
       </div>
       <div
         class="col-md-3 col-1"

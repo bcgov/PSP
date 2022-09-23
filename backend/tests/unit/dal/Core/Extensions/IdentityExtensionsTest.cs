@@ -1,10 +1,10 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Core.Extensions
             var id = Guid.NewGuid();
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, id.ToString()),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -54,7 +54,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, "")
+                new Claim(ClaimTypes.NameIdentifier, string.Empty),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -71,7 +71,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, " ")
+                new Claim(ClaimTypes.NameIdentifier, " "),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -83,171 +83,171 @@ namespace Pims.Api.Test.Core.Extensions
         }
         #endregion
 
-        #region GetAgencies
+        #region GetOrganizations
         [Fact]
-        public void GetAgencies_Empty()
+        public void GetOrganizations_Empty()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "")
+                new Claim("organizations", string.Empty),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetAgencies_Whitespace()
+        public void GetOrganizations_Whitespace()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", " ")
+                new Claim("organizations", " "),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetAgencies()
+        public void GetOrganizations()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1,2")
+                new Claim("organizations", "1,2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgencies_WithSeparator()
+        public void GetOrganizations_WithSeparator()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1;2")
+                new Claim("organizations", "1;2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies(";");
+            var organizations = principal.GetOrganizations(";");
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgencies_NoUser()
+        public void GetOrganizations_NoUser()
         {
             // Arrange
             var principal = new ClaimsPrincipal();
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
         #endregion
 
-        #region GetAgenciesAsNullable
+        #region GetOrganizationsAsNullable
         [Fact]
-        public void GetAgenciesAsNullable_Empty()
+        public void GetOrganizationsAsNullable_Empty()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "")
+                new Claim("organizations", string.Empty),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Count().Should().Be(1);
-            agencies.First().Should().BeNull();
+            organizations.Count().Should().Be(1);
+            organizations.First().Should().BeNull();
         }
 
         [Fact]
-        public void GetAgenciesAsNullable_Whitespace()
+        public void GetOrganizationsAsNullable_Whitespace()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", " ")
+                new Claim("organizations", " "),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Count().Should().Be(1);
-            agencies.First().Should().BeNull();
+            organizations.Count().Should().Be(1);
+            organizations.First().Should().BeNull();
         }
 
         [Fact]
-        public void GetAgenciesAsNullable()
+        public void GetOrganizationsAsNullable()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1,2")
+                new Claim("organizations", "1,2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgenciesAsNullable_WithSeparator()
+        public void GetOrganizationsAsNullable_WithSeparator()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1;2")
+                new Claim("organizations", "1;2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable(";");
+            var organizations = principal.GetOrganizationsAsNullable(";");
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgenciesAsNullable_NoUser()
+        public void GetOrganizationsAsNullable_NoUser()
         {
             // Arrange
             var principal = new ClaimsPrincipal();
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
         #endregion
 
@@ -258,7 +258,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("username", "test")
+                new Claim("username", "test"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -276,7 +276,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim("username", "test1"),
-                new Claim("username", "test2")
+                new Claim("username", "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -308,7 +308,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("name", "test")
+                new Claim("name", "test"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -326,7 +326,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim("name", "test1"),
-                new Claim("name", "test2")
+                new Claim("name", "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -358,7 +358,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.GivenName, "test")
+                new Claim(ClaimTypes.GivenName, "test"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -376,7 +376,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.GivenName, "test1"),
-                new Claim(ClaimTypes.GivenName, "test2")
+                new Claim(ClaimTypes.GivenName, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -408,7 +408,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Surname, "test")
+                new Claim(ClaimTypes.Surname, "test"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -426,7 +426,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Surname, "test1"),
-                new Claim(ClaimTypes.Surname, "test2")
+                new Claim(ClaimTypes.Surname, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -458,7 +458,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Email, "test")
+                new Claim(ClaimTypes.Email, "test"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -476,7 +476,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Email, "test1"),
-                new Claim(ClaimTypes.Email, "test2")
+                new Claim(ClaimTypes.Email, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -545,7 +545,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, "test1"),
-                new Claim(ClaimTypes.Role, "test2")
+                new Claim(ClaimTypes.Role, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -563,7 +563,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, "test1"),
-                new Claim(ClaimTypes.Role, "test2")
+                new Claim(ClaimTypes.Role, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -581,7 +581,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, "test1"),
-                new Claim(ClaimTypes.Role, "test2")
+                new Claim(ClaimTypes.Role, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -599,7 +599,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, "test1"),
-                new Claim(ClaimTypes.Role, "test2")
+                new Claim(ClaimTypes.Role, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -654,7 +654,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, "test1"),
-                new Claim(ClaimTypes.Role, "test2")
+                new Claim(ClaimTypes.Role, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
@@ -672,7 +672,7 @@ namespace Pims.Api.Test.Core.Extensions
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, "test1"),
-                new Claim(ClaimTypes.Role, "test2")
+                new Claim(ClaimTypes.Role, "test2"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 

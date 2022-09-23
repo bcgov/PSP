@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { IApiHealth, IApiVersion, IHealthLive, IHealthReady, useApi } from '.';
+import { IApiHealth, IApiVersion, IHealthLive, IHealthReady, useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the health endpoints.
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiHealth = () => {
-  const api = useApi();
+  const api = useAxiosApi();
 
   return React.useMemo(
     () =>

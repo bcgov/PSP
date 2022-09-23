@@ -23,8 +23,8 @@ namespace Pims.Ltsa.Models
         /// Initializes a new instance of the <see cref="TitleIdentifier" /> class.
         /// </summary>
         /// <param name="titleNumber">In practice, the same value as the Application number that raised the Title. (required).</param>
-        /// <param name="landLandDistrict">landLandDistrict.</param>
-        public TitleIdentifier(string titleNumber = default, LandTitleDistrict landLandDistrict = default)
+        /// <param name="landTitleDistrict">landLandDistrict.</param>
+        public TitleIdentifier(string titleNumber = default, string landTitleDistrict = default)
         {
             // to ensure "titleNumber" is required (not null)
             if (titleNumber == null)
@@ -35,7 +35,7 @@ namespace Pims.Ltsa.Models
             {
                 this.TitleNumber = titleNumber;
             }
-            this.LandLandDistrict = landLandDistrict;
+            this.LandTitleDistrict = landTitleDistrict;
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Pims.Ltsa.Models
         public string TitleNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets LandLandDistrict
+        /// Gets or Sets landTitleDistrict
         /// </summary>
-        [DataMember(Name = "landLandDistrict", EmitDefaultValue = false)]
-        public LandTitleDistrict LandLandDistrict { get; set; }
+        [DataMember(Name = "landTitleDistrict", EmitDefaultValue = false)]
+        public string LandTitleDistrict { get; set; }
     }
 }

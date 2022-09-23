@@ -1,84 +1,70 @@
-import variables from '_variables.module.scss';
 import profileUrl from 'assets/images/profile.svg';
-import * as API from 'constants/API';
+import variables from 'assets/scss/_variables.module.scss';
 import { useConfiguration } from 'hooks/useConfiguration';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 
 /** the styling for the dropdown menu that appears after clicking the user's name */
 const StyleDropDown = styled(NavDropdown)`
-  font-size: 14px;
+  font-size: 1.4rem;
   .dropdown-menu {
-    width: 300px;
-    padding: 0px;
+    width: 30rem;
+    padding: 0rem;
   }
   .nav-link {
     color: #fff;
-    padding: 1px;
+    padding: 0.1rem;
   }
   .dropdown-item {
     background-color: ${variables.primaryLightColor};
-    border-top: 2px solid ${variables.accentColor};
+    border-top: 0.2rem solid ${variables.accentColor};
   }
 `;
 
 /** shaded box the users system roles will be displayed in */
 const RolesBox = styled.div`
   background-color: ${variables.filterBackgroundColor};
-  margin: 5px;
+  margin: 0.5rem;
 `;
 
 /** the text contained in the logout footer  */
 const LogoutText = styled.p`
   color: #fff;
-  margin-top: 0.5rem;
-  margin-left: 120px;
+  margin-top: 0.8rem;
+  margin-left: 12rem;
 `;
 
 /** the styling for the avatar next to user's name */
 const ProfileAvatar = styled(Image)`
-  height: 30px;
-  width: 30px;
+  height: 3rem;
+  width: 3rem;
 `;
 
 /** the styling for the logout icon in the logout footer */
 const LogoutButton = styled(FaSignOutAlt)`
-  margin-bottom: 2px;
-  margin-left: 5px;
+  margin-bottom: 0.2rem;
+  margin-left: 0.5rem;
 `;
 
-/** Component that allows the user to logout, and gives information on current user's agency/roles */
+/** Component that allows the user to logout, and gives information on current user's organization/roles */
 export const UserProfile: React.FC = () => {
   const keycloak = useKeycloakWrapper();
   const displayName =
     keycloak.displayName ??
-    (!!keycloak.firstName && !!keycloak.lastName
-      ? `${keycloak.firstName} ${keycloak.lastName}`
+    (!!keycloak.firstName && !!keycloak.surname
+      ? `${keycloak.firstName} ${keycloak.surname}`
       : 'default');
   const configuration = useConfiguration();
-  const lookupCodes = useLookupCodeHelpers();
-  const agencyOptions = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
   const roles = keycloak.roles.join(', ');
 
   return (
     <>
       <ProfileAvatar src={profileUrl} rounded />
       <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
-        <p style={{ margin: 5 }}>
-          <b>
-            {
-              agencyOptions.find(
-                (x: ILookupCode) => x.id.toString() === keycloak.agencyId?.toString(),
-              )?.name
-            }
-          </b>
-        </p>
         {!!keycloak.roles.length && (
           <RolesBox>
             <p style={{ margin: 5 }}>
@@ -92,7 +78,7 @@ export const UserProfile: React.FC = () => {
         )}
         <NavDropdown.Item
           onClick={() => {
-            keycloak.obj!.logout({ redirectUri: `${configuration.baseUrl}/logout` });
+            keycloak.obj.logout({ redirectUri: `${configuration.baseUrl}/logout` });
           }}
         >
           <LogoutText>

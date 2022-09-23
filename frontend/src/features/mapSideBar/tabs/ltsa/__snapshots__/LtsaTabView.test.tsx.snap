@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LtsaTabView component renders as expected when provided valid ltsa data object and requested on datetime 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+<div
+    class="c0"
+  >
+    <b>
+      This property does not have a valid PID.
+      <br />
+      <br />
+       Only properties that are associated to a valid PID can display corresponding data from LTSA.
+    </b>
+  </div>
+</DocumentFragment>
+`;

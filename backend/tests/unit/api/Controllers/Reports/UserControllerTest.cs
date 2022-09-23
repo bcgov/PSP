@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -5,12 +8,9 @@ using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Admin;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -27,27 +27,15 @@ namespace Pims.Api.Test.Controllers.Reports
         public readonly static IEnumerable<object[]> AllPropertiesFilters = new List<object[]>()
         {
             new object [] { new UserFilter(1, 100) },
-            new object [] { new UserFilter(1, 100) { Username = "username" } },
-            new object [] { new UserFilter(1, 100) { DisplayName = "firstname, lastname" } },
-            new object [] { new UserFilter(1, 100) { FirstName = "firstname" } },
-            new object [] { new UserFilter(1, 100) { LastName = "lastname" } },
+            new object [] { new UserFilter(1, 100) { BusinessIdentifierValue = "businessIdentifier" } },
             new object [] { new UserFilter(1, 100) { Email = "email" } },
-            new object [] { new UserFilter(1, 100) { IsDisabled = false } },
-            new object [] { new UserFilter(1, 100) { Position = "position" } },
-            new object [] { new UserFilter(1, 100) { Role = "role" } },
         };
 
         public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/users?Username=test") },
-            new object [] { new Uri("http://host/api/users?DisplayName=test") },
-            new object [] { new Uri("http://host/api/users?FirstName=test") },
-            new object [] { new Uri("http://host/api/users?LastName=test") },
-            new object [] { new Uri("http://host/api/users?LastName=test") },
             new object [] { new Uri("http://host/api/users?Email=test") },
             new object [] { new Uri("http://host/api/users?IsDisabled=false") },
-            new object [] { new Uri("http://host/api/users?Position=test") },
-            new object [] { new Uri("http://host/api/users?Role=test") },
         };
         #endregion
 
@@ -72,12 +60,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
-            var user = new Entity.User(Guid.NewGuid(), "username", "email", "firstname", "lastname");
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -102,12 +90,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_CSV);
 
-            var user = new Entity.User(Guid.NewGuid(), "username", "email", "firstname", "lastname");
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users);
+            var page = new Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -133,12 +121,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
 
-            var user = new Entity.User(Guid.NewGuid(), "username", "email", "firstname", "lastname");
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -165,12 +153,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCEL);
 
-            var user = new Entity.User(Guid.NewGuid(), "username", "email", "firstname", "lastname");
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users);
+            var page = new Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -197,12 +185,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
-            var user = new Entity.User(Guid.NewGuid(), "username", "email", "firstname", "lastname");
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -229,12 +217,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
 
-            var user = new Entity.User(Guid.NewGuid(), "username", "email", "firstname", "lastname");
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users);
+            var page = new Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -258,7 +246,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             // Act
             // Assert
@@ -276,7 +264,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             // Act
             // Assert
@@ -294,7 +282,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var filter = new UserFilter() { };
 
             // Act
@@ -313,7 +301,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
             var filter = new UserFilter() { };
