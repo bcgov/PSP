@@ -21,6 +21,8 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPid(int pid);
 
+        PimsProperty GetByPin(int pin);
+
         PimsProperty GetAssociations(long id);
 
         PimsProperty Update(PimsProperty property);
