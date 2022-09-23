@@ -70,10 +70,10 @@ describe('Activity List View', () => {
   });
 
   it('should not display the view icon/link unless the user has the correct claim', async () => {
-    const { getByTitle, queryAllByTitle, queryByText } = setup();
+    const { getByTitle, queryAllByTitle, queryAllByText } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const icon = queryAllByTitle('View Activity');
-    const link = queryByText('Survey');
+    const link = queryAllByText('Survey')[0];
     expect(icon).toHaveLength(0);
     expect(link).not.toHaveClass('btn-link');
   });
@@ -91,11 +91,11 @@ describe('Activity List View', () => {
   });
 
   it('should allow an activity to be viewed by clicking the link', async () => {
-    const { getByTitle, getByText } = setup({
+    const { getByTitle, getAllByText } = setup({
       claims: [Claims.ACTIVITY_VIEW, Claims.ACTIVITY_DELETE],
     });
     await waitForElementToBeRemoved(getByTitle('table-loading'));
-    const link = getByText('Survey');
+    const link = getAllByText('Survey')[1];
 
     userEvent.click(link);
 

@@ -303,6 +303,18 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                 >
                   Closed
                 </option>
+                <option
+                  class="option"
+                  value="DRAFT"
+                >
+                  Draft
+                </option>
+                <option
+                  class="option"
+                  value="HOLD"
+                >
+                  Hold
+                </option>
               </select>
             </div>
           </div>
