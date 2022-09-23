@@ -1,12 +1,18 @@
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
-import { FieldArray, useFormikContext } from 'formik';
+import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
 import { PropertyForm } from '../../shared/models';
 import { AcquisitionForm } from './models';
 
-export const AcquisitionProperties: React.FunctionComponent = () => {
+interface AcquisitionPropertiesProp {
+  formikProps: FormikProps<AcquisitionForm>;
+}
+
+export const AcquisitionProperties: React.FunctionComponent<AcquisitionPropertiesProp> = ({
+  formikProps,
+}) => {
   const { values } = useFormikContext<AcquisitionForm>();
 
   return (
@@ -24,6 +30,9 @@ export const AcquisitionProperties: React.FunctionComponent = () => {
                 onSelectedProperty={(newProperty: IMapProperty) => {
                   const formProperty = PropertyForm.fromMapProperty(newProperty);
                   push(formProperty);
+                  if (values.properties?.length === 0) {
+                    formikProps.setFieldValue(`region`, formProperty.region);
+                  }
                 }}
                 existingProperties={values.properties}
                 onRemoveProperty={remove}
