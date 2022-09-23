@@ -44,7 +44,7 @@ export const ContactInput: React.FC<ContactInputProps> = ({
   const contactInfo: IContactSearchResult | undefined = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
 
-  var text = '';
+  var text = 'Select from contacts';
 
   if (contactInfo !== undefined) {
     if (contactInfo.personId !== undefined) {
@@ -101,9 +101,8 @@ const StyledDiv = styled.div`
   border-radius: 0.3rem;
   padding: 6px;
   min-height: 2.5em;
-
   background-image: none;
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  color: #495057;
   border: #606060 solid 0.1rem;
 
   &.is-invalid {
