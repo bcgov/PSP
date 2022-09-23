@@ -81,7 +81,6 @@ export const ActivityForm = ({
         }
       }}
       onSubmit={async (values, formikHelpers) => {
-        values.activityStatusTypeCode = toTypeCode(values.status);
         const updatedActivity = await onSave(values.toApi());
         if (!!updatedActivity) {
           formikHelpers.resetForm({
