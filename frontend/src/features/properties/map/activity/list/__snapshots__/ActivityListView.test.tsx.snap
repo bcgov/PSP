@@ -330,6 +330,30 @@ exports[`Activity List View renders as expected 1`] = `
                 >
                   All activity types
                 </option>
+                <option
+                  class="option"
+                  value="GENERAL"
+                >
+                  General
+                </option>
+                <option
+                  class="option"
+                  value="GENLTR"
+                >
+                  Generate Letter
+                </option>
+                <option
+                  class="option"
+                  value="SITEVIS"
+                >
+                  Site Visit
+                </option>
+                <option
+                  class="option"
+                  value="SURVEY"
+                >
+                  Survey
+                </option>
               </select>
             </div>
           </div>
@@ -349,6 +373,30 @@ exports[`Activity List View renders as expected 1`] = `
                   value=""
                 >
                   All statuses
+                </option>
+                <option
+                  class="option"
+                  value="NOSTART"
+                >
+                  Not Started
+                </option>
+                <option
+                  class="option"
+                  value="INPROG"
+                >
+                  In Progress
+                </option>
+                <option
+                  class="option"
+                  value="COMPLETE"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  value="CANCELLED"
+                >
+                  Cancelled
                 </option>
               </select>
             </div>

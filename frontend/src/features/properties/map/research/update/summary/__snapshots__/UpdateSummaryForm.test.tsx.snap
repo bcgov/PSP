@@ -361,6 +361,12 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
                 </option>
                 <option
                   class="option"
+                  value="ANY"
+                >
+                  Any status
+                </option>
+                <option
+                  class="option"
                   value="ARCHIVED"
                 >
                   Archived
