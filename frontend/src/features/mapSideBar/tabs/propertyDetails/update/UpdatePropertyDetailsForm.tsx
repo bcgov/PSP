@@ -177,7 +177,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
           )}
         </SectionField>
         {isHighwayRoad && (
-          <SectionField label="Highway / Road">
+          <SectionField label="Highway / Road established by">
             <Multiselect
               field="roadTypes"
               displayValue="typeDescription"
@@ -188,7 +188,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
           </SectionField>
         )}
         {isAdjacentLand && (
-          <SectionField label="Adjacent land">
+          <SectionField label="Adjacent Land type">
             <Multiselect
               field="adjacentLands"
               displayValue="typeDescription"
