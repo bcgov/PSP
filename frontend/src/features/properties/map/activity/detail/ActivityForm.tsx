@@ -5,7 +5,6 @@ import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_Activity } from 'models/api/Activity';
 import * as React from 'react';
-import { toTypeCode } from 'utils/formUtils';
 
 import { Activity, ActivityFile } from './ActivityContainer';
 import { ActivityView } from './ActivityView';
