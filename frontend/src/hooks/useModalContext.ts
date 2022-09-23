@@ -1,19 +1,28 @@
 import { useEffect } from 'react';
 import { useContext } from 'react';
 
-import { ModalProps } from './../components/common/GenericModal';
+import { ModalContent } from './../components/common/GenericModal';
 import { ModalContext } from './../contexts/modalContext';
-export const useModalContext = (newModalProps?: ModalProps) => {
-  const { modalProps, setModalProps, setDisplayModal } = useContext(ModalContext);
+
+export const useModalContext = (newModalContent?: ModalContent, isVisible?: boolean) => {
+  const { modalProps, setModalContent, setDisplayModal } = useContext(ModalContext);
   // if the modal props were passed in to the hook as a param, set them during hook initialization only. Ignore all future updates to newModalProps.
   useEffect(() => {
-    if (newModalProps !== undefined) {
-      setModalProps({ ...newModalProps });
+    if (newModalContent !== undefined) {
+      setModalContent({ ...newModalContent });
+    }
+    if (isVisible !== undefined) {
+      setDisplayModal(isVisible);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { modalProps, setModalProps, displayModal: modalProps?.display, setDisplayModal };
+  return {
+    modalProps,
+    setModalContent,
+    displayModal: modalProps?.display,
+    setDisplayModal,
+  };
 };
 
 export const getCancelModalProps = () => ({

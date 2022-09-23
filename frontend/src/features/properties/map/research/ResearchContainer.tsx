@@ -4,8 +4,8 @@ import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
+import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
 import { getResearchPropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -161,7 +161,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         onClose={props.onClose}
         showCloseButton
       >
-        <ResearchFileLayout
+        <FileLayout
           leftComponent={
             <>
               {selectedMenuIndex === 0 &&
@@ -212,7 +212,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
               </>
             </StyledFormWrapper>
           }
-        ></ResearchFileLayout>
+        ></FileLayout>
       </MapSideBarLayout>
     );
   }

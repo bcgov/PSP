@@ -90,6 +90,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -132,6 +133,22 @@ exports[`ResearchContainer component renders as expected 1`] = `
 
 .c11.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c9 {
+  height: 100%;
+}
+
+.c10 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c15 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
 }
 
 .c18 {
@@ -193,22 +210,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
 .c1 {
   font-size: 30px;
   cursor: pointer;
-}
-
-.c9 {
-  height: 100%;
-}
-
-.c10 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c15 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
 }
 
 .c6 {
@@ -722,7 +723,7 @@ exports[`ResearchContainer component renders as expected 1`] = `
                   <a
                     aria-selected="true"
                     class="nav-item nav-link active"
-                    data-rb-event-key="researchDetails"
+                    data-rb-event-key="fileDetails"
                     href="#"
                     role="tab"
                   >
