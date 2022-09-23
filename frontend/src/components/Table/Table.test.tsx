@@ -1,12 +1,4 @@
-import React from 'react';
-import {
-  fillInput,
-  getByRole,
-  getByTestId,
-  render,
-  RenderOptions,
-  userEvent,
-} from 'utils/test-utils';
+import { render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
