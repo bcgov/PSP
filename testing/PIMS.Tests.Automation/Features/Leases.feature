@@ -6,5 +6,5 @@ This feature tests all test cases related to Leases and Licenses.
 #	Given I log in with IDIR credentials sutairak
 #	Then I am on path /login
 
-Scenario: Create Minimum Lease and License with One Tenant
-	Given I create a new Lease with minimum requirements
+Scenario: Create Maximum Lease and License
+	Given I create a new Lease with all fields

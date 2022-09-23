@@ -13,7 +13,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public virtual string CurrentLocation => new Uri(webDriver.Url).AbsolutePath;
 
-        public virtual void Wait(int milliseconds = 500) => Thread.Sleep(milliseconds);
+        public virtual void Wait(int milliseconds = 700) => Thread.Sleep(milliseconds);
 
         protected void ButtonElement(string btnContent)
         {
@@ -49,6 +49,7 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
+
         protected void ChooseRandomOption(IWebElement parentElement, string parentElementName, int fromOption)
         {
             Random random = new Random();
@@ -69,6 +70,18 @@ namespace PIMS.Tests.Automation.PageObjects
             var js = (IJavaScriptExecutor)webDriver;
 
             var selectedRadioBttnLocator = "//select[@id='"+ parentElementName +"']/option[contains(text(),'"+ option +"')]";
+            var selectedOption = webDriver.FindElement(By.XPath(selectedRadioBttnLocator));
+
+            js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+            Wait();
+            selectedOption.Click();
+        }
+
+        protected void ChooseSpecificRadioButton(string parentElementName, string option)
+        {
+            var js = (IJavaScriptExecutor)webDriver;
+
+            var selectedRadioBttnLocator = "//input[@name='"+ parentElementName +"']/following-sibling::label[contains(text(),'"+ option +"')]";
             var selectedOption = webDriver.FindElement(By.XPath(selectedRadioBttnLocator));
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);

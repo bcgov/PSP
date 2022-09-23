@@ -27,7 +27,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProgramSelector = By.Id("input-programType");
         private By licenseDetailsOtherProgramInput = By.Id("input-otherProgramType");
         private By licenseDetailsTypeSelector = By.Id("input-type");
-        private By licenseDetailsOtherTypeInput = By.Id("input-otherProgramType");
+        private By licenseDetailsOtherTypeInput = By.Id("input-otherType");
         private By licenseDetailsCategorySelector = By.Id("input-categoryType");
         private By licenseDetailsPurposeSelector = By.Id("input-purposeType");
         private By licenseDetailsOtherPurposeInput = By.Id("input-otherPurposeType");
@@ -91,6 +91,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var programElement = webDriver.FindElement(licenseDetailsProgramSelector);
             ChooseRandomOption(programElement, "input-programType", 2);
 
+            Wait();
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0)
             {
@@ -101,6 +102,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var typeElement = webDriver.FindElement(licenseDetailsTypeSelector);
             ChooseRandomOption(typeElement, "input-type", 2);
 
+            Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
             {
@@ -108,16 +110,18 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseRandomOption(categoryElement, "input-categoryType", 2);
             }
 
+            Wait();
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0)
             {
-                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Program");
+                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Purpose");
             }
 
             //Selecting Purpose
             var purposeElement = webDriver.FindElement(licenseDetailsPurposeSelector);
             ChooseRandomOption(purposeElement, "input-purposeType", 2);
 
+            Wait();
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0)
             {
@@ -138,10 +142,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(startDate);
 
             //Insert Expiry Date
+            webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
             webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(expiryDate);
 
             //Change Status
             var statusElement = webDriver.FindElement(licenseDetailsStatusSelector);
+            statusElement.Click();
             ChooseRandomOption(statusElement, "input-statusType", 2);
 
 
@@ -161,6 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var programElement = webDriver.FindElement(licenseDetailsProgramSelector);
             ChooseRandomOption(programElement, "input-programType", 2);
 
+            Wait();
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0)
             {
@@ -171,6 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var typeElement = webDriver.FindElement(licenseDetailsTypeSelector);
             ChooseRandomOption(typeElement, "input-type", 2);
 
+            Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
             {
@@ -178,16 +186,18 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseRandomOption(categoryElement, "input-categoryType", 2);
             }
 
+            Wait();
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0)
             {
-                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Program");
+                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Purpose");
             }
 
             //Selecting Purpose
             var purposeElement = webDriver.FindElement(licenseDetailsPurposeSelector);
             ChooseRandomOption(purposeElement, "input-purposeType", 2);
 
+            Wait();
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0)
             {
@@ -235,7 +245,6 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             Wait();
-
             //If PID is already associated with another license
             if (webDriver.FindElements(licenseDetailsModalPIDAttached).Count > 0)
             {
