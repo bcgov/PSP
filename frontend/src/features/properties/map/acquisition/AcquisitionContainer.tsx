@@ -1,19 +1,15 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
 import { GenericModal } from 'components/common/GenericModal';
-import { Button } from 'components/common/buttons';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
-import { Claims } from 'constants/claims';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { getFilePropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { MdLocationPin } from 'react-icons/md';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -49,7 +45,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   const { acquisitionFileId, onClose } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
   const { search } = useMapSearch();
-  const { getAcquisitionFile, updateAcquisitionFile } = useAcquisitionProvider();
+  const { updateAcquisitionFile } = useAcquisitionProvider();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,
@@ -60,8 +56,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   );
 
   const formikRef = useRef<FormikProps<any>>(null);
-  const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
-  const { hasClaim } = useKeycloakWrapper();
 
   /**
    See here that we are using `newState: Partial<AcquisitionContainerState>` in our reducer
@@ -169,6 +163,19 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   }
 
+  if (containerState.activeEditForm === EditFormNames.propertySelector && acquisitionFile) {
+    return (
+      <UpdateProperties
+        file={acquisitionFile}
+        setIsShowingPropertySelector={() =>
+          setContainerState({ activeEditForm: EditFormNames.acquisitionSummary })
+        }
+        onSuccess={onSuccess}
+        updateFileProperties={updateAcquisitionFile.execute}
+      />
+    );
+  }
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -196,28 +203,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     >
       <FileLayout
         leftComponent={
-        <>
-          <AcquisitionMenu
-            items={menuItems}
-            selectedIndex={containerState.selectedMenuIndex}
-            onChange={onMenuChange}
-            setContainerState={setContainerState}
-          />
-          {hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile !== undefined ? (
-          <Button variant="success" onClick={() => setIsShowingPropertySelector(true)}>
-            <MdLocationPin size={'2.5rem'} />
-            Edit properties
-          </Button>
-        ) : null}
-        {!!acquisitionFile && isShowingPropertySelector && (
-          <UpdateProperties
-            file={acquisitionFile}
-            setIsShowingPropertySelector={setIsShowingPropertySelector}
-            onSuccess={onSuccess}
-            updateFileProperties={updateAcquisitionFile.execute}
-          />
-        )}
-        </>
+          <>
+            <AcquisitionMenu
+              items={menuItems}
+              selectedIndex={containerState.selectedMenuIndex}
+              onChange={onMenuChange}
+              setContainerState={setContainerState}
+            />
+          </>
         }
         bodyComponent={
           <StyledFormWrapper>
@@ -250,7 +243,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
           </StyledFormWrapper>
         }
       ></FileLayout>
-      </>
     </MapSideBarLayout>
   );
 };
