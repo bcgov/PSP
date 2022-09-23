@@ -163,6 +163,21 @@ namespace Pims.Api.Services
                         PopulateNewProperty(researchProperty.Property);
                     }
                 }
+                else if (researchProperty.Property.Pin.HasValue)
+                {
+                    var pin = researchProperty.Property.Pin.Value;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        researchProperty.PropertyId = foundProperty.Id;
+                        researchProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException e)
+                    {
+                        _logger.LogDebug("Adding new property with pin:{pin}", pin);
+                        PopulateNewProperty(researchProperty.Property);
+                    }
+                }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid");
