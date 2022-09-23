@@ -168,7 +168,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           leftComponent={
             <>
               {selectedMenuIndex === 0 &&
-              hasClaim(Claims.RESEARCH_ADD) &&
+              hasClaim(Claims.RESEARCH_EDIT) &&
               researchFile !== undefined ? (
                 <Button variant="success" onClick={showPropertiesSelector}>
                   <MdLocationPin size={'2.5rem'} />

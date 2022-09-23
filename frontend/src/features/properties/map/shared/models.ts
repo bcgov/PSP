@@ -22,9 +22,9 @@ export class FileForm {
       fileProperties: this.properties.map<Api_PropertyFile>(x => {
         return {
           id: x.id,
-          fileId: x.fileId,
+          fileId: this.id,
           property: x.toApi(),
-          File: { id: this.id },
+          file: { id: this.id },
           propertyName: x.name,
           rowVersion: x.rowVersion,
         };

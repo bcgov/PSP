@@ -1,17 +1,13 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
-import { Button } from 'components/common/buttons';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
-import { Claims } from 'constants/claims';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { getAcquisitionPropertyName } from 'features/properties/selector/utils';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
-import { MdLocationPin } from 'react-icons/md';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
@@ -37,13 +33,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
-  const { getAcquisitionFile, updateAcquisitionFile } = useAcquisitionProvider();
+  const { updateAcquisitionFile } = useAcquisitionProvider();
 
   const [acquisitionFile, setAcquisitionFile] = useState<Api_AcquisitionFile | undefined>(
     undefined,
   );
-  const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
-  const { hasClaim } = useKeycloakWrapper();
   const { search } = useMapSearch();
 
   /**
@@ -87,15 +81,33 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     setContainerState({ selectedMenuIndex: selectedIndex });
   };
 
+  const onSuccess = () => {
+    fetchAcquisitionFile();
+    search();
+  };
+
   // UI components
   const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
 
   const menuItems =
-    acquisitionFile?.acquisitionProperties?.map(x => getAcquisitionPropertyName(x).value) || [];
+    acquisitionFile?.fileProperties?.map(x => getAcquisitionPropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
   if (acquisitionFile === undefined && loadingAcquisitionFile) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
+
+  if (containerState.activeEditForm === EditFormNames.propertySelector && acquisitionFile) {
+    return (
+      <UpdateProperties
+        file={acquisitionFile}
+        setIsShowingPropertySelector={() =>
+          setContainerState({ activeEditForm: EditFormNames.acquisitionSummary })
+        }
+        onSuccess={onSuccess}
+        updateFileProperties={updateAcquisitionFile.execute}
+      />
+    );
   }
 
   return (
@@ -117,28 +129,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     >
       <FileLayout
         leftComponent={
-        <>
-          <AcquisitionMenu
-            items={menuItems}
-            selectedIndex={containerState.selectedMenuIndex}
-            onChange={onMenuChange}
-            setContainerState={setContainerState}
-          />
-          {hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile !== undefined ? (
-          <Button variant="success" onClick={() => setIsShowingPropertySelector(true)}>
-            <MdLocationPin size={'2.5rem'} />
-            Edit properties
-          </Button>
-        ) : null}
-        {!!acquisitionFile && isShowingPropertySelector && (
-          <UpdateProperties
-            file={acquisitionFile}
-            setIsShowingPropertySelector={setIsShowingPropertySelector}
-            onSuccess={onSuccess}
-            updateFileProperties={updateAcquisitionFile.execute}
-          />
-        )}
-        </>
+          <>
+            <AcquisitionMenu
+              items={menuItems}
+              selectedIndex={containerState.selectedMenuIndex}
+              onChange={onMenuChange}
+              setContainerState={setContainerState}
+            />
+          </>
         }
         bodyComponent={
           <StyledFormWrapper>
@@ -146,7 +144,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
           </StyledFormWrapper>
         }
       ></FileLayout>
-      </>
     </MapSideBarLayout>
   );
 };

@@ -24,7 +24,7 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'AddAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File saved'),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to save Acquisition File'),
   });
 
   const getAcquisitionFileApi = useApiRequestWrapper<
@@ -35,7 +35,7 @@ export const useAcquisitionProvider = () => {
     ]),
     requestName: 'RetrieveAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File retrieved'),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to load Acquisition File'),
   });
 
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<
@@ -47,7 +47,7 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'UpdateAcquisitionFileProperties',
     onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
   });
 
   return useMemo(

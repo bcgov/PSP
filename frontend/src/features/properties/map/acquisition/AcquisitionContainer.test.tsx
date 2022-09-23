@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { FileTypes } from 'constants/index';
 import { Claims } from 'constants/claims';
+import { FileTypes } from 'constants/index';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -126,20 +126,20 @@ describe('AcquisitionContainer component', () => {
   });
 
   it('should display the Edit Properties button if the user has permissions', async () => {
-    const { getByText, getByTestId } = setup(undefined, { claims: [Claims.ACQUISITION_EDIT] });
+    const { getByTitle, getByTestId } = setup(undefined, { claims: [Claims.ACQUISITION_EDIT] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(getByText(/Edit properties/g)).toBeVisible();
+    expect(getByTitle(/Edit acquisition properties/g)).toBeVisible();
   });
 
   it('should not display the Edit Properties button if the user does not have permissions', async () => {
-    const { queryByText, getByTestId } = setup(undefined, { claims: [] });
+    const { queryByTitle, getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    expect(queryByText('Edit properties')).toBeNull();
+    expect(queryByTitle('Edit acquisition properties')).toBeNull();
   });
 });

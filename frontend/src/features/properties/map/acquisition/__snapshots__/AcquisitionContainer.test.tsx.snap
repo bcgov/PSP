@@ -305,6 +305,49 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
   width: 100%;
 }
 
+.c15 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c14 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c17.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c16 {
+  font-weight: bold;
+}
+
+.c11 {
+  height: 100%;
+}
+
+.c11 .nav-tabs {
+  height: 2.4rem;
+}
+
+.c11 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.4rem);
+  overflow-y: auto;
+}
+
+.c11 .tab-content .tab-pane {
+  position: relative;
+  height: 100%;
+}
+
 .c4 {
   text-align: left;
   padding: 0px;
@@ -360,49 +403,6 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
-}
-
-.c11 {
-  height: 100%;
-}
-
-.c11 .nav-tabs {
-  height: 2.4rem;
-}
-
-.c11 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.4rem);
-  overflow-y: auto;
-}
-
-.c11 .tab-content .tab-pane {
-  position: relative;
-  height: 100%;
-}
-
-.c15 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c14 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
-.c17.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c16 {
-  font-weight: bold;
 }
 
 .c13 {

@@ -130,9 +130,4 @@ describe('UpdateProperties component', () => {
       expect(onSuccess).toHaveBeenCalled();
     });
   });
-
-  it('handles cancel as expected', async () => {
-    setup({});
-    expect(document.body).toMatchSnapshot();
-  });
 });

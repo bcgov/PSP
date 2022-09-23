@@ -20,7 +20,7 @@ export interface IUpdatePropertiesProps {
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
   const formikRef = useRef<FormikProps<FileForm>>(null);
-  const formResearchFile = FileForm.fromApi(props.file);
+  const formFile = FileForm.fromApi(props.file);
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
@@ -80,11 +80,11 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       >
         <Formik<FileForm>
           innerRef={formikRef}
-          initialValues={formResearchFile}
+          initialValues={formFile}
           validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: FileForm) => {
-            const researchFile: Api_File = values.toApi();
-            await saveFile(researchFile);
+            const file: Api_File = values.toApi();
+            await saveFile(file);
           }}
         >
           {formikProps => (
