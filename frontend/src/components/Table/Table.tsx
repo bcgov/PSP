@@ -533,6 +533,9 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
 
   const onPageSizeChange = (size: number) => {
     props.onPageSizeChange && props.onPageSizeChange(size);
+    if (!instance.manualPagination) {
+      instance.setPageSize(size);
+    }
   };
 
   const renderLoading = () => {

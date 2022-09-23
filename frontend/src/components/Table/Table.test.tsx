@@ -1,5 +1,12 @@
 import React from 'react';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import {
+  fillInput,
+  getByRole,
+  getByTestId,
+  render,
+  RenderOptions,
+  userEvent,
+} from 'utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
@@ -76,58 +83,83 @@ describe('Generic table component', () => {
     expect(getByText('No rows to display')).toBeVisible();
   });
 
-  it('by default the first page is the active page', async () => {
-    const { getByLabelText } = setup({ props: { pageSize: 5 } });
+  describe('table pagination', () => {
+    it('by default the first page is the active page', async () => {
+      const { getByLabelText } = setup({ props: { pageSize: 5 } });
 
-    const page1Button = getByLabelText('Page 1 is your current page');
-    expect(page1Button.parentElement).toHaveClass('active');
-  });
-
-  it('it displays a maximum number of rows equal to the pagesize prop if manualPagination is false', async () => {
-    const { tableRows } = setup({ props: { pageSize: 5, manualPagination: false } });
-
-    expect(tableRows).toHaveLength(5);
-  });
-
-  it('it displays all rows if manualPagination is true', async () => {
-    const { tableRows } = setup({ props: { pageSize: 5, manualPagination: true } });
-
-    expect(tableRows).toHaveLength(6);
-  });
-
-  it('allows the current page to be changed', async () => {
-    const { getByLabelText, getByText } = setup({ props: { pageSize: 5 } });
-
-    const page2Button = getByLabelText('Page 2');
-    userEvent.click(page2Button);
-    expect(getByText('six')).toBeVisible();
-    expect(page2Button.parentElement).toHaveClass('active');
-  });
-
-  it('displays multiple pages when the total number of rows exceed the page size', async () => {
-    const { getByLabelText } = setup({ props: { pageSize: 5 } });
-
-    expect(getByLabelText('Page 2')).toBeVisible();
-  });
-
-  it('hides the paging control when hidePagination is set', async () => {
-    const { tableRows, queryByLabelText } = setup({ props: { pageSize: 5, hidePagination: true } });
-
-    const page1Button = queryByLabelText('Page 1 is your current page');
-    expect(page1Button).toBeNull();
-    expect(tableRows).toHaveLength(6);
-  });
-
-  it('does not change the page when manual pagination is set', async () => {
-    const onRequestData = jest.fn();
-    const { getByLabelText, tableRows } = setup({
-      props: { pageSize: 5, manualPagination: true, onRequestData },
+      const page1Button = getByLabelText('Page 1 is your current page');
+      expect(page1Button.parentElement).toHaveClass('active');
     });
 
-    const page2Button = getByLabelText('Page 2');
-    userEvent.click(page2Button);
-    expect(tableRows).toHaveLength(6); //pagination is handled externally, the table component will ignore the page size prop.
-    expect(onRequestData).toHaveBeenCalled();
+    it('it displays a maximum number of rows equal to the pagesize prop if manualPagination is false', async () => {
+      const { tableRows } = setup({ props: { pageSize: 5, manualPagination: false } });
+
+      expect(tableRows).toHaveLength(5);
+    });
+
+    it('it displays all rows if manualPagination is true', async () => {
+      const { tableRows } = setup({ props: { pageSize: 5, manualPagination: true } });
+
+      expect(tableRows).toHaveLength(6);
+    });
+
+    it('allows the current page to be changed', async () => {
+      const { getByLabelText, getByText } = setup({ props: { pageSize: 5 } });
+
+      const page2Button = getByLabelText('Page 2');
+      userEvent.click(page2Button);
+      expect(getByText('six')).toBeVisible();
+      expect(page2Button.parentElement).toHaveClass('active');
+    });
+
+    it('displays multiple pages when the total number of rows exceed the page size', async () => {
+      const { getByLabelText } = setup({ props: { pageSize: 5 } });
+
+      expect(getByLabelText('Page 2')).toBeVisible();
+    });
+
+    it('hides the paging control when hidePagination is set', async () => {
+      const { tableRows, queryByLabelText } = setup({
+        props: { pageSize: 5, hidePagination: true },
+      });
+
+      const page1Button = queryByLabelText('Page 1 is your current page');
+      expect(page1Button).toBeNull();
+      expect(tableRows).toHaveLength(6);
+    });
+
+    it('does not change the page when manual pagination is set', async () => {
+      const onRequestData = jest.fn();
+      const { getByLabelText, tableRows } = setup({
+        props: { pageSize: 5, manualPagination: true, onRequestData },
+      });
+
+      const page2Button = getByLabelText('Page 2');
+      userEvent.click(page2Button);
+      expect(tableRows).toHaveLength(6); //pagination is handled externally, the table component will ignore the page size prop.
+      expect(onRequestData).toHaveBeenCalled();
+    });
+
+    it('page size works as expected when not using manual pagination', async () => {
+      const { getByLabelText, getByTitle, container } = setup({
+        props: { pageSize: 10, manualPagination: false },
+      });
+
+      userEvent.click(getByTitle('menu-item-5'));
+      const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
+      expect(tableRows).toHaveLength(5);
+      expect(getByLabelText('Page 2')).toBeVisible();
+    });
+
+    it('page size works as expected when using manual pagination', async () => {
+      const onPageSizeChange = jest.fn();
+      const { getByTitle } = setup({
+        props: { pageSize: 10, manualPagination: true, onPageSizeChange },
+      });
+
+      userEvent.click(getByTitle('menu-item-5'));
+      expect(onPageSizeChange).toHaveBeenCalledWith(5);
+    });
   });
 
   it('can select only one row at a time when single select prop set', async () => {
