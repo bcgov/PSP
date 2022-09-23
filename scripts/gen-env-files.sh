@@ -9,7 +9,7 @@ read -p 'Username: ' varKeycloak
 echo 'Enter a username for the API database.'
 read -p 'Username: ' varApiDb
 
-passvar=$(grep -Po 'DB_PASSWORD=\K.*$' ./database/mssql/.env)
+passvar=$(grep -Po '^DB_PASSWORD=\K.*$' ./database/mssql/.env)
 
 if [ -z "$passvar" ]
 then
@@ -72,11 +72,28 @@ else
 echo \
 "ASPNETCORE_ENVIRONMENT=Local
 ASPNETCORE_URLS=http://*:5000
+
 TZ=America/Los_Angeles
+
 ConnectionStrings__PIMS=Server=localhost,5433;uid=$varApiDb;Password=$passvar;Database=pims
 DB_PASSWORD=$passvar
+
 Keycloak__Secret=
-Keycloak__ServiceAccount__Secret=" >> ./backend/api/.env
+Keycloak__ServiceAccount__Secret=
+
+Ltsa__MyLtsaUsername=
+Ltsa__MyLtsaUserPassword=
+Ltsa__IntegratorUsername=
+Ltsa__IntegratorPassword=
+
+Mayan__BaseUri=http://localhost:7080/api/v4
+Mayan__ConnectionUser=admin
+Mayan__ConnectionPassword=
+
+Cdogs__AuthEndpoint=
+Cdogs__CDogsHost=
+Cdogs__ServiceClientId=
+Cdogs__ServiceClientSecret=" >> ./backend/api/.env
 fi
 
 # DAL DB migration
