@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { layerData } from 'constants/toasts';
-import { Feature, FeatureCollection } from 'geojson';
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { LatLngLiteral } from 'leaflet';
 import { useMemo } from 'react';
@@ -58,6 +58,13 @@ export interface IUserLayerQuery {
     geometryName?: string,
     spatialReferenceId?: number,
   ) => Promise<Record<string, any>>;
+
+  findOneWhereContainsWrapped: (
+    latlng: LatLngLiteral,
+    geometryName?: string | undefined,
+    spatialReferenceId?: number | undefined,
+  ) => Promise<FeatureCollection<Geometry, GeoJsonProperties> | undefined>;
+  findOneWhereContainsLoading: boolean;
 }
 
 const MAX_RETRIES = 2;
@@ -114,6 +121,28 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     },
     [baseUrl, authenticated],
   );
+
+  const {
+    execute: findOneWhereContainsWrapped,
+    loading: findOneWhereContainsLoading,
+  } = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        latlng: LatLngLiteral,
+        geometryName: string = 'SHAPE',
+        spatialReferenceId: number = 4326,
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios({ authenticated }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(
+          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
+        );
+        return data;
+      },
+      [baseUrl, authenticated],
+    ),
+    requestName: 'findByPid',
+  });
 
   const findByAdministrative = useCallback(
     async (city: string): Promise<Feature | null> => {
@@ -217,6 +246,8 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       findByPlanNumberLoading,
       findByAdministrative,
       findMetadataByLocation,
+      findOneWhereContainsWrapped,
+      findOneWhereContainsLoading,
     }),
     [
       findMetadataByLocation,
@@ -228,6 +259,8 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
       findByPlanNumber,
       findByPlanNumberLoading,
       findOneWhereContains,
+      findOneWhereContainsWrapped,
+      findOneWhereContainsLoading,
     ],
   );
 };
