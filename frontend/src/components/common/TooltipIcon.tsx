@@ -8,7 +8,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { FaInfoCircle } from 'react-icons/fa';
 
 interface TooltipIconProps extends Partial<React.ComponentPropsWithRef<typeof Overlay>> {
-  toolTip?: string;
+  toolTip?: React.ReactNode;
   toolTipId: string;
   className?: string;
   customOverlay?: OverlayChildren;
