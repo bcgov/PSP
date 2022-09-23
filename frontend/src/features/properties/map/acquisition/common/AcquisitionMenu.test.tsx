@@ -24,7 +24,7 @@ describe('AcquisitionMenu component', () => {
       />,
       {
         useMockAuthentication: true,
-        claims: [Claims.PROPERTY_EDIT],
+        claims: [Claims.ACQUISITION_EDIT],
         ...renderOptions,
       },
     );
@@ -94,7 +94,7 @@ describe('AcquisitionMenu component', () => {
         onChange,
         setContainerState,
       },
-      { claims: [Claims.PROPERTY_EDIT] },
+      { claims: [Claims.ACQUISITION_EDIT] },
     );
 
     const button = getByTitle('Edit acquisition properties');
@@ -116,7 +116,7 @@ describe('AcquisitionMenu component', () => {
         onChange,
         setContainerState,
       },
-      { claims: [Claims.PROPERTY_VIEW] }, // no edit permissions, just view.
+      { claims: [Claims.ACQUISITION_VIEW] }, // no edit permissions, just view.
     );
 
     const button = queryByTitle('Edit acquisition properties');
