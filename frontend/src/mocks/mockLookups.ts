@@ -2235,7 +2235,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 'ADJLAND',
-    name: 'Adjacent Land',
+    name: 'Adjacent Land type',
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',
@@ -2267,7 +2267,7 @@ export const mockLookups: Partial<ILookupCode>[] = [
   },
   {
     id: 'HWYROAD',
-    name: 'Highway/Road',
+    name: 'Highway/Road established by',
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsPropertyTenureType',

@@ -1,10 +1,6 @@
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
-import {
-  ResearchTabNames,
-  ResearchTabs,
-  TabResearchView,
-} from 'features/mapSideBar/tabs/ResearchTabs';
+import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import React, { useState } from 'react';
@@ -32,7 +28,7 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
   setEditMode,
   setEditKey,
 }) => {
-  const tabViews: TabResearchView[] = [];
+  const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 
   tabViews.push({
@@ -45,7 +41,7 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
         }}
       />
     ),
-    key: ResearchTabNames.researchDetails,
+    key: FileTabNames.fileDetails,
     name: 'Research Details',
   });
 
@@ -54,17 +50,17 @@ export const ResearchTabsContainer: React.FunctionComponent<IResearchTabsContain
       content: (
         <ActivityListView fileId={researchFile.id} fileType={FileTypes.Research}></ActivityListView>
       ),
-      key: ResearchTabNames.activities,
+      key: FileTabNames.activities,
       name: 'Activities',
     });
   }
 
-  var defaultTab = ResearchTabNames.researchDetails;
+  var defaultTab = FileTabNames.fileDetails;
 
-  const [activeTab, setActiveTab] = useState<ResearchTabNames>(defaultTab);
+  const [activeTab, setActiveTab] = useState<FileTabNames>(defaultTab);
 
   return (
-    <ResearchTabs
+    <FileTabs
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}

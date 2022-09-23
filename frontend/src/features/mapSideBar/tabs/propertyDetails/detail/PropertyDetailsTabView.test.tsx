@@ -50,7 +50,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
-    expect(getByText('Highway / Road:')).toBeVisible();
+    expect(getByText('Highway / Road established by:')).toBeVisible();
   });
 
   it('does not show highway/road multi-select when tenure status is not Highway/Road', () => {
@@ -60,7 +60,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { queryByText } = setup({ property });
-    expect(queryByText('Highway / Road:')).toBeNull();
+    expect(queryByText('Highway / Road established by:')).toBeNull();
   });
 
   it('shows first nations information when adjacent land is Indian Reserve', () => {
