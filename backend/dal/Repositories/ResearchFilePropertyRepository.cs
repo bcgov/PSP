@@ -32,12 +32,11 @@ namespace Pims.Dal.Repositories
 
         public List<PimsPropertyResearchFile> GetByResearchFileId(long researchFileId)
         {
-            return Context.PimsPropertyResearchFiles
+            return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)
                 .Include(rp => rp.Property)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
                 .Include(rp => rp.PimsActInstPropRsrchFiles)
-                .AsNoTracking()
                 .ToList();
         }
 
@@ -63,17 +62,18 @@ namespace Pims.Dal.Repositories
 
         public void Delete(PimsPropertyResearchFile propertyResearchFile)
         {
-            // Mark the property not to be changed if it did not exist already.
-            if (propertyResearchFile.Property != null)
-            {
-                Context.Entry(propertyResearchFile.Property).State = EntityState.Unchanged;
-            }
+            var existingPropertyResearchFile = Context.PimsPropertyResearchFiles.AsNoTracking()
+                .Where(x => x.PropertyResearchFileId == propertyResearchFile.Id)
+                .Include(rp => rp.Property)
+                .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
+                .Include(rp => rp.PimsActInstPropRsrchFiles)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             // Delete any Property research purpose type associations
-            propertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(purposeType));
-            propertyResearchFile.PimsActInstPropRsrchFiles.ForEach(s => Context.PimsActInstPropRsrchFiles.Remove(s));
+            existingPropertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(new PimsPrfPropResearchPurposeType() { Id = purposeType.Id }));
+            existingPropertyResearchFile.PimsActInstPropRsrchFiles.ForEach(s => Context.PimsActInstPropRsrchFiles.Remove(new PimsActInstPropRsrchFile() { Id = s.Id }));
 
-            Context.PimsPropertyResearchFiles.Remove(propertyResearchFile);
+            Context.Remove(new PimsPropertyResearchFile() { PropertyResearchFileId = propertyResearchFile.Id });
         }
 
         public PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile)
