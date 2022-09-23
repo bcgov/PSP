@@ -41,7 +41,6 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
   return (
     <Formik
       enableReinitialize
-      //initialValues={filter ?? defaultFilter}
       initialValues={
         filter ?? { ...defaultFilter, searchBy: showOnlyIndividuals ? 'persons' : 'all' }
       }
