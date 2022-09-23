@@ -8,8 +8,9 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { AcquisitionProperties } from './AcquisitionProperties';
-import { AcquisitionForm, AcquisitionPropertyForm } from './models';
+import { AcquisitionForm } from './models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -42,8 +43,8 @@ describe('AcquisitionProperties component', () => {
     testForm = new AcquisitionForm();
     testForm.fileName = 'Test name';
     testForm.properties = [
-      AcquisitionPropertyForm.fromMapProperty({ pid: '123-456-789' }),
-      AcquisitionPropertyForm.fromMapProperty({ pin: '1111222' }),
+      PropertyForm.fromMapProperty({ pid: '123-456-789' }),
+      PropertyForm.fromMapProperty({ pin: '1111222' }),
     ];
   });
 

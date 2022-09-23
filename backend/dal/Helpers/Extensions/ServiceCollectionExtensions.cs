@@ -50,6 +50,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentActivityRepository, Repositories.DocumentActivityRepository>();
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
+            repositories.AddScoped<Repositories.IAcquisitionFilePropertyRepository, Repositories.AcquisitionFilePropertyRepository>();
             repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
             repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
             return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.

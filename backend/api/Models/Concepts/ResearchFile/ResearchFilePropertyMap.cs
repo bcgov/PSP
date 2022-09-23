@@ -18,7 +18,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DocumentReference, src => src.DocumentReference)
                 .Map(dest => dest.ResearchSummary, src => src.ResearchSummary)
                 .Map(dest => dest.Property, src => src.Property)
-                .Map(dest => dest.ResearchFile, src => src.ResearchFile)
+                .Map(dest => dest.File, src => src.ResearchFile)
                 .Map(dest => dest.PurposeTypes, src => src.PimsPrfPropResearchPurposeTypes)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
@@ -26,7 +26,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PropertyResearchFileId, src => src.Id)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
-                .Map(dest => dest.ResearchFileId, src => src.ResearchFile.Id)
+                .Map(dest => dest.ResearchFileId, src => src.File.Id)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)

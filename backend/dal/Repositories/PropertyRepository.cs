@@ -267,7 +267,7 @@ namespace Pims.Dal.Repositories
 
         public void Delete(PimsProperty property)
         {
-            this.Context.PimsProperties.Remove(property);
+            this.Context.PimsProperties.Remove(new PimsProperty { Id = property.Id });
         }
 
         #endregion

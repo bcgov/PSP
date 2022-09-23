@@ -3,7 +3,8 @@ import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
-import { AcquisitionForm, AcquisitionPropertyForm } from './models';
+import { PropertyForm } from '../../shared/models';
+import { AcquisitionForm } from './models';
 
 export const AcquisitionProperties: React.FunctionComponent = () => {
   const { values } = useFormikContext<AcquisitionForm>();
@@ -21,7 +22,7 @@ export const AcquisitionProperties: React.FunctionComponent = () => {
             <Col>
               <MapSelectorContainer
                 onSelectedProperty={(newProperty: IMapProperty) => {
-                  const formProperty = AcquisitionPropertyForm.fromMapProperty(newProperty);
+                  const formProperty = PropertyForm.fromMapProperty(newProperty);
                   push(formProperty);
                 }}
                 existingProperties={values.properties}
