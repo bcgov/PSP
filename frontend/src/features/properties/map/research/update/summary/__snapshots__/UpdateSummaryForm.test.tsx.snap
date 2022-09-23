@@ -185,6 +185,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
+  color: #495057;
   border: #606060 solid 0.1rem;
 }
 

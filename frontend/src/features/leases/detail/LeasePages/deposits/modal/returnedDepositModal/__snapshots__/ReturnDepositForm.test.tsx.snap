@@ -211,6 +211,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
+  color: #495057;
   border: #606060 solid 0.1rem;
 }
 
@@ -518,6 +519,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
               <div
                 class="c6"
               >
+                Select from contacts
                 <button
                   class="c7 Button Button--disabled c8 btn btn-link"
                   disabled=""
@@ -809,6 +811,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
+  color: #495057;
   border: #606060 solid 0.1rem;
 }
 
@@ -1116,6 +1119,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
               <div
                 class="c6"
               >
+                Select from contacts
                 <button
                   class="c7 Button Button--disabled c8 btn btn-link"
                   disabled=""

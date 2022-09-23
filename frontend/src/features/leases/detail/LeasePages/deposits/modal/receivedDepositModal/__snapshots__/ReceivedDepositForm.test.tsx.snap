@@ -193,6 +193,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
+  color: #495057;
   border: #606060 solid 0.1rem;
 }
 
@@ -413,6 +414,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
               <div
                 class="c4"
               >
+                Select from contacts
                 <button
                   class="c5 Button Button--disabled c6 btn btn-link"
                   disabled=""
@@ -686,6 +688,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
+  color: #495057;
   border: #606060 solid 0.1rem;
 }
 
@@ -906,6 +909,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
               <div
                 class="c4"
               >
+                Select from contacts
                 <button
                   class="c5 Button Button--disabled c6 btn btn-link"
                   disabled=""
