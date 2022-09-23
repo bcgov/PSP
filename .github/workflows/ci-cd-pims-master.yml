@@ -101,7 +101,7 @@ jobs:
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
       - name: call script to tag frontend and api images with version number
         run: |
-          ./openshift/4.0/scripts/oc-tag.sh $DESTINATION
+          OC_JOB_NAME=$DESTINATION ./openshift/4.0/scripts/oc-tag.sh
 
   deploy:
     name: Deploy frontend and api to OpenShift
