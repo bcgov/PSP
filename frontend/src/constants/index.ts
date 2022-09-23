@@ -5,6 +5,7 @@ export * from './claims';
 export * from './countryCodes';
 export * from './districtCodes';
 export * from './environment';
+export * from './fileTypes';
 export * from './leaseStatusTypes';
 export * from './noteTypes';
 export * from './organizationIdentifierTypes';

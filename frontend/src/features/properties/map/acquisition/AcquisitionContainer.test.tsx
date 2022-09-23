@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { FileTypes } from 'constants/index';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -12,9 +13,13 @@ import {
   waitForElementToBeRemoved,
 } from 'utils/test-utils';
 
+import { SideBarContextProvider } from '../context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
 
 const mockAxios = new MockAdapter(axios);
+
+// mock auth library
+jest.mock('@react-keycloak/web');
 
 const onClose = jest.fn();
 
@@ -39,12 +44,23 @@ describe('AcquisitionContainer component', () => {
     props: IAcquisitionContainerProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
   ) => {
-    const utils = render(<AcquisitionContainer {...props} />, {
-      ...renderOptions,
-      store: {
-        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+    const utils = render(
+      <SideBarContextProvider
+        file={{
+          ...mockAcquisitionFileResponse(),
+          fileType: FileTypes.Acquisition,
+        }}
+      >
+        <AcquisitionContainer {...props} />
+      </SideBarContextProvider>,
+      {
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+        useMockAuthentication: true,
+        ...renderOptions,
       },
-    });
+    );
 
     return {
       ...utils,
