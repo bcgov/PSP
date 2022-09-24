@@ -25,7 +25,7 @@ export interface IUpdateAcquisitionFormProps {
 export const UpdateAcquisitionForm = React.forwardRef<
   FormikProps<UpdateAcquisitionSummaryFormModel>,
   IUpdateAcquisitionFormProps
->((props, ref) => {
+>((props, formikRef) => {
   const { initialValues, validationSchema, onSubmit } = props;
 
   const { getOptionsByType } = useLookupCodeHelpers();
@@ -36,7 +36,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
   return (
     <Formik<UpdateAcquisitionSummaryFormModel>
       enableReinitialize
-      innerRef={ref}
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -107,17 +107,7 @@ const LargeInput = styled(Input)`
 `;
 
 const Container = styled.div`
-  .form-section {
-    margin: 0;
-    padding-left: 0;
-  }
-
-  .tab-pane {
-    .form-section {
-      margin: 1.5rem;
-      padding-left: 1.5rem;
-    }
-  }
+  background-color: ${props => props.theme.css.filterBackgroundColor};
 
   .react-datepicker-wrapper {
     max-width: 14rem;

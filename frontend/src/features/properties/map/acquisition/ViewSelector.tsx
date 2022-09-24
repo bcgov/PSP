@@ -1,3 +1,4 @@
+import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 
@@ -15,38 +16,40 @@ export interface IViewSelectorProps {
   onSuccess: () => void;
 }
 
-export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
-  // render edit forms
-  if (props.isEditing && !!props.acquisitionFile) {
-    switch (props.activeEditForm) {
-      case EditFormNames.acquisitionSummary:
+export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>(
+  (props, formikRef) => {
+    // render edit forms
+    if (props.isEditing && !!props.acquisitionFile) {
+      switch (props.activeEditForm) {
+        case EditFormNames.acquisitionSummary:
+          return (
+            <UpdateAcquisitionContainer
+              ref={formikRef}
+              acquisitionFile={props.acquisitionFile}
+              onSuccess={props.onSuccess}
+            />
+          );
+
+        case EditFormNames.propertyDetails:
+          return <></>;
+
+        default:
+          throw Error('Active edit form not defined');
+      }
+    } else {
+      // render read-only views
+      if (props.selectedMenuIndex === 0) {
         return (
-          <UpdateAcquisitionContainer
+          <AcquisitionFileTabs
             acquisitionFile={props.acquisitionFile}
             setContainerState={props.setContainerState}
-            onSuccess={props.onSuccess}
           />
         );
-
-      case EditFormNames.propertyDetails:
+      } else {
         return <></>;
-
-      default:
-        throw Error('Active edit form not defined');
+      }
     }
-  } else {
-    // render read-only views
-    if (props.selectedMenuIndex === 0) {
-      return (
-        <AcquisitionFileTabs
-          acquisitionFile={props.acquisitionFile}
-          setContainerState={props.setContainerState}
-        />
-      );
-    } else {
-      return <></>;
-    }
-  }
-};
+  },
+);
 
 export default ViewSelector;

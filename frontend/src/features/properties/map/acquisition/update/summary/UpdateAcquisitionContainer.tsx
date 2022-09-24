@@ -1,27 +1,22 @@
 import { FormikHelpers, FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-import { AcquisitionContainerState } from '../../AcquisitionContainer';
 import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionForm } from './UpdateAcquisitionForm';
 
 export interface IUpdateAcquisitionContainerProps {
   acquisitionFile: Api_AcquisitionFile;
-  setContainerState: (value: Partial<AcquisitionContainerState>) => void;
   onSuccess: () => void;
 }
 
-export const UpdateAcquisitionContainer: React.FC<IUpdateAcquisitionContainerProps> = ({
-  acquisitionFile,
-  setContainerState,
-  onSuccess,
-}) => {
-  const formikRef = useRef<FormikProps<UpdateAcquisitionSummaryFormModel>>(null);
-
-  setContainerState({ formikRef });
+export const UpdateAcquisitionContainer = React.forwardRef<
+  FormikProps<any>,
+  IUpdateAcquisitionContainerProps
+>((props, formikRef) => {
+  const { acquisitionFile, onSuccess } = props;
 
   const {
     updateAcquisitionFile: { execute: updateAcquisitionFile },
@@ -57,7 +52,7 @@ export const UpdateAcquisitionContainer: React.FC<IUpdateAcquisitionContainerPro
       />
     </StyledFormWrapper>
   );
-};
+});
 
 export default UpdateAcquisitionContainer;
 
