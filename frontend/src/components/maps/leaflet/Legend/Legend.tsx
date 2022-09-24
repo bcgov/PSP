@@ -13,6 +13,10 @@ export const Legend = () => {
         pin: require('assets/images/pins/land-reg.png').default,
         label: 'Parcel',
       },
+      {
+        pin: require('assets/images/pins/land-poi.svg').default,
+        label: 'Point of Interest',
+      },
     ];
   }, []);
 
