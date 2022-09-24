@@ -12,6 +12,7 @@ export const useAcquisitionProvider = () => {
   const {
     getAcquisitionFile,
     postAcquisitionFile,
+    putAcquisitionFile,
     putAcquisitionFileProperties,
   } = useApiAcquisitionFile();
 
@@ -38,6 +39,18 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),
   });
 
+  const updateAcquisitionFileApi = useApiRequestWrapper<
+    (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFile(acqFile),
+      [putAcquisitionFile],
+    ),
+    requestName: 'UpdateAcquisitionFile',
+    onSuccess: useAxiosSuccessHandler('Acquisition File updated'),
+    onError: useAxiosErrorHandler(),
+  });
+
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<
     (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
@@ -54,8 +67,9 @@ export const useAcquisitionProvider = () => {
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
       getAcquisitionFile: getAcquisitionFileApi,
-      updateAcquisitionFile: updateAcquisitionPropertiesApi,
+      updateAcquisitionFile: updateAcquisitionFileApi,
+      updateAcquisitionProperties: updateAcquisitionPropertiesApi,
     }),
-    [addAcquisitionFileApi, getAcquisitionFileApi, updateAcquisitionPropertiesApi],
+    [addAcquisitionFileApi, getAcquisitionFileApi, updateAcquisitionFileApi, updateAcquisitionPropertiesApi],
   );
 };
