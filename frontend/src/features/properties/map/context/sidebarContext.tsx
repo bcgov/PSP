@@ -1,4 +1,5 @@
 import { FileTypes } from 'constants/fileTypes';
+import { findIndex } from 'lodash';
 import { Api_File } from 'models/api/File';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
@@ -14,6 +15,7 @@ export interface ISideBarContext {
   setStaleFile: (stale: boolean) => void;
   fileLoading: boolean;
   setFileLoading: (loading: boolean) => void;
+  getFilePropertyIndexById: (filePropertyId: number) => number;
 }
 
 export const SideBarContext = React.createContext<ISideBarContext>({
@@ -27,6 +29,9 @@ export const SideBarContext = React.createContext<ISideBarContext>({
   },
   staleFile: false,
   setStaleFile: (stale: boolean) => {
+    throw Error('setStaleFile function not defined');
+  },
+  getFilePropertyIndexById: (filePropertyId: number) => {
     throw Error('setStaleFile function not defined');
   },
 });
@@ -47,6 +52,9 @@ export const SideBarContextProvider = (props: {
     [setFile, setStaleFile],
   );
 
+  const getFilePropertyIndexById = (filePropertyId: number) =>
+    findIndex(file?.fileProperties, fp => fp.id === filePropertyId);
+
   return (
     <SideBarContext.Provider
       value={{
@@ -56,6 +64,7 @@ export const SideBarContextProvider = (props: {
         fileLoading: fileLoading,
         staleFile,
         setStaleFile,
+        getFilePropertyIndexById,
       }}
     >
       {props.children}

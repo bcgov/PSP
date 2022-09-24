@@ -58,6 +58,8 @@ namespace Pims.Dal.Repositories
              return this.Context.PimsActivityInstances.AsNoTracking()
                 .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
                 .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+                .Include(a => a.PimsActInstPropAcqFiles)
+                .Include(a => a.PimsActInstPropRsrchFiles)
                 .Where(x => x.PimsResearchActivityInstances.Any(ra => ra.ResearchFileId == researchFileId))
                 .ToList();
         }
@@ -72,6 +74,8 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsActivityInstances.AsNoTracking()
                .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
                .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+               .Include(a => a.PimsActInstPropAcqFiles)
+                .Include(a => a.PimsActInstPropRsrchFiles)
                .Where(x => x.PimsAcquisitionActivityInstances.Any(ra => ra.AcquisitionFileId == acquisitionFileId))
                .ToList();
         }
