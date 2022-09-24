@@ -27,7 +27,10 @@ export const AcquisitionFileTabs: React.FunctionComponent<IAcquisitionFileTabsPr
       <AcquisitionSummaryView
         acquisitionFile={acquisitionFile}
         onEdit={() =>
-          setContainerState({ isEditing: true, activeEditForm: EditFormNames.acquisitionSummary })
+          setContainerState({
+            isEditing: true,
+            activeEditForm: EditFormNames.acquisitionSummary,
+          })
         }
       />
     ),

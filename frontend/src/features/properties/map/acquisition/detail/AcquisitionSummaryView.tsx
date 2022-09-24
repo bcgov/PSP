@@ -3,7 +3,7 @@ import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { prettyFormatDate } from 'utils';
 import { DetailAcquisitionFile } from './models';
 
 export interface IAcquisitionSummaryViewProps {
-  acquisitionFile?: Api_ResearchFile;
+  acquisitionFile?: Api_AcquisitionFile;
   onEdit: () => void;
 }
 
