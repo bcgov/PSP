@@ -102,10 +102,9 @@ const StyledDiv = styled.div`
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
-  color: #495057;
-  border: #606060 solid 0.1rem;
-
-  &.is-invalid {
+  color: ${props => props.theme.css.formControlTextColor};
+  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  $ &.is-invalid {
     border: ${props => props.theme.css.dangerColor} solid 0.1rem;
   }
 `;
@@ -113,7 +112,7 @@ const StyledDiv = styled.div`
 export const StyledRemoveLinkButton = styled(LinkButton)`
   &&.btn {
     float: right;
-    color: #aaaaaa;
+    color: ${props => props.theme.css.primaryBorderColor};
     text-decoration: none;
     line-height: unset;
     .text {
@@ -122,7 +121,7 @@ export const StyledRemoveLinkButton = styled(LinkButton)`
     &:hover,
     &:active,
     &:focus {
-      color: #d8292f;
+      color: ${props => props.theme.css.dangerColor};
       text-decoration: none;
       opacity: unset;
       display: flex;
