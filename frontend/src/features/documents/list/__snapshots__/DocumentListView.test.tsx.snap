@@ -907,26 +907,31 @@ exports[`Document List View renders as expected 1`] = `
                   >
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-5"
                     >
                       5
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-10"
                     >
                       10
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-20"
                     >
                       20
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-50"
                     >
                       50
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-100"
                     >
                       100
                     </div>
@@ -1907,26 +1912,31 @@ exports[`Document List View renders as expected 2`] = `
                   >
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-5"
                     >
                       5
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-10"
                     >
                       10
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-20"
                     >
                       20
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-50"
                     >
                       50
                     </div>
                     <div
                       class="Menu-item list-group-item"
+                      title="menu-item-100"
                     >
                       100
                     </div>
