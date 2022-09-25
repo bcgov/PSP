@@ -53,7 +53,7 @@ const fakeProperty: Api_Property = {
       propertyId: 205,
       propertyTenureTypeCode: {
         id: 'HWYROAD',
-        description: 'Highway/Road',
+        description: 'Highway/Road established by',
         isDisabled: false,
       },
       rowVersion: 16,
@@ -63,7 +63,7 @@ const fakeProperty: Api_Property = {
       propertyId: 205,
       propertyTenureTypeCode: {
         id: 'ADJLAND',
-        description: 'Adjacent Land',
+        description: 'Adjacent Land type',
         isDisabled: false,
       },
       rowVersion: 16,
