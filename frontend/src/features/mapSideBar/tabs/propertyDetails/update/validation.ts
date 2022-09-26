@@ -24,7 +24,7 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
     is: (tenureArray: PropertyTenureFormModel[]) =>
       tenureArray?.some(obj => obj.typeCode === PropertyTenureTypes.AdjacentLand),
     then: Yup.array()
-      .min(1, `Adjacent land is required if tenure status includes 'Adjacent Land'`)
+      .min(1, `Adjacent land type is required if tenure status includes 'Adjacent Land'`)
       .required(),
     otherwise: Yup.array().nullable(),
   }),

@@ -762,7 +762,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       class="chip  false false"
                       style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
                     >
-                      Highway/Road
+                      Highway/Road established by
                       <i
                         class="custom-close"
                       >
@@ -786,7 +786,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       class="chip  false false"
                       style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
                     >
-                      Adjacent Land
+                      Adjacent Land type
                       <i
                         class="custom-close"
                       >
@@ -916,7 +916,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             <label
               class="c2"
             >
-              Highway / Road:
+              Highway / Road established by:
             </label>
           </div>
           <div
@@ -1100,7 +1100,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
             <label
               class="c2"
             >
-              Adjacent land:
+              Adjacent Land type:
             </label>
           </div>
           <div
