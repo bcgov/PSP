@@ -11,7 +11,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +41,49 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +104,9 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +115,14 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,15 +133,15 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -188,35 +188,32 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c4 {
+.c5 {
   border-radius: 0.3rem;
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
-  color: #495057;
-  border: #606060 solid 0.1rem;
-}
-
-.c4.is-invalid {
   border: solid 0.1rem;
 }
 
-.c6.c6.btn {
+$ .c4.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c7.c7.btn {
   float: right;
-  color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c7.c7.btn .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
-  color: #d8292f;
+.c7.c7.btn:hover,
+.c7.c7.btn:active,
+.c7.c7.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
@@ -229,9 +226,9 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c7.c7.btn:hover .text,
+.c7.c7.btn:active .text,
+.c7.c7.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -412,11 +409,11 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c4"
+                class="c4 c5"
               >
                 Select from contacts
                 <button
-                  class="c5 Button Button--disabled c6 btn btn-link"
+                  class="c6 Button Button--disabled c7 btn btn-link"
                   disabled=""
                   type="button"
                 >
@@ -462,7 +459,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c5 Button Button--icon-only px-2 btn btn-primary"
+                class="c6 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
@@ -506,7 +503,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -536,49 +533,49 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -599,9 +596,9 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -610,14 +607,14 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -628,15 +625,15 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -683,35 +680,32 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c4 {
+.c5 {
   border-radius: 0.3rem;
   padding: 6px;
   min-height: 2.5em;
   background-image: none;
-  color: #495057;
-  border: #606060 solid 0.1rem;
-}
-
-.c4.is-invalid {
   border: solid 0.1rem;
 }
 
-.c6.c6.btn {
+$ .c4.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c7.c7.btn {
   float: right;
-  color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c7.c7.btn .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
-  color: #d8292f;
+.c7.c7.btn:hover,
+.c7.c7.btn:active,
+.c7.c7.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
@@ -724,9 +718,9 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c7.c7.btn:hover .text,
+.c7.c7.btn:active .text,
+.c7.c7.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -907,11 +901,11 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
               class="col"
             >
               <div
-                class="c4"
+                class="c4 c5"
               >
                 Select from contacts
                 <button
-                  class="c5 Button Button--disabled c6 btn btn-link"
+                  class="c6 Button Button--disabled c7 btn btn-link"
                   disabled=""
                   type="button"
                 >
@@ -957,7 +951,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c5 Button Button--icon-only px-2 btn btn-primary"
+                class="c6 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
