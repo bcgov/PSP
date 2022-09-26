@@ -1,4 +1,4 @@
-import { IconButton } from 'components/common/buttons';
+import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
@@ -64,14 +64,14 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           <TooltipWrapper toolTipId="property-zoom-map" toolTip="Zoom Map">
-            <IconButton
+            <StyledIconButton
               variant="info"
               disabled={!props.onZoom}
               title="Zoom Map"
               onClick={() => props?.onZoom && props?.onZoom(props.composedProperty.apiProperty)}
             >
               <FaSearchPlus size={22} />
-            </IconButton>
+            </StyledIconButton>
           </TooltipWrapper>
         </Col>
       </Row>

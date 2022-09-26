@@ -1,4 +1,4 @@
-import { IconButton, LinkButton, StyledRemoveLinkButton } from 'components/common/buttons';
+import { LinkButton, StyledIconButton, StyledRemoveIconButton } from 'components/common/buttons';
 import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import Claims from 'constants/claims';
@@ -49,7 +49,7 @@ export function createActivityTableColumns(
     },
     {
       Header: 'Actions',
-      align: 'right',
+      align: 'left',
       sortable: false,
       width: 20,
       maxWidth: 20,
@@ -58,19 +58,19 @@ export function createActivityTableColumns(
         return (
           <StyledDiv>
             {hasClaim(Claims.ACTIVITY_VIEW) ? (
-              <IconButton
+              <StyledIconButton
                 title="View Activity"
                 variant="light"
                 onClick={() => onShowActivity(cellProps.row.original)}
               >
                 <ImEye size="2rem" />
-              </IconButton>
+              </StyledIconButton>
             ) : null}
 
             {hasClaim(Claims.ACTIVITY_DELETE) ? (
-              <StyledRemoveLinkButton onClick={() => onDelete(cellProps.row.original)}>
+              <StyledRemoveIconButton onClick={() => onDelete(cellProps.row.original)}>
                 <FaTrash title="Delete Activity" size="2rem" />
-              </StyledRemoveLinkButton>
+              </StyledRemoveIconButton>
             ) : null}
           </StyledDiv>
         );
