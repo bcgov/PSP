@@ -1,8 +1,9 @@
-import { fromApiPerson, IContactSearchResult } from 'interfaces';
 import { Api_AcquisitionFile, Api_AcquisitionFilePerson } from 'models/api/AcquisitionFile';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
-export class UpdateAcquisitionSummaryFormModel {
+import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../common/models';
+
+export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   id?: number;
   fileName?: string = '';
   assignedDate?: string;
@@ -46,32 +47,6 @@ export class UpdateAcquisitionSummaryFormModel {
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     newForm.team = model.acquisitionTeam?.map(x => AcquisitionTeamFormModel.fromApi(x)) || [];
 
-    return newForm;
-  }
-}
-
-export class AcquisitionTeamFormModel {
-  contact?: IContactSearchResult;
-  contactTypeCode: string;
-
-  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
-    this.contactTypeCode = contactTypeCode;
-    this.contact = contact;
-  }
-
-  toApi(): Api_AcquisitionFilePerson {
-    return {
-      personId: this.contact?.personId || 0,
-      person: { id: this.contact?.personId || 0 },
-      personProfileType: toTypeCode(this.contactTypeCode),
-    };
-  }
-
-  static fromApi(model: Api_AcquisitionFilePerson): AcquisitionTeamFormModel {
-    const newForm = new AcquisitionTeamFormModel(
-      fromTypeCode(model.personProfileType) || '',
-      model.person !== undefined ? fromApiPerson(model.person) : undefined,
-    );
     return newForm;
   }
 }

@@ -3,29 +3,27 @@ import { Select } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import * as API from 'constants/API';
-import { FieldArray, FormikProps, useFormikContext } from 'formik';
+import { FieldArray, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { AcquisitionForm, AcquisitionTeamForm } from './models';
+import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
 
-interface AddAcquisitionTeamFormProp {
-  formikProps: FormikProps<AcquisitionForm>;
-}
-export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamFormProp> = ({
-  formikProps,
-}) => {
-  const { values } = useFormikContext<AcquisitionForm>();
+interface IUpdateAcquisitionTeamSubFormProps {}
+
+export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquisitionTeamSubFormProps> = () => {
+  const { values, setFieldValue } = useFormikContext<WithAcquisitionTeam>();
   const [contactIndex, setContactIndex] = useState<number>(-1);
   const [showContactManager, setShowContactManager] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<IContactSearchResult[]>([]);
   const { getOptionsByType } = useLookupCodeHelpers();
   const personProfileTypes = getOptionsByType(API.ACQUISITION_FILE_PERSON_PROFILE_TYPES);
+
   const handleContactManagerOk = () => {
-    formikProps.setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
+    setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
     setShowContactManager(false);
     setSelectedContact([]);
   };
@@ -55,7 +53,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                       setShowContactManager(true);
                     }}
                     field={`team[${index}].contact`}
-                    onClear={() => formikProps.setFieldValue(`team[${index}].contact`, undefined)}
+                    onClear={() => setFieldValue(`team[${index}].contact`, undefined)}
                   ></ContactInput>
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
@@ -70,9 +68,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
             <LinkButton
               data-testid="add-team-member"
               onClick={() => {
-                const person: AcquisitionTeamForm = {
-                  contactTypeCode: '',
-                };
+                const person = new AcquisitionTeamFormModel('');
                 arrayHelpers.push(person);
               }}
             >

@@ -1,4 +1,3 @@
-import { IContactSearchResult } from 'interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFilePerson,
@@ -7,8 +6,9 @@ import {
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
+import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../common/models';
 
-export class AcquisitionForm {
+export class AcquisitionForm implements WithAcquisitionTeam {
   id?: number;
   fileName?: string = '';
   assignedDate?: string;
@@ -21,7 +21,7 @@ export class AcquisitionForm {
   // MOTI region
   region?: string;
   properties: PropertyForm[] = [];
-  team: AcquisitionTeamForm[] = [];
+  team: AcquisitionTeamFormModel[] = [];
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -46,7 +46,9 @@ export class AcquisitionForm {
           acquisitionFile: { id: this.id },
         };
       }),
-      acquisitionTeam: AcquisitionTeamForm.toApi(this.team),
+      acquisitionTeam: this.team
+        .filter(x => !!x.contact && !!x.contactTypeCode)
+        .map<Api_AcquisitionFilePerson>(x => x.toApi()),
     };
   }
 
@@ -65,26 +67,5 @@ export class AcquisitionForm {
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
 
     return newForm;
-  }
-}
-
-export class AcquisitionTeamForm {
-  contact?: IContactSearchResult;
-  contactTypeCode: string;
-
-  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
-    this.contactTypeCode = contactTypeCode;
-    this.contact = contact;
-  }
-
-  static toApi(model: AcquisitionTeamForm[]): Api_AcquisitionFilePerson[] {
-    return model
-      .filter(x => !!x.contact && !!x.contactTypeCode)
-      .map<Api_AcquisitionFilePerson>(x => {
-        return {
-          personId: x.contact?.personId || 0,
-          personProfileTypeCode: x.contactTypeCode,
-        };
-      });
   }
 }
