@@ -5,6 +5,7 @@ import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_Activity } from 'models/api/Activity';
 import * as React from 'react';
+import * as Yup from 'yup';
 
 import { Activity, ActivityFile } from './ActivityContainer';
 import { ActivityView } from './ActivityView';
@@ -73,6 +74,7 @@ export const ActivityForm = ({
           functionErrors = formContent?.validationFunction
             ? formContent?.validationFunction(values)
             : {};
+          validateYupSchema(values, activityYupSchema, true);
           validateYupSchema(values, formContent?.validationSchema, true);
           return functionErrors;
         } catch (err) {
@@ -121,5 +123,9 @@ export const ActivityForm = ({
     </Formik>
   );
 };
+
+const activityYupSchema = Yup.object().shape({
+  description: Yup.string().max(500, 'description must be at most 2000 characters'),
+});
 
 export default ActivityForm;
