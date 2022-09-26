@@ -48,7 +48,7 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'UpdateAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File updated'),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
   });
 
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<
@@ -60,7 +60,7 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'UpdateAcquisitionFileProperties',
     onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
-    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
+    onError: useAxiosErrorHandler('Failed to update Acquisition File Properties'),
   });
 
   return useMemo(
@@ -70,6 +70,11 @@ export const useAcquisitionProvider = () => {
       updateAcquisitionFile: updateAcquisitionFileApi,
       updateAcquisitionProperties: updateAcquisitionPropertiesApi,
     }),
-    [addAcquisitionFileApi, getAcquisitionFileApi, updateAcquisitionFileApi, updateAcquisitionPropertiesApi],
+    [
+      addAcquisitionFileApi,
+      getAcquisitionFileApi,
+      updateAcquisitionFileApi,
+      updateAcquisitionPropertiesApi,
+    ],
   );
 };

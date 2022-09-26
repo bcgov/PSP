@@ -47,6 +47,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   const { acquisitionFileId, onClose } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
   const { search } = useMapSearch();
+  const {
+    getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
+    updateAcquisitionProperties,
+  } = useAcquisitionProvider();
 
   const [acquisitionFile, setAcquisitionFile] = useState<Api_AcquisitionFile | undefined>(
     undefined,
@@ -65,11 +69,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }),
     initialState,
   );
-
-  const {
-    getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
-    updateAcquisitionFileProperties,
-  } = useAcquisitionProvider();
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
@@ -161,7 +160,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
           setContainerState({ activeEditForm: undefined, isEditing: false })
         }
         onSuccess={onSuccess}
-        updateFileProperties={updateAcquisitionFileProperties.execute}
+        updateFileProperties={updateAcquisitionProperties.execute}
       />
     );
   }
