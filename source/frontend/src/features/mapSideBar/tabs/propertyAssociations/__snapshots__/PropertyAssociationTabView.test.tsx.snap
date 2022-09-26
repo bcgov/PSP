@@ -29,6 +29,10 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
   text-align: left;
 }
 
+.c4 {
+  font-weight: bold;
+}
+
 .c2 {
   color: white;
   font-size: 1.5rem;
@@ -260,7 +264,17 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                   style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  admin
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon"
+                    id="userNameTooltip"
+                  >
+                    <span
+                      class="c4"
+                    >
+                      admin
+                    </span>
+                  </span>
                 </div>
                 <div
                   class="td"
@@ -334,7 +348,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                 <div
                   class="c2"
                 >
-                  0
+                  1
                 </div>
               </div>
             </div>
@@ -369,7 +383,151 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
       <div
         class="collapse"
       >
-        There are no acquisition files available
+        <div
+          class="table"
+          data-testid="associationFiles"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  File #
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  File name
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Created by
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Created date
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Status
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tbody"
+            role="rowgroup"
+          >
+            <div
+              class="tr-wrapper"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              >
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <a
+                    href="/mapview/sidebar/acquisition/45"
+                  >
+                    95154
+                  </a>
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  -
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon"
+                    id="userNameTooltip"
+                  >
+                    <span
+                      class="c4"
+                    >
+                      Acquisition File Data
+                    </span>
+                  </span>
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  May 13, 2022
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Active
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -570,7 +728,17 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
                   style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  Lease Seed Data
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon"
+                    id="userNameTooltip"
+                  >
+                    <span
+                      class="c4"
+                    >
+                      Lease Seed Data
+                    </span>
+                  </span>
                 </div>
                 <div
                   class="td"

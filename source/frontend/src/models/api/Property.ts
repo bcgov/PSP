@@ -109,5 +109,6 @@ export interface Api_PropertyAssociation {
   fileName?: string;
   createdDateTime?: string;
   createdBy?: string;
+  createdByGuid?: string;
   status?: string;
 }

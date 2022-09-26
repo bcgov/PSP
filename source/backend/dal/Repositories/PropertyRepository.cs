@@ -246,6 +246,10 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropertyResearchFiles)
                     .ThenInclude(pr => pr.ResearchFile)
                     .ThenInclude(r => r.ResearchFileStatusTypeCodeNavigation)
+                .Include(p => p.PimsPropertyAcquisitionFiles)
+                    .ThenInclude(pa => pa.AcquisitionFile)
+                    .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
+                   
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
