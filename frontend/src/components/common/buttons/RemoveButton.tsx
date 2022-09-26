@@ -11,7 +11,8 @@ interface IRemoveButtonProps {
 export const RemoveButton: React.FunctionComponent<IRemoveButtonProps> = ({ onRemove }) => {
   return (
     <StyledRemoveLinkButton onClick={onRemove}>
-      <MdClose size="2rem" title="remove" /> <span className="text">Remove</span>
+      <MdClose data-testid="remove-button" size="2rem" title="remove" />{' '}
+      <span className="text">Remove</span>
     </StyledRemoveLinkButton>
   );
 };
