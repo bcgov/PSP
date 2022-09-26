@@ -101,6 +101,7 @@ const baseSchema = Yup.object().shape({
       then: Yup.string().required('Province/State is required'),
     }),
   }),
+  comment: Yup.string().max(2000, 'Comments must be at most 2000 characters'),
 });
 
 export const PersonValidationSchema = baseSchema.shape({
