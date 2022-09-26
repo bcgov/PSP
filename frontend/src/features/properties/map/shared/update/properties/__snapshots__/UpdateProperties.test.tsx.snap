@@ -1069,6 +1069,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
                         class="Button__value"
                       >
                         <svg
+                          data-testid="remove-button"
                           fill="currentColor"
                           height="2rem"
                           stroke="currentColor"
