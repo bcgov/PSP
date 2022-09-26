@@ -61,6 +61,14 @@ namespace Pims.Dal
 
         #region ResearchFiles
         IResearchFileRepository ResearchFile { get; }
+
+        IResearchFilePropertyRepository ResearchFileProperty { get; }
+        #endregion
+
+        #region AcquisitionFiles
+        IAcquisitionFileRepository AcquisitionFile { get; }
+
+        IAcquisitionFilePropertyRepository AcquisitionFileProperty { get; }
         #endregion
 
         #region Notes

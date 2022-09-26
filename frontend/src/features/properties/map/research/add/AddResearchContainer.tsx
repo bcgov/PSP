@@ -10,11 +10,12 @@ import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
-import { PropertyForm, ResearchForm } from './models';
+import { ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;

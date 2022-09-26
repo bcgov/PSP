@@ -12,5 +12,7 @@ namespace Pims.Api.Services
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 
         PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile);
+
+        PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile);
     }
 }

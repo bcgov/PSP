@@ -30,7 +30,6 @@ export interface Api_ResearchFileProperty extends Api_ConcurrentVersion {
 export interface Api_ResearchFile extends Api_File, Api_AuditFields {
   roadName?: string;
   roadAlias?: string;
-  researchProperties?: Api_ResearchFileProperty[];
   requestDate?: string;
   requestDescription?: string;
   requestSourceDescription?: string;

@@ -1,4 +1,5 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { FileTypes } from 'constants/index';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
@@ -9,6 +10,7 @@ import React, { useCallback, useContext, useEffect, useReducer, useState } from 
 import styled from 'styled-components';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
 import { AcquisitionHeader } from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { EditFormNames } from './EditFormNames';
@@ -31,10 +33,12 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
+  const { updateAcquisitionFile } = useAcquisitionProvider();
 
   const [acquisitionFile, setAcquisitionFile] = useState<Api_AcquisitionFile | undefined>(
     undefined,
   );
+  const { search } = useMapSearch();
 
   /**
    See here that we are using `newState: Partial<AcquisitionContainerState>` in our reducer
@@ -77,15 +81,33 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     setContainerState({ selectedMenuIndex: selectedIndex });
   };
 
+  const onSuccess = () => {
+    fetchAcquisitionFile();
+    search();
+  };
+
   // UI components
   const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
 
   const menuItems =
-    acquisitionFile?.acquisitionProperties?.map(x => getAcquisitionPropertyName(x).value) || [];
+    acquisitionFile?.fileProperties?.map(x => getAcquisitionPropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
   if (acquisitionFile === undefined && loadingAcquisitionFile) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+  }
+
+  if (containerState.activeEditForm === EditFormNames.propertySelector && acquisitionFile) {
+    return (
+      <UpdateProperties
+        file={acquisitionFile}
+        setIsShowingPropertySelector={() =>
+          setContainerState({ activeEditForm: undefined, isEditing: false })
+        }
+        onSuccess={onSuccess}
+        updateFileProperties={updateAcquisitionFile.execute}
+      />
+    );
   }
 
   return (

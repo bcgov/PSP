@@ -92,7 +92,7 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsActivityInstanceDocuments.Remove(pimsActivityInstanceDocument);
             }
 
-            this.Context.PimsDocuments.Remove(documentToDelete);
+            this.Context.PimsDocuments.Remove(new PimsDocument() { Id = document.Id });
             return true;
         }
 

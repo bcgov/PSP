@@ -19,7 +19,7 @@ export function useAxiosSuccessHandler(message?: string) {
  * Provides default boilerplate applicable to handling most common axios request errors.
  * @param axiosError The request error object
  */
-export function useAxiosErrorHandler(message = 'Save error. Check responses and try again.') {
+export function useAxiosErrorHandler(message = 'Network error. Check responses and try again.') {
   return useCallback(
     (axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {

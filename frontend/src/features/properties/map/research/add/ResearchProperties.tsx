@@ -4,7 +4,8 @@ import { FieldArray, useFormikContext } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { PropertyForm, ResearchForm } from './models';
+import { PropertyForm } from '../../shared/models';
+import { ResearchForm } from './models';
 
 const ResearchProperties: React.FunctionComponent = () => {
   const { values } = useFormikContext<ResearchForm>();
