@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { Button } from './Button';
 
-export const IconButton = styled(Button)`
+export const StyledIconButton = styled(Button)`
   &&.btn {
     background-color: unset;
     border: none;
