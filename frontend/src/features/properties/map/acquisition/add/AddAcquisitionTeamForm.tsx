@@ -1,5 +1,4 @@
-import { LinkButton } from 'components/common/buttons';
-import { Button } from 'components/common/buttons/Button';
+import { LinkButton, RemoveButton } from 'components/common/buttons';
 import { Select } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
@@ -10,7 +9,6 @@ import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { MdClose } from 'react-icons/md';
 
 import { AcquisitionForm, AcquisitionTeamForm } from './models';
 
@@ -60,16 +58,12 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                     onClear={() => formikProps.setFieldValue(`team[${index}].contact`, undefined)}
                   ></ContactInput>
                 </Col>
-                <Col xs="auto" xl="2" className="pl-0 align-self-center mb-3">
-                  <Button
-                    data-testid="remove-team-member"
-                    icon={<MdClose size={20} />}
-                    variant="secondary"
-                    className="px-2"
-                    onClick={() => {
+                <Col xs="auto" xl="2" className="pl-0 mt-2">
+                  <RemoveButton
+                    onRemove={() => {
                       arrayHelpers.remove(index);
                     }}
-                  ></Button>
+                  />
                 </Col>
               </Row>
             ))}
