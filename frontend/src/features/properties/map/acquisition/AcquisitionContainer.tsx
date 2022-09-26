@@ -102,7 +102,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       <UpdateProperties
         file={acquisitionFile}
         setIsShowingPropertySelector={() =>
-          setContainerState({ activeEditForm: EditFormNames.acquisitionSummary })
+          setContainerState({ activeEditForm: undefined, isEditing: false })
         }
         onSuccess={onSuccess}
         updateFileProperties={updateAcquisitionFile.execute}
@@ -129,14 +129,12 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     >
       <FileLayout
         leftComponent={
-          <>
-            <AcquisitionMenu
-              items={menuItems}
-              selectedIndex={containerState.selectedMenuIndex}
-              onChange={onMenuChange}
-              setContainerState={setContainerState}
-            />
-          </>
+          <AcquisitionMenu
+            items={menuItems}
+            selectedIndex={containerState.selectedMenuIndex}
+            onChange={onMenuChange}
+            setContainerState={setContainerState}
+          />
         }
         bodyComponent={
           <StyledFormWrapper>
