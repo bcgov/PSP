@@ -125,7 +125,7 @@ export const ActivityForm = ({
 };
 
 const activityYupSchema = Yup.object().shape({
-  description: Yup.string().max(500, 'description must be at most 2000 characters'),
+  description: Yup.string().max(500, 'description must be at most 500 characters'),
 });
 
 export default ActivityForm;
