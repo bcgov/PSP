@@ -17,6 +17,28 @@ export const parcelIcon = L.icon({
   shadowSize: [41, 41],
 });
 
+// point of interest icon (blue) highlighted
+export const pointOfInterestIcon = L.icon({
+  iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
+  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// point of interest icon (blue) highlighted
+export const pointOfInterestIconSelect = L.icon({
+  iconUrl:
+    require('assets/images/pins/land-poi-selected.svg').default ??
+    'assets/images/pins/land-poi-selected.svg',
+  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // parcel icon (green) highlighted
 export const parcelIconSelect = L.icon({
   iconUrl:
@@ -68,7 +90,13 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
  * Get an icon type for the specified cluster property details (type, draft, erp, spp etc)
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
-  if (selected) {
+  if (feature.properties.IS_PROPERTY_OF_INTEREST) {
+    if (selected) {
+      return pointOfInterestIconSelect;
+    } else {
+      return pointOfInterestIcon;
+    }
+  } else if (selected) {
     return parcelIconSelect;
   }
   return parcelIcon;
