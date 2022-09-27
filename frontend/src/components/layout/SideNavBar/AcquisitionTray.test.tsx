@@ -33,13 +33,13 @@ describe('AcquisitionTray', () => {
   it(`should have the "Manage acquisition files" link in the component`, async () => {
     mockKeycloak({ claims: [Claims.ACQUISITION_VIEW] });
     setup({});
-    expect(screen.getByText(`Manage acquisition files`)).toBeInTheDocument();
+    expect(screen.getByText(`Manage Acquisition files`)).toBeInTheDocument();
   });
 
   it(`should have the Create an acquisition file link in the component`, async () => {
     mockKeycloak({ claims: [Claims.ACQUISITION_ADD] });
     setup({});
-    expect(screen.getByText(`Create an acquisition file`)).toBeInTheDocument();
+    expect(screen.getByText(`Create an Acquisition file`)).toBeInTheDocument();
   });
 
   it(`should not have the "Manage acquisition files" link in the component`, async () => {

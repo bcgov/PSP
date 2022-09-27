@@ -67,6 +67,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   municipalZoning?: string;
 
   notes?: string;
+  isDisabled?: boolean;
 }
 
 export interface Api_PropertyAnomaly extends Api_ConcurrentVersion, Api_AuditFields {

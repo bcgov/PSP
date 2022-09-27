@@ -9,7 +9,11 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
  * hook that interacts with the Acquisition File API.
  */
 export const useAcquisitionProvider = () => {
-  const { getAcquisitionFile, postAcquisitionFile } = useApiAcquisitionFile();
+  const {
+    getAcquisitionFile,
+    postAcquisitionFile,
+    putAcquisitionFileProperties,
+  } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
     (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
@@ -20,7 +24,7 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'AddAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File saved'),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to save Acquisition File'),
   });
 
   const getAcquisitionFileApi = useApiRequestWrapper<
@@ -31,14 +35,27 @@ export const useAcquisitionProvider = () => {
     ]),
     requestName: 'RetrieveAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File retrieved'),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to load Acquisition File'),
+  });
+
+  const updateAcquisitionPropertiesApi = useApiRequestWrapper<
+    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFileProperties(acqFile),
+      [putAcquisitionFileProperties],
+    ),
+    requestName: 'UpdateAcquisitionFileProperties',
+    onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
+    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
   });
 
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
       getAcquisitionFile: getAcquisitionFileApi,
+      updateAcquisitionFile: updateAcquisitionPropertiesApi,
     }),
-    [addAcquisitionFileApi, getAcquisitionFileApi],
+    [addAcquisitionFileApi, getAcquisitionFileApi, updateAcquisitionPropertiesApi],
   );
 };

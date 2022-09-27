@@ -20,6 +20,7 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
+        private readonly IAcquisitionFilePropertyRepository _acquisitionFilePropertyRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -28,6 +29,7 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
             IAcquisitionFileRepository acqFileRepository,
+            IAcquisitionFilePropertyRepository acqFilePropertyRepository,
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService)
@@ -35,6 +37,7 @@ namespace Pims.Api.Services
             _user = user;
             _logger = logger;
             _acqFileRepository = acqFileRepository;
+            _acquisitionFilePropertyRepository = acqFilePropertyRepository;
             _userRepository = userRepository;
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
@@ -90,6 +93,56 @@ namespace Pims.Api.Services
 
             // TODO: Implementation pending
             throw new System.NotImplementedException();
+        }
+
+        public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile)
+        {
+            _logger.LogInformation("Updating acquisition file properties...");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
+
+            MatchProperties(acquisitionFile);
+
+            // Get the current properties in the research file
+            var currentProperties = _acquisitionFilePropertyRepository.GetByAcquisitionFileId(acquisitionFile.Id);
+
+            // Check if the property is new or if it is being updated
+            foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                // If the property is not new, check if the name has been updated.
+                if (incomingAcquisitionProperty.Id != 0)
+                {
+                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Id == incomingAcquisitionProperty.Id);
+                    if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
+                    {
+                        existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        _acquisitionFilePropertyRepository.Update(existingProperty);
+                    }
+                }
+                else
+                {
+                    // New property needs to be added
+                    _acquisitionFilePropertyRepository.Add(incomingAcquisitionProperty);
+                }
+            }
+
+            // The ones not on the new set should be deleted
+            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Id == x.Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                _acquisitionFilePropertyRepository.Delete(deletedProperty);
+                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                {
+                    int propertyCount = _acquisitionFilePropertyRepository.GetAcquisitionFilePropertyRelatedCount(deletedProperty.PropertyId);
+                    if (propertyCount == 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    {
+                        _propertyRepository.Delete(deletedProperty.Property);
+                    }
+                }
+            }
+
+            _acqFileRepository.CommitTransaction();
+            return _acqFileRepository.GetById(acquisitionFile.Id);
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)

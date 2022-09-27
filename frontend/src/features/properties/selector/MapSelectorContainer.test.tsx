@@ -8,7 +8,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { PropertyForm } from '../map/research/add/models';
+import { PropertyForm } from '../map/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 import { featuresToIdentifiedMapProperty } from './search/PropertySelectorSearchContainer';

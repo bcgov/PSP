@@ -3,6 +3,7 @@ import { Claims } from 'constants/index';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_ResearchFile } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
@@ -98,7 +99,7 @@ describe('Research List View', () => {
         appCreateUserid: '',
         appCreateTimestamp: '2020-01-01',
         appLastUpdateTimestamp: '2021-01-01',
-        researchProperties: [
+        fileProperties: [
           {
             id: 1,
             isDisabled: false,
@@ -163,7 +164,7 @@ describe('Research List View', () => {
         appCreateUserid: '',
         appCreateTimestamp: '2020-01-01',
         appLastUpdateTimestamp: '2021-01-01',
-        researchProperties: [
+        fileProperties: [
           {
             id: 1,
             isDisabled: false,
@@ -496,17 +497,12 @@ describe('Research List View', () => {
   });
 });
 
-const mockResearchListViewResponse = [
+const mockResearchListViewResponse: Api_ResearchFile[] = [
   {
     id: 1,
-    researchFileStatusTypeCode: {
-      id: 'ACTIVE',
-      description: 'Active',
-      isDisabled: false,
-    },
     fileName: 'name',
     fileNumber: 'R100-100-100',
-    researchProperties: [
+    fileProperties: [
       {
         id: 1,
         isDisabled: false,
@@ -519,7 +515,7 @@ const mockResearchListViewResponse = [
           },
           dataSourceEffectiveDate: '2021-08-31T00:00:00',
           isSensitive: false,
-          pid: '007-723-385',
+          pid: 723385,
           pin: 90069930,
           landArea: 1,
           isVolumetricParcel: false,
@@ -540,7 +536,7 @@ const mockResearchListViewResponse = [
           },
           dataSourceEffectiveDate: '2021-08-31T00:00:00',
           isSensitive: false,
-          pid: '011-041-404',
+          pid: 11041404,
           pin: 90072652,
           landArea: 1,
           isVolumetricParcel: false,
@@ -558,15 +554,10 @@ const mockResearchListViewResponse = [
   },
   {
     id: 2,
-    researchFileStatusTypeCode: {
-      id: 'INACTIVE',
-      description: 'Inactive',
-      isDisabled: false,
-    },
     fileName: 'name',
     roadName: 'a road name',
     fileNumber: 'R100-100-101',
-    researchProperties: [],
+    fileProperties: [],
     appCreateTimestamp: '2020-02-02T00:00:00',
     appLastUpdateTimestamp: '2021-02-02T00:00:00',
     appLastUpdateUserid: 'dbo',
@@ -575,14 +566,9 @@ const mockResearchListViewResponse = [
   },
   {
     id: 3,
-    researchFileStatusTypeCode: {
-      id: 'ACTIVE',
-      description: 'Active',
-      isDisabled: false,
-    },
     fileName: 'test file name 1',
     fileNumber: 'R100-100-102',
-    researchProperties: [],
+    fileProperties: [],
     appCreateTimestamp: '2020-03-03T00:00:00',
     appLastUpdateTimestamp: '2020-04-04T00:00:00',
     appLastUpdateUserid: 'dbo',
@@ -591,14 +577,9 @@ const mockResearchListViewResponse = [
   },
   {
     id: 4,
-    researchFileStatusTypeCode: {
-      id: 'ACTIVE',
-      description: 'Active',
-      isDisabled: false,
-    },
     fileName: 'name',
     fileNumber: 'R100-100-103',
-    researchProperties: [],
+    fileProperties: [],
     appCreateTimestamp: '2020-05-05T00:00:00',
     appLastUpdateTimestamp: '2020-06-06T00:00:00',
     appLastUpdateUserid: 'dbo',
@@ -607,14 +588,9 @@ const mockResearchListViewResponse = [
   },
   {
     id: 5,
-    researchFileStatusTypeCode: {
-      id: 'ACTIVE',
-      description: 'Active',
-      isDisabled: false,
-    },
     fileName: 'name',
     fileNumber: 'R100-100-104',
-    researchProperties: [],
+    fileProperties: [],
     appCreateTimestamp: '2020-05-05T00:00:00',
     appLastUpdateTimestamp: '2020-06-06T00:00:00',
     appLastUpdateUserid: 'updateUser',

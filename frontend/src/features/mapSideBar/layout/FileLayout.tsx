@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-interface IResearchFileLayoutProps {
+interface IFileLayoutProps {
   leftComponent: React.ReactNode;
   bodyComponent: React.ReactNode;
 }
 
-const ResearchFileLayout: React.FunctionComponent<IResearchFileLayoutProps> = ({
+const FileLayout: React.FunctionComponent<IFileLayoutProps> = ({
   leftComponent,
   bodyComponent,
 }) => {
@@ -35,4 +35,4 @@ const StyledColContent = styled(Col)`
   width: 100%;
 `;
 
-export default ResearchFileLayout;
+export default FileLayout;

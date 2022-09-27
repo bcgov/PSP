@@ -1,4 +1,5 @@
-export const getMockResearchFile = () => ({
+import { Api_ResearchFile } from 'models/api/ResearchFile';
+export const getMockResearchFile = (): Api_ResearchFile => ({
   id: 109,
   fileName: 'fsdgsdf',
   fileNumber: 'R-109',
@@ -7,7 +8,7 @@ export const getMockResearchFile = () => ({
     description: 'Active',
     isDisabled: false,
   },
-  researchProperties: [
+  fileProperties: [
     {
       id: 55,
       isDisabled: false,
@@ -44,7 +45,6 @@ export const getMockResearchFile = () => ({
         },
         rowVersion: 1,
       },
-      purposeTypes: [],
       rowVersion: 1,
     },
   ],
