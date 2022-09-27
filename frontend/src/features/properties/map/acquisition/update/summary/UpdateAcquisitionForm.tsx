@@ -10,6 +10,7 @@ import styled from 'styled-components';
 
 import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { UpdateAcquisitionSummaryFormModel } from './models';
+import StatusToolTip from './StatusToolTip';
 
 export interface IUpdateAcquisitionFormProps {
   /** Initial values of the form */
@@ -47,7 +48,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
         <>
           <Container>
             <Section>
-              <SectionField label="Status">
+              <SectionField label="Status" helpText={<StatusToolTip />}>
                 <Select
                   field="fileStatusTypeCode"
                   options={fileStatusTypeCodes}
@@ -61,7 +62,10 @@ export const UpdateAcquisitionForm = React.forwardRef<
               <SectionField label="Assigned date">
                 <FastDatePicker field="assignedDate" formikProps={formikProps} />
               </SectionField>
-              <SectionField label="Delivery date">
+              <SectionField
+                label="Delivery date"
+                helpText="Date for delivery of the property to the project"
+              >
                 <FastDatePicker field="deliveryDate" formikProps={formikProps} />
               </SectionField>
             </Section>
