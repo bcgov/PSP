@@ -65,7 +65,6 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
         }
       }
     };
-
     func();
   }, [getProperty, id, isMounted]);
 
@@ -105,7 +104,6 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
         }
       }
     };
-
     func();
   }, [getPropertyAssociations, id]);
 
@@ -165,6 +163,7 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
 
   return (
     <InventoryTabsView
+      loading={propertyAssociationsLoading || ltsaLoading || propertyLoading}
       tabViews={tabViews}
       defaultTabKey={props.defaultTab}
       activeTab={activeTab}

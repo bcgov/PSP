@@ -9,6 +9,7 @@ export interface TabInventoryView {
 }
 
 export interface IInventoryTabsProps {
+  loading: boolean;
   defaultTabKey: InventoryTabNames;
   tabViews: TabInventoryView[];
   activeTab: InventoryTabNames;

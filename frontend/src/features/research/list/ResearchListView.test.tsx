@@ -88,7 +88,7 @@ describe('Research List View', () => {
     setupMockSearch([
       {
         id: 1,
-        researchFileStatusTypeCode: {
+        fileStatusTypeCode: {
           id: 'ACTIVE',
           description: 'Active',
           isDisabled: false,
@@ -153,7 +153,7 @@ describe('Research List View', () => {
     setupMockSearch([
       {
         id: 1,
-        researchFileStatusTypeCode: {
+        fileStatusTypeCode: {
           id: 'ACTIVE',
           description: 'Active',
           isDisabled: false,

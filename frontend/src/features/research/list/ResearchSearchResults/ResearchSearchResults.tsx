@@ -90,7 +90,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'Status',
-    accessor: 'researchFileStatusTypeCode',
+    accessor: 'fileStatusTypeCode',
     align: 'right',
     clickable: true,
     sortable: true,
