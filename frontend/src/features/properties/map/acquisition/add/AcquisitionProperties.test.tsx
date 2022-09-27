@@ -25,7 +25,7 @@ describe('AcquisitionProperties component', () => {
     const utils = render(
       <SelectedPropertyContextProvider values={{ setDraftProperties: setDraftProperties }}>
         <Formik initialValues={props.initialForm} onSubmit={noop}>
-          <AcquisitionProperties />
+          {formikProps => <AcquisitionProperties formikProps={formikProps} />}
         </Formik>
       </SelectedPropertyContextProvider>,
       {
