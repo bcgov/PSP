@@ -1,5 +1,6 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { compact } from 'lodash';
+import { Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
 import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { pidFormatter } from 'utils';
 
@@ -9,6 +10,7 @@ export enum NameSourceType {
   PLAN = 'Plan #',
   LOCATION = 'Location',
   RESEARCH = 'Research Name',
+  ACQUISITION = 'Acquisition Name',
   NONE = 'n/a',
 }
 
@@ -48,7 +50,30 @@ export const getResearchPropertyName = (
     return { label: NameSourceType.RESEARCH, value: researchProperty.propertyName };
   } else if (researchProperty.property !== undefined) {
     const property = researchProperty.property;
-    let mapProperty: IMapProperty = {
+    const mapProperty: IMapProperty = {
+      pin: property.pin?.toString(),
+      pid: property.pid?.toString(),
+      latitude: property.latitude,
+      longitude: property.longitude,
+      planNumber: property.planNumber,
+    };
+    return getPropertyName(mapProperty);
+  }
+  return { label: NameSourceType.NONE, value: '' };
+};
+
+export const getAcquisitionPropertyName = (
+  acquisitionProperty?: Api_AcquisitionFileProperty,
+): PropertyName => {
+  if (acquisitionProperty === undefined) {
+    return { label: NameSourceType.NONE, value: '' };
+  }
+
+  if (acquisitionProperty.propertyName !== undefined && acquisitionProperty.propertyName !== '') {
+    return { label: NameSourceType.ACQUISITION, value: acquisitionProperty.propertyName };
+  } else if (acquisitionProperty.property !== undefined) {
+    const property = acquisitionProperty.property;
+    const mapProperty: IMapProperty = {
       pin: property.pin?.toString(),
       pid: property.pid?.toString(),
       latitude: property.latitude,

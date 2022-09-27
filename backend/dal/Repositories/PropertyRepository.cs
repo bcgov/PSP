@@ -267,7 +267,16 @@ namespace Pims.Dal.Repositories
 
         public void Delete(PimsProperty property)
         {
-            this.Context.PimsProperties.Remove(property);
+            var existingProperty = this.Context.PimsProperties.AsNoTracking()
+                .Where(p => p.PropertyId == property.Id)
+                .Include(p => p.PimsPropertyResearchFiles)
+                .Include(p => p.PimsPropertyAcquisitionFiles)
+                .FirstOrDefault();
+
+            existingProperty.PimsPropertyResearchFiles.ForEach(pr => this.Context.Remove(pr));
+            existingProperty.PimsPropertyAcquisitionFiles.ForEach(pa => this.Context.Remove(pa));
+
+            this.Context.Entry(existingProperty).State = EntityState.Deleted;
         }
 
         #endregion

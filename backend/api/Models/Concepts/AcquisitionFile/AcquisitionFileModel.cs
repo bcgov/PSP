@@ -28,11 +28,6 @@ namespace Pims.Api.Models.Concepts
         public DateTime? DeliveryDate { get; set; }
 
         /// <summary>
-        /// get/set - The acquisition file status type.
-        /// </summary>
-        public TypeModel<string> AcquisitionFileStatusTypeCode { get; set; }
-
-        /// <summary>
         /// get/set - The acquisition physical file status type.
         /// </summary>
         public TypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }
@@ -50,7 +45,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - A list of research property relationships.
         /// </summary>
-        public IList<AcquisitionFilePropertyModel> AcquisitionProperties { get; set; }
+        public IList<AcquisitionFilePropertyModel> FileProperties { get; set; }
 
         /// <summary>
         /// get/set - A list of acquisition file person relationships.

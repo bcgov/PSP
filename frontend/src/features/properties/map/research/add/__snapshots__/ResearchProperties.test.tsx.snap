@@ -115,6 +115,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -1013,6 +1014,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                   class="Button__value"
                 >
                   <svg
+                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -1152,6 +1154,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                   class="Button__value"
                 >
                   <svg
+                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"

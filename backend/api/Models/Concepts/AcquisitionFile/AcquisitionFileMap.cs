@@ -16,11 +16,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.MinistryProjectName, src => src.MinistryProjectName)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
                 .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
+                .Map(dest => dest.FileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCodeNavigation)
                 .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
-                .Map(dest => dest.AcquisitionProperties, src => src.PimsPropertyAcquisitionFiles)
+                .Map(dest => dest.FileProperties, src => src.PimsPropertyAcquisitionFiles)
                 .Map(dest => dest.AcquisitionTeam, src => src.PimsAcquisitionFilePeople)
                 .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
 
@@ -32,11 +32,11 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.MinistryProjectName, src => src.MinistryProjectName)
                 .Map(dest => dest.AssignedDate, src => src.AssignedDate)
                 .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
-                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCode.Id)
+                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
-                .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.AcquisitionProperties)
+                .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
                 .Map(dest => dest.PimsAcquisitionFilePeople, src => src.AcquisitionTeam)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }

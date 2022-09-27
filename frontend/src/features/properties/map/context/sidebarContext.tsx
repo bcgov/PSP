@@ -1,8 +1,5 @@
 import { FileTypes } from 'constants/fileTypes';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_File } from 'models/api/File';
-import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
 
@@ -17,7 +14,6 @@ export interface ISideBarContext {
   setStaleFile: (stale: boolean) => void;
   fileLoading: boolean;
   setFileLoading: (loading: boolean) => void;
-  getFileProperties: () => Api_PropertyFile[];
 }
 
 export const SideBarContext = React.createContext<ISideBarContext>({
@@ -32,9 +28,6 @@ export const SideBarContext = React.createContext<ISideBarContext>({
   staleFile: false,
   setStaleFile: (stale: boolean) => {
     throw Error('setStaleFile function not defined');
-  },
-  getFileProperties: () => {
-    throw Error('getFileProperties function not defined');
   },
 });
 
@@ -54,17 +47,6 @@ export const SideBarContextProvider = (props: {
     [setFile, setStaleFile],
   );
 
-  const getFileProperties = () => {
-    switch (file?.fileType) {
-      case FileTypes.Acquisition:
-        return (file as Api_AcquisitionFile).acquisitionProperties ?? [];
-      case FileTypes.Research:
-        return (file as Api_ResearchFile).researchProperties ?? [];
-      default:
-        throw Error('invalid file type');
-    }
-  };
-
   return (
     <SideBarContext.Provider
       value={{
@@ -72,7 +54,6 @@ export const SideBarContextProvider = (props: {
         file: file,
         setFileLoading: setFileLoading,
         fileLoading: fileLoading,
-        getFileProperties,
         staleFile,
         setStaleFile,
       }}

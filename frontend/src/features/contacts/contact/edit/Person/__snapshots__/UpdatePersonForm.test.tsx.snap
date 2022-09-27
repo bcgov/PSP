@@ -103,6 +103,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -682,6 +683,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                     class="Button__value"
                   >
                     <svg
+                      data-testid="remove-button"
                       fill="currentColor"
                       height="2rem"
                       stroke="currentColor"
@@ -814,6 +816,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
                   class="Button__value"
                 >
                   <svg
+                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -1520,6 +1523,7 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 

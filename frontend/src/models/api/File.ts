@@ -1,3 +1,5 @@
+import { Api_PropertyFile } from 'models/api/PropertyFile';
+
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import Api_TypeCode from './TypeCode';
 
@@ -12,4 +14,5 @@ export interface Api_File extends Api_ConcurrentVersion {
   appCreateUserid?: string;
   appCreateUserGuid?: string;
   appLastUpdateUserGuid?: string;
+  fileProperties?: Api_PropertyFile[];
 }

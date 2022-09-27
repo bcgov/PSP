@@ -1,4 +1,4 @@
-import { IconButton } from 'components/common/buttons';
+import { StyledIconButton } from 'components/common/buttons';
 import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
 import { useContactDetail } from 'features/contacts/hooks/useContactDetail';
@@ -29,13 +29,13 @@ const ContactViewContainer: React.FunctionComponent<IContactViewContainerProps> 
         </Col>
         <Col md="auto" className="ml-auto">
           <ProtectedComponent hideIfNotAuthorized claims={[Claims.CONTACT_EDIT]}>
-            <IconButton
+            <StyledIconButton
               title="Edit Contact"
               variant="light"
               onClick={() => history.push(`/contact/${props?.match?.params?.id}/edit`)}
             >
               <MdEdit size={22} />
-            </IconButton>
+            </StyledIconButton>
           </ProtectedComponent>
         </Col>
       </Styled.RowAligned>

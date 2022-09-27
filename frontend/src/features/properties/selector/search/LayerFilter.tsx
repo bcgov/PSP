@@ -4,9 +4,9 @@ import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Form } from 'components/common/form';
 import { SelectInput } from 'components/common/List/SelectInput';
 import { IResearchFilterProps } from 'features/research/list/ResearchFilter/ResearchFilter';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { IGeocoderResponse } from 'hooks/useApi';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -39,6 +39,8 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
   onAddressChange,
   onAddressSelect,
 }) => {
+  const formikRef = useRef<FormikProps<ILayerSearchCriteria>>(null);
+
   const onSearchSubmit = (values: ILayerSearchCriteria, { setSubmitting }: any) => {
     setFilter(values);
     setSubmitting(false);
@@ -58,9 +60,15 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
     }
     return (
       <div className="suggestionList">
-        {addressResults?.map((x: IGeocoderResponse, index: number) => (
-          <option key={index} onClick={() => onSuggestionSelected(x)}>
-            {x.fullAddress}
+        {addressResults?.map((geoResponse: IGeocoderResponse, index: number) => (
+          <option
+            key={index}
+            onClick={() => {
+              formikRef.current?.setFieldValue('address', geoResponse.fullAddress);
+              onSuggestionSelected(geoResponse);
+            }}
+          >
+            {geoResponse.fullAddress}
           </option>
         ))}
       </div>
@@ -72,21 +80,17 @@ export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
   const isSearchByLegalDescription = internalFilter?.searchBy === 'legalDescription';
 
   return (
-    <Formik enableReinitialize initialValues={internalFilter} onSubmit={onSearchSubmit}>
+    <Formik
+      enableReinitialize
+      initialValues={internalFilter}
+      onSubmit={onSearchSubmit}
+      innerRef={formikRef}
+    >
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
             <Col xl={isSearchByLegalDescription ? 10 : 6}>
-              <SelectInput<
-                {
-                  pid: number;
-                  pin: number;
-                  planNumber: string;
-                  legalDescription: string;
-                  address: string;
-                },
-                IResearchFilterProps
-              >
+              <SelectInput<ILayerSearchCriteria, IResearchFilterProps>
                 field="searchBy"
                 defaultKey="pid"
                 as={isSearchByLegalDescription ? 'textarea' : 'input'}

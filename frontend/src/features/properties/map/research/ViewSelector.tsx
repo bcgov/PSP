@@ -47,10 +47,10 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
       );
     }
   } else {
-    const properties = props.researchFile?.researchProperties || [];
+    const properties = props.researchFile?.fileProperties || [];
     const selectedPropertyIndex = props.selectedIndex - 1;
     const researchFileProperty = properties[selectedPropertyIndex];
-    researchFileProperty.researchFile = props.researchFile;
+    researchFileProperty.file = props.researchFile;
     if (props.isEditMode) {
       if (props.editKey === FormKeys.propertyDetails) {
         return (

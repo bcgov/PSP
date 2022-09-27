@@ -159,11 +159,27 @@ namespace Pims.Dal
         }
 
         /// <summary>
-        /// get - The research file repository.
+        /// get - The research file property repository.
         /// </summary>
         public IResearchFilePropertyRepository ResearchFileProperty
         {
             get { return _serviceProvider.GetService<IResearchFilePropertyRepository>(); }
+        }
+
+        /// <summary>
+        /// get - The acquisition file repository.
+        /// </summary>
+        public IAcquisitionFileRepository AcquisitionFile
+        {
+            get { return _serviceProvider.GetService<IAcquisitionFileRepository>(); }
+        }
+
+        /// <summary>
+        /// get - The acquisition file property repository.
+        /// </summary>
+        public IAcquisitionFilePropertyRepository AcquisitionFileProperty
+        {
+            get { return _serviceProvider.GetService<IAcquisitionFilePropertyRepository>(); }
         }
 
         /// <summary>

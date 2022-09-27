@@ -1,10 +1,10 @@
-import { ModalProps } from 'components/common/GenericModal';
+import { ModalContent, ModalProps } from 'components/common/GenericModal';
 import * as React from 'react';
 import { useState } from 'react';
 
 export interface IModalContext {
   modalProps?: ModalProps;
-  setModalProps: (modalProps?: ModalProps) => void;
+  setModalContent: (modalProps?: ModalContent) => void;
   setDisplayModal: (display: boolean) => void;
 }
 
@@ -13,30 +13,26 @@ export const ModalContext = React.createContext<IModalContext>({
   setDisplayModal: (display: boolean) => {
     throw Error('setDisplayModal function not defined');
   },
-  setModalProps: (modalProps?: ModalProps) => {
+  setModalContent: (modalProps?: ModalContent) => {
     throw Error('setModalProps function not defined');
   },
 });
 
-export const ModalContextProvider = (
-  props: IModalContext & { children: React.ReactChild | React.ReactChild[] | React.ReactNode },
-) => {
+export const ModalContextProvider = (props: {
+  children: React.ReactChild | React.ReactChild[] | React.ReactNode;
+}) => {
   const [modalProps, setModalProps] = useState<ModalProps | undefined>(undefined);
-  const displayFunction = React.useCallback(
-    (displayModal: boolean) => {
-      setModalProps({ ...modalProps, display: displayModal });
-    },
-    [modalProps],
-  );
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const updateFunction = React.useCallback(
-    (updatedModalProps?: ModalProps) =>
+    (updatedModalContent?: ModalContent) => {
       setModalProps({
-        ...modalProps,
-        ...updatedModalProps,
-        display: updatedModalProps?.display ?? modalProps?.display ?? false,
-        setDisplay: displayFunction,
-      }),
-    [displayFunction, modalProps],
+        ...updatedModalContent,
+        display: showModal,
+        setDisplay: setShowModal,
+      });
+    },
+    [showModal, setShowModal],
   );
 
   return (
@@ -44,11 +40,11 @@ export const ModalContextProvider = (
       value={{
         modalProps: {
           ...modalProps,
-          display: modalProps?.display ?? false,
-          setDisplay: displayFunction,
+          display: showModal,
+          setDisplay: setShowModal,
         },
-        setModalProps: updateFunction,
-        setDisplayModal: displayFunction,
+        setModalContent: updateFunction,
+        setDisplayModal: setShowModal,
       }}
     >
       {props.children}

@@ -32,6 +32,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PphStatusUpdateTimestamp, src => src.PphStatusUpdateTimestamp)
                 .Map(dest => dest.PphStatusUpdateUserGuid, src => src.PphStatusUpdateUserGuid)
                 .Map(dest => dest.Notes, src => src.Notes)
+                .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
                 .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes)
@@ -77,6 +79,8 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
 
                 .Map(dest => dest.Notes, src => src.Notes)
+                .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
                 .Map(dest => dest.PimsPropPropAnomalyTypes, src => src.Anomalies)

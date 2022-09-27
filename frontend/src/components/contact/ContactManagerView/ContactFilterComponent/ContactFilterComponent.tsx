@@ -49,7 +49,13 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
       validateOnChange={true}
     >
       {({ resetForm, isSubmitting, values, submitForm }) => (
-        <StyledFilterBoxForm>
+        <StyledFilterBoxForm
+          onKeyUp={(e: any) => {
+            if (e.keyCode === 13) {
+              submitForm();
+            }
+          }}
+        >
           <Row>
             <Col xs="auto">
               <RadioGroup
@@ -141,7 +147,7 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
                         setFilter={setFilter}
                       />
                       <Active />
-                      <span>Show active users only</span>
+                      <span>Show active contacts only</span>
                     </>
                   )}
                 </Col>

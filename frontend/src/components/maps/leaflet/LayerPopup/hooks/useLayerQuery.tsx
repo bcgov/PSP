@@ -1,12 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { layerData } from 'constants/toasts';
-import { Feature, FeatureCollection } from 'geojson';
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { LatLngLiteral } from 'leaflet';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
+import { store } from 'store/store';
 
 import { toCqlFilter } from '../../mapUtils';
 
@@ -57,11 +58,23 @@ export interface IUserLayerQuery {
     geometryName?: string,
     spatialReferenceId?: number,
   ) => Promise<Record<string, any>>;
+
+  findOneWhereContainsWrapped: (
+    latlng: LatLngLiteral,
+    geometryName?: string | undefined,
+    spatialReferenceId?: number | undefined,
+  ) => Promise<FeatureCollection<Geometry, GeoJsonProperties> | undefined>;
+  findOneWhereContainsLoading: boolean;
 }
 
 const MAX_RETRIES = 2;
-const wfsAxios = (timeout?: number) => {
-  const instance = axios.create({ timeout: timeout ?? 5000 });
+const wfsAxios = (axiosProps?: { timeout?: number; authenticated?: boolean }) => {
+  const instance = axios.create({
+    timeout: axiosProps?.timeout ?? 5000,
+  });
+  if (axiosProps?.authenticated) {
+    instance.defaults.headers.common['Authorization'] = `Bearer ${store.getState().jwt}`;
+  }
   instance.defaults.raxConfig = {
     retry: MAX_RETRIES,
     instance: instance,
@@ -89,7 +102,7 @@ const wfsAxios = (timeout?: number) => {
  * @param url wfs request url
  * @param geometry the name of the geometry in the feature collection
  */
-export const useLayerQuery = (url: string): IUserLayerQuery => {
+export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQuery => {
   const baseAllUrl = `${url}&srsName=EPSG:4326`;
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
@@ -100,20 +113,42 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
       spatialReferenceId: number = 4326,
     ): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
-        await wfsAxios().get<FeatureCollection>(
+        await wfsAxios({ authenticated }).get<FeatureCollection>(
           `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
         )
       )?.data;
       return data;
     },
-    [baseUrl],
+    [baseUrl, authenticated],
   );
+
+  const {
+    execute: findOneWhereContainsWrapped,
+    loading: findOneWhereContainsLoading,
+  } = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        latlng: LatLngLiteral,
+        geometryName: string = 'SHAPE',
+        spatialReferenceId: number = 4326,
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios({ authenticated }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(
+          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
+        );
+        return data;
+      },
+      [baseUrl, authenticated],
+    ),
+    requestName: 'findByPid',
+  });
 
   const findByAdministrative = useCallback(
     async (city: string): Promise<Feature | null> => {
       try {
         const data: any = (
-          await wfsAxios().get(
+          await wfsAxios({ authenticated }).get(
             `${baseUrl}&cql_filter=ADMIN_AREA_NAME='${city}' OR ADMIN_AREA_ABBREVIATION='${city}'&outputformat=json`,
           )
         )?.data;
@@ -127,7 +162,7 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
         return null;
       }
     },
-    [baseUrl],
+    [baseUrl, authenticated],
   );
 
   const { execute: findByPid, loading: findByPidLoading } = useApiRequestWrapper({
@@ -135,12 +170,15 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
       async (pid: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         //Do not make a request if we our currently cached response matches the requested pid.
         const formattedPid = pid.replace(/-/g, '');
-        const data: AxiosResponse<FeatureCollection> = await wfsAxios(20000).get<FeatureCollection>(
+        const data: AxiosResponse<FeatureCollection> = await wfsAxios({
+          timeout: 20000,
+          authenticated,
+        }).get<FeatureCollection>(
           `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PID: formattedPid }, true)}`,
         );
         return data;
       },
-      [baseAllUrl, baseUrl],
+      [baseAllUrl, baseUrl, authenticated],
     ),
     requestName: 'findByPid',
   });
@@ -149,12 +187,13 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
     requestFunction: useCallback(
       async (pin: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         //Do not make a request if we our currently cached response matches the requested pid.
-        const data: AxiosResponse<FeatureCollection> = await wfsAxios(20000).get<FeatureCollection>(
-          `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PIN: pin })}`,
-        );
+        const data: AxiosResponse<FeatureCollection> = await wfsAxios({
+          timeout: 20000,
+          authenticated,
+        }).get<FeatureCollection>(`${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PIN: pin })}`);
         return data;
       },
-      [baseAllUrl, baseUrl],
+      [baseAllUrl, baseUrl, authenticated],
     ),
     requestName: 'findByPin',
   });
@@ -163,12 +202,15 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
     requestFunction: useCallback(
       async (planNumber: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
         //Do not make a request if we our currently cached response matches the requested pid.
-        const data: AxiosResponse<FeatureCollection> = await wfsAxios(20000).get<FeatureCollection>(
+        const data: AxiosResponse<FeatureCollection> = await wfsAxios({
+          timeout: 20000,
+          authenticated,
+        }).get<FeatureCollection>(
           `${allBy ? baseAllUrl : baseUrl}&${toCqlFilter({ PLAN_NUMBER: planNumber })}`,
         );
         return data;
       },
-      [baseAllUrl, baseUrl],
+      [baseAllUrl, baseUrl, authenticated],
     ),
     requestName: 'planNumber',
   });
@@ -204,6 +246,8 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
       findByPlanNumberLoading,
       findByAdministrative,
       findMetadataByLocation,
+      findOneWhereContainsWrapped,
+      findOneWhereContainsLoading,
     }),
     [
       findMetadataByLocation,
@@ -215,6 +259,8 @@ export const useLayerQuery = (url: string): IUserLayerQuery => {
       findByPlanNumber,
       findByPlanNumberLoading,
       findOneWhereContains,
+      findOneWhereContainsWrapped,
+      findOneWhereContainsLoading,
     ],
   );
 };

@@ -100,6 +100,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -148,15 +149,6 @@ exports[`Manage access requests Snapshot matches 1`] = `
   margin-top: 0.3rem;
 }
 
-.c2 {
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2rem;
-}
-
 .c0 {
   padding: 1.6rem 3.2rem;
   -webkit-box-flex: 1;
@@ -176,14 +168,18 @@ exports[`Manage access requests Snapshot matches 1`] = `
   height: 100%;
 }
 
+.c2 {
+  text-align: left;
+}
+
 <div
     class="c0 c1"
   >
-    <h1
+    <h3
       class="c2"
     >
       PIMS User Access Requests
-    </h1>
+    </h3>
     <form
       class="c3 p-3"
     >
