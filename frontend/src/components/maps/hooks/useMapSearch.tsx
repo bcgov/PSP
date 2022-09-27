@@ -28,7 +28,6 @@ export const useMapSearch = () => {
       );
       if (tileData) {
         const validFeatures = tileData.features.filter(feature => !!feature?.geometry);
-        console.log(validFeatures);
         setProperties(propertiesResponseToPointFeature(tileData));
 
         if (validFeatures.length === 0) {
