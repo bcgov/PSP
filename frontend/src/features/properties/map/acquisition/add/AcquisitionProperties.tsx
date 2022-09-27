@@ -28,7 +28,7 @@ export const AcquisitionProperties: React.FunctionComponent<AcquisitionPropertie
             <Col>
               <MapSelectorContainer
                 onSelectedProperty={(newProperty: IMapProperty) => {
-                  const formProperty = AcquisitionPropertyForm.fromMapProperty(newProperty);
+                  const formProperty = PropertyForm.fromMapProperty(newProperty);
                   if (values.properties?.length === 0) {
                     formikProps.setFieldValue(`region`, formProperty.region);
                   }
