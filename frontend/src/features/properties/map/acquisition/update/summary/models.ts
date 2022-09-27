@@ -5,6 +5,8 @@ import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../common/mode
 
 export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   id?: number;
+  fileNo?: number;
+  fileNumber?: string;
   fileName?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
@@ -21,6 +23,8 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   toApi(): Api_AcquisitionFile {
     return {
       id: this.id,
+      fileNo: this.fileNo,
+      fileNumber: this.fileNumber,
       fileName: this.fileName,
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
@@ -38,6 +42,8 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   static fromApi(model: Api_AcquisitionFile): UpdateAcquisitionSummaryFormModel {
     const newForm = new UpdateAcquisitionSummaryFormModel();
     newForm.id = model.id;
+    newForm.fileNo = model.fileNo;
+    newForm.fileNumber = model.fileNumber;
     newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;

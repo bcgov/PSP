@@ -112,8 +112,19 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model)
         {
-            // TODO: Implementation pending
-            throw new System.NotImplementedException();
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(UpdateAcquisitionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
+
+            var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
+            var acquisitionFile = _acquisitionService.Update(acqFileEntity);
+
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         /// <summary>

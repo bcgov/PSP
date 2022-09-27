@@ -8,6 +8,11 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
+        /// get/set - The auto-generated portion of the acquisition file number.
+        /// </summary>
+        public long FileNo { get; set; }
+
+        /// <summary>
         /// get/set - The ministry project number.
         /// </summary>
         public string MinistryProjectNumber { get; set; }
@@ -50,7 +55,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - A list of acquisition file person relationships.
         /// </summary>
-        public IList<AcquisitionFilePersonModel> AcquisitionTeam{ get; set; }
+        public IList<AcquisitionFilePersonModel> AcquisitionTeam { get; set; }
         #endregion
     }
 }

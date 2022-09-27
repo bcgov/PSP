@@ -129,14 +129,15 @@ namespace Pims.Dal.Repositories
         public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile)
         {
             using var _ = Logger.QueryScope();
-
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
             var existingAcqFile = this.Context.PimsAcquisitionFiles
                 .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Id) ?? throw new KeyNotFoundException();
 
-            // TODO: Implementation pending
-            throw new System.NotImplementedException();
+            this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
+            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
+
+            return acquisitionFile;
         }
 
         /// <summary>

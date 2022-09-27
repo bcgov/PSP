@@ -91,8 +91,9 @@ namespace Pims.Api.Services
 
             ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
 
-            // TODO: Implementation pending
-            throw new System.NotImplementedException();
+            var newAcqFile =_acqFileRepository.Update(acquisitionFile);
+            _acqFileRepository.CommitTransaction();
+            return newAcqFile;
         }
 
         public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile)
