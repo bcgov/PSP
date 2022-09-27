@@ -8,6 +8,7 @@ import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 
 export interface IUpdateAcquisitionFormProps {
@@ -32,6 +33,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
+  const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
 
   return (
     <Formik<UpdateAcquisitionSummaryFormModel>
@@ -44,6 +46,17 @@ export const UpdateAcquisitionForm = React.forwardRef<
       {formikProps => (
         <>
           <Container>
+            <Section>
+              <SectionField label="Status">
+                <Select
+                  field="fileStatusTypeCode"
+                  options={fileStatusTypeCodes}
+                  placeholder="Select..."
+                  required
+                />
+              </SectionField>
+            </Section>
+
             <Section header="Schedule">
               <SectionField label="Assigned date">
                 <FastDatePicker field="assignedDate" formikProps={formikProps} />
@@ -83,7 +96,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
             </Section>
 
             <Section header="Acquisition Team">
-              {/* <AddAcquisitionTeamForm formikProps={formikProps} /> */}
+              <UpdateAcquisitionTeamSubForm />
             </Section>
           </Container>
 

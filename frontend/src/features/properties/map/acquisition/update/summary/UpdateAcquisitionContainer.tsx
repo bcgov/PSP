@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { UpdateAcquisitionSummaryFormModel } from './models';
+import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import { UpdateAcquisitionForm } from './UpdateAcquisitionForm';
 
 export interface IUpdateAcquisitionContainerProps {
@@ -48,7 +49,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
         ref={formikRef}
         initialValues={UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile)}
         onSubmit={handleSubmit}
-        // validationSchema={helper.validationSchema}
+        validationSchema={UpdateAcquisitionFileYupSchema}
       />
     </StyledFormWrapper>
   );

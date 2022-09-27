@@ -10,6 +10,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   deliveryDate?: string;
   rowVersion?: number;
   // Code Tables
+  fileStatusTypeCode?: string;
   acquisitionFileStatusType?: string;
   acquisitionPhysFileStatusType?: string;
   acquisitionType?: string;
@@ -41,6 +42,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
     newForm.rowVersion = model.rowVersion;
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
+    newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
