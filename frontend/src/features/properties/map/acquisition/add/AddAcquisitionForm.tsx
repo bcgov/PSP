@@ -38,7 +38,6 @@ export const AddAcquisitionForm = React.forwardRef<
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] = React.useState<boolean>(
     false,
   );
-  const [ignoreRegionWarning, setIgnoreRegionWarning] = React.useState<boolean>(false);
   const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
     const selectedPropRegions = values.properties.map(x => x.region);
     return (
@@ -50,7 +49,7 @@ export const AddAcquisitionForm = React.forwardRef<
   };
 
   const handleSubmit = (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
-    if (isMinistryRegionDiff(values) && !ignoreRegionWarning) {
+    if (isMinistryRegionDiff(values)) {
       setShowDiffMinistryRegionModal(true);
     } else {
       onSubmit(values, formikHelpers);
@@ -125,12 +124,10 @@ export const AddAcquisitionForm = React.forwardRef<
             title="Different Ministry region"
             display={showDiffMinistryRegionModal}
             handleOk={() => {
-              setIgnoreRegionWarning(true);
               setShowDiffMinistryRegionModal(false);
               onSubmit(formikProps.values, formikProps);
             }}
             handleCancel={() => {
-              setIgnoreRegionWarning(false);
               setShowDiffMinistryRegionModal(false);
             }}
           ></AcquisitionFormModal>
