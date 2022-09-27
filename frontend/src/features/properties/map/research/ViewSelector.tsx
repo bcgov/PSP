@@ -1,9 +1,15 @@
+import {
+  InventoryTabNames,
+  InventoryTabs,
+  TabInventoryView,
+} from 'features/mapSideBar/tabs/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import { PropertyResearchTabView } from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import { FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 
-import PropertyResearchContainer from './detail/PropertyResearchContainer';
+import PropertyFileContainer from '../shared/detail/PropertyFileContainer';
 import { FormKeys } from './FormKeys';
 import ResearchTabsContainer from './ResearchTabsContainer';
 import UpdatePropertyView from './update/property/UpdatePropertyView';
@@ -51,6 +57,7 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
     const selectedPropertyIndex = props.selectedIndex - 1;
     const researchFileProperty = properties[selectedPropertyIndex];
     researchFileProperty.file = props.researchFile;
+
     if (props.isEditMode) {
       if (props.editKey === FormKeys.propertyDetails) {
         return (
@@ -70,11 +77,30 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
         );
       }
     } else {
+      const researchPropertyTab: TabInventoryView = {
+        content: (
+          <PropertyResearchTabView
+            researchFile={researchFileProperty}
+            setEditMode={editable => {
+              props.setEditMode(editable);
+              props.setEditKey(FormKeys.propertyResearch);
+            }}
+          />
+        ),
+        key: InventoryTabNames.research,
+        name: 'Property Research',
+      };
+
       return (
-        <PropertyResearchContainer
-          researchFileProperty={researchFileProperty}
-          setEditMode={props.setEditMode}
-          setEditKey={props.setEditKey}
+        <PropertyFileContainer
+          fileProperty={researchFileProperty}
+          setEditFileProperty={() => {
+            props.setEditKey(FormKeys.propertyDetails);
+            props.setEditMode(true);
+          }}
+          defaultTab={InventoryTabNames.research}
+          customTabs={[researchPropertyTab]}
+          View={InventoryTabs}
         />
       );
     }

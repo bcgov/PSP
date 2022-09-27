@@ -1,6 +1,6 @@
 import Api_TypeCode from 'interfaces/ITypeCode';
+import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 
-import { Api_PropertyResearchFile } from './../models/api/PropertyResearchFile';
 export interface IResearchSearchResult {
   id: number;
   fileNumber: string;
@@ -11,5 +11,5 @@ export interface IResearchSearchResult {
   appCreateUserid: string;
   appLastUpdateTimestamp: string;
   researchFileStatusTypeCode: Api_TypeCode<string>;
-  fileProperties: Api_PropertyResearchFile[];
+  fileProperties: Api_ResearchFileProperty[];
 }

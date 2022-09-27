@@ -5,6 +5,7 @@ import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Person } from './Person';
 import { Api_Property } from './Property';
+import { Api_PropertyFile } from './PropertyFile';
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
@@ -21,14 +22,10 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTeam?: Api_AcquisitionFilePerson[];
 }
 
-export interface Api_AcquisitionFileProperty extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  isDisabled?: boolean;
-  displayOrder?: number;
-  propertyName?: string;
-  property?: Api_Property;
-  acquisitionFile?: Api_AcquisitionFile;
-}
+export interface Api_AcquisitionFileProperty
+  extends Api_ConcurrentVersion,
+    Api_PropertyFile,
+    Api_AuditFields {}
 
 export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;

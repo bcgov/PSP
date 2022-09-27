@@ -2,14 +2,14 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
-import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
+import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import { UpdatePropertyFormModel } from './models';
 import UpdatePropertyForm from './UpdatePropertyForm';
 
-const testResearchFile: Api_PropertyResearchFile = {
+const testResearchFile: Api_ResearchFileProperty = {
   id: 1,
   propertyName: 'Corner of Nakya PL ',
   isDisabled: false,
