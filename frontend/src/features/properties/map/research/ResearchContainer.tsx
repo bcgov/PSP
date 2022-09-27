@@ -6,7 +6,7 @@ import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
-import { getResearchPropertyName } from 'features/properties/selector/utils';
+import { getFilePropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
@@ -52,8 +52,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const { search } = useMapSearch();
   const { hasClaim } = useKeycloakWrapper();
 
-  const menuItems =
-    researchFile?.researchProperties?.map(x => getResearchPropertyName(x).value) || [];
+  const menuItems = researchFile?.researchProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('RFile Summary');
 
   useEffect(() => setFileLoading(loadingResearchFile), [loadingResearchFile, setFileLoading]);

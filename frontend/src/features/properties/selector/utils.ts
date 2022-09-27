@@ -1,6 +1,6 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { compact } from 'lodash';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { pidFormatter } from 'utils';
 
 export enum NameSourceType {
@@ -37,17 +37,22 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   return { label: NameSourceType.NONE, value: '' };
 };
 
-export const getResearchPropertyName = (
-  researchProperty?: Api_ResearchFileProperty,
+export const getFilePropertyName = (
+  fileProperty?: Api_PropertyFile,
+  skipName: boolean = false,
 ): PropertyName => {
-  if (researchProperty === undefined) {
+  if (fileProperty === undefined) {
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  if (researchProperty.propertyName !== undefined && researchProperty.propertyName !== '') {
-    return { label: NameSourceType.RESEARCH, value: researchProperty.propertyName };
-  } else if (researchProperty.property !== undefined) {
-    const property = researchProperty.property;
+  if (
+    fileProperty.propertyName !== undefined &&
+    fileProperty.propertyName !== '' &&
+    skipName === false
+  ) {
+    return { label: NameSourceType.RESEARCH, value: fileProperty.propertyName };
+  } else if (fileProperty.property !== undefined) {
+    const property = fileProperty.property;
     let mapProperty: IMapProperty = {
       pin: property.pin?.toString(),
       pid: property.pid?.toString(),
