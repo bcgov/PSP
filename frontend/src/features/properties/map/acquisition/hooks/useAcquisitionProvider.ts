@@ -67,18 +67,6 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to update Acquisition File Properties'),
   });
 
-  const updateAcquisitionPropertiesApi = useApiRequestWrapper<
-    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFileProperties(acqFile),
-      [putAcquisitionFileProperties],
-    ),
-    requestName: 'UpdateAcquisitionFileProperties',
-    onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
-    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
-  });
-
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,

@@ -1,3 +1,4 @@
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
@@ -38,6 +39,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     return researchForm;
   }, [selectedResearchFeature]);
   const { addResearchFile } = useAddResearch();
+  const { search } = useMapSearch();
 
   useEffect(() => {
     if (!!selectedResearchFeature && !!formikRef.current) {
@@ -56,6 +58,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     formikRef.current?.setSubmitting(false);
     if (!!response?.fileName) {
       formikRef.current?.resetForm();
+      await search();
       history.replace(`/mapview/sidebar/research/${response.id}`);
     }
   };
