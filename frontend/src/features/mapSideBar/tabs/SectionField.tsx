@@ -1,13 +1,12 @@
 import clsx from 'classnames';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { Col, Row } from 'react-bootstrap';
-import { Placement } from 'react-bootstrap/Overlay';
 import styled from 'styled-components';
 
 interface ISectionFieldProps {
   label: string;
-  helpText?: React.ReactNode;
-  helpTextPlacement?: Placement;
+  /** It accepts either a string or a custom React tooltip component  */
+  tooltip?: React.ReactNode;
   className?: string;
   required?: boolean;
   labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
@@ -20,14 +19,7 @@ export const SectionField: React.FunctionComponent<ISectionFieldProps> = props =
       <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">
         <StyledFieldLabel>
           {props.label}:
-          {props.helpText && (
-            <TooltipIcon
-              className="ml-2"
-              toolTipId="section-field-tooltip"
-              toolTip={props.helpText}
-              placement={props.helpTextPlacement}
-            />
-          )}
+          {props.tooltip && <span className="ml-2">{renderTooltip(props.tooltip)}</span>}
         </StyledFieldLabel>
       </Col>
       <StyledCol
@@ -39,6 +31,18 @@ export const SectionField: React.FunctionComponent<ISectionFieldProps> = props =
     </Row>
   );
 };
+
+function renderTooltip(tooltip?: React.ReactNode): React.ReactNode {
+  if (tooltip === undefined) {
+    return null;
+  }
+  if (typeof tooltip === 'string' || typeof tooltip === 'number') {
+    return <TooltipIcon toolTipId="section-field-tooltip" toolTip={tooltip} placement="auto" />;
+  }
+  // we got a custom tooltip - render that
+  return tooltip;
+}
+
 export const StyledCol = styled(Col)`
   &.required::before {
     content: '*';
