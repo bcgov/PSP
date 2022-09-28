@@ -11,6 +11,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly LoginSteps loginSteps;
         private readonly LeaseDetails leaseDetails;
+<<<<<<< HEAD
+<<<<<<< HEAD
         private readonly LeaseTenants tenant;
         private readonly LeasePayments payments;
         private readonly LeaseImprovements improvements;
@@ -18,6 +20,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LeaseDeposits deposits;
         private readonly LeaseSurplus surplus;
         private readonly SearchLease searchLease;
+=======
+        private readonly Tenants tenant;
+        private readonly LeasePayments payments;
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+        private readonly LeaseTenants tenant;
+        private readonly LeasePayments payments;
+        private readonly LeaseImprovements improvements;
+        private readonly LeaseInsurance insurance;
+        private readonly LeaseDeposits deposits;
+        private readonly LeaseSurplus surplus;
+        private readonly SearchLease searchLease;
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
         private readonly string userName = "sutairak";
 
@@ -37,6 +52,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private readonly string firstTermEndDate = "04/22/2022";
         private readonly string firstTermAgreedPayment = "2500";
+<<<<<<< HEAD
+<<<<<<< HEAD
         private readonly string firstTermPaymentSentDate = "02/23/2022";
         private readonly string firstTermPaymentStatus = "Paid";
         private readonly string firstTermPaymentReceived = "2625";
@@ -46,12 +63,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string secondTermStartDate = "05/22/2022";
         private readonly string secondTermEndDate = "06/30/2022";
         private readonly string secondTermAgreedPayment = "3500";
+=======
+        private readonly string firstTermPaymentSentDate = "04/23/2022";
+=======
+        private readonly string firstTermPaymentSentDate = "02/23/2022";
+        private readonly string firstTermPaymentStatus = "Paid";
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
+        private readonly string firstTermPaymentReceived = "2625";
+        private readonly string firstTerm2ndPaymentSentDate = "03/09/2022";
+        private readonly string firstTerm2ndPaymentReceived = "300";
+        private readonly string firstTerm2ndPaymentStatus = "Partial";
+        private readonly string secondTermStartDate = "05/22/2022";
+        private readonly string secondTermEndDate = "06/30/2022";
+        private readonly string secondTermAgreedPayment = "3500";
+<<<<<<< HEAD
+        private readonly string secondTermPaymentSentDate = "04/23/2022";
+        private readonly string secondTermPaymentReceived = "3000";
+
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         private readonly string termPaymentDue = "Automation Test Due";
         private readonly string noGST = "N";
         private readonly string yesGST = "Y";
         private readonly string termExercised = "Exercised";
         private readonly string termNotExercised = "Not Exercised";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         private readonly string improvementCommercialAddress = "1688 Blanshard St. Victoria, BC, V7C 1B7";
         private readonly string improvementCommercialSize = "256 sqft";
         private readonly string improvementCommercialDescription = "Automation Test - Commercial Improvement Description";
@@ -92,11 +133,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string depositNotes = "Automation Test - Deposit Notes";
 
         protected string leaseCode = "";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
         public LeaseLicenseSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             leaseDetails = new LeaseDetails(driver.Current);
+<<<<<<< HEAD
+<<<<<<< HEAD
             tenant = new LeaseTenants(driver.Current);
             payments = new LeasePayments(driver.Current);
             improvements = new LeaseImprovements(driver.Current);
@@ -104,6 +153,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
             deposits = new LeaseDeposits(driver.Current);
             surplus = new LeaseSurplus(driver.Current);
             searchLease = new SearchLease(driver.Current);
+=======
+            tenant = new Tenants(driver.Current);
+            payments = new LeasePayments(driver.Current);
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+            tenant = new LeaseTenants(driver.Current);
+            payments = new LeasePayments(driver.Current);
+            improvements = new LeaseImprovements(driver.Current);
+            insurance = new LeaseInsurance(driver.Current);
+            deposits = new LeaseDeposits(driver.Current);
+            surplus = new LeaseSurplus(driver.Current);
+            searchLease = new SearchLease(driver.Current);
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         }
 
         [StepDefinition(@"I create a new Lease with minimum fields")]
@@ -135,6 +197,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Saving Tenant
             tenant.SaveTenant();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
             //PAYMENTS
             //Navigating to Payments section
             payments.NavigateToPaymentSection();
@@ -157,6 +223,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Get new lease's code
             leaseCode = surplus.GetLeaseCode();
+<<<<<<< HEAD
+=======
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
         }
 
@@ -221,11 +292,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //PAYMENTS
             //Navigating to Payments section
+<<<<<<< HEAD
+<<<<<<< HEAD
             payments.NavigateToPaymentSection();
+=======
+            payments.NavigateToTenantSection();
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+            payments.NavigateToPaymentSection();
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
             //Inserting first term
             payments.AddTerm(leaseStartDate, firstTermEndDate, firstTermAgreedPayment, termPaymentDue, yesGST, termExercised);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
             //Add Payments
             payments.OpenLastPaymentTab();
 
@@ -234,10 +315,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Inserting second Payment
             payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
+=======
+            //Inserting Payment for first term
+            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived);
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+            //Add Payments
+            payments.OpenLastPaymentTab();
+
+            //Inserting Payment for first term
+            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
+
+            //Inserting second Payment
+            payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
             //Inserting second term
             payments.AddTerm(secondTermStartDate, secondTermEndDate, secondTermAgreedPayment, termPaymentDue, noGST, termNotExercised);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
             //IMPROVEMENTS
             //Navigate to Improvements
             improvements.NavigateToImprovementSection();
@@ -305,6 +402,80 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLease.SearchFoundResults());
+=======
+            //Inserting Payment for second term
+            payments.AddPayment(secondTermPaymentSentDate, secondTermPaymentReceived);
+
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+            //IMPROVEMENTS
+            //Navigate to Improvements
+            improvements.NavigateToImprovementSection();
+
+            //Edit Improvement Section
+            improvements.EditImprovements();
+
+            //Add Commercial Improvements
+            improvements.AddCommercialImprovement(improvementCommercialAddress, improvementCommercialSize, improvementCommercialSize);
+
+            //Add Commercial Improvements
+            improvements.AddResidentialImprovement(improvementResidentialAddress, improvementResidentialSize, improvementResidentialDescription);
+
+            //Add Commercial Improvements
+            improvements.AddOtherImprovement(improvementOtherAddress, improvementOtherSize, improvementOtherDescription);
+
+            //Save Improvements
+            improvements.SaveImproments();
+
+            //INSURANCE
+            //Navigate to Improvements
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Improvement Section
+            insurance.EditInsurance();
+
+            //Add Aircraft Insurance
+            insurance.AddAircraftInsurance(insuranceAircraftLimit, insuranceAircraftExpiryDate, insuranceAircraftDescription);
+
+            //Add CGL Insurance
+            insurance.AddCGLInsurance(insuranceCGLLimit, insuranceCGLExpiryDate, insuranceCGLDescription);
+
+            //Add Marine Insurance
+            insurance.AddMarineInsurance(insuranceMarineLimit, insuranceMarineExpiryDate, insuranceMarineDescription);
+
+            //Save Insurances
+            insurance.SaveInsurance();
+
+            //DEPOSITS
+            //Navigate to Deposits
+            deposits.NavigateToDepositSection();
+
+            //Add Deposit
+            deposits.AddDeposit(depositDescription, depositAmount, depositPaidDate, depositHolder);
+
+            //Add Return
+            deposits.AddReturn(depositReturnTerminationDate, depositReturnClaims, depositRetunedAmount, depositReturnInterestPaid, depositReturnDate, depositReturnPayeeName);
+
+            //Add Deposit Notes
+            deposits.AddNotes(depositNotes);
+
+            //SURPLUS
+            //Navigate to Surplus Declaration Section
+            surplus.NavigateToSurplusSection();
+
+            //Get new lease's code
+            leaseCode = surplus.GetLeaseCode();
+
+        }
+
+        [StepDefinition(@"A new lease is created successfully")]
+        public void NewLeaseCreated()
+        {
+            searchLease.NavigateToSearchLicense();
+            searchLease.SearchLicenseByLFile(leaseCode);
+
+            Assert.True(searchLease.SearchFoundResults());
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         }
     }
 }

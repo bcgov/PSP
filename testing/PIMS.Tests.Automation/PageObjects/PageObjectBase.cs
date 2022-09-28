@@ -17,6 +17,15 @@ namespace PIMS.Tests.Automation.PageObjects
         public virtual string CurrentLocation => new Uri(webDriver.Url).AbsolutePath;
 
         public virtual void Wait(int milliseconds = 700) => Thread.Sleep(milliseconds);
+<<<<<<< HEAD
+
+        public void WaitUntil(By element)
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(20));
+            wait.Until(ExpectedConditions.ElementIsVisible(element));
+        }
+=======
+>>>>>>> 7f1c050a4 (Leases automation)
 
         public void WaitUntil(By element)
         {
@@ -58,12 +67,21 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         protected void ScrollUp()
         {
             var js = (IJavaScriptExecutor)webDriver;
             js.ExecuteScript("window.scrollBy(0,0)", "");
         }
 
+<<<<<<< HEAD
+=======
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
         protected void ChooseRandomOption(IWebElement parentElement, string parentElementName, int fromOption)
         {
@@ -92,6 +110,10 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         protected void ChooseRandomRadioButton(By parentName)
         {
             Random random = new Random();
@@ -107,6 +129,11 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedRadioBttn.Click();
         }
 
+<<<<<<< HEAD
+=======
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
         protected void ChooseSpecificRadioButton(string parentElementName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
@@ -118,12 +145,21 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             selectedOption.Click();
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
 
         protected void ZoomOutScreen()
         {
             var js = (IJavaScriptExecutor)webDriver;
             js.ExecuteScript("document.body.style.zoom='80%';");
         }
+<<<<<<< HEAD
+=======
+>>>>>>> 7f1c050a4 (Leases automation)
+=======
+>>>>>>> 55c310707 (Automation for Lease and Licenses)
     }
 
 }
