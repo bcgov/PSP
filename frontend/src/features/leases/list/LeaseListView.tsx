@@ -107,7 +107,7 @@ export const LeaseListView: React.FunctionComponent = () => {
         {hasClaim(Claims.LEASE_ADD) && (
           <StyledAddButton onClick={() => history.push('/lease/new')}>
             <FaPlus />
-            &nbsp;Add A Lease/License
+            &nbsp;Create a Lease/License
           </StyledAddButton>
         )}
         <LeaseSearchResults
