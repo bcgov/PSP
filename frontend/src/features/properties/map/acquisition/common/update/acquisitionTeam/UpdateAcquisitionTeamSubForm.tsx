@@ -50,7 +50,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquis
                     value={person.contactTypeCode}
                   />
                 </Col>
-                <Col xs="auto" xl="5">
+                <Col xs="auto" xl="5" className="pl-0">
                   <ContactInput
                     data-testid="contact-input"
                     setShowContactManager={() => {
