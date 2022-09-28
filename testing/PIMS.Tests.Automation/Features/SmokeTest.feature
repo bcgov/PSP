@@ -13,4 +13,5 @@ Scenario: Create a new Organization Contact with minimum fields
 
 Scenario: Create Minimum Lease and License with One Tenant
 	Given I create a new Lease with minimum fields
+	Then A new lease is created successfully
 

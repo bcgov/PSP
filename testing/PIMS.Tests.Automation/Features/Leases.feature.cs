@@ -101,6 +101,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 10
  testRunner.Given("I create a new Lease with all fields", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 11
+ testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

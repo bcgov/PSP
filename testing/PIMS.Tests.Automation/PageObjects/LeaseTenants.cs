@@ -4,7 +4,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
-    public class Tenants: PageObjectBase
+    public class LeaseTenants: PageObjectBase
     {
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
 
@@ -18,20 +18,23 @@ namespace PIMS.Tests.Automation.PageObjects
         private By tenantSearchBttn = By.Id("search-button");
         private By tenantFirstResultRadioBttn = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
         private By tenantSelectedTenantsTable = By.CssSelector("div[data-testid='selected-items']");
+        private By tenantsAddSelectedButton = By.XPath("//button/div[contains(text(),'Add selected tenants')]/ancestor::button");
+
         private By tenantSelectedTenantsRows = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
 
         private By tenantsTotalTenantsView = By.CssSelector("form[id='leaseForm'] div li");
+        private By tenantsSaveButton = By.XPath("//button/div[contains(text(),'Save')]/ancestor::button");
 
         private int totalTenantsInLease;
    
 
-        public Tenants(IWebDriver webDriver) : base(webDriver)
+        public LeaseTenants(IWebDriver webDriver) : base(webDriver)
         { }
 
         //Navigates to Tenants Section
         public void NavigateToTenantSection()
         {
-            Wait();
+            Wait(700);
             webDriver.FindElement(licenseTenantLink).Click();
         }
 
@@ -57,7 +60,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ScrollToElement(tenantSearchInput);
             webDriver.FindElement(tenantFirstResultRadioBttn).Click();
-            ButtonElement("Add selected tenants");
+
+            Wait();
+            webDriver.FindElement(tenantsAddSelectedButton).Click();
 
             ScrollToElement(tenantSelectedTenantsTable);
 
@@ -82,7 +87,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ScrollToElement(tenantSearchInput);
             webDriver.FindElement(tenantFirstResultRadioBttn).Click();
-            ButtonElement("Add selected tenants");
+
+            Wait();
+            webDriver.FindElement(tenantsAddSelectedButton).Click();
 
             ScrollToElement(tenantSelectedTenantsTable);
 
@@ -104,7 +111,14 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SaveTenant()
         {
             Wait();
-            ButtonElement("Save");
+
+            ScrollToElement(tenantsSaveButton);
+
+            var saveButton = webDriver.FindElement(tenantsSaveButton);
+            saveButton.Enabled.Should().BeTrue();
+
+            Wait();
+            saveButton.Click();
         }
 
         public void CancelTenant()

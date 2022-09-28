@@ -6,7 +6,6 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private By menuManagementButton = By.XPath("//a/label[contains(text(),'Management')]/parent::a");
         private By createLicenseButton = By.XPath("//a[contains(text(),'Add a lease or license')]");
-        private By searchLicenseButton = By.XPath("//a[contains(text(),'Search for a Lease or License')]");
 
         private By licenseDetailsLink = By.XPath("//a[contains(text(),'Details')]");
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
@@ -49,21 +48,16 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToCreateNewLicense()
         {
             Wait();
+            ZoomOutScreen();
+
+            Wait();
             webDriver.FindElement(menuManagementButton).Click();
 
             Wait();
             webDriver.FindElement(createLicenseButton).Click();
         }
 
-        //Navigates to Search a Lease/License
-        public void NavigateToSearchLicense()
-        {
-            Wait();
-            webDriver.FindElement(menuManagementButton).Click();
-
-            Wait();
-            webDriver.FindElement(searchLicenseButton).Click();
-        }
+        
 
         //Covers only required fields on License Details
         public void LicenseDetailsMinFields(string startDate, string pid)

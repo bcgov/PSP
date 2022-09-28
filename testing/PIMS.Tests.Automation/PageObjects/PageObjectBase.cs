@@ -1,10 +1,13 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public abstract class PageObjectBase
     {
         protected readonly IWebDriver webDriver;
+       
 
         protected PageObjectBase(IWebDriver webDriver)
         {
@@ -14,6 +17,12 @@ namespace PIMS.Tests.Automation.PageObjects
         public virtual string CurrentLocation => new Uri(webDriver.Url).AbsolutePath;
 
         public virtual void Wait(int milliseconds = 700) => Thread.Sleep(milliseconds);
+
+        public void WaitUntil(By element)
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(20));
+            wait.Until(ExpectedConditions.ElementIsVisible(element));
+        }
 
         protected void ButtonElement(string btnContent)
         {
@@ -49,6 +58,12 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
+        protected void ScrollUp()
+        {
+            var js = (IJavaScriptExecutor)webDriver;
+            js.ExecuteScript("window.scrollBy(0,0)", "");
+        }
+
 
         protected void ChooseRandomOption(IWebElement parentElement, string parentElementName, int fromOption)
         {
@@ -77,6 +92,21 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
+        protected void ChooseRandomRadioButton(By parentName)
+        {
+            Random random = new Random();
+            var js = (IJavaScriptExecutor)webDriver;
+
+            var childrenElements = webDriver.FindElements(parentName);
+            int index = random.Next(0, childrenElements.Count);
+            var selectedRadioBttn = childrenElements[index];
+            //var selectedRadioBttn = webDriver.FindElement(By.CssSelector(selectedRadioBttnLocator));
+
+            js.ExecuteScript("arguments[0].scrollIntoView();", selectedRadioBttn);
+            Wait();
+            selectedRadioBttn.Click();
+        }
+
         protected void ChooseSpecificRadioButton(string parentElementName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
@@ -87,6 +117,12 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             Wait();
             selectedOption.Click();
+        }
+
+        protected void ZoomOutScreen()
+        {
+            var js = (IJavaScriptExecutor)webDriver;
+            js.ExecuteScript("document.body.style.zoom='80%';");
         }
     }
 
