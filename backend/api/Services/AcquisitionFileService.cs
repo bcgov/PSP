@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
@@ -11,7 +12,6 @@ using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 
 namespace Pims.Api.Services
 {
@@ -82,7 +82,7 @@ namespace Pims.Api.Services
             return newAcqFile;
         }
 
-        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
@@ -91,7 +91,12 @@ namespace Pims.Api.Services
 
             ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
 
-            var newAcqFile =_acqFileRepository.Update(acquisitionFile);
+            if (!userOverride)
+            {
+                ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
+            }
+
+            var newAcqFile = _acqFileRepository.Update(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
         }
@@ -216,6 +221,15 @@ namespace Pims.Api.Services
             if (currentRowVersion != acqFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this acquisition file, please refresh the application and retry.");
+            }
+        }
+
+        private void ValidateMinistryRegion(long acqFileId, short updatedRegion)
+        {
+            short currentRegion = _acqFileRepository.GetRegion(acqFileId);
+            if (currentRegion != updatedRegion)
+            {
+                throw new BusinessRuleViolationException("The Ministry region has been changed this will result in a change to the file's prefix. This requires user confirmation.");
             }
         }
     }

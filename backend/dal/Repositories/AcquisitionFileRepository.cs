@@ -144,7 +144,7 @@ namespace Pims.Dal.Repositories
         /// Retrieves the version of the acquisition file with the specified id.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>The file row version.</returns>
         public long GetRowVersion(long id)
         {
             using var _ = Logger.QueryScope();
@@ -152,6 +152,21 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcquisitionFiles.AsNoTracking()
                 .Where(p => p.AcquisitionFileId == id)?
                 .Select(p => p.ConcurrencyControlNumber)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Retrieves the region of the acquisition file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The file region.</returns>
+        public short GetRegion(long id)
+        {
+            using var _ = Logger.QueryScope();
+
+            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(p => p.AcquisitionFileId == id)?
+                .Select(p => p.RegionCode)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 

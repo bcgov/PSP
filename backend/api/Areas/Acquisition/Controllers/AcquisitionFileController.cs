@@ -7,6 +7,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -110,7 +111,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model)
+        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, bool userOverride = false)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -122,9 +123,16 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
             var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
-            var acquisitionFile = _acquisitionService.Update(acqFileEntity);
 
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            try
+            {
+                var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverride);
+                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            }
+            catch (BusinessRuleViolationException e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
         /// <summary>
