@@ -6,7 +6,6 @@ import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
-import { Api_Property } from './Property';
 
 export interface Api_ResearchFilePropertyPurposeType extends Api_ConcurrentVersion {
   id?: number;

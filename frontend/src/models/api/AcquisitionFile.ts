@@ -4,7 +4,6 @@ import Api_TypeCode from 'models/api/TypeCode';
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Person } from './Person';
-import { Api_Property } from './Property';
 import { Api_PropertyFile } from './PropertyFile';
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
