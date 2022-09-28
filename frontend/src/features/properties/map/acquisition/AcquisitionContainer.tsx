@@ -128,7 +128,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-
     setContainerState({
       showConfirmModal: false,
       isEditing: false,

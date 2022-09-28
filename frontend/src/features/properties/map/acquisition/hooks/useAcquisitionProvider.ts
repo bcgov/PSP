@@ -5,6 +5,8 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
+const ignoreErrorCodes = [409];
+
 /**
  * hook that interacts with the Acquisition File API.
  */
@@ -43,12 +45,14 @@ export const useAcquisitionProvider = () => {
     (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFile(acqFile),
+      async (acqFile: Api_AcquisitionFile, userOverride = false) =>
+        await putAcquisitionFile(acqFile, userOverride),
       [putAcquisitionFile],
     ),
     requestName: 'UpdateAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File updated'),
-    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
   });
 
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<

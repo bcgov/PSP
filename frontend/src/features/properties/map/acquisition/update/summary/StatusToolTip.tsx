@@ -4,9 +4,6 @@ import styled from 'styled-components';
 const StatusToolTip: React.FunctionComponent = () => {
   return (
     <StyledTooltip>
-      <StyledTooltipHeader>Status Descriptions</StyledTooltipHeader>
-      <br />
-      <br />
       <b>Draft</b>
       <p>
         The file has been created for the purpose of starting an acquisition, however it is not
@@ -44,15 +41,10 @@ const StatusToolTip: React.FunctionComponent = () => {
 
 const StyledTooltip = styled.div`
   color: black;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   p {
     margin: 0;
   }
-`;
-
-const StyledTooltipHeader = styled.b`
-  color: ${({ theme }) => theme.css.primaryColor};
-  font-size: 2.6rem;
 `;
 
 export default StatusToolTip;

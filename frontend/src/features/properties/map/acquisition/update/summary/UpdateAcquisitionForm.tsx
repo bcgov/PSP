@@ -48,7 +48,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
         <>
           <Container>
             <Section>
-              <SectionField label="Status" helpText={<StatusToolTip />}>
+              <SectionField label="Status" helpText={<StatusToolTip />} helpTextPlacement="auto">
                 <Select
                   field="fileStatusTypeCode"
                   options={fileStatusTypeCodes}

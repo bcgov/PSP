@@ -1,7 +1,9 @@
+import GenericModal from 'components/common/GenericModal';
 import { FormikHelpers, FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useAxiosErrorHandlerWithConfirmation } from 'utils';
 
 import { useAcquisitionProvider } from '../../hooks/useAcquisitionProvider';
 import { UpdateAcquisitionSummaryFormModel } from './models';
@@ -23,15 +25,23 @@ export const UpdateAcquisitionContainer = React.forwardRef<
     updateAcquisitionFile: { execute: updateAcquisitionFile },
   } = useAcquisitionProvider();
 
+  const [showMinistryModal, setShowMinistryModal] = useState(false);
+  const [allowMinistryOverride, setAllowMinistryOverride] = useState(false);
+
+  const handleAxiosErrors = useAxiosErrorHandlerWithConfirmation(
+    setShowMinistryModal,
+    'Failed to update Acquisition File',
+  );
+
   // save handler
-  const handleSubmit = useCallback(
-    async (
-      values: UpdateAcquisitionSummaryFormModel,
-      formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
-    ) => {
+  const handleSubmit = async (
+    values: UpdateAcquisitionSummaryFormModel,
+    formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
+  ) => {
+    try {
+      setShowMinistryModal(false);
       const acquisitionFile = values.toApi();
-      const response = await updateAcquisitionFile(acquisitionFile);
-      formikHelpers?.setSubmitting(false);
+      const response = await updateAcquisitionFile(acquisitionFile, allowMinistryOverride);
 
       if (!!response?.id) {
         formikHelpers?.resetForm();
@@ -39,9 +49,22 @@ export const UpdateAcquisitionContainer = React.forwardRef<
           onSuccess();
         }
       }
-    },
-    [updateAcquisitionFile, onSuccess],
-  );
+    } catch (e) {
+      handleAxiosErrors(e);
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  const saveOverride = async () => {
+    setAllowMinistryOverride(true);
+    // need to use type coercion here to make typescript happy
+    const ref = formikRef as React.RefObject<FormikProps<UpdateAcquisitionSummaryFormModel>>;
+    if (ref !== undefined) {
+      ref.current?.setSubmitting(true);
+      ref.current?.submitForm();
+    }
+  };
 
   return (
     <StyledFormWrapper>
@@ -51,6 +74,18 @@ export const UpdateAcquisitionContainer = React.forwardRef<
         onSubmit={handleSubmit}
         validationSchema={UpdateAcquisitionFileYupSchema}
       />
+      <GenericModal
+        title="Different Ministry region"
+        message="The Ministry region has been changed this will result in a change to the file's prefix. Do you wish to continue?"
+        okButtonText="Continue Save"
+        cancelButtonText="Cancel Update"
+        display={showMinistryModal}
+        handleOk={() => saveOverride()}
+        handleCancel={() => {
+          setAllowMinistryOverride(false);
+          setShowMinistryModal(false);
+        }}
+      ></GenericModal>
     </StyledFormWrapper>
   );
 });
