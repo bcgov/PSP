@@ -90,7 +90,7 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
  * Get an icon type for the specified cluster property details (type, draft, erp, spp etc)
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
-  if (feature.properties.IS_PROPERTY_OF_INTEREST) {
+  if (feature.properties.IS_PROPERTY_OF_INTEREST || feature.properties.isPropertyOfInterest) {
     if (selected) {
       return pointOfInterestIconSelect;
     } else {
