@@ -10,6 +10,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
+import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
 import { AcquisitionForm, AcquisitionTeamForm } from './models';
 
 interface AddAcquisitionTeamFormProp {
@@ -21,6 +22,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
   const { values } = useFormikContext<AcquisitionForm>();
   const [contactIndex, setContactIndex] = useState<number>(-1);
   const [showContactManager, setShowContactManager] = useState<boolean>(false);
+  const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<IContactSearchResult[]>([]);
   const { getOptionsByType } = useLookupCodeHelpers();
   const personProfileTypes = getOptionsByType(API.ACQUISITION_FILE_PERSON_PROFILE_TYPES);
@@ -61,9 +63,21 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
                   <RemoveButton
                     onRemove={() => {
-                      arrayHelpers.remove(index);
+                      setShowRemoveMemberModal(true);
                     }}
                   />
+                  <AcquisitionFormModal
+                    message="Are you sure you want to remove this row?"
+                    title="Remove Team Member"
+                    display={showRemoveMemberModal}
+                    handleOk={() => {
+                      setShowRemoveMemberModal(false);
+                      arrayHelpers.remove(index);
+                    }}
+                    handleCancel={() => {
+                      setShowRemoveMemberModal(false);
+                    }}
+                  ></AcquisitionFormModal>
                 </Col>
               </Row>
             ))}
