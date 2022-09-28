@@ -18,4 +18,5 @@ export interface ILayerSearchCriteria {
   planNumber?: string;
   legalDescription?: string;
   searchBy?: string;
+  address?: string;
 }

@@ -81,9 +81,7 @@ export const useDocumentProvider = () => {
   const {
     execute: retrieveDocumentTypes,
     loading: retrieveDocumentTypesLoading,
-  } = useApiRequestWrapper<
-    (mayanDocumentId: number) => Promise<AxiosResponse<Api_DocumentType[], any>>
-  >({
+  } = useApiRequestWrapper<() => Promise<AxiosResponse<Api_DocumentType[], any>>>({
     requestFunction: useCallback(async () => await getDocumentTypes(), [getDocumentTypes]),
     requestName: 'retrieveDocumentTypes',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {

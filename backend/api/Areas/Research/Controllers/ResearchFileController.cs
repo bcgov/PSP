@@ -181,7 +181,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             }
 
             var researchFilePropertyEntity = _mapper.Map<Dal.Entities.PimsPropertyResearchFile>(researchFilePropertyModel);
-            var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyModel.ResearchFile.RowVersion, researchFilePropertyEntity);
+            var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyModel.RowVersion, researchFilePropertyEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }

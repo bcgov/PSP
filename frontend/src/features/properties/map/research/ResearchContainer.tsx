@@ -18,11 +18,12 @@ import styled from 'styled-components';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';
+import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
 import { FormKeys } from './FormKeys';
 import { useGetResearch } from './hooks/useGetResearch';
-import { UpdateProperties } from './update/properties/UpdateProperties';
+import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
 import ViewSelector from './ViewSelector';
 
 export interface IResearchContainerProps {
@@ -52,9 +53,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const { search } = useMapSearch();
   const { hasClaim } = useKeycloakWrapper();
 
-  const menuItems =
-    researchFile?.researchProperties?.map(x => getResearchPropertyName(x).value) || [];
+  const menuItems = researchFile?.fileProperties?.map(x => getResearchPropertyName(x).value) || [];
   menuItems.unshift('RFile Summary');
+
+  const { updateResearchFileProperties } = useUpdateResearchProperties();
 
   useEffect(() => setFileLoading(loadingResearchFile), [loadingResearchFile, setFileLoading]);
 
@@ -138,9 +140,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   if (isShowingPropertySelector && researchFile) {
     return (
       <UpdateProperties
-        researchFile={researchFile}
+        file={researchFile}
         setIsShowingPropertySelector={setIsShowingPropertySelector}
         onSuccess={onSuccess}
+        updateFileProperties={updateResearchFileProperties}
       />
     );
   } else {
@@ -165,7 +168,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           leftComponent={
             <>
               {selectedMenuIndex === 0 &&
-              hasClaim(Claims.RESEARCH_ADD) &&
+              hasClaim(Claims.RESEARCH_EDIT) &&
               researchFile !== undefined ? (
                 <Button variant="success" onClick={showPropertiesSelector}>
                   <MdLocationPin size={'2.5rem'} />

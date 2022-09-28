@@ -23,7 +23,7 @@ namespace Pims.Dal.Test.Repositories
 
         #region Tests
 
-        #region Add Note
+        #region Add Activity
         [Fact]
         public void Add_Success()
         {

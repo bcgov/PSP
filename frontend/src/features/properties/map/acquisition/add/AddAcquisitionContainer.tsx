@@ -9,10 +9,11 @@ import { useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
 import { AddAcquisitionForm } from './AddAcquisitionForm';
-import { AcquisitionForm, AcquisitionPropertyForm } from './models';
+import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
   onClose?: () => void;
@@ -30,7 +31,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     const acquisitionForm = new AcquisitionForm();
     if (!!selectedFileFeature) {
       acquisitionForm.properties = [
-        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ];
     }
     return acquisitionForm;
@@ -40,7 +41,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     if (!!selectedFileFeature && !!formikRef.current) {
       formikRef.current.resetForm();
       formikRef.current?.setFieldValue('properties', [
-        AcquisitionPropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
+        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
       ]);
     }
     return () => {

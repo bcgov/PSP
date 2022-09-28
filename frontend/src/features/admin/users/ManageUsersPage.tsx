@@ -1,4 +1,4 @@
-import { IconButton } from 'components/common/buttons';
+import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { IPaginateParams } from 'constants/API';
@@ -93,9 +93,9 @@ export const ManageUsersPage = () => {
         </Col>
         <Col md={4} className="align-items-center d-flex">
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-            <IconButton onClick={() => fetch('excel')}>
+            <StyledIconButton onClick={() => fetch('excel')}>
               <FaFileExcel data-testid="excel-icon" size={36} />
-            </IconButton>
+            </StyledIconButton>
           </TooltipWrapper>
         </Col>
       </Row>

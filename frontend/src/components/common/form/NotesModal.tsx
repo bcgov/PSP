@@ -1,4 +1,4 @@
-import { IconButton } from 'components/common/buttons';
+import { StyledIconButton } from 'components/common/buttons';
 import { TextArea } from 'components/common/form';
 import GenericModal from 'components/common/GenericModal';
 import { getIn, useFormikContext } from 'formik';
@@ -37,9 +37,9 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
   }, [showNotes, noteValue]);
   return (
     <>
-      <IconButton title="notes" onClick={() => setShowNotes(true)} variant="light">
+      <StyledIconButton title="notes" onClick={() => setShowNotes(true)} variant="light">
         <FaRegFileAlt />
-      </IconButton>
+      </StyledIconButton>
       <GenericModal
         display={showNotes}
         setDisplay={setShowNotes}

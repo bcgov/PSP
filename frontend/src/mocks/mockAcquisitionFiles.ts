@@ -28,7 +28,7 @@ export const mockAcquisitionFileResponse = (
     description: 'South Coast Region',
     isDisabled: false,
   },
-  acquisitionProperties: [
+  fileProperties: [
     {
       id: 1,
       isDisabled: false,

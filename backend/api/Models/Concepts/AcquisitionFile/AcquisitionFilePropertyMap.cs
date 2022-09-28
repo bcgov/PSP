@@ -14,14 +14,15 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Property, src => src.Property)
-                .Map(dest => dest.AcquisitionFile, src => src.AcquisitionFile)
+                .Map(dest => dest.File, src => src.AcquisitionFile)
+                .Map(dest => dest.FileId, src => src.AcquisitionFileId)
                 .Inherits<Entity.IBaseEntity, BaseModel>();
 
             config.NewConfig<AcquisitionFilePropertyModel, Entity.PimsPropertyAcquisitionFile>()
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.Id)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
-                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFile.Id)
+                .Map(dest => dest.AcquisitionFileId, src => src.FileId)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)

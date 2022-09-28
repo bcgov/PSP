@@ -64,12 +64,12 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
   },
   {
     Header: 'Civic Address / PID / PIN',
-    accessor: 'acquisitionProperties',
+    accessor: 'fileProperties',
     align: 'left',
     Cell: (props: CellProps<Api_AcquisitionFile>) => {
       return (
         <AcquisitionProperties
-          acquisitionProperties={props.row.original.acquisitionProperties}
+          acquisitionProperties={props.row.original.fileProperties}
           maxDisplayCount={2}
         ></AcquisitionProperties>
       );

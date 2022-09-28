@@ -105,7 +105,7 @@ describe('Activity Container', () => {
 
   it('displays the select properties modal for an acquisition file', async () => {
     const { getByTestId } = setup({
-      file: { ...mockAcquisitionFileResponse(), acquisitionProperties: getMockApiPropertyFiles() },
+      file: { ...mockAcquisitionFileResponse(), fileProperties: getMockApiPropertyFiles() },
     });
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
@@ -122,7 +122,7 @@ describe('Activity Container', () => {
 
   it('displays the select properties modal for a research file', async () => {
     const { getByTestId } = setup({
-      file: { ...getMockResearchFile(), researchProperties: getMockApiPropertyFiles() },
+      file: { ...getMockResearchFile(), fileProperties: getMockApiPropertyFiles() },
       fileType: FileTypes.Research,
     });
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
