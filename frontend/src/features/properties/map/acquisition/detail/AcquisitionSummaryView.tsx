@@ -35,7 +35,7 @@ const AcquisitionSummaryView: React.FunctionComponent<IAcquisitionSummaryViewPro
         <SectionField label="Assigned date">{prettyFormatDate(detail.assignedDate)}</SectionField>
         <SectionField
           label="Delivery date"
-          helpText="Date for delivery of the property to the project"
+          tooltip="Date for delivery of the property to the project"
         >
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>

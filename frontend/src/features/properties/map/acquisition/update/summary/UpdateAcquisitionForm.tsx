@@ -1,4 +1,5 @@
 import { FastDatePicker, Input, Select } from 'components/common/form';
+import TooltipIcon from 'components/common/TooltipIcon';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
@@ -48,7 +49,17 @@ export const UpdateAcquisitionForm = React.forwardRef<
         <>
           <Container>
             <Section>
-              <SectionField label="Status" helpText={<StatusToolTip />} helpTextPlacement="auto">
+              <SectionField
+                label="Status"
+                tooltip={
+                  <TooltipIcon
+                    className="tooltip-light"
+                    toolTipId="status-field-tooltip"
+                    toolTip={<StatusToolTip />}
+                    placement="auto"
+                  />
+                }
+              >
                 <Select
                   field="fileStatusTypeCode"
                   options={fileStatusTypeCodes}
@@ -64,7 +75,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
               </SectionField>
               <SectionField
                 label="Delivery date"
-                helpText="Date for delivery of the property to the project"
+                tooltip="Date for delivery of the property to the project"
               >
                 <FastDatePicker field="deliveryDate" formikProps={formikProps} />
               </SectionField>
