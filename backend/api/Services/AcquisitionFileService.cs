@@ -229,7 +229,7 @@ namespace Pims.Api.Services
             short currentRegion = _acqFileRepository.GetRegion(acqFileId);
             if (currentRegion != updatedRegion)
             {
-                throw new BusinessRuleViolationException("The Ministry region has been changed this will result in a change to the file's prefix. This requires user confirmation.");
+                throw new BusinessRuleViolationException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
         }
     }

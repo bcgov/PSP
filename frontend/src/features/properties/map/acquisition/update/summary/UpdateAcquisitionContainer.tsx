@@ -76,7 +76,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
       />
       <GenericModal
         title="Different Ministry region"
-        message="The Ministry region has been changed this will result in a change to the file's prefix. Do you wish to continue?"
+        message="The Ministry region has been changed, this will result in a change to the file's prefix. Do you wish to continue?"
         okButtonText="Continue Save"
         cancelButtonText="Cancel Update"
         display={showMinistryModal}
