@@ -13,7 +13,6 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
   rowVersion?: number;
   // Code Tables
   fileStatusTypeCode?: string;
-  acquisitionFileStatusType?: string;
   acquisitionPhysFileStatusType?: string;
   acquisitionType?: string;
   // MOTI region
@@ -29,7 +28,7 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
       rowVersion: this.rowVersion,
       assignedDate: this.assignedDate,
       deliveryDate: this.deliveryDate,
-      fileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
+      fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
@@ -49,7 +48,6 @@ export class UpdateAcquisitionSummaryFormModel implements WithAcquisitionTeam {
     newForm.assignedDate = model.assignedDate;
     newForm.deliveryDate = model.deliveryDate;
     newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode);
-    newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
     newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
     newForm.region = fromTypeCode(model.regionCode)?.toString();
