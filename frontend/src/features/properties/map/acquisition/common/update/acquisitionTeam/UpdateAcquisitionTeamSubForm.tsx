@@ -3,6 +3,11 @@ import { Select } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import * as API from 'constants/API';
+import {
+  AcquisitionTeamFormModel,
+  WithAcquisitionTeam,
+} from 'features/properties/map/acquisition/common/models';
+import { AcquisitionFormModal } from 'features/properties/map/acquisition/modals/AcquisitionFormModal';
 import { FieldArray, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
@@ -10,14 +15,14 @@ import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
-
 interface IUpdateAcquisitionTeamSubFormProps {}
 
 export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquisitionTeamSubFormProps> = () => {
   const { values, setFieldValue } = useFormikContext<WithAcquisitionTeam>();
   const [contactIndex, setContactIndex] = useState<number>(-1);
   const [showContactManager, setShowContactManager] = useState<boolean>(false);
+  const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
+  const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [selectedContact, setSelectedContact] = useState<IContactSearchResult[]>([]);
   const { getOptionsByType } = useLookupCodeHelpers();
   const personProfileTypes = getOptionsByType(API.ACQUISITION_FILE_PERSON_PROFILE_TYPES);
@@ -59,7 +64,8 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquis
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
                   <RemoveButton
                     onRemove={() => {
-                      arrayHelpers.remove(index);
+                      setRemoveIndex(index);
+                      setShowRemoveMemberModal(true);
                     }}
                   />
                 </Col>
@@ -74,6 +80,21 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquis
             >
               + Add another team member
             </LinkButton>
+
+            <AcquisitionFormModal
+              message="Are you sure you want to remove this row?"
+              title="Remove Team Member"
+              display={showRemoveMemberModal}
+              handleOk={() => {
+                setShowRemoveMemberModal(false);
+                arrayHelpers.remove(removeIndex);
+                setRemoveIndex(-1);
+              }}
+              handleCancel={() => {
+                setShowRemoveMemberModal(false);
+                setRemoveIndex(-1);
+              }}
+            ></AcquisitionFormModal>
           </>
         )}
       />
