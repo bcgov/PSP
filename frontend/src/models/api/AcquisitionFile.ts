@@ -17,7 +17,6 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTypeCode?: Api_TypeCode<string>;
   // MOTI region
   regionCode?: Api_TypeCode<number>;
-  acquisitionProperties?: Api_AcquisitionFileProperty[];
   acquisitionTeam?: Api_AcquisitionFilePerson[];
 }
 

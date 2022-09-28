@@ -4,28 +4,26 @@ import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import MapSelectorContainer from 'features/properties/selector/MapSelectorContainer';
 import { IMapProperty } from 'features/properties/selector/models';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
+import { Api_File } from 'models/api/File';
 import { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { PropertyForm, ResearchForm } from '../../add/models';
-import { useUpdateResearchProperties } from '../../hooks/useUpdateResearchProperties';
+import { FileForm, PropertyForm } from '../../models';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
-interface IUpdatePropertiesProps {
-  researchFile: Api_ResearchFile;
+export interface IUpdatePropertiesProps {
+  file: Api_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: () => void;
+  updateFileProperties: (file: Api_File) => Promise<Api_File | undefined>;
 }
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
-  const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const formResearchFile = ResearchForm.fromApi(props.researchFile);
+  const formikRef = useRef<FormikProps<FileForm>>(null);
+  const formFile = FileForm.fromApi(props.file);
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
-
-  const { updateResearchFileProperties } = useUpdateResearchProperties();
 
   const handleSaveClick = async () => {
     setShowSaveConfirmModal(true);
@@ -58,8 +56,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     props.setIsShowingPropertySelector(false);
   };
 
-  const saveResearchFile = async (researchFile: Api_ResearchFile) => {
-    const response = await updateResearchFileProperties(researchFile);
+  const saveFile = async (researchFile: Api_File) => {
+    const response = await props.updateFileProperties(researchFile);
     formikRef.current?.setSubmitting(false);
     if (!!response?.fileName) {
       formikRef.current?.resetForm();
@@ -80,13 +78,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           />
         }
       >
-        <Formik<ResearchForm>
+        <Formik<FileForm>
           innerRef={formikRef}
-          initialValues={formResearchFile}
+          initialValues={formFile}
           validationSchema={UpdatePropertiesYupSchema}
-          onSubmit={async (values: ResearchForm) => {
-            const researchFile: Api_ResearchFile = values.toApi();
-            await saveResearchFile(researchFile);
+          onSubmit={async (values: FileForm) => {
+            const file: Api_File = values.toApi();
+            await saveFile(file);
           }}
         >
           {formikProps => (
@@ -114,7 +112,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         title={'Confirm changes'}
         message={
           <>
-            <div>You have made changes to the properties in this Research File.</div>
+            <div>You have made changes to the properties in this file.</div>
             <br />
             <strong>Do you want to save these changes?</strong>
           </>
@@ -131,7 +129,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         title={'Confirm changes'}
         message={
           <>
-            <div>If you cancel now, this research file will not be saved.</div>
+            <div>If you cancel now, this file will not be saved.</div>
             <br />
             <strong>Are you sure you want to Cancel?</strong>
           </>

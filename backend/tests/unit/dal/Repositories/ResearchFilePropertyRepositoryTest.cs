@@ -36,6 +36,7 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(pimsPropertyResearchFile);
+            context.ChangeTracker.Clear();
 
             var repository = helper.CreateRepository<ResearchFilePropertyRepository>(user);
 

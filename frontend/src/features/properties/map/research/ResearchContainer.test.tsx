@@ -68,7 +68,7 @@ describe('ResearchContainer component', () => {
     const mockResearchFile = getMockResearchFile();
     mockAxios.onGet().reply(200, {
       ...mockResearchFile,
-      researchProperties: [{ id: 1, property: { pid: 123456789 } }],
+      fileProperties: [{ id: 1, property: { pid: 123456789 } }],
     } as Api_ResearchFile);
     const { getByTestId, findByText } = setup({});
 
@@ -81,7 +81,7 @@ describe('ResearchContainer component', () => {
     const mockResearchFile = getMockResearchFile();
     mockAxios.onGet().reply(200, {
       ...mockResearchFile,
-      researchProperties: [{ id: 1, property: { pin: 123456 } }],
+      fileProperties: [{ id: 1, property: { pin: 123456 } }],
     } as Api_ResearchFile);
     const { getByTestId, findByText } = setup({});
 
@@ -94,7 +94,7 @@ describe('ResearchContainer component', () => {
     const mockResearchFile = getMockResearchFile();
     mockAxios.onGet().reply(200, {
       ...mockResearchFile,
-      researchProperties: [{ id: 1, property: { planNumber: 'EPP92028' } }],
+      fileProperties: [{ id: 1, property: { planNumber: 'EPP92028' } }],
     } as Api_ResearchFile);
     const { getByTestId, findByText } = setup({});
 
@@ -107,7 +107,7 @@ describe('ResearchContainer component', () => {
     const mockResearchFile = getMockResearchFile();
     mockAxios.onGet().reply(200, {
       ...mockResearchFile,
-      researchProperties: [{ id: 1, property: { latitude: 1, longitude: 2 } }],
+      fileProperties: [{ id: 1, property: { latitude: 1, longitude: 2 } }],
     } as Api_ResearchFile);
     const { getByTestId, findByText } = setup({});
 

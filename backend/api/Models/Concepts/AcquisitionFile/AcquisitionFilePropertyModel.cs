@@ -32,7 +32,12 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The relationship's acquisition file.
         /// </summary>
-        public AcquisitionFileModel AcquisitionFile { get; set; }
+        public FileModel File { get; set; }
+
+        /// <summary>
+        /// get/set - The relationship's acquisition file id.
+        /// </summary>
+        public long FileId { get; set; }
 
         #endregion
     }

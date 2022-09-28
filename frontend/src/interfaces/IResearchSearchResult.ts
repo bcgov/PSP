@@ -11,5 +11,5 @@ export interface IResearchSearchResult {
   appCreateUserid: string;
   appLastUpdateTimestamp: string;
   researchFileStatusTypeCode: Api_TypeCode<string>;
-  researchProperties: Api_PropertyResearchFile[];
+  fileProperties: Api_PropertyResearchFile[];
 }

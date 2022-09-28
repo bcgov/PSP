@@ -1,6 +1,6 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { IconButton } from 'components/common/buttons';
+import { StyledIconButton } from 'components/common/buttons';
 import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import { Claims } from 'constants/claims';
@@ -117,23 +117,23 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
       return (
         <StyledDiv>
           {hasClaim(Claims.CONTACT_EDIT) && (
-            <IconButton
+            <StyledIconButton
               title="Edit Contact"
               variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
             >
               <MdEdit size={22} />
-            </IconButton>
+            </StyledIconButton>
           )}
 
           {hasClaim(Claims.CONTACT_VIEW) && (
-            <IconButton
+            <StyledIconButton
               title="View Contact"
               variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}`)}
             >
               <MdContactMail size={22} />
-            </IconButton>
+            </StyledIconButton>
           )}
         </StyledDiv>
       );

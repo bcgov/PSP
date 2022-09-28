@@ -9,7 +9,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
-import { PropertyForm, ResearchForm } from './models';
+import { PropertyForm } from '../../shared/models';
+import { ResearchForm } from './models';
 import ResearchProperties from './ResearchProperties';
 
 const mockStore = configureMockStore([thunk]);

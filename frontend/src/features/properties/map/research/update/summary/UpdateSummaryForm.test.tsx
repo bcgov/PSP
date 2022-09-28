@@ -22,7 +22,7 @@ const testResearchFile: Api_ResearchFile = {
     description: 'Active',
     isDisabled: false,
   },
-  researchProperties: [],
+  fileProperties: [],
   requestDate: '2022-04-14T00:00:00',
   requestDescription: 'a request description',
   researchResult: 'A research result',

@@ -40,7 +40,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'MOTI Region',
-    accessor: 'researchProperties',
+    accessor: 'fileProperties',
     align: 'right',
     clickable: true,
     width: 10,

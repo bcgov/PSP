@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/index';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
@@ -27,6 +28,7 @@ const DEFAULT_PROPS: IAcquisitionContainerProps = {
   acquisitionFileId: 1,
   onClose,
 };
+jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -58,6 +60,7 @@ describe('AcquisitionContainer component', () => {
           [lookupCodesSlice.name]: { lookupCodes: mockLookups },
         },
         useMockAuthentication: true,
+        claims: renderOptions?.claims ?? [],
         ...renderOptions,
       },
     );
@@ -120,5 +123,23 @@ describe('AcquisitionContainer component', () => {
     await waitFor(() => userEvent.click(getCloseButton()));
 
     expect(onClose).toBeCalled();
+  });
+
+  it('should display the Edit Properties button if the user has permissions', async () => {
+    const { getByTitle, getByTestId } = setup(undefined, { claims: [Claims.ACQUISITION_EDIT] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    expect(getByTitle(/Edit acquisition properties/g)).toBeVisible();
+  });
+
+  it('should not display the Edit Properties button if the user does not have permissions', async () => {
+    const { queryByTitle, getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    expect(queryByTitle('Edit acquisition properties')).toBeNull();
   });
 });
