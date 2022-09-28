@@ -96,6 +96,8 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
             }
 
+            UpdateFileNumber(acquisitionFile);
+
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
@@ -213,6 +215,11 @@ namespace Pims.Api.Services
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
             }
+        }
+
+        private void UpdateFileNumber(PimsAcquisitionFile acquisitionFile)
+        {
+            acquisitionFile.FileNumber = $"{acquisitionFile.RegionCode}-{acquisitionFile.FileNo}-01";
         }
 
         private void ValidateVersion(long acqFileId, long acqFileVersion)
