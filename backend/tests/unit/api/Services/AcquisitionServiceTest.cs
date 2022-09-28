@@ -149,7 +149,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
             // Act
-            Action act = () => service.Update(acqFile);
+            Action act = () => service.Update(acqFile, true);
 
             // Assert
 
@@ -172,7 +172,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
             // Act
-            Action act = () => service.Update(acqFile);
+            Action act = () => service.Update(acqFile, true);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
