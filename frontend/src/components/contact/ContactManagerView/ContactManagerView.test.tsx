@@ -20,7 +20,12 @@ const getContacts = jest.fn();
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
   const utils = render(
-    <ContactManagerView selectedRows={[]} setSelectedRows={noop} showActiveSelector />,
+    <ContactManagerView
+      selectedRows={[]}
+      setSelectedRows={noop}
+      showActiveSelector
+      showSelectedRowCount
+    />,
     {
       ...renderOptions,
     },

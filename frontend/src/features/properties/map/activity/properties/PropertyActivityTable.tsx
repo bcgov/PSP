@@ -1,6 +1,7 @@
 import { ColumnWithProps, Table } from 'components/Table';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { getPropertyName } from 'features/properties/selector/utils';
+import { getFilePropertyName } from 'features/properties/selector/utils';
+import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { CellProps } from 'react-table';
@@ -34,8 +35,8 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
-    Cell: (cellProps: CellProps<Api_PropertyFile>) => {
-      const propertyName = getPropertyName(cellProps.value);
+    Cell: (cellProps: CellProps<Api_PropertyFile, Api_Property>) => {
+      const propertyName = getFilePropertyName(cellProps.row.original, true);
       return `${propertyName.label}: ${propertyName.value}`;
     },
   },

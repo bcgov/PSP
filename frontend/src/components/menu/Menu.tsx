@@ -23,7 +23,13 @@ export const MenuItem = (props: IMenuItemProps) => {
   };
 
   return (
-    <ListGroup.Item ref={ref} disabled={props.disabled} className="Menu-item" onClick={onClick}>
+    <ListGroup.Item
+      ref={ref}
+      disabled={props.disabled}
+      className="Menu-item"
+      onClick={onClick}
+      title={`menu-item-${props.label}`}
+    >
       {props.label}
     </ListGroup.Item>
   );

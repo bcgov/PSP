@@ -80,6 +80,7 @@ export const getMockProperties = () =>
 export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
   {
     id: 1,
+    propertyName: 'test property name',
     property: {
       id: 1,
       anomalies: [],
