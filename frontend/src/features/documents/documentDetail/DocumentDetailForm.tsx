@@ -5,7 +5,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import * as API from 'constants/API';
 import Claims from 'constants/claims';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Api_DocumentUpdateRequest } from 'models/api/Document';
@@ -21,10 +21,12 @@ import {
 } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
+import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
 import { StyledContainer } from '../list/styles';
 import DocumentDetailHeader from './DocumentDetailHeader';
 
 export interface IDocumentDetailFormProps {
+  formikRef: React.RefObject<FormikProps<DocumentUpdateFormData>>;
   document: ComposedDocument;
   isLoading: boolean;
   mayanMetadataTypes: Api_Storage_DocumentTypeMetadataType[];
@@ -64,7 +66,9 @@ export const DocumentDetailForm: React.FunctionComponent<IDocumentDetailFormProp
 
             <StyledScrollable>
               <Formik<DocumentUpdateFormData>
+                innerRef={props.formikRef}
                 initialValues={initialFormState}
+                validationSchema={getDocumentMetadataYupSchema(props.mayanMetadataTypes)}
                 onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
                   if (props.document?.pimsDocument?.id && values.documentStatusCode !== undefined) {
                     var request = values.toRequestApi();

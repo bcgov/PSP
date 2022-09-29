@@ -61,7 +61,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public async Task<IActionResult> UserInfoAsync()
         {
-            _optionsKeycloak.Validate(); // TODO: Validate configuration automatically.
+            _optionsKeycloak.Validate(); // TODO: PSP-4418 Validate configuration automatically.
             _optionsKeycloak.OpenIdConnect.Validate();
             var response = await _requestClient.ProxyGetAsync(Request, $"{_optionsKeycloak.Authority}{_optionsKeycloak.OpenIdConnect.UserInfo}");
             return await response.HandleResponseAsync<KModel.UserInfoModel>();

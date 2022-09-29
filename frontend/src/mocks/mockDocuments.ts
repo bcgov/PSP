@@ -1,5 +1,9 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
+import {
+  Api_Storage_DocumentMetadata,
+  Api_Storage_DocumentTypeMetadataType,
+} from 'models/api/DocumentStorage';
 
 export const mockDocumentsResponse = (): Api_DocumentRelationship[] => [
   {
@@ -85,7 +89,64 @@ export const mockDocumentTypesResponse = (): Api_DocumentType[] => [
   {
     documentType: 'Survey',
     id: 1,
+    mayanId: 8,
     appCreateUserid: 'James Bond',
     appCreateTimestamp: '10-Jan-2022',
+  },
+  {
+    id: 2,
+    documentType: 'Privy Council',
+    mayanId: 7,
+    appCreateUserid: 'James Bond',
+    appCreateTimestamp: '10-Jan-2022',
+  },
+];
+
+export const mockDocumentTypeMetadata = (): Api_Storage_DocumentTypeMetadataType[] => [
+  {
+    id: 1,
+    document_type: {
+      id: 1,
+      label: 'Survey',
+    },
+    metadata_type: {
+      default: '',
+      id: 1,
+      label: 'Tag',
+      lookup: '',
+      name: 'Tag',
+      parser: '',
+      parser_arguments: '',
+      url: '',
+      validation: '',
+      validation_arguments: '',
+    },
+    required: true,
+  },
+];
+
+export const mockDocumentMetadata = (): Api_Storage_DocumentMetadata[] => [
+  {
+    document: {
+      label: '',
+      datetime_created: '2022-07-27T16:06:42.42',
+      description: '',
+      file_latest: {
+        id: 2,
+        document_id: 1,
+        comment: '',
+        encoding: '',
+        fileName: '',
+        mimetype: '',
+        size: 12,
+        timeStamp: '',
+      },
+      id: 1,
+      document_type: { id: 1, label: 'Survey' },
+    },
+    id: 1,
+    metadata_type: { id: 1, label: 'Tag' },
+    url: '',
+    value: 'Tag1234',
   },
 ];

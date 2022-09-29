@@ -22,11 +22,13 @@ exports[`renders correctly 1`] = `
         >
           <div
             class="Menu-item list-group-item"
+            title="menu-item-Option 1"
           >
             Option 1
           </div>
           <div
             class="Menu-item list-group-item"
+            title="menu-item-Option 2"
           >
             Option 2
           </div>

@@ -188,6 +188,7 @@ const StyledButton = styled(BootstrapButton)`
       line-height: 3rem;
       justify-content: left;
       letter-spacing: unset;
+      text-align: left;
       padding: 0;
       &:hover,
       &:active,

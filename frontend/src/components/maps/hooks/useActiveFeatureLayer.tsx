@@ -5,6 +5,7 @@ import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
 import { isEmpty, isNumber } from 'lodash';
 import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import {
   HWY_DISTRICT_LAYER_URL,
@@ -14,6 +15,7 @@ import {
   municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
   PARCELS_LAYER_URL,
+  PIMS_BOUNDARY_LAYER_URL,
   useLayerQuery,
 } from '../leaflet/LayerPopup';
 import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
@@ -46,6 +48,8 @@ const useActiveFeatureLayer = ({
   const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
+  const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
+
   const { isSelecting, setSelectedFeature } = useContext(SelectedPropertyContext);
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -65,10 +69,12 @@ const useActiveFeatureLayer = ({
     const task1 = parcelsService.findOneWhereContains(latLng);
     const task2 = regionService.findMetadataByLocation(latLng, 'GEOMETRY');
     const task3 = districtService.findMetadataByLocation(latLng, 'GEOMETRY');
+    const task4 = pimsService.findOneWhereContains(latLng, 'GEOMETRY');
 
     const parcel = await task1;
     const region = await task2;
     const district = await task3;
+    const pimsProperties = await task4;
 
     if (!isSelecting) {
       const municipality = await municipalitiesService.findOneWhereContains(latLng);
@@ -101,6 +107,12 @@ const useActiveFeatureLayer = ({
 
     if ((!isEmpty(properties) || isSelecting) && feature) {
       if (!isSelecting) {
+        if (pimsProperties?.features?.length > 1) {
+          toast.error(
+            'Unable to determine desired PIMS Property due to overlapping map boundaries. Click directly on a map marker to view that markers details.',
+          );
+        }
+        const pimsProperty = pimsProperties.features[0];
         setLayerPopup({
           title,
           data: properties as any,
@@ -109,6 +121,7 @@ const useActiveFeatureLayer = ({
           center,
           bounds: mapBounds,
           feature,
+          pimsProperty,
         } as any);
       }
       feature.properties = {

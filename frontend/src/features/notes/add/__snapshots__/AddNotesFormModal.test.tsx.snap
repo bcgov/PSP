@@ -90,6 +90,7 @@ exports[`AddNotesFormModal component renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -149,6 +150,10 @@ exports[`AddNotesFormModal component renders as expected 1`] = `
 .c0 .modal-header .close {
   color: white;
   opacity: 1;
+  font-size: 3rem;
+  font-weight: 10;
+  text-shadow: none;
+  font-family: 'Helvetica Narrow';
 }
 
 .c1 {

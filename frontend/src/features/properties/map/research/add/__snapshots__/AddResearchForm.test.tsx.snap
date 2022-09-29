@@ -273,6 +273,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -860,7 +861,7 @@ exports[`AddResearchForm component renders as expected 1`] = `
                           <div>
                             <input
                               data-testid="selectrow-parent"
-                              disabled=""
+                              name=""
                               style="cursor: pointer;"
                               title="Click to deselect all."
                               type="checkbox"

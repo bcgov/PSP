@@ -44,14 +44,14 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
         <Row className="no-gutters">
           <Col>
             <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
-              {researchFile?.rfileNumber}
+              {researchFile?.fileNumber}
             </HeaderField>
           </Col>
         </Row>
         <Row className="no-gutters">
           <Col>
             <HeaderField label="File name:" labelWidth={leftColumnLabel} contentWidth="9">
-              {researchFile?.name}
+              {researchFile?.fileName}
             </HeaderField>
           </Col>
         </Row>
@@ -97,7 +97,7 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
         <Row className="no-gutters">
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
-              {researchFile?.researchFileStatusTypeCode?.description}
+              {researchFile?.fileStatusTypeCode?.description}
             </HeaderField>
           </Col>
         </Row>

@@ -120,6 +120,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -706,7 +707,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       <div>
                         <input
                           data-testid="selectrow-parent"
-                          disabled=""
+                          name=""
                           style="cursor: pointer;"
                           title="Click to deselect all."
                           type="checkbox"
@@ -746,6 +747,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       Summary
                       <div
                         class="c11"
+                        data-testid="sort-column-summary"
                       >
                         <svg
                           class="c12"
@@ -791,6 +793,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       First name
                       <div
                         class="c11"
+                        data-testid="sort-column-firstName"
                       >
                         <svg
                           class="c12"
@@ -836,6 +839,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       Last name
                       <div
                         class="c11"
+                        data-testid="sort-column-surname"
                       >
                         <svg
                           class="c12"
@@ -881,6 +885,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       Organization
                       <div
                         class="c11"
+                        data-testid="sort-column-organizationName"
                       >
                         <svg
                           class="c12"
@@ -950,6 +955,7 @@ exports[`AddLeaseTenantContainer component renders as expected 1`] = `
                       City
                       <div
                         class="c11"
+                        data-testid="sort-column-municipalityName"
                       >
                         <svg
                           class="c12"

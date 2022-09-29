@@ -22,7 +22,6 @@ export function NoteResults(props: INoteResultProps) {
     <Table<Api_Note>
       name="notesTable"
       manualSortBy={false}
-      lockPageSize={true}
       manualPagination={false}
       totalItems={results.length}
       columns={columns}

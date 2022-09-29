@@ -4,7 +4,7 @@ import { mockLookups } from 'mocks';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
-import { ModalProps } from './GenericModal';
+import { ModalContent } from './GenericModal';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -13,12 +13,14 @@ const storeState = {
 jest.mock('@react-keycloak/web');
 
 describe('ModalContainer component', () => {
-  const TestComponent = (props: ModalProps) => {
-    useModalContext(props);
+  const TestComponent = (props: ModalContent, isVisible: boolean) => {
+    useModalContext(props, isVisible);
     return <></>;
   };
 
-  const setup = (renderOptions?: RenderOptions & { modalProps: ModalProps }) => {
+  const setup = (
+    renderOptions?: RenderOptions & { modalProps: ModalContent; isVisible: boolean },
+  ) => {
     // render component under test
     const component = render(
       <>
@@ -41,14 +43,17 @@ describe('ModalContainer component', () => {
   });
 
   it('displays a modal based on props', async () => {
-    setup({ modalProps: { title: 'test', message: 'test 2', display: true } });
+    setup({ modalProps: { title: 'test', message: 'test 2' }, isVisible: true });
 
     expect(await screen.findByText('test')).toBeVisible();
     expect(await screen.findByText('test 2')).toBeVisible();
   });
 
   it('shows/hides modal', async () => {
-    setup({ modalProps: { title: 'test', message: 'test 2', display: true, okButtonText: 'ok' } });
+    setup({
+      modalProps: { title: 'test', message: 'test 2', okButtonText: 'ok' },
+      isVisible: true,
+    });
 
     const okButton = await screen.findByText('ok');
     userEvent.click(okButton);

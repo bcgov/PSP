@@ -6,6 +6,8 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
+import AcquisitionProperties from './AcquisitionProperties';
+
 export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
   {
     Header: 'Acquisition file #',
@@ -18,7 +20,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     Cell: (props: CellProps<Api_AcquisitionFile>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.ACQUISITION_VIEW)) {
-        // TODO: Remove icon when file number field is added to CREATE ACQUISITION FILE form.
+        // TODO: PSP-4400 Remove icon when file number field is added to CREATE ACQUISITION FILE form.
         // The icon is here so we can open ACQ File details from list
         return (
           <Link to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
@@ -61,8 +63,21 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     },
   },
   {
+    Header: 'Civic Address / PID / PIN',
+    accessor: 'acquisitionProperties',
+    align: 'left',
+    Cell: (props: CellProps<Api_AcquisitionFile>) => {
+      return (
+        <AcquisitionProperties
+          acquisitionProperties={props.row.original.acquisitionProperties}
+          maxDisplayCount={2}
+        ></AcquisitionProperties>
+      );
+    },
+  },
+  {
     Header: 'Status',
-    accessor: 'acquisitionFileStatusTypeCode',
+    accessor: 'fileStatusTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,

@@ -5,6 +5,21 @@ namespace Pims.Dal.Entities.Models
         #region Properties
 
         /// <summary>
+        /// get/set - The pid identifier to search by.
+        /// </summary>
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The pin identifier to search by.
+        /// </summary>
+        public string Pin { get; set; }
+
+        /// <summary>
+        /// get/set - The address to search by.
+        /// </summary>
+        public string Address { get; set; }
+
+        /// <summary>
         /// get/set - The status of the acquisition file,.
         /// </summary>
         public string AcquisitionFileStatusTypeCode { get; set; }

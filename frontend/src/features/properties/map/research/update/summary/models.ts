@@ -56,12 +56,12 @@ export class UpdateResearchSummaryFormModel {
   public static fromApi(base: Api_ResearchFile): UpdateResearchSummaryFormModel {
     var model = new UpdateResearchSummaryFormModel();
     model.id = base.id;
-    model.name = base.name;
+    model.name = base.fileName;
     model.roadName = base.roadName;
     model.roadAlias = base.roadAlias;
-    model.rfileNumber = base.rfileNumber;
-    model.statusTypeCode = base.researchFileStatusTypeCode?.id;
-    model.statusTypeDescription = base.researchFileStatusTypeCode?.description;
+    model.rfileNumber = base.fileNumber;
+    model.statusTypeCode = base.fileStatusTypeCode?.id;
+    model.statusTypeDescription = base.fileStatusTypeCode?.description;
     //model.researchProperties = base.researchProperties;
     model.requestDate = base.requestDate;
     model.requestDescription = base.requestDescription;
@@ -88,11 +88,11 @@ export class UpdateResearchSummaryFormModel {
   public toApi(): Api_ResearchFile {
     return {
       id: this.id,
-      name: this.name,
+      fileName: this.name,
       roadName: this.roadName,
       roadAlias: this.roadAlias,
-      rfileNumber: this.rfileNumber,
-      researchFileStatusTypeCode: { id: this.statusTypeCode },
+      fileNumber: this.rfileNumber,
+      fileStatusTypeCode: { id: this.statusTypeCode },
       //researchProperties: this.researchProperties,
       requestDate: this.requestDate,
       requestDescription: this.requestDescription,

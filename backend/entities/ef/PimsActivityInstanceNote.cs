@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACTIVITY_INSTANCE_NOTE")]
     [Index(nameof(ActivityInstanceId), Name = "ACTINN_ACTIVITY_INSTANCE_ID_IDX")]
+    [Index(nameof(NoteId), nameof(ActivityInstanceId), Name = "ACTINN_ACTIVITY_NOTE_TUC", IsUnique = true)]
     [Index(nameof(NoteId), Name = "ACTINN_NOTE_ID_IDX")]
     public partial class PimsActivityInstanceNote
     {

@@ -1,11 +1,10 @@
+import EditButton from 'components/common/EditButton';
 import Claims from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
-import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 import { formatApiPersonNames } from 'utils/personUtils';
@@ -39,11 +38,11 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   const keycloak = useKeycloakWrapper();
   const detail: DetailResearchFile = {
     id: props.researchFile?.id,
-    name: props.researchFile?.name,
+    name: props.researchFile?.fileName,
     roadName: props.researchFile?.roadName,
     roadAlias: props.researchFile?.roadAlias,
-    rfileNumber: props.researchFile?.rfileNumber,
-    statusTypeCodeDescription: props.researchFile?.researchFileStatusTypeCode?.description,
+    rfileNumber: props.researchFile?.fileNumber,
+    statusTypeCodeDescription: props.researchFile?.fileStatusTypeCode?.description,
     requestDate: props.researchFile?.requestDate,
     requestDescription: props.researchFile?.requestDescription,
     requestSourceDescription: props.researchFile?.requestSourceDescription,
@@ -81,15 +80,12 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
         {keycloak.hasClaim(Claims.RESEARCH_EDIT) && props.researchFile !== undefined ? (
-          <Button
-            variant="link"
+          <EditButton
             title="Edit research file"
             onClick={() => {
               props.setEditMode(true);
             }}
-          >
-            <FaEdit size={'2rem'} />
-          </Button>
+          />
         ) : null}
       </StyledEditWrapper>
       <Section header="Roads">

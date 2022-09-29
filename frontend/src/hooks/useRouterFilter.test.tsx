@@ -98,7 +98,7 @@ describe('useRouterFilter hook tests', () => {
     renderHook(() => useRouterFilter({ filter, setFilter, key: 'test' }), {
       wrapper,
     });
-    expect(filter).toEqual(expectedFilter); // TODO: It should equal the expectedFilter...
+    expect(filter).toEqual(expectedFilter);
   });
 
   it('will not set the filter based on redux if there is no matching key', () => {

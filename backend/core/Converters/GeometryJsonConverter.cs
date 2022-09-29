@@ -23,7 +23,7 @@ namespace Pims.Core.Converters
         /// <returns></returns>
         public override Geometry Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            // TODO: Deserialize other geometric shapes.
+            // TODO: PSP-4422 Deserialize other geometric shapes.
             return reader.TokenType switch
             {
                 JsonTokenType.String => Create(typeToConvert, reader.GetString()),
