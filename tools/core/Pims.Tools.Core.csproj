@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\backend\core\Pims.Core.csproj" />
+    <ProjectReference Include="..\..\source\backend\core\Pims.Core.csproj" />
   </ItemGroup>
 
 </Project>

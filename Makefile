@@ -262,19 +262,19 @@ db-seed: ## create a new, database seeded with test data using the script file i
 
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
-	@cd backend/dal; dotnet ef database drop;
+	@cd source/backend/dal; dotnet ef database drop;
 
 db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
-	@cd database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
+	@cd source/database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
 db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01).
 	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
-	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
+	@cd source/database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
 
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
-	@cd backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
+	@cd source/backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
 
 keycloak-sync: ## Syncs accounts with Keycloak and PIMS
 	@echo "$(P) Syncing keycloak with PIMS..."
@@ -286,7 +286,7 @@ convert: ## Convert Excel files to JSON
 
 backend-test: ## Run backend unit tests
 	@echo "$(P) Run backend unit tests"
-	@cd backend; dotnet test;
+	@cd source/backend; dotnet test;
 
 frontend-test: ## Run frontend unit tests
 	@echo "$(P) Run frontend unit tests"
@@ -294,14 +294,14 @@ frontend-test: ## Run frontend unit tests
 
 backend-coverage: ## Generate coverage report for backend
 	@echo "$(P) Generate coverage report for backend"
-	@cd backend/tests/unit/api; dotnet build;
-	@cd backend/tests/unit/dal; dotnet build;
-	@cd backend/tests/unit/mockdal; dotnet build;
-	@cd backend; coverlet ./tests/unit/api/bin/Debug/net6.0/Pims.Api.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.json" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" -f json
-	@cd backend; coverlet ./tests/unit/dal/bin/Debug/net6.0/Pims.Dal.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
-	@cd backend; coverlet ./tests/unit/mockdal/bin/Debug/net6.0/Pims.Dal.Mock.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
-	@cd backend; reportgenerator "-reports:./tests/TestResults/coverage.xml" "-targetdir:./tests/TestResults/Coverage" -reporttypes:Html
-	@cd backend; start ./tests/TestResults/Coverage/index.htm
+	@cd source/backend/tests/unit/api; dotnet build;
+	@cd source/backend/tests/unit/dal; dotnet build;
+	@cd source/backend/tests/unit/mockdal; dotnet build;
+	@cd source/backend; coverlet ./tests/unit/api/bin/Debug/net6.0/Pims.Api.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.json" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" -f json
+	@cd source/backend; coverlet ./tests/unit/dal/bin/Debug/net6.0/Pims.Dal.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
+	@cd source/backend; coverlet ./tests/unit/mockdal/bin/Debug/net6.0/Pims.Dal.Mock.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
+	@cd source/backend; reportgenerator "-reports:./tests/TestResults/coverage.xml" "-targetdir:./tests/TestResults/Coverage" -reporttypes:Html
+	@cd source/backend; start ./tests/TestResults/Coverage/index.htm
 
 frontend-coverage: ## Generate coverage report for frontend
 	@echo "$(P) Generate coverage report for frontend"

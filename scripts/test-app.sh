@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ./frontend
+cd ./source/frontend
 npm test
 
 $SHELL

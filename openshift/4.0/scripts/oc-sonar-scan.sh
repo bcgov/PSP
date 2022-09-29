@@ -33,7 +33,7 @@ ZAP_REPORT=${ZAP_REPORT:-}
 HTML_ZAP_REPORT=${HTML_ZAP_REPORT:-}
 SONAR_TOKEN=${SONAR_TOKEN:-}
 
-FRONTEND_DIR="${FRONTEND_DIR:-../../../frontend}"
+FRONTEND_DIR="${FRONTEND_DIR:-../../../source/frontend}"
 
 # Check requirements
 #

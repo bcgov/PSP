@@ -6,12 +6,10 @@ on:
   pull_request:
     branches: [master, test, dev]
   schedule:
-    - cron: '42 15 * * 5'
+    - cron: "42 15 * * 5"
 
 jobs:
-
   build:
-
     name: db-schema
     runs-on: ubuntu-latest
     permissions:
@@ -19,55 +17,55 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory: ./database/mssql/scripts/dbscripts
+      working-directory: ./source/database/mssql/scripts/dbscripts
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up random env variable
-      run: |
-        passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!
-        last_sprint=$(ls -d */ |  tail -n 1 | cut -f1 -d'/')
-        echo \
-        "ACCEPT_EULA=Y
-        MSSQL_SA_PASSWORD=$passvar
-        MSSQL_PID=Developer
-        TZ=America/Los_Angeles
-        TARGET_SPRINT=$last_sprint
-        DB_USER=admin
-        DB_PASSWORD=$passvar
-        TIMEOUT_LENGTH=120" >> ./.env
-        chmod +x ./entrypoint.sh
-        chmod +x ./setup.sh
-      working-directory: ${{env.working-directory}}
-    - name: Build ms sql 2019 stack
-      run: |
-        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
-      working-directory: ${{env.working-directory}}
-      
-    - name: Build db-schema and load schema
-      run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env docker.io/my-organization/my-app:${{ github.sha }}
-      working-directory: ${{env.working-directory}}
-    - name: Wait on the sqlserver process
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '120s'        
-    - name: Check running containers
-      run: docker ps -a
-    - name: Check pims-database logs
-      run: docker logs db-schema
-    - name: Check schema build
-      run: |
-        docker cp db-schema:/tmp/log.txt .
-        result="$(cat log.txt)"
-        echo "Error code ${result}"
-        if [[ "$result" == "0" ]]; then
-            echo "=======DB SCHEMA LOADED ========";
-        else
-            echo "There's an error loading schema" && exit 1 ;
-        fi
-      working-directory: ${{env.working-directory}}
-            
-    - name: Stop containers
-      if: always()
-      run: docker stop db-schema
-      working-directory: ${{env.working-directory}}
+      - uses: actions/checkout@v1
+      - name: Set up random env variable
+        run: |
+          passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!
+          last_sprint=$(ls -d */ |  tail -n 1 | cut -f1 -d'/')
+          echo \
+          "ACCEPT_EULA=Y
+          MSSQL_SA_PASSWORD=$passvar
+          MSSQL_PID=Developer
+          TZ=America/Los_Angeles
+          TARGET_SPRINT=$last_sprint
+          DB_USER=admin
+          DB_PASSWORD=$passvar
+          TIMEOUT_LENGTH=120" >> ./.env
+          chmod +x ./entrypoint.sh
+          chmod +x ./setup.sh
+        working-directory: ${{env.working-directory}}
+      - name: Build ms sql 2019 stack
+        run: |
+          docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+        working-directory: ${{env.working-directory}}
+
+      - name: Build db-schema and load schema
+        run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env docker.io/my-organization/my-app:${{ github.sha }}
+        working-directory: ${{env.working-directory}}
+      - name: Wait on the sqlserver process
+        uses: jakejarvis/wait-action@master
+        with:
+          time: "120s"
+      - name: Check running containers
+        run: docker ps -a
+      - name: Check pims-database logs
+        run: docker logs db-schema
+      - name: Check schema build
+        run: |
+          docker cp db-schema:/tmp/log.txt .
+          result="$(cat log.txt)"
+          echo "Error code ${result}"
+          if [[ "$result" == "0" ]]; then
+              echo "=======DB SCHEMA LOADED ========";
+          else
+              echo "There's an error loading schema" && exit 1 ;
+          fi
+        working-directory: ${{env.working-directory}}
+
+      - name: Stop containers
+        if: always()
+        run: docker stop db-schema
+        working-directory: ${{env.working-directory}}
