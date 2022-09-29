@@ -63,6 +63,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var acqFile = _acqFileRepository.GetById(id);
+            ReprojectPropertyLocationsToWgs84(acqFile);
             return acqFile;
         }
 
@@ -214,6 +215,24 @@ namespace Pims.Api.Services
             {
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BC_ALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BC_ALBERS);
+            }
+        }
+
+        private void ReprojectPropertyLocationsToWgs84(PimsAcquisitionFile acquisitionFile)
+        {
+            if (acquisitionFile == null)
+            {
+                return;
+            }
+
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                if (acquisitionProperty.Property.Location != null)
+                {
+                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
             }
         }
 

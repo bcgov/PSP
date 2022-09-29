@@ -1,4 +1,5 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
@@ -26,6 +27,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { selectedFileFeature, setSelectedFileFeature } = React.useContext(SelectedPropertyContext);
+  const { search } = useMapSearch();
 
   const initialForm = useMemo(() => {
     const acquisitionForm = new AcquisitionForm();
@@ -55,8 +57,9 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   };
 
   // navigate to read-only view after file has been created
-  const onSuccess = (acqFile: Api_AcquisitionFile) => {
+  const onSuccess = async (acqFile: Api_AcquisitionFile) => {
     formikRef.current?.resetForm();
+    await search();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
   };
 

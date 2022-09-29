@@ -45,6 +45,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   const { acquisitionFileId, onClose } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);
   const { search } = useMapSearch();
+  const { updateAcquisitionFile } = useAcquisitionProvider();
   const {
     getAcquisitionFile: { execute: retrieveAcquisitionFile, loading: loadingAcquisitionFile },
     updateAcquisitionProperties,
@@ -162,6 +163,19 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   }
 
+  if (containerState.activeEditForm === EditFormNames.propertySelector && acquisitionFile) {
+    return (
+      <UpdateProperties
+        file={acquisitionFile}
+        setIsShowingPropertySelector={() =>
+          setContainerState({ activeEditForm: EditFormNames.acquisitionSummary })
+        }
+        onSuccess={onSuccess}
+        updateFileProperties={updateAcquisitionFile.execute}
+      />
+    );
+  }
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -189,12 +203,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     >
       <FileLayout
         leftComponent={
-          <AcquisitionMenu
-            items={menuItems}
-            selectedIndex={containerState.selectedMenuIndex}
-            onChange={onMenuChange}
-            setContainerState={setContainerState}
-          />
+          <>
+            <AcquisitionMenu
+              items={menuItems}
+              selectedIndex={containerState.selectedMenuIndex}
+              onChange={onMenuChange}
+              setContainerState={setContainerState}
+            />
+          </>
         }
         bodyComponent={
           <StyledFormWrapper>
