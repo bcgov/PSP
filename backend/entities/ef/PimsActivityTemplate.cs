@@ -15,6 +15,7 @@ namespace Pims.Dal.Entities
         public PimsActivityTemplate()
         {
             PimsActivityInstances = new HashSet<PimsActivityInstance>();
+            PimsActivityTemplateDocuments = new HashSet<PimsActivityTemplateDocument>();
         }
 
         [Key]
@@ -70,5 +71,7 @@ namespace Pims.Dal.Entities
         public virtual PimsActivityTemplateType ActivityTemplateTypeCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsActivityInstance.ActivityTemplate))]
         public virtual ICollection<PimsActivityInstance> PimsActivityInstances { get; set; }
+        [InverseProperty(nameof(PimsActivityTemplateDocument.ActivityTemplate))]
+        public virtual ICollection<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
     }
 }

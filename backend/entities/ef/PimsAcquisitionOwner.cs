@@ -21,6 +21,9 @@ namespace Pims.Dal.Entities
         [Column("OWNER_NAME")]
         [StringLength(300)]
         public string OwnerName { get; set; }
+        [Column("OWNER_COMMENT")]
+        [StringLength(2000)]
+        public string OwnerComment { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
