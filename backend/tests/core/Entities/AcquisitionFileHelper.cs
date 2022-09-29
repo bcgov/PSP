@@ -26,6 +26,7 @@ namespace Pims.Core.Test
             acquisitionFile.AcquisitionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcquisitionFileStatusType() { Id = "ACTIVE" };
             acquisitionFile.AcquisitionTypeCodeNavigation = acquisitionType ?? new Entity.PimsAcquisitionType() { Id = "SECTN3" };
             acquisitionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1 };
+            acquisitionFile.RegionCode = acquisitionFile.RegionCodeNavigation.RegionCode;
 
             return acquisitionFile;
         }
