@@ -9,6 +9,7 @@ import {
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import { IProperty } from 'interfaces';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import queryString from 'query-string';
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -40,7 +41,10 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const [showActionBar, setShowActionBar] = useState(false);
 
   const onMarkerClicked = (property: IProperty) => {
-    history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
+    history.push({
+      pathname: `/mapview/sidebar/property/${property.id}`,
+      search: queryString.stringify({ pid: property.pid }),
+    });
   };
 
   const onPropertyViewClicked = (pid?: string | null, id?: number) => {

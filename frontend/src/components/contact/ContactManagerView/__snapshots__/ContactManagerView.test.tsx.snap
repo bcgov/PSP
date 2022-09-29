@@ -202,6 +202,10 @@ exports[`ContactManagerView matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
+.c11 {
+  font-size: 1.4rem;
+}
+
 .c1.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -581,8 +585,28 @@ exports[`ContactManagerView matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 430px;"
+            style="display: flex; flex: 1 0 auto; min-width: 440px;"
           >
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                <div>
+                  <input
+                    data-testid="selectrow-parent"
+                    name=""
+                    style="cursor: pointer;"
+                    title="Click to deselect all."
+                    type="checkbox"
+                  />
+                </div>
+              </div>
+            </div>
             <div
               class="th"
               colspan="1"
@@ -615,6 +639,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 Summary
                 <div
                   class="c8"
+                  data-testid="sort-column-summary"
                 >
                   <svg
                     class="c9"
@@ -660,6 +685,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 First name
                 <div
                   class="c8"
+                  data-testid="sort-column-firstName"
                 >
                   <svg
                     class="c9"
@@ -705,6 +731,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 Last name
                 <div
                   class="c8"
+                  data-testid="sort-column-surname"
                 >
                   <svg
                     class="c9"
@@ -750,6 +777,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 Organization
                 <div
                   class="c8"
+                  data-testid="sort-column-organizationName"
                 >
                   <svg
                     class="c9"
@@ -819,6 +847,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                 City
                 <div
                   class="c8"
+                  data-testid="sort-column-municipalityName"
                 >
                   <svg
                     class="c9"
@@ -896,7 +925,13 @@ exports[`ContactManagerView matches snapshot 1`] = `
         />
         <div
           class="ml-auto align-self-center col-auto"
-        />
+        >
+          <p
+            class="c11"
+          >
+            0 selected
+          </p>
+        </div>
         <div
           class="align-self-center col-auto"
         />

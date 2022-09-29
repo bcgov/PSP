@@ -66,6 +66,7 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
   const editActivity = async (activity: Api_Activity) => {
     const updatedActivity = await updateActivity(activity);
     setStaleFile(true);
+    fetchActivity();
     return updatedActivity;
   };
 

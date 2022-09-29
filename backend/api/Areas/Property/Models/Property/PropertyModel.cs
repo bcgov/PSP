@@ -84,6 +84,11 @@ namespace Pims.Api.Areas.Property.Models.Property
         public bool IsSensitive { get; set; }
 
         /// <summary>
+        /// get/set - Whether the property is a POI.
+        /// </summary>
+        public bool IsPropertyOfInterest { get; set; }
+
+        /// <summary>
         /// get/set - Whether the property is a provincial highway.
         /// </summary>
         public bool? IsProvincialPublicHwy { get; set; }

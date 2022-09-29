@@ -65,6 +65,7 @@ exports[`Acquisition Search Results Table matches snapshot 1`] = `
             Acquisition file #
             <div
               class="c0"
+              data-testid="sort-column-fileNumber"
             >
               <svg
                 class="c1"
@@ -110,6 +111,7 @@ exports[`Acquisition Search Results Table matches snapshot 1`] = `
             Acquisition file name
             <div
               class="c0"
+              data-testid="sort-column-fileName"
             >
               <svg
                 class="c1"
@@ -191,6 +193,7 @@ exports[`Acquisition Search Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
+              data-testid="sort-column-fileStatusTypeCode"
             >
               <svg
                 class="c1"

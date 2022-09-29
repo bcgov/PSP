@@ -18,7 +18,7 @@ export const usePropertyAssociations = () => {
     requestName: 'getPropertyAssociations',
     onError: useCallback(axiosError => {
       toast.error(
-        `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
+        `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data?.error}`,
       );
     }, []),
   });

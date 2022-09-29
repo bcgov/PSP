@@ -9,6 +9,7 @@ using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -147,14 +148,13 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
 
             // Act
-            Action act = () => service.Update(acqFile);
+            var result = service.Update(acqFile, true);
 
             // Assert
-
-            // TODO: Update test when Update gets implemented
-            act.Should().Throw<System.NotImplementedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
         }
 
         [Fact]
@@ -170,9 +170,10 @@ namespace Pims.Api.Test.Services
             var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
 
             // Act
-            Action act = () => service.Update(acqFile);
+            Action act = () => service.Update(acqFile, true);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -180,7 +181,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_ThrowIfNull()
+        public void Update_ThrowIf_Null()
         {
             // Arrange
             var helper = new TestHelper();
@@ -190,14 +191,59 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
 
             // Act
-            Action act = () => service.Add(null);
+            Action act = () => service.Update(null, false);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_ThrowIf_RegionDoesNotMatch()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+            var service = helper.Create<AcquisitionFileService>(user);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns((short)(acqFile.RegionCode + 100));
+
+            // Act
+            Action act = () => service.Update(acqFile, false);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Success_UserOverride()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+            var service = helper.Create<AcquisitionFileService>(user);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns((short)(acqFile.RegionCode + 100));
+
+            // Act
+            var result = service.Update(acqFile, userOverride: true);
+
+            // Assert
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
         }
 
         [Fact]

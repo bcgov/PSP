@@ -1,4 +1,7 @@
-import { Api_PropertyPurpose, Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
+import {
+  Api_ResearchFileProperty,
+  Api_ResearchFilePropertyPurposeType,
+} from 'models/api/ResearchFile';
 
 export class PropertyResearchFilePurposeFormModel {
   public id?: number;
@@ -6,7 +9,9 @@ export class PropertyResearchFilePurposeFormModel {
   public propertyPurposeTypeDescription?: string;
   public version?: number;
 
-  public static fromApi(base: Api_PropertyPurpose): PropertyResearchFilePurposeFormModel {
+  public static fromApi(
+    base: Api_ResearchFilePropertyPurposeType,
+  ): PropertyResearchFilePurposeFormModel {
     var newModel = new PropertyResearchFilePurposeFormModel();
     newModel.id = base.id;
     newModel.propertyPurposeTypeCode = base.propertyPurposeType?.id;
@@ -15,7 +20,7 @@ export class PropertyResearchFilePurposeFormModel {
     return newModel;
   }
 
-  public toApi(): Api_PropertyPurpose {
+  public toApi(): Api_ResearchFilePropertyPurposeType {
     return {
       id: this.id,
       propertyPurposeType: {
@@ -38,11 +43,11 @@ export class UpdatePropertyFormModel {
   public researchSummary?: string;
   public propertyId?: number;
   public researchFileId?: number;
-  public reaserchFileVersion?: number;
+  public researchFileVersion?: number;
   public purposeTypes?: PropertyResearchFilePurposeFormModel[];
   public rowVersion?: number;
 
-  public static fromApi(base: Api_PropertyResearchFile): UpdatePropertyFormModel {
+  public static fromApi(base: Api_ResearchFileProperty): UpdatePropertyFormModel {
     var model = new UpdatePropertyFormModel();
     model.id = base.id;
     model.propertyName = base.propertyName;
@@ -63,17 +68,17 @@ export class UpdatePropertyFormModel {
     model.documentReference = base.documentReference;
     model.researchSummary = base.researchSummary;
     model.propertyId = base.property?.id;
-    model.researchFileId = base.researchFile?.id;
-    model.reaserchFileVersion = base.researchFile?.rowVersion;
+    model.researchFileId = base.file?.id;
+    model.researchFileVersion = base.file?.rowVersion;
 
-    model.purposeTypes = base.purposeTypes?.map(x =>
+    model.purposeTypes = base.purposeTypes?.map((x: Api_ResearchFilePropertyPurposeType) =>
       PropertyResearchFilePurposeFormModel.fromApi(x),
     );
     model.rowVersion = base.rowVersion;
     return model;
   }
 
-  public toApi(): Api_PropertyResearchFile {
+  public toApi(): Api_ResearchFileProperty {
     return {
       id: this.id,
       propertyName: this.propertyName,
@@ -94,7 +99,7 @@ export class UpdatePropertyFormModel {
       documentReference: this.documentReference,
       researchSummary: this.researchSummary,
       property: { id: this.propertyId },
-      researchFile: { id: this.researchFileId, rowVersion: this.reaserchFileVersion },
+      file: { id: this.researchFileId, rowVersion: this.researchFileVersion },
       purposeTypes: this.purposeTypes?.map(x => x.toApi()),
       rowVersion: this.rowVersion,
     };

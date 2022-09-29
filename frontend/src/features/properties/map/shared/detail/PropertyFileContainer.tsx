@@ -1,14 +1,13 @@
 import axios, { AxiosError } from 'axios';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
 import {
+  IInventoryTabsProps,
   InventoryTabNames,
-  InventoryTabs,
   TabInventoryView,
 } from 'features/mapSideBar/tabs/InventoryTabs';
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
-import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import useIsMounted from 'hooks/useIsMounted';
 import { useLtsa } from 'hooks/useLtsa';
 import { useProperties } from 'hooks/useProperties';
@@ -17,25 +16,20 @@ import { IApiError } from 'interfaces/IApiError';
 import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { Api_PropertyAssociations } from 'models/api/Property';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { pidFormatter } from 'utils';
 
-import { FormKeys } from '../FormKeys';
-
-export interface IPropertyResearchContainerProps {
-  researchFileProperty: Api_ResearchFileProperty;
-  // The "edit key" identifies which form is currently being edited: e.g.
-  //  - property details info,
-  //  - research summary,
-  //  - research property info
-  //  - 'none' means no form is being edited.
-  setEditKey: (editKey: FormKeys) => void;
-  setEditMode: (isEditing: boolean) => void;
+export interface IPropertyFileContainerProps {
+  fileProperty: Api_PropertyFile;
+  setEditFileProperty: () => void;
+  View: React.FunctionComponent<IInventoryTabsProps>;
+  customTabs: TabInventoryView[];
+  defaultTab: InventoryTabNames;
 }
 
-const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContainerProps> = props => {
+export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContainerProps> = props => {
   const isMounted = useIsMounted();
   const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
   const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
@@ -45,8 +39,8 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
   >(undefined);
   const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
 
-  const pid = props.researchFileProperty?.property?.pid?.toString();
-  const id = props.researchFileProperty?.property?.id;
+  const pid = props.fileProperty?.property?.pid?.toString();
+  const id = props.fileProperty?.property?.id;
 
   // First, fetch property information from PSP API
   const { getProperty, getPropertyLoading: propertyLoading } = useProperties();
@@ -71,7 +65,6 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
         }
       }
     };
-
     func();
   }, [getProperty, id, isMounted]);
 
@@ -111,7 +104,6 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
         }
       }
     };
-
     func();
   }, [getPropertyAssociations, id]);
 
@@ -135,21 +127,7 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     name: 'Value',
   });
 
-  tabViews.push({
-    content: (
-      <PropertyResearchTabView
-        researchFile={props.researchFileProperty}
-        setEditMode={editable => {
-          props.setEditMode(editable);
-          props.setEditKey(FormKeys.propertyResearch);
-        }}
-      />
-    ),
-    key: InventoryTabNames.research,
-    name: 'Property Research',
-  });
-
-  const defaultTab = InventoryTabNames.research;
+  tabViews.push(...props.customTabs);
 
   if (showPropertyInfoTab) {
     tabViews.push({
@@ -158,8 +136,7 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
           property={propertyViewForm}
           loading={propertyLoading}
           setEditMode={editable => {
-            props.setEditMode(editable);
-            props.setEditKey(FormKeys.propertyDetails);
+            props.setEditFileProperty();
           }}
         />
       ),
@@ -181,16 +158,18 @@ const PropertyResearchContainer: React.FunctionComponent<IPropertyResearchContai
     });
   }
 
-  const [activeTab, setActiveTab] = useState<InventoryTabNames>(defaultTab);
+  const [activeTab, setActiveTab] = useState<InventoryTabNames>(props.defaultTab);
+  const InventoryTabsView = props.View;
 
   return (
-    <InventoryTabs
+    <InventoryTabsView
+      loading={propertyAssociationsLoading || ltsaLoading || propertyLoading}
       tabViews={tabViews}
-      defaultTabKey={defaultTab}
+      defaultTabKey={props.defaultTab}
       activeTab={activeTab}
       setActiveTab={setActiveTab}
     />
   );
 };
 
-export default PropertyResearchContainer;
+export default PropertyFileContainer;

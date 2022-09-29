@@ -5,6 +5,8 @@ import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback, useMemo } from 'react';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from 'utils';
 
+const ignoreErrorCodes = [409];
+
 /**
  * hook that interacts with the Acquisition File API.
  */
@@ -12,6 +14,7 @@ export const useAcquisitionProvider = () => {
   const {
     getAcquisitionFile,
     postAcquisitionFile,
+    putAcquisitionFile,
     putAcquisitionFileProperties,
   } = useApiAcquisitionFile();
 
@@ -38,6 +41,20 @@ export const useAcquisitionProvider = () => {
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),
   });
 
+  const updateAcquisitionFileApi = useApiRequestWrapper<
+    (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFile: Api_AcquisitionFile, userOverride = false) =>
+        await putAcquisitionFile(acqFile, userOverride),
+      [putAcquisitionFile],
+    ),
+    requestName: 'UpdateAcquisitionFile',
+    onSuccess: useAxiosSuccessHandler('Acquisition File updated'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<
     (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
@@ -47,15 +64,21 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'UpdateAcquisitionFileProperties',
     onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
-    onError: useAxiosErrorHandler('Failed to update Acquisition File'),
+    onError: useAxiosErrorHandler('Failed to update Acquisition File Properties'),
   });
 
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
       getAcquisitionFile: getAcquisitionFileApi,
-      updateAcquisitionFile: updateAcquisitionPropertiesApi,
+      updateAcquisitionFile: updateAcquisitionFileApi,
+      updateAcquisitionProperties: updateAcquisitionPropertiesApi,
     }),
-    [addAcquisitionFileApi, getAcquisitionFileApi, updateAcquisitionPropertiesApi],
+    [
+      addAcquisitionFileApi,
+      getAcquisitionFileApi,
+      updateAcquisitionFileApi,
+      updateAcquisitionPropertiesApi,
+    ],
   );
 };

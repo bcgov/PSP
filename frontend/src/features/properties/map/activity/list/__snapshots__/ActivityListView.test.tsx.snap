@@ -329,6 +329,30 @@ exports[`Activity List View renders as expected 1`] = `
                 >
                   All activity types
                 </option>
+                <option
+                  class="option"
+                  value="GENERAL"
+                >
+                  General
+                </option>
+                <option
+                  class="option"
+                  value="GENLTR"
+                >
+                  Generate Letter
+                </option>
+                <option
+                  class="option"
+                  value="SITEVIS"
+                >
+                  Site Visit
+                </option>
+                <option
+                  class="option"
+                  value="SURVEY"
+                >
+                  Survey
+                </option>
               </select>
             </div>
           </div>
@@ -348,6 +372,30 @@ exports[`Activity List View renders as expected 1`] = `
                   value=""
                 >
                   All statuses
+                </option>
+                <option
+                  class="option"
+                  value="NOSTART"
+                >
+                  Not Started
+                </option>
+                <option
+                  class="option"
+                  value="INPROG"
+                >
+                  In Progress
+                </option>
+                <option
+                  class="option"
+                  value="COMPLETE"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  value="CANCELLED"
+                >
+                  Cancelled
                 </option>
               </select>
             </div>
@@ -423,7 +471,7 @@ exports[`Activity List View renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            style="display: flex; flex: 1 0 auto; min-width: 150px;"
           >
             <div
               class="th"
@@ -437,6 +485,7 @@ exports[`Activity List View renders as expected 1`] = `
                 Activity type
                 <div
                   class="c6"
+                  data-testid="sort-column-activityTemplate"
                 >
                   <svg
                     class="c7"
@@ -482,6 +531,7 @@ exports[`Activity List View renders as expected 1`] = `
                 Description
                 <div
                   class="c6"
+                  data-testid="sort-column-description"
                 >
                   <svg
                     class="c7"
@@ -524,9 +574,22 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="sortable-column"
               >
+                Property
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
                 Status
                 <div
                   class="c6"
+                  data-testid="sort-column-activityStatusTypeCode"
                 >
                   <svg
                     class="c7"
@@ -584,7 +647,7 @@ exports[`Activity List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="td"
@@ -617,6 +680,14 @@ exports[`Activity List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
+                All
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
                 Draft
               </div>
               <div
@@ -687,7 +758,7 @@ exports[`Activity List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="td"
@@ -720,6 +791,14 @@ exports[`Activity List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
+                All
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
                 Draft
               </div>
               <div
@@ -790,7 +869,7 @@ exports[`Activity List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="td"
@@ -816,6 +895,14 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 Site Visit Activity
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                All
               </div>
               <div
                 class="td"

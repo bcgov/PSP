@@ -44,7 +44,7 @@ export const DocumentDetailView: React.FunctionComponent<IDocumentDetailsViewPro
                   <StyledH2>Document information</StyledH2>
                   <TooltipIcon
                     toolTipId="documentInfoToolTip"
-                    className="documentInfoToolTip"
+                    innerClassName="documentInfoToolTip"
                     toolTip="Information you provided here will be searchable"
                   ></TooltipIcon>
                 </StyledHeader>

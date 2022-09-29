@@ -61,7 +61,7 @@ export const getMockActivityResponse: () => Api_Activity = () => ({
     isDisabled: false,
   },
   activityStatusTypeCode: {
-    id: 'NOSTART',
+    id: 'INPROG',
     description: 'Not Started',
     isDisabled: false,
   },

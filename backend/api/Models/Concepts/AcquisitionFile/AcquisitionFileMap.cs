@@ -10,6 +10,7 @@ namespace Pims.Api.Models.Concepts
             config.NewConfig<Entity.PimsAcquisitionFile, AcquisitionFileModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFileId)
+                .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.MinistryProjectNumber, src => src.MinistryProjectNumber)
@@ -26,6 +27,7 @@ namespace Pims.Api.Models.Concepts
 
             config.NewConfig<AcquisitionFileModel, Entity.PimsAcquisitionFile>()
                 .Map(dest => dest.AcquisitionFileId, src => src.Id)
+                .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.MinistryProjectNumber, src => src.MinistryProjectNumber)

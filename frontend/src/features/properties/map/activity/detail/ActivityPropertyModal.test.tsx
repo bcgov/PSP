@@ -70,6 +70,26 @@ describe('ActivityPropertyModal tests', () => {
     });
   });
 
+  it('displays both the name and identifier of a property if both selected', async () => {
+    const { getByText } = setup();
+    expect(getByText('PID: 007-723-385')).toBeVisible();
+    expect(getByText('test property name')).toBeVisible();
+  });
+
+  it('displays the plan number if no other identifiers are set', async () => {
+    const { getByText } = setup({
+      props: {
+        allProperties: [
+          {
+            ...getMockApiPropertyFiles()[0],
+            property: { pid: undefined, pin: undefined, planNumber: '12345' },
+          },
+        ],
+      },
+    });
+    expect(getByText('Plan #: 12345')).toBeVisible();
+  });
+
   it('can select a property', async () => {
     const { getAllByTitle, getByText } = setup();
 

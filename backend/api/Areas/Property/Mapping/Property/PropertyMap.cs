@@ -30,6 +30,7 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
+                .Map(dest => dest.IsPropertyOfInterest, src => src.IsPropertyOfInterest)
                 .Map(dest => dest.IsProvincialPublicHwy, src => src.IsProvincialPublicHwy)
                 .Map(dest => dest.PphStatusUpdateUserid, src => src.PphStatusUpdateUserid)
                 .Map(dest => dest.PphStatusUpdateTimestamp, src => src.PphStatusUpdateTimestamp)

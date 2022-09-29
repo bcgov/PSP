@@ -117,7 +117,7 @@ describe('SideNavbar display and logic', () => {
         userEvent.click(managementButton);
       });
       await waitFor(async () => {
-        expect(getByText('Manage Lease/License files')).toBeInTheDocument();
+        expect(getByText('Manage Lease/License Files')).toBeInTheDocument();
       });
     });
 
@@ -180,7 +180,7 @@ describe('SideNavbar display and logic', () => {
       await act(async () => {
         userEvent.click(researchButton);
       });
-      const searchReseachFileLink = getByText('Manage Research files');
+      const searchReseachFileLink = getByText('Manage Research Files');
       await act(async () => {
         userEvent.click(searchReseachFileLink);
       });
