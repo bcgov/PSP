@@ -4,7 +4,7 @@ import {
   TabInventoryView,
 } from 'features/mapSideBar/tabs/InventoryTabs';
 import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
-import { PropertyResearchTabView } from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
+import PropertyResearchTabView from 'features/mapSideBar/tabs/propertyResearch/PropertyResearchTabView';
 import { FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
@@ -81,7 +81,7 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
         content: (
           <PropertyResearchTabView
             researchFile={researchFileProperty}
-            setEditMode={editable => {
+            setEditMode={(editable: boolean) => {
               props.setEditMode(editable);
               props.setEditKey(FormKeys.propertyResearch);
             }}

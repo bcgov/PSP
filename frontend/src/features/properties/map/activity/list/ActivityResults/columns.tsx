@@ -58,7 +58,8 @@ export function createActivityTableColumns(
         }
         const activityPropertyIndexes = activityProperties
           .filter(ap => ap?.propertyFileId !== undefined)
-          .map(ap => getFilePropertyIndexById(ap.propertyFileId as number) + 1);
+          .map(ap => getFilePropertyIndexById(ap.propertyFileId as number) + 1)
+          .sort();
         return activityPropertyIndexes.join(', ');
       },
     },
