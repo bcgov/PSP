@@ -523,18 +523,6 @@ exports[`Activity List View renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Property
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
               style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
@@ -575,6 +563,18 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                 </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Property
               </div>
             </div>
             <div
