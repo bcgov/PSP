@@ -1040,7 +1040,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Status
                 <div
                   class="c13"
-                  data-testid="sort-column-researchFileStatusTypeCode"
+                  data-testid="sort-column-fileStatusTypeCode"
                 >
                   <svg
                     class="c14"
