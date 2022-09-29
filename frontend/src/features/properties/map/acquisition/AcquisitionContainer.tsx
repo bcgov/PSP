@@ -29,7 +29,6 @@ export interface IAcquisitionContainerProps {
 export interface AcquisitionContainerState {
   isEditing: boolean;
   activeEditForm?: EditFormNames;
-  // formikRef?: React.RefObject<FormikProps<any>>;
   selectedMenuIndex: number;
   showConfirmModal: boolean;
 }
@@ -37,7 +36,6 @@ export interface AcquisitionContainerState {
 const initialState: AcquisitionContainerState = {
   isEditing: false,
   activeEditForm: undefined,
-  // formikRef: undefined,
   selectedMenuIndex: 0,
   showConfirmModal: false,
 };
