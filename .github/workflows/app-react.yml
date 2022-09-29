@@ -19,7 +19,7 @@ jobs:
         with:
           filters: |
             frontend:
-              - 'frontend/**'
+              - 'source/frontend/**'
 
   build-frontend:
     needs: check-changes
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      working-directory: ./frontend
+      working-directory: ./source/frontend
       GIT_BRANCH: "${{github.ref}}"
 
     steps:

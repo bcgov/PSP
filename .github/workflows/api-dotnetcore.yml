@@ -19,14 +19,14 @@ jobs:
         with:
           filters: |
             backend:
-              - 'backend/**'
+              - 'source/backend/**'
 
   build-backend:
     needs: check-changes
     if: ${{ needs.check-changes.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
     env:
-      working-directory: ./backend
+      working-directory: ./source/backend
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GIT_BRANCH: "${{github.ref}}"
 
