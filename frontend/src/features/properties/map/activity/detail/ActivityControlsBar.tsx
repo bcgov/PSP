@@ -29,7 +29,11 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
         <StyledRow>
           <LeftAligned>
             <SectionField label="Status">
-              <Select disabled={!editMode} field="status" options={activityStatusTypeOptions} />
+              <Select
+                disabled={!editMode}
+                field="activityStatusTypeCode.id"
+                options={activityStatusTypeOptions}
+              />
             </SectionField>
           </LeftAligned>
           <RightAligned>

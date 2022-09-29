@@ -509,6 +509,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                     >
                       <div
                         class="Menu-item list-group-item"
+                        title="menu-item-Approve"
                       >
                         Approve
                       </div>
@@ -516,16 +517,19 @@ exports[`Manage access requests Snapshot matches 1`] = `
                         aria-disabled="true"
                         class="Menu-item list-group-item disabled"
                         tabindex="-1"
+                        title="menu-item-Hold"
                       >
                         Hold
                       </div>
                       <div
                         class="Menu-item list-group-item"
+                        title="menu-item-Decline"
                       >
                         Decline
                       </div>
                       <div
                         class="Menu-item list-group-item"
+                        title="menu-item-Delete"
                       >
                         Delete
                       </div>
@@ -662,6 +666,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                     >
                       <div
                         class="Menu-item list-group-item"
+                        title="menu-item-Approve"
                       >
                         Approve
                       </div>
@@ -669,16 +674,19 @@ exports[`Manage access requests Snapshot matches 1`] = `
                         aria-disabled="true"
                         class="Menu-item list-group-item disabled"
                         tabindex="-1"
+                        title="menu-item-Hold"
                       >
                         Hold
                       </div>
                       <div
                         class="Menu-item list-group-item"
+                        title="menu-item-Decline"
                       >
                         Decline
                       </div>
                       <div
                         class="Menu-item list-group-item"
+                        title="menu-item-Delete"
                       >
                         Delete
                       </div>
@@ -744,26 +752,31 @@ exports[`Manage access requests Snapshot matches 1`] = `
               >
                 <div
                   class="Menu-item list-group-item"
+                  title="menu-item-5"
                 >
                   5
                 </div>
                 <div
                   class="Menu-item list-group-item"
+                  title="menu-item-10"
                 >
                   10
                 </div>
                 <div
                   class="Menu-item list-group-item"
+                  title="menu-item-20"
                 >
                   20
                 </div>
                 <div
                   class="Menu-item list-group-item"
+                  title="menu-item-50"
                 >
                   50
                 </div>
                 <div
                   class="Menu-item list-group-item"
+                  title="menu-item-100"
                 >
                   100
                 </div>

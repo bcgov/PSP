@@ -1,7 +1,6 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { compact } from 'lodash';
-import { Api_AcquisitionFileProperty } from 'models/api/AcquisitionFile';
-import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
+import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { pidFormatter } from 'utils';
 
 export enum NameSourceType {
@@ -10,7 +9,6 @@ export enum NameSourceType {
   PLAN = 'Plan #',
   LOCATION = 'Location',
   RESEARCH = 'Research Name',
-  ACQUISITION = 'Acquisition Name',
   NONE = 'n/a',
 }
 
@@ -39,41 +37,23 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   return { label: NameSourceType.NONE, value: '' };
 };
 
-export const getResearchPropertyName = (
-  researchProperty?: Api_ResearchFileProperty,
+export const getFilePropertyName = (
+  fileProperty?: Api_PropertyFile,
+  skipName: boolean = false,
 ): PropertyName => {
-  if (researchProperty === undefined) {
+  if (fileProperty === undefined) {
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  if (researchProperty.propertyName !== undefined && researchProperty.propertyName !== '') {
-    return { label: NameSourceType.RESEARCH, value: researchProperty.propertyName };
-  } else if (researchProperty.property !== undefined) {
-    const property = researchProperty.property;
-    const mapProperty: IMapProperty = {
-      pin: property.pin?.toString(),
-      pid: property.pid?.toString(),
-      latitude: property.latitude,
-      longitude: property.longitude,
-      planNumber: property.planNumber,
-    };
-    return getPropertyName(mapProperty);
-  }
-  return { label: NameSourceType.NONE, value: '' };
-};
-
-export const getAcquisitionPropertyName = (
-  acquisitionProperty?: Api_AcquisitionFileProperty,
-): PropertyName => {
-  if (acquisitionProperty === undefined) {
-    return { label: NameSourceType.NONE, value: '' };
-  }
-
-  if (acquisitionProperty.propertyName !== undefined && acquisitionProperty.propertyName !== '') {
-    return { label: NameSourceType.ACQUISITION, value: acquisitionProperty.propertyName };
-  } else if (acquisitionProperty.property !== undefined) {
-    const property = acquisitionProperty.property;
-    const mapProperty: IMapProperty = {
+  if (
+    fileProperty.propertyName !== undefined &&
+    fileProperty.propertyName !== '' &&
+    skipName === false
+  ) {
+    return { label: NameSourceType.RESEARCH, value: fileProperty.propertyName };
+  } else if (fileProperty.property !== undefined) {
+    const property = fileProperty.property;
+    let mapProperty: IMapProperty = {
       pin: property.pin?.toString(),
       pid: property.pid?.toString(),
       latitude: property.latitude,

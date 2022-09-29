@@ -94,6 +94,15 @@ describe('ActivityControlsBar test', () => {
     expect(setEditMode).toHaveBeenCalled();
   });
 
+  it('populates status field as expected', async () => {
+    const { getByRole } = setup({
+      editMode: false,
+      setEditMode,
+      onEditRelatedProperties,
+    });
+    expect((getByRole('option', { name: 'In Progress' }) as any).selected).toBe(true);
+  });
+
   it('calls expected function when related properties is clicked', async () => {
     const { getByText } = setup({
       editMode: true,

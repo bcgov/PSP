@@ -2,8 +2,7 @@ import userEvent from '@testing-library/user-event';
 import { Claims } from 'constants/claims';
 import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
-import React from 'react';
-import { act, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
+import { mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { ContactResultComponent, IContactResultComponentProps } from './ContactResultComponent';
 
@@ -23,6 +22,7 @@ const setup = (
       selectedRows={[]}
       results={results ?? []}
       setSort={setSort}
+      showSelectedRowCount
     />,
     {
       ...rest,
@@ -98,11 +98,14 @@ describe('Contact Search Results Table', () => {
   });
 
   it('sorts table when sort buttons are clicked', async () => {
-    const { sortButtons } = setup({ results: mockResults });
+    const { getByTestId } = setup({ results: mockResults });
     // click on sort buttons
-    await act(async () => userEvent.click(sortButtons));
-    // should be sorted in ascending order
-    expect(setSort).toHaveBeenCalledWith({ summary: 'asc' });
+    userEvent.click(getByTestId('sort-column-summary'));
+
+    await waitFor(() => {
+      // should be sorted in ascending order
+      expect(setSort).toHaveBeenCalledWith({ summary: 'asc' });
+    });
   });
 
   describe('when user has CONTACT_EDIT claim', () => {
