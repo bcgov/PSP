@@ -35,6 +35,9 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToSearchContact()
         {
             Wait();
+            ZoomOutScreen();
+
+            Wait();
             webDriver.FindElement(menuContactsButton).Click();
 
             Wait();
@@ -110,10 +113,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactViewContactInfoHeader).Displayed);
 
             webDriver.FindElement(searchContactBackLink).Click();
-
-            //Wait();
-            //webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
-            //webDriver.FindElement(searchContactResultsButton).Click();
 
         }
 
