@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 13.0.1                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S37.00.dez                                 */
+/* Project file:          PIMS S38.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2022-09-14 11:50                                */
+/* Created on:            2022-09-22 12:17                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1898,6 +1898,14 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACT_INST_PROP_ACQ_FILE] DROP CONSTRAINT [PIM_PRACQF_PIM_AIPAFL_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [PIM_DOCMNT_PIM_ACTMDO_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [PIM_ACTTMP_PIM_ACTMDO_FK]
 GO
 
 
@@ -3952,6 +3960,84 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACTIVITY_TEMPLATE_DOCUMENT"                       */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_ACTIVITY_TEMPLATE_DOCUMENT_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_APP_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_APP_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_APP_CREATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_APP_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_APP_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT] DROP CONSTRAINT [ACTMDO_ACT_TMP_DOC_TUC]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACTIVITY_TEMPLATE_DOCUMENT', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACTIVITY_TEMPLATE_DOCUMENT', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT]
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_ACTIVITY_TEMPLATE"                                */
 /* ---------------------------------------------------------------------- */
 
@@ -4162,6 +4248,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_OWNER', 'COLUMN', N'OWNER_NAME'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_OWNER', 'COLUMN', N'OWNER_COMMENT'
 GO
 
 
@@ -12532,5 +12622,9 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_ACTIVITY_TEMPLATE_DOCUMENT_ID_SEQ]
 GO
 
