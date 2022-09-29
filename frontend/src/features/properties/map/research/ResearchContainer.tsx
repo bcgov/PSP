@@ -53,7 +53,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const { search } = useMapSearch();
   const { hasClaim } = useKeycloakWrapper();
 
-  const menuItems = researchFile?.fileProperties?.map(x => getResearchPropertyName(x).value) || [];
+  const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('RFile Summary');
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();

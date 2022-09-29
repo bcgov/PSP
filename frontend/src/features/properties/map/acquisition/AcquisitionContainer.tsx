@@ -4,7 +4,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { FileTypes } from 'constants/index';
 import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import { getAcquisitionPropertyName } from 'features/properties/selector/utils';
+import { getFilePropertyName } from 'features/properties/selector/utils';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
@@ -89,8 +89,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // UI components
   const formTitle = containerState.isEditing ? 'Update Acquisition File' : 'Acquisition File';
 
-  const menuItems =
-    acquisitionFile?.fileProperties?.map(x => getAcquisitionPropertyName(x).value) || [];
+  const menuItems = acquisitionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('File Summary');
 
   if (acquisitionFile === undefined && loadingAcquisitionFile) {
