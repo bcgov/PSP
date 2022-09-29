@@ -67,6 +67,9 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToCreateNewContact()
         {
             Wait();
+            ZoomOutScreen();
+
+            Wait();
             webDriver.FindElement(menuContactsButton).Click();
 
             Wait();
