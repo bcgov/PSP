@@ -93,6 +93,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsActivityInstanceNoteHist> PimsActivityInstanceNoteHists { get; set; }
         public virtual DbSet<PimsActivityInstanceStatusType> PimsActivityInstanceStatusTypes { get; set; }
         public virtual DbSet<PimsActivityTemplate> PimsActivityTemplates { get; set; }
+        public virtual DbSet<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
+        public virtual DbSet<PimsActivityTemplateDocumentHist> PimsActivityTemplateDocumentHists { get; set; }
         public virtual DbSet<PimsActivityTemplateHist> PimsActivityTemplateHists { get; set; }
         public virtual DbSet<PimsActivityTemplateType> PimsActivityTemplateTypes { get; set; }
         public virtual DbSet<PimsAddress> PimsAddresses { get; set; }
@@ -2214,6 +2216,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.OwnerComment).HasComment("Comment related to the owner.");
+
                 entity.Property(e => e.OwnerName)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("Name of the owner.");
@@ -2617,6 +2621,64 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsActivityTemplates)
                     .HasForeignKey(d => d.ActivityTemplateTypeCode)
                     .HasConstraintName("PIM_ACTTTY_PIM_ACTTMP_FK");
+            });
+
+            modelBuilder.Entity<PimsActivityTemplateDocument>(entity =>
+            {
+                entity.HasKey(e => e.ActivityTemplateDocumentId)
+                    .HasName("ACTMDO_PK");
+
+                entity.HasComment("Associative relationship between an activity template and a document.  Useful in determining with templates reference a document and conversely, which documents reference an activity template.");
+
+                entity.Property(e => e.ActivityTemplateDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_DOCUMENT_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the relationship has been disabled.");
+
+                entity.HasOne(d => d.ActivityTemplate)
+                    .WithMany(p => p.PimsActivityTemplateDocuments)
+                    .HasForeignKey(d => d.ActivityTemplateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACTTMP_PIM_ACTMDO_FK");
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.PimsActivityTemplateDocuments)
+                    .HasForeignKey(d => d.DocumentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_DOCMNT_PIM_ACTMDO_FK");
+            });
+
+            modelBuilder.Entity<PimsActivityTemplateDocumentHist>(entity =>
+            {
+                entity.HasKey(e => e.ActivityTemplateDocumentHistId)
+                    .HasName("PIMS_ACTMDO_H_PK");
+
+                entity.Property(e => e.ActivityTemplateDocumentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_TEMPLATE_DOCUMENT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsActivityTemplateHist>(entity =>
@@ -6633,6 +6695,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_ACTIVITY_TASK_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_DOCUMENT_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_DOCUMENT_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
