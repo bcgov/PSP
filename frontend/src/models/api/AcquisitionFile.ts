@@ -8,6 +8,7 @@ import { Api_Property } from './Property';
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
+  fileNo?: number;
   ministryProjectNumber?: string;
   ministryProjectName?: string;
   assignedDate?: string;

@@ -1,83 +1,84 @@
-import { FastDatePicker, Input, Select } from 'components/common/form/';
+import { FastDatePicker, Input, Select } from 'components/common/form';
+import TooltipIcon from 'components/common/TooltipIcon';
 import * as API from 'constants/API';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
-import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
-import { AcquisitionProperties } from './AcquisitionProperties';
-import { AcquisitionForm } from './models';
+import { UpdateAcquisitionTeamSubForm } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { UpdateAcquisitionSummaryFormModel } from './models';
+import StatusToolTip from './StatusToolTip';
 
-export interface IAddAcquisitionFormProps {
+export interface IUpdateAcquisitionFormProps {
   /** Initial values of the form */
-  initialValues: AcquisitionForm;
+  initialValues: UpdateAcquisitionSummaryFormModel;
   /** A Yup Schema or a function that returns a Yup schema */
   validationSchema?: any | (() => any);
   /** Submission handler */
   onSubmit: (
-    values: AcquisitionForm,
-    formikHelpers: FormikHelpers<AcquisitionForm>,
+    values: UpdateAcquisitionSummaryFormModel,
+    formikHelpers: FormikHelpers<UpdateAcquisitionSummaryFormModel>,
   ) => void | Promise<any>;
 }
 
-export const AddAcquisitionForm = React.forwardRef<
-  FormikProps<AcquisitionForm>,
-  IAddAcquisitionFormProps
->((props, ref) => {
+export const UpdateAcquisitionForm = React.forwardRef<
+  FormikProps<UpdateAcquisitionSummaryFormModel>,
+  IUpdateAcquisitionFormProps
+>((props, formikRef) => {
   const { initialValues, validationSchema, onSubmit } = props;
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
-  const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] = React.useState<boolean>(
-    false,
-  );
-  const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
-    const selectedPropRegions = values.properties.map(x => x.region);
-    return (
-      (selectedPropRegions.length &&
-        (selectedPropRegions.indexOf(Number(values.region)) === -1 ||
-          !selectedPropRegions.every(e => e === selectedPropRegions[0]))) ||
-      false
-    );
-  };
-
-  const handleSubmit = (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
-    if (isMinistryRegionDiff(values)) {
-      setShowDiffMinistryRegionModal(true);
-    } else {
-      onSubmit(values, formikHelpers);
-    }
-  };
+  const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
 
   return (
-    <Formik<AcquisitionForm>
+    <Formik<UpdateAcquisitionSummaryFormModel>
       enableReinitialize
-      innerRef={ref}
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
     >
       {formikProps => (
         <>
           <Container>
+            <Section>
+              <SectionField
+                label="Status"
+                tooltip={
+                  <TooltipIcon
+                    className="tooltip-light"
+                    toolTipId="status-field-tooltip"
+                    toolTip={<StatusToolTip />}
+                    placement="auto"
+                  />
+                }
+              >
+                <Select
+                  field="fileStatusTypeCode"
+                  options={fileStatusTypeCodes}
+                  placeholder="Select..."
+                  required
+                />
+              </SectionField>
+            </Section>
+
             <Section header="Schedule">
               <SectionField label="Assigned date">
                 <FastDatePicker field="assignedDate" formikProps={formikProps} />
               </SectionField>
-              <SectionField label="Delivery date">
+              <SectionField
+                label="Delivery date"
+                tooltip="Date for delivery of the property to the project"
+              >
                 <FastDatePicker field="deliveryDate" formikProps={formikProps} />
               </SectionField>
-            </Section>
-
-            <Section header="Properties to include in this file:">
-              <AcquisitionProperties formikProps={formikProps} />
             </Section>
 
             <Section header="Acquisition Details">
@@ -118,26 +119,13 @@ export const AddAcquisitionForm = React.forwardRef<
             when={formikProps.dirty && formikProps.submitCount === 0}
             message="You have made changes on this form. Do you wish to leave without saving?"
           />
-
-          <AcquisitionFormModal
-            message="Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"
-            title="Different Ministry region"
-            display={showDiffMinistryRegionModal}
-            handleOk={() => {
-              setShowDiffMinistryRegionModal(false);
-              onSubmit(formikProps.values, formikProps);
-            }}
-            handleCancel={() => {
-              setShowDiffMinistryRegionModal(false);
-            }}
-          ></AcquisitionFormModal>
         </>
       )}
     </Formik>
   );
 });
 
-export default AddAcquisitionForm;
+export default UpdateAcquisitionForm;
 
 const LargeInput = styled(Input)`
   input.form-control {
@@ -147,17 +135,7 @@ const LargeInput = styled(Input)`
 `;
 
 const Container = styled.div`
-  .form-section {
-    margin: 0;
-    padding-left: 0;
-  }
-
-  .tab-pane {
-    .form-section {
-      margin: 1.5rem;
-      padding-left: 1.5rem;
-    }
-  }
+  background-color: ${props => props.theme.css.filterBackgroundColor};
 
   .react-datepicker-wrapper {
     max-width: 14rem;

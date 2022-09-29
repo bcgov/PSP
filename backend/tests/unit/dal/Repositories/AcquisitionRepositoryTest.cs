@@ -117,12 +117,11 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, name: "updated");
-
-            // TODO: Update test when Update gets implemented
-            Action act = () => repository.Update(acquisitionUpdated);
+            var result = repository.Update(acquisitionUpdated);
 
             // Assert
-            act.Should().Throw<System.NotImplementedException>();
+            result.Should().NotBeNull();
+            result.FileName.Should().Be("updated");
         }
 
         [Fact]

@@ -1,10 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
-import { UpdateAcquisitionTeamYupSchema } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamYupSchema';
+import { UpdateAcquisitionTeamYupSchema } from '../../common/update/acquisitionTeam/UpdateAcquisitionTeamYupSchema';
 
-export const AddAcquisitionFileYupSchema = Yup.object()
+export const UpdateAcquisitionFileYupSchema = Yup.object()
   .shape({
+    fileStatusTypeCode: Yup.string().required('Status is required'),
     fileName: Yup.string()
       .required('Acquisition file name is required')
       .max(500, 'Acquisition file name must be at most ${max} characters'),

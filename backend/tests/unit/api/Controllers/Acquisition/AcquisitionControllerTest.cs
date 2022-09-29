@@ -89,12 +89,19 @@ namespace Pims.Api.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AcquisitionFileController>(Permissions.AcquisitionFileEdit);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-
+            var service = helper.GetService<Mock<IAcquisitionFileService>>();
             var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>())).Returns(acqFile);
 
-            // TODO: Update test when Update gets implemented
-            Action act = () => controller.UpdateAcquisitionFile(1, mapper.Map<AcquisitionFileModel>(acqFile));
-            act.Should().Throw<System.NotImplementedException>();
+            // Act
+            var result = controller.UpdateAcquisitionFile(1, mapper.Map<AcquisitionFileModel>(acqFile), true);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<AcquisitionFileModel>(actionResult.Value);
+            var expectedResult = mapper.Map<AcquisitionFileModel>(acqFile);
+            expectedResult.Should().BeEquivalentTo(actualResult);
+            service.Verify(m => m.Update(It.IsAny<PimsAcquisitionFile>(), It.IsAny<bool>()), Times.Once());
         }
 
         /// <summary>

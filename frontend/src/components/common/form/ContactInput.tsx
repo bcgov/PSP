@@ -64,7 +64,7 @@ export const ContactInput: React.FC<ContactInputProps> = ({
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
         <Row>
           <Col>
-            <StyledDiv className={!!touch && !!error ? 'is-invalid' : ''}>
+            <StyledDiv className={!!error ? 'is-invalid' : ''}>
               {text}
               <StyledRemoveLinkButton
                 onClick={() => {
@@ -98,20 +98,24 @@ export const ContactInput: React.FC<ContactInputProps> = ({
 };
 
 const StyledDiv = styled.div`
+  position: relative;
   border-radius: 0.3rem;
-  padding: 6px;
+  padding: 0.6rem;
+  padding-right: 2.1rem;
   min-height: 2.5em;
   background-image: none;
   color: ${props => props.theme.css.formControlTextColor};
   border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
-  $ &.is-invalid {
+  &.is-invalid {
     border: ${props => props.theme.css.dangerColor} solid 0.1rem;
   }
 `;
 
 export const StyledRemoveLinkButton = styled(LinkButton)`
   &&.btn {
-    float: right;
+    position: absolute;
+    top: calc(50% - 1.4rem);
+    right: 0.4rem;
     color: ${props => props.theme.css.primaryBorderColor};
     text-decoration: none;
     line-height: unset;
@@ -124,12 +128,6 @@ export const StyledRemoveLinkButton = styled(LinkButton)`
       color: ${props => props.theme.css.dangerColor};
       text-decoration: none;
       opacity: unset;
-      display: flex;
-      flex-direction: row;
-      .text {
-        display: inline;
-        line-height: 2rem;
-      }
     }
   }
 `;

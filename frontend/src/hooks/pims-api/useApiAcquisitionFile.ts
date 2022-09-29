@@ -24,6 +24,11 @@ export const useApiAcquisitionFile = () => {
         api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
       postAcquisitionFile: (acqFile: Api_ResearchFile) =>
         api.post<Api_AcquisitionFile>(`/acquisitionfiles`, acqFile),
+      putAcquisitionFile: (acqFile: Api_ResearchFile, userOverride = false) =>
+        api.put<Api_AcquisitionFile>(
+          `/acquisitionfiles/${acqFile.id}?userOverride=${userOverride}`,
+          acqFile,
+        ),
       putAcquisitionFileProperties: (acqFile: Api_AcquisitionFile) =>
         api.put<Api_ResearchFile>(`/acquisitionfiles/${acqFile?.id}/properties`, acqFile),
     }),

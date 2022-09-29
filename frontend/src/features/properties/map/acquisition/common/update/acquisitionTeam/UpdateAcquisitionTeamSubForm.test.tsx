@@ -4,15 +4,18 @@ import { mockLookups } from 'mocks';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import { AddAcquisitionTeamForm } from './AddAcquisitionTeamForm';
-import { AcquisitionForm } from './models';
+import { WithAcquisitionTeam } from '../../models';
+import { UpdateAcquisitionTeamSubForm } from './UpdateAcquisitionTeamSubForm';
 
 describe('AcquisitionTeam component', () => {
   // render component under test
-  const setup = (props: { initialForm: AcquisitionForm }, renderOptions: RenderOptions = {}) => {
+  const setup = (
+    props: { initialForm: WithAcquisitionTeam },
+    renderOptions: RenderOptions = {},
+  ) => {
     const utils = render(
       <Formik initialValues={props.initialForm} onSubmit={noop}>
-        {formikProps => <AddAcquisitionTeamForm formikProps={formikProps} />}
+        {formikProps => <UpdateAcquisitionTeamSubForm />}
       </Formik>,
       {
         ...renderOptions,
@@ -23,11 +26,10 @@ describe('AcquisitionTeam component', () => {
     return { ...utils };
   };
 
-  let testForm: AcquisitionForm;
+  let testForm: WithAcquisitionTeam;
 
   beforeEach(() => {
-    testForm = new AcquisitionForm();
-    testForm.fileName = 'Test name';
+    testForm = { team: [] };
   });
 
   afterEach(() => {

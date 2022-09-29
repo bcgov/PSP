@@ -3,29 +3,32 @@ import { Select } from 'components/common/form';
 import { ContactInput } from 'components/common/form/ContactInput';
 import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import * as API from 'constants/API';
-import { FieldArray, FormikProps, useFormikContext } from 'formik';
+import {
+  AcquisitionTeamFormModel,
+  WithAcquisitionTeam,
+} from 'features/properties/map/acquisition/common/models';
+import { AcquisitionFormModal } from 'features/properties/map/acquisition/modals/AcquisitionFormModal';
+import { FieldArray, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { AcquisitionForm, AcquisitionTeamForm } from './models';
+interface IUpdateAcquisitionTeamSubFormProps {}
 
-interface AddAcquisitionTeamFormProp {
-  formikProps: FormikProps<AcquisitionForm>;
-}
-export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamFormProp> = ({
-  formikProps,
-}) => {
-  const { values } = useFormikContext<AcquisitionForm>();
+export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquisitionTeamSubFormProps> = () => {
+  const { values, setFieldValue } = useFormikContext<WithAcquisitionTeam>();
   const [contactIndex, setContactIndex] = useState<number>(-1);
   const [showContactManager, setShowContactManager] = useState<boolean>(false);
+  const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
+  const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [selectedContact, setSelectedContact] = useState<IContactSearchResult[]>([]);
   const { getOptionsByType } = useLookupCodeHelpers();
   const personProfileTypes = getOptionsByType(API.ACQUISITION_FILE_PERSON_PROFILE_TYPES);
+
   const handleContactManagerOk = () => {
-    formikProps.setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
+    setFieldValue(`team[${contactIndex}].contact`, selectedContact[0]);
     setShowContactManager(false);
     setSelectedContact([]);
   };
@@ -47,7 +50,7 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                     value={person.contactTypeCode}
                   />
                 </Col>
-                <Col xs="auto" xl="5">
+                <Col xs="auto" xl="5" className="pl-0">
                   <ContactInput
                     data-testid="contact-input"
                     setShowContactManager={() => {
@@ -55,13 +58,14 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
                       setShowContactManager(true);
                     }}
                     field={`team[${index}].contact`}
-                    onClear={() => formikProps.setFieldValue(`team[${index}].contact`, undefined)}
+                    onClear={() => setFieldValue(`team[${index}].contact`, undefined)}
                   ></ContactInput>
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
                   <RemoveButton
                     onRemove={() => {
-                      arrayHelpers.remove(index);
+                      setRemoveIndex(index);
+                      setShowRemoveMemberModal(true);
                     }}
                   />
                 </Col>
@@ -70,14 +74,27 @@ export const AddAcquisitionTeamForm: React.FunctionComponent<AddAcquisitionTeamF
             <LinkButton
               data-testid="add-team-member"
               onClick={() => {
-                const person: AcquisitionTeamForm = {
-                  contactTypeCode: '',
-                };
+                const person = new AcquisitionTeamFormModel('');
                 arrayHelpers.push(person);
               }}
             >
               + Add another team member
             </LinkButton>
+
+            <AcquisitionFormModal
+              message="Are you sure you want to remove this row?"
+              title="Remove Team Member"
+              display={showRemoveMemberModal}
+              handleOk={() => {
+                setShowRemoveMemberModal(false);
+                arrayHelpers.remove(removeIndex);
+                setRemoveIndex(-1);
+              }}
+              handleCancel={() => {
+                setShowRemoveMemberModal(false);
+                setRemoveIndex(-1);
+              }}
+            ></AcquisitionFormModal>
           </>
         )}
       />
