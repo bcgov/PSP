@@ -8,7 +8,7 @@ export enum NameSourceType {
   PIN = 'PIN',
   PLAN = 'Plan #',
   LOCATION = 'Location',
-  RESEARCH = 'Research Name',
+  NAME = 'Descriptive Name',
   NONE = 'n/a',
 }
 
@@ -50,7 +50,7 @@ export const getFilePropertyName = (
     fileProperty.propertyName !== '' &&
     skipName === false
   ) {
-    return { label: NameSourceType.RESEARCH, value: fileProperty.propertyName };
+    return { label: NameSourceType.NAME, value: fileProperty.propertyName };
   } else if (fileProperty.property !== undefined) {
     const property = fileProperty.property;
     let mapProperty: IMapProperty = {

@@ -38,7 +38,7 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
   return (
     <TooltipIcon
       toolTipId={'userNameTooltip'}
-      className={'userNameTooltip'}
+      innerClassName={'userNameTooltip'}
       toolTip={userNameInfo}
       customToolTipIcon={<StyledUserLabel>{userName ?? 'USER'}</StyledUserLabel>}
     ></TooltipIcon>

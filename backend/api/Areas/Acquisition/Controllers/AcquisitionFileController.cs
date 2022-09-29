@@ -3,9 +3,11 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -109,10 +111,45 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model)
+        public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, bool userOverride = false)
         {
-            // TODO: Implementation pending
-            throw new System.NotImplementedException();
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(UpdateAcquisitionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
+
+            var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
+
+            try
+            {
+                var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverride);
+                return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
+            }
+            catch (BusinessRuleViolationException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Update the acquisition file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}/properties")]
+        [HasPermission(Permissions.AcquisitionFileEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel)
+        {
+            var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
+            var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity);
+
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 
         #endregion

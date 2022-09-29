@@ -8,9 +8,10 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { FaInfoCircle } from 'react-icons/fa';
 
 interface TooltipIconProps extends Partial<React.ComponentPropsWithRef<typeof Overlay>> {
-  toolTip?: string;
+  toolTip?: React.ReactNode;
   toolTipId: string;
   className?: string;
+  innerClassName?: string;
   customOverlay?: OverlayChildren;
   customToolTipIcon?: React.ComponentType<any> | JSX.Element;
 }
@@ -18,12 +19,16 @@ interface TooltipIconProps extends Partial<React.ComponentPropsWithRef<typeof Ov
 const TooltipIcon: React.FunctionComponent<TooltipIconProps> = props => {
   const overlay =
     props.customOverlay === undefined
-      ? ((<Tooltip id={props.toolTipId}>{props.toolTip}</Tooltip>) as OverlayChildren)
+      ? ((
+          <Tooltip id={props.toolTipId} className={props.className}>
+            {props.toolTip}
+          </Tooltip>
+        ) as OverlayChildren)
       : props.customOverlay;
 
   const icon =
     props.customToolTipIcon === undefined ? (
-      <FaInfoCircle className={classNames('tooltip-icon', props.className)} />
+      <FaInfoCircle className={classNames('tooltip-icon', props.innerClassName)} />
     ) : (
       props.customToolTipIcon
     );

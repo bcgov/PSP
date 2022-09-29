@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
@@ -11,7 +12,6 @@ using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 
 namespace Pims.Api.Services
 {
@@ -20,6 +20,7 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
+        private readonly IAcquisitionFilePropertyRepository _acquisitionFilePropertyRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -28,6 +29,7 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
             IAcquisitionFileRepository acqFileRepository,
+            IAcquisitionFilePropertyRepository acqFilePropertyRepository,
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService)
@@ -35,6 +37,7 @@ namespace Pims.Api.Services
             _user = user;
             _logger = logger;
             _acqFileRepository = acqFileRepository;
+            _acquisitionFilePropertyRepository = acqFilePropertyRepository;
             _userRepository = userRepository;
             _propertyRepository = propertyRepository;
             _coordinateService = coordinateService;
@@ -60,6 +63,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var acqFile = _acqFileRepository.GetById(id);
+            ReprojectPropertyLocationsToWgs84(acqFile);
             return acqFile;
         }
 
@@ -79,7 +83,7 @@ namespace Pims.Api.Services
             return newAcqFile;
         }
 
-        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride)
         {
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
@@ -88,8 +92,66 @@ namespace Pims.Api.Services
 
             ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
 
-            // TODO: Implementation pending
-            throw new System.NotImplementedException();
+            if (!userOverride)
+            {
+                ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
+            }
+
+            UpdateFileNumber(acquisitionFile);
+
+            var newAcqFile = _acqFileRepository.Update(acquisitionFile);
+            _acqFileRepository.CommitTransaction();
+            return newAcqFile;
+        }
+
+        public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile)
+        {
+            _logger.LogInformation("Updating acquisition file properties...");
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            ValidateVersion(acquisitionFile.Id, acquisitionFile.ConcurrencyControlNumber);
+
+            MatchProperties(acquisitionFile);
+
+            // Get the current properties in the research file
+            var currentProperties = _acquisitionFilePropertyRepository.GetByAcquisitionFileId(acquisitionFile.Id);
+
+            // Check if the property is new or if it is being updated
+            foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                // If the property is not new, check if the name has been updated.
+                if (incomingAcquisitionProperty.Id != 0)
+                {
+                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Id == incomingAcquisitionProperty.Id);
+                    if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
+                    {
+                        existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        _acquisitionFilePropertyRepository.Update(existingProperty);
+                    }
+                }
+                else
+                {
+                    // New property needs to be added
+                    _acquisitionFilePropertyRepository.Add(incomingAcquisitionProperty);
+                }
+            }
+
+            // The ones not on the new set should be deleted
+            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Id == x.Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                _acquisitionFilePropertyRepository.Delete(deletedProperty);
+                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                {
+                    int propertyCount = _acquisitionFilePropertyRepository.GetAcquisitionFilePropertyRelatedCount(deletedProperty.PropertyId);
+                    if (propertyCount == 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    {
+                        _propertyRepository.Delete(deletedProperty.Property);
+                    }
+                }
+            }
+
+            _acqFileRepository.CommitTransaction();
+            return _acqFileRepository.GetById(acquisitionFile.Id);
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
@@ -156,12 +218,44 @@ namespace Pims.Api.Services
             }
         }
 
+        private void ReprojectPropertyLocationsToWgs84(PimsAcquisitionFile acquisitionFile)
+        {
+            if (acquisitionFile == null)
+            {
+                return;
+            }
+
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                if (acquisitionProperty.Property.Location != null)
+                {
+                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
+                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BC_ALBERS, SpatialReference.WGS_84, oldCoords);
+                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
+                }
+            }
+        }
+
+        private void UpdateFileNumber(PimsAcquisitionFile acquisitionFile)
+        {
+            acquisitionFile.FileNumber = $"{acquisitionFile.RegionCode}-{acquisitionFile.FileNo}-01";
+        }
+
         private void ValidateVersion(long acqFileId, long acqFileVersion)
         {
             long currentRowVersion = _acqFileRepository.GetRowVersion(acqFileId);
             if (currentRowVersion != acqFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this acquisition file, please refresh the application and retry.");
+            }
+        }
+
+        private void ValidateMinistryRegion(long acqFileId, short updatedRegion)
+        {
+            short currentRegion = _acqFileRepository.GetRegion(acqFileId);
+            if (currentRegion != updatedRegion)
+            {
+                throw new BusinessRuleViolationException("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
             }
         }
     }

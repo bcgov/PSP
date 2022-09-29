@@ -8,8 +8,9 @@ import React from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { AcquisitionFormModal } from '../modals/AcquisitionFormModal';
 import { AcquisitionProperties } from './AcquisitionProperties';
-import { AddAcquisitionTeamForm } from './AddAcquisitionTeamForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
@@ -34,6 +35,26 @@ export const AddAcquisitionForm = React.forwardRef<
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
+  const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] = React.useState<boolean>(
+    false,
+  );
+  const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
+    const selectedPropRegions = values.properties.map(x => x.region);
+    return (
+      (selectedPropRegions.length &&
+        (selectedPropRegions.indexOf(Number(values.region)) === -1 ||
+          !selectedPropRegions.every(e => e === selectedPropRegions[0]))) ||
+      false
+    );
+  };
+
+  const handleSubmit = (values: AcquisitionForm, formikHelpers: FormikHelpers<AcquisitionForm>) => {
+    if (isMinistryRegionDiff(values)) {
+      setShowDiffMinistryRegionModal(true);
+    } else {
+      onSubmit(values, formikHelpers);
+    }
+  };
 
   return (
     <Formik<AcquisitionForm>
@@ -41,7 +62,7 @@ export const AddAcquisitionForm = React.forwardRef<
       innerRef={ref}
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       {formikProps => (
         <>
@@ -56,7 +77,7 @@ export const AddAcquisitionForm = React.forwardRef<
             </Section>
 
             <Section header="Properties to include in this file:">
-              <AcquisitionProperties />
+              <AcquisitionProperties formikProps={formikProps} />
             </Section>
 
             <Section header="Acquisition Details">
@@ -89,7 +110,7 @@ export const AddAcquisitionForm = React.forwardRef<
             </Section>
 
             <Section header="Acquisition Team">
-              <AddAcquisitionTeamForm formikProps={formikProps} />
+              <UpdateAcquisitionTeamSubForm />
             </Section>
           </Container>
 
@@ -97,6 +118,19 @@ export const AddAcquisitionForm = React.forwardRef<
             when={formikProps.dirty && formikProps.submitCount === 0}
             message="You have made changes on this form. Do you wish to leave without saving?"
           />
+
+          <AcquisitionFormModal
+            message="Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"
+            title="Different Ministry region"
+            display={showDiffMinistryRegionModal}
+            handleOk={() => {
+              setShowDiffMinistryRegionModal(false);
+              onSubmit(formikProps.values, formikProps);
+            }}
+            handleCancel={() => {
+              setShowDiffMinistryRegionModal(false);
+            }}
+          ></AcquisitionFormModal>
         </>
       )}
     </Formik>

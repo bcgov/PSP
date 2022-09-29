@@ -3,7 +3,7 @@ import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
+import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
@@ -40,12 +40,12 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'MOTI Region',
-    accessor: 'researchProperties',
+    accessor: 'fileProperties',
     align: 'right',
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: ({ value }: CellProps<any, Api_PropertyResearchFile[]>) => {
+    Cell: ({ value }: CellProps<any, Api_ResearchFileProperty[]>) => {
       const regions = [...new Set(value.map(pr => pr?.property?.region?.description))];
       return regions.join(', ');
     },
@@ -90,7 +90,7 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'Status',
-    accessor: 'researchFileStatusTypeCode',
+    accessor: 'fileStatusTypeCode',
     align: 'right',
     clickable: true,
     sortable: true,

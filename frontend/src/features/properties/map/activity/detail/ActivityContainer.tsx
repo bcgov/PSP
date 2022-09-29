@@ -1,10 +1,7 @@
-import { FileTypes } from 'constants/fileTypes';
 import { SideBarContext, TypedFile } from 'features/properties/map/context/sidebarContext';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Api_Activity, Api_PropertyActivity } from 'models/api/Activity';
 import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -44,7 +41,7 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
     updateActivity: { execute: updateActivity, loading: updateLoading },
     updateActivityProperties: { execute: updateActivityProperties },
   } = useActivityRepository();
-  const { file, fileLoading, setStaleFile, getFileProperties } = useContext(SideBarContext);
+  const { file, fileLoading, setStaleFile } = useContext(SideBarContext);
   const activityModel =
     response && file?.fileType ? ActivityModel.fromApi(response, file?.fileType) : undefined;
 
@@ -69,6 +66,7 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
   const editActivity = async (activity: Api_Activity) => {
     const updatedActivity = await updateActivity(activity);
     setStaleFile(true);
+    fetchActivity();
     return updatedActivity;
   };
 
@@ -110,7 +108,7 @@ export const ActivityContainer: React.FunctionComponent<IActivityContainerProps>
         activityModel={activityModel}
         selectedFileProperties={selectedFileProperties}
         setSelectedFileProperties={setSelectedFileProperties}
-        allProperties={getFileProperties()}
+        allProperties={file.fileProperties ?? []}
         originalSelectedProperties={getActivityPropertiesOnFile(
           file,
           activityModel?.actInstPropFiles ?? [],
@@ -126,18 +124,9 @@ export const getActivityPropertiesOnFile = (
   activityFileProperties: Api_PropertyActivity[],
 ): Api_PropertyFile[] => {
   const activityFilePropertyIds = activityFileProperties.map(af => af.propertyFileId);
-
-  if (file?.fileType === FileTypes.Research) {
-    return (file as Api_ResearchFile).researchProperties
-      ?.filter(researchProperty => activityFilePropertyIds.includes(researchProperty.id))
-      .map(p => ({ id: p.id })) as Api_PropertyFile[];
-  } else if (file?.fileType === FileTypes.Acquisition) {
-    return (file as Api_AcquisitionFile).acquisitionProperties
-      ?.filter(acquisitionProperty => activityFilePropertyIds.includes(acquisitionProperty.id))
-      .map(p => ({ id: p.id })) as Api_PropertyFile[];
-  } else {
-    throw Error('Unexpected file type');
-  }
+  return file.fileProperties
+    ?.filter(acquisitionProperty => activityFilePropertyIds.includes(acquisitionProperty.id))
+    .map(p => ({ id: p.id })) as Api_PropertyFile[];
 };
 
 export default ActivityContainer;

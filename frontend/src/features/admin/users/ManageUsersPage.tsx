@@ -1,5 +1,4 @@
-import { IconButton } from 'components/common/buttons';
-import { H1 } from 'components/common/styles';
+import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { IPaginateParams } from 'constants/API';
@@ -87,16 +86,16 @@ export const ManageUsersPage = () => {
 
   return (
     <StyledPage fluid className="users-management-page">
-      <H1>User Management</H1>
+      <StyledPageHeader>User Management</StyledPageHeader>
       <Row>
         <Col md={8}>
           <UsersFilterBar values={filter} onChange={setFilter} />
         </Col>
         <Col md={4} className="align-items-center d-flex">
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-            <IconButton onClick={() => fetch('excel')}>
+            <StyledIconButton onClick={() => fetch('excel')}>
               <FaFileExcel data-testid="excel-icon" size={36} />
-            </IconButton>
+            </StyledIconButton>
           </TooltipWrapper>
         </Col>
       </Row>
@@ -129,4 +128,7 @@ const StyledPage = styled(Styled.ListView)`
   padding: 1rem 2rem;
 `;
 
+const StyledPageHeader = styled.h3`
+  text-align: left;
+`;
 export default ManageUsersPage;

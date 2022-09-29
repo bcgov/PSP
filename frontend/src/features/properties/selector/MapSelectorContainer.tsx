@@ -6,7 +6,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { PropertyForm } from '../map/research/add/models';
+import { PropertyForm } from '../map/shared/models';
 import SelectedPropertyHeaderRow from './components/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from './components/SelectedPropertyRow';
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';

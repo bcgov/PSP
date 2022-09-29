@@ -39,7 +39,6 @@ export class UpdateResearchSummaryFormModel {
   public rfileNumber?: string;
   public statusTypeCode?: string;
   public statusTypeDescription?: string;
-  //public researchProperties?: Api_ResearchFileProperty[];
   public requestDate?: string;
   public requestDescription?: string;
   public requestSourceDescription?: string;
@@ -62,7 +61,6 @@ export class UpdateResearchSummaryFormModel {
     model.rfileNumber = base.fileNumber;
     model.statusTypeCode = base.fileStatusTypeCode?.id;
     model.statusTypeDescription = base.fileStatusTypeCode?.description;
-    //model.researchProperties = base.researchProperties;
     model.requestDate = base.requestDate;
     model.requestDescription = base.requestDescription;
     model.requestSourceDescription = base.requestSourceDescription;
@@ -93,7 +91,6 @@ export class UpdateResearchSummaryFormModel {
       roadAlias: this.roadAlias,
       fileNumber: this.rfileNumber,
       fileStatusTypeCode: { id: this.statusTypeCode },
-      //researchProperties: this.researchProperties,
       requestDate: this.requestDate,
       requestDescription: this.requestDescription,
       requestSourceDescription: this.requestSourceDescription,

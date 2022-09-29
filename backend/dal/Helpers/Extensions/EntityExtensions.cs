@@ -164,16 +164,18 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="grandchildNavigation"></param>
         /// <param name="parentId"></param>
         /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
+        /// <param name="updateGrandChildValues">if false, do not update existing grandchild fields(add/remove only).</param>
         public static void UpdateGrandchild<T_Entity, T_Id, T_ChildEntity>(
             this PimsContext context,
             Expression<Func<T_Entity, object>> childNavigation,
             Expression<Func<T_ChildEntity, object>> grandchildNavigation,
             T_Id parentId,
-            T_ChildEntity[] childrenWithGrandchildren)
+            T_ChildEntity[] childrenWithGrandchildren,
+            bool updateGrandChildValues = true)
             where T_Entity : IdentityBaseAppEntity<T_Id>
             where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {
-            UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true);
+            UpdateGrandchild(context, childNavigation, grandchildNavigation, parentId, childrenWithGrandchildren, (context, x) => true, updateGrandChildValues);
         }
 
         /// <summary>
@@ -190,13 +192,14 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="parentId"></param>
         /// <param name="childrenWithGrandchildren">The collection of children (and grandchildren) to update. Assumes grandchildren can be accessed via grandchildNavigation.</param>
         /// <param name="canDeleteGrandchild">A callback to determine whether is safe to remove a grandchild entity.</param>
+        /// <param name="updateGrandChildValues">if false, do not update existing grandchild fields(add/remove only).</param>
         public static void UpdateGrandchild<T_Entity, T_Id, T_ChildEntity>(
             this PimsContext context,
             Expression<Func<T_Entity, object>> childNavigation,
             Expression<Func<T_ChildEntity, object>> grandchildNavigation,
             T_Id parentId,
             T_ChildEntity[] childrenWithGrandchildren,
-            Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild)
+            Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild, bool updateGrandChildValues = true)
             where T_Entity : IdentityBaseAppEntity<T_Id>
             where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {
@@ -231,7 +234,10 @@ namespace Pims.Dal.Helpers.Extensions
 
                     // Update grandchild navigation with values passed in the array
                     var grandchildValue = grandchildFunc(child);
-                    grandchildReference.TargetEntry.CurrentValues.SetValues(grandchildValue);
+                    if (updateGrandChildValues)
+                    {
+                        grandchildReference.TargetEntry.CurrentValues.SetValues(grandchildValue);
+                    }
 
                     existingChildren.Remove(child.Id);
                 }

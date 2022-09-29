@@ -16,14 +16,12 @@ const ResearchHeader: React.FunctionComponent<IResearchHeaderProps> = props => {
   const leftColumnLabel = '3';
   const researchFile = props.researchFile;
 
-  const regions = removeDuplicates(
-    researchFile?.researchProperties?.map(x => x.property?.region) || [],
-  )
+  const regions = removeDuplicates(researchFile?.fileProperties?.map(x => x.property?.region) || [])
     .map(x => x.description)
     .join(', ');
 
   const districts = removeDuplicates(
-    researchFile?.researchProperties?.map(x => x.property?.district) || [],
+    researchFile?.fileProperties?.map(x => x.property?.district) || [],
   )
     .map(x => x.description)
     .join(', ');

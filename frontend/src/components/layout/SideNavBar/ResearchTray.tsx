@@ -18,7 +18,7 @@ export const ResearchTray = ({ onLinkClick }: ISideTrayPageProps) => {
         <Styled.TrayHeader>Research Files</Styled.TrayHeader>
         {hasClaim(Claims.RESEARCH_VIEW) && (
           <Link onClick={onLinkClick} to="/research/list">
-            Search for a Research File
+            Manage Research Files
           </Link>
         )}
         {hasClaim(Claims.RESEARCH_ADD) && (

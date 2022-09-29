@@ -207,20 +207,19 @@ exports[`Activity List View renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c12.c12.btn {
-  color: #aaaaaa;
+.c12.c12.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c12.c12.btn .text {
+.c12.c12.btn.btn-primary .text {
   display: none;
 }
 
-.c12.c12.btn:hover,
-.c12.c12.btn:active,
-.c12.c12.btn:focus {
+.c12.c12.btn.btn-primary:hover,
+.c12.c12.btn.btn-primary:active,
+.c12.c12.btn.btn-primary:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -234,9 +233,9 @@ exports[`Activity List View renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c12.c12.btn:hover .text,
-.c12.c12.btn:active .text,
-.c12.c12.btn:focus .text {
+.c12.c12.btn.btn-primary:hover .text,
+.c12.c12.btn.btn-primary:active .text,
+.c12.c12.btn.btn-primary:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -472,7 +471,7 @@ exports[`Activity List View renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 120px;"
+            style="display: flex; flex: 1 0 auto; min-width: 150px;"
           >
             <div
               class="th"
@@ -575,6 +574,18 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="sortable-column"
               >
+                Property
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
                 Status
                 <div
                   class="c6"
@@ -616,7 +627,7 @@ exports[`Activity List View renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -636,7 +647,7 @@ exports[`Activity List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="td"
@@ -669,12 +680,20 @@ exports[`Activity List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
+                All
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
                 Draft
               </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
@@ -705,7 +724,7 @@ exports[`Activity List View renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c5 Button c12 btn btn-link"
+                    class="c5 Button c11 c12 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -739,7 +758,7 @@ exports[`Activity List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="td"
@@ -772,12 +791,20 @@ exports[`Activity List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
+                All
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
                 Draft
               </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
@@ -808,7 +835,7 @@ exports[`Activity List View renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c5 Button c12 btn btn-link"
+                    class="c5 Button c11 c12 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -842,7 +869,7 @@ exports[`Activity List View renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 120px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="td"
@@ -875,12 +902,20 @@ exports[`Activity List View renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
+                All
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
                 Draft
               </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
@@ -911,7 +946,7 @@ exports[`Activity List View renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c5 Button c12 btn btn-link"
+                    class="c5 Button c11 c12 btn btn-primary"
                     type="button"
                   >
                     <div

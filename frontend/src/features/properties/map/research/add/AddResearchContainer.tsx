@@ -1,3 +1,4 @@
+import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
@@ -10,11 +11,12 @@ import { MdTopic } from 'react-icons/md';
 import { Prompt, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
-import { PropertyForm, ResearchForm } from './models';
+import { ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;
@@ -37,6 +39,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     return researchForm;
   }, [selectedResearchFeature]);
   const { addResearchFile } = useAddResearch();
+  const { search } = useMapSearch();
 
   useEffect(() => {
     if (!!selectedResearchFeature && !!formikRef.current) {
@@ -55,6 +58,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     formikRef.current?.setSubmitting(false);
     if (!!response?.fileName) {
       formikRef.current?.resetForm();
+      await search();
       history.replace(`/mapview/sidebar/research/${response.id}`);
     }
   };
