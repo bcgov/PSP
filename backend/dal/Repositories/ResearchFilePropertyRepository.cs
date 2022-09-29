@@ -36,6 +36,7 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.ResearchFileId == researchFileId)
                 .Include(rp => rp.Property)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
+                .Include(rp => rp.PimsActInstPropRsrchFiles)
                 .AsNoTracking()
                 .ToList();
         }
@@ -70,6 +71,7 @@ namespace Pims.Dal.Repositories
 
             // Delete any Property research purpose type associations
             propertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(purposeType));
+            propertyResearchFile.PimsActInstPropRsrchFiles.ForEach(s => Context.PimsActInstPropRsrchFiles.Remove(s));
 
             Context.PimsPropertyResearchFiles.Remove(propertyResearchFile);
         }

@@ -100,6 +100,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -193,10 +194,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c5 {
-  border-radius: 0.5rem;
-}
-
 .c12 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -224,6 +221,10 @@ exports[`Lease and License List View matches snapshot 1`] = `
 .c13 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c5 {
+  border-radius: 0.5rem;
 }
 
 .c9 {
@@ -800,6 +801,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                 L-File Number
                 <div
                   class="c12"
+                  data-testid="sort-column-lFileNo"
                 >
                   <svg
                     class="c13"
@@ -845,6 +847,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                 Expiry Date
                 <div
                   class="c12"
+                  data-testid="sort-column-expiryDate"
                 >
                   <svg
                     class="c13"
@@ -890,6 +893,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                 Program Name
                 <div
                   class="c12"
+                  data-testid="sort-column-programName"
                 >
                   <svg
                     class="c13"
@@ -959,6 +963,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                 Status
                 <div
                   class="c12"
+                  data-testid="sort-column-statusType"
                 >
                   <svg
                     class="c13"

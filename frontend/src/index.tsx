@@ -13,7 +13,6 @@ import { ModalContextProvider } from 'contexts/modalContext';
 import LoginLoading from 'features/account/LoginLoading';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import EmptyLayout from 'layouts/EmptyLayout';
-import noop from 'lodash/noop';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -44,7 +43,7 @@ const Index = () => {
             >
               <Provider store={store}>
                 <AuthStateContextProvider>
-                  <ModalContextProvider setModalProps={noop} setDisplayModal={noop}>
+                  <ModalContextProvider>
                     <Router>
                       <App />
                     </Router>

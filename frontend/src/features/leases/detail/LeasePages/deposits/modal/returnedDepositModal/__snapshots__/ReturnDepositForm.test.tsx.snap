@@ -136,6 +136,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -489,6 +490,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
                   class="form-control"
                   id="input-contactHolder.id"
                   name="contactHolder.id"
+                  placeholder="Select from Contacts"
                   value=""
                 />
               </div>
@@ -697,6 +699,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -1050,6 +1053,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
                   class="form-control"
                   id="input-contactHolder.id"
                   name="contactHolder.id"
+                  placeholder="Select from Contacts"
                   value=""
                 />
               </div>

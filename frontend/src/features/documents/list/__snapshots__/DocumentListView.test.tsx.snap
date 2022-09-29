@@ -100,6 +100,7 @@ exports[`Document List View renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -144,24 +145,6 @@ exports[`Document List View renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c2 {
-  float: right;
-  cursor: pointer;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -189,6 +172,28 @@ exports[`Document List View renders as expected 1`] = `
 .c7 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c10 {
+  margin-top: 0.3rem;
+}
+
+.c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c3 {
@@ -219,13 +224,16 @@ exports[`Document List View renders as expected 1`] = `
             class="col"
           >
             <div
-              class="row"
+              class="no-gutters justify-content-between row"
             >
               <div
-                class="col-auto"
+                class="px-2 my-1 col-auto"
               >
                 Documents
               </div>
+              <div
+                class="my-1 col-auto"
+              />
             </div>
           </div>
           <div
@@ -241,19 +249,22 @@ exports[`Document List View renders as expected 1`] = `
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>
+                collapse-documents
+              </title>
               <path
                 d="M0 0h24v24H0z"
                 fill="none"
               />
               <path
-                d="M7 10l5 5 5-5z"
+                d="M7 14l5-5 5 5z"
               />
             </svg>
           </div>
         </div>
       </h2>
       <div
-        class="collapse"
+        class="collapse show"
       >
         <form
           class="c3 p-3"
@@ -479,6 +490,7 @@ exports[`Document List View renders as expected 1`] = `
                   Document type
                   <div
                     class="c6"
+                    data-testid="sort-column-documentType"
                   >
                     <svg
                       class="c7"
@@ -524,6 +536,7 @@ exports[`Document List View renders as expected 1`] = `
                   File name
                   <div
                     class="c6"
+                    data-testid="sort-column-fileName"
                   >
                     <svg
                       class="c7"
@@ -569,6 +582,7 @@ exports[`Document List View renders as expected 1`] = `
                   Upload date
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateTimestamp"
                   >
                     <svg
                       class="c7"
@@ -614,6 +628,7 @@ exports[`Document List View renders as expected 1`] = `
                   Uploaded by
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateUserid"
                   >
                     <svg
                       class="c7"
@@ -659,6 +674,7 @@ exports[`Document List View renders as expected 1`] = `
                   Status
                   <div
                     class="c6"
+                    data-testid="sort-column-statusTypeCode"
                   >
                     <svg
                       class="c7"
@@ -851,6 +867,79 @@ exports[`Document List View renders as expected 1`] = `
           <div
             class="ml-auto align-self-center col-auto"
           />
+          <div
+            class="align-self-center col-auto"
+          >
+            <div>
+              <div
+                class="Menu-root"
+              >
+                <div
+                  class="Menu-button"
+                >
+                  <div
+                    style="display: flex;"
+                  >
+                    <span
+                      class="c10"
+                    >
+                      Show
+                    </span>
+                    <input
+                      class="form-control form-control-sm"
+                      style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                      type="number"
+                      value="10"
+                    />
+                    <span
+                      class="c10"
+                    >
+                      Entries
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="Menu-items"
+                  style="width: 10.0rem;"
+                >
+                  <div
+                    class="Menu-options scrollable list-group"
+                  >
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-5"
+                    >
+                      5
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-10"
+                    >
+                      10
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-20"
+                    >
+                      20
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-50"
+                    >
+                      50
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-100"
+                    >
+                      100
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div
             class="align-self-center col-auto"
           >
@@ -1016,6 +1105,7 @@ exports[`Document List View renders as expected 2`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -1060,24 +1150,6 @@ exports[`Document List View renders as expected 2`] = `
   margin-right: 0;
 }
 
-.c2 {
-  float: right;
-  cursor: pointer;
-}
-
-.c1 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-}
-
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1105,6 +1177,28 @@ exports[`Document List View renders as expected 2`] = `
 .c7 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c10 {
+  margin-top: 0.3rem;
+}
+
+.c2 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 .c3 {
@@ -1135,13 +1229,16 @@ exports[`Document List View renders as expected 2`] = `
             class="col"
           >
             <div
-              class="row"
+              class="no-gutters justify-content-between row"
             >
               <div
-                class="col-auto"
+                class="px-2 my-1 col-auto"
               >
                 Documents
               </div>
+              <div
+                class="my-1 col-auto"
+              />
             </div>
           </div>
           <div
@@ -1157,19 +1254,22 @@ exports[`Document List View renders as expected 2`] = `
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <title>
+                collapse-documents
+              </title>
               <path
                 d="M0 0h24v24H0z"
                 fill="none"
               />
               <path
-                d="M7 10l5 5 5-5z"
+                d="M7 14l5-5 5 5z"
               />
             </svg>
           </div>
         </div>
       </h2>
       <div
-        class="collapse"
+        class="collapse show"
       >
         <form
           class="c3 p-3"
@@ -1395,6 +1495,7 @@ exports[`Document List View renders as expected 2`] = `
                   Document type
                   <div
                     class="c6"
+                    data-testid="sort-column-documentType"
                   >
                     <svg
                       class="c7"
@@ -1440,6 +1541,7 @@ exports[`Document List View renders as expected 2`] = `
                   File name
                   <div
                     class="c6"
+                    data-testid="sort-column-fileName"
                   >
                     <svg
                       class="c7"
@@ -1485,6 +1587,7 @@ exports[`Document List View renders as expected 2`] = `
                   Upload date
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateTimestamp"
                   >
                     <svg
                       class="c7"
@@ -1530,6 +1633,7 @@ exports[`Document List View renders as expected 2`] = `
                   Uploaded by
                   <div
                     class="c6"
+                    data-testid="sort-column-appCreateUserid"
                   >
                     <svg
                       class="c7"
@@ -1575,6 +1679,7 @@ exports[`Document List View renders as expected 2`] = `
                   Status
                   <div
                     class="c6"
+                    data-testid="sort-column-statusTypeCode"
                   >
                     <svg
                       class="c7"
@@ -1767,6 +1872,79 @@ exports[`Document List View renders as expected 2`] = `
           <div
             class="ml-auto align-self-center col-auto"
           />
+          <div
+            class="align-self-center col-auto"
+          >
+            <div>
+              <div
+                class="Menu-root"
+              >
+                <div
+                  class="Menu-button"
+                >
+                  <div
+                    style="display: flex;"
+                  >
+                    <span
+                      class="c10"
+                    >
+                      Show
+                    </span>
+                    <input
+                      class="form-control form-control-sm"
+                      style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                      type="number"
+                      value="10"
+                    />
+                    <span
+                      class="c10"
+                    >
+                      Entries
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="Menu-items"
+                  style="width: 10.0rem;"
+                >
+                  <div
+                    class="Menu-options scrollable list-group"
+                  >
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-5"
+                    >
+                      5
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-10"
+                    >
+                      10
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-20"
+                    >
+                      20
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-50"
+                    >
+                      50
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-100"
+                    >
+                      100
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div
             class="align-self-center col-auto"
           >

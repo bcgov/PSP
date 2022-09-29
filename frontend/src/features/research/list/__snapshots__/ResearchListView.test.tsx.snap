@@ -100,6 +100,7 @@ exports[`Research List View matches snapshot 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -448,6 +449,12 @@ exports[`Research List View matches snapshot 1`] = `
                               </option>
                               <option
                                 class="option"
+                                value="ANY"
+                              >
+                                Any status
+                              </option>
+                              <option
+                                class="option"
                                 value="ARCHIVED"
                               >
                                 Archived
@@ -745,6 +752,7 @@ exports[`Research List View matches snapshot 1`] = `
                 R-File Number
                 <div
                   class="c13"
+                  data-testid="sort-column-fileNumber"
                 >
                   <svg
                     class="c14"
@@ -790,6 +798,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Research file name
                 <div
                   class="c13"
+                  data-testid="sort-column-fileName"
                 >
                   <svg
                     class="c14"
@@ -847,6 +856,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Created by
                 <div
                   class="c13"
+                  data-testid="sort-column-appCreateUserid"
                 >
                   <svg
                     class="c14"
@@ -892,6 +902,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Created date
                 <div
                   class="c13"
+                  data-testid="sort-column-appCreateTimestamp"
                 >
                   <svg
                     class="c14"
@@ -937,6 +948,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Last updated by
                 <div
                   class="c13"
+                  data-testid="sort-column-appLastUpdateUserid"
                 >
                   <svg
                     class="c14"
@@ -982,6 +994,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Last updated date
                 <div
                   class="c13"
+                  data-testid="sort-column-appLastUpdateTimestamp"
                 >
                   <svg
                     class="c14"
@@ -1027,6 +1040,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Status
                 <div
                   class="c13"
+                  data-testid="sort-column-researchFileStatusTypeCode"
                 >
                   <svg
                     class="c14"

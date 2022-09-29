@@ -38,11 +38,11 @@ namespace Pims.Api.Helpers.Swagger
         {
             var info = new OpenApiInfo()
             {
-                Title = "PIMS API", // TODO: From configuration
+                Title = "PIMS API", // TODO: PSP-4420 From configuration
                 Version = description.ApiVersion.ToString(),
-                Description = "Property Inventory Management System", // TODO: From configuration
-                Contact = new OpenApiContact() { Name = "Support", Email = "support@pims.gov.bc.ca" }, // TODO: From configuration
-                License = new OpenApiLicense() { Name = "APACHE", Url = new Uri("https://github.com/bcgov/PSP/blob/dev/LICENSE") }, // TODO: From configuration
+                Description = "Property Inventory Management System", // TODO: PSP-4420 From configuration
+                Contact = new OpenApiContact() { Name = "Support", Email = "support@pims.gov.bc.ca" }, // TODO: PSP-4420 From configuration
+                License = new OpenApiLicense() { Name = "APACHE", Url = new Uri("https://github.com/bcgov/PSP/blob/dev/LICENSE") }, // TODO: PSP-4420 From configuration
             };
 
             if (description.IsDeprecated)

@@ -14,7 +14,7 @@ import { useAddResearch } from './useAddResearch';
 
 const testResearchFile: Api_ResearchFile = {
   id: 1,
-  rfileNumber: 'RFile-0123456789',
+  fileNumber: 'RFile-0123456789',
 };
 
 const dispatch = jest.fn();

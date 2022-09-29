@@ -117,10 +117,17 @@ namespace Pims.Dal.Keycloak
                 var userGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
                 foreach (var group in userGroups)
                 {
-                    var matchingPimsRole = _pimsRepository.Role.GetByKeycloakId(group.Id);
-                    if (matchingPimsRole != null)
+                    try
                     {
-                        await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
+                        var matchingPimsRole = _pimsRepository.Role.GetByKeycloakId(group.Id);
+                        if (matchingPimsRole != null)
+                        {
+                            await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
+                        }
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        // ignore any roles that are in keycloak but not in PIMS
                     }
                 }
             }

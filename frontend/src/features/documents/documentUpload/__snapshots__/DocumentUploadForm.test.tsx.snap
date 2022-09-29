@@ -90,6 +90,7 @@ exports[`DocumentUploadView component renders as expected 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -431,8 +432,8 @@ exports[`DocumentUploadView component renders as expected 1`] = `
                 <input
                   class="form-control"
                   data-testid="metadata-input-Tag"
-                  id="input-[documentMetadata.1]"
-                  name="[documentMetadata.1]"
+                  id="input-documentMetadata.1"
+                  name="documentMetadata.1"
                   title=""
                   value=""
                 />

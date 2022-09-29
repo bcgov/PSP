@@ -1,5 +1,4 @@
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
-import { StyledAddButton } from 'components/common/styles';
 import styled from 'styled-components';
 
 export const ListPage = styled.div`
@@ -12,7 +11,6 @@ export const ListPage = styled.div`
 `;
 
 export const Scrollable = styled(ScrollableBase)`
-  padding: 1.6rem 3.2rem;
   width: 100%;
 `;
 
@@ -28,12 +26,4 @@ export const PageToolbar = styled.div`
   align-items: center;
   padding: 0;
   padding-bottom: 2rem;
-`;
-
-export const AddNoteButton = styled(StyledAddButton)`
-  && {
-    display: inline-block;
-    margin-left: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
 `;

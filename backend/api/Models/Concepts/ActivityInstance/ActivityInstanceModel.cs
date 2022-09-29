@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Models.Concepts
 {
     /// <summary>
@@ -18,9 +20,19 @@ namespace Pims.Api.Models.Concepts
         public string Description { get; set; }
 
         /// <summary>
+        /// get/set - Activity Instance Status
+        /// </summary>
+        public string Status { get; set; }
+
+        /// <summary>
         /// get/set - Activity Template Id .
         /// </summary>
         public int ActivityTemplateId { get; set; }
+
+        /// <summary>
+        /// get/set - JSON form data .
+        /// </summary>
+        public string ActivityDataJson { get; set; }
 
         /// <summary>
         /// get/set - Activity Template Id .
@@ -36,6 +48,16 @@ namespace Pims.Api.Models.Concepts
         /// get/set - Activity Status Type Code .
         /// </summary>
         public TypeModel<string> ActivityStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The list of properties that are part of this research file and this activity.
+        /// </summary>
+        public IList<ActivityInstancePropertyFileModel> ActInstPropRsrchFiles { get; set; }
+
+        /// <summary>
+        /// get/set - The list of properties that are part of this acquisition file and this activity.
+        /// </summary>
+        public IList<ActivityInstancePropertyFileModel> ActInstPropAcqFiles { get; set; }
         #endregion
     }
 }

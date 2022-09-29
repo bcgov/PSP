@@ -100,6 +100,7 @@ exports[`Research Filter matches snapshot 1`] = `
   -moz-letter-spacing: unset;
   -ms-letter-spacing: unset;
   letter-spacing: unset;
+  text-align: left;
   padding: 0;
 }
 
@@ -352,6 +353,12 @@ exports[`Research Filter matches snapshot 1`] = `
                       value="ACTIVE"
                     >
                       Active
+                    </option>
+                    <option
+                      class="option"
+                      value="ANY"
+                    >
+                      Any status
                     </option>
                     <option
                       class="option"

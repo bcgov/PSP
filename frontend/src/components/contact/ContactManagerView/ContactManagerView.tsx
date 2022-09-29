@@ -28,6 +28,7 @@ interface IContactManagerViewProps {
   showAddButton?: boolean;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
+  showOnlyIndividuals?: boolean;
 }
 
 /**
@@ -43,6 +44,7 @@ const ContactManagerView = ({
   showAddButton,
   showActiveSelector,
   isSingleSelect,
+  showOnlyIndividuals,
 }: IContactManagerViewProps) => {
   const history = useHistory();
   const { hasClaim } = useKeycloakWrapper();
@@ -98,6 +100,7 @@ const ContactManagerView = ({
             filter={filter}
             setFilter={changeFilter}
             showActiveSelector={showActiveSelector}
+            showOnlyIndividuals={showOnlyIndividuals}
           />
         </Col>
         {showAddButton && hasClaim(Claims.CONTACT_ADD) && (

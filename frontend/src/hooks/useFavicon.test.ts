@@ -25,7 +25,7 @@ describe('useFavicon suite', () => {
   it('useFavicon returns empty link', () => {
     renderHook(() => {
       const link = useFavicon();
-      expect(link.href).toBeEmpty(); // TODO: This test doesn't actually work.
+      expect(link.href).toBeEmpty(); // TODO: PSP-4409 This test doesn't actually work.
       expect(spy).toBeCalledTimes(1);
     });
   });
@@ -33,7 +33,7 @@ describe('useFavicon suite', () => {
   it('useFavicon returns tenant link', () => {
     renderHook(() => {
       const link = useFavicon();
-      expect(link.href).toBe('test'); // TODO: This test doesn't actually work.
+      expect(link.href).toBe('test'); // TODO: PSP-4409 This test doesn't actually work.
     });
   });
 });

@@ -166,7 +166,7 @@ namespace Pims.Api.Helpers.Middleware
                     using var responseStream = await exception?.Response.Content.ReadAsStreamAsync();
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
-                    details = readStream.ReadToEnd(); // TODO: Rewrite this logic.
+                    details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
                     _logger.LogError(ex, details);
                 }
                 catch (Exception streamEx)
@@ -177,12 +177,11 @@ namespace Pims.Api.Helpers.Middleware
             }
             else if (ex is LtsaException)
             {
-                var exception = ex as LtsaException;
-                code = exception.StatusCode.Value;
-                message = exception.Message;
-                details = exception.Detail;
+                // Do not forward LTSA-specific errors to UI
+                message = "LTSA service is not available";
+                details = string.Empty;
 
-                _logger.LogError(ex, "Ltsa unhandled exception.");
+                _logger.LogError(ex, "LTSA unhandled exception.");
             }
             else if (ex is AvException)
             {
@@ -202,7 +201,7 @@ namespace Pims.Api.Helpers.Middleware
                     using var responseStream = await exception?.Response.Content.ReadAsStreamAsync();
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
-                    details = readStream.ReadToEnd(); // TODO: Rewrite this logic.
+                    details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
                     _logger.LogError(ex, details);
                 }
                 catch (Exception streamEx)
@@ -215,7 +214,7 @@ namespace Pims.Api.Helpers.Middleware
             {
                 var exception = ex as AuthenticationException;
                 message = exception.Message;
-                details = exception.InnerException.Message;
+                details = exception.InnerException?.Message ?? String.Empty;
 
                 _logger.LogError(ex, "Unable to validate authentication information.");
             }

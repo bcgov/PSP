@@ -27,7 +27,7 @@ namespace Pims.Api.Services
     public class DocumentService : BaseService, IDocumentService
     {
         private readonly IDocumentRepository documentRepository;
-        private readonly IDocumentActivityRepository documentActivityRespository;
+        private readonly IDocumentActivityRepository documentActivityRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
@@ -37,7 +37,7 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<DocumentService> logger,
             IDocumentRepository documentRepository,
-            IDocumentActivityRepository documentActivityRespository,
+            IDocumentActivityRepository documentActivityRepository,
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
@@ -45,8 +45,7 @@ namespace Pims.Api.Services
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
-            this.documentActivityRespository = documentActivityRespository;
-            this.documentActivityRespository = documentActivityRespository;
+            this.documentActivityRepository = documentActivityRepository;
             this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
@@ -66,24 +65,31 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Retrieving PIMS document for single activity");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
-            return documentActivityRespository.GetAllByActivity(activityId);
+            return documentActivityRepository.GetAllByActivity(activityId);
         }
 
-        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument)
+        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting PIMS document for single activity");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRespository.GetAllByDocument(activityDocument.DocumentId);
+            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRepository.GetAllByDocument(activityDocument.DocumentId);
             if (existingActivityDocuments.Count == 1)
             {
-                documentActivityRespository.Delete(activityDocument);
-                return await DeleteDocumentAsync(activityDocument.Document);
+                var deletedDocumentFlag = await DeleteDocumentAsync(activityDocument.Document, false);
+                if(commitTransaction)
+                {
+                    documentActivityRepository.CommitTransaction();
+                }
+                return deletedDocumentFlag;
             }
             else
             {
-                documentActivityRespository.Delete(activityDocument);
-                documentActivityRespository.CommitTransaction();
+                documentActivityRepository.Delete(activityDocument);
+                if (commitTransaction)
+                {
+                    documentActivityRepository.CommitTransaction();
+                }
                 return true;
             }
         }
@@ -134,8 +140,8 @@ namespace Pims.Api.Services
                     ActivityInstanceId = activityId,
                     Document = newPimsDocument,
                 };
-                newActivityDocument = documentActivityRespository.Add(newActivityDocument);
-                documentActivityRespository.CommitTransaction();
+                newActivityDocument = documentActivityRepository.Add(newActivityDocument);
+                documentActivityRepository.CommitTransaction();
 
                 response.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newActivityDocument);
             }
@@ -229,12 +235,12 @@ namespace Pims.Api.Services
             return response;
         }
 
-        public async Task<bool> DeleteDocumentAsync(PimsDocument document)
+        public async Task<bool> DeleteDocumentAsync(PimsDocument document, bool commitTransaction = true)
         {
             this.Logger.LogInformation("Deleting document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            int relationCount = documentRepository.GetTotalRelationCount(document.DocumentId);
+            int relationCount = 1;
             if (relationCount > 1)
             {
                 throw new InvalidOperationException("Documents can only be removed if there is one or less relationships");
@@ -246,7 +252,10 @@ namespace Pims.Api.Services
                 if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
                 {
                     documentRepository.Delete(document);
-                    documentRepository.CommitTransaction();
+                    if (commitTransaction)
+                    {
+                        documentRepository.CommitTransaction();
+                    }
                     return true;
                 }
                 else

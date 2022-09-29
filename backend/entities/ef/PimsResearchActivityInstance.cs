@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_RESEARCH_ACTIVITY_INSTANCE")]
     [Index(nameof(ActivityInstanceId), Name = "RSCHAI_ACTIVITY_INSTANCE_ID_IDX")]
     [Index(nameof(ResearchFileId), Name = "RSCHAI_RESEARCH_FILE_ID_IDX")]
+    [Index(nameof(ResearchFileId), nameof(ActivityInstanceId), Name = "RSCHAI_RSRCH_FILE_ACTIVITY_TUC", IsUnique = true)]
     public partial class PimsResearchActivityInstance
     {
         [Key]

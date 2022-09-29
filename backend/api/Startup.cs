@@ -216,7 +216,7 @@ namespace Pims.Api
             AddPimsApiRepositories(services);
             AddPimsApiServices(services);
             services.AddPimsKeycloakService();
-            services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
+            services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: PSP-4415 Determine if a default value could be used instead.
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
             services.AddClamAvService(this.Configuration.GetSection("Av"));
             services.AddSingleton<IAuthorizationHandler, RealmAccessRoleHandler>();

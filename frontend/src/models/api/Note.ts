@@ -10,6 +10,7 @@ export interface Api_EntityNote extends Api_ConcurrentVersion {
 export interface Api_Note extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   note?: string;
+  isSystemGenerated?: boolean;
 }
 
 export interface Api_NoteParent extends Api_ConcurrentVersion {
