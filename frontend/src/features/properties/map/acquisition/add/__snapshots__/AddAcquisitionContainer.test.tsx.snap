@@ -1366,6 +1366,9 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
               <div
                 class="container"
               />
+              <div
+                class="container"
+              />
             </div>
           </div>
         </div>
