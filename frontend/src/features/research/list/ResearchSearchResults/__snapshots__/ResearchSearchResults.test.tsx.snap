@@ -353,7 +353,7 @@ exports[`Research Search Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
-              data-testid="sort-column-researchFileStatusTypeCode"
+              data-testid="sort-column-fileStatusTypeCode"
             >
               <svg
                 class="c1"

@@ -86,6 +86,11 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
 
   return (
     <InventoryTabs
+      loading={
+        composedProperty.apiPropertyLoading ||
+        composedProperty.ltsaLoading ||
+        composedProperty.propertyAssociationsLoading
+      }
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}

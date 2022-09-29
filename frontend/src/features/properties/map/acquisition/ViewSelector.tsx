@@ -1,7 +1,9 @@
+import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
 
+import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionFileTabs from './detail/AcquisitionFileTabs';
 import { EditFormNames } from './EditFormNames';
@@ -46,7 +48,24 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           />
         );
       } else {
-        return <></>;
+        const properties = props.acquisitionFile?.fileProperties || [];
+        const selectedPropertyIndex = props.selectedMenuIndex - 1;
+        const acquisitionFileProperty = properties[selectedPropertyIndex];
+        acquisitionFileProperty.file = props.acquisitionFile;
+        return (
+          <PropertyFileContainer
+            setEditFileProperty={() =>
+              props.setContainerState({
+                isEditing: true,
+                activeEditForm: EditFormNames.propertyDetails,
+              })
+            }
+            fileProperty={acquisitionFileProperty}
+            defaultTab={InventoryTabNames.property}
+            customTabs={[]}
+            View={InventoryTabs}
+          />
+        );
       }
     }
   },

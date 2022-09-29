@@ -34,6 +34,7 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
         isSensitive: false,
         isRwyBeltDomPatent: false,
         pin: 0,
+        pid: 123456789,
         planNumber: 'EPP92028',
         landArea: 0,
         isVolumetricParcel: false,
