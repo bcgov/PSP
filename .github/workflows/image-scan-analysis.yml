@@ -77,7 +77,7 @@ jobs:
     needs: nodejs-base-image
     runs-on: ubuntu-latest
     env:
-      working-directory: ./frontend
+      working-directory: ./source/frontend
       image-name: nodejs-14-ubi8
       tag: ${{secrets.NODEJS14_BASE_TAG}}
       OPENSHIFT_NAMESPACE: 3cd915-tools
@@ -207,7 +207,7 @@ jobs:
     needs: nginx-base-image
     runs-on: ubuntu-latest
     env:
-      working-directory: ./frontend
+      working-directory: ./source/frontend
       image-name: nginx-base
       tag: ${{secrets.NGINX_BASE_TAG}}
       output-filename: nginx-base.txt
@@ -282,7 +282,7 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory: ./frontend
+      working-directory: ./source/frontend
       image-name: pims-app
       tag: latest
       OPENSHIFT_NAMESPACE: 3cd915-tools
@@ -340,7 +340,7 @@ jobs:
     needs: build_frontend
     runs-on: ubuntu-latest
     env:
-      working-directory: ./frontend
+      working-directory: ./source/frontend
       image-name: pims-app
       tag: latest
       output-filename: pims-app.txt
@@ -675,7 +675,7 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory: ./backend
+      working-directory: ./source/backend
       image-name: pims-api
       tag: latest
       OPENSHIFT_NAMESPACE: 3cd915-tools
@@ -731,7 +731,7 @@ jobs:
     needs: build_backend
     runs-on: ubuntu-latest
     env:
-      working-directory: ./backend
+      working-directory: ./source/backend
       image-name: pims-api
       tag: latest
       output-filename: pims-api.txt

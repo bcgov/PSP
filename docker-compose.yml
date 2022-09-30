@@ -24,9 +24,9 @@ services:
     restart: on-failure:1
     container_name: psp-db
     build:
-      context: database/mssql/scripts/dbscripts
+      context: source/database/mssql/scripts/dbscripts
     env_file:
-      - database/mssql/.env
+      - source/database/mssql/.env
     ports:
       - ${DATABASE_PORT:-5433}:1433
     volumes:
@@ -39,10 +39,10 @@ services:
     restart: on-failure:1
     container_name: psp-api
     build:
-      context: backend
+      context: source/backend
       args:
         BUILD_CONFIGURATION: Debug
-    env_file: backend/api/.env
+    env_file: source/backend/api/.env
     ports:
       - ${API_HTTPS_PORT:-5001}:443
       - ${API_HTTP_PORT:-5000}:8080
@@ -60,16 +60,16 @@ services:
     restart: on-failure:1
     container_name: psp-app
     build:
-      context: frontend
+      context: source/frontend
     volumes:
-      - ./frontend/src:/usr/app/src
-      - ./frontend/public:/usr/app/public
+      - ./source/frontend/src:/usr/app/src
+      - ./source/frontend/public:/usr/app/public
       - frontend-node-cache:/usr/app/node_modules
     ports:
       - ${APP_HTTP_PORT:-3000}:3000
     depends_on:
       - backend
-    env_file: ./frontend/.env
+    env_file: ./source/frontend/.env
     networks:
       - psp
 

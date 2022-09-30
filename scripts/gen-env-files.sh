@@ -50,8 +50,8 @@ POSTGRESQL_PASSWORD=$passvar
 fi
 
 # API Database
-if test -f "./database/mssql/.env"; then
-    echo "./database/mssql/.env exists"
+if test -f "./source/database/mssql/.env"; then
+    echo "./source/database/mssql/.env exists"
 else
 echo \
 "ACCEPT_EULA=Y
@@ -62,12 +62,12 @@ DB_NAME=pims
 DB_USER=admin
 DB_PASSWORD=$passvar
 SERVER_NAME=localhost,5433
-TIMEOUT_LENGTH=120" >> ./database/mssql/.env
+TIMEOUT_LENGTH=120" >> ./source/database/mssql/.env
 fi
 
 # API
-if test -f "./backend/api/.env"; then
-    echo "./backend/api/.env exists"
+if test -f "./source/backend/api/.env"; then
+    echo "./source/backend/api/.env exists"
 else
 echo \
 "ASPNETCORE_ENVIRONMENT=Local
@@ -93,27 +93,27 @@ Mayan__ConnectionPassword=
 Cdogs__AuthEndpoint=
 Cdogs__CDogsHost=
 Cdogs__ServiceClientId=
-Cdogs__ServiceClientSecret=" >> ./backend/api/.env
+Cdogs__ServiceClientSecret=" >> ./source/backend/api/.env
 fi
 
 # DAL DB migration
-if test -f "./backend/dal/.env"; then
-    echo "./backend/dal/.env exists"
+if test -f "./source/backend/dal/.env"; then
+    echo "./source/backend/dal/.env exists"
 else
 echo \
 "ASPNETCORE_ENVIRONMENT=Local
 ConnectionStrings__PIMS=Server=localhost,5433;uid=$varApiDb;Password=$passvar;Database=pims
-DB_PASSWORD=$passvar" >> ./backend/dal/.env
+DB_PASSWORD=$passvar" >> ./source/backend/dal/.env
 fi
 
 # Application
-if test -f "./frontend/.env"; then
-    echo "./frontend/.env exists"
+if test -f "./source/frontend/.env"; then
+    echo "./source/frontend/.env exists"
 else
 echo \
 "NODE_ENV=development
 API_URL=http://localhost:5000/
-CHOKIDAR_USEPOLLING=true" >> ./frontend/.env
+CHOKIDAR_USEPOLLING=true" >> ./source/frontend/.env
 fi
 
 # Keycloak sync tool
