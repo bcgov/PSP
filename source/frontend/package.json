@@ -154,7 +154,7 @@
     "check": "prettier --check \"./src/**/*.{js,jsx,ts,tsx,css,scss}\"",
     "pre-push:check": "npm run check && npm run lint",
     "docu:server": "npx styleguidist server",
-    "prepare": "cd .. && husky install frontend/.husky",
+    "prepare": "cd ../.. && husky install source/frontend/.husky",
     "pretty-quick": "pretty-quick"
   },
   "jest": {
