@@ -107,16 +107,6 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            // TODO: PSP-4508 Review this logic in the context of an addition
-            // - there should be no pre-existing AcquisitionFilePerson rows for this file!
-            foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
-            {
-                if (acquisitionPeople.AcquisitionFilePersonId != 0)
-                {
-                    Context.Entry(acquisitionPeople).State = EntityState.Unchanged;
-                }
-            }
-
             this.Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
         }
