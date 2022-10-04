@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
@@ -15,7 +16,7 @@ namespace Pims.Dal.Repositories
 
         PimsActivityInstance Add(PimsActivityInstance instance);
 
-        PimsActivityInstance Update(PimsActivityInstance instance);
+        Tuple<PimsActivityInstance, PimsActivityInstanceNote> Update(PimsActivityInstance instance);
 
         PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance);
 

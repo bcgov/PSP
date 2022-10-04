@@ -17,6 +17,10 @@ namespace Pims.Api.Services
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
         private readonly IDocumentActivityService _documentActivityService;
+        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly IResearchFileService _researchFileService;
+        private readonly IAcquisitionFileService _acquisitionFileService;
+        private readonly IDocumentService _documentService;
         private readonly INoteService _noteService;
 
         public ActivityService(
@@ -24,6 +28,9 @@ namespace Pims.Api.Services
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
             IActivityTemplateRepository activityTemplateRepository,
+            IEntityNoteRepository entityNoteRepository,
+            IAcquisitionFileService acquisitionFileService,
+            IResearchFileService researchFileService,
             INoteService noteService,
             IDocumentActivityService documentActivityService)
             : base(user, logger)
@@ -33,6 +40,8 @@ namespace Pims.Api.Services
             _activityTemplateRepository = activityTemplateRepository;
             _noteService = noteService;
             _documentActivityService = documentActivityService;
+            _documentService = documentService;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public PimsActivityInstance GetById(long id)
@@ -108,9 +117,13 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.ActivityEdit);
             ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
 
-            var newActivityInstance = _activityRepository.Update(model);
+            var result = _activityRepository.Update(model);
+            if(result.Item2 != null)
+            {
+                _entityNoteRepository.Add(result.Item2);
+            }
             _activityRepository.CommitTransaction();
-            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+            return _activityRepository.GetById(result.Item1.ActivityInstanceId);
         }
 
         public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance model)

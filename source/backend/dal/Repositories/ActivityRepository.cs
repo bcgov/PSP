@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -24,7 +26,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ActivityRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFileRepository> logger, IMapper mapper)
+        public ActivityRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ActivityRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
         }
@@ -91,14 +93,34 @@ namespace Pims.Dal.Repositories
             return instance;
         }
 
-        public PimsActivityInstance Update(PimsActivityInstance instance)
+        public Tuple<PimsActivityInstance, PimsActivityInstanceNote> Update(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
             var currentActivity = this.Context.PimsActivityInstances
                 .FirstOrDefault(x => x.ActivityInstanceId == instance.Id) ?? throw new KeyNotFoundException();
+
+            PimsActivityInstanceNote note = null;
+            if (currentActivity.ActivityInstanceStatusTypeCode!=instance.ActivityInstanceStatusTypeCode && this.User.HasPermission(Permissions.NoteAdd))
+            {
+                // add note
+                note = new PimsActivityInstanceNote()
+                {
+                    ActivityInstanceId = currentActivity.ActivityInstanceId,
+                    AppCreateTimestamp = System.DateTime.Now,
+                    AppCreateUserid = instance.AppCreateUserid,
+                    Note = new PimsNote()
+                    {
+                        IsSystemGenerated = true,
+                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCode } to { instance.ActivityInstanceStatusTypeCode }",
+                        AppCreateTimestamp = System.DateTime.Now,
+                        AppCreateUserid = instance.AppCreateUserid,
+                    },
+                };
+
+            }
             this.Context.Entry(currentActivity).CurrentValues.SetValues(instance);
 
-            return instance;
+            return new Tuple<PimsActivityInstance, PimsActivityInstanceNote>(instance, note);
         }
 
         public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance)
