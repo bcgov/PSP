@@ -49,38 +49,6 @@ namespace Pims.Api.Areas.Property.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the property for the specified unique 'pid'.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{pid}")]
-        [HasPermission(Permissions.PropertyView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<PropertyModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult GetPropertyWithPid(string pid)
-        {
-            var property = _pimsRepository.Property.GetByPid(pid);
-
-            return new JsonResult(_mapper.Map<PropertyModel>(property));
-        }
-
-        /// <summary>
-        /// Get the property for the specified primary key 'id'.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{id:int}")]
-        [HasPermission(Permissions.PropertyView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<PropertyModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        public IActionResult GetProperty(int id)
-        {
-            var property = _pimsRepository.Property.Get(id);
-
-            return new JsonResult(_mapper.Map<PropertyModel>(property));
-        }
-
-        /// <summary>
         /// Get the property associations for the specified unique 'id'.
         /// </summary>
         /// <returns></returns>

@@ -1,6 +1,5 @@
 import { IPaginateProperties } from 'constants/API';
 import { IPagedItems, IProperty } from 'interfaces';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { Api_Property, Api_PropertyAssociations } from 'models/api/Property';
 import queryString from 'query-string';
 import React from 'react';
@@ -20,8 +19,6 @@ export const useApiProperties = () => {
         api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getPropertyWithPid: (pid: string) => api.get<IPropertyApiModel>(`/properties/${pid}`),
-      getProperty: (id: number) => api.get<IPropertyApiModel>(`/properties/${id}`),
       getPropertyAssociations: (id: number) =>
         api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
       exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>

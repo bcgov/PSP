@@ -67,7 +67,7 @@ describe('PropertyFileContainer component', () => {
 
   beforeEach(() => {
     mockAxios
-      .onGet('properties/495')
+      .onGet('properties/concept/495')
       .reply(200, (getMockResearchFile().fileProperties ?? [])[0].property);
     mockAxios.onGet(new RegExp('ogs-internal/ows.*')).reply(200, mockWfsGetPropertyById);
     mockAxios
@@ -106,11 +106,17 @@ describe('PropertyFileContainer component', () => {
     const { getByTestId } = setup();
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(mockAxios.history.get[0].url).toEqual('/properties/495');
-    expect(mockAxios.history.get[1].url).toEqual(
-      `ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&cql_filter=PROPERTY_ID%20ilike%20'%25495%25'`,
+    expect(mockAxios.history.get[0].url).toEqual('/properties/concept/495');
+    expect(mockAxios.history.get[1].url).toEqual('/properties/495/associations');
+    expect(mockAxios.history.get[2].url).toEqual(
+      'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.128633565 49.27720127104871))',
     );
-    expect(mockAxios.history.get[2].url).toEqual('/properties/495/associations');
+    expect(mockAxios.history.get[3].url).toEqual(
+      `https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
+    );
+    expect(mockAxios.history.get[4].url).toEqual(
+      `https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
+    );
     expect(mockAxios.history.post[0].url).toEqual('/tools/ltsa/all?pid=123-456-789');
   });
 
@@ -125,15 +131,16 @@ describe('PropertyFileContainer component', () => {
     expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.pims);
   });
 
-  it('skips the property tab if no property is found', async () => {
-    mockAxios.onGet('properties/495').reply(404);
-    const { getByTestId } = setup();
+  it('skips the property tab if the property has no id', async () => {
+    mockAxios.onGet('properties/').reply(404);
+    setup({
+      ...DEFAULT_PROPS,
+      fileProperty: { ...DEFAULT_PROPS.fileProperty, property: { id: undefined } },
+    });
 
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(viewProps?.tabViews).toHaveLength(3);
+    expect(viewProps?.tabViews).toHaveLength(2);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
-    expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.pims);
   });
 
   it('skips the property associations tab if no property associations are found', async () => {

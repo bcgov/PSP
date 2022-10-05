@@ -1,20 +1,12 @@
 import { ReactComponent as LotSvg } from 'assets/images/icon-lot.svg';
-import axios, { AxiosError } from 'axios';
 import GenericModal from 'components/common/GenericModal';
-import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
 import PropertyViewSelector from 'features/properties/map/propertyInformation/PropertyViewSelector';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikProps } from 'formik';
-import useIsMounted from 'hooks/useIsMounted';
-import { useLtsa } from 'hooks/useLtsa';
-import { useProperties } from 'hooks/useProperties';
-import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
-import { IApiError } from 'interfaces/IApiError';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { PROPERTY_TYPES, useComposedProperties } from 'hooks/useComposedProperties';
+import { Api_Property } from 'models/api/Property';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { pidFormatter } from 'utils';
 
 import MapSideBarLayout from './layout/MapSideBarLayout';
 import { MotiInventoryHeader } from './MotiInventoryHeader';
@@ -23,15 +15,13 @@ export interface IMotiInventoryContainerProps {
   id?: number;
   pid?: string;
   onClose: () => void;
-  onZoom?: (apiProperty?: IPropertyApiModel) => void;
+  onZoom?: (apiProperty?: Api_Property) => void;
 }
 
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
 export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryContainerProps> = props => {
-  const isMounted = useIsMounted();
-
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -40,101 +30,18 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
     undefined,
   );
 
-  // First, fetch property information from PSP API
-  const { getPropertyLoading: propertyLoading, getProperty } = useProperties();
-
-  const {
-    getPropertyAssociations,
-    isLoading: propertyAssociationsLoading,
-  } = usePropertyAssociations();
-
-  const { getLtsaData, ltsaLoading } = useLtsa();
-
-  const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
-    apiPropertyLoading: ltsaLoading,
-    ltsaLoading: propertyLoading,
-    propertyAssociationsLoading: propertyAssociationsLoading,
+  const composedProperty = useComposedProperties({
+    id: props.id,
+    pid: props.pid !== undefined ? +props.pid : undefined,
+    propertyTypes: [PROPERTY_TYPES.ASSOCIATIONS, PROPERTY_TYPES.LTSA, PROPERTY_TYPES.PIMS_API],
   });
 
   useEffect(() => {
-    setComposedProperty(property => ({
-      ...property,
-      pid: props.pid,
-    }));
     setIsEditing(false);
   }, [props.pid]);
 
-  useEffect(() => {
-    setComposedProperty(property => ({
-      ...property,
-      ltsaLoading: ltsaLoading,
-      apiPropertyLoading: propertyLoading,
-      propertyAssociationsLoading: propertyAssociationsLoading,
-    }));
-  }, [propertyLoading, ltsaLoading, propertyAssociationsLoading]);
-
-  const fetchPimsProperty = React.useCallback(async () => {
-    try {
-      if (!!props.id) {
-        const propInfo = await getProperty(props.id);
-        if (isMounted() && propInfo?.id === props.id) {
-          setComposedProperty(property => ({ ...property, apiProperty: propInfo }));
-        }
-      }
-    } catch (e) {
-      // PSP-2919 Hide the property info tab for non-inventory properties
-      // We get an error because PID is not on our database
-      if (axios.isAxiosError(e)) {
-        const axiosError = e as AxiosError<IApiError>;
-        if (axiosError?.response?.status === 404) {
-          setComposedProperty(property => ({ ...property, apiProperty: undefined }));
-        } else {
-          toast.error('Failed to load property. Please refresh this page to try again');
-        }
-      }
-    }
-  }, [getProperty, isMounted, props.id]);
-
-  useEffect(() => {
-    fetchPimsProperty();
-  }, [fetchPimsProperty]);
-
-  useEffect(() => {
-    const getAssociations = async () => {
-      if (props?.id !== undefined) {
-        const response = await getPropertyAssociations(props.id);
-        if (response !== undefined) {
-          setComposedProperty(property => ({ ...property, propertyAssociations: response }));
-        }
-      }
-    };
-    getAssociations();
-  }, [getPropertyAssociations, props?.id]);
-
-  useEffect(() => {
-    const func = async () => {
-      setComposedProperty(property => ({
-        ...property,
-        ltsaDataRequestedOn: new Date(),
-        ltsaData: undefined,
-      }));
-
-      if (!!props?.pid) {
-        const ltsaData = await getLtsaData(pidFormatter(props.pid));
-        if (
-          isMounted() &&
-          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier ===
-            pidFormatter(props?.pid)
-        ) {
-          setComposedProperty(property => ({ ...property, ltsaData: ltsaData }));
-        }
-      }
-    };
-    func();
-  }, [getLtsaData, props?.pid, isMounted]);
-
   const onSuccess = () => {
-    fetchPimsProperty();
+    props.id && composedProperty.apiWrapper?.execute(props.id);
     setIsEditing(false);
   };
 

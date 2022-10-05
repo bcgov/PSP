@@ -1,14 +1,15 @@
 import { AreaUnitTypes } from 'constants/areaUnitTypes';
 import { VolumeUnitTypes } from 'constants/volumeUnitTypes';
 import { GeoJsonProperties } from 'geojson';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { Api_Property } from 'models/api/Property';
+import Api_TypeCode from 'models/api/TypeCode';
 import { ReactNode } from 'react';
 import { convertArea, convertVolume } from 'utils/convertUtils';
 import { booleanToString } from 'utils/formUtils';
 
 export interface IPropertyDetailsForm
   extends ExtendOverride<
-    IPropertyApiModel,
+    Api_Property,
     {
       electoralDistrict?: GeoJsonProperties;
       isALR?: boolean;
@@ -19,10 +20,14 @@ export interface IPropertyDetailsForm
       isVolumetricParcel: string; // radio buttons only support string values, not booleans
       landMeasurementTable?: Array<{ value: number; unit: string }>;
       volumetricMeasurementTable?: Array<{ value: number; unit: ReactNode }>;
+      anomalies: (Api_TypeCode<string> | undefined)[];
+      tenures: (Api_TypeCode<string> | undefined)[];
+      adjacentLands: (Api_TypeCode<string> | undefined)[];
+      roadTypes: (Api_TypeCode<string> | undefined)[];
     }
   > {}
 
-export function toFormValues(apiData?: IPropertyApiModel): IPropertyDetailsForm {
+export function toFormValues(apiData?: Api_Property): IPropertyDetailsForm {
   return {
     ...apiData,
     isALR: false,
@@ -30,15 +35,17 @@ export function toFormValues(apiData?: IPropertyApiModel): IPropertyDetailsForm 
       bandName: '',
       reserveName: '',
     },
+    anomalies: apiData?.anomalies?.map(a => a.propertyAnomalyTypeCode) ?? [],
+    tenures: apiData?.tenures?.map(t => t.propertyTenureTypeCode) ?? [],
+    adjacentLands: apiData?.adjacentLands?.map(a => a.propertyAdjacentLandTypeCode) ?? [],
+    roadTypes: apiData?.roadTypes?.map(a => a.propertyRoadTypeCode) ?? [],
     isVolumetricParcel: booleanToString(apiData?.isVolumetricParcel),
     landMeasurementTable: generateLandMeasurements(apiData),
     volumetricMeasurementTable: generateVolumeMeasurements(apiData),
   };
 }
 
-function generateLandMeasurements(
-  apiData?: IPropertyApiModel,
-): Array<{ value: number; unit: string }> {
+function generateLandMeasurements(apiData?: Api_Property): Array<{ value: number; unit: string }> {
   const { landArea, areaUnit } = { ...apiData };
   const unitId = areaUnit?.id;
   if (typeof landArea === 'undefined' || typeof unitId === 'undefined') {
@@ -66,7 +73,7 @@ function generateLandMeasurements(
 }
 
 function generateVolumeMeasurements(
-  apiData?: IPropertyApiModel,
+  apiData?: Api_Property,
 ): Array<{ value: number; unit: ReactNode }> {
   const { volumetricMeasurement, volumetricUnit } = { ...apiData };
   const unitId = volumetricUnit?.id;
@@ -112,15 +119,15 @@ export const readOnlyMultiSelectStyle = {
   },
 };
 
-export const defaultPropertyInfo: Partial<IPropertyApiModel> = {
+export const defaultPropertyInfo: Partial<Api_Property> = {
   anomalies: [],
-  tenure: [],
-  roadType: [],
-  adjacentLand: [],
+  tenures: [],
+  roadTypes: [],
+  adjacentLands: [],
   dataSourceEffectiveDate: '',
   isSensitive: false,
   isProvincialPublicHwy: false,
-  pid: '',
+  pid: 0,
   pin: undefined,
   areaUnit: undefined,
   landArea: undefined,
