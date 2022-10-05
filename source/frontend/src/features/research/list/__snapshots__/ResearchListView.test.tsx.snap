@@ -439,7 +439,7 @@ exports[`Research List View matches snapshot 1`] = `
                               <option
                                 value=""
                               >
-                                Select a status
+                                All Status
                               </option>
                               <option
                                 class="option"
