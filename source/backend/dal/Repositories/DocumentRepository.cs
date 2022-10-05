@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -58,6 +59,26 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Adds the passed document to the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public PimsDocument Add(PimsDocument document)
+        {
+            document.ThrowIfNull(nameof(document));
+
+            var newEntry = this.Context.PimsDocuments.Add(document);
+            if (newEntry.State == EntityState.Added)
+            {
+                return newEntry.Entity;
+            }
+            else
+            {
+                throw new InvalidOperationException("Could not create document");
+            }
+        }
+
+        /// <summary>
         /// Updates the passed document in the database.
         /// </summary>
         /// <param name="document"></param>
@@ -83,13 +104,19 @@ namespace Pims.Dal.Repositories
             // Need to load required related entities otherwise the below foreach may fail.
             var documentToDelete = this.Context.PimsDocuments.AsNoTracking()
                 .Include(d => d.PimsActivityInstanceDocuments)
+                .Include(d => d.PimsActivityTemplateDocuments)
                 .Where(d => d.DocumentId == document.Id)
                 .AsNoTracking()
                 .FirstOrDefault();
 
             foreach (var pimsActivityInstanceDocument in documentToDelete.PimsActivityInstanceDocuments)
             {
-                this.Context.PimsActivityInstanceDocuments.Remove(pimsActivityInstanceDocument);
+                this.Context.PimsActivityInstanceDocuments.Remove(new PimsActivityInstanceDocument() { Id = pimsActivityInstanceDocument.Id });
+            }
+
+            foreach (var pimsTemplateDocument in documentToDelete.PimsActivityTemplateDocuments)
+            {
+                this.Context.PimsActivityTemplateDocuments.Remove(new PimsActivityTemplateDocument() { Id = pimsTemplateDocument.Id });
             }
 
             this.Context.PimsDocuments.Remove(new PimsDocument() { Id = document.Id });

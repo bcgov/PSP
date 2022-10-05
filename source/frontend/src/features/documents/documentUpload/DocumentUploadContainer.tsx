@@ -5,7 +5,7 @@ import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_DocumentType, Api_DocumentUploadRequest } from 'models/api/Document';
 import { Api_Storage_DocumentTypeMetadataType } from 'models/api/DocumentStorage';
 import { ExternalResultStatus } from 'models/api/ExternalResult';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { DocumentUploadFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -62,30 +62,45 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
     Api_Storage_DocumentTypeMetadataType[]
   >([]);
 
+  const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const documentTypeId = Number(changeEvent.target.value);
+    await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
+  };
+
+  const updateDocumentType = useCallback(
+    async (documentType?: Api_DocumentType) => {
+      if (documentType === undefined) {
+        return;
+      }
+
+      setDocumentType(documentType.id?.toString() || '');
+      if (documentType.mayanId) {
+        const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
+        if (results?.status === ExternalResultStatus.Success) {
+          setDocumentTypeMetadataTypes(results?.payload?.results);
+        }
+      } else {
+        setDocumentTypeMetadataTypes([]);
+      }
+    },
+    [retrieveDocumentTypeMetadata],
+  );
+
   useEffect(() => {
     const fetch = async () => {
       const axiosResponse = await retrieveDocumentTypes();
       if (axiosResponse && isMounted()) {
-        setDocumentTypes(axiosResponse);
+        if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
+          setDocumentTypes(axiosResponse.filter(x => x.documentType === 'CDOGS Template'));
+          updateDocumentType(axiosResponse.find(x => x.documentType === 'CDOGS Template'));
+        } else {
+          setDocumentTypes(axiosResponse);
+        }
       }
     };
 
     fetch();
-  }, [retrieveDocumentTypes, isMounted]);
-
-  const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
-    const documentTypeId = Number(changeEvent.target.value);
-    const mayanDocumentTypeId = documentTypes.find(x => x.id === documentTypeId)?.mayanId;
-    setDocumentType(documentTypeId?.toString() || '');
-    if (mayanDocumentTypeId) {
-      const results = await retrieveDocumentTypeMetadata(mayanDocumentTypeId);
-      if (results?.status === ExternalResultStatus.Success) {
-        setDocumentTypeMetadataTypes(results?.payload?.results);
-      }
-    } else {
-      setDocumentTypeMetadataTypes([]);
-    }
-  };
+  }, [props.relationshipType, retrieveDocumentTypes, isMounted, updateDocumentType]);
 
   const onUploadDocument = async (uploadRequest: Api_DocumentUploadRequest) => {
     await uploadDocument(props.relationshipType, props.parentId, uploadRequest);

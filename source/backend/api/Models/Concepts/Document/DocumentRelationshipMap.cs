@@ -24,6 +24,23 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
+
+            config.NewConfig<Entity.PimsActivityTemplateDocument, DocumentRelationshipModel>()
+                .PreserveReference(true)
+                .Map(dest => dest.Id, src => src.ActivityTemplateDocumentId)
+                .Map(dest => dest.ParentId, src => src.ActivityTemplateId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Templates)
+                .Inherits<Entity.IBaseAppEntity, BaseAppModel>();
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsActivityTemplateDocument>()
+                .Map(dest => dest.ActivityTemplateDocumentId, src => src.Id)
+                .Map(dest => dest.ActivityTemplateId, src => src.ParentId)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document)
+                .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
 }

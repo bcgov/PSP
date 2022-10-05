@@ -6,11 +6,12 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
-import React, { useState } from 'react';
+import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
+import React, { useEffect, useState } from 'react';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
+import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 
@@ -34,11 +35,32 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
 
+  const [documentTypes, setDocumentTypes] = useState<Api_DocumentType[]>([]);
+
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
   const [filters, setFilters] = React.useState<IDocumentFilter>(
     defaultFilters ?? defaultDocumentFilter,
   );
+
+  const { retrieveDocumentTypes } = useDocumentProvider();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const axiosResponse = await retrieveDocumentTypes();
+      console.log(axiosResponse, props.relationshipType);
+      if (
+        axiosResponse !== undefined &&
+        props.relationshipType === DocumentRelationshipType.TEMPLATES
+      ) {
+        setDocumentTypes(axiosResponse.filter(x => x.documentType === 'CDOGS Template'));
+      } else {
+        setDocumentTypes(axiosResponse || []);
+      }
+    };
+
+    fetch();
+  }, [props.relationshipType, retrieveDocumentTypes]);
 
   const sortedFilteredDocuments = React.useMemo(() => {
     if (documentResults?.length > 0) {
@@ -141,7 +163,13 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         isCollapsable
         initiallyExpanded
       >
-        {!hideFilters && <DocumentFilterForm onSetFilter={setFilters} documentFilter={filters} />}
+        {!hideFilters && (
+          <DocumentFilterForm
+            onSetFilter={setFilters}
+            documentFilter={filters}
+            documentTypes={documentTypes}
+          />
+        )}
         <DocumentResults
           results={sortedFilteredDocuments}
           loading={isLoading}
