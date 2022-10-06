@@ -85,7 +85,7 @@ namespace Pims.Api.Services
         public async Task<DocumentUploadRelationshipResponse> UploadActivityTemplateDocumentAsync(long activityTemplateId, DocumentUploadRequest uploadRequest)
         {
             this.Logger.LogInformation("Uploading document for single activity");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -125,14 +125,14 @@ namespace Pims.Api.Services
             {
                 documentActivityRepository.Delete(activityDocument);
                 documentActivityRepository.CommitTransaction();
-                return new ExternalResult<string>(); // TODO Manuel
+                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
             }
         }
 
         public async Task<ExternalResult<string>> DeleteActivityTemplateDocumentAsync(PimsActivityTemplateDocument templateDocument)
         {
             this.Logger.LogInformation("Deleting PIMS document for single activity");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
 
             IList<PimsActivityTemplateDocument> existingActivityTemplateDocuments = documentActivityTemplateRepository.GetAllByDocument(templateDocument.DocumentId);
             if (existingActivityTemplateDocuments.Count == 1)
@@ -143,7 +143,7 @@ namespace Pims.Api.Services
             {
                 documentActivityTemplateRepository.Delete(templateDocument);
                 documentActivityTemplateRepository.CommitTransaction();
-                return new ExternalResult<string>(); // TODO Manuel
+                return new ExternalResult<string>() { Status = ExternalResultStatus.NotExecuted };
             }
         }
     }

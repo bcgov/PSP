@@ -20,5 +20,11 @@ namespace Pims.Api.Models
         /// </summary>
         [EnumMember(Value = "error")]
         Error,
+
+        /// <summary>
+        /// The external call was not executed.
+        /// </summary>
+        [EnumMember(Value = "not-executed")]
+        NotExecuted,
     }
 }
