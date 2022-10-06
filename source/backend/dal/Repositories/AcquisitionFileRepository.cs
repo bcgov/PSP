@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -17,6 +16,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class AcquisitionFileRepository : BaseRepository<PimsAcquisitionFile>, IAcquisitionFileRepository
     {
+        private readonly ISequenceRepository _sequenceRepository;
         #region Constructors
 
         /// <summary>
@@ -25,9 +25,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, IMapper mapper)
+        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, ISequenceRepository sequenceRepository)
             : base(dbContext, user, logger)
         {
+            _sequenceRepository = sequenceRepository;
         }
         #endregion
 
@@ -107,17 +108,11 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            // TODO: PSP-4508 Review this logic in the context of an addition
-            // - there should be no pre-existing AcquisitionFilePerson rows for this file!
-            foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
-            {
-                if (acquisitionPeople.AcquisitionFilePersonId != 0)
-                {
-                    Context.Entry(acquisitionPeople).State = EntityState.Unchanged;
-                }
-            }
+            int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
+            acquisitionFile.FileNo = nextFileNo;
+            acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo);
 
-            this.Context.PimsAcquisitionFiles.Add(acquisitionFile);
+            Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
         }
 
@@ -133,6 +128,19 @@ namespace Pims.Dal.Repositories
 
             var existingAcqFile = this.Context.PimsAcquisitionFiles
                 .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Id) ?? throw new KeyNotFoundException();
+
+            // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
+            if (existingAcqFile.RegionCode != acquisitionFile.RegionCode)
+            {
+                acquisitionFile.FileNo = existingAcqFile.FileNo;
+                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo);
+            }
+            else
+            {
+                // Make sure the frontend cannot override these auto-generated fields
+                acquisitionFile.FileNo = existingAcqFile.FileNo;
+                acquisitionFile.FileNumber = existingAcqFile.FileNumber;
+            }
 
             this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
             this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
@@ -168,6 +176,41 @@ namespace Pims.Dal.Repositories
                 .Where(p => p.AcquisitionFileId == id)?
                 .Select(p => p.RegionCode)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Generates a new Acquisition Number in the following format.
+        /// </summary>
+        /// <remarks>
+        /// <list type="bullet">
+        /// <item>
+        /// Format: YY-XXXXXXXXXXXX-ZZ
+        /// </item>
+        /// <item>
+        /// Prefix - (YY above) The prefix numbers for an Acquisition file correspond with the MoTI region
+        /// </item>
+        /// <item>
+        /// File # - (XXXXX... above) Acquisition File number is created and each file number should increase in increments of 1.
+        /// The digit base number is unique to the file. Do not pad the number with zeros.
+        /// </item>
+        /// <item>
+        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01.
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// <returns>The formatted Acquisition File Number.</returns>
+        private static string GenerateAcquisitionNumber(short prefix, long fileNumber, short suffix = 1)
+        {
+            return $"{prefix:00}-{fileNumber}-{suffix:00}";
+        }
+
+        /// <summary>
+        /// Get the next available value from PIMS_ACQUISITION_FILE_NO_SEQ.
+        /// </summary>
+        /// <returns>The next value for the sequence.</returns>
+        private int GetNextAcquisitionFileNumberSequenceValue()
+        {
+            return (int)_sequenceRepository.GetNextSequenceValue("dbo.PIMS_ACQUISITION_FILE_NO_SEQ");
         }
 
         #endregion
