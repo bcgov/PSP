@@ -15,12 +15,6 @@ SELECT @generateDocuments = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'generate-docu
 /* Functional */
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @generateDocuments AND ROLE_ID = @functional;
 
-/* Functional Restricted */
-DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @generateDocuments AND ROLE_ID = @restricted;
-
-/* Finance */
-DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @generateDocuments AND ROLE_ID = @finance;
-
 /* System Administrator */
 DELETE FROM [dbo].[PIMS_ROLE_CLAIM] WHERE CLAIM_ID = @generateDocuments AND ROLE_ID = @systemAdministrator;
 GO
