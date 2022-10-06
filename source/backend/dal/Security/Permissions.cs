@@ -133,6 +133,6 @@ namespace Pims.Dal.Security
         ActivityEdit = 42,
 
         [Display(GroupName = "activity", Name = "activity-delete", Description = "Can delete existing activities.")]
-        ActivityDelete = 43
+        ActivityDelete = 43,
     }
 }

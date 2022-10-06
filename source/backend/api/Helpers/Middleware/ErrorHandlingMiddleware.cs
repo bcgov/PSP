@@ -214,7 +214,7 @@ namespace Pims.Api.Helpers.Middleware
             {
                 var exception = ex as AuthenticationException;
                 message = exception.Message;
-                details = exception.InnerException?.Message ?? String.Empty;
+                details = exception.InnerException?.Message ?? string.Empty;
 
                 _logger.LogError(ex, "Unable to validate authentication information.");
             }

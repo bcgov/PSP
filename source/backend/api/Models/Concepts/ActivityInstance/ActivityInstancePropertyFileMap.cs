@@ -21,7 +21,6 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PropertyResearchFileId, src => src.PropertyFileId)
                 .Inherits<BaseAppModel, Entity.IBaseAppEntity>();
 
-
             config.NewConfig<Entity.PimsActInstPropAcqFile, ActivityInstancePropertyFileModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.Id)

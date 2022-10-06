@@ -2,7 +2,6 @@ using System;
 using System.Security.Claims;
 using Microsoft.Extensions.DependencyInjection;
 using Pims.Api.Services;
-using Pims.Dal.Services;
 
 namespace Pims.Api
 {

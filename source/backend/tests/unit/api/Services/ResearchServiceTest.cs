@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
@@ -6,12 +12,6 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Pims.Api.Test.Services

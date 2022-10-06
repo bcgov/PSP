@@ -14,7 +14,6 @@ namespace Pims.Api.Areas.Research.Controllers
     using Pims.Api.Services;
     using Pims.Dal.Entities.Models;
     using Pims.Dal.Security;
-    using Pims.Dal.Services;
     using Swashbuckle.AspNetCore.Annotations;
 
     /// <summary>
