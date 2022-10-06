@@ -102,4 +102,14 @@ describe('SelectedPropertyRow component', () => {
     } as any);
     expect(getByText('4.00000, 5.00000')).toBeVisible();
   });
+
+  it('falls back to address', async () => {
+    const mapProperties: IMapProperty[] = [{ address: 'a test address' }];
+    const {
+      component: { getByText },
+    } = await setup({
+      values: { properties: mapProperties },
+    } as any);
+    expect(getByText('a test address')).toBeVisible();
+  });
 });
