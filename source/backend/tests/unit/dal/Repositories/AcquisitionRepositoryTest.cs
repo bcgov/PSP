@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
@@ -22,18 +23,23 @@ namespace Pims.Dal.Test.Repositories
 
         #region Tests
 
-        #region Add Note
+        #region Add
         [Fact]
         public void Add_Success()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
 
-            var context = helper.CreatePimsContext(user, true);
+            helper.CreatePimsContext(user, true);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            helper.AddSingleton(mockSequenceRepo.Object);
+
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(888999);
 
             // Act
             var result = repository.Add(acqFile);
@@ -43,6 +49,8 @@ namespace Pims.Dal.Test.Repositories
             result.Should().BeAssignableTo<PimsAcquisitionFile>();
             result.FileName.Should().Be("Test Acquisition File");
             result.AcquisitionFileId.Should().Be(1);
+            result.FileNo.Should().Be(888999);
+            result.FileNumber.Should().Be("01-888999-01");
         }
 
         [Fact]
