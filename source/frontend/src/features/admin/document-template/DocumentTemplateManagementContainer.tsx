@@ -4,7 +4,7 @@ import { useState } from 'react';
 import DocumentTemplateManagementView from './DocumentTemplateManagementView';
 
 export const DocumentTemplateManagementContainer: React.FunctionComponent = () => {
-  const [acitivityTemplateId, setActivityTemplateId] = useState<number>(0);
+  const [acitivityTemplateId, setActivityTemplateId] = useState<number | undefined>(undefined);
   const {
     getActivityTemplates: { response: templateResponse, loading: templateLoading },
   } = useActivityRepository();

@@ -1,43 +1,65 @@
+import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { StyledContainer } from 'features/documents/list/styles';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { Api_ActivityTemplate } from 'models/api/Activity';
+import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
 export interface IDocumentTemplateManagementViewProp {
   isLoading: boolean;
   activityTypes?: Api_ActivityTemplate[];
-  activityTypeId: number;
-  setActivityTemplateId: (a: number) => void;
+  activityTypeId?: number;
+  setActivityTemplateId: (templateId?: number) => void;
 }
 
 export const DocumentTemplateManagementView: React.FunctionComponent<IDocumentTemplateManagementViewProp> = props => {
-  console.log(props.activityTypes);
-
-  const change = (par: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(par);
-    console.log(par.target.value);
-    props.setActivityTemplateId(Number.parseInt(par.target.value));
+  const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
+    var typeId = Number.parseInt(selectedType.target.value);
+    console.log(typeId);
+    if (!Number.isNaN(typeId)) {
+      props.setActivityTemplateId(typeId);
+    } else {
+      props.setActivityTemplateId(undefined);
+    }
   };
+
   return (
-    <StyledContainer>
-      <LoadingBackdrop show={props.isLoading} />
-      <StyledPageHeader>PIMS Document Template Management {props.activityTypeId}</StyledPageHeader>
-      <Form.Group aria-label="Default select example">
-        <Form.Control as="select" onChange={change}>
-          <option>Open this select menu</option>
-          {props.activityTypes?.map((types, index) => {
-            return <option value={types.id}>{types.activityTemplateTypeCode?.description}</option>;
-          })}
-        </Form.Control>
-      </Form.Group>
-      <DocumentListContainer
-        parentId={props.activityTypeId}
-        relationshipType={DocumentRelationshipType.TEMPLATES}
-      />
-    </StyledContainer>
+    <ListPage>
+      <Scrollable>
+        <LoadingBackdrop show={props.isLoading} />
+
+        <StyledPageHeader>PIMS Document Template Management</StyledPageHeader>
+        <Section>
+          <Row>
+            <Col xs="auto">Activity Type:</Col>
+            <Col xs="auto">
+              <Form.Group aria-label="Default select example">
+                <Form.Control as="select" onChange={onSelectChange}>
+                  <option>Select an Activity type</option>
+                  {props.activityTypes?.map(types => {
+                    return (
+                      <option value={types.id}>
+                        {types.activityTemplateTypeCode?.description}
+                      </option>
+                    );
+                  })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
+        </Section>
+        {props.activityTypeId !== undefined && (
+          <DocumentListContainer
+            parentId={props.activityTypeId}
+            relationshipType={DocumentRelationshipType.TEMPLATES}
+          />
+        )}
+      </Scrollable>
+    </ListPage>
   );
 };
 
@@ -45,4 +67,18 @@ export default DocumentTemplateManagementView;
 
 const StyledPageHeader = styled.h3`
   text-align: left;
+`;
+
+export const ListPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  gap: 2.5rem;
+  padding: 0;
+`;
+
+export const Scrollable = styled(ScrollableBase)`
+  padding: 1.6rem 3.2rem;
+  width: 100%;
 `;

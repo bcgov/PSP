@@ -149,7 +149,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   return (
-    <div>
+    <>
       <Section
         header={
           <SectionListHeader
@@ -216,7 +216,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         okButtonText="Continue"
         cancelButtonText="Cancel"
       />
-    </div>
+    </>
   );
 };
 
