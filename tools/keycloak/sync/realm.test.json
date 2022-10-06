@@ -18,7 +18,7 @@
         "BearerOnly": true,
         "AuthorizationServicesEnabled": false,
         "RedirectUris": [
-          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "WebOrigins": ["*"],
         "Attributes": {
@@ -39,15 +39,15 @@
         "ImplicitFlowEnabled": false,
         "DirectAccessGrantsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca",
+        "RootUrl": "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca",
         "RedirectUris": [
-          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/*",
-          "https://tst-pims.th.gov.bc.ca/*"
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/*",
+          "https://dev-pims.th.gov.bc.ca/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": [
-          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca",
-          "https://tst-pims.th.gov.bc.ca/*",
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca",
+          "https://dev-pims.th.gov.bc.ca/*",
           "*"
         ],
         "ProtocolMappers": [
@@ -223,7 +223,7 @@
         }
       },
       {
-        "ClientId": "pims-service-account",
+        "ClientId": "pims-service-account-test",
         "Name": "PIMS API Service Account",
         "Description": "Property Inventory Management System API Service Account",
         "Enabled": true,
@@ -236,9 +236,9 @@
         "DirectAccessGrantsEnabled": true,
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api",
+        "RootUrl": "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api",
         "RedirectUris": [
-          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": ["*"],
@@ -270,9 +270,9 @@
         "DirectAccessGrantsEnabled": true,
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": true,
-        "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api",
+        "RootUrl": "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api",
         "RedirectUris": [
-          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": ["*"],
