@@ -2,7 +2,6 @@ import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrol
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import DocumentListContainer from 'features/documents/list/DocumentListContainer';
-import { StyledContainer } from 'features/documents/list/styles';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { Api_ActivityTemplate } from 'models/api/Activity';
 import { Col, Row } from 'react-bootstrap';

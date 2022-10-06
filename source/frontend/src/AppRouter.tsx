@@ -124,7 +124,7 @@ const AppRouter: React.FC = () => {
           path="/admin/access/requests"
           customComponent={ManageAccessRequests}
           layout={AuthLayout}
-          claim={Claims.ADMIN_DOCUMENT_GENERATION}
+          claim={Claims.ADMIN_USERS}
           title={getTitle('Access Requests')}
         ></AppRoute>
         <AppRoute
