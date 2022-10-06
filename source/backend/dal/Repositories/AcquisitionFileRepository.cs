@@ -35,32 +35,6 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Generates a new Acquisition Number in the following format.
-        /// </summary>
-        /// <remarks>
-        /// <list type="bullet">
-        /// <item>
-        /// Format: YY-XXXXXXXXXXXX-ZZ
-        /// </item>
-        /// <item>
-        /// Prefix - (YY above) The prefix numbers for an Acquisition file correspond with the MoTI region
-        /// </item>
-        /// <item>
-        /// File # - (XXXXX... above) Acquisition File number is created and each file number should increase in increments of 1.
-        /// The digit base number is unique to the file. Do not pad the number with zeros.
-        /// </item>
-        /// <item>
-        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01.
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// <returns>The formatted Acquisition File Number.</returns>
-        public static string GenerateAcquisitionNumber(short prefix, long fileNumber, short suffix = 1)
-        {
-            return $"{prefix:00}-{fileNumber}-{suffix:00}";
-        }
-
-        /// <summary>
         /// Retrieves a page with an array of acquisition files within the specified filters.
         /// Note that the 'filter' will control the 'page' and 'quantity'.
         /// </summary>
@@ -202,6 +176,32 @@ namespace Pims.Dal.Repositories
                 .Where(p => p.AcquisitionFileId == id)?
                 .Select(p => p.RegionCode)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Generates a new Acquisition Number in the following format.
+        /// </summary>
+        /// <remarks>
+        /// <list type="bullet">
+        /// <item>
+        /// Format: YY-XXXXXXXXXXXX-ZZ
+        /// </item>
+        /// <item>
+        /// Prefix - (YY above) The prefix numbers for an Acquisition file correspond with the MoTI region
+        /// </item>
+        /// <item>
+        /// File # - (XXXXX... above) Acquisition File number is created and each file number should increase in increments of 1.
+        /// The digit base number is unique to the file. Do not pad the number with zeros.
+        /// </item>
+        /// <item>
+        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01.
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// <returns>The formatted Acquisition File Number.</returns>
+        private static string GenerateAcquisitionNumber(short prefix, long fileNumber, short suffix = 1)
+        {
+            return $"{prefix:00}-{fileNumber}-{suffix:00}";
         }
 
         /// <summary>
