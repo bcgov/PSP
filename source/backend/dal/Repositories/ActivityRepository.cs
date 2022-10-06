@@ -98,11 +98,9 @@ namespace Pims.Dal.Repositories
             instance.ThrowIfNull(nameof(instance));
             var currentActivity = this.Context.PimsActivityInstances
                 .FirstOrDefault(x => x.ActivityInstanceId == instance.Id) ?? throw new KeyNotFoundException();
-
             PimsActivityInstanceNote note = null;
-            if (currentActivity.ActivityInstanceStatusTypeCode!=instance.ActivityInstanceStatusTypeCode && this.User.HasPermission(Permissions.NoteAdd))
-            {
-                // add note
+            if (currentActivity.ActivityInstanceStatusTypeCode != instance.ActivityInstanceStatusTypeCode)
+            {                
                 note = new PimsActivityInstanceNote()
                 {
                     ActivityInstanceId = currentActivity.ActivityInstanceId,
@@ -113,7 +111,7 @@ namespace Pims.Dal.Repositories
                         IsSystemGenerated = true,
                         NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCode } to { instance.ActivityInstanceStatusTypeCode }",
                         AppCreateTimestamp = System.DateTime.Now,
-                        AppCreateUserid = instance.AppCreateUserid,
+                        AppCreateUserid = this.User.GetUsername(),
                     },
                 };
 
