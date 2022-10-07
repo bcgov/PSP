@@ -752,7 +752,7 @@ exports[`Research List View matches snapshot 1`] = `
                 R-File Number
                 <div
                   class="c13"
-                  data-testid="sort-column-fileNumber"
+                  data-testid="sort-column-rfileNumber"
                 >
                   <svg
                     class="c14"
@@ -798,7 +798,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Research file name
                 <div
                   class="c13"
-                  data-testid="sort-column-fileName"
+                  data-testid="sort-column-name"
                 >
                   <svg
                     class="c14"
@@ -1040,7 +1040,7 @@ exports[`Research List View matches snapshot 1`] = `
                 Status
                 <div
                   class="c13"
-                  data-testid="sort-column-fileStatusTypeCode"
+                  data-testid="sort-column-researchFileStatusTypeCode"
                 >
                   <svg
                     class="c14"
