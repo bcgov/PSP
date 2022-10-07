@@ -14,6 +14,7 @@ import styled from 'styled-components';
 
 import { AcquisitionFilter, defaultAcquisitionFilter } from './AcquisitionFilter/AcquisitionFilter';
 import { AcquisitionSearchResults } from './AcquisitionSearchResults/AcquisitionSearchResults';
+import { AcquisitionSearchResultModel } from './AcquisitionSearchResults/models';
 import { IAcquisitionFilter } from './interfaces';
 import * as Styled from './styles';
 
@@ -77,7 +78,7 @@ export const AcquisitionListView: React.FunctionComponent = () => {
           </StyledAddButton>
         )}
         <AcquisitionSearchResults
-          results={results}
+          results={results.map(a => AcquisitionSearchResultModel.fromApi(a))}
           totalItems={totalItems}
           pageIndex={currentPage}
           pageSize={pageSize}
