@@ -93,32 +93,14 @@ namespace Pims.Dal.Repositories
             return instance;
         }
 
-        public Tuple<PimsActivityInstance, PimsActivityInstanceNote> Update(PimsActivityInstance instance)
+        public PimsActivityInstance Update(PimsActivityInstance instance)
         {
             instance.ThrowIfNull(nameof(instance));
             var currentActivity = this.Context.PimsActivityInstances
-                .FirstOrDefault(x => x.ActivityInstanceId == instance.Id) ?? throw new KeyNotFoundException();
-            PimsActivityInstanceNote note = null;
-            if (currentActivity.ActivityInstanceStatusTypeCode != instance.ActivityInstanceStatusTypeCode)
-            {                
-                note = new PimsActivityInstanceNote()
-                {
-                    ActivityInstanceId = currentActivity.ActivityInstanceId,
-                    AppCreateTimestamp = System.DateTime.Now,
-                    AppCreateUserid = instance.AppCreateUserid,
-                    Note = new PimsNote()
-                    {
-                        IsSystemGenerated = true,
-                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCode } to { instance.ActivityInstanceStatusTypeCode }",
-                        AppCreateTimestamp = System.DateTime.Now,
-                        AppCreateUserid = this.User.GetUsername(),
-                    },
-                };
-
-            }
+                .FirstOrDefault(x => x.ActivityInstanceId == instance.Id) ?? throw new KeyNotFoundException();           
             this.Context.Entry(currentActivity).CurrentValues.SetValues(instance);
 
-            return new Tuple<PimsActivityInstance, PimsActivityInstanceNote>(instance, note);
+            return instance;
         }
 
         public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance)

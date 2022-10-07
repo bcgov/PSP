@@ -214,9 +214,9 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().NotBeNull();
-            result.Item1.Should().BeAssignableTo<PimsActivityInstance>();
-            result.Item1.ActivityDataJson.Should().Be("test");
-            result.Item1.ActivityInstanceId.Should().Be(activity.ActivityInstanceId);
+            result.Should().BeAssignableTo<PimsActivityInstance>();
+            result.ActivityDataJson.Should().Be("test");
+            result.ActivityInstanceId.Should().Be(activity.ActivityInstanceId);
         }
 
         [Fact]

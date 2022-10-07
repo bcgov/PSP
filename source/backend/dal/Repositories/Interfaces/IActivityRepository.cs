@@ -16,7 +16,7 @@ namespace Pims.Dal.Repositories
 
         PimsActivityInstance Add(PimsActivityInstance instance);
 
-        Tuple<PimsActivityInstance, PimsActivityInstanceNote> Update(PimsActivityInstance instance);
+        PimsActivityInstance Update(PimsActivityInstance instance);
 
         PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance instance);
 

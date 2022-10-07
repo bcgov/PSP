@@ -307,9 +307,8 @@ namespace Pims.Api.Test.Services
             var activity = EntityHelper.CreateActivity();
             var model = mapper.Map<NoteModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            var tupleToReturn = Tuple.Create<PimsActivityInstance, PimsActivityInstanceNote>(activity, null);
-            repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(tupleToReturn);
+            var repository = helper.GetService<Mock<IActivityRepository>>();            
+            repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 
@@ -333,8 +332,7 @@ namespace Pims.Api.Test.Services
             var model = mapper.Map<ActivityInstanceModel>(activity);
 
             var repository = helper.GetService<Mock<IActivityRepository>>();
-            var tupleToReturn = Tuple.Create<PimsActivityInstance, PimsActivityInstanceNote>(activity, null);
-            repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(tupleToReturn);
+            repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 
@@ -358,9 +356,8 @@ namespace Pims.Api.Test.Services
             var activity = EntityHelper.CreateActivity();
             var model = mapper.Map<ActivityInstanceModel>(activity);
 
-            var repository = helper.GetService<Mock<IActivityRepository>>();
-            var tupleToReturn = Tuple.Create<PimsActivityInstance, PimsActivityInstanceNote>(activity, null);
-            repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(tupleToReturn);
+            var repository = helper.GetService<Mock<IActivityRepository>>();            
+            repository.Setup(x => x.Update(It.IsAny<PimsActivityInstance>())).Returns(activity);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(activity);
 

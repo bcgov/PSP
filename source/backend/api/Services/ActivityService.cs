@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -118,12 +119,9 @@ namespace Pims.Api.Services
             ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
 
             var result = _activityRepository.Update(model);
-            if(result.Item2 != null)
-            {
-                _entityNoteRepository.Add(result.Item2);
-            }
+            AddNoteIfActivityStatusChanged(model);
             _activityRepository.CommitTransaction();
-            return _activityRepository.GetById(result.Item1.ActivityInstanceId);
+            return _activityRepository.GetById(result.ActivityInstanceId);
         }
 
         public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance model)
@@ -191,6 +189,28 @@ namespace Pims.Api.Services
             if (currentRowVersion != activityVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this activity, please refresh the application and retry.");
+            }
+        }
+
+        private void AddNoteIfActivityStatusChanged(PimsActivityInstance instance)
+        {
+            var currentActivity = _activityRepository.GetById(instance.Id);
+            if (currentActivity.ActivityInstanceStatusTypeCode != instance.ActivityInstanceStatusTypeCode)
+            {
+                PimsActivityInstanceNote note = new PimsActivityInstanceNote()
+                {
+                    ActivityInstanceId = currentActivity.ActivityInstanceId,
+                    AppCreateTimestamp = System.DateTime.Now,
+                    AppCreateUserid = instance.AppCreateUserid,
+                    Note = new PimsNote()
+                    {
+                        IsSystemGenerated = true,
+                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCode } to { instance.ActivityInstanceStatusTypeCode }",
+                        AppCreateTimestamp = System.DateTime.Now,
+                        AppCreateUserid = this.User.GetUsername(),
+                    },
+                };
+                _entityNoteRepository.Add(note);
             }
         }
     }
