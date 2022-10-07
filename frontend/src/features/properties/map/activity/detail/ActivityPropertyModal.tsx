@@ -32,6 +32,44 @@ export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyMod
   onSave,
 }) => {
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
+
+  const handleCancel = () => {
+    if (
+      !dequal(
+        originalSelectedProperties.map(op => op.id),
+        selectedFileProperties.map(fp => fp.id),
+      )
+    ) {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          setSelectedFileProperties(originalSelectedProperties);
+          setDisplay(false);
+          setDisplayModal(false);
+        },
+      });
+      setDisplayModal(true);
+    } else {
+      setDisplay(false);
+      setDisplayModal(false);
+    }
+  };
+
+  const handleOk = async () => {
+    if (activityModel && allProperties?.length > 0) {
+      activityModel.actInstPropFiles =
+        selectedFileProperties.map(p => ({
+          activityId: activityModel?.id,
+          propertyFileId: p?.id,
+        })) ?? [];
+      const updatedActivity = await onSave(activityModel);
+      // if the activity was updated successfully, hide the modal.
+      if (!!updatedActivity) {
+        setDisplay(false);
+      }
+    }
+  };
+
   return (
     <GenericModal
       modalSize={ModalSize.MEDIUM}
@@ -39,52 +77,31 @@ export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyMod
       display={display}
       setDisplay={setDisplay}
       closeButton={true}
-      okButtonText="Save"
-      cancelButtonText="Cancel"
-      handleCancel={() => {
-        if (
-          !dequal(
-            originalSelectedProperties.map(op => op.id),
-            selectedFileProperties.map(fp => fp.id),
-          )
-        ) {
-          setModalContent({
-            ...getCancelModalProps(),
-            handleOk: () => {
-              setSelectedFileProperties(originalSelectedProperties);
-              setDisplay(false);
-              setDisplayModal(false);
-            },
-          });
-          setDisplayModal(true);
-        } else {
-          setDisplay(false);
-          setDisplayModal(false);
-        }
-      }}
-      handleOk={async () => {
-        if (activityModel) {
-          activityModel.actInstPropFiles =
-            selectedFileProperties.map(p => ({
-              activityId: activityModel?.id,
-              propertyFileId: p?.id,
-            })) ?? [];
-          const updatedActivity = await onSave(activityModel);
-          // if the activity was updated successfully, hide the modal.
-          if (!!updatedActivity) {
-            setDisplay(false);
-          }
-        }
-      }}
-      message={
-        <PropertyActivityTable
-          fileProperties={allProperties ?? []}
-          selectedFileProperties={selectedFileProperties}
-          setSelectedFileProperties={setSelectedFileProperties}
-        />
-      }
+      okButtonText={allProperties?.length > 0 ? 'Save' : 'Ok'}
+      cancelButtonText={allProperties?.length > 0 ? 'Cancel' : undefined}
+      handleCancel={allProperties?.length > 0 ? handleCancel : undefined}
+      handleOk={allProperties?.length > 0 ? handleOk : undefined}
+      message={renderModalContent(allProperties, selectedFileProperties, setSelectedFileProperties)}
     />
   );
 };
 
 export default ActivityPropertyModal;
+
+function renderModalContent(
+  allProperties: Api_PropertyFile[],
+  selectedFileProperties: Api_PropertyFile[],
+  setSelectedFileProperties: (properties: Api_PropertyFile[]) => void,
+) {
+  if (allProperties?.length > 0) {
+    return (
+      <PropertyActivityTable
+        fileProperties={allProperties ?? []}
+        selectedFileProperties={selectedFileProperties}
+        setSelectedFileProperties={setSelectedFileProperties}
+      />
+    );
+  } else {
+    return 'To link activity to one or more properties, add properties to the parent file first';
+  }
+}
