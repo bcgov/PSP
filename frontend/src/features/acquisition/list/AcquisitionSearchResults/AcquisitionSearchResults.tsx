@@ -1,6 +1,5 @@
 import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback } from 'react';
 
 import { columns } from './columns';
