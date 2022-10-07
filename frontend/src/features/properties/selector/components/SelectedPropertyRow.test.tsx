@@ -110,6 +110,6 @@ describe('SelectedPropertyRow component', () => {
     } = await setup({
       values: { properties: mapProperties },
     } as any);
-    expect(getByText('a test address')).toBeVisible();
+    expect(getByText('Address: a test address')).toBeVisible();
   });
 });
