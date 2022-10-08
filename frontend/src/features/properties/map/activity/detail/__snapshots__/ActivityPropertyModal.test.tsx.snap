@@ -1,18 +1,470 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ActivityPropertyModal tests Renders as expected 1`] = `
-<DocumentFragment>
+.c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 .modal-header {
+  height: 3.8rem;
+  padding: 0 1rem;
+}
+
+.c0 .modal-header .h4 {
+  color: white;
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  height: 2.75rem;
+}
+
+.c0 .modal-header .close {
+  color: white;
+  opacity: 1;
+  font-size: 3rem;
+  font-weight: 10;
+  text-shadow: none;
+  font-family: 'Helvetica Narrow';
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+<body
+  class="modal-open"
+  style="padding-right: 0px;"
+>
   <div
-    class="Toastify"
+    aria-hidden="true"
+  >
+    <div
+      class="Toastify"
+    />
+    <div
+      class="container"
+    />
+    <div
+      class="Toastify"
+    />
+    <div
+      class="container"
+    />
+  </div>
+  <div
+    class="fade modal-backdrop show"
   />
   <div
-    class="container"
-  />
-  <div
-    class="Toastify"
-  />
-  <div
-    class="container"
-  />
-</DocumentFragment>
+    aria-modal="true"
+    class="fade c0 modal show"
+    role="dialog"
+    style="display: block;"
+    tabindex="-1"
+  >
+    <div
+      class="modal-dialog modal-m"
+    >
+      <div
+        class="modal-content"
+      >
+        <div
+          class="modal-header"
+        >
+          <div
+            class="modal-title h4"
+          >
+            Related properties
+          </div>
+          <button
+            class="close"
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+            <span
+              class="sr-only"
+            >
+              Close
+            </span>
+          </button>
+        </div>
+        <div
+          class="modal-body"
+        >
+          <p>
+            Select the properties from the parent file that this activity relates to:
+          </p>
+          <div
+            class="c1 form-section m-0 p-0"
+          >
+            <h2
+              class="c2"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  Properties (0)
+                </div>
+                <div
+                  class="col-1"
+                />
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="table"
+                data-testid="selectableProperties"
+                role="table"
+              >
+                <div
+                  class="thead thead-light"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 117px;"
+                  >
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        <div>
+                          <input
+                            data-testid="selectrow-parent"
+                            name=""
+                            style="cursor: pointer;"
+                            title="Click to deselect all."
+                            type="checkbox"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        #
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Property name
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Identifier
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tbody"
+                  role="rowgroup"
+                >
+                  <div
+                    class="tr-wrapper"
+                  >
+                    <div
+                      class="tr"
+                      role="row"
+                      style="display: flex; flex: 1 0 auto; min-width: 117px;"
+                    >
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        <div>
+                          <input
+                            data-testid="selectrow-1"
+                            name=""
+                            style="cursor: pointer;"
+                            title="Toggle Row Selected"
+                            type="checkbox"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        1
+                      </div>
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        test property name
+                      </div>
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        PID: 007-723-385
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="tr-wrapper"
+                  >
+                    <div
+                      class="tr"
+                      role="row"
+                      style="display: flex; flex: 1 0 auto; min-width: 117px;"
+                    >
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        <div>
+                          <input
+                            data-testid="selectrow-2"
+                            name=""
+                            style="cursor: pointer;"
+                            title="Toggle Row Selected"
+                            type="checkbox"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 7 0 auto; min-width: 7px; width: 7px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        2
+                      </div>
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        
+                      </div>
+                      <div
+                        class="td"
+                        role="cell"
+                        style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                        title=""
+                      >
+                        PID: 011-041-404
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="c3 Button btn btn-secondary"
+            title="cancel-modal"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Cancel
+            </div>
+          </button>
+          <button
+            class="c3 Button btn btn-primary"
+            title="ok-modal"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Save
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 `;
