@@ -91,12 +91,8 @@ github-auth: require-gh ## Checks GITHUB_TOKEN has been set
 # look for GITHUB_TOKEN in the environment
 ifdef GITHUB_TOKEN
 	$(info GITHUB_TOKEN found in the environment)
-endif
-# if the token isn't available in the environment we try using the GitHub CLI
-ifeq ($(shell gh config get oauth_token -h github.com),)
-	$(error Failed to fetch GitHub token using GitHub CLI)
 else
-	$(info GITHUB_TOKEN fetched via GitHub CLI)
+	$(info GITHUB_TOKEN not set, you might need to authenticate manually to use GH CLI)
 endif
 	@exit 0
 
@@ -139,15 +135,16 @@ release: github-auth require-node require-gh ## Creates a new github release
 	$(eval tag := v$(CURRENT_VERSION))
 	$(eval owner := $(shell gh repo view --json owner --jq '.owner.login'))
 	$(eval repo := $(shell gh repo view --json name --jq '.name'))
-	$(eval release_notes := Release $(tag) ($(CURRENT_DATE)))
 
 	$(info Releasing version $(CURRENT_VERSION))
 	$(info Using tag: $(tag))
+	$(info Using previous_tag: $(previous_tag))
 	$(info Using repo: $(owner)/$(repo))
-ifdef changelog
-	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --notes-file $(changelog)
+
+ifdef previous_tag
+	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --generate-notes --notes-start-tag $(previous_tag)
 else
-	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --notes "$(release_notes)"
+	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --generate-notes
 endif
 
 ##############################################################################
