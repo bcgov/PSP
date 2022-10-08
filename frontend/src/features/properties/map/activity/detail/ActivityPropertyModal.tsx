@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import { getCancelModalProps } from 'hooks/useModalContext';
 import { Api_Activity } from 'models/api/Activity';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
-import * as React from 'react';
+import React from 'react';
 import { useContext } from 'react';
 
 import PropertyActivityTable from '../properties/PropertyActivityTable';
@@ -81,18 +81,30 @@ export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyMod
       cancelButtonText={allProperties?.length > 0 ? 'Cancel' : undefined}
       handleCancel={allProperties?.length > 0 ? handleCancel : undefined}
       handleOk={allProperties?.length > 0 ? handleOk : undefined}
-      message={renderModalContent(allProperties, selectedFileProperties, setSelectedFileProperties)}
+      message={
+        <ModalContent
+          allProperties={allProperties}
+          selectedFileProperties={selectedFileProperties}
+          setSelectedFileProperties={setSelectedFileProperties}
+        />
+      }
     />
   );
 };
 
 export default ActivityPropertyModal;
 
-function renderModalContent(
-  allProperties: Api_PropertyFile[],
-  selectedFileProperties: Api_PropertyFile[],
-  setSelectedFileProperties: (properties: Api_PropertyFile[]) => void,
-) {
+interface IModalContentProps {
+  allProperties: Api_PropertyFile[];
+  selectedFileProperties: Api_PropertyFile[];
+  setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
+}
+
+const ModalContent: React.FC<IModalContentProps> = ({
+  allProperties,
+  selectedFileProperties,
+  setSelectedFileProperties,
+}) => {
   if (allProperties?.length > 0) {
     return (
       <PropertyActivityTable
@@ -102,6 +114,6 @@ function renderModalContent(
       />
     );
   } else {
-    return 'To link activity to one or more properties, add properties to the parent file first';
+    return <>To link activity to one or more properties, add properties to the parent file first</>;
   }
-}
+};
