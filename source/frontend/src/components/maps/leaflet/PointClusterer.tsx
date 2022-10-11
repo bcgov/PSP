@@ -296,19 +296,15 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               icon={getMarkerIcon(cluster)}
               eventHandlers={{
                 click: e => {
-                  try {
-                    const convertedProperty = convertToProperty(
-                      cluster.properties,
-                      latitude,
-                      longitude,
-                    );
-                    convertedProperty && onMarkerClick(convertedProperty); //open information slideout
-                    setCurrentSelected(convertedProperty);
+                  const convertedProperty = convertToProperty(
+                    cluster.properties,
+                    latitude,
+                    longitude,
+                  );
+                  convertedProperty && onMarkerClick(convertedProperty); //open information slideout
+                  setCurrentSelected(convertedProperty);
 
-                    selectedPropertyContext.setPropertyInfo(convertedProperty);
-                  } catch (err) {
-                    console.log(err);
-                  }
+                  selectedPropertyContext.setPropertyInfo(convertedProperty);
                 },
               }}
             />

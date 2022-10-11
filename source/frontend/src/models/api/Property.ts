@@ -48,7 +48,6 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   isPropertyOfInterest?: boolean;
   pphStatusTypeCode?: string;
   isRwyBeltDomPatent?: boolean;
-  isALR?: boolean;
   pphStatusUpdateTimestamp?: Date;
   pphStatusUpdateUserGuid?: string;
   pphStatusUpdateUserid?: string;

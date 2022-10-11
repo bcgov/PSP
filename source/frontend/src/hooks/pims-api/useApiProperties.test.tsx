@@ -53,7 +53,7 @@ describe('useApiProperties api hook', () => {
     expect(response.data).toEqual(mockParcel);
   });
   it('Gets a detailed parcel', async () => {
-    mockAxios.onGet(`/properties/concept/${mockParcel.id}`).reply(200, mockParcel);
+    mockAxios.onGet(`/properties/${mockParcel.id}`).reply(200, mockParcel);
 
     const { getPropertyConceptWithId } = setup();
     const response = await getPropertyConceptWithId(mockParcel.id as number);

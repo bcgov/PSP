@@ -67,7 +67,7 @@ describe('PropertyFileContainer component', () => {
 
   beforeEach(() => {
     mockAxios
-      .onGet('properties/concept/495')
+      .onGet('properties/495')
       .reply(200, (getMockResearchFile().fileProperties ?? [])[0].property);
     mockAxios.onGet(new RegExp('ogs-internal/ows.*')).reply(200, mockWfsGetPropertyById);
     mockAxios
@@ -106,7 +106,7 @@ describe('PropertyFileContainer component', () => {
     const { getByTestId } = setup();
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(mockAxios.history.get[0].url).toEqual('/properties/concept/495');
+    expect(mockAxios.history.get[0].url).toEqual('/properties/495');
     expect(mockAxios.history.get[1].url).toEqual('/properties/495/associations');
     expect(mockAxios.history.get[2].url).toEqual(
       'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.128633565 49.27720127104871))',

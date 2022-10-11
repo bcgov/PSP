@@ -71,7 +71,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// Get the property for the specified unique 'id'.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("concept/{id}")]
+        [HttpGet("{id}")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Pims.Api.Models.Concepts.PropertyModel>), 200)]
@@ -86,7 +86,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// Update the specified property, and attached properties.
         /// </summary>
         /// <returns></returns>
-        [HttpPut("concept/{id}")]
+        [HttpPut("{id}")]
         [HasPermission(Permissions.PropertyEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Pims.Api.Models.Concepts.PropertyModel), 200)]

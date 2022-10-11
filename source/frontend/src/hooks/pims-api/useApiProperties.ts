@@ -31,9 +31,9 @@ export const useApiProperties = () => {
             },
           },
         ),
-      getPropertyConceptWithId: (id: number) => api.get<Api_Property>(`/properties/concept/${id}`),
+      getPropertyConceptWithId: (id: number) => api.get<Api_Property>(`/properties/${id}`),
       putPropertyConcept: (property: Api_Property) =>
-        api.put<Api_Property>(`/properties/concept/${property.id}`, property),
+        api.put<Api_Property>(`/properties/${property.id}`, property),
     }),
     [api],
   );
