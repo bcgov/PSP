@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Moq;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Av;
@@ -12,10 +13,10 @@ using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Api.Test.Services
 {
     [Trait("category", "unit")]
-    [Trait("category", "dal")]
+    [Trait("category", "api")]
     [Trait("group", "document")]
     [ExcludeFromCodeCoverage]
     public class DocumentServiceTest
@@ -38,8 +39,10 @@ namespace Pims.Dal.Test.Services
             var avService = helper.GetService<Mock<IAvService>>();
             avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>()));
 
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = helper.GetFormFile(string.Empty) };
+
             // Act
-            var updatedLease = service.UploadDocumentAsync(1, helper.GetFormFile(string.Empty));
+            var updatedLease = service.UploadDocumentAsync(uploadRequest);
 
             // Assert
             documentRepository.Verify(x => x.UploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()), Times.Once);

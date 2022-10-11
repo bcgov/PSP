@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +11,6 @@ using Pims.Api.Services;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Areas.Activities.Controllers
 {

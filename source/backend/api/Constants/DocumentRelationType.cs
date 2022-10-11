@@ -10,5 +10,7 @@ namespace Pims.Api.Constants
         Activities,
         [EnumMember(Value = "files")]
         Files,
+        [EnumMember(Value = "templates")]
+        Templates,
     }
 }

@@ -55,13 +55,13 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IList<PimsActivityInstance> GetAllByResearchFileId(long researchFileId)
         {
-             return this.Context.PimsActivityInstances.AsNoTracking()
-                .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
-                .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
-                .Include(a => a.PimsActInstPropAcqFiles)
-                .Include(a => a.PimsActInstPropRsrchFiles)
-                .Where(x => x.PimsResearchActivityInstances.Any(ra => ra.ResearchFileId == researchFileId))
-                .ToList();
+            return this.Context.PimsActivityInstances.AsNoTracking()
+               .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
+               .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+               .Include(a => a.PimsActInstPropAcqFiles)
+               .Include(a => a.PimsActInstPropRsrchFiles)
+               .Where(x => x.PimsResearchActivityInstances.Any(ra => ra.ResearchFileId == researchFileId))
+               .ToList();
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PimsActInstPropRsrchFiles)
                 .FirstOrDefault(x => x.ActivityInstanceId == activityId) ?? throw new KeyNotFoundException();
 
-            foreach(var acquisitionActivityInstance in instance.PimsAcquisitionActivityInstances)
+            foreach (var acquisitionActivityInstance in instance.PimsAcquisitionActivityInstances)
             {
                 this.Context.PimsAcquisitionActivityInstances.Remove(acquisitionActivityInstance);
             }

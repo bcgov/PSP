@@ -19,7 +19,6 @@ using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Reports.Controllers

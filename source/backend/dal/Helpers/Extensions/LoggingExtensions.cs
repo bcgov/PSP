@@ -9,11 +9,11 @@ namespace Pims.Dal.Helpers.Extensions
     public static class LoggingExtensions
     {
         /// <summary>
-        /// Use your own log scope. This will add additional property (scope) with scopeValue
+        /// Use your own log scope. This will add additional property (scope) with scopeValue.
         /// </summary>
-        /// <param name="logger">The ILogger</param>
-        /// <param name="scope">Scope property name</param>
-        /// <param name="scopeValue">Scope property value</param>
+        /// <param name="logger">The ILogger.</param>
+        /// <param name="scope">Scope property name.</param>
+        /// <param name="scopeValue">Scope property value.</param>
         public static IDisposable LogScope<T>(this ILogger<T> logger, string scope, string scopeValue)
             => logger.BeginScope(new Dictionary<string, object> { { scope, scopeValue } });
 
@@ -21,8 +21,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// Use a query log scope to aid in debugging EF queries.
         /// It will add a "Query" property to all logs inside this scope with queryName as the value.
         /// </summary>
-        /// <param name="logger">The ILogger</param>
-        /// <param name="queryName">Scope property value</param>
+        /// <param name="logger">The ILogger.</param>
+        /// <param name="queryName">Scope property value.</param>
         public static IDisposable QueryScope<T>(this ILogger<T> logger, string queryName)
             => LogScope(logger, "Query", queryName);
 

@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models;
+using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -10,7 +13,7 @@ namespace Pims.Api.Controllers
     /// <summary>
     /// DocumentGenerationController class, provides endpoints to handle document generation requests.
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/documentGeneration/")]
@@ -27,7 +30,6 @@ namespace Pims.Api.Controllers
         /// Creates a new instance of a DocumentGenerationController class.
         /// </summary>
         /// <param name="documentGenerationService"></param>
-        /// <param name="mapper"></param>
         public DocumentGenerationController(IDocumentGenerationService documentGenerationService)
         {
             _documentGenerationService = documentGenerationService;
@@ -48,7 +50,6 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> GetSupportedDocumentTypes()
         {
             var supportedFileTypes = await _documentGenerationService.GetSupportedFileTypes();
-            //var mappedDocumentTypes = _mapper.Map<List<Concepts.DocumentTypeModel>>(documentTypes);
             return new JsonResult(supportedFileTypes);
         }
 

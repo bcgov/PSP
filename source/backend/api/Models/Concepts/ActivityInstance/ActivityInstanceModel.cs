@@ -20,7 +20,7 @@ namespace Pims.Api.Models.Concepts
         public string Description { get; set; }
 
         /// <summary>
-        /// get/set - Activity Instance Status
+        /// get/set - Activity Instance Status.
         /// </summary>
         public string Status { get; set; }
 
