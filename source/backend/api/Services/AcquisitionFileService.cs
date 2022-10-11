@@ -97,8 +97,6 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
             }
 
-            UpdateFileNumber(acquisitionFile);
-
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
