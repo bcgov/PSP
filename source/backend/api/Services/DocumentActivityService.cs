@@ -94,7 +94,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.DocumentExternalResult.Status == ExternalResultStatus.Success && uploadResult.Document != null && uploadResult.Document.Id != 0)
             {
                 // Create the pims document activity relationship
                 PimsActivityTemplateDocument newActivityTemplateDocument = new PimsActivityTemplateDocument()
