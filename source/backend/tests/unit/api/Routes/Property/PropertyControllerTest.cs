@@ -48,7 +48,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("concept/{id}");
+            endpoint.HasGet("{id}");
             endpoint.HasPermissions(Permissions.PropertyView);
         }
 
@@ -61,7 +61,7 @@ namespace Pims.Api.Test.Routes
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPut("concept/{id}");
+            endpoint.HasPut("{id}");
             endpoint.HasPermissions(Permissions.PropertyEdit);
         }
         #endregion
