@@ -1,5 +1,6 @@
 import { RemoveButton } from 'components/common/buttons';
 import { InlineInput } from 'components/common/form/styles';
+import OverflowTip from 'components/common/OverflowTip';
 import { NoPaddingRow } from 'components/common/styles';
 import DraftCircleNumber from 'features/properties/selector/components/DraftCircleNumber';
 import { IMapProperty } from 'features/properties/selector/models';
@@ -27,6 +28,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
     case NameSourceType.PID:
     case NameSourceType.PIN:
     case NameSourceType.PLAN:
+    case NameSourceType.ADDRESS:
       propertyIdentifier = `${propertyName.label}: ${propertyName.value}`;
       break;
     case NameSourceType.LOCATION:
@@ -40,9 +42,9 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   return (
     <NoPaddingRow className="align-items-center mb-3">
       <Col md={3}>
-        <p className="mb-0">
+        <p className="mb-0 d-flex align-items-center">
           <DraftCircleNumber text={(index + 1).toString()} />
-          <span className="pl-3">{propertyIdentifier}</span>
+          <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
         </p>
       </Col>
       <Col md={7}>
