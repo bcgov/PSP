@@ -7,7 +7,7 @@ using Pims.Dal.Entities;
 namespace Pims.Api.Services
 {
     /// <summary>
-    /// IDocumentSIDocumentActivityServicervice interface, defines the functionality for document services.
+    /// IDocumentActivityService interface, defines the functionality for document services.
     /// </summary>
     public interface IDocumentActivityService
     {

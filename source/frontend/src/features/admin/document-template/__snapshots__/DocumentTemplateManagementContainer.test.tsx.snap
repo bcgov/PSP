@@ -116,7 +116,7 @@ exports[`DocumentTemplateManagementContainer component matches snapshot 1`] = `
               class="col-auto"
             >
               <div
-                aria-label="Default select example"
+                aria-label="Select activity type"
                 class="form-group"
               >
                 <select

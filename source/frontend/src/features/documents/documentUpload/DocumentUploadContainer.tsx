@@ -1,4 +1,5 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { DocumentTypeName } from 'constants/documentType';
 import { FormikProps } from 'formik';
 import useIsMounted from 'hooks/useIsMounted';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
@@ -91,8 +92,8 @@ export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadCon
       const axiosResponse = await retrieveDocumentTypes();
       if (axiosResponse && isMounted()) {
         if (props.relationshipType === DocumentRelationshipType.TEMPLATES) {
-          setDocumentTypes(axiosResponse.filter(x => x.documentType === 'CDOGS Template'));
-          updateDocumentType(axiosResponse.find(x => x.documentType === 'CDOGS Template'));
+          setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
+          updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
         } else {
           setDocumentTypes(axiosResponse);
         }

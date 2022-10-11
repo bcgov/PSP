@@ -132,7 +132,7 @@ const AppRouter: React.FC = () => {
           path="/admin/document_generation"
           customComponent={ManageDocumentTemplate}
           layout={AuthLayout}
-          claim={Claims.ADMIN_USERS}
+          claim={Claims.DOCUMENT_ADMIN}
           title={getTitle('Document Template')}
         ></AppRoute>
         <AppRoute

@@ -18,7 +18,6 @@ export interface IDocumentTemplateManagementViewProp {
 export const DocumentTemplateManagementView: React.FunctionComponent<IDocumentTemplateManagementViewProp> = props => {
   const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
     var typeId = Number.parseInt(selectedType.target.value);
-    console.log(typeId);
     if (!Number.isNaN(typeId)) {
       props.setActivityTemplateId(typeId);
     } else {
@@ -36,7 +35,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<IDocumentTe
           <Row>
             <Col xs="auto">Activity Type:</Col>
             <Col xs="auto">
-              <Form.Group aria-label="Default select example">
+              <Form.Group aria-label="Select activity type">
                 <Form.Control as="select" onChange={onSelectChange}>
                   <option>Select an Activity type</option>
                   {props.activityTypes?.map(types => {

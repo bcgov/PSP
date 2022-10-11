@@ -34,6 +34,7 @@ export enum Claims {
   DOCUMENT_VIEW = 'document-view',
   DOCUMENT_ADD = 'document-add',
   DOCUMENT_DELETE = 'document-delete',
+  DOCUMENT_ADMIN = 'document-admin',
   ACTIVITY_EDIT = 'activity-edit',
   ACTIVITY_VIEW = 'activity-view',
   ACTIVITY_ADD = 'activity-add',

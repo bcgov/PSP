@@ -13,7 +13,7 @@ using Pims.Dal.Security;
 namespace Pims.Api.Services
 {
     /// <summary>
-    /// DocumentService implementation provides document managing capabilities.
+    /// DocumentActivityService implementation provides document managing capabilities for activities.
     /// </summary>
     public class DocumentActivityService : BaseService, IDocumentActivityService
     {

@@ -3,6 +3,7 @@ import { SectionListHeader } from 'components/common/SectionListHeader';
 import { TableSort } from 'components/Table/TableSort';
 import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { DocumentTypeName } from 'constants/documentType';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
@@ -48,12 +49,11 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   useEffect(() => {
     const fetch = async () => {
       const axiosResponse = await retrieveDocumentTypes();
-      console.log(axiosResponse, props.relationshipType);
       if (
         axiosResponse !== undefined &&
         props.relationshipType === DocumentRelationshipType.TEMPLATES
       ) {
-        setDocumentTypes(axiosResponse.filter(x => x.documentType === 'CDOGS Template'));
+        setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
       } else {
         setDocumentTypes(axiosResponse || []);
       }

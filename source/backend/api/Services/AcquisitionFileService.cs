@@ -152,11 +152,6 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetById(acquisitionFile.Id);
         }
 
-        private static void UpdateFileNumber(PimsAcquisitionFile acquisitionFile)
-        {
-            acquisitionFile.FileNumber = $"{acquisitionFile.RegionCode}-{acquisitionFile.FileNo}-01";
-        }
-
         private void MatchProperties(PimsAcquisitionFile acquisitionFile)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)

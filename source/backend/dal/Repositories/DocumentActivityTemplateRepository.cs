@@ -31,7 +31,7 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Get a list of all the document relationships for a given document.
+        /// Get a list of all the document activity template relationships for a given document.
         /// </summary>
         /// <returns></returns>
         public IList<PimsActivityTemplateDocument> GetAllByDocument(long documentId)
