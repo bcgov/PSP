@@ -11,6 +11,16 @@ const history = createMemoryHistory();
 const fakeAssociations: Api_PropertyAssociations = {
   id: '168',
   pid: '26934426',
+  acquisitionAssociations: [
+    {
+      id: 45,
+      fileNumber: '95154',
+      fileName: '-',
+      createdDateTime: '2022-05-13T11:51:29.23',
+      createdBy: 'Acquisition File Data',
+      status: 'Active',
+    },
+  ],
   leaseAssociations: [
     {
       id: 34,
