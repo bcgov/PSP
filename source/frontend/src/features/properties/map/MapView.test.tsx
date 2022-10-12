@@ -14,11 +14,10 @@ import {
   PropertyTenureTypes,
 } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
-import { useLtsa } from 'hooks/useLtsa';
-import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
+import { useComposedProperties } from 'hooks/useComposedProperties';
 import { IProperty } from 'interfaces';
+import { Api_Property } from 'models/api/Property';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -34,45 +33,29 @@ jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
 jest.mock('./hooks/useMapProperties');
 jest.mock('components/maps/leaflet/LayerPopup');
-jest.mock('hooks/useProperties');
+jest.mock('hooks/useComposedProperties');
 jest.mock('hooks/usePropertyAssociations');
 jest.mock('hooks/pims-api');
 jest.mock('hooks/useLtsa');
 
-const ltsaMock = {
-  getLtsaData: jest.fn(),
-  ltsaLoading: false,
-};
-(useLtsa as any).mockImplementation(() => ltsaMock);
-
-(useProperties as any).mockImplementation(() => ({
-  deleteParcel: jest.fn(),
-  deleteBuilding: jest.fn(),
-  updateParcel: jest.fn(),
-  createParcel: jest.fn(),
-  fetchPropertyDetail: jest.fn(),
-  fetchBuildingDetail: jest.fn(),
-  fetchParcelDetail: jest.fn(),
-  fetchParcelsDetail: jest.fn(),
-  fetchParcels: jest.fn(),
-  getPropertyWithPid: jest.fn(),
-}));
-
-(usePropertyAssociations as any).mockImplementation(() => ({
-  getPropertyAssociations: jest.fn(),
+(useComposedProperties as any).mockImplementation(() => ({
+  composedLoading: false,
+  ltsaWrapper: { execute: jest.fn(), loading: false },
+  apiWrapper: { execute: jest.fn(), loading: false },
+  propertyAssociationWrapper: { execute: jest.fn(), loading: false },
 }));
 
 const largeMockParcels = [
   { id: 1, latitude: 53.917061, longitude: -122.749672 },
-  { id: 2, latitude: 53.917062, longitude: -122.749672 },
-  { id: 3, latitude: 53.917063, longitude: -122.749672 },
+  { id: 2, latitude: 53.917062, longitude: -122.749692 },
+  { id: 3, latitude: 53.917063, longitude: -122.749682 },
   { id: 4, latitude: 53.917064, longitude: -122.749672 },
-  { id: 5, latitude: 53.917065, longitude: -122.749672 },
-  { id: 6, latitude: 53.917066, longitude: -122.749672 },
-  { id: 7, latitude: 53.917067, longitude: -122.749672 },
-  { id: 8, latitude: 53.917068, longitude: -122.749672 },
-  { id: 9, latitude: 53.917069, longitude: -122.749672 },
-  { id: 10, latitude: 53.917071, longitude: -122.749672 },
+  { id: 5, latitude: 53.917065, longitude: -122.749662 },
+  { id: 6, latitude: 53.917066, longitude: -122.749652 },
+  { id: 7, latitude: 53.917067, longitude: -122.749642 },
+  { id: 8, latitude: 53.917068, longitude: -122.749632 },
+  { id: 9, latitude: 53.917069, longitude: -122.749622 },
+  { id: 10, latitude: 53.917071, longitude: -122.749612 },
   { id: 11, latitude: 53.918172, longitude: -122.749772 },
 ] as IProperty[];
 
@@ -84,9 +67,9 @@ const smallMockParcels = [
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels = [
-  { id: 1, latitude: 55.917061, longitude: -122.749672, pid: '7771' },
-  { id: 2, latitude: 55.917062, longitude: -122.749672, pid: '7772' },
-  { id: 3, latitude: 55.917063, longitude: -122.749772, pid: '7773' },
+  { id: 1, latitude: 55.917161, longitude: -122.749612, pid: '7771' },
+  { id: 2, latitude: 55.917262, longitude: -122.749622, pid: '7772' },
+  { id: 3, latitude: 55.917363, longitude: -122.749732, pid: '7773' },
 ] as IProperty[];
 
 const useLayerQueryMock = {
@@ -168,6 +151,9 @@ describe('MapView', () => {
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getProperty: async () => {
         return {} as IProperty;
+      },
+      getPropertyConceptWithId: async () => {
+        return {} as Api_Property;
       },
     });
     delete (window as any).ResizeObserver;
