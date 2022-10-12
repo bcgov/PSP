@@ -2023,6 +2023,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.MinistryProjectNumber).HasComment("Ministry project number.");
 
+                entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
+
                 entity.Property(e => e.RegionCode)
                     .HasDefaultValueSql("((-1))")
                     .HasComment("Region responsible for oversight of the acquisition.");

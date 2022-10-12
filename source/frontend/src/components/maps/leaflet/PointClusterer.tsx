@@ -2,15 +2,13 @@ import './PointClusterer.scss';
 
 import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
-import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import L, { LatLng, LatLngLiteral } from 'leaflet';
+import L, { LatLng } from 'leaflet';
 import { find } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
-import { toast } from 'react-toastify';
 import Supercluster from 'supercluster';
 
 import useSupercluster from '../hooks/useSupercluster';
@@ -248,47 +246,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
     }
   }, [featureGroupRef, mapInstance, clusters, tilesLoaded]);
 
-  const { getProperty } = useApiProperties();
-  const fetchProperty = React.useCallback(
-    (id: number, latLng: LatLngLiteral) => {
-      selectedPropertyContext.setLoading(true);
-      getProperty(id)
-        .then(apiProperty => {
-          const propertyData = apiProperty.data;
-          const propertyAddress = propertyData.address;
-          const tenure = propertyData?.tenure !== undefined ? propertyData?.tenure[0] : undefined;
-          const property: IProperty = {
-            ...propertyData,
-            pid: propertyData.pid || '',
-            status: propertyData.status?.id,
-            dataSource: propertyData.dataSource?.id,
-            tenure: tenure?.id,
-            address: {
-              provinceId: propertyAddress?.province?.id || 0,
-              streetAddress1: propertyAddress?.streetAddress1 || '',
-              streetAddress2: propertyAddress?.streetAddress2,
-              streetAddress3: propertyAddress?.streetAddress3,
-              municipality: propertyAddress?.municipality || '',
-              postal: propertyAddress?.postal || '',
-            },
-            areaUnit: propertyData.areaUnit?.id,
-            landArea: propertyData.landArea || 0,
-            landLegalDescription: propertyData.landLegalDescription || '',
-            latitude: latLng.lat,
-            longitude: latLng.lng,
-          };
-          selectedPropertyContext.setPropertyInfo(property);
-        })
-        .catch(() => {
-          toast.error('Unable to load property details, refresh the page and try again.');
-        })
-        .finally(() => {
-          selectedPropertyContext.setLoading(false);
-        });
-    },
-    [getProperty, selectedPropertyContext],
-  );
-
   const keycloak = useKeycloakWrapper();
   return (
     <>
@@ -346,16 +303,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   );
                   convertedProperty && onMarkerClick(convertedProperty); //open information slideout
                   setCurrentSelected(convertedProperty);
-                  if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
-                    convertedProperty?.id
-                      ? fetchProperty(convertedProperty.id, {
-                          lat: latitude,
-                          lng: longitude,
-                        })
-                      : toast.dark('This property is invalid, unable to view details');
-                  } else {
-                    selectedPropertyContext.setPropertyInfo(convertedProperty);
-                  }
+
+                  selectedPropertyContext.setPropertyInfo(convertedProperty);
                 },
               }}
             />
@@ -372,7 +321,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             //highlight pin if currently selected
             icon={getMarkerIcon(m, (m.properties.id as number) === (selected?.id as number))}
             eventHandlers={{
-              click: () => {
+              click: e => {
                 //sets this pin as currently selected
                 const convertedProperty = convertToProperty(
                   m.properties,
@@ -381,12 +330,6 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 );
 
                 if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                  convertedProperty?.id
-                    ? fetchProperty(convertedProperty.id, {
-                        lat: convertedProperty.latitude ?? 0,
-                        lng: convertedProperty.longitude ?? 0,
-                      })
-                    : toast.dark('This property is invalid, unable to view details');
                   convertedProperty && onMarkerClick(convertedProperty); //open information slideout
                 }
               },

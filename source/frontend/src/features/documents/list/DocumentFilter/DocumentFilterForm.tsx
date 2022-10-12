@@ -2,39 +2,28 @@ import { ResetButton, SearchButton } from 'components/common/buttons';
 import { Form, Input, Select, SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import { Formik } from 'formik';
-import { useApiDocuments } from 'hooks/pims-api/useApiDocuments';
-import useIsMounted from 'hooks/useIsMounted';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
-import React from 'react';
+import { Api_DocumentType } from 'models/api/Document';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export interface IDocumentFilterFormProps {
   documentFilter?: IDocumentFilter;
+  documentTypes: Api_DocumentType[];
   onSetFilter: (filterValues: IDocumentFilter) => void;
 }
 
 export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const documentStatusTypeOptions = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
-  const isMounted = useIsMounted();
-  const { getDocumentTypes } = useApiDocuments();
-  const [documentTypes, setDocumentTypes] = React.useState<SelectOption[]>([]);
 
-  React.useEffect(() => {
-    getDocumentTypes().then(({ data }) => {
-      if (data && isMounted()) {
-        const options: SelectOption[] = data.map(dt => {
-          return {
-            label: dt.documentType || '',
-            value: dt.id ? dt.id.toString() : '',
-          };
-        });
-        setDocumentTypes(options);
-      }
-    });
-  }, [isMounted, getDocumentTypes]);
+  const typeOptions: SelectOption[] = props.documentTypes.map(dt => {
+    return {
+      label: dt.documentType || '',
+      value: dt.id ? dt.id.toString() : '',
+    };
+  });
 
   return (
     <Formik<IDocumentFilter>
@@ -56,7 +45,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                 data-testid="document-type"
                 field="documentTypeId"
                 placeholder="All document types"
-                options={documentTypes}
+                options={typeOptions}
               />
             </Col>
             <Col lg={3}>

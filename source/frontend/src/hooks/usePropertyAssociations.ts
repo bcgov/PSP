@@ -9,7 +9,7 @@ import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
 export const usePropertyAssociations = () => {
   const { getPropertyAssociations } = useApiProperties();
 
-  const { execute, loading } = useApiRequestWrapper<
+  const getPropertyAssociationsWrapper = useApiRequestWrapper<
     (id: number) => Promise<AxiosResponse<Api_PropertyAssociations>>
   >({
     requestFunction: useCallback(async (id: number) => await getPropertyAssociations(id), [
@@ -23,5 +23,5 @@ export const usePropertyAssociations = () => {
     }, []),
   });
 
-  return { getPropertyAssociations: execute, isLoading: loading };
+  return getPropertyAssociationsWrapper;
 };

@@ -40,8 +40,13 @@ export interface Api_DocumentUploadRequest {
   documentMetadata?: Api_DocumentMetadataUpdate[];
 }
 
-export interface Api_DocumentUploadResponse {
+export interface Api_DocumentUploadRelationshipResponse {
   documentRelationship?: Api_DocumentRelationship;
+  uploadResponse?: Api_DocumentUploadResponse;
+}
+
+export interface Api_DocumentUploadResponse {
+  document?: Api_Document;
   documentExternalResult?: ExternalResult<Api_Storage_DocumentDetail>;
   metadataExternalResult?: ExternalResult<Api_Storage_DocumentMetadata>;
 }

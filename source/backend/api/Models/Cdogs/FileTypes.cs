@@ -13,6 +13,5 @@ namespace Pims.Api.Models.Cdogs
         /// </summary>
         [JsonPropertyName("dictionary")]
         public IDictionary<string, IList<string>> Dictionary { get; set; }
-
     }
 }

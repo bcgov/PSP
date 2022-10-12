@@ -1,10 +1,10 @@
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { Api_Property } from 'models/api/Property';
 import { render, RenderOptions, RenderResult, userEvent } from 'utils/test-utils';
 
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
 
 const defaultComposedProperty = {
-  ltsaLoading: false,
+  composedLoading: false,
   apiPropertyLoading: false,
   propertyAssociationsLoading: false,
 };
@@ -34,7 +34,7 @@ describe('MotiInventoryHeader component', () => {
 
   it('renders a spinner when the data is loading', () => {
     const { getByTestId } = setup({
-      composedProperty: { ...defaultComposedProperty, ltsaLoading: true },
+      composedProperty: { ...defaultComposedProperty, composedLoading: true },
     });
 
     const spinner = getByTestId('filter-backdrop-loading');
@@ -54,21 +54,27 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('displays land parcel type', async () => {
-    const testProperty: IPropertyApiModel = {
+    const testProperty: Api_Property = {
       propertyType: { description: 'A land type description' },
     };
     const result = setup({
-      composedProperty: { ...defaultComposedProperty, apiProperty: testProperty },
+      composedProperty: {
+        ...defaultComposedProperty,
+        apiWrapper: { response: testProperty, loading: false } as any,
+      },
     });
     // PID is shown
     expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
   });
 
   it('allows the active property to be zoomed in', async () => {
-    const testProperty: IPropertyApiModel = {} as any;
+    const testProperty: Api_Property = {} as any;
 
     const { getByTitle } = setup({
-      composedProperty: { ...defaultComposedProperty, apiProperty: testProperty },
+      composedProperty: {
+        ...defaultComposedProperty,
+        apiWrapper: { response: testProperty, loading: false } as any,
+      },
     });
     const zoomButton = getByTitle('Zoom Map');
     userEvent.click(zoomButton);
@@ -77,7 +83,10 @@ describe('MotiInventoryHeader component', () => {
 
   it('does not allow property zooming if no property is visible', async () => {
     const { getByTitle } = setup({
-      composedProperty: { ...defaultComposedProperty, apiProperty: undefined },
+      composedProperty: {
+        ...defaultComposedProperty,
+        apiWrapper: { response: undefined, loading: false } as any,
+      },
     });
 
     const zoomButton = getByTitle('Zoom Map');

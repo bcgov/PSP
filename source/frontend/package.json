@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "2.2.0-38.8",
+  "version": "2.2.0-38.14",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -141,7 +141,9 @@
     "cross-fetch": "3.1.5",
     "postcss": "7.0.39",
     "postcss-safe-parser": "4.0.2",
-    "resolve-url-loader": "3.1.4"
+    "resolve-url-loader": "3.1.4",
+    "json-schema": "0.4.0",
+    "jsprim": "1.4.2"
   },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",

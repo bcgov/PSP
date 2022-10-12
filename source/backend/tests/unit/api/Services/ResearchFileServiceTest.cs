@@ -15,13 +15,13 @@ using Pims.Dal.Security;
 using Pims.Dal.Services;
 using Xunit;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Api.Test.Services
 {
     [Trait("category", "unit")]
-    [Trait("category", "dal")]
+    [Trait("category", "api")]
     [Trait("group", "research")]
     [ExcludeFromCodeCoverage]
-    public class ResearchServiceTest
+    public class ResearchFileServiceTest
     {
 
         #region Tests

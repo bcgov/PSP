@@ -192,6 +192,10 @@ namespace Pims.Api.Repositories.Rest
                     result.Status = ExternalResultStatus.Error;
                     result.Message = "No content was returned from the call";
                     break;
+                case HttpStatusCode.NotFound:
+                    result.Status = ExternalResultStatus.Error;
+                    result.Message = "The requested resource does not exist on the server";
+                    break;
                 case HttpStatusCode.Forbidden:
                     result.Status = ExternalResultStatus.Error;
                     result.Message = "Request was forbidden";

@@ -2,7 +2,11 @@ import { toCqlFilter } from 'components/maps/leaflet/mapUtils';
 import CustomAxios from 'customAxios';
 import { Feature, FeatureCollection, Point } from 'geojson';
 import { useCallback, useContext } from 'react';
+import { toast } from 'react-toastify';
 import { TenantContext } from 'tenants';
+import { useAxiosErrorHandler } from 'utils';
+
+import { useApiRequestWrapper } from './useApiRequestWrapper';
 
 function buildUrl(inputUrl: string, cqlFilter: Record<string, any>) {
   return `${inputUrl}${toCqlFilter(cqlFilter)}`;
@@ -27,6 +31,18 @@ export const useGeoServer = () => {
     },
     [baseUrl],
   );
+  const getPropertyWfsWrapper = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (id: number) => {
+        const wfsUrl = buildUrl(baseUrl, { PROPERTY_ID: id });
+        return await CustomAxios().get<FeatureCollection>(wfsUrl);
+      },
+      [baseUrl],
+    ),
+    requestName: 'getPropertyWfs',
+    onSuccess: useCallback(() => toast.success('Property information retrieved from layer'), []),
+    onError: useAxiosErrorHandler('Failed to retrieve property information from BC Data Warehouse'),
+  });
 
   const getPropertyWithPidWfs = useCallback(
     async function(pid: string): Promise<Feature<Point> | null> {
@@ -40,5 +56,5 @@ export const useGeoServer = () => {
     [baseUrl],
   );
 
-  return { getPropertyWfs, getPropertyWithPidWfs };
+  return { getPropertyWfs, getPropertyWfsWrapper, getPropertyWithPidWfs };
 };

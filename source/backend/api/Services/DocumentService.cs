@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -27,7 +26,6 @@ namespace Pims.Api.Services
     public class DocumentService : BaseService, IDocumentService
     {
         private readonly IDocumentRepository documentRepository;
-        private readonly IDocumentActivityRepository documentActivityRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
@@ -37,7 +35,6 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<DocumentService> logger,
             IDocumentRepository documentRepository,
-            IDocumentActivityRepository documentActivityRepository,
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
@@ -45,7 +42,6 @@ namespace Pims.Api.Services
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
-            this.documentActivityRepository = documentActivityRepository;
             this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
@@ -60,43 +56,9 @@ namespace Pims.Api.Services
             return documentTypeRepository.GetAll();
         }
 
-        public IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId)
+        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Retrieving PIMS document for single activity");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
-
-            return documentActivityRepository.GetAllByActivity(activityId);
-        }
-
-        public async Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true)
-        {
-            this.Logger.LogInformation("Deleting PIMS document for single activity");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
-
-            IList<PimsActivityInstanceDocument> existingActivityDocuments = documentActivityRepository.GetAllByDocument(activityDocument.DocumentId);
-            if (existingActivityDocuments.Count == 1)
-            {
-                var deletedDocumentFlag = await DeleteDocumentAsync(activityDocument.Document, false);
-                if(commitTransaction)
-                {
-                    documentActivityRepository.CommitTransaction();
-                }
-                return deletedDocumentFlag;
-            }
-            else
-            {
-                documentActivityRepository.Delete(activityDocument);
-                if (commitTransaction)
-                {
-                    documentActivityRepository.CommitTransaction();
-                }
-                return true;
-            }
-        }
-
-        public async Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest)
-        {
-            this.Logger.LogInformation("Uploading document for single activity");
+            this.Logger.LogInformation("Uploading document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             ExternalResult<DocumentDetail> externalResult = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
@@ -134,27 +96,21 @@ namespace Pims.Api.Services
                     MayanId = externalDocument.Id,
                 };
 
-                // Create the pims document activity relationship
-                PimsActivityInstanceDocument newActivityDocument = new PimsActivityInstanceDocument()
-                {
-                    ActivityInstanceId = activityId,
-                    Document = newPimsDocument,
-                };
-                newActivityDocument = documentActivityRepository.Add(newActivityDocument);
-                documentActivityRepository.CommitTransaction();
+                documentRepository.Add(newPimsDocument);
+                documentRepository.CommitTransaction();
 
-                response.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newActivityDocument);
+                response.Document = mapper.Map<DocumentModel>(newPimsDocument);
             }
             return response;
         }
 
-        public async Task<DocumentUpdateResponse> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateRequest updateRequest)
+        public async Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest)
         {
-            this.Logger.LogInformation("Updating document for single activity");
+            this.Logger.LogInformation("Updating document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
 
             // update the pims document status
-            PimsDocument existingDocument = documentRepository.Get(documentId);
+            PimsDocument existingDocument = documentRepository.Get(updateRequest.DocumentId);
             if (existingDocument == null)
             {
                 throw new BadRequestException("Document Id not found.");
@@ -166,7 +122,6 @@ namespace Pims.Api.Services
             {
                 MetadataExternalResult = new List<ExternalResult<DocumentMetadata>>(),
             };
-
 
             var metadataUpdateSucessful = false;
             if (updateRequest.DocumentMetadata.Count > 0)
@@ -225,44 +180,30 @@ namespace Pims.Api.Services
             if (metadataUpdateSucessful)
             {
                 documentRepository.CommitTransaction();
-                this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", documentId);
+                this.Logger.LogInformation("Metadata & Status for Document with id {id} update successfully", updateRequest.DocumentId);
             }
             else
             {
-                this.Logger.LogError("Metadata & Status for Document with id {id} update aborted", documentId);
+                this.Logger.LogError("Metadata & Status for Document with id {id} update aborted", updateRequest.DocumentId);
             }
 
             return response;
         }
 
-        public async Task<bool> DeleteDocumentAsync(PimsDocument document, bool commitTransaction = true)
+        public async Task<ExternalResult<string>> DeleteDocumentAsync(PimsDocument document)
         {
             this.Logger.LogInformation("Deleting document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            int relationCount = 1;
-            if (relationCount > 1)
+            // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
+            ExternalResult<string> result = await documentStorageRepository.DeleteDocument(document.MayanId);
+            if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
             {
-                throw new InvalidOperationException("Documents can only be removed if there is one or less relationships");
+                documentRepository.Delete(document);
+                documentRepository.CommitTransaction();
             }
-            else
-            {
-                // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
-                ExternalResult<string> result = await documentStorageRepository.DeleteDocument(document.MayanId);
-                if (result.Status == ExternalResultStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
-                {
-                    documentRepository.Delete(document);
-                    if (commitTransaction)
-                    {
-                        documentRepository.CommitTransaction();
-                    }
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+
+            return result;
         }
 
         public async Task<ExternalResult<QueryResult<DocumentType>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
@@ -340,7 +281,7 @@ namespace Pims.Api.Services
             }
         }
 
-        public async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
+        private async Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
         {
             this.Logger.LogInformation("Uploading storage document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);

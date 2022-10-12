@@ -131,7 +131,7 @@ describe('AddLeaseTenantContainer component', () => {
   it('primary contact information is loaded for a organization with a single contact', async () => {
     mockAxios.onPut().reply(200);
     mockAxios
-      .onGet('/persons/concept/3')
+      .onGet('/persons/3')
       .reply(200, getMockPerson({ id: 3, firstName: 'Stinky', surname: 'Cheese' }));
     mockAxios.onGet().reply(200, {
       items: [getMockContactOrganizationWithOnePerson()],
@@ -149,16 +149,16 @@ describe('AddLeaseTenantContainer component', () => {
 
     await findAllByTitle('Click to remove');
     expect(await findByText('Stinky Cheese')).toBeVisible();
-    expect(mockAxios.history.get[1].url).toBe('/persons/concept/3');
+    expect(mockAxios.history.get[1].url).toBe('/persons/3');
   });
 
   it('primary contact information is loaded for a organization with multiple person contacts', async () => {
     mockAxios.onPut().reply(200);
     mockAxios
-      .onGet('/persons/concept/3')
+      .onGet('/persons/3')
       .reply(200, getMockPerson({ id: 3, firstName: 'Stinky', surname: 'Cheese' }));
     mockAxios
-      .onGet('/persons/concept/1')
+      .onGet('/persons/1')
       .reply(200, getMockPerson({ id: 1, firstName: 'Bob', surname: 'Billy' }));
     mockAxios.onGet().reply(200, {
       items: [getMockContactOrganizationWithMultiplePeople()],
@@ -177,17 +177,17 @@ describe('AddLeaseTenantContainer component', () => {
     expect(await findByRole('option', { name: 'Select a contact' })).toBeVisible();
     expect(await findByRole('option', { name: 'Stinky Cheese' })).toBeVisible();
     expect(await findByRole('option', { name: 'Bob Billy' })).toBeVisible();
-    expect(mockAxios.history.get[1].url).toBe('/persons/concept/1');
-    expect(mockAxios.history.get[2].url).toBe('/persons/concept/3');
+    expect(mockAxios.history.get[1].url).toBe('/persons/1');
+    expect(mockAxios.history.get[2].url).toBe('/persons/3');
   });
 
   it('primary contact information is loaded for multiple organizations each with multiple person contacts', async () => {
     mockAxios.onPut().reply(200);
     mockAxios
-      .onGet('/persons/concept/3')
+      .onGet('/persons/3')
       .reply(200, getMockPerson({ id: 3, firstName: 'Stinky', surname: 'Cheese' }));
     mockAxios
-      .onGet('/persons/concept/1')
+      .onGet('/persons/1')
       .reply(200, getMockPerson({ id: 1, firstName: 'Bob', surname: 'Billy' }));
     mockAxios.onGet().reply(200, {
       items: [
@@ -210,8 +210,8 @@ describe('AddLeaseTenantContainer component', () => {
 
     expect((await findAllByRole('option', { name: 'Select a contact' }))[0]).toBeVisible();
     expect(mockAxios.history.get).toHaveLength(3); // unique persons should only be requested once.
-    expect(mockAxios.history.get[1].url).toBe('/persons/concept/1');
-    expect(mockAxios.history.get[2].url).toBe('/persons/concept/3');
+    expect(mockAxios.history.get[1].url).toBe('/persons/1');
+    expect(mockAxios.history.get[2].url).toBe('/persons/3');
   });
 
   describe('displays modal warning when a tenant organization with persons has no primary contact', () => {
