@@ -3,14 +3,16 @@ import { SectionListHeader } from 'components/common/SectionListHeader';
 import { TableSort } from 'components/Table/TableSort';
 import Claims from 'constants/claims';
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { DocumentTypeName } from 'constants/documentType';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { defaultDocumentFilter, IDocumentFilter } from 'interfaces/IDocumentResults';
 import { orderBy } from 'lodash';
-import { Api_Document, Api_DocumentRelationship } from 'models/api/Document';
-import React, { useState } from 'react';
+import { Api_Document, Api_DocumentRelationship, Api_DocumentType } from 'models/api/Document';
+import React, { useEffect, useState } from 'react';
 
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
+import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 
@@ -34,11 +36,31 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
 
+  const [documentTypes, setDocumentTypes] = useState<Api_DocumentType[]>([]);
+
   const [sort, setSort] = React.useState<TableSort<Api_Document>>({});
 
   const [filters, setFilters] = React.useState<IDocumentFilter>(
     defaultFilters ?? defaultDocumentFilter,
   );
+
+  const { retrieveDocumentTypes } = useDocumentProvider();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const axiosResponse = await retrieveDocumentTypes();
+      if (
+        axiosResponse !== undefined &&
+        props.relationshipType === DocumentRelationshipType.TEMPLATES
+      ) {
+        setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
+      } else {
+        setDocumentTypes(axiosResponse || []);
+      }
+    };
+
+    fetch();
+  }, [props.relationshipType, retrieveDocumentTypes]);
 
   const sortedFilteredDocuments = React.useMemo(() => {
     if (documentResults?.length > 0) {
@@ -127,7 +149,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   return (
-    <div>
+    <>
       <Section
         header={
           <SectionListHeader
@@ -141,7 +163,13 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         isCollapsable
         initiallyExpanded
       >
-        {!hideFilters && <DocumentFilterForm onSetFilter={setFilters} documentFilter={filters} />}
+        {!hideFilters && (
+          <DocumentFilterForm
+            onSetFilter={setFilters}
+            documentFilter={filters}
+            documentTypes={documentTypes}
+          />
+        )}
         <DocumentResults
           results={sortedFilteredDocuments}
           loading={isLoading}
@@ -188,7 +216,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         okButtonText="Continue"
         cancelButtonText="Cancel"
       />
-    </div>
+    </>
   );
 };
 

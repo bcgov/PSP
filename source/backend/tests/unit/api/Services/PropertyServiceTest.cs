@@ -18,7 +18,7 @@ using Xunit;
 namespace Pims.Api.Test.Services
 {
     [Trait("category", "unit")]
-    [Trait("category", "dal")]
+    [Trait("category", "api")]
     [Trait("group", "property")]
     [ExcludeFromCodeCoverage]
     public class PropertyServiceTest

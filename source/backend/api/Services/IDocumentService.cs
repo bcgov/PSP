@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
@@ -26,18 +25,12 @@ namespace Pims.Api.Services
 
         Task<ExternalResult<FileDownload>> DownloadFileLatestAsync(long mayanDocumentId);
 
-        Task<ExternalResult<DocumentDetail>> UploadDocumentAsync(long documentType, IFormFile fileRaw);
-
         IList<PimsDocumentTyp> GetPimsDocumentTypes();
 
-        IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
+        Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest);
 
-        Task<bool> DeleteDocumentAsync(PimsDocument document, bool commitTransaction = true);
+        Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest);
 
-        Task<bool> DeleteActivityDocumentAsync(PimsActivityInstanceDocument activityDocument, bool commitTransaction = true);
-
-        Task<DocumentUploadResponse> UploadActivityDocumentAsync(long activityId, DocumentUploadRequest uploadRequest);
-
-        Task<DocumentUpdateResponse> UpdateActivityDocumentMetadataAsync(long documentId, DocumentUpdateRequest updateRequest);
+        Task<ExternalResult<string>> DeleteDocumentAsync(PimsDocument document);
     }
 }

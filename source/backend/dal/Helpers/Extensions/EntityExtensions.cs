@@ -199,7 +199,8 @@ namespace Pims.Dal.Helpers.Extensions
             Expression<Func<T_ChildEntity, object>> grandchildNavigation,
             T_Id parentId,
             T_ChildEntity[] childrenWithGrandchildren,
-            Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild, bool updateGrandChildValues = true)
+            Func<PimsContext, T_ChildEntity, bool> canDeleteGrandchild,
+            bool updateGrandChildValues = true)
             where T_Entity : IdentityBaseAppEntity<T_Id>
             where T_ChildEntity : IdentityBaseAppEntity<T_Id>
         {

@@ -123,16 +123,19 @@ namespace Pims.Dal.Security
         [Display(GroupName = "document", Name = "document-admin", Description = "Can perform admin functions on documents.")]
         DocumentAdmin = 39,
 
+        [Display(GroupName = "document", Name = "generate-documents", Description = "Can generate documents.")]
+        GenerateDocuments = 40,
+
         [Display(GroupName = "activity", Name = "activity-view", Description = "Can view activities.")]
-        ActivityView = 40,
+        ActivityView = 41,
 
         [Display(GroupName = "activity", Name = "activity-add", Description = "Can add new activities.")]
-        ActivityAdd = 41,
+        ActivityAdd = 42,
 
         [Display(GroupName = "activity", Name = "activity-edit", Description = "Can update existing activities.")]
-        ActivityEdit = 42,
+        ActivityEdit = 43,
 
         [Display(GroupName = "activity", Name = "activity-delete", Description = "Can delete existing activities.")]
-        ActivityDelete = 43
+        ActivityDelete = 44,
     }
 }

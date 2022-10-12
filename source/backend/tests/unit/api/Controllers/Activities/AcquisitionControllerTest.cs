@@ -334,7 +334,7 @@ namespace Pims.Api.Test.Controllers
             service.Setup(m => m.UpdateActivityAcquisitionProperties(It.IsAny<PimsActivityInstance>())).Returns(activity);
 
             // Act
-            Action act =  () => controller.UpdateActivityProperties(FileType.Unknown, mapper.Map<ActivityInstanceModel>(activity));
+            Action act = () => controller.UpdateActivityProperties(FileType.Unknown, mapper.Map<ActivityInstanceModel>(activity));
 
             act.Should().Throw<BadRequestException>();
         }

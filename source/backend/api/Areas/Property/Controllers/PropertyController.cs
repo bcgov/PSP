@@ -7,7 +7,6 @@ using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Property.Controllers

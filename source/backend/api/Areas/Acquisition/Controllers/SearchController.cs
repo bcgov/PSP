@@ -85,7 +85,8 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         public IActionResult GetAcquisitionFiles([FromBody] AcquisitionFilterModel filter)
         {
             // RECOMMENDED - Add valuable metadata to logs
-            _logger.LogInformation("Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(SearchController),
                 nameof(GetAcquisitionFiles),
                 User.GetUsername(),

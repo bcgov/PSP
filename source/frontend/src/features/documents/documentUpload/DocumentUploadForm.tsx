@@ -33,6 +33,7 @@ interface IDocumentUploadFormProps {
  */
 const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = props => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const documentTypes = props.documentTypes.map<SelectOption>(x => {
     return { label: x.documentType || '', value: x.id?.toString() || '' };
   });
@@ -100,7 +101,7 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = pr
             <SectionField label="Document type" labelWidth="3" className="pb-2">
               <Select
                 data-testid="document-type"
-                placeholder="Select Document type"
+                placeholder={documentTypes.length > 1 ? 'Select Document type' : undefined}
                 field="documentTypeId"
                 options={documentTypes}
                 onChange={props.onDocumentTypeChange}

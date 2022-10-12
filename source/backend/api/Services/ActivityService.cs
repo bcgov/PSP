@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 
 namespace Pims.Api.Services
 {
@@ -17,9 +16,7 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
-        private readonly IResearchFileService _researchFileService;
-        private readonly IAcquisitionFileService _acquisitionFileService;
-        private readonly IDocumentService _documentService;
+        private readonly IDocumentActivityService _documentActivityService;
         private readonly INoteService _noteService;
 
         public ActivityService(
@@ -27,19 +24,15 @@ namespace Pims.Api.Services
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
             IActivityTemplateRepository activityTemplateRepository,
-            IAcquisitionFileService acquisitionFileService,
-            IResearchFileService researchFileService,
             INoteService noteService,
-            IDocumentService documentService)
+            IDocumentActivityService documentActivityService)
             : base(user, logger)
         {
             _logger = logger;
             _activityRepository = activityRepository;
             _activityTemplateRepository = activityTemplateRepository;
-            _acquisitionFileService = acquisitionFileService;
-            _researchFileService = researchFileService;
             _noteService = noteService;
-            _documentService = documentService;
+            _documentActivityService = documentActivityService;
         }
 
         public PimsActivityInstance GetById(long id)
@@ -149,11 +142,11 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting activity instance ...", activityId);
             this.User.ThrowIfNotAuthorized(Permissions.ActivityDelete);
 
-            var activityDocuments = _documentService.GetActivityDocuments(activityId);
+            var activityDocuments = _documentActivityService.GetActivityDocuments(activityId);
             foreach (PimsActivityInstanceDocument activityInstanceDocument in activityDocuments)
             {
-                var response = await _documentService.DeleteActivityDocumentAsync(activityInstanceDocument, false);
-                if(!response)
+                var response = await _documentActivityService.DeleteActivityDocumentAsync(activityInstanceDocument);
+                if (response.Status == ExternalResultStatus.Error)
                 {
                     throw new DbUpdateException("Failed to delete one or more related documents, unable to remove activity at this time. If this error persists, contact support.");
                 }

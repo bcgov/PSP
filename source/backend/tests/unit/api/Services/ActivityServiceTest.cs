@@ -8,6 +8,7 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Pims.Api.Constants;
+using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
@@ -17,10 +18,10 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 
-namespace Pims.Dal.Test.Services
+namespace Pims.Api.Test.Services
 {
     [Trait("category", "unit")]
-    [Trait("category", "dal")]
+    [Trait("category", "api")]
     [Trait("group", "activity")]
     [ExcludeFromCodeCoverage]
     public class ActivityServiceTest
@@ -481,9 +482,9 @@ namespace Pims.Dal.Test.Services
 
             var repository = helper.GetService<Mock<IActivityRepository>>();
             var noteService = helper.GetService<Mock<INoteService>>();
-            var documentService = helper.GetService<Mock<IDocumentService>>();
+            var documentService = helper.GetService<Mock<IDocumentActivityService>>();
             documentService.Setup(x => x.GetActivityDocuments(It.IsAny<long>())).Returns(activityDocuments);
-            documentService.Setup(x => x.DeleteActivityDocumentAsync(It.IsAny<PimsActivityInstanceDocument>(), false)).ReturnsAsync(true);
+            documentService.Setup(x => x.DeleteActivityDocumentAsync(It.IsAny<PimsActivityInstanceDocument>())).ReturnsAsync(new ExternalResult<string>());
             noteService.Setup(x => x.GetNotes(NoteType.Activity, It.IsAny<long>())).Returns(activityNotes.Select(n => n.Note));
             repository.Setup(x => x.Delete(It.IsAny<long>()));
 
@@ -492,7 +493,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             repository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
-            documentService.Verify(x => x.DeleteActivityDocumentAsync(activityDocuments.FirstOrDefault(), false));
+            documentService.Verify(x => x.DeleteActivityDocumentAsync(activityDocuments.FirstOrDefault()));
             noteService.Verify(x => x.DeleteNote(NoteType.Activity, It.IsAny<long>(), false));
         }
 
@@ -503,15 +504,15 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.ActivityDelete);
             var service = helper.Create<ActivityService>(user);
-            var mapper = helper.GetService<IMapper>();
+            //var mapper = helper.GetService<IMapper>();
             var activityNotes = new List<PimsActivityInstanceNote>() { EntityHelper.CreateActivityNote() };
             var activityDocuments = new List<PimsActivityInstanceDocument>() { EntityHelper.CreateActivityDocument() };
 
             var repository = helper.GetService<Mock<IActivityRepository>>();
             var noteService = helper.GetService<Mock<INoteService>>();
-            var documentService = helper.GetService<Mock<IDocumentService>>();
+            var documentService = helper.GetService<Mock<IDocumentActivityService>>();
             documentService.Setup(x => x.GetActivityDocuments(It.IsAny<long>())).Returns(activityDocuments);
-            documentService.Setup(x => x.DeleteActivityDocumentAsync(It.IsAny<PimsActivityInstanceDocument>(), false)).ReturnsAsync(false);
+            documentService.Setup(x => x.DeleteActivityDocumentAsync(It.IsAny<PimsActivityInstanceDocument>())).ReturnsAsync(new ExternalResult<string>() { Status = ExternalResultStatus.Error });
             noteService.Setup(x => x.GetNotes(NoteType.Activity, It.IsAny<long>())).Returns(activityNotes.Select(n => n.Note));
             repository.Setup(x => x.Delete(It.IsAny<long>()));
 

@@ -184,6 +184,18 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
             >
               All document types
             </option>
+            <option
+              class="option"
+              value="1"
+            >
+              BC Assessment Search
+            </option>
+            <option
+              class="option"
+              value="2"
+            >
+              Privy Council
+            </option>
           </select>
         </div>
       </div>
@@ -538,6 +550,18 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
               value=""
             >
               All document types
+            </option>
+            <option
+              class="option"
+              value="1"
+            >
+              BC Assessment Search
+            </option>
+            <option
+              class="option"
+              value="2"
+            >
+              Privy Council
             </option>
           </select>
         </div>
