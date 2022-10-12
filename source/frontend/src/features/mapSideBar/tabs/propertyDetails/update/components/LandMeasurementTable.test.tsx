@@ -1,13 +1,13 @@
 import { AreaUnitTypes } from 'constants/index';
 import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import { IUpdateLandMeasurementTableProps, LandMeasurementTable } from './LandMeasurementTable';
+import { IUpdateLandMeasurementEditTableProps, LandMeasurementEditTable } from './LandMeasurementEditTable';
 
 describe('LandMeasurementTable component', () => {
   // render component under test
-  const setup = (props: RenderOptions & IUpdateLandMeasurementTableProps = {}) => {
+  const setup = (props: RenderOptions & IUpdateLandMeasurementEditTableProps = {}) => {
     const utils = render(
-      <LandMeasurementTable
+      <LandMeasurementEditTable
         area={props.area}
         areaUnitTypeCode={props.areaUnitTypeCode}
         onChange={props.onChange}
