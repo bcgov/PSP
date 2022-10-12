@@ -1,3 +1,4 @@
+import OverflowTip from 'components/common/OverflowTip';
 import { ColumnWithProps, Table } from 'components/Table';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { getFilePropertyName } from 'features/properties/selector/utils';
@@ -37,7 +38,7 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
     maxWidth: 60,
     Cell: (cellProps: CellProps<Api_PropertyFile, Api_Property>) => {
       const propertyName = getFilePropertyName(cellProps.row.original, true);
-      return `${propertyName.label}: ${propertyName.value}`;
+      return <OverflowTip fullText={`${propertyName.label}: ${propertyName.value}`} />;
     },
   },
 ];

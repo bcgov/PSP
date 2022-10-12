@@ -193,7 +193,7 @@ exports[`Acquisition Search Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
-              data-testid="sort-column-fileStatusTypeCode"
+              data-testid="sort-column-acquisitionFileStatusTypeCode"
             >
               <svg
                 class="c1"
