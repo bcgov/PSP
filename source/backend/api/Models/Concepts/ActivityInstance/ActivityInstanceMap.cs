@@ -25,6 +25,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.ActivityInstanceId, src => src.Id)
                 .Map(dest => dest.ActivityTemplateId, src => src.ActivityTemplateId)
                 .Map(dest => dest.ActivityInstanceStatusTypeCode, src => src.ActivityStatusTypeCode.Id)
+                .Map(dest => dest.ActivityInstanceStatusTypeCodeNavigation, src => src.ActivityStatusTypeCode)
                 .Map(dest => dest.ActivityDataJson, src => src.ActivityDataJson)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.PimsActInstPropRsrchFiles, src => src.ActInstPropRsrchFiles)
