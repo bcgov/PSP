@@ -1,7 +1,10 @@
 import { AreaUnitTypes } from 'constants/index';
 import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import { IUpdateLandMeasurementEditTableProps, LandMeasurementEditTable } from './LandMeasurementEditTable';
+import {
+  IUpdateLandMeasurementEditTableProps,
+  LandMeasurementEditTable,
+} from './LandMeasurementEditTable';
 
 describe('LandMeasurementTable component', () => {
   // render component under test
