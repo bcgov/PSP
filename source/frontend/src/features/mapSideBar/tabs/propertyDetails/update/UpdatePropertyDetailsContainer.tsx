@@ -20,7 +20,7 @@ export interface IUpdatePropertyDetailsContainerProps {
 
 export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
   const isMounted = useIsMounted();
-  const { retrieveProperty, retrievePropertyLoading } = useGetProperty();
+  const getPropertyWrapper = useGetProperty();
   const { updateProperty } = useUpdateProperty();
   const { queryAll } = useQueryMapLayersByLocation();
 
@@ -29,11 +29,12 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
   props.setFormikRef(formikRef);
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
+  const executeGetProperty = getPropertyWrapper.execute;
 
   useEffect(() => {
     async function fetchProperty() {
       if (!!props.id) {
-        const retrieved = await retrieveProperty(props.id);
+        const retrieved = await executeGetProperty(props.id);
         if (retrieved !== undefined && isMounted()) {
           const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
 
@@ -52,7 +53,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
       }
     }
     fetchProperty();
-  }, [isMounted, props.id, queryAll, retrieveProperty]);
+  }, [isMounted, props.id, queryAll, executeGetProperty]);
 
   // save handler - sends updated property information to backend
   const savePropertyInformation = async (
@@ -81,7 +82,7 @@ export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsCont
       {formikProps => (
         <StyledFormWrapper>
           <LoadingBackdrop
-            show={retrievePropertyLoading || !initialForm}
+            show={getPropertyWrapper?.loading || !initialForm}
             parentScreen={true}
           ></LoadingBackdrop>
           <UpdatePropertyDetailsForm formikProps={formikProps} />

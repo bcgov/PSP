@@ -4,7 +4,6 @@ import * as API from 'constants/API';
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import Api_TypeCode from 'models/api/TypeCode';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
@@ -42,20 +41,21 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
     pph => pph.value === property?.pphStatusTypeCode,
   )?.label;
 
-  const anomalies = property?.anomalies as Api_TypeCode<string>[];
-  const tenureStatus = property?.tenure as Api_TypeCode<string>[];
-  const roadType = property?.roadType as Api_TypeCode<string>[];
-  const adjacentLand = property?.adjacentLand as Api_TypeCode<string>[];
+  const anomalies = property?.anomalies;
+  const tenureStatus = property?.tenures;
+  const roadType = property?.roadTypes;
+  const adjacentLand = property?.adjacentLands;
 
   // measurement tables
   const landMeasurement = property?.landMeasurementTable;
   const volumeMeasurement = property?.volumetricMeasurementTable;
 
   // show/hide conditionals
-  const isHighwayRoad = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.HighwayRoad);
-  const isAdjacentLand = tenureStatus?.some(obj => obj.id === PropertyTenureTypes.AdjacentLand);
+  const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
+  const isAdjacentLand = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.AdjacentLand);
   const isIndianReserve =
-    isAdjacentLand && adjacentLand?.some(obj => obj.id === PropertyAdjacentLandTypes.IndianReserve);
+    isAdjacentLand &&
+    adjacentLand?.some(obj => obj?.id === PropertyAdjacentLandTypes.IndianReserve);
 
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
   return (
@@ -73,13 +73,13 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           )}
         </StyledEditWrapper>
         <Section header="Property Attributes">
-          <SectionField label="MOTI region">{property?.regionType?.description}</SectionField>
+          <SectionField label="MOTI region">{property?.region?.description}</SectionField>
           <SectionField label="Highways district">
             <InlineContainer>
-              {property?.districtType?.description !== 'Cannot determine' && (
-                <>{property?.districtType?.id}-</>
+              {property?.district?.description !== 'Cannot determine' && (
+                <>{property?.district?.id}-</>
               )}
-              {property?.districtType?.description}
+              {property?.district?.description}
             </InlineContainer>
           </SectionField>
           <SectionField label="Electoral district">

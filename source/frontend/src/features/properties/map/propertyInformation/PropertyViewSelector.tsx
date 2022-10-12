@@ -14,10 +14,10 @@ export interface IPropertyViewSelectorProps {
 }
 
 const PropertyViewSelector: React.FunctionComponent<IPropertyViewSelectorProps> = props => {
-  if (props.isEditMode && !!props?.composedProperty?.apiProperty?.id) {
+  if (props.isEditMode && !!props?.composedProperty?.apiWrapper?.response?.id) {
     return (
       <UpdatePropertyDetailsContainer
-        id={props.composedProperty.apiProperty.id}
+        id={props.composedProperty?.apiWrapper?.response?.id}
         onSuccess={props.onSuccess}
         setFormikRef={props.setFormikRef}
       />

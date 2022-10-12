@@ -13,7 +13,7 @@ import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
 export const useLtsa = () => {
   const { getLtsaOrders } = useApiLtsa();
 
-  const { execute, loading } = useApiRequestWrapper<
+  const ltsaRequestWrapper = useApiRequestWrapper<
     (pid: string) => Promise<AxiosResponse<LtsaOrders>>
   >({
     requestFunction: useCallback(async (pid: string) => await getLtsaOrders(pidFormatter(pid)), [
@@ -25,5 +25,5 @@ export const useLtsa = () => {
     }, []),
   });
 
-  return { getLtsaData: execute, ltsaLoading: loading };
+  return ltsaRequestWrapper;
 };

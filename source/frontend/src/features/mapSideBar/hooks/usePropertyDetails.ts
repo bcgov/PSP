@@ -8,8 +8,8 @@ import {
   useLayerQuery,
 } from 'components/maps/leaflet/LayerPopup';
 import useIsMounted from 'hooks/useIsMounted';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { LatLngLiteral } from 'leaflet';
+import { Api_Property } from 'models/api/Property';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -17,7 +17,7 @@ import {
   toFormValues,
 } from '../tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 
-export function usePropertyDetails(property?: IPropertyApiModel): IPropertyDetailsForm | undefined {
+export function usePropertyDetails(property?: Api_Property): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();
   const motiRegionService = useLayerQuery(MOTI_REGION_LAYER_URL);
   const highwaysDistrictService = useLayerQuery(HWY_DISTRICT_LAYER_URL);

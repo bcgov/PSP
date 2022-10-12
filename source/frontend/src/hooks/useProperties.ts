@@ -5,7 +5,7 @@ import { catchAxiosError } from 'customAxios';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
 import { IPagedItems, IProperty } from 'interfaces';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { Api_Property } from 'models/api/Property';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -20,7 +20,7 @@ export const useProperties = () => {
   const dispatch = useDispatch();
   const {
     getPropertiesPaged,
-    getProperty,
+    getPropertyConceptWithId,
     exportProperties: rawApiExportProperties,
   } = useApiProperties();
 
@@ -42,9 +42,11 @@ export const useProperties = () => {
   });
 
   const { execute: getPropertyWrapped, loading: getPropertyLoading } = useApiRequestWrapper<
-    (id: number) => Promise<AxiosResponse<IPropertyApiModel>>
+    (id: number) => Promise<AxiosResponse<Api_Property>>
   >({
-    requestFunction: useCallback(async (id: number) => await getProperty(id), [getProperty]),
+    requestFunction: useCallback(async (id: number) => await getPropertyConceptWithId(id), [
+      getPropertyConceptWithId,
+    ]),
     requestName: actionTypes.GET_PARCELS,
     skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
@@ -55,14 +57,14 @@ export const useProperties = () => {
    * @param params Id of the property
    */
   const fetchPropertyWithId = useCallback(
-    async (id: number): Promise<IPropertyApiModel> => {
+    async (id: number): Promise<Api_Property> => {
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
       //   1. to the REST API to fetch property field attributes (e.g. address, etc)
       //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
       return Promise.all([getPropertyWrapped(id), getPropertyWfs(id)]).then(
         ([propertyResponse, wfsResponse]) => {
           const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: IPropertyApiModel = {
+          const property: Api_Property = {
             ...propertyResponse,
             latitude,
             longitude,

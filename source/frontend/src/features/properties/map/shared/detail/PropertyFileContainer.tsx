@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -8,18 +7,10 @@ import {
 import LtsaTabView from 'features/mapSideBar/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from 'features/mapSideBar/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from 'features/mapSideBar/tabs/propertyDetails/detail/PropertyDetailsTabView';
-import useIsMounted from 'hooks/useIsMounted';
-import { useLtsa } from 'hooks/useLtsa';
-import { useProperties } from 'hooks/useProperties';
-import { usePropertyAssociations } from 'hooks/usePropertyAssociations';
-import { IApiError } from 'interfaces/IApiError';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
-import { LtsaOrders } from 'interfaces/ltsaModels';
-import { Api_PropertyAssociations } from 'models/api/Property';
+import { PROPERTY_TYPES, useComposedProperties } from 'hooks/useComposedProperties';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { pidFormatter } from 'utils';
+import { useState } from 'react';
 
 export interface IPropertyFileContainerProps {
   fileProperty: Api_PropertyFile;
@@ -30,92 +21,29 @@ export interface IPropertyFileContainerProps {
 }
 
 export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContainerProps> = props => {
-  const isMounted = useIsMounted();
-  const [ltsaData, setLtsaData] = useState<LtsaOrders | undefined>(undefined);
-  const [apiProperty, setApiProperty] = useState<IPropertyApiModel | undefined>(undefined);
-  const [ltsaDataRequestedOn, setLtsaDataRequestedOn] = useState<Date | undefined>(undefined);
-  const [propertyAssociations, setPropertyAssociations] = useState<
-    Api_PropertyAssociations | undefined
-  >(undefined);
-  const [showPropertyInfoTab, setShowPropertyInfoTab] = useState(true);
-
-  const pid = props.fileProperty?.property?.pid?.toString();
+  const pid = props.fileProperty?.property?.pid;
   const id = props.fileProperty?.property?.id;
 
-  // First, fetch property information from PSP API
-  const { getProperty, getPropertyLoading: propertyLoading } = useProperties();
-  useEffect(() => {
-    const func = async () => {
-      try {
-        if (!!id) {
-          const propInfo = await getProperty(id);
-          if (isMounted() && propInfo?.id === id) {
-            setApiProperty(propInfo);
-            setShowPropertyInfoTab(true);
-          }
-        }
-      } catch (e) {
-        // PSP-2919 Hide the property info tab for non-inventory properties
-        // We get an error because PID is not on our database
-        if (axios.isAxiosError(e)) {
-          const axiosError = e as AxiosError<IApiError>;
-          if (axiosError?.response?.status === 404) {
-            setShowPropertyInfoTab(false);
-          }
-        }
-      }
-    };
-    func();
-  }, [getProperty, id, isMounted]);
+  const composedProperties = useComposedProperties({
+    pid,
+    id,
+    propertyTypes: [PROPERTY_TYPES.ASSOCIATIONS, PROPERTY_TYPES.LTSA, PROPERTY_TYPES.PIMS_API],
+  });
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
-  const propertyViewForm = usePropertyDetails(apiProperty);
-
-  const { getLtsaData, ltsaLoading } = useLtsa();
-  useEffect(() => {
-    const func = async () => {
-      setLtsaDataRequestedOn(new Date());
-      setLtsaData(undefined);
-      if (!!pid) {
-        const ltsaData = await getLtsaData(pidFormatter(pid));
-        if (
-          isMounted() &&
-          ltsaData?.parcelInfo?.orderedProduct?.fieldedData.parcelIdentifier === pidFormatter(pid)
-        ) {
-          setLtsaData(ltsaData);
-        }
-      }
-    };
-    func();
-  }, [getLtsaData, pid, isMounted]);
-
-  const {
-    getPropertyAssociations,
-    isLoading: propertyAssociationsLoading,
-  } = usePropertyAssociations();
-
-  useEffect(() => {
-    const func = async () => {
-      if (id !== undefined) {
-        const response = await getPropertyAssociations(id);
-        if (response?.id !== undefined) {
-          setPropertyAssociations(response);
-        }
-      }
-    };
-    func();
-  }, [getPropertyAssociations, id]);
+  const propertyViewForm = usePropertyDetails(composedProperties.apiWrapper?.response);
 
   const tabViews: TabInventoryView[] = [];
+  const ltsaWrapper = composedProperties.ltsaWrapper;
 
   tabViews.push({
     content: (
       <LtsaTabView
-        ltsaData={ltsaData}
-        ltsaRequestedOn={ltsaDataRequestedOn}
-        loading={ltsaLoading}
-        pid={apiProperty?.pid}
+        ltsaData={ltsaWrapper?.response}
+        ltsaRequestedOn={ltsaWrapper?.requestedOn}
+        loading={ltsaWrapper?.loading ?? false}
+        pid={pid?.toString()}
       />
     ),
     key: InventoryTabNames.title,
@@ -129,12 +57,12 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
 
   tabViews.push(...props.customTabs);
 
-  if (showPropertyInfoTab) {
+  if (!!id) {
     tabViews.push({
       content: (
         <PropertyDetailsTabView
           property={propertyViewForm}
-          loading={propertyLoading}
+          loading={composedProperties.apiWrapper?.loading ?? false}
           setEditMode={editable => {
             props.setEditFileProperty();
           }}
@@ -145,12 +73,12 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
     });
   }
 
-  if (propertyAssociations?.id !== undefined) {
+  if (composedProperties.propertyAssociationWrapper?.response?.id !== undefined) {
     tabViews.push({
       content: (
         <PropertyAssociationTabView
-          isLoading={propertyAssociationsLoading}
-          associations={propertyAssociations}
+          isLoading={composedProperties.propertyAssociationWrapper?.loading}
+          associations={composedProperties.propertyAssociationWrapper?.response}
         />
       ),
       key: InventoryTabNames.pims,
@@ -163,7 +91,7 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
 
   return (
     <InventoryTabsView
-      loading={propertyAssociationsLoading || ltsaLoading || propertyLoading}
+      loading={composedProperties.composedLoading}
       tabViews={tabViews}
       defaultTabKey={props.defaultTab}
       activeTab={activeTab}
