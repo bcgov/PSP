@@ -62,7 +62,7 @@ export function createTableColumns(
               </StyledIconButton>
             )}
 
-            {hasClaim(Claims.NOTE_DELETE) && (
+            {hasClaim(Claims.NOTE_DELETE) && !cellProps.row.original.isSystemGenerated && (
               <StyledRemoveLinkButton
                 title="Delete Note"
                 variant="light"

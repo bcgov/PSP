@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -17,6 +18,10 @@ namespace Pims.Api.Services
         private readonly IActivityRepository _activityRepository;
         private readonly IActivityTemplateRepository _activityTemplateRepository;
         private readonly IDocumentActivityService _documentActivityService;
+        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly IResearchFileService _researchFileService;
+        private readonly IAcquisitionFileService _acquisitionFileService;
+        private readonly IDocumentService _documentService;
         private readonly INoteService _noteService;
 
         public ActivityService(
@@ -24,6 +29,10 @@ namespace Pims.Api.Services
             ILogger<ActivityService> logger,
             IActivityRepository activityRepository,
             IActivityTemplateRepository activityTemplateRepository,
+            IEntityNoteRepository entityNoteRepository,
+            IAcquisitionFileService acquisitionFileService,
+            IResearchFileService researchFileService,
+            IDocumentService documentService,
             INoteService noteService,
             IDocumentActivityService documentActivityService)
             : base(user, logger)
@@ -33,6 +42,8 @@ namespace Pims.Api.Services
             _activityTemplateRepository = activityTemplateRepository;
             _noteService = noteService;
             _documentActivityService = documentActivityService;
+            _documentService = documentService;
+            _entityNoteRepository = entityNoteRepository;
         }
 
         public PimsActivityInstance GetById(long id)
@@ -108,9 +119,10 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.ActivityEdit);
             ValidateVersion(model.ActivityInstanceId, model.ConcurrencyControlNumber);
 
-            var newActivityInstance = _activityRepository.Update(model);
+            var result = _activityRepository.Update(model);
+            AddNoteIfActivityStatusChanged(model);
             _activityRepository.CommitTransaction();
-            return _activityRepository.GetById(newActivityInstance.ActivityInstanceId);
+            return _activityRepository.GetById(result.ActivityInstanceId);
         }
 
         public PimsActivityInstance UpdateActivityResearchProperties(PimsActivityInstance model)
@@ -178,6 +190,28 @@ namespace Pims.Api.Services
             if (currentRowVersion != activityVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this activity, please refresh the application and retry.");
+            }
+        }
+
+        private void AddNoteIfActivityStatusChanged(PimsActivityInstance instance)
+        {
+            var currentActivity = _activityRepository.GetById(instance.Id);
+            if (currentActivity.ActivityInstanceStatusTypeCode != instance.ActivityInstanceStatusTypeCode)
+            {
+                PimsActivityInstanceNote note = new PimsActivityInstanceNote()
+                {
+                    ActivityInstanceId = currentActivity.ActivityInstanceId,
+                    AppCreateTimestamp = System.DateTime.Now,
+                    AppCreateUserid = instance.AppCreateUserid,
+                    Note = new PimsNote()
+                    {
+                        IsSystemGenerated = true,
+                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCodeNavigation?.Description } to { instance.ActivityInstanceStatusTypeCodeNavigation?.Description }",
+                        AppCreateTimestamp = System.DateTime.Now,
+                        AppCreateUserid = this.User.GetUsername(),
+                    },
+                };
+                _entityNoteRepository.Add(note);
             }
         }
     }
