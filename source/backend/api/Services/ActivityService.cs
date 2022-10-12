@@ -205,7 +205,7 @@ namespace Pims.Api.Services
                     Note = new PimsNote()
                     {
                         IsSystemGenerated = true,
-                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCode } to { instance.ActivityInstanceStatusTypeCode }",
+                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCodeNavigation?.Description } to { instance.ActivityInstanceStatusTypeCodeNavigation?.Description }",
                         AppCreateTimestamp = System.DateTime.Now,
                         AppCreateUserid = this.User.GetUsername(),
                     },
