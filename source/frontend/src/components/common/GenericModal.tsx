@@ -163,23 +163,26 @@ export const GenericModal = (props: BsModalProps & ModalProps) => {
   );
 };
 
-const ModalContainer = (props: BsModalProps & ModalProps) =>
-  !props.asPopup ? (
+const ModalContainer = (props: BsModalProps & ModalProps) => {
+  const { modalSize, ...rest } = props;
+
+  return !props.asPopup ? (
     <Container>
       <StyledModal
-        {...props}
+        {...rest}
         show={props.show}
         onHide={props.close}
-        dialogClassName={classNames(props.modalSize, props.className)}
+        dialogClassName={classNames(modalSize, props.className)}
       >
         {props.children}
       </StyledModal>
     </Container>
   ) : props.show ? (
-    <PopupContainer className={classNames(props.modalSize, props.className)}>
+    <PopupContainer className={classNames(modalSize, props.className)}>
       {props.children}
     </PopupContainer>
   ) : null;
+};
 
 const StyledModal = styled(Modal)`
   .modal-header {

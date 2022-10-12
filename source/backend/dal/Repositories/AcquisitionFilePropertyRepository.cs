@@ -80,7 +80,8 @@ namespace Pims.Dal.Repositories
         {
             propertyAcquisitionFile.ThrowIfNull(nameof(propertyAcquisitionFile));
 
-            this.Context.Entry(propertyAcquisitionFile).CurrentValues.SetValues(propertyAcquisitionFile);
+            Context.Entry(propertyAcquisitionFile).CurrentValues.SetValues(propertyAcquisitionFile);
+            Context.Entry(propertyAcquisitionFile).State = EntityState.Modified;
             return propertyAcquisitionFile;
         }
 

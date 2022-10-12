@@ -1,13 +1,13 @@
 import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import AcquisitionProperties from './AcquisitionProperties';
+import { AcquisitionSearchResultModel } from './models';
 
-export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
+export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
   {
     Header: 'Acquisition file #',
     accessor: 'fileNumber',
@@ -16,7 +16,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<Api_AcquisitionFile>) => {
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.ACQUISITION_VIEW)) {
         return (
@@ -44,7 +44,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<Api_AcquisitionFile>) => props.row.original.regionCode?.description,
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => props.row.original.regionCode,
   },
   {
     Header: 'Ministry project',
@@ -53,7 +53,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     clickable: true,
     width: 20,
     maxWidth: 30,
-    Cell: (props: CellProps<Api_AcquisitionFile>) => {
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const { ministryProjectNumber, ministryProjectName } = props.row.original;
       const formattedValue = [ministryProjectNumber, ministryProjectName].filter(Boolean).join(' ');
       return formattedValue;
@@ -63,7 +63,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
     Header: 'Civic Address / PID / PIN',
     accessor: 'fileProperties',
     align: 'left',
-    Cell: (props: CellProps<Api_AcquisitionFile>) => {
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       return (
         <AcquisitionProperties
           acquisitionProperties={props.row.original.fileProperties}
@@ -74,7 +74,7 @@ export const columns: ColumnWithProps<Api_AcquisitionFile>[] = [
   },
   {
     Header: 'Status',
-    accessor: 'fileStatusTypeCode',
+    accessor: 'acquisitionFileStatusTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,

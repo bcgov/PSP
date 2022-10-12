@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import TooltipWrapper from './TooltipWrapper';
 
 interface IOverflowTextProps {
-  title: string;
   fullText?: string;
 }
 
 /** Creates a dynamic tooltip that displays over text when that text is overflowing and displaying an ellipsis via textOverflow css property */
-const OverflowTip: React.FunctionComponent<IOverflowTextProps> = ({ title, fullText }) => {
+const OverflowTip: React.FunctionComponent<IOverflowTextProps &
+  React.HTMLAttributes<HTMLDivElement>> = ({ fullText, className }) => {
   const textElementRef = useRef<HTMLDivElement>();
 
   const compareSize = () => {
@@ -32,7 +32,9 @@ const OverflowTip: React.FunctionComponent<IOverflowTextProps> = ({ title, fullT
 
   return (
     <TooltipWrapper toolTipId={`tooltip-title`} toolTip={hoverStatus ? fullText : ''}>
-      <StyledOverflowDiv ref={textElementRef as any}>{fullText ?? ''}</StyledOverflowDiv>
+      <StyledOverflowDiv className={className} ref={textElementRef as any}>
+        {fullText ?? ''}
+      </StyledOverflowDiv>
     </TooltipWrapper>
   );
 };

@@ -83,7 +83,7 @@ export const UpdateAcquisitionForm = React.forwardRef<
 
             <Section header="Acquisition Details">
               <SectionField label="Acquisition file name">
-                <LargeInput field="fileName" />
+                <Input field="fileName" />
               </SectionField>
               <SectionField label="Physical file status">
                 <Select
@@ -126,13 +126,6 @@ export const UpdateAcquisitionForm = React.forwardRef<
 });
 
 export default UpdateAcquisitionForm;
-
-const LargeInput = styled(Input)`
-  input.form-control {
-    min-width: 50rem;
-    max-width: 100%;
-  }
-`;
 
 const Container = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
