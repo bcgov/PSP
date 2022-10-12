@@ -35,14 +35,14 @@ describe('useWfsLayer hook', () => {
   });
 
   it('fetches all features matching CQL filter', async () => {
-    const { getAllFeatures, getAllFeaturesLoading } = setup();
+    const { execute, loading } = setup();
 
     await act(async () => {
-      const response = await getAllFeatures({ LEGAL_DESCRIPTION: 'some legal description' });
+      const response = await execute({ LEGAL_DESCRIPTION: 'some legal description' });
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
       'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25some+legal+description%25%27',
@@ -53,14 +53,14 @@ describe('useWfsLayer hook', () => {
     const url = 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs';
     mockAxios.onGet(new RegExp(url)).reply(200, mockFAParcelLayerResponse);
 
-    const { getAllFeatures, getAllFeaturesLoading } = setup(url);
+    const { execute, loading } = setup(url);
 
     await act(async () => {
-      const response = await getAllFeatures({ PID: '000111222' });
+      const response = await execute({ PID: '000111222' });
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
       'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%25000111222%25%27+OR+PID+ilike+%27%25000111222%25%27++OR+PID_PADDED+ilike+%27%25000111222%25%27',
@@ -71,14 +71,14 @@ describe('useWfsLayer hook', () => {
     const url = 'geoserver/psp/ows';
     mockAxios.onGet(new RegExp(url)).reply(200, mockFAParcelLayerResponse);
 
-    const { getAllFeatures, getAllFeaturesLoading } = setup(url);
+    const { execute, loading } = setup(url);
 
     await act(async () => {
-      const response = await getAllFeatures({ PID: '000111222' });
+      const response = await execute({ PID: '000111222' });
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
       'http://localhost/geoserver/psp/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%25000111222%25%27+OR+PID+ilike+%27%25000111222%25%27++OR+PID_PADDED+ilike+%27%25000111222%25%27',
@@ -92,14 +92,14 @@ describe('useWfsLayer hook', () => {
       outputFormat: 'GML3',
       outputSrsName: 'EPSG:3005',
     };
-    const { getAllFeatures, getAllFeaturesLoading } = setup(wfsUrl, props);
+    const { execute, loading } = setup(wfsUrl, props);
 
     await act(async () => {
-      const response = await getAllFeatures();
+      const response = await execute();
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
       'http://localhost/ogs-internal/ows?service=WFS&version=1.3.0&outputFormat=GML3&typeNames=geo%3AFOOBAR&srsName=EPSG%3A3005&request=GetFeature',
@@ -107,14 +107,14 @@ describe('useWfsLayer hook', () => {
   });
 
   it('limits the number of features returned when count parameter is supplied', async () => {
-    const { getAllFeatures, getAllFeaturesLoading } = setup(wfsUrl);
+    const { execute, loading } = setup(wfsUrl);
 
     await act(async () => {
-      const response = await getAllFeatures({ KEY: 'VALUE' }, { maxCount: 5 });
+      const response = await execute({ KEY: 'VALUE' }, { maxCount: 5 });
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
       'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&count=5&cql_filter=KEY+ilike+%27%25VALUE%25%27',
@@ -122,27 +122,27 @@ describe('useWfsLayer hook', () => {
   });
 
   it('times out layer requests after 5 seconds by default', async () => {
-    const { getAllFeatures, getAllFeaturesLoading } = setup(wfsUrl);
+    const { execute, loading } = setup(wfsUrl);
 
     await act(async () => {
-      const response = await getAllFeatures({ SLOW_FIELD: 'SOME VALUE' });
+      const response = await execute({ SLOW_FIELD: 'SOME VALUE' });
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].timeout).toBe(5000);
   });
 
   it('supports increasing request timeouts for slow layers', async () => {
-    const { getAllFeatures, getAllFeaturesLoading } = setup(wfsUrl);
+    const { execute, loading } = setup(wfsUrl);
 
     await act(async () => {
-      const response = await getAllFeatures({ SLOW_FIELD: 'SOME VALUE' }, { timeout: 40000 });
+      const response = await execute({ SLOW_FIELD: 'SOME VALUE' }, { timeout: 40000 });
       expect(response).toStrictEqual(mockFAParcelLayerResponse);
     });
 
-    expect(getAllFeaturesLoading).toBe(false);
+    expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].timeout).toBe(40000);
   });

@@ -43,6 +43,7 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
 
   isSensitive?: boolean;
   isVisibleToOtherAgencies?: boolean;
+  isProvincialPublicHwy?: boolean;
   isOwned?: boolean;
   isPropertyOfInterest?: boolean;
   pphStatusTypeCode?: string;

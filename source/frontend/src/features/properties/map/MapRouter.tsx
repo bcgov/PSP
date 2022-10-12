@@ -1,6 +1,6 @@
 import Claims from 'constants/claims';
 import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
 import * as React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
@@ -14,7 +14,7 @@ import ResearchContainer from './research/ResearchContainer';
 interface IMapRouterProps {
   showSideBar: boolean;
   setShowSideBar: (show: boolean) => void;
-  onZoom?: (apiProperty?: IPropertyApiModel) => void;
+  onZoom?: (apiProperty?: Api_Property) => void;
 }
 
 export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(props => {

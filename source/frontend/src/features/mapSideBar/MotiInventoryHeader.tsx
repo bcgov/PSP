@@ -2,8 +2,8 @@ import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { AssociatedPlan } from 'interfaces/ltsaModels';
+import { Api_Property } from 'models/api/Property';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaSearchPlus } from 'react-icons/fa';
@@ -14,20 +14,19 @@ import { HeaderField } from './tabs/HeaderField';
 
 export interface IMotiInventoryHeaderProps {
   composedProperty: ComposedProperty;
-  onZoom?: (apiProperty?: IPropertyApiModel | undefined) => void;
+  onZoom?: (apiProperty?: Api_Property | undefined) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
-  const ltsaData = props.composedProperty.ltsaData;
+  const ltsaData = props.composedProperty.ltsaWrapper?.response;
   const planNumbers =
     ltsaData === undefined
       ? []
-      : (ltsaData?.parcelInfo.orderedProduct.fieldedData.associatedPlans as AssociatedPlan[]).map(
-          x => x.planNumber,
-        );
+      : ((ltsaData?.parcelInfo?.orderedProduct.fieldedData.associatedPlans ??
+          []) as AssociatedPlan[]).map(x => x.planNumber);
 
-  const isLoading = props.composedProperty.ltsaLoading || props.composedProperty.apiPropertyLoading;
+  const isLoading = props.composedProperty.composedLoading;
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
@@ -57,7 +56,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
                 contentWidth="5"
                 className="justify-content-end"
               >
-                {props.composedProperty.apiProperty?.propertyType?.description}
+                {props.composedProperty.apiWrapper?.response?.propertyType?.description}
               </HeaderField>
             </Col>
           </Row>
@@ -68,7 +67,9 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
               variant="info"
               disabled={!props.onZoom}
               title="Zoom Map"
-              onClick={() => props?.onZoom && props?.onZoom(props.composedProperty.apiProperty)}
+              onClick={() =>
+                props?.onZoom && props?.onZoom(props.composedProperty.apiWrapper?.response)
+              }
             >
               <FaSearchPlus size={22} />
             </StyledIconButton>

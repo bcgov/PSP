@@ -39,6 +39,7 @@ export enum Claims {
   ACTIVITY_VIEW = 'activity-view',
   ACTIVITY_ADD = 'activity-add',
   ACTIVITY_DELETE = 'activity-delete',
+  GENERATE_DOCUMENTS = 'generate-documents',
 }
 
 export default Claims;
