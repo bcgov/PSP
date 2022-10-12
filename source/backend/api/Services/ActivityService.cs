@@ -32,6 +32,7 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IAcquisitionFileService acquisitionFileService,
             IResearchFileService researchFileService,
+            IDocumentService documentService,
             INoteService noteService,
             IDocumentActivityService documentActivityService)
             : base(user, logger)
