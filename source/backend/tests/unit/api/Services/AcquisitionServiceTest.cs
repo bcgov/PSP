@@ -346,7 +346,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
-            updatedProperty.PropertyDataSourceEffectiveDate.Should().BeCloseTo(System.DateTime.Now);
+            updatedProperty.PropertyDataSourceEffectiveDate.Should().BeCloseTo(System.DateTime.Now, 500);
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
