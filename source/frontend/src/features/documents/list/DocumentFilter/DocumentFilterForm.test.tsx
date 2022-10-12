@@ -6,6 +6,7 @@ import { defaultDocumentFilter } from 'interfaces/IDocumentResults';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks';
 import { mockDocumentTypesResponse } from 'mocks/mockDocuments';
+import { Api_DocumentType } from 'models/api/Document';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
@@ -18,6 +19,19 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+const documentTypes: Api_DocumentType[] = [
+  {
+    id: 1,
+    documentType: 'BC Assessment Search',
+    mayanId: 17,
+  },
+  {
+    id: 2,
+    documentType: 'Privy Council',
+    mayanId: 7,
+  },
+];
+
 describe('DocumentFilterForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
@@ -28,7 +42,11 @@ describe('DocumentFilterForm component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <DocumentFilterForm onSetFilter={onSetFilter} documentFilter={defaultDocumentFilter} />
+        <DocumentFilterForm
+          onSetFilter={onSetFilter}
+          documentFilter={defaultDocumentFilter}
+          documentTypes={documentTypes}
+        />
       </Formik>,
       {
         ...renderOptions,

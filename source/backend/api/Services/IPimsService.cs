@@ -1,5 +1,3 @@
-using Pims.Api.Services;
-
 namespace Pims.Api.Services
 {
     public interface IPimsService

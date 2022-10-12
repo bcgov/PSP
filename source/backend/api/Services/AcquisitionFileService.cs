@@ -97,8 +97,6 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Id, acquisitionFile.RegionCode);
             }
 
-            UpdateFileNumber(acquisitionFile);
-
             var newAcqFile = _acqFileRepository.Update(acquisitionFile);
             _acqFileRepository.CommitTransaction();
             return newAcqFile;
@@ -167,7 +165,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.PropertyId = foundProperty.Id;
                         acquisitionProperty.Property = foundProperty;
                     }
-                    catch (KeyNotFoundException e)
+                    catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pid:{pid}", pid);
                         PopulateNewProperty(acquisitionProperty.Property);
@@ -182,7 +180,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.PropertyId = foundProperty.Id;
                         acquisitionProperty.Property = foundProperty;
                     }
-                    catch (KeyNotFoundException e)
+                    catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pin:{pin}", pin);
                         PopulateNewProperty(acquisitionProperty.Property);
@@ -234,11 +232,6 @@ namespace Pims.Api.Services
                     acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS_84);
                 }
             }
-        }
-
-        private void UpdateFileNumber(PimsAcquisitionFile acquisitionFile)
-        {
-            acquisitionFile.FileNumber = $"{acquisitionFile.RegionCode}-{acquisitionFile.FileNo}-01";
         }
 
         private void ValidateVersion(long acqFileId, long acqFileVersion)

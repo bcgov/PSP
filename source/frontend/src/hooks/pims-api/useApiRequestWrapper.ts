@@ -14,6 +14,8 @@ export interface IResponseWrapper<
     ...params: Parameters<FunctionType>
   ) => Promise<Awaited<ReturnType<FunctionType>>['data'] | undefined>;
   loading: boolean;
+  requestedOn?: Date;
+  requestEndOn?: Date;
 }
 
 export interface IApiRequestWrapper<
@@ -51,6 +53,8 @@ export const useApiRequestWrapper = <
 }: IApiRequestWrapper<FunctionType>): IResponseWrapper<FunctionType> => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError<IApiError>>();
+  const [requestedOn, setRequestedOn] = useState<Date>();
+  const [requestEndOn, setRequestEndOn] = useState<Date>();
   const [response, setResponse] = useState<Awaited<ReturnType<FunctionType>>['data'] | undefined>();
   const dispatch = useDispatch();
   const isMounted = useIsMounted();
@@ -63,6 +67,7 @@ export const useApiRequestWrapper = <
       try {
         // reset initial state whenever a request is started.
         setLoading(true);
+        setRequestedOn(new Date());
         setError(undefined);
         setResponse(undefined);
         const response = await handleAxiosResponse<
@@ -89,6 +94,7 @@ export const useApiRequestWrapper = <
         }
       } finally {
         if (isMounted()) {
+          setRequestEndOn(new Date());
           setLoading(false);
         }
       }
@@ -118,7 +124,9 @@ export const useApiRequestWrapper = <
       response: response,
       loading: loading,
       execute: wrappedApiRequest,
+      requestedOn,
+      requestEndOn,
     }),
-    [error, loading, response, wrappedApiRequest],
+    [error, loading, requestEndOn, requestedOn, response, wrappedApiRequest],
   );
 };

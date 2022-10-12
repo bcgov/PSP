@@ -8,10 +8,11 @@ import { useWfsLayer } from './useWfsLayer';
  * Note: according to https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b
  */
 export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
-  const { getAllFeatures, getAllFeaturesLoading } = useWfsLayer(url, {
+  const getAllFeaturesWrapper = useWfsLayer(url, {
     name,
     withCredentials: true,
   });
+  const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
   const findByLegalDescription = useCallback(
     async (legalDesc: string) => {
@@ -57,5 +58,6 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
     findByPin,
     findByPlanNumber,
     loadingIndicator: getAllFeaturesLoading,
+    getAllFeaturesWrapper,
   };
 };

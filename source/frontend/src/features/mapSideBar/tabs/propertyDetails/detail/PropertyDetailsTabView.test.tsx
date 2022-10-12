@@ -1,7 +1,7 @@
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
 import { mockLookups } from 'mocks/mockLookups';
+import { Api_Property } from 'models/api/Property';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
@@ -18,7 +18,7 @@ jest.mock('@react-keycloak/web');
 
 describe('PropertyDetailsTabView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { property?: IPropertyApiModel } = {}) => {
+  const setup = (renderOptions: RenderOptions & { property?: Api_Property } = {}) => {
     const { property, ...rest } = renderOptions;
     const formValues = toFormValues(property);
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
@@ -39,14 +39,14 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not throw an exception for an invalid data object', () => {
-    const { getByText } = setup({ property: {} as IPropertyApiModel });
+    const { getByText } = setup({ property: {} as Api_Property });
     expect(getByText(/property attributes/i)).toBeVisible();
   });
 
   it('shows highway/road multi-select when tenure status is Highway/Road', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
-      tenure: [{ id: PropertyTenureTypes.HighwayRoad }],
+      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.HighwayRoad } }],
     };
 
     const { getByText } = setup({ property });
@@ -54,9 +54,9 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not show highway/road multi-select when tenure status is not Highway/Road', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
-      tenure: [{ id: PropertyTenureTypes.Unknown }],
+      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.Unknown } }],
     };
 
     const { queryByText } = setup({ property });
@@ -64,10 +64,12 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows first nations information when adjacent land is Indian Reserve', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
-      tenure: [{ id: PropertyTenureTypes.AdjacentLand }],
-      adjacentLand: [{ id: PropertyAdjacentLandTypes.IndianReserve }],
+      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.AdjacentLand } }],
+      adjacentLands: [
+        { propertyAdjacentLandTypeCode: { id: PropertyAdjacentLandTypes.IndianReserve } },
+      ],
     };
 
     const { getByText } = setup({ property });
@@ -75,10 +77,10 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not show first nations information when adjacent land is not Indian Reserve', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
-      tenure: [{ id: PropertyTenureTypes.AdjacentLand }],
-      adjacentLand: [{ id: PropertyAdjacentLandTypes.Crown }],
+      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.AdjacentLand } }],
+      adjacentLands: [{ propertyAdjacentLandTypeCode: { id: PropertyAdjacentLandTypes.Crown } }],
     };
 
     const { queryByText } = setup({ property });
@@ -86,7 +88,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows additional volume measurements for volumetric parcels', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
       isVolumetricParcel: true,
     };
@@ -96,7 +98,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows Provincial public hwy field', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
       pphStatusTypeCode: 'NONPPH',
     };
@@ -106,7 +108,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not show shows additional volume measurements for non-volumetric parcels', () => {
-    const property: IPropertyApiModel = {
+    const property: Api_Property = {
       ...mockPropertyInfo,
       isVolumetricParcel: false,
     };
@@ -116,7 +118,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 });
 
-export const mockPropertyInfo: IPropertyApiModel = {
+export const mockPropertyInfo: Api_Property = {
   id: 1,
   propertyType: {
     id: 'TITLED',
@@ -125,30 +127,38 @@ export const mockPropertyInfo: IPropertyApiModel = {
   },
   anomalies: [
     {
-      id: 'BLDGLIENS',
-      description: 'Building liens',
-      isDisabled: false,
+      propertyAnomalyTypeCode: {
+        id: 'BLDGLIENS',
+        description: 'Building liens',
+        isDisabled: false,
+      },
     },
   ],
-  tenure: [
+  tenures: [
     {
-      id: 'CLOSEDRD',
-      description: 'Closed Road',
-      isDisabled: false,
+      propertyTenureTypeCode: {
+        id: 'CLOSEDRD',
+        description: 'Closed Road',
+        isDisabled: false,
+      },
     },
   ],
-  roadType: [
+  roadTypes: [
     {
-      id: 'GAZSURVD',
-      description: 'Gazetted (Surveyed)',
-      isDisabled: false,
+      propertyRoadTypeCode: {
+        id: 'GAZSURVD',
+        description: 'Gazetted (Surveyed)',
+        isDisabled: false,
+      },
     },
   ],
-  adjacentLand: [
+  adjacentLands: [
     {
-      id: 'PRIVATE',
-      description: 'Private (Fee Simple)',
-      isDisabled: false,
+      propertyAdjacentLandTypeCode: {
+        id: 'PRIVATE',
+        description: 'Private (Fee Simple)',
+        isDisabled: false,
+      },
     },
   ],
   status: {
@@ -186,7 +196,7 @@ export const mockPropertyInfo: IPropertyApiModel = {
     postal: 'IH8 B0B',
     rowVersion: 1,
   },
-  pid: '007-723-385',
+  pid: 7723385,
   pin: 90069930,
   areaUnit: {
     id: 'HA',
@@ -210,6 +220,5 @@ export const mockPropertyInfo: IPropertyApiModel = {
   zoning: 'Lorem ipsum',
   notes:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.',
-  leases: [],
   rowVersion: 16,
 };

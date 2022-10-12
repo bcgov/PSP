@@ -7,7 +7,6 @@ using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Dal;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Organizations.Controllers

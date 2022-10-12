@@ -8,7 +8,7 @@ import {
 } from 'components/maps/providers/SelectedPropertyContext';
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import { IProperty } from 'interfaces';
-import { IPropertyApiModel } from 'interfaces/IPropertyApiModel';
+import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -60,7 +60,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   };
 
   const onZoom = useCallback(
-    (apiProperty?: IPropertyApiModel) =>
+    (apiProperty?: Api_Property) =>
       apiProperty?.longitude &&
       apiProperty?.latitude &&
       mapInstance?.flyTo(

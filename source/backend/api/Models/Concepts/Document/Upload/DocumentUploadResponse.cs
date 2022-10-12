@@ -10,9 +10,9 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
-        /// get/set - The new document relationship created.
+        /// get/set - The new document created.
         /// </summary>
-        public DocumentRelationshipModel DocumentRelationship { get; set; }
+        public DocumentModel Document { get; set; }
 
         /// <summary>
         /// get/set - Response with document information from the file storage.

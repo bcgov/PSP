@@ -1,8 +1,7 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
-using Moq;
-using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;
 
@@ -84,7 +83,7 @@ namespace Pims.Core.Test
         {
             if (!helper.Services.Any(s => s.ServiceType == typeof(PimsContext)))
             {
-                var dbName = StringHelper.Generate(10);
+                var dbName = Guid.NewGuid().ToString();
                 return helper.CreateRepository<T>(helper.CreatePimsContext(dbName, user, false), args);
             }
 

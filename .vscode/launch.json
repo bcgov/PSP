@@ -19,16 +19,16 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/backend/api/bin/Debug/net6.0/Pims.Api.dll",
+      "program": "${workspaceRoot}/source/backend/api/bin/Debug/net6.0/Pims.Api.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/backend/api",
+      "cwd": "${workspaceRoot}/source/backend/api",
       "stopAtEntry": false,
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Local",
         "ASPNETCORE_URLS": "http://*:5000;https://*:433"
       },
       "sourceFileMap": {
-        "/Views": "${workspaceFolder}/backend/Views"
+        "/Views": "${workspaceRoot}/source/backend/Views"
       }
     },
     {
@@ -41,7 +41,7 @@
       "name": "Debug Frontend Tests",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/frontend/node_modules/.bin/react-scripts",
+      "runtimeExecutable": "${workspaceRoot}/source/frontend/node_modules/.bin/react-scripts",
       "args": [
         "test",
         "${fileBasenameNoExtension}",
@@ -49,7 +49,7 @@
         "--no-cache",
         "--watchAll=false"
       ],
-      "cwd": "${workspaceRoot}/frontend",
+      "cwd": "${workspaceRoot}/source/frontend",
       "protocol": "inspector",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;
 
@@ -32,7 +31,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static PimsContext CreatePimsContext(this TestHelper helper, Permissions permission, bool ensureDeleted = false)
         {
-            return helper.CreatePimsContext(StringHelper.Generate(10), permission, ensureDeleted);
+            return helper.CreatePimsContext(Guid.NewGuid().ToString(), permission, ensureDeleted);
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static PimsContext CreatePimsContext(this TestHelper helper, ClaimsPrincipal user, bool ensureDeleted = false)
         {
-            return helper.CreatePimsContext(StringHelper.Generate(10), user, ensureDeleted);
+            return helper.CreatePimsContext(Guid.NewGuid().ToString(), user, ensureDeleted);
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace Pims.Core.Test
             // Generate a randome database name.
             if (string.IsNullOrWhiteSpace(dbName))
             {
-                dbName = StringHelper.Generate(10);
+                dbName = Guid.NewGuid().ToString();
             }
 
             helper.AddSingleton(user);
@@ -115,7 +114,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static PimsContext InitializeDatabase(this TestHelper helper, ClaimsPrincipal user)
         {
-            return helper.InitializeDatabase(StringHelper.Generate(15), user);
+            return helper.InitializeDatabase(Guid.NewGuid().ToString(), user);
         }
 
         /// <summary>

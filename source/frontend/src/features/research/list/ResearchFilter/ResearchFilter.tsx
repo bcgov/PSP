@@ -94,7 +94,7 @@ export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
                   <Row>
                     <Col xl="4">
                       <Select
-                        placeholder="Select a status"
+                        placeholder="All Status"
                         options={researchStatusOptions}
                         field="researchFileStatusTypeCode"
                       />

@@ -8,8 +8,8 @@ namespace Pims.Api.Services
 {
     public class CoordinateTransformService : ICoordinateTransformService
     {
-        protected readonly CoordinateSystemFactory CoordinateSystemFactory = new CoordinateSystemFactory();
-        protected readonly CoordinateTransformationFactory CoordinateTransformationFactory = new CoordinateTransformationFactory();
+        private readonly CoordinateSystemFactory _coordinateSystemFactory = new CoordinateSystemFactory();
+        private readonly CoordinateTransformationFactory _coordinateTransformationFactory = new CoordinateTransformationFactory();
         private readonly Dictionary<int, CoordinateSystem> _projections = new Dictionary<int, CoordinateSystem>();
 
         private static IEnumerable<KeyValuePair<int, string>> DefaultProjections()
@@ -22,7 +22,7 @@ namespace Pims.Api.Services
         {
             try
             {
-                return CoordinateSystemFactory.CreateFromWkt(wkt);
+                return _coordinateSystemFactory.CreateFromWkt(wkt);
             }
             catch (Exception)
             {
@@ -33,7 +33,7 @@ namespace Pims.Api.Services
 
         /// <summary>
         /// Creates an instance of this class.
-        /// </summary
+        /// </summary>
         public CoordinateTransformService()
         {
             var enumeration = DefaultProjections();
@@ -47,23 +47,13 @@ namespace Pims.Api.Services
             }
         }
 
-        /// <summary>
-        /// Determines whether the supplied coordinate system is supported.
-        /// </summary>
-        /// <param name="srid">The identifier for the spatial reference system.</param>
-        /// <returns>true if supported; false otherwise.</returns>
+        /// <inheritdoc />
         public bool IsCoordinateSystemSupported(int srid)
         {
             return _projections.ContainsKey(srid);
         }
 
-        /// <summary>
-        /// Transforms (re-projects) coordinates between two spatial reference systems, defined by their identifiers.
-        /// </summary>
-        /// <param name="sourceSrid">The identifier for the source spatial reference system.</param>
-        /// <param name="targetSrid">The identifier for the target spatial reference system.</param>
-        /// <param name="coordinate">The coordinates to re-project.</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public Coordinate TransformCoordinates(int sourceSrid, int targetSrid, Coordinate location)
         {
             if (!IsCoordinateSystemSupported(sourceSrid))
@@ -78,7 +68,7 @@ namespace Pims.Api.Services
             var source = _projections[sourceSrid];
             var target = _projections[targetSrid];
 
-            var ct = CoordinateTransformationFactory.CreateFromCoordinateSystems(source, target);
+            var ct = _coordinateTransformationFactory.CreateFromCoordinateSystems(source, target);
             (var projectedX, var projectedY) = ct.MathTransform.Transform(location.X, location.Y);
 
             return new Coordinate(projectedX, projectedY);

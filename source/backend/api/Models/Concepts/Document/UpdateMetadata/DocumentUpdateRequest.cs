@@ -10,6 +10,11 @@ namespace Pims.Api.Models.Concepts
         #region Properties
 
         /// <summary>
+        /// get/set - The pims document id.
+        /// </summary>
+        public long DocumentId { get; set; }
+
+        /// <summary>
         /// get/set - The mayan document id.
         /// </summary>
         public long MayanDocumentId { get; set; }

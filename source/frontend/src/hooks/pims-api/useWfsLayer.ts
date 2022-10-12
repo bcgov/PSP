@@ -26,7 +26,7 @@ export interface IWfsGetAllFeaturesOptions {
  * @returns Object containing functions to make requests to the WFS layer.
  */
 export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
-  const { execute: getAllFeatures, loading: getAllFeaturesLoading } = useApiRequestWrapper({
+  const getAllFeaturesWrapper = useApiRequestWrapper({
     requestFunction: useDeepCompareCallback(
       async (filter: Record<string, string> = {}, options?: IWfsGetAllFeaturesOptions) => {
         const urlObj = buildUrl(url, getUrlParams(layerOptions));
@@ -53,7 +53,7 @@ export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
     requestName: 'getAllFeatures',
   });
 
-  return { getAllFeatures, getAllFeaturesLoading };
+  return getAllFeaturesWrapper;
 };
 
 function getUrlParams(options: IUseWfsLayerOptions): Record<string, any> {

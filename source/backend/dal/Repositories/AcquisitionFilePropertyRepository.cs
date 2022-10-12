@@ -51,6 +51,7 @@ namespace Pims.Dal.Repositories
         public PimsPropertyAcquisitionFile Add(PimsPropertyAcquisitionFile propertyAcquisitionFile)
         {
             propertyAcquisitionFile.ThrowIfNull(nameof(propertyAcquisitionFile));
+
             // Mark the property not to be changed if it did not exist already.
             if (propertyAcquisitionFile.PropertyId != 0)
             {

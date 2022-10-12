@@ -31,8 +31,8 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<FileTypes>> GetSupportedFileTypes()
         {
             this.Logger.LogInformation("Getting supported file Types");
-            //this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
+            // this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
             ExternalResult<FileTypes> result = await documentGenerationRepository.GetFileTypesAsync();
             return result;
         }
@@ -40,8 +40,8 @@ namespace Pims.Api.Services
         public async Task<ExternalResult<string>> UploadFileTemplate(IFormFile fileRaw)
         {
             this.Logger.LogInformation("Uploading template document");
-            //this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
+            // this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
             await this.avService.ScanAsync(fileRaw);
             ExternalResult<string> result = await documentGenerationRepository.UploadTemplateAsync(fileRaw);
             return result;

@@ -102,7 +102,7 @@ export const AcquisitionFilter: React.FC<IAcquisitionFilterProps> = ({ filter, s
                   <Select
                     options={acquisitionStatusOptions}
                     field="acquisitionFileStatusTypeCode"
-                    placeholder="Any status"
+                    placeholder="All Status"
                   />
                 </Col>
               </Row>

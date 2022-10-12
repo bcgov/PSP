@@ -277,7 +277,7 @@ exports[`Acquisition Filter matches snapshot 1`] = `
                 <option
                   value=""
                 >
-                  Any status
+                  All Status
                 </option>
                 <option
                   class="option"
