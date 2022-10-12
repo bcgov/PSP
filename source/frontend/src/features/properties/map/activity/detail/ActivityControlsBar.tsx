@@ -4,10 +4,13 @@ import { Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
+import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
 import styled from 'styled-components';
+
+import { ActivityModel } from './models';
 
 export interface IActivityControlsBarProps {
   editMode: boolean;
@@ -23,6 +26,16 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
   const { hasClaim } = useKeycloakWrapper();
   const { getOptionsByType } = useLookupCodeHelpers();
   const activityStatusTypeOptions = getOptionsByType(API.ACTIVITY_STATUS_TYPE);
+  const formikProps = useFormikContext<ActivityModel>();
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = activityStatusTypeOptions.find(
+      x => x.value === event.target.selectedOptions[0].value,
+    );
+    formikProps.setFieldValue('activityStatusTypeCode', {
+      id: selected?.value,
+      description: selected?.label,
+    });
+  };
   return (
     <>
       {hasClaim(Claims.ACTIVITY_EDIT) && (
@@ -33,6 +46,7 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
                 disabled={!editMode}
                 field="activityStatusTypeCode.id"
                 options={activityStatusTypeOptions}
+                onChange={handleStatusChange}
               />
             </SectionField>
           </LeftAligned>
