@@ -75,12 +75,9 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 query = query.Where(r => EF.Functions.Like(r.MinistryProjectName, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(r.MinistryProjectNumber, $"%{filter.ProjectNameOrNumber}%"));
             }
-
-            if (regions.Count > 0)
-            {
-                // Business Requirement: limit search results to user's assigned region(s)
-                query = query.Where(r => regions.Contains(r.RegionCode));
-            }
+   
+            // Business Requirement: limit search results to user's assigned region(s)
+            query = query.Where(r => regions.Contains(r.RegionCode));
 
             if (filter.Sort?.Any() == true)
             {
