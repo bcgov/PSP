@@ -13,6 +13,7 @@ namespace Pims.Api.Areas.Property.Models.Property
         public DateTime? CreatedDateTime { get; set; }
 
         public string CreatedBy { get; set; }
+        public string CreatedByGuid { get; set; }
 
         public string Status { get; set; }
     }

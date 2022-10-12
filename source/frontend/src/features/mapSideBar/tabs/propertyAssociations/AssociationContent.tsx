@@ -1,4 +1,6 @@
+import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import { ColumnWithProps, renderDate, Table } from 'components/Table';
+import { orderBy } from 'lodash';
 import { Api_PropertyAssociation } from 'models/api/Property';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,6 +12,7 @@ interface IAssociationInfo {
   fileIdentifier: string;
   fileName: string;
   createdBy: string;
+  createdByGuid: string;
   createdDate: string;
   status: string;
 }
@@ -25,17 +28,25 @@ const AssociationContent: React.FunctionComponent<IAssociationContentProps> = pr
   if (props.associations === undefined) {
     return <>{noDataMessage}</>;
   }
-  const tableData = props.associations.map<IAssociationInfo>(x => {
-    return {
-      id: x.id?.toString() || '',
-      linkUrl: props.linkUrlMask.replace('|id|', x.id?.toString() || ''),
-      fileIdentifier: x.fileNumber || '',
-      fileName: x.fileName || '',
-      createdBy: x.createdBy || '',
-      createdDate: x.createdDateTime || '',
-      status: x.status || '',
-    };
-  });
+  const tableData = orderBy(
+    props.associations.map<IAssociationInfo>(x => {
+      return {
+        id: x.id?.toString() || '',
+        linkUrl: props.linkUrlMask.replace('|id|', x.id?.toString() || ''),
+        fileIdentifier: x.fileNumber || '',
+        fileName: x.fileName || '',
+        createdBy: x.createdBy || '',
+        createdByGuid: x.createdByGuid || '',
+        createdDate: x.createdDateTime || '',
+        status: x.status || '',
+      };
+    }),
+    (association: IAssociationInfo) => {
+      return association.createdDate;
+    },
+    'desc',
+  );
+
   return (
     <Table<IAssociationInfo>
       name="associationFiles"
@@ -68,6 +79,14 @@ const acquisitionColumns: ColumnWithProps<IAssociationInfo>[] = [
     accessor: 'createdBy',
     align: 'left',
     width: 50,
+    Cell: (props: CellProps<IAssociationInfo>) => {
+      return (
+        <UserNameTooltip
+          userName={props.row.original?.createdBy}
+          userGuid={props.row.original?.createdByGuid}
+        />
+      );
+    },
   },
   {
     Header: 'Created date',

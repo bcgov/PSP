@@ -30,11 +30,12 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
 
   const spinner = <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
 
-  const editButton = keycloak.hasClaim(Claims.NOTE_EDIT) ? (
-    <Button variant="link" aria-label="edit" onClick={() => onEdit && onEdit(note)}>
-      <FaEdit size="2rem" />
-    </Button>
-  ) : null;
+  const editButton =
+    keycloak.hasClaim(Claims.NOTE_EDIT) && !note?.isSystemGenerated ? (
+      <Button variant="link" aria-label="edit" onClick={() => onEdit && onEdit(note)}>
+        <FaEdit size="2rem" />
+      </Button>
+    ) : null;
 
   const body = (
     <Container>
