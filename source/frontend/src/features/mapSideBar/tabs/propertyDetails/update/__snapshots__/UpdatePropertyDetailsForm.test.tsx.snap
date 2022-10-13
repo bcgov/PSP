@@ -1,0 +1,1672 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c4 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c9.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c9.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c9.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c9.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c9.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c9 .form-label {
+  margin-bottom: unset;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c8 {
+  border-left: 1px solid #8c8c8c;
+}
+
+.c6 {
+  width: 100%;
+  font-weight: bold;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0;
+  border-bottom: 2px solid #8c8c8c;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c7.table .no-rows-message {
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.c7.table .tbody .tr {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  min-width: 60px;
+}
+
+.c7.table .tbody .tr .td {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 100 0 auto;
+  -ms-flex: 100 0 auto;
+  flex: 100 0 auto;
+  box-sizing: border-box;
+  min-height: 3.6rem;
+  min-width: 30px;
+  width: 100px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c7.table .tbody .tr .td.right {
+  -webkit-box-pack: right;
+  -webkit-justify-content: right;
+  -ms-flex-pack: right;
+  justify-content: right;
+  text-align: right;
+}
+
+.c7.table .tbody .tr .td.left {
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  text-align: left;
+}
+
+.c7.table .tbody .tr .td input {
+  max-width: 12.5rem;
+}
+
+<div
+    class=""
+  >
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Property Attributes
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              MOTI region:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-regionTypeCode"
+                name="regionTypeCode"
+              >
+                <option
+                  class="option"
+                  value="1"
+                >
+                  South Coast Region
+                </option>
+                <option
+                  class="option"
+                  value="2"
+                >
+                  Southern Interior Region
+                </option>
+                <option
+                  class="option"
+                  value="3"
+                >
+                  Northern Region
+                </option>
+                <option
+                  class="option"
+                  value="4"
+                >
+                  Cannot determine
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Highways district:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-districtTypeCode"
+                name="districtTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Please Select
+                </option>
+                <option
+                  class="option"
+                  value="1"
+                >
+                  Lower Mainland District
+                </option>
+                <option
+                  class="option"
+                  value="2"
+                >
+                  Vancouver Island District
+                </option>
+                <option
+                  class="option"
+                  value="3"
+                >
+                  Rocky Mountain District
+                </option>
+                <option
+                  class="option"
+                  value="4"
+                >
+                  West Kootenay District
+                </option>
+                <option
+                  class="option"
+                  value="5"
+                >
+                  Okanagan-Shuswap District
+                </option>
+                <option
+                  class="option"
+                  value="6"
+                >
+                  Thompson-Nicola District
+                </option>
+                <option
+                  class="option"
+                  value="7"
+                >
+                  Cariboo District
+                </option>
+                <option
+                  class="option"
+                  value="8"
+                >
+                  Peace District
+                </option>
+                <option
+                  class="option"
+                  value="9"
+                >
+                  Fort George District
+                </option>
+                <option
+                  class="option"
+                  value="10"
+                >
+                  Bulkley-Stikine District
+                </option>
+                <option
+                  class="option"
+                  value="11"
+                >
+                  Skeena District
+                </option>
+                <option
+                  class="option"
+                  value="12"
+                >
+                  Cannot determine
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Electoral district:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <span
+              class=""
+            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Agricultural Land Reserve:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <span
+              class=""
+            >
+              No
+            </span>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Railway belt / Dominion patent:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-control"
+                id="input-isRwyBeltDomPatent"
+                name="isRwyBeltDomPatent"
+              >
+                <option
+                  value="null"
+                >
+                  Unknown
+                </option>
+                <option
+                  value="true"
+                >
+                  Yes
+                </option>
+                <option
+                  value="false"
+                >
+                  No
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Land parcel type:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-propertyTypeCode"
+                name="propertyTypeCode"
+              >
+                <option
+                  class="option"
+                  value="CROWNFSRVD"
+                >
+                  Crown - Federal - Surveyed
+                </option>
+                <option
+                  class="option"
+                  value="CROWNFUSRVD"
+                >
+                  Crown - Federal - Unsurveyed
+                </option>
+                <option
+                  class="option"
+                  value="CROWNPSRVD"
+                >
+                  Crown - Provincial - Surveyed
+                </option>
+                <option
+                  class="option"
+                  value="CROWNPUSRVD"
+                >
+                  Crown - Provincial - Unsurveyed
+                </option>
+                <option
+                  class="option"
+                  value="HWYROAD"
+                >
+                  Hwy / Road
+                </option>
+                <option
+                  class="option"
+                  value="PARKS"
+                >
+                  Parks
+                </option>
+                <option
+                  class="option"
+                  value="RESERVE"
+                >
+                  Reserve (IR)
+                </option>
+                <option
+                  class="option"
+                  value="STRATACP"
+                >
+                  Strata Common Property
+                </option>
+                <option
+                  class="option"
+                  value="TITLED"
+                >
+                  Titled
+                </option>
+                <option
+                  class="option"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Municipal zoning:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-municipalZoning"
+                name="municipalZoning"
+                title="Zoning # 1"
+                value="Zoning # 1"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Anomalies:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-anomalies"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060;"
+                  >
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Access
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Disturbance
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-anomalies_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Assignment of rent
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Potential for business loss claims
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Building liens
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Certification of pending litigation
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Charge holders in general
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Charge to the Crown
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Duplicate title
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        E&F clause
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Legal notations
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Mortgage/security interests
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Tenure Status
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Tenure status:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-tenures"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060;"
+                  >
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Highway/Road established by
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Adjacent Land type
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-tenures_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Closed Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Unknown
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Provincial Public Hwy:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-pphStatusTypeCode"
+                name="pphStatusTypeCode"
+              >
+                <option
+                  class="option"
+                  value="COMBO"
+                >
+                  Combination (PPH & Non-PPH)
+                </option>
+                <option
+                  class="option"
+                  value="NONPPH"
+                >
+                  Non-Provincial Public Highway (Non-PPH)
+                </option>
+                <option
+                  class="option"
+                  value="PPH"
+                >
+                  Provincial Public Highway (PPH)
+                </option>
+                <option
+                  class="option"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
+              </select>
+            </div>
+            <p
+              class="text-right font-italic"
+            >
+              PPH status last updated by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon"
+                id="userNameTooltip"
+              >
+                <span
+                  class="c5"
+                >
+                  USER
+                </span>
+              </span>
+               on May 10, 2020
+            </p>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Highway / Road established by:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-roadTypes"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060;"
+                  >
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Controlled Access
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Order in Council (OIC)
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-roadTypes_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        107 Explanatory Plan
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        107 Reference Plan
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Arterial
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Crown grant deletion
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Federal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Forest Service Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted (MoTI Plan)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted (Surveyed)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted (Unsurveyed)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Municipal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Public Road (FLNRORD Juridiction)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        S.42 (Court declared)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        S.56 (2) Highway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        SRW plan (with no gazette)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Subdivision
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Untenured (no dedicated highway)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Adjacent Land type:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-adjacentLands"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060;"
+                  >
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                    >
+                      Indian Reserve (IR)
+                      <i
+                        class="custom-close"
+                      >
+                        <svg
+                          class="c4"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-adjacentLands_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Crown
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Act Reserve (Section 16/17/12/14)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned and leased - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned and leased - HMQ
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned not leases - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ministry owned not leases - HMQ
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Private (Fee Simple)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Special Use Permit (SUP)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            First Nations Information
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Band name:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <span
+              class=""
+            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Reserve name:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <span
+              class=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Area
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            <label
+              class="c6"
+            >
+              Land measurement
+            </label>
+            <div
+              class="c7 table"
+              role="table"
+            >
+              <div
+                class="tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                  >
+                    <div
+                      class="td right"
+                      role="cell"
+                      title=""
+                    >
+                      <input
+                        aria-label="square metres"
+                        name="area-sq-meters"
+                        step=".01"
+                        type="number"
+                        value="25000"
+                      />
+                    </div>
+                    <div
+                      class="td left"
+                      role="cell"
+                      title=""
+                    >
+                      sq. metres
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                  >
+                    <div
+                      class="td right"
+                      role="cell"
+                      title=""
+                    >
+                      <input
+                        aria-label="square feet"
+                        name="area-sq-feet"
+                        step=".01"
+                        type="number"
+                        value="269097.76"
+                      />
+                    </div>
+                    <div
+                      class="td left"
+                      role="cell"
+                      title=""
+                    >
+                      sq. feet
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                  >
+                    <div
+                      class="td right"
+                      role="cell"
+                      title=""
+                    >
+                      <input
+                        aria-label="hectares"
+                        name="area-hectares"
+                        step=".01"
+                        type="number"
+                        value="2.5"
+                      />
+                    </div>
+                    <div
+                      class="td left"
+                      role="cell"
+                      title=""
+                    >
+                      hectares
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                  >
+                    <div
+                      class="td right"
+                      role="cell"
+                      title=""
+                    >
+                      <input
+                        aria-label="acres"
+                        name="area-acres"
+                        step=".01"
+                        type="number"
+                        value="6.18"
+                      />
+                    </div>
+                    <div
+                      class="td left"
+                      role="cell"
+                      title=""
+                    >
+                      acres
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c8 col"
+          >
+            <label
+              class="c2"
+            >
+              Is this a volumetric parcel?
+            </label>
+            <div
+              class="c9 form-group"
+            >
+              <div
+                class="radio-group"
+              >
+                <div
+                  class="c10 pb-3"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input position-static"
+                      id="input-true"
+                      name="isVolumetricParcel"
+                      type="radio"
+                      value="true"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="input-isVolumetricParcel"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="c10 pb-3"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input position-static"
+                      id="input-false"
+                      name="isVolumetricParcel"
+                      type="radio"
+                      value="false"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="input-isVolumetricParcel"
+                  >
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Type:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-volumetricParcelTypeCode"
+                    name="volumetricParcelTypeCode"
+                  >
+                    <option
+                      class="option"
+                      value="AIRSPACE"
+                    >
+                      Airspace
+                    </option>
+                    <option
+                      class="option"
+                      value="SUBSURF"
+                    >
+                      Sub-surface
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <label
+                  class="c6"
+                >
+                  Volumetric measurement
+                </label>
+                <div
+                  class="c7 table"
+                  role="table"
+                >
+                  <div
+                    class="tbody"
+                    role="rowgroup"
+                  >
+                    <div
+                      class="tr-wrapper"
+                    >
+                      <div
+                        class="tr"
+                        role="row"
+                      >
+                        <div
+                          class="td right"
+                          role="cell"
+                          title=""
+                        >
+                          <input
+                            aria-label="cubic metres"
+                            name="volume-cubic-meters"
+                            step=".01"
+                            type="number"
+                            value="1000"
+                          />
+                        </div>
+                        <div
+                          class="td left"
+                          role="cell"
+                          title=""
+                        >
+                          <span>
+                            metres
+                            <sup>
+                              3
+                            </sup>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="tr-wrapper"
+                    >
+                      <div
+                        class="tr"
+                        role="row"
+                      >
+                        <div
+                          class="td right"
+                          role="cell"
+                          title=""
+                        >
+                          <input
+                            aria-label="cubic feet"
+                            name="volume-cubic-feet"
+                            step=".01"
+                            type="number"
+                            value="35714.29"
+                          />
+                        </div>
+                        <div
+                          class="td left"
+                          role="cell"
+                          title=""
+                        >
+                          <span>
+                            feet
+                            <sup>
+                              3
+                            </sup>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0 form-section"
+    >
+      <h2
+        class="c1"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            Notes
+          </div>
+          <div
+            class="col-1"
+          />
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="textarea input form-group"
+        >
+          <textarea
+            class="form-control"
+            id="input-notes"
+            name="notes"
+            rows="4"
+            title="I edited this Test notes for this property - again"
+          >
+            I edited this Test notes for this property - again
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

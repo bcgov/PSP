@@ -1,8 +1,8 @@
 const fs = require('fs');
 const os = require('os');
 
-const packageJsonLoc = './frontend/package.json';
-const csprojLoc = './backend/api/Pims.Api.csproj';
+const packageJsonLoc = './source/frontend/package.json';
+const csprojLoc = './source/backend/api/Pims.Api.csproj';
 
 /**
  * A script for automated version bumps. It requires Node.js to be installed on the server.
