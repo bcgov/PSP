@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -11,6 +7,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly LoginSteps loginSteps;
         private readonly LeaseDetails leaseDetails;
+
         private readonly LeaseTenants tenant;
         private readonly LeasePayments payments;
         private readonly LeaseImprovements improvements;
@@ -37,6 +34,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private readonly string firstTermEndDate = "04/22/2022";
         private readonly string firstTermAgreedPayment = "2500";
+
         private readonly string firstTermPaymentSentDate = "02/23/2022";
         private readonly string firstTermPaymentStatus = "Paid";
         private readonly string firstTermPaymentReceived = "2625";
@@ -46,6 +44,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string secondTermStartDate = "05/22/2022";
         private readonly string secondTermEndDate = "06/30/2022";
         private readonly string secondTermAgreedPayment = "3500";
+        private readonly string secondTermPaymentSentDate = "04/23/2022";
+        private readonly string secondTermPaymentReceived = "3000";
+
+
         private readonly string termPaymentDue = "Automation Test Due";
         private readonly string noGST = "N";
         private readonly string yesGST = "Y";
@@ -104,6 +106,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             deposits = new LeaseDeposits(driver.Current);
             surplus = new LeaseSurplus(driver.Current);
             searchLease = new SearchLease(driver.Current);
+
         }
 
         [StepDefinition(@"I create a new Lease with minimum fields")]
@@ -235,6 +238,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Inserting second Payment
             payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
 
+            //Add Payments
+            payments.OpenLastPaymentTab();
+
+            //Inserting Payment for first term
+            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
+
+            //Inserting second Payment
+            payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
+
             //Inserting second term
             payments.AddTerm(secondTermStartDate, secondTermEndDate, secondTermAgreedPayment, termPaymentDue, noGST, termNotExercised);
 
@@ -292,6 +304,70 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //SURPLUS
             //Navigate to Surplus Declaration Section
             surplus.NavigateToSurplusSection();
+
+            //Get new lease's code
+            leaseCode = surplus.GetLeaseCode();
+
+        }
+
+        [StepDefinition(@"I update an existing lease")]
+        public void EditExistingLease()
+        {
+            searchLease.NavigateToSearchLicense();
+            searchLease.SearchLicenseByLFile(leaseCode);
+
+            Assert.True(searchLease.SearchFoundResults());
+
+            //IMPROVEMENTS
+            //Navigate to Improvements
+            improvements.NavigateToImprovementSection();
+
+            //Edit Improvement Section
+            improvements.EditImprovements();
+
+            //Add Commercial Improvements
+            improvements.AddCommercialImprovement(improvementCommercialAddress, improvementCommercialSize, improvementCommercialSize);
+
+            //Add Commercial Improvements
+            improvements.AddResidentialImprovement(improvementResidentialAddress, improvementResidentialSize, improvementResidentialDescription);
+
+            //Add Commercial Improvements
+            improvements.AddOtherImprovement(improvementOtherAddress, improvementOtherSize, improvementOtherDescription);
+
+            //Save Improvements
+            improvements.SaveImproments();
+
+            //INSURANCE
+            //Navigate to Improvements
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Improvement Section
+            insurance.EditInsurance();
+
+            //Add Aircraft Insurance
+            insurance.AddAircraftInsurance(insuranceAircraftLimit, insuranceAircraftExpiryDate, insuranceAircraftDescription);
+
+            //Add CGL Insurance
+            insurance.AddCGLInsurance(insuranceCGLLimit, insuranceCGLExpiryDate, insuranceCGLDescription);
+
+            //Add Marine Insurance
+            insurance.AddMarineInsurance(insuranceMarineLimit, insuranceMarineExpiryDate, insuranceMarineDescription);
+
+            //Save Insurances
+            insurance.SaveInsurance();
+
+            //DEPOSITS
+            //Navigate to Deposits
+            deposits.NavigateToDepositSection();
+
+            //Add Deposit
+            deposits.AddDeposit(depositDescription, depositAmount, depositPaidDate, depositHolder);
+
+            //Add Return
+            deposits.AddReturn(depositReturnTerminationDate, depositReturnClaims, depositRetunedAmount, depositReturnInterestPaid, depositReturnDate, depositReturnPayeeName);
+
+            //Add Deposit Notes
+            deposits.AddNotes(depositNotes);
 
             //Get new lease's code
             leaseCode = surplus.GetLeaseCode();
