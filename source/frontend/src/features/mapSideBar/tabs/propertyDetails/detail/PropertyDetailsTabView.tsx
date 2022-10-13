@@ -198,7 +198,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
                   <SectionField label="Type">{property?.volumetricType?.description}</SectionField>
 
                   <Row>
-                    <Col className="col-10">
+                    <Col>
                       <VolumetricMeasurementTable data={volumeMeasurement} />
                     </Col>
                   </Row>

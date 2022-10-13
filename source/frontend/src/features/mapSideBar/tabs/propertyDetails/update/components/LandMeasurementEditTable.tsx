@@ -5,28 +5,31 @@ import { convertArea, round } from 'utils';
 
 import { StyledTable } from '../styles';
 
-export interface IUpdateLandMeasurementTableProps {
+export interface IUpdateLandMeasurementEditTableProps {
   area?: number;
   areaUnitTypeCode?: string;
   onChange?: (landArea: number, areaUnitTypeCode: string) => void;
 }
 
-export const LandMeasurementTable: React.FC<IUpdateLandMeasurementTableProps> = ({
+export const LandMeasurementEditTable: React.FC<IUpdateLandMeasurementEditTableProps> = ({
   area = 0,
   areaUnitTypeCode = AreaUnitTypes.Hectares,
   onChange,
 }) => {
-  // derive our internal state from props
-  const initialState: Record<string, number> = {
-    [AreaUnitTypes.SquareMeters]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareMeters),
-    [AreaUnitTypes.SquareFeet]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareFeet),
-    [AreaUnitTypes.Hectares]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Hectares),
-    [AreaUnitTypes.Acres]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Acres),
-  };
-
   // keep track of which input is receiving user input
   const [focus, setFocus] = useState('');
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState<Record<string, number>>({});
+
+  // derive our internal state from props
+  useEffect(() => {
+    const initialState: Record<string, number> = {
+      [AreaUnitTypes.SquareMeters]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareMeters),
+      [AreaUnitTypes.SquareFeet]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareFeet),
+      [AreaUnitTypes.Hectares]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Hectares),
+      [AreaUnitTypes.Acres]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Acres),
+    };
+    setState(initialState);
+  }, [area, areaUnitTypeCode]);
 
   const sqMeters = round(state[AreaUnitTypes.SquareMeters], 2);
   const sqFeet = round(state[AreaUnitTypes.SquareFeet], 2);

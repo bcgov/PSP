@@ -16,8 +16,8 @@ import { stringToBoolean } from 'utils/formUtils';
 import { Section } from '../../Section';
 import { SectionField, StyledFieldLabel } from '../../SectionField';
 import { LeftBorderCol } from '../../SectionStyles';
-import { LandMeasurementTable } from './components/LandMeasurementTable';
-import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
+import { LandMeasurementEditTable } from './components/LandMeasurementEditTable';
+import { VolumetricMeasurementEditTable } from './components/VolumetricMeasurementTable';
 import {
   PropertyAdjacentLandFormModel,
   PropertyAnomalyFormModel,
@@ -68,7 +68,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
     adjacentLands?.some(obj => obj.typeCode === PropertyAdjacentLandTypes.IndianReserve);
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
   // area measurements table inputs
-  const landArea = getIn(values, 'landArea') as number;
+  const landArea = getIn(values, 'landArea') as number | undefined;
   const areaUnit = getIn(values, 'areaUnitTypeCode') as string;
   // volume measurements table inputs
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
@@ -214,18 +214,14 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
       <Section header="Area">
         <Row>
           <Col>
-            <Row>
-              <Col className="col-10">
-                <LandMeasurementTable
-                  area={landArea}
-                  areaUnitTypeCode={areaUnit}
-                  onChange={(landArea, areaUnitTypeCode) => {
-                    formikProps.setFieldValue('landArea', landArea);
-                    formikProps.setFieldValue('areaUnitTypeCode', areaUnitTypeCode);
-                  }}
-                />
-              </Col>
-            </Row>
+            <LandMeasurementEditTable
+              area={landArea}
+              areaUnitTypeCode={areaUnit}
+              onChange={(landArea, areaUnitTypeCode) => {
+                formikProps.setFieldValue('landArea', landArea);
+                formikProps.setFieldValue('areaUnitTypeCode', areaUnitTypeCode);
+              }}
+            />
           </Col>
           <LeftBorderCol>
             <StyledFieldLabel>Is this a volumetric parcel?</StyledFieldLabel>
@@ -256,8 +252,8 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyD
                 </SectionField>
 
                 <Row>
-                  <Col className="col-10">
-                    <VolumetricMeasurementTable
+                  <Col>
+                    <VolumetricMeasurementEditTable
                       volume={volumetricMeasurement}
                       volumeUnitTypeCode={volumetricUnit}
                       onChange={(volume, volumeUnitTypeCode) => {
