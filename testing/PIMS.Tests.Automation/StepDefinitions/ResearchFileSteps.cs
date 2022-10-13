@@ -140,8 +140,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Address
-            //sharedSearchProperties.SelectPropertyByAddress(address1Search);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectPropertyByAddress(address1Search);
+            sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Legal Description
             sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);

@@ -66,7 +66,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddAircraftInsurance(string limit, string expiryDate, string description)
         {
             Wait();
-            ScrollUp();
             FocusAndClick(insuranceAircraftCheckbox);
 
             Wait();
@@ -84,7 +83,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddCGLInsurance(string limit, string expiryDate, string description)
         {
             Wait();
-            ScrollUp();
             FocusAndClick(insuranceCGLCheckbox);
 
             Wait();
@@ -102,7 +100,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddMarineInsurance(string limit, string expiryDate, string description)
         {
             Wait();
-            ScrollUp();
             FocusAndClick(insuranceMarineCheckbox);
 
             Wait();
@@ -120,7 +117,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddVehicleInsurance(string limit, string expiryDate, string description)
         {
             Wait();
-            ScrollUp();
             FocusAndClick(insuranceVehicleCheckbox);
 
             Wait();
@@ -138,7 +134,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddOtherInsurance(string type, string limit, string expiryDate, string description)
         {
             Wait();
-            ScrollUp();
             FocusAndClick(insuranceOtherCheckbox);
 
             Wait();

@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SearchLease : PageObjectBase
     {
         private By menuManagementButton = By.XPath("//a/label[contains(text(),'Management')]/parent::a");
-        private By searchLicenseButton = By.XPath("//a[contains(text(),'Search for a Lease or License')]");
+        private By searchLicenseButton = By.XPath("//a[contains(text(),'Manage Lease/License Files')]");
 
         private By searchLicenseLFileInput = By.Id("input-lFileNo");
         private By searchLicenseActiveStatusDeleteBttn = By.CssSelector("div[class='search-wrapper searchWrapper '] span i");

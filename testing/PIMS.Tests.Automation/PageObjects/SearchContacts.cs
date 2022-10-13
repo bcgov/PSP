@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SearchContacts : PageObjectBase
     {
         private By menuContactsButton = By.XPath("//a/label[contains(text(),'Contacts')]/parent::a");
-        private By searchContactButton = By.XPath("//a[contains(text(),'Search for a Contact')]");
+        private By searchContactButton = By.XPath("//a[contains(text(),'Manage Contacts')]");
 
         private By searchContactOrgRadioBttn = By.Id("input-organizations");
         private By searchContactIndRadioBttn = By.Id("input-persons");
@@ -34,8 +34,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Contact
         public void NavigateToSearchContact()
         {
-            Wait();
-            ZoomOutScreen();
 
             Wait();
             webDriver.FindElement(menuContactsButton).Click();

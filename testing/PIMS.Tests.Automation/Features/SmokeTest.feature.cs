@@ -159,18 +159,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 15
  testRunner.Given("I create a new Lease with minimum fields", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-<<<<<<< HEAD
-<<<<<<< HEAD
 #line 16
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-=======
->>>>>>> 7f1c050a4 (Leases automation)
-=======
-#line 16
- testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
->>>>>>> 55c310707 (Automation for Lease and Licenses)
             }
             this.ScenarioCleanup();
         }

@@ -33,7 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByPID(string PID)
         {
             Wait();
-            ChooseSelectSpecificOption("input-searchBy", "PID");
+            ChooseSpecificSelectOption("input-searchBy", "PID");
 
             WaitUntil(searchByPIDInput);
             if (webDriver.FindElement(searchByPIDInput).GetAttribute("value") != "")
@@ -48,7 +48,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByPIN(string PIN)
         {
             Wait();
-            ChooseSelectSpecificOption("input-searchBy", "PIN");
+            ChooseSpecificSelectOption("input-searchBy", "PIN");
 
             WaitUntil(searchByPINInput);
             if (webDriver.FindElement(searchByPINInput).GetAttribute("value") != "")
@@ -63,7 +63,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByAddress(string address)
         {
             Wait();
-            ChooseSelectSpecificOption("input-searchBy", "Address");
+            ChooseSpecificSelectOption("input-searchBy", "Address");
 
             WaitUntil(searchByAddressInput);
             if (webDriver.FindElement(searchByAddressInput).GetAttribute("value") != "")
@@ -80,7 +80,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByPlan(string plan)
         {
             Wait();
-            ChooseSelectSpecificOption("input-searchBy", "Plan #");
+            ChooseSpecificSelectOption("input-searchBy", "Plan #");
 
             WaitUntil(searchByPlanInput);
             if (webDriver.FindElement(searchByPlanInput).GetAttribute("value") != "")
@@ -95,7 +95,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectPropertyByLegalDescription(string legalDescription)
         {
             Wait();
-            ChooseSelectSpecificOption("input-searchBy", "Legal Description");
+            ChooseSpecificSelectOption("input-searchBy", "Legal Description");
 
             WaitUntil(searchByLegalDescriptionInput);
             if (webDriver.FindElement(searchByLegalDescriptionInput).GetAttribute("value") != "")

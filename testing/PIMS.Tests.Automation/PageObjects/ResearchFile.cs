@@ -26,6 +26,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchResultExpropiationYesRadioBttn = By.Id("input-true");
         private By researchExpropiationNotes = By.Id("input-expropriationNotes");
 
+        private By researchFileSaveButton = By.XPath("//button/div[contains(text(),'Save')]/parent::button");
+
         private By researchEditPropertiesBttn = By.XPath("//button/div[contains(text(),'Edit properties')]");
 
         private By researchFileConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -65,7 +67,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddAdditionalResearchFileInfo(string roadName, string roadAlias, int purposes, string requestDate, string requester, string descriptionRequest, string researchCompletedDate, string resultRequest, Boolean expropiation, string expropiationNotes)
         {
             WaitUntil(researchFileEditButton);
-
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Roads
@@ -78,7 +79,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Research Request
             webDriver.FindElement(researchRequestDateInput).SendKeys(requestDate);
 
-            ChooseSelectRandomOption(researchRequestSourceSelect, "input-requestSourceTypeCode", 2);
+            ChooseRandomSelectOption(researchRequestSourceSelect, "input-requestSourceTypeCode", 2);
 
             Wait();
             webDriver.FindElement(selectContactButton).Click();
@@ -89,7 +90,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Result
             webDriver.FindElement(researchCompleteDateInput).SendKeys(researchCompletedDate);
-            //webDriver.FindElement(researchDescriptionRequestTextarea).Click();
+            webDriver.FindElement(researchCompleteDateInput).SendKeys(Keys.Enter);
           
             webDriver.FindElement(researchResultTextarea).SendKeys(resultRequest);
 

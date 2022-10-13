@@ -58,10 +58,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileTypeSelect);
 
             Wait();
-            ChooseSelectRandomOption(acquisitionFileTypeSelect,"input-acquisitionType", 2);
+            ChooseRandomSelectOption(acquisitionFileTypeSelect,"input-acquisitionType", 2);
 
             Wait();
-            ChooseSelectRandomOption(acquisitionRegionSelect, "input-region", 2);
+            ChooseRandomSelectOption(acquisitionRegionSelect, "input-region", 2);
         }
 
         public void AddAdditionalInformation(string deliveryDate, string teamMember1, string teamMember2)
@@ -72,7 +72,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(deliveryDate);
 
-            ChooseSelectRandomOption(acquisitionFilePhysicalStatusSelect, "input-acquisitionPhysFileStatusType", 2);
+            ChooseRandomSelectOption(acquisitionFilePhysicalStatusSelect, "input-acquisitionPhysFileStatusType", 2);
 
             AddTeamMembers(teamMember1);
             AddTeamMembers(teamMember2);
@@ -109,7 +109,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
 
             WaitUntil(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"));
-            ChooseSelectRandomOption(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"), "input-team["+ teamMemberIndex +"].contactTypeCode", 2);
+            ChooseRandomSelectOption(By.CssSelector("select[id='input-team["+ teamMemberIndex +"].contactTypeCode']"), "input-team["+ teamMemberIndex +"].contactTypeCode", 2);
             FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
             sharedSelectContact.SelectContact(contactName);
 

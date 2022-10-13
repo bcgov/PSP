@@ -16,16 +16,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public virtual string CurrentLocation => new Uri(webDriver.Url).AbsolutePath;
 
-        public virtual void Wait(int milliseconds = 700) => Thread.Sleep(milliseconds);
-<<<<<<< HEAD
+        public virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
 
-        public void WaitUntil(By element)
-        {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(20));
-            wait.Until(ExpectedConditions.ElementIsVisible(element));
-        }
-=======
->>>>>>> 7f1c050a4 (Leases automation)
 
         public void WaitUntil(By element)
         {
@@ -41,7 +33,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var buttons = webDriver.FindElements(By.TagName("button"));
             var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            js.ExecuteScript("arguments[0].click()", selectedBtn);
+            //js.ExecuteScript("arguments[0].click()", selectedBtn);
+
+            selectedBtn.Click();
         }
 
         protected void FocusAndClick(By element)
@@ -67,27 +61,12 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 55c310707 (Automation for Lease and Licenses)
-        protected void ScrollUp()
-        {
-            var js = (IJavaScriptExecutor)webDriver;
-            js.ExecuteScript("window.scrollBy(0,0)", "");
-        }
-
-<<<<<<< HEAD
-=======
->>>>>>> 7f1c050a4 (Leases automation)
-=======
->>>>>>> 55c310707 (Automation for Lease and Licenses)
-
-        protected void ChooseRandomOption(IWebElement parentElement, string parentElementName, int fromOption)
+        protected void ChooseRandomSelectOption(By parentElementBy, string parentElementName, int fromOption)
         {
             Random random = new Random();
             var js = (IJavaScriptExecutor)webDriver;
 
+            var parentElement = webDriver.FindElement(parentElementBy);
             var childrenElements = parentElement.FindElements(By.TagName("option"));
             int index = random.Next(fromOption, childrenElements.Count + 1);
             var selectedRadioBttnLocator = "select[id='" + parentElementName + "'] option:nth-child(" + index + ")";
@@ -98,7 +77,7 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedRadioBttn.Click();
         }
 
-        protected void ChooseSpecificOption(string parentElementName, string option)
+        protected void ChooseSpecificSelectOption(string parentElementName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
 
@@ -110,10 +89,6 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 55c310707 (Automation for Lease and Licenses)
         protected void ChooseRandomRadioButton(By parentName)
         {
             Random random = new Random();
@@ -129,11 +104,6 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedRadioBttn.Click();
         }
 
-<<<<<<< HEAD
-=======
->>>>>>> 7f1c050a4 (Leases automation)
-=======
->>>>>>> 55c310707 (Automation for Lease and Licenses)
         protected void ChooseSpecificRadioButton(string parentElementName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
@@ -145,21 +115,36 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             selectedOption.Click();
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 55c310707 (Automation for Lease and Licenses)
 
-        protected void ZoomOutScreen()
+        protected void ChooseMultiSelectRandomOpions(By element, string optionsContainerName, int options)
         {
+            Random random = new Random();
             var js = (IJavaScriptExecutor)webDriver;
-            js.ExecuteScript("document.body.style.zoom='80%';");
+
+            for (int i = 0; i < options; i++)
+            {
+                var parentElement = webDriver.FindElement(element);
+                var childrenElements = parentElement.FindElements(By.TagName("li"));
+
+                int index = random.Next(1, childrenElements.Count + 1);
+                var selectedOptionBttnLocator = "ul[class='" + optionsContainerName + "'] li:nth-child(" + index + ")";
+                var selectedOption = webDriver.FindElement(By.CssSelector(selectedOptionBttnLocator));
+
+                js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+
+                Wait();
+                selectedOption.Click();
+            } 
         }
-<<<<<<< HEAD
-=======
->>>>>>> 7f1c050a4 (Leases automation)
-=======
->>>>>>> 55c310707 (Automation for Lease and Licenses)
+
+        protected void ClearInput(By elementBy)
+        {
+            var element = webDriver.FindElement(elementBy);
+            while (!element.GetAttribute("value").Equals(""))
+            {
+                element.SendKeys(Keys.Backspace);
+            }
+        }
     }
 
 }
