@@ -2,36 +2,36 @@ import { ColumnWithProps, DateCell, renderTypeCode, Table } from 'components/Tab
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
-import { Api_PropertyResearchFile } from 'models/api/PropertyResearchFile';
+import { ResearchSearchResultModel } from 'interfaces/IResearchSearchResult';
+import { Api_ResearchFileProperty } from 'models/api/ResearchFile';
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-const columns: ColumnWithProps<IResearchSearchResult>[] = [
+const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'R-File Number',
-    accessor: 'fileNumber',
+    accessor: 'rfileNumber',
     align: 'right',
     clickable: true,
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<IResearchSearchResult>) => {
+    Cell: (props: CellProps<ResearchSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.CONTACT_VIEW)) {
         return (
           <Link to={`/mapview/sidebar/research/${props.row.original.id}`}>
-            {props.row.original.fileNumber}
+            {props.row.original.rfileNumber}
           </Link>
         );
       }
-      return props.row.original.fileNumber;
+      return props.row.original.rfileNumber;
     },
   },
   {
     Header: 'Research file name',
-    accessor: 'fileName',
+    accessor: 'name',
     align: 'right',
     clickable: true,
     sortable: true,
@@ -40,12 +40,12 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
   },
   {
     Header: 'MOTI Region',
-    accessor: 'researchProperties',
+    accessor: 'fileProperties',
     align: 'right',
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: ({ value }: CellProps<any, Api_PropertyResearchFile[]>) => {
+    Cell: ({ value }: CellProps<any, Api_ResearchFileProperty[]>) => {
       const regions = [...new Set(value.map(pr => pr?.property?.region?.description))];
       return regions.join(', ');
     },
@@ -101,13 +101,13 @@ const columns: ColumnWithProps<IResearchSearchResult>[] = [
 ];
 
 export interface IResearchSearchResultsProps {
-  results: IResearchSearchResult[];
+  results: ResearchSearchResultModel[];
   totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageIndex?: number;
-  sort?: TableSort<IResearchSearchResult>;
-  setSort: (value: TableSort<IResearchSearchResult>) => void;
+  sort?: TableSort<ResearchSearchResultModel>;
+  setSort: (value: TableSort<ResearchSearchResultModel>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
@@ -123,7 +123,7 @@ export function ResearchSearchResults(props: IResearchSearchResultsProps) {
   );
 
   return (
-    <Table<IResearchSearchResult>
+    <Table<ResearchSearchResultModel>
       name="researchFilesTable"
       columns={columns}
       data={results ?? []}

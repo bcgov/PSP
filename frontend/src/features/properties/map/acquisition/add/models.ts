@@ -1,15 +1,14 @@
-import { IMapProperty } from 'features/properties/selector/models';
-import { IContactSearchResult } from 'interfaces';
 import {
   Api_AcquisitionFile,
   Api_AcquisitionFilePerson,
   Api_AcquisitionFileProperty,
 } from 'models/api/AcquisitionFile';
-import { Api_Property } from 'models/api/Property';
-import { pidParser } from 'utils';
 import { fromTypeCode, toTypeCode } from 'utils/formUtils';
 
-export class AcquisitionForm {
+import { PropertyForm } from '../../shared/models';
+import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../common/models';
+
+export class AcquisitionForm implements WithAcquisitionTeam {
   id?: number;
   fileName?: string = '';
   assignedDate?: string;
@@ -21,8 +20,8 @@ export class AcquisitionForm {
   acquisitionType?: string;
   // MOTI region
   region?: string;
-  properties: AcquisitionPropertyForm[] = [];
-  team: AcquisitionTeamForm[] = [];
+  properties: PropertyForm[] = [];
+  team: AcquisitionTeamFormModel[] = [];
 
   toApi(): Api_AcquisitionFile {
     return {
@@ -36,9 +35,9 @@ export class AcquisitionForm {
       acquisitionTypeCode: toTypeCode(this.acquisitionType),
       regionCode: toTypeCode(Number(this.region)),
       // ACQ file properties
-      acquisitionProperties: this.properties.map<Api_AcquisitionFileProperty>(x => {
+      fileProperties: this.properties.map<Api_AcquisitionFileProperty>(x => {
         return {
-          id: x.acquisitionFilePropertyId,
+          id: x.id,
           propertyName: x.name,
           isDisabled: x.isDisabled,
           displayOrder: x.displayOrder,
@@ -47,7 +46,9 @@ export class AcquisitionForm {
           acquisitionFile: { id: this.id },
         };
       }),
-      acquisitionTeam: AcquisitionTeamForm.toApi(this.team),
+      acquisitionTeam: this.team
+        .filter(x => !!x.contact && !!x.contactTypeCode)
+        .map<Api_AcquisitionFilePerson>(x => x.toApi()),
     };
   }
 
@@ -63,96 +64,8 @@ export class AcquisitionForm {
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
-    newForm.properties =
-      model.acquisitionProperties?.map(x => AcquisitionPropertyForm.fromApi(x)) || [];
+    newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
 
     return newForm;
-  }
-}
-
-export class AcquisitionPropertyForm {
-  acquisitionFilePropertyId?: number;
-  apiId?: number;
-  pid?: string;
-  pin?: string;
-  latitude?: number;
-  longitude?: number;
-  planNumber?: string;
-  name?: string;
-  isDisabled?: boolean;
-  displayOrder?: number;
-  region?: number;
-  regionName?: string;
-  district?: number;
-  districtName?: string;
-  rowVersion?: number;
-  legalDescription?: string;
-  address?: string;
-
-  static fromMapProperty(model: IMapProperty): AcquisitionPropertyForm {
-    const newForm = new AcquisitionPropertyForm();
-    newForm.pid = model.pid;
-    newForm.pin = model.pin;
-    newForm.latitude = model.latitude;
-    newForm.longitude = model.longitude;
-    newForm.planNumber = model.planNumber;
-    newForm.region = model.region;
-    newForm.regionName = model.regionName;
-    newForm.district = model.district;
-    newForm.districtName = model.districtName;
-    newForm.legalDescription = model.legalDescription;
-    newForm.address = model.address;
-
-    return newForm;
-  }
-
-  static fromApi(model: Api_AcquisitionFileProperty): AcquisitionPropertyForm {
-    const newForm = new AcquisitionPropertyForm();
-    newForm.acquisitionFilePropertyId = model.id;
-    newForm.apiId = model.property?.id;
-    newForm.name = model.propertyName;
-    newForm.pid = model.property?.pid?.toString();
-    newForm.pin = model.property?.pin?.toString();
-    newForm.latitude = model.property?.latitude;
-    newForm.longitude = model.property?.longitude;
-    newForm.planNumber = model.property?.planNumber;
-    newForm.region = model.property?.region?.id;
-    newForm.district = model.property?.district?.id;
-    newForm.rowVersion = model.rowVersion;
-
-    return newForm;
-  }
-
-  toApi(): Api_Property {
-    return {
-      id: this.apiId,
-      pid: pidParser(this.pid),
-      pin: this.pin !== undefined ? Number(this.pin) : undefined,
-      landArea: 0,
-      location: { coordinate: { x: this.longitude, y: this.latitude } },
-      region: toTypeCode(this.region),
-      district: toTypeCode(this.district),
-    };
-  }
-}
-
-export class AcquisitionTeamForm {
-  contact?: IContactSearchResult;
-  contactTypeCode: string;
-
-  constructor(contactTypeCode: string, contact?: IContactSearchResult) {
-    this.contactTypeCode = contactTypeCode;
-    this.contact = contact;
-  }
-
-  static toApi(model: AcquisitionTeamForm[]): Api_AcquisitionFilePerson[] {
-    return model
-      .filter(x => !!x.contact && !!x.contactTypeCode)
-      .map<Api_AcquisitionFilePerson>(x => {
-        return {
-          personId: x.contact?.personId || 0,
-          personProfileTypeCode: x.contactTypeCode,
-        };
-      });
   }
 }

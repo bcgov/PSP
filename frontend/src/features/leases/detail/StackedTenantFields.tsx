@@ -20,7 +20,7 @@ export const StackedTenantFields: React.FunctionComponent<IStackedTenantFieldsPr
     <>
       <StyledStackedDivs>
         <label>Tenant:</label>
-        <OverflowTip title="tenant" fullText={getAllNames(lease)} />
+        <OverflowTip fullText={getAllNames(lease)} />
       </StyledStackedDivs>
     </>
   );

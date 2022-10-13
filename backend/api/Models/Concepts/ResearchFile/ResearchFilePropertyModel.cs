@@ -54,7 +54,7 @@ namespace Pims.Api.Models.Concepts
         /// <summary>
         /// get/set - The relationship's research file.
         /// </summary>
-        public ResearchFileModel ResearchFile { get; set; }
+        public ResearchFileModel File { get; set; }
 
         /// <summary>
         /// get/set - The property's purpose types.

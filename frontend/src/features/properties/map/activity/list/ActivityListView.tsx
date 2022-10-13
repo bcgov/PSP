@@ -49,7 +49,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
   const [filters, setFilters] = React.useState<IActivityFilter>(
     defaultFilters ?? defaultActivityFilter,
   );
-  const { staleFile, setStaleFile } = useContext(SideBarContext);
+  const { staleFile, setStaleFile, getFilePropertyIndexById, file } = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { hasClaim } = useKeycloakWrapper();
 
@@ -102,6 +102,7 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
       }
       return activityItems;
     }
+
     return [];
   }, [activityResults, sort, filters]);
 
@@ -164,6 +165,8 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
               history.push(`${match.url}/activity/${activity?.id}`);
             }}
             onDelete={onDeleteActivity}
+            getFilePropertyIndexById={getFilePropertyIndexById}
+            fileProperties={file?.fileProperties ?? []}
           />
         </Styled.Scrollable>
       </Styled.ListPage>

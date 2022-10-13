@@ -8,7 +8,8 @@ export interface TabInventoryView {
   name: string;
 }
 
-interface IInventoryTabsProps {
+export interface IInventoryTabsProps {
+  loading: boolean;
   defaultTabKey: InventoryTabNames;
   tabViews: TabInventoryView[];
   activeTab: InventoryTabNames;

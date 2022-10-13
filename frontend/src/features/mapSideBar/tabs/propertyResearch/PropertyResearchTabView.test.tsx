@@ -42,7 +42,7 @@ const fakePropertyResearch: Api_ResearchFileProperty = {
   isDisabled: false,
 
   property: {},
-  researchFile: {},
+  file: {},
   propertyName: 'The Research Property name',
   isLegalOpinionRequired: true,
   isLegalOpinionObtained: true,

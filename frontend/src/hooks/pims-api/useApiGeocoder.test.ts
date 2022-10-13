@@ -27,7 +27,7 @@ describe('useApiGeocoder testing suite', () => {
   };
 
   it('Get SitePIds', async () => {
-    const { getSitePids } = setup();
+    const { getSitePidsApi: getSitePids } = setup();
     const response = await getSitePids('1234');
 
     expect(response.status).toBe(200);
@@ -35,7 +35,7 @@ describe('useApiGeocoder testing suite', () => {
   });
 
   it('Search address', async () => {
-    const { searchAddress } = setup();
+    const { searchAddressApi: searchAddress } = setup();
     const response = await searchAddress(
       '1234 Fake',
       'matchPrecisionNot=OCCUPANT,INTERSECTION,BLOCK,STREET,LOCALITY,PROVINCE,OCCUPANT',

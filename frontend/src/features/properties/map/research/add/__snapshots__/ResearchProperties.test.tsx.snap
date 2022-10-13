@@ -178,7 +178,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   border-bottom-left-radius: 0;
 }
 
-.c18 {
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -190,7 +190,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   gap: 0.8rem;
 }
 
-.c18 .form-label {
+.c19 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -241,20 +241,20 @@ exports[`ResearchProperties component renders as expected when provided no prope
   margin-bottom: 2rem;
 }
 
-.c19.c19.btn {
+.c20.c20.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c19.c19.btn .text {
+.c20.c20.btn .text {
   display: none;
 }
 
-.c19.c19.btn:hover,
-.c19.c19.btn:active,
-.c19.c19.btn:focus {
+.c20.c20.btn:hover,
+.c20.c20.btn:active,
+.c20.c20.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -268,9 +268,9 @@ exports[`ResearchProperties component renders as expected when provided no prope
   flex-direction: row;
 }
 
-.c19.c19.btn:hover .text,
-.c19.c19.btn:active .text,
-.c19.c19.btn:focus .text {
+.c20.c20.btn:hover .text,
+.c20.c20.btn:active .text,
+.c20.c20.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -288,6 +288,15 @@ exports[`ResearchProperties component renders as expected when provided no prope
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';
+}
+
+.c18 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .c17 {
@@ -911,7 +920,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
               class="col-md-3"
             >
               <p
-                class="mb-0"
+                class="mb-0 d-flex align-items-center"
               >
                 <svg
                   height="45"
@@ -982,18 +991,19 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     1
                   </title>
                 </svg>
-                <span
-                  class="pl-3"
-                >
-                  PID: 123-456-789
-                </span>
               </p>
+              <div
+                class="c18 pl-3"
+              >
+                PID: 123-456-789
+              </div>
+              <p />
             </div>
             <div
               class="col-md-7"
             >
               <div
-                class="c18 mb-0 w-100 input form-group"
+                class="c19 mb-0 w-100 input form-group"
               >
                 <input
                   class="form-control"
@@ -1007,13 +1017,14 @@ exports[`ResearchProperties component renders as expected when provided no prope
               class="col-md-2"
             >
               <button
-                class="c13 Button c19 btn btn-link"
+                class="c13 Button c20 btn btn-link"
                 type="button"
               >
                 <div
                   class="Button__value"
                 >
                   <svg
+                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -1050,7 +1061,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
               class="col-md-3"
             >
               <p
-                class="mb-0"
+                class="mb-0 d-flex align-items-center"
               >
                 <svg
                   height="45"
@@ -1121,18 +1132,19 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     2
                   </title>
                 </svg>
-                <span
-                  class="pl-3"
-                >
-                  PIN: 1111222
-                </span>
               </p>
+              <div
+                class="c18 pl-3"
+              >
+                PIN: 1111222
+              </div>
+              <p />
             </div>
             <div
               class="col-md-7"
             >
               <div
-                class="c18 mb-0 w-100 input form-group"
+                class="c19 mb-0 w-100 input form-group"
               >
                 <input
                   class="form-control"
@@ -1146,13 +1158,14 @@ exports[`ResearchProperties component renders as expected when provided no prope
               class="col-md-2"
             >
               <button
-                class="c13 Button c19 btn btn-link"
+                class="c13 Button c20 btn btn-link"
                 type="button"
               >
                 <div
                   class="Button__value"
                 >
                   <svg
+                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"

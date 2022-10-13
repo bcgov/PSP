@@ -13,13 +13,13 @@ export const useApiGeocoder = () => {
 
   return React.useMemo(
     () => ({
-      searchAddress: (address: string, additionalQS?: string) =>
+      searchAddressApi: (address: string, additionalQS?: string) =>
         api.get<IGeocoderResponse[]>(
           `/tools/geocoder/addresses?address=${address}${additionalQS ? `&${additionalQS}` : ``}`,
         ),
-      getSitePids: (siteId: string) =>
+      getSitePidsApi: (siteId: string) =>
         api.get<IGeocoderPidsResponse>(`/tools/geocoder/parcels/pids/${siteId}`),
-      getNearestToPoint: (lng: number, lat: number) =>
+      getNearestToPointApi: (lng: number, lat: number) =>
         api.get<IGeocoderResponse>(`/tools/geocoder/nearest?point=${lng},${lat}`),
     }),
     [api],

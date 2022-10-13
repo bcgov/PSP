@@ -1,15 +1,16 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { compact } from 'lodash';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { pidFormatter } from 'utils';
+import { formatApiAddress, pidFormatter } from 'utils';
 
 export enum NameSourceType {
   PID = 'PID',
   PIN = 'PIN',
   PLAN = 'Plan #',
   LOCATION = 'Location',
-  RESEARCH = 'Research Name',
+  NAME = 'Descriptive Name',
   NONE = 'n/a',
+  ADDRESS = 'Address',
 }
 
 interface PropertyName {
@@ -33,6 +34,11 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
       label: NameSourceType.LOCATION,
       value: compact([property.latitude?.toFixed(5), property.longitude?.toFixed(5)]).join(', '),
     };
+  } else if (property.address !== undefined) {
+    return {
+      label: NameSourceType.ADDRESS,
+      value: property.address,
+    };
   }
   return { label: NameSourceType.NONE, value: '' };
 };
@@ -50,7 +56,7 @@ export const getFilePropertyName = (
     fileProperty.propertyName !== '' &&
     skipName === false
   ) {
-    return { label: NameSourceType.RESEARCH, value: fileProperty.propertyName };
+    return { label: NameSourceType.NAME, value: fileProperty.propertyName };
   } else if (fileProperty.property !== undefined) {
     const property = fileProperty.property;
     let mapProperty: IMapProperty = {
@@ -59,6 +65,7 @@ export const getFilePropertyName = (
       latitude: property.latitude,
       longitude: property.longitude,
       planNumber: property.planNumber,
+      address: property.address !== undefined ? formatApiAddress(property.address) : undefined,
     };
     return getPropertyName(mapProperty);
   }

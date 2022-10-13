@@ -1,4 +1,4 @@
-import { Button, IconButton } from 'components/common/buttons';
+import { Button, StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
@@ -90,16 +90,16 @@ export const LeaseListView: React.FunctionComponent = () => {
             </Col>
             <Col md="auto" className="px-0">
               <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-                <IconButton onClick={() => fetch('excel')}>
+                <StyledIconButton onClick={() => fetch('excel')}>
                   <FaFileExcel data-testid="excel-icon" size={36} />
-                </IconButton>
+                </StyledIconButton>
               </TooltipWrapper>
             </Col>
             <Col md="auto" className="px-0">
               <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
-                <IconButton onClick={() => fetch('csv')}>
+                <StyledIconButton onClick={() => fetch('csv')}>
                   <FaFileAlt data-testid="csv-icon" size={36} />
-                </IconButton>
+                </StyledIconButton>
               </TooltipWrapper>
             </Col>
           </Row>
@@ -107,7 +107,7 @@ export const LeaseListView: React.FunctionComponent = () => {
         {hasClaim(Claims.LEASE_ADD) && (
           <StyledAddButton onClick={() => history.push('/lease/new')}>
             <FaPlus />
-            &nbsp;Add A Lease/License
+            &nbsp;Create a Lease/License
           </StyledAddButton>
         )}
         <LeaseSearchResults

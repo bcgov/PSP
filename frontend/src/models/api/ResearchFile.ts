@@ -1,11 +1,11 @@
 import { Api_File } from 'models/api/File';
+import { Api_PropertyFile } from 'models/api/PropertyFile';
 import Api_TypeCode from 'models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
-import { Api_Property } from './Property';
 
 export interface Api_ResearchFilePropertyPurposeType extends Api_ConcurrentVersion {
   id?: number;
@@ -13,13 +13,8 @@ export interface Api_ResearchFilePropertyPurposeType extends Api_ConcurrentVersi
   propertyResearchFileId?: number;
 }
 
-export interface Api_ResearchFileProperty extends Api_ConcurrentVersion {
-  id?: number;
-  isDisabled?: boolean;
+export interface Api_ResearchFileProperty extends Api_PropertyFile, Api_ConcurrentVersion {
   displayOrder?: number;
-  property?: Api_Property;
-  researchFile?: Api_ResearchFile;
-  propertyName?: string;
   isLegalOpinionRequired?: boolean;
   isLegalOpinionObtained?: boolean;
   documentReference?: string;
@@ -30,7 +25,6 @@ export interface Api_ResearchFileProperty extends Api_ConcurrentVersion {
 export interface Api_ResearchFile extends Api_File, Api_AuditFields {
   roadName?: string;
   roadAlias?: string;
-  researchProperties?: Api_ResearchFileProperty[];
   requestDate?: string;
   requestDescription?: string;
   requestSourceDescription?: string;

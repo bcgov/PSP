@@ -1,18 +1,18 @@
 import { Table } from 'components/Table';
 import { TableSort } from 'components/Table/TableSort';
-import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import { useCallback } from 'react';
 
 import { columns } from './columns';
+import { AcquisitionSearchResultModel } from './models';
 
 export interface IAcquisitionSearchResultsProps {
-  results: Api_AcquisitionFile[];
+  results: AcquisitionSearchResultModel[];
   totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageIndex?: number;
-  sort?: TableSort<Api_AcquisitionFile>;
-  setSort: (value: TableSort<Api_AcquisitionFile>) => void;
+  sort?: TableSort<AcquisitionSearchResultModel>;
+  setSort: (value: TableSort<AcquisitionSearchResultModel>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
@@ -32,7 +32,7 @@ export function AcquisitionSearchResults(props: IAcquisitionSearchResultsProps) 
   );
 
   return (
-    <Table<Api_AcquisitionFile>
+    <Table<AcquisitionSearchResultModel>
       name="acquisitionFilesTable"
       columns={columns}
       data={results ?? []}

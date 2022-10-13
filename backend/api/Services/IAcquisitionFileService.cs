@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 
-        PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile);
+        PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile, bool userOverride);
+
+        PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile);
     }
 }

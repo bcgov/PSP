@@ -1,4 +1,4 @@
-import { IconButton, StyledRemoveLinkButton } from 'components/common/buttons';
+import { StyledIconButton, StyledRemoveLinkButton } from 'components/common/buttons';
 import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, DateCell } from 'components/Table';
 import { Claims } from 'constants/index';
@@ -53,13 +53,13 @@ export function createTableColumns(
         return (
           <StyledDiv>
             {hasClaim(Claims.NOTE_VIEW) && (
-              <IconButton
+              <StyledIconButton
                 title="View Note"
                 variant="light"
                 onClick={() => onShowDetails(cellProps.row.original)}
               >
                 <ImFileText2 size="2rem" />
-              </IconButton>
+              </StyledIconButton>
             )}
 
             {hasClaim(Claims.NOTE_DELETE) && (

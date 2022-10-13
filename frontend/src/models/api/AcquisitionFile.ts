@@ -3,10 +3,12 @@ import Api_TypeCode from 'models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
-import { Api_Property } from './Property';
+import { Api_Person } from './Person';
+import { Api_PropertyFile } from './PropertyFile';
 
 export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFields, Api_File {
   id?: number;
+  fileNo?: number;
   ministryProjectNumber?: string;
   ministryProjectName?: string;
   assignedDate?: string;
@@ -16,21 +18,19 @@ export interface Api_AcquisitionFile extends Api_ConcurrentVersion, Api_AuditFie
   acquisitionTypeCode?: Api_TypeCode<string>;
   // MOTI region
   regionCode?: Api_TypeCode<number>;
-  acquisitionProperties?: Api_AcquisitionFileProperty[];
   acquisitionTeam?: Api_AcquisitionFilePerson[];
 }
 
-export interface Api_AcquisitionFileProperty extends Api_ConcurrentVersion, Api_AuditFields {
-  id?: number;
-  isDisabled?: boolean;
-  displayOrder?: number;
-  propertyName?: string;
-  property?: Api_Property;
-  acquisitionFile?: Api_AcquisitionFile;
-}
+export interface Api_AcquisitionFileProperty
+  extends Api_ConcurrentVersion,
+    Api_PropertyFile,
+    Api_AuditFields {}
 
 export interface Api_AcquisitionFilePerson extends Api_ConcurrentVersion, Api_AuditFields {
   id?: number;
   personId?: number;
+  person?: Api_Person;
   personProfileTypeCode?: string;
+  personProfileType?: Api_TypeCode<string>;
+  isDisabled?: boolean;
 }

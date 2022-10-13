@@ -6,18 +6,18 @@ import { useDispatch } from 'react-redux';
 import { handleAxiosResponse } from 'utils';
 
 export interface IResponseWrapper<
-  FunctionType extends (...args: any[]) => Promise<AxiosResponse<unknown | undefined>>
+  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>
 > {
   error: AxiosError<IApiError, any> | undefined;
   response: Awaited<ReturnType<FunctionType>>['data'] | undefined;
   execute: (
-    ...params: Parameters<FunctionType> | []
+    ...params: Parameters<FunctionType>
   ) => Promise<Awaited<ReturnType<FunctionType>>['data'] | undefined>;
   loading: boolean;
 }
 
 export interface IApiRequestWrapper<
-  FunctionType extends (...args: any[]) => Promise<AxiosResponse<unknown | undefined>>
+  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>
 > {
   requestFunction: FunctionType;
   requestName: string;
@@ -39,7 +39,7 @@ type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
  * @param {boolean} invoke immediately invoke the wrapped function.
  */
 export const useApiRequestWrapper = <
-  FunctionType extends (...args: any[]) => Promise<AxiosResponse<unknown | undefined>>
+  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>
 >({
   requestFunction,
   requestName,
@@ -57,7 +57,7 @@ export const useApiRequestWrapper = <
 
   // allow direct access to the api wrapper function in case direct invocation is required by consumer.
   const wrappedApiRequest = useCallback<
-    (...params: Parameters<FunctionType> | []) => Promise<unknown | undefined>
+    (params: Parameters<FunctionType>) => Promise<unknown | undefined>
   >(
     async (...args) => {
       try {
@@ -107,7 +107,8 @@ export const useApiRequestWrapper = <
 
   useEffect(() => {
     if (invoke) {
-      wrappedApiRequest();
+      // If invoke is set then the function is parameterless.
+      wrappedApiRequest(undefined as Parameters<FunctionType>);
     }
   }, [wrappedApiRequest, invoke]);
 

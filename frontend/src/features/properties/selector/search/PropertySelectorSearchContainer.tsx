@@ -1,15 +1,13 @@
-import { AxiosResponse } from 'axios';
 import {
   HWY_DISTRICT_LAYER_URL,
-  IUserLayerQuery,
   MOTI_REGION_LAYER_URL,
   useLayerQuery,
 } from 'components/maps/leaflet/LayerPopup';
 import { DistrictCodes, RegionCodes } from 'constants/index';
 import { FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
-import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
 import { useFullyAttributedParcelMapLayer } from 'hooks/pims-api/useFullyAttributedParcelMapLayer';
 import { IGeocoderResponse } from 'hooks/useApi';
+import { useGeocoderRepository } from 'hooks/useGeocoderRepository';
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
@@ -37,10 +35,23 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
-  const { getSitePids, searchAddress, getNearestToPoint } = useApiGeocoder();
+  const {
+    getSitePids,
+    isLoadingSitePids,
+    searchAddress,
+    isLoadingSearchAddress,
+    getNearestToPoint,
+    isLoadingNearestToPoint,
+  } = useGeocoderRepository();
 
-  const regionService = useLayerQuery(MOTI_REGION_LAYER_URL);
-  const districtService = useLayerQuery(HWY_DISTRICT_LAYER_URL);
+  const {
+    findOneWhereContainsWrapped: findOneWhereContainsRegion,
+    findOneWhereContainsLoading: regionSearchLoading,
+  } = useLayerQuery(MOTI_REGION_LAYER_URL);
+  const {
+    findOneWhereContainsWrapped: findOneWhereContainsDistrict,
+    findOneWhereContainsLoading: districtSearchLoading,
+  } = useLayerQuery(HWY_DISTRICT_LAYER_URL);
 
   const { parcelMapFullyAttributed } = useTenant();
   const {
@@ -48,7 +59,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     findByPin,
     findByPlanNumber,
     findByLegalDescription,
-    loadingIndicator,
+    loadingIndicator: isMapLayerLoading,
   } = useFullyAttributedParcelMapLayer(parcelMapFullyAttributed.url, parcelMapFullyAttributed.name);
 
   React.useEffect(() => {
@@ -66,16 +77,25 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         result = await findByPlanNumber(layerSearch.planNumber);
       } else if (layerSearch?.searchBy === 'legalDescription' && layerSearch.legalDescription) {
         result = await findByLegalDescription(layerSearch.legalDescription);
+      } else if (layerSearch?.searchBy === 'address' && layerSearch.address) {
+        // Ignore address searches
+        return;
       }
 
       const foundProperties = featuresToIdentifiedMapProperty(result) ?? [];
       // match the region and district for all found properties
       if (result?.features?.length !== undefined && result?.features?.length <= 15) {
-        await Promise.all(
-          foundProperties.map(p => matchRegionAndDistrict(p, regionService, districtService)),
+        var matchTask = foundProperties.map(p =>
+          matchRegionAndDistrict(p, findOneWhereContainsRegion, findOneWhereContainsDistrict),
         );
 
-        await Promise.all(foundProperties.map(p => matchAddress(p, getNearestToPoint)));
+        var getAddressTasks = foundProperties.map(p => getPropertyAddress(p, getNearestToPoint));
+
+        var addresses = await Promise.all(getAddressTasks);
+        await Promise.all(matchTask);
+        foundProperties.forEach((p, i) => {
+          p.address = addresses[i]?.fullAddress;
+        });
       }
 
       setSearchResults(foundProperties);
@@ -88,8 +108,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     findByPlanNumber,
     getNearestToPoint,
     layerSearch,
-    districtService,
-    regionService,
+    findOneWhereContainsRegion,
+    findOneWhereContainsDistrict,
   ]);
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
@@ -99,8 +119,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
     }
     const pidResults = await getSitePids(selectedItem.siteId);
 
-    if (pidResults && pidResults.data?.pids) {
-      if (pidResults.data.pids.length > 15) {
+    if (pidResults && pidResults?.pids) {
+      if (pidResults.pids.length > 15) {
         toast.error('Maximum PID search size exceeded for selected address');
         return;
       }
@@ -108,7 +128,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       const findByPidCalls: Promise<
         FeatureCollection<Geometry, GeoJsonProperties> | undefined
       >[] = [];
-      pidResults.data.pids.forEach(async (pid: string) => {
+      pidResults.pids.forEach(async (pid: string) => {
         findByPidCalls.push(findByPid(pid));
       });
 
@@ -117,13 +137,17 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
       let propertyResults: IMapProperty[] = [];
       responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
         if (item) {
-          propertyResults = propertyResults.concat(featuresToIdentifiedMapProperty(item) ?? []);
+          propertyResults = propertyResults.concat(
+            featuresToIdentifiedMapProperty(item, selectedItem.fullAddress) ?? [],
+          );
         }
       });
 
       // match the region and district for all found properties
       await Promise.all(
-        propertyResults.map(p => matchRegionAndDistrict(p, regionService, districtService)),
+        propertyResults.map(p =>
+          matchRegionAndDistrict(p, findOneWhereContainsRegion, findOneWhereContainsDistrict),
+        ),
       );
 
       setSearchResults([...propertyResults]);
@@ -139,7 +163,8 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
             val,
             `matchPrecisionNot=OCCUPANT,INTERSECTION,BLOCK,STREET,LOCALITY,PROVINCE,OCCUPANT`,
           );
-          setAddressResults(addresses.data);
+
+          setAddressResults(addresses || []);
         }
       },
       500,
@@ -162,13 +187,19 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
         selectedProperties={selectedProperties}
         search={layerSearch}
         searchResults={searchResults}
-        loading={loadingIndicator}
+        loading={
+          isMapLayerLoading ||
+          isLoadingSearchAddress ||
+          isLoadingNearestToPoint ||
+          isLoadingSitePids ||
+          regionSearchLoading ||
+          districtSearchLoading
+        }
         onSelectedProperties={setSelectedProperties}
         addressResults={addressResults}
         onAddressChange={handleOnAddressChange}
         onAddressSelect={handleOnAddressSelect}
       />
-
       <MapClickMonitor addProperty={noop} />
     </>
   );
@@ -176,6 +207,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertyS
 
 export const featuresToIdentifiedMapProperty = (
   values: FeatureCollection<Geometry, GeoJsonProperties> | undefined,
+  address?: string,
 ) =>
   values?.features
     ?.filter(feature => feature?.geometry?.type === 'Polygon')
@@ -189,15 +221,25 @@ export const featuresToIdentifiedMapProperty = (
           latitude: boundedCenter[1],
           longitude: boundedCenter[0],
           legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
+          address: address,
         };
         return property;
       },
     );
 
+// Not thread safe. Modifies the passed property.
 async function matchRegionAndDistrict(
   property: IMapProperty,
-  regionService: IUserLayerQuery,
-  districtService: IUserLayerQuery,
+  regionSearch: (
+    latlng: LatLngLiteral,
+    geometryName?: string | undefined,
+    spatialReferenceId?: number | undefined,
+  ) => Promise<FeatureCollection<Geometry, GeoJsonProperties> | undefined>,
+  districtSearch: (
+    latlng: LatLngLiteral,
+    geometryName?: string | undefined,
+    spatialReferenceId?: number | undefined,
+  ) => Promise<FeatureCollection<Geometry, GeoJsonProperties> | undefined>,
 ) {
   if (property?.latitude === undefined || property?.longitude === undefined) {
     return;
@@ -209,30 +251,42 @@ async function matchRegionAndDistrict(
   };
 
   // call these APIs in parallel - notice there is no "await"
-  const regionTask = regionService.findMetadataByLocation(latLng, 'GEOMETRY');
-  const districtTask = districtService.findMetadataByLocation(latLng, 'GEOMETRY');
+  const regionTask = regionSearch(latLng, 'GEOMETRY');
+  const districtTask = districtSearch(latLng, 'GEOMETRY');
 
-  const region = await regionTask;
-  const district = await districtTask;
+  const regionCollection = await regionTask;
+  const districtCollection = await districtTask;
 
-  property.region = isNumber(region.REGION_NUMBER) ? region.REGION_NUMBER : RegionCodes.Unknown;
-  property.regionName = region.REGION_NAME ?? 'Cannot determine';
-  property.district = isNumber(district.DISTRICT_NUMBER)
-    ? district.DISTRICT_NUMBER
+  const region = getProperties(regionCollection);
+  const district = getProperties(districtCollection);
+
+  property.region = isNumber(region?.REGION_NUMBER) ? region?.REGION_NUMBER : RegionCodes.Unknown;
+  property.regionName = region?.REGION_NAME ?? 'Cannot determine';
+  property.district = isNumber(district?.DISTRICT_NUMBER)
+    ? district?.DISTRICT_NUMBER
     : DistrictCodes.Unknown;
-  property.districtName = district.DISTRICT_NAME ?? 'Cannot determine';
+  property.districtName = district?.DISTRICT_NAME ?? 'Cannot determine';
 }
 
-async function matchAddress(
+async function getPropertyAddress(
   property: IMapProperty,
-  getNearestToPoint: (lng: number, lat: number) => Promise<AxiosResponse<IGeocoderResponse, any>>,
+  getNearestToPoint: (lng: number, lat: number) => Promise<IGeocoderResponse | undefined>,
 ) {
   if (property?.latitude === undefined || property?.longitude === undefined) {
-    return property;
+    return;
   }
 
-  const queryResult = await getNearestToPoint(property.longitude, property.latitude);
-  property.address = queryResult?.data?.fullAddress;
+  return await getNearestToPoint(property.longitude, property.latitude);
+}
+
+function getProperties(collection: FeatureCollection<Geometry, GeoJsonProperties> | undefined) {
+  if (collection?.features?.length === undefined) {
+    return {};
+  }
+
+  if (collection.features.length > 0) {
+    return collection.features[0].properties || {};
+  }
 }
 
 export default PropertySelectorSearchContainer;

@@ -70,7 +70,7 @@ namespace Pims.Dal.Repositories
         {
             using var _ = Logger.QueryScope();
 
-            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+            return Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.AcquisitionFileStatusTypeCodeNavigation)
                 .Include(r => r.AcqPhysFileStatusTypeCodeNavigation)
                 .Include(r => r.AcquisitionTypeCodeNavigation)
@@ -81,6 +81,10 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                     .ThenInclude(rp => rp.Property)
                     .ThenInclude(p => p.DistrictCodeNavigation)
+                .Include(r => r.PimsAcquisitionFilePeople)
+                    .ThenInclude(rp => rp.Person)
+                .Include(r => r.PimsAcquisitionFilePeople)
+                    .ThenInclude(rp => rp.AcqFlPersonProfileTypeCodeNavigation)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -103,6 +107,8 @@ namespace Pims.Dal.Repositories
                 }
             }
 
+            // TODO: PSP-4508 Review this logic in the context of an addition
+            // - there should be no pre-existing AcquisitionFilePerson rows for this file!
             foreach (var acquisitionPeople in acquisitionFile.PimsAcquisitionFilePeople)
             {
                 if (acquisitionPeople.AcquisitionFilePersonId != 0)
@@ -123,21 +129,22 @@ namespace Pims.Dal.Repositories
         public PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile)
         {
             using var _ = Logger.QueryScope();
-
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
             var existingAcqFile = this.Context.PimsAcquisitionFiles
                 .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Id) ?? throw new KeyNotFoundException();
 
-            // TODO: Implementation pending
-            throw new System.NotImplementedException();
+            this.Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
+            this.Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFilePerson>(p => p.PimsAcquisitionFilePeople, acquisitionFile.Id, acquisitionFile.PimsAcquisitionFilePeople.ToArray());
+
+            return acquisitionFile;
         }
 
         /// <summary>
         /// Retrieves the version of the acquisition file with the specified id.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>The file row version.</returns>
         public long GetRowVersion(long id)
         {
             using var _ = Logger.QueryScope();
@@ -145,6 +152,21 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcquisitionFiles.AsNoTracking()
                 .Where(p => p.AcquisitionFileId == id)?
                 .Select(p => p.ConcurrencyControlNumber)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Retrieves the region of the acquisition file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The file region.</returns>
+        public short GetRegion(long id)
+        {
+            using var _ = Logger.QueryScope();
+
+            return this.Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(p => p.AcquisitionFileId == id)?
+                .Select(p => p.RegionCode)?
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 

@@ -148,6 +148,16 @@ namespace Pims.Api.Models.Concepts
         public string PlanNumber { get; set; }
 
         /// <summary>
+        /// get/set - Whether this parcel is owned by the ministry.
+        /// </summary>
+        public bool IsOwned { get; set; }
+
+        /// <summary>
+        /// get/set - Whether or not other agencies can view this property.
+        /// </summary>
+        public bool IsVisibleToOtherAgencies { get; set; }
+
+        /// <summary>
         /// get/set - Area Unit name.
         /// </summary>
         public TypeModel<string> AreaUnit { get; set; }

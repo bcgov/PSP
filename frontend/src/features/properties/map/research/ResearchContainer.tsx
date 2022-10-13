@@ -4,8 +4,8 @@ import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
+import FileLayout from 'features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import ResearchFileLayout from 'features/mapSideBar/layout/ResearchFileLayout';
 import { getFilePropertyName } from 'features/properties/selector/utils';
 import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -18,11 +18,12 @@ import styled from 'styled-components';
 
 import { SideBarContext } from '../context/sidebarContext';
 import SidebarFooter from '../shared/SidebarFooter';
+import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
 import { FormKeys } from './FormKeys';
 import { useGetResearch } from './hooks/useGetResearch';
-import { UpdateProperties } from './update/properties/UpdateProperties';
+import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
 import ViewSelector from './ViewSelector';
 
 export interface IResearchContainerProps {
@@ -52,8 +53,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const { search } = useMapSearch();
   const { hasClaim } = useKeycloakWrapper();
 
-  const menuItems = researchFile?.researchProperties?.map(x => getFilePropertyName(x).value) || [];
+  const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
   menuItems.unshift('RFile Summary');
+
+  const { updateResearchFileProperties } = useUpdateResearchProperties();
 
   useEffect(() => setFileLoading(loadingResearchFile), [loadingResearchFile, setFileLoading]);
 
@@ -137,9 +140,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   if (isShowingPropertySelector && researchFile) {
     return (
       <UpdateProperties
-        researchFile={researchFile}
+        file={researchFile}
         setIsShowingPropertySelector={setIsShowingPropertySelector}
         onSuccess={onSuccess}
+        updateFileProperties={updateResearchFileProperties}
       />
     );
   } else {
@@ -160,11 +164,11 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         onClose={props.onClose}
         showCloseButton
       >
-        <ResearchFileLayout
+        <FileLayout
           leftComponent={
             <>
               {selectedMenuIndex === 0 &&
-              hasClaim(Claims.RESEARCH_ADD) &&
+              hasClaim(Claims.RESEARCH_EDIT) &&
               researchFile !== undefined ? (
                 <Button variant="success" onClick={showPropertiesSelector}>
                   <MdLocationPin size={'2.5rem'} />
@@ -211,7 +215,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
               </>
             </StyledFormWrapper>
           }
-        ></ResearchFileLayout>
+        ></FileLayout>
       </MapSideBarLayout>
     );
   }

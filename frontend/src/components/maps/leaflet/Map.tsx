@@ -297,6 +297,7 @@ const StyledFilterContainer = styled(Container)`
     align-items: center;
     justify-content: center;
     padding: 0.5rem 0;
+    margin: 0;
     .vl {
       border-left: 6px solid rgba(96, 96, 96, 0.2);
       height: 4rem;
