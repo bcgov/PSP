@@ -3,14 +3,14 @@ import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import {
   IVolumetricMeasurementTableProps,
-  VolumetricMeasurementTable,
+  VolumetricMeasurementEditTable,
 } from './VolumetricMeasurementTable';
 
 describe('VolumetricMeasurementTable component', () => {
   // render component under test
   const setup = (props: RenderOptions & IVolumetricMeasurementTableProps = {}) => {
     const utils = render(
-      <VolumetricMeasurementTable
+      <VolumetricMeasurementEditTable
         volume={props.volume}
         volumeUnitTypeCode={props.volumeUnitTypeCode}
         onChange={props.onChange}

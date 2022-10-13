@@ -11,7 +11,7 @@ export interface IVolumetricMeasurementTableProps {
   onChange?: (volume: number, volumeUnitTypeCode: string) => void;
 }
 
-export const VolumetricMeasurementTable: React.FC<IVolumetricMeasurementTableProps> = ({
+export const VolumetricMeasurementEditTable: React.FC<IVolumetricMeasurementTableProps> = ({
   volume = 0,
   volumeUnitTypeCode = VolumeUnitTypes.CubicMeters,
   onChange,

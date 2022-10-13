@@ -58,8 +58,17 @@ describe('ActivityPropertyModal tests', () => {
   });
 
   it('Renders as expected', async () => {
-    const { asFragment } = setup();
-    expect(asFragment()).toMatchSnapshot();
+    setup();
+    expect(document.body).toMatchSnapshot();
+  });
+
+  it('displays a warning text when no properties are available', async () => {
+    const { getByText } = setup({ props: { allProperties: [] } });
+    expect(
+      getByText(
+        'To link activity to one or more properties, add properties to the parent file first',
+      ),
+    ).toBeVisible();
   });
 
   it('displays no selected properties by default', async () => {

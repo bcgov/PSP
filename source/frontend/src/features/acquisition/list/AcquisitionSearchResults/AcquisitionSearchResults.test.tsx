@@ -5,6 +5,7 @@ import {
   AcquisitionSearchResults,
   IAcquisitionSearchResultsProps,
 } from './AcquisitionSearchResults';
+import { AcquisitionSearchResultModel } from './models';
 
 const setSort = jest.fn();
 
@@ -31,7 +32,9 @@ describe('Acquisition Search Results Table', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup({ results: mockResults });
+    const { asFragment } = setup({
+      results: mockResults.map(a => AcquisitionSearchResultModel.fromApi(a)),
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 

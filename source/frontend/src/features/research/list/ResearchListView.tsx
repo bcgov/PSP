@@ -3,7 +3,7 @@ import Claims from 'constants/claims';
 import { useApiResearchFile } from 'hooks/pims-api/useApiResearchFile';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
-import { IResearchSearchResult } from 'interfaces/IResearchSearchResult';
+import { IResearchSearchResult, ResearchSearchResultModel } from 'interfaces/IResearchSearchResult';
 import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -77,7 +77,7 @@ export const ResearchListView: React.FunctionComponent = () => {
           </StyledAddButton>
         )}
         <ResearchSearchResults
-          results={results}
+          results={results.map(r => ResearchSearchResultModel.fromApi(r))}
           totalItems={totalItems}
           pageIndex={currentPage}
           pageSize={pageSize}
