@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { createMemoryHistory } from 'history';
+import { createMemoryHistory, History } from 'history';
 import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
 import React from 'react';
@@ -32,11 +32,14 @@ const useLayerQueryMock = {
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
 const getStore = (values?: any) => mockStore(values ?? { properties: {} });
-const getWrapper = (store: any) => ({ children }: any) => (
-  <Provider store={store}>
-    <Router history={history}>{children}</Router>
-  </Provider>
-);
+const getWrapper =
+  (store: any) =>
+  ({ children }: any) =>
+    (
+      <Provider store={store}>
+        <Router history={history}>{children}</Router>
+      </Provider>
+    );
 
 describe('useActiveFeatureLayer hook tests', () => {
   beforeEach(() => {

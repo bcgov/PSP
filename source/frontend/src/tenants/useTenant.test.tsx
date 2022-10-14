@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
-import { config, defaultTenant, TenantProvider, useTenant } from '.';
+import { config, TenantProvider, useTenant } from '.';
+import defaultTenant from './config/defaultTenant';
 
 const origEnv = process.env;
 

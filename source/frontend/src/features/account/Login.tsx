@@ -39,6 +39,7 @@ const Login = () => {
   if (isIE) {
     return <Redirect to={{ pathname: '/ienotsupported' }} />;
   }
+  console.log(tenant);
 
   return (
     <LoginStyled className="login" fluid={true}>

@@ -26,8 +26,9 @@ const createUpdateTimestampOptions = [
 /**
  * Provides a dropdown with list of search options for properties.
  */
-export const AppCreateUpdateRangeSelect: React.FC<IAppCreateUpdateRangeSelectProps &
-  React.HTMLAttributes<HTMLElement>> = ({ disabled, options, placeholders, ...rest }) => {
+export const AppCreateUpdateRangeSelect: React.FC<
+  IAppCreateUpdateRangeSelectProps & React.HTMLAttributes<HTMLElement>
+> = ({ disabled, options, placeholders, ...rest }) => {
   const state: {
     options: { label: string; value: string }[];
     placeholders: Record<string, string>;

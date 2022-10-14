@@ -18,7 +18,7 @@ const actualsActions = (
   onEdit: (values: IFormLeasePayment) => void,
   onDelete: (values: IFormLeasePayment) => void,
 ) => {
-  return function({ row: { original, index } }: CellProps<IFormLeasePayment, string>) {
+  return function ({ row: { original, index } }: CellProps<IFormLeasePayment, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>

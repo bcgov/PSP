@@ -21,8 +21,9 @@ export interface ITenantOrganizationContactInfoProps {
  * Sub-form displaying a organization tenant associated to the current lease.
  * @param {ITenantOrganizationContactInfoProps} param0
  */
-export const TenantOrganizationContactInfo: React.FunctionComponent<ITenantOrganizationContactInfoProps &
-  Partial<FieldArrayRenderProps>> = ({ nameSpace, disabled }) => {
+export const TenantOrganizationContactInfo: React.FunctionComponent<
+  ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>
+> = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<IFormLease>();
   const tenant: FormTenant = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;

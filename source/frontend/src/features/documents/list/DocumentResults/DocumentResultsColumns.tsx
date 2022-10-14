@@ -74,7 +74,7 @@ function renderDocumentType({ value }: CellProps<Api_Document, Api_DocumentType>
 }
 
 const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
-  return function(cell: CellProps<Api_Document, string>) {
+  return function (cell: CellProps<Api_Document, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <>
@@ -98,7 +98,7 @@ const renderActions = (
   onViewDetails: (values: Api_Document) => void,
   onDelete: (values: Api_Document) => void,
 ) => {
-  return function({ row: { original, index } }: CellProps<Api_Document, string>) {
+  return function ({ row: { original, index } }: CellProps<Api_Document, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIconsRow className="no-gutters">

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { config, defaultTenant, ITenantConfig } from '.';
+import { config, ITenantConfig } from '.';
+import defaultTenant from './config/defaultTenant';
 
 export interface ITenantContext {
   // The tenant configuration.

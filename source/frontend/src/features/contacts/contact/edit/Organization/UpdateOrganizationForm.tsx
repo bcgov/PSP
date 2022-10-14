@@ -56,9 +56,10 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
 
   // fetch organization details from API for the supplied Id
   const { organization } = useOrganizationDetail(id);
-  const formOrganization = useMemo(() => apiOrganizationToFormOrganization(organization), [
-    organization,
-  ]);
+  const formOrganization = useMemo(
+    () => apiOrganizationToFormOrganization(organization),
+    [organization],
+  );
 
   const initialValues = !!formOrganization
     ? {
