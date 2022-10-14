@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { createMemoryHistory, History } from 'history';
+import { createMemoryHistory } from 'history';
 import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
 import React from 'react';
