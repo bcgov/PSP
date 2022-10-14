@@ -1,5 +1,5 @@
 import { Col } from 'react-bootstrap';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { FastCurrencyInput, Form, Input, Select } from '.';
 import { FastDatePicker } from './FastDatePicker';
