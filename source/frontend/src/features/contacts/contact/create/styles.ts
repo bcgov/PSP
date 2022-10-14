@@ -1,5 +1,4 @@
 import { Form as FormBase } from 'components/common/form';
-import { sharedFormStyles } from 'components/common/form/styles';
 import { FlexBox } from 'components/common/styles';
 import { Form as FormikForm } from 'formik';
 import styled from 'styled-components';
@@ -29,10 +28,14 @@ export const CreateFormLayout = styled(FlexBox).attrs({ column: true })`
   padding-right: 1rem;
 `;
 
-// TODO: PSP-4401 This is common form look-and-feel. Should be abstracted for all forms
 export const Form = styled(FormikForm)`
-  &#createForm {
-    ${sharedFormStyles}
+  .form-group {
+    &.required {
+      label:after {
+        content: ' *';
+        color: red;
+      }
+    }
   }
 `;
 
