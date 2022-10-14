@@ -273,44 +273,7 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   padding-right: 1rem;
 }
 
-.c2#createForm .form-control.is-invalid {
-  border: 2px solid #d8292f;
-}
-
-.c2#createForm .invalid-feedback {
-  color: #d8292f;
-}
-
-.c2#createForm .form-group label {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c2#createForm .form-group input,
-.c2#createForm .form-group select,
-.c2#createForm .form-group textarea {
-  border: 2px solid #606060;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 1.6rem;
-  color: #000000;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c2#createForm .form-group input.form-control:disabled,
-.c2#createForm .form-group select.form-control:disabled,
-.c2#createForm .form-group textarea.form-control:disabled,
-.c2#createForm .form-group input.form-control[readonly],
-.c2#createForm .form-group select.form-control[readonly],
-.c2#createForm .form-group textarea.form-control[readonly] {
-  opacity: 1;
-}
-
-.c2#createForm .form-group.required label:after {
+.c2 .form-group.required label:after {
   content: ' *';
   color: red;
 }
