@@ -13,6 +13,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(RegionCode), Name = "ACRQST_REGION_CODE_IDX")]
     [Index(nameof(RoleId), Name = "ACRQST_ROLE_ID_IDX")]
     [Index(nameof(UserId), Name = "ACRQST_USER_ID_IDX")]
+    [Index(nameof(RegionCode), nameof(RoleId), nameof(UserId), Name = "ACRQST_USER_ROLE_REGION_TUC", IsUnique = true)]
     public partial class PimsAccessRequest
     {
         public PimsAccessRequest()

@@ -10,6 +10,7 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_LEASE_TENANT")]
     [Index(nameof(LeaseId), Name = "TENANT_LEASE_ID_IDX")]
+    [Index(nameof(OrganizationId), nameof(PersonId), nameof(LeaseId), Name = "TENANT_LEASE_PERSON_ORG_TUC", IsUnique = true)]
     [Index(nameof(LessorTypeCode), Name = "TENANT_LESSOR_TYPE_CODE_IDX")]
     [Index(nameof(OrganizationId), Name = "TENANT_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "TENANT_PERSON_ID_IDX")]
