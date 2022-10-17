@@ -58,6 +58,9 @@ namespace Pims.Dal.Entities
         public string LFileNo { get; set; }
         [Column("TFA_FILE_NO")]
         public int? TfaFileNo { get; set; }
+        [Column("TFA_FILE_NUMBER")]
+        [StringLength(50)]
+        public string TfaFileNumber { get; set; }
         [Column("PS_FILE_NO")]
         [StringLength(50)]
         public string PsFileNo { get; set; }

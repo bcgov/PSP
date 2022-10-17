@@ -1948,13 +1948,11 @@ namespace Pims.Dal
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsAcquisitionActivityInstances)
                     .HasForeignKey(d => d.AcquisitionFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_ACQAIN_FK");
 
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsAcquisitionActivityInstances)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_ACQAIN_FK");
             });
 
@@ -2111,7 +2109,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsAcquisitionFilePeople)
                     .HasForeignKey(d => d.AcquisitionFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_ACQPER_FK");
 
                 entity.HasOne(d => d.Person)
@@ -2218,16 +2215,26 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.OwnerComment).HasComment("Comment related to the owner.");
+                entity.Property(e => e.GivenName).HasComment("Given name of the owner (person).");
 
-                entity.Property(e => e.OwnerName)
+                entity.Property(e => e.IncorporationNumber).HasComment("Incorporation number of the organization.");
+
+                entity.Property(e => e.LastNameOrCorpName1)
                     .HasDefaultValueSql("('<Empty>')")
-                    .HasComment("Name of the owner.");
+                    .HasComment("Name of the owner (person or organization).  If person, surname.");
+
+                entity.Property(e => e.LastNameOrCorpName2).HasComment("Optional.");
 
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsAcquisitionOwners)
                     .HasForeignKey(d => d.AcquisitionFileId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("PIM_ACQNFL_PIM_ACQOWN_FK");
+
+                entity.HasOne(d => d.Address)
+                    .WithMany(p => p.PimsAcquisitionOwners)
+                    .HasForeignKey(d => d.AddressId)
+                    .HasConstraintName("PIM_ADDRSS_PIM_ACQOWN_FK");
             });
 
             modelBuilder.Entity<PimsAcquisitionOwnerHist>(entity =>
@@ -2306,7 +2313,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsActInstPropAcqFiles)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_AIPAFL_FK");
 
                 entity.HasOne(d => d.PropertyAcquisitionFile)
@@ -2364,7 +2370,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsActInstPropRsrchFiles)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_AIPRFL_FK");
 
                 entity.HasOne(d => d.PropertyResearchFile)
@@ -2473,7 +2478,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsActivityInstanceDocuments)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_ACTDOC_FK");
 
                 entity.HasOne(d => d.Document)
@@ -2538,7 +2542,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsActivityInstanceNotes)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_ACTINN_FK");
 
                 entity.HasOne(d => d.Note)
@@ -3379,6 +3382,8 @@ namespace Pims.Dal
                 entity.Property(e => e.ReturnNotes).HasComment("Notes accompanying lease");
 
                 entity.Property(e => e.TfaFileNo).HasComment("Sourced from t_fileMain.TFA_File_Number");
+
+                entity.Property(e => e.TfaFileNumber).HasComment("Sourced from t_fileMain.TFA_File_Number || - || t_fileSub.Subfile_Sequence_Code");
 
                 entity.HasOne(d => d.LeaseCategoryTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
@@ -4810,7 +4815,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.AcquisitionFile)
                     .WithMany(p => p.PimsPropertyAcquisitionFiles)
                     .HasForeignKey(d => d.AcquisitionFileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACQNFL_PIM_PRACQF_FK");
 
                 entity.HasOne(d => d.Property)
@@ -5673,7 +5677,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityInstance)
                     .WithMany(p => p.PimsResearchActivityInstances)
                     .HasForeignKey(d => d.ActivityInstanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTINS_PIM_RSCHAI_FK");
 
                 entity.HasOne(d => d.ResearchFile)
@@ -6784,6 +6787,10 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_GL_ACCOUNT_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_INSURANCE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7084,6 +7091,10 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CENTRE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_RFILE_NUMBER_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7205,6 +7216,10 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_WORKFLOW_MODEL_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_YEARLY_FINANCIAL_CODE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
