@@ -62,7 +62,7 @@ exports[`Research Search Results Table matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            R-File Number
+            File #
             <div
               class="c0"
               data-testid="sort-column-rfileNumber"
@@ -108,7 +108,7 @@ exports[`Research Search Results Table matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Research file name
+            File name
             <div
               class="c0"
               data-testid="sort-column-name"
