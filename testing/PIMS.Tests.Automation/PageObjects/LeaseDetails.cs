@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseDetails : PageObjectBase
     {
         private By menuManagementButton = By.XPath("//a/label[contains(text(),'Management')]/parent::a");
-        private By createLicenseButton = By.XPath("//a[contains(text(),'Add a lease or license')]");
+        private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/License File')]");
 
         private By licenseDetailsLink = By.XPath("//a[contains(text(),'Details')]");
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
@@ -48,9 +48,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToCreateNewLicense()
         {
             Wait();
-            ZoomOutScreen();
-
-            Wait();
             webDriver.FindElement(menuManagementButton).Click();
 
             Wait();
@@ -68,22 +65,19 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDetailsStartDateInput).SendKeys(startDate);
 
             //Change Status
-            var statusElement = webDriver.FindElement(licenseDetailsStatusSelector);
-            ChooseRandomOption(statusElement, "input-statusType", 2);
+            ChooseRandomSelectOption(licenseDetailsStatusSelector, "input-statusType", 2);
 
 
             //Selecting Receive or Payable Type
             var receivePayableTypeElement = webDriver.FindElement(licenseDetailsReceiveOrPaySelector);
             receivePayableTypeElement.Click();
-            ChooseRandomOption(receivePayableTypeElement, "input-paymentReceivableType", 2);
+            ChooseRandomSelectOption(licenseDetailsReceiveOrPaySelector, "input-paymentReceivableType", 2);
 
             //Selecting MOTI Region
-            var motiRegionElement = webDriver.FindElement(licenseDetailsMotiRegionSelector);
-            ChooseRandomOption(motiRegionElement, "input-region", 2);
+            ChooseRandomSelectOption(licenseDetailsMotiRegionSelector, "input-region", 2);
 
             //Selecting Program
-            var programElement = webDriver.FindElement(licenseDetailsProgramSelector);
-            ChooseRandomOption(programElement, "input-programType", 2);
+            ChooseRandomSelectOption(licenseDetailsProgramSelector, "input-programType", 2);
 
             Wait();
             //If other Program is selected, insert input
@@ -93,15 +87,13 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Selecting Type
-            var typeElement = webDriver.FindElement(licenseDetailsTypeSelector);
-            ChooseRandomOption(typeElement, "input-type", 2);
+            ChooseRandomSelectOption(licenseDetailsTypeSelector, "input-type", 2);
 
             Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
             {
-                var categoryElement = webDriver.FindElement(licenseDetailsCategorySelector);
-                ChooseRandomOption(categoryElement, "input-categoryType", 2);
+                ChooseRandomSelectOption(licenseDetailsCategorySelector, "input-categoryType", 2);
             }
 
             Wait();
@@ -112,8 +104,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Selecting Purpose
-            var purposeElement = webDriver.FindElement(licenseDetailsPurposeSelector);
-            ChooseRandomOption(purposeElement, "input-purposeType", 2);
+            ChooseRandomSelectOption(licenseDetailsPurposeSelector, "input-purposeType", 2);
 
             Wait();
             //If other Purpose is selected, insert input
@@ -140,26 +131,22 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(expiryDate);
 
             //Change Status
-            var statusElement = webDriver.FindElement(licenseDetailsStatusSelector);
-            statusElement.Click();
-            ChooseRandomOption(statusElement, "input-statusType", 2);
+            webDriver.FindElement(licenseDetailsStatusSelector).Click();
+            ChooseRandomSelectOption(licenseDetailsStatusSelector, "input-statusType", 2);
 
 
             //Selecting Receive or Payable Type
-            var receivePayableTypeElement = webDriver.FindElement(licenseDetailsReceiveOrPaySelector);
-            receivePayableTypeElement.Click();
-            ChooseRandomOption(receivePayableTypeElement, "input-paymentReceivableType", 2);
+            webDriver.FindElement(licenseDetailsReceiveOrPaySelector).Click();
+            ChooseRandomSelectOption(licenseDetailsReceiveOrPaySelector, "input-paymentReceivableType", 2);
 
             //Inserting MOTI Contact
             webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(motiContact);
 
             //Selecting MOTI Region
-            var motiRegionElement = webDriver.FindElement(licenseDetailsMotiRegionSelector);
-            ChooseRandomOption(motiRegionElement, "input-region", 2);
+            ChooseRandomSelectOption(licenseDetailsMotiRegionSelector, "input-region", 2);
 
             //Selecting Program
-            var programElement = webDriver.FindElement(licenseDetailsProgramSelector);
-            ChooseRandomOption(programElement, "input-programType", 2);
+            ChooseRandomSelectOption(licenseDetailsProgramSelector, "input-programType", 2);
 
             Wait();
             //If other Program is selected, insert input
@@ -169,15 +156,13 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Selecting Type
-            var typeElement = webDriver.FindElement(licenseDetailsTypeSelector);
-            ChooseRandomOption(typeElement, "input-type", 2);
+            ChooseRandomSelectOption(licenseDetailsTypeSelector, "input-type", 2);
 
             Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
             {
-                var categoryElement = webDriver.FindElement(licenseDetailsCategorySelector);
-                ChooseRandomOption(categoryElement, "input-categoryType", 2);
+                ChooseRandomSelectOption(licenseDetailsCategorySelector, "input-categoryType", 2);
             }
 
             Wait();
@@ -188,8 +173,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Selecting Purpose
-            var purposeElement = webDriver.FindElement(licenseDetailsPurposeSelector);
-            ChooseRandomOption(purposeElement, "input-purposeType", 2);
+            ChooseRandomSelectOption(licenseDetailsPurposeSelector, "input-purposeType", 2);
 
             Wait();
             //If other Purpose is selected, insert input
@@ -199,23 +183,19 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Selecting a Initiator
-            var initiatorElement = webDriver.FindElement(licenseDetailsInitiatorSelector);
-            ChooseRandomOption(initiatorElement, "input-initiatorType", 2);
+            ChooseRandomSelectOption(licenseDetailsInitiatorSelector, "input-initiatorType", 2);
 
             //Selecting a Responsibility
-            var responsibilityElement = webDriver.FindElement(licenseDetailsResposibilitySelector);
-            ChooseRandomOption(responsibilityElement, "input-responsibilityType", 2);
+            ChooseRandomSelectOption(licenseDetailsResposibilitySelector, "input-responsibilityType", 2);
 
             //Inserting a Effective date of responsibility
             webDriver.FindElement(licenseDetailsResponsibilityEffectDateInput).SendKeys(responsibilityDate);
 
             //Selecting Physical lease exists
-            var physicalLeaseElement = webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector);
-            ChooseRandomOption(physicalLeaseElement, "input-hasPhysicalLicense", 1);
+            ChooseRandomSelectOption(licenseDetailsPhysicalLeaseExistSelector, "input-hasPhysicalLicense", 1);
 
             //Selecting Digital lease exists
-            var digitalLeaseElement = webDriver.FindElement(licenseDetailsDigitalLeaseExistSelector);
-            ChooseRandomOption(digitalLeaseElement, "input-hasDigitalLicense", 1);
+            ChooseRandomSelectOption(licenseDetailsDigitalLeaseExistSelector, "input-hasDigitalLicense", 1);
 
             //Inserting Location of documents
             webDriver.FindElement(licenseDetailsLocationDocsTextarea).SendKeys(locationOfDoc);

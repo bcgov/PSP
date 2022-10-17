@@ -9,3 +9,7 @@ This feature tests all test cases related to Leases and Licenses.
 Scenario: Create Maximum Lease and License
 	Given I create a new Lease with all fields
 	Then A new lease is created successfully
+
+#Scenario: Edit Existing Lease and License
+#	Given I update an existing lease
+#	Then An existing lease is updated successfully

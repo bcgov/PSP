@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -9,6 +11,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licensePaymentsModal = By.CssSelector("div[class='modal-content']");
         private By licensePaymentTermStartDateInput = By.Id("datepicker-startDate");
+
+        private By licensePaymentTermStartCalPicker = By.XPath("//div[contains(@class,'--selected')]");
+
         private By licensePaymentTermEndDateInput = By.Id("datepicker-expiryDate");
         private By licensePaymentFrequencySelect = By.Id("input-leasePmtFreqTypeCode.id");
         private By licensePaymentAgreedPaymentInput = By.Id("input-paymentAmount");
@@ -22,8 +27,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentExpPaymentInput = By.Id("input-amountPreTax");
         private By licensePaymentGSTInput = By.Id("input-amountGst");
 
+
         //private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
         private By licencePaymentsTable = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']");
+        private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
+
+        //private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
+
 
         private int totalTermsInLease;
 
@@ -53,22 +63,23 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             Wait();
+            //webDriver.FindElement(licensePaymentTermStartCalPicker).Click();
 
             webDriver.FindElement(licensePaymentTermEndDateInput).Click();
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(endDate);
+            webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(Keys.Enter);
 
-            var paymentFrequencyElement = webDriver.FindElement(licensePaymentFrequencySelect);
-            ChooseRandomOption(paymentFrequencyElement, "input-leasePmtFreqTypeCode.id", 2);
+            ChooseRandomSelectOption(licensePaymentFrequencySelect, "input-leasePmtFreqTypeCode.id", 2);
 
             webDriver.FindElement(licensePaymentAgreedPaymentInput).Click();
             webDriver.FindElement(licensePaymentAgreedPaymentInput).SendKeys(agreedPayment);
             webDriver.FindElement(licensePaymentDueInput).SendKeys(paymentDue);
 
             ChooseSpecificRadioButton("isGstEligible", gst);
-            ChooseSpecificOption("input-statusTypeCode.id", termStatus); 
-
+            ChooseSpecificSelectOption("input-statusTypeCode.id", termStatus); 
             ButtonElement("Save term");
         }
+
 
         public void OpenLastPaymentTab()
         {
@@ -90,10 +101,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licensePaymentSendDateInput).Click();
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(sentDate);
-
-            var paymentMethodElement = webDriver.FindElement(licensePaymentMethodSelect);
             webDriver.FindElement(licensePaymentsModal).Click();
-            ChooseRandomOption(paymentMethodElement, "input-leasePaymentMethodType.id", 1);
+
+            ChooseRandomSelectOption(licensePaymentMethodSelect, "input-leasePaymentMethodType.id", 1);
 
             webDriver.FindElement(licensePaymentAmountReceivedInput).SendKeys(totalReceived);
 
