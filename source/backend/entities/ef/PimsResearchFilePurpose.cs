@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_RESEARCH_FILE_PURPOSE")]
     [Index(nameof(ResearchFileId), Name = "RSFLPR_RESEARCH_FILE_ID_IDX")]
     [Index(nameof(ResearchPurposeTypeCode), Name = "RSFLPR_RESEARCH_PURPOSE_TYPE_CODE_IDX")]
+    [Index(nameof(ResearchPurposeTypeCode), nameof(ResearchFileId), Name = "RSFLPR_RSRCH_FL_RSRCH_FL_PURP_TUC", IsUnique = true)]
     public partial class PimsResearchFilePurpose
     {
         [Key]
