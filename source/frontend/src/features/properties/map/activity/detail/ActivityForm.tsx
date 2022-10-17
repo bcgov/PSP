@@ -1,7 +1,9 @@
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
+import { Claims } from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_Activity } from 'models/api/Activity';
 import * as React from 'react';
@@ -32,7 +34,7 @@ export const ActivityForm = ({
   formContent,
 }: IActivityFormProps) => {
   const { setModalContent, setDisplayModal } = useModalContext();
-
+  const { hasClaim } = useKeycloakWrapper();
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     const onCancel = () => {
       resetForm();
@@ -98,7 +100,6 @@ export const ActivityForm = ({
             activity={activity}
             file={file}
             editMode={editMode}
-            setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}
           >
             {(EditForm || ViewForm) && (
@@ -113,13 +114,15 @@ export const ActivityForm = ({
               </Section>
             )}
           </ActivityView>
-          {editMode && (
-            <SidebarFooter
-              onSave={() => submitForm()}
-              isOkDisabled={isSubmitting || !dirty}
-              onCancel={() => cancelFunc(resetForm, dirty)}
-            />
-          )}
+
+          <SidebarFooter
+            editMode={editMode}
+            showEdit={hasClaim(Claims.ACTIVITY_EDIT)}
+            onEdit={setEditMode}
+            onSave={() => submitForm()}
+            isOkDisabled={isSubmitting || !dirty}
+            onCancel={() => cancelFunc(resetForm, dirty)}
+          />
         </>
       )}
     </Formik>
