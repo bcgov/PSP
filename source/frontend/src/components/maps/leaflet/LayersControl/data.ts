@@ -40,8 +40,7 @@ export const layersTree: ILayerItem[] = [
         key: 'motiHighwayDistricts',
         label: 'MOTI Highway Districts',
         on: false,
-        url:
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/ows?',
+        url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/ows?',
         layers: 'pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY',
         transparent: true,
         opacity: 0.9,
