@@ -45,7 +45,7 @@ exports[`Map Legend View renders correctly 1`] = `
         <div
           class="label col"
         >
-          Point of Interest
+          Property of Interest
         </div>
       </div>
     </div>

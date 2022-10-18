@@ -17,8 +17,8 @@ export const parcelIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-// point of interest icon (blue) highlighted
-export const pointOfInterestIcon = L.icon({
+// property of interest icon (blue) highlighted
+export const propertyOfInterestIcon = L.icon({
   iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
   shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
   iconSize: [25, 41],
@@ -27,8 +27,8 @@ export const pointOfInterestIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-// point of interest icon (blue) highlighted
-export const pointOfInterestIconSelect = L.icon({
+// property of interest icon (blue) highlighted
+export const propertyOfInterestIconSelect = L.icon({
   iconUrl:
     require('assets/images/pins/land-poi-selected.svg').default ??
     'assets/images/pins/land-poi-selected.svg',
@@ -56,7 +56,7 @@ export const parcelIconSelect = L.icon({
  * @param properties
  */
 export const createPoints = (properties: IProperty[], type: string = 'Point') =>
-  properties.map(x => {
+  properties.map((x) => {
     return {
       type: 'Feature',
       properties: {
@@ -87,14 +87,14 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
 };
 
 /**
- * Get an icon type for the specified cluster property details (type, draft, erp, spp etc)
+ * Get an icon type for the specified cluster property details.
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
   if (feature.properties.IS_PROPERTY_OF_INTEREST || feature.properties.isPropertyOfInterest) {
     if (selected) {
-      return pointOfInterestIconSelect;
+      return propertyOfInterestIconSelect;
     } else {
-      return pointOfInterestIcon;
+      return propertyOfInterestIcon;
     }
   } else if (selected) {
     return parcelIconSelect;
@@ -139,7 +139,7 @@ export const createClusterMarker = (feature: ICluster, latlng: LatLngExpression)
   } = feature?.properties as Supercluster.ClusterProperties;
 
   if (!isCluster) {
-    return (null as unknown) as Layer;
+    return null as unknown as Layer;
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
