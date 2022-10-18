@@ -152,6 +152,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
 
             //INSURANCE
+            //Navigate to Improvements
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Improvement Section
+            insurance.EditInsurance();
+
             //Add Vehicle Insurance
             insurance.AddVehicleInsurance(insuranceVechicleLimit, insuranceVehicleExpiryDate, insuranceVehicleDescription);
 

@@ -131,21 +131,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by PIN
-
             sharedSearchProperties.SelectPropertyByPIN(PIN1Search);
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Plan
-            sharedSearchProperties.SelectPropertyByPlan(Plan1Search);
-            sharedSearchProperties.SelectFirstOption();
+            //sharedSearchProperties.SelectPropertyByPlan(Plan1Search);
+            //sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Address
-            sharedSearchProperties.SelectPropertyByAddress(address1Search);
-            sharedSearchProperties.SelectFirstOption();
+            //sharedSearchProperties.SelectPropertyByAddress(address1Search);
+            //sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Legal Description
-            sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);
-            sharedSearchProperties.SelectFirstOption();
+            //sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);
+            //sharedSearchProperties.SelectFirstOption();
 
             //Save Research File
             researchFile.SaveResearchFile();

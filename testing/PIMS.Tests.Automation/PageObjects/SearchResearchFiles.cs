@@ -36,7 +36,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ChooseSpecificSelectOption("input-researchSearchBy", "Research file #");
             webDriver.FindElement(searchResearchFileInput).SendKeys(RFile);
-            ChooseSpecificSelectOption("input-researchFileStatusTypeCode", "Select a status");
+            ChooseSpecificSelectOption("input-researchFileStatusTypeCode", "All Status");
 
             Wait(5000);
             webDriver.FindElement(searchResearchFileButton).Click();

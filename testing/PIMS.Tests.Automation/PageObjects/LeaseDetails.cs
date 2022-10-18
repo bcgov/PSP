@@ -89,6 +89,12 @@ namespace PIMS.Tests.Automation.PageObjects
             //Selecting Type
             ChooseRandomSelectOption(licenseDetailsTypeSelector, "input-type", 2);
 
+            //Selecting other Type if required
+            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0)
+            {
+                webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys("Automation Test - Other Type");
+            }
+
             Wait();
             //Selecting Category if required
             if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
@@ -96,22 +102,17 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseRandomSelectOption(licenseDetailsCategorySelector, "input-categoryType", 2);
             }
 
-            Wait();
-            //If other Program is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0)
-            {
-                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Purpose");
-            }
-
             //Selecting Purpose
             ChooseRandomSelectOption(licenseDetailsPurposeSelector, "input-purposeType", 2);
 
             Wait();
             //If other Purpose is selected, insert input
-            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0)
+            if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0)
             {
-                webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys("Automation Test - Other Type");
+                webDriver.FindElement(licenseDetailsOtherPurposeInput).SendKeys("Automation Test - Other Purpose");
             }
+
+            Wait();
 
             //Inserting PID
             webDriver.FindElement(licenseDetailsPID1Input).SendKeys(pid);

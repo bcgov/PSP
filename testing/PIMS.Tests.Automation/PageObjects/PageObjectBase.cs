@@ -33,8 +33,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var buttons = webDriver.FindElements(By.TagName("button"));
             var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            //js.ExecuteScript("arguments[0].click()", selectedBtn);
-
             selectedBtn.Click();
         }
 
@@ -48,7 +46,6 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
 
             Wait();
-            //selectedElement.Click();
             js.ExecuteScript("arguments[0].click();", selectedElement);
         }
 
