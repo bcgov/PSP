@@ -22,7 +22,7 @@ source "$(dirname ${0})/common.sh"
 
 # Receive parameters
 #
-OC_JOB_NAME=${OC_JOB_NAME:-test}
+OC_JOB_NAME=${1:-test}
 
 # Variables
 APP_NAME="pims";
