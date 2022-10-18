@@ -52,8 +52,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Add a deposit");
 
             WaitUntil(licenseDepositModal);
-            var selectDepositTypeElement = webDriver.FindElement(licenseDepositTypeSelect);
-            ChooseRandomOption(selectDepositTypeElement, "input-depositTypeCode", 2);
+            ChooseRandomSelectOption(licenseDepositTypeSelect, "input-depositTypeCode", 2);
 
             Wait();
             if (webDriver.FindElements(licenseDepositOtherTypeInput).Count() > 0)

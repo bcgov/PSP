@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_PROP_PROP_TENURE_TYPE")]
     [Index(nameof(PropertyId), Name = "PRPRTT_PROPERTY_ID_IDX")]
     [Index(nameof(PropertyTenureTypeCode), Name = "PRPRTT_PROPERTY_TENURE_TYPE_CODE_IDX")]
+    [Index(nameof(PropertyTenureTypeCode), nameof(PropertyId), Name = "PRPRTT_PROP_PROP_TENURE_TUC", IsUnique = true)]
     public partial class PimsPropPropTenureType
     {
         [Key]

@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_PROPERTY_LEASE")]
     [Index(nameof(LeaseId), Name = "PROPLS_LEASE_ID_IDX")]
     [Index(nameof(PropertyId), Name = "PROPLS_PROPERTY_ID_IDX")]
+    [Index(nameof(LeaseId), nameof(PropertyId), Name = "PROPLS_PROPERTY_LEASE_TUC", IsUnique = true)]
     public partial class PimsPropertyLease
     {
         [Key]
