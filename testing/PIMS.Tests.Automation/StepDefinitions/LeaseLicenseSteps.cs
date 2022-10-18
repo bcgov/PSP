@@ -238,15 +238,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Inserting second Payment
             payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
 
-            //Add Payments
-            payments.OpenLastPaymentTab();
-
-            //Inserting Payment for first term
-            payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
-
-            //Inserting second Payment
-            payments.AddPayment(firstTerm2ndPaymentSentDate, firstTerm2ndPaymentReceived, firstTerm2ndPaymentStatus);
-
             //Inserting second term
             payments.AddTerm(secondTermStartDate, secondTermEndDate, secondTermAgreedPayment, termPaymentDue, noGST, termNotExercised);
 

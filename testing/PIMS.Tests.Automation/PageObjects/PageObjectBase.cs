@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void WaitUntil(By element)
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(20));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
@@ -48,7 +48,8 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
 
             Wait();
-            selectedElement.Click();
+            //selectedElement.Click();
+            js.ExecuteScript("arguments[0].click();", selectedElement);
         }
 
         protected void ScrollToElement(By element)

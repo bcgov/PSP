@@ -101,6 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licensePaymentSendDateInput).Click();
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(sentDate);
+            webDriver.FindElement(licensePaymentSendDateInput).SendKeys(Keys.Enter);
             webDriver.FindElement(licensePaymentsModal).Click();
 
             ChooseRandomSelectOption(licensePaymentMethodSelect, "input-leasePaymentMethodType.id", 1);

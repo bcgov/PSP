@@ -39,6 +39,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
+            Wait();
             return webDriver.FindElements(searchLicenseResultsTable1stResult).Count > 0;
         }
     }

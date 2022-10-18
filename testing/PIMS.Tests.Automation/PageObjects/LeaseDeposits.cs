@@ -8,7 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private By licenseDepositsLink = By.XPath("//a[contains(text(),'Deposit')]");
 
-
+        private By licenseDepositAddBttn = By.XPath("//button/div[contains(text(),'Add a deposit')]/ancestor::button");
         private By licenseDepositModal = By.CssSelector("div[class='modal-content']");
         private By licenseDepositTypeSelect = By.Id("input-depositTypeCode");
         private By licenseDepositOtherTypeInput = By.Id("input-otherTypeDescription");
@@ -49,7 +49,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddDeposit(string description, string amount, string paidDate, string depositHolder)
         {
-            ButtonElement("Add a deposit");
+            Wait();
+            FocusAndClick(licenseDepositAddBttn);
 
             WaitUntil(licenseDepositModal);
             ChooseRandomSelectOption(licenseDepositTypeSelect, "input-depositTypeCode", 2);
