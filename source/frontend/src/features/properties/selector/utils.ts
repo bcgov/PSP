@@ -1,7 +1,7 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { compact } from 'lodash';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { formatApiAddress, pidFormatter } from 'utils';
+import { pidFormatter } from 'utils';
 
 import { formatApiSummaryAddress } from './../../../utils/propertyUtils';
 
