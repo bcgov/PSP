@@ -1,9 +1,13 @@
 import { render } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
 import { config, TenantProvider, useTenant } from '.';
 import defaultTenant from './config/defaultTenant';
 
 const origEnv = process.env;
+
+const mockAxios = new MockAdapter(axios);
 
 const TestTenant = () => {
   const tenant = useTenant();
@@ -19,12 +23,14 @@ const testRender = () =>
 
 describe('useTenant hook', () => {
   beforeEach(() => {
+    mockAxios.onAny().reply(200);
     jest.resetModules();
     process.env = { ...origEnv };
   });
 
   afterAll(() => {
     process.env = origEnv;
+    mockAxios.reset();
     jest.restoreAllMocks();
   });
 

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 
 import { config, ITenantConfig } from '.';
@@ -44,8 +45,8 @@ export const TenantProvider: React.FC = props => {
       }
     } else {
       // Fetch the configuration file generated for the environment.
-      const r = await fetch(`${process.env.PUBLIC_URL}/tenants/tenant.json`);
-      const fileTenantConfig = await r.json();
+      const r = await axios.get<ITenantConfig>(`${process.env.PUBLIC_URL}/tenants/tenant.json`);
+      const fileTenantConfig = await r.data;
       setTenant({ ...defaultTenant, ...fileTenantConfig });
     }
   }, []);
