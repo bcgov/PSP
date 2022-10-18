@@ -260,7 +260,7 @@ const LayersMenu: React.FC = () => {
           nodes: allNodes?.map((node: any, index) => ({
             ...node,
             zIndex: (parentIndex + 1) * index,
-            opacity: 0.3,
+            opacity: node?.opacity !== undefined ? Number(node?.opacity) : 0.3,
           })),
         };
       }),
