@@ -3,6 +3,8 @@ import { compact } from 'lodash';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { formatApiAddress, pidFormatter } from 'utils';
 
+import { formatApiSummaryAddress } from './../../../utils/propertyUtils';
+
 export enum NameSourceType {
   PID = 'PID',
   PIN = 'PIN',
@@ -65,7 +67,8 @@ export const getFilePropertyName = (
       latitude: property.latitude,
       longitude: property.longitude,
       planNumber: property.planNumber,
-      address: property.address !== undefined ? formatApiAddress(property.address) : undefined,
+      address:
+        property.address !== undefined ? formatApiSummaryAddress(property.address) : undefined,
     };
     return getPropertyName(mapProperty);
   }

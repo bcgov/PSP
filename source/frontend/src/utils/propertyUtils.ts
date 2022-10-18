@@ -82,6 +82,20 @@ export const formatApiAddress = (address?: Api_Address) => {
 };
 
 /**
+ * Provides a formatted address as a string.
+ * @param address Address object from property.
+ * @returns Civic address string value.
+ */
+export const formatApiSummaryAddress = (address?: Api_Address) => {
+  const values = [
+    address?.streetAddress1 ?? '',
+    address?.streetAddress2 ?? '',
+    address?.streetAddress3 ?? '',
+  ];
+  return values.join(' ') + (address?.municipality ? ', ' + (address?.municipality ?? '') : '');
+};
+
+/**
  * Provides a formatted street address as a string.
  * Combines streetAddress1, streetAddress2 and streetAddress3 into a single string.
  *
