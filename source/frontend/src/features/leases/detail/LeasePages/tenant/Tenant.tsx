@@ -60,6 +60,7 @@ export class FormTenant {
   public readonly initialPrimaryContact?: Api_Person;
   public readonly lessorTypeCode?: ITypeCode<string>;
   public readonly original?: IContactSearchResult;
+  public readonly provinceState?: string;
 
   constructor(apiModel?: Api_LeaseTenant, selectedContactModel?: IContactSearchResult) {
     if (!!apiModel) {
@@ -111,6 +112,7 @@ export class FormTenant {
       this.primaryContactId = primaryContact?.id;
       this.initialPrimaryContact = primaryContact;
       this.original = selectedContactModel;
+      this.provinceState = selectedContactModel.provinceState;
     }
   }
 }
