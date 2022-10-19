@@ -10,7 +10,7 @@ import { CellProps } from 'react-table';
 
 const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
-    Header: 'R-File Number',
+    Header: 'File #',
     accessor: 'rfileNumber',
     align: 'right',
     clickable: true,
@@ -30,7 +30,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Research file name',
+    Header: 'File name',
     accessor: 'name',
     align: 'right',
     clickable: true,

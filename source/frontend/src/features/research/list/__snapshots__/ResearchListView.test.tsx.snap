@@ -749,7 +749,7 @@ exports[`Research List View matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                R-File Number
+                File #
                 <div
                   class="c13"
                   data-testid="sort-column-rfileNumber"
@@ -795,7 +795,7 @@ exports[`Research List View matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Research file name
+                File name
                 <div
                   class="c13"
                   data-testid="sort-column-name"
