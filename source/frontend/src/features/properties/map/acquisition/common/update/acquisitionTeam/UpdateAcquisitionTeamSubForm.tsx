@@ -17,7 +17,9 @@ import { Col, Row } from 'react-bootstrap';
 
 interface IUpdateAcquisitionTeamSubFormProps {}
 
-export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<IUpdateAcquisitionTeamSubFormProps> = () => {
+export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
+  IUpdateAcquisitionTeamSubFormProps
+> = () => {
   const { values, setFieldValue } = useFormikContext<WithAcquisitionTeam>();
   const [contactIndex, setContactIndex] = useState<number>(-1);
   const [showContactManager, setShowContactManager] = useState<boolean>(false);

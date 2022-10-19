@@ -51,13 +51,11 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
     initialContacts.push(values.requestor);
   }
 
-  const [selectedContacts, setSelectedContacts] = React.useState<IContactSearchResult[]>(
-    initialContacts,
-  );
+  const [selectedContacts, setSelectedContacts] =
+    React.useState<IContactSearchResult[]>(initialContacts);
 
-  const [selectedPurposes, setSelectedPurposes] = React.useState<MultiSelectOption[]>(
-    initialPurposeList,
-  );
+  const [selectedPurposes, setSelectedPurposes] =
+    React.useState<MultiSelectOption[]>(initialPurposeList);
 
   const multiselectProgramRef = React.createRef<Multiselect>();
 

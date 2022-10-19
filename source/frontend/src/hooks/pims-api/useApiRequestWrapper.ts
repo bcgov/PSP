@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { handleAxiosResponse } from 'utils';
 
 export interface IResponseWrapper<
-  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>
+  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>,
 > {
   error: AxiosError<IApiError, any> | undefined;
   response: Awaited<ReturnType<FunctionType>>['data'] | undefined;
@@ -19,7 +19,7 @@ export interface IResponseWrapper<
 }
 
 export interface IApiRequestWrapper<
-  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>
+  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>,
 > {
   requestFunction: FunctionType;
   requestName: string;
@@ -41,7 +41,7 @@ type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
  * @param {boolean} invoke immediately invoke the wrapped function.
  */
 export const useApiRequestWrapper = <
-  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>
+  FunctionType extends (...args: any) => Promise<AxiosResponse<unknown | undefined>>,
 >({
   requestFunction,
   requestName,

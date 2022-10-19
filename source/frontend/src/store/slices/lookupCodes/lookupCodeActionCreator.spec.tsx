@@ -31,9 +31,10 @@ const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});
   return currentStore;
 };
-const getWrapper = (store: any) => ({ children }: any) => (
-  <Provider store={store}>{children}</Provider>
-);
+const getWrapper =
+  (store: any) =>
+  ({ children }: any) =>
+    <Provider store={store}>{children}</Provider>;
 
 describe('getFetchLookupCodeAction action creator', () => {
   afterAll(() => {

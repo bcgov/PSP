@@ -11,7 +11,7 @@ export const LeaseTermSchema = Yup.object().shape({
   statusTypeCode: Yup.object()
     .test({
       name: 'statusTypeTest',
-      test: function(value, context) {
+      test: function (value, context) {
         if (value?.id === LeaseTermStatusTypes.NOT_EXERCISED && !!this.parent.payments.length) {
           return context.createError({
             path: 'statusTypeCode.id',
