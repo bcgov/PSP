@@ -17,8 +17,8 @@ export const parcelIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-// point of interest icon (blue) highlighted
-export const pointOfInterestIcon = L.icon({
+// property of interest icon (blue) highlighted
+export const propertyOfInterestIcon = L.icon({
   iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
   shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
   iconSize: [25, 41],
@@ -27,8 +27,8 @@ export const pointOfInterestIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-// point of interest icon (blue) highlighted
-export const pointOfInterestIconSelect = L.icon({
+// property of interest icon (blue) highlighted
+export const propertyOfInterestIconSelect = L.icon({
   iconUrl:
     require('assets/images/pins/land-poi-selected.svg').default ??
     'assets/images/pins/land-poi-selected.svg',
@@ -87,14 +87,14 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
 };
 
 /**
- * Get an icon type for the specified cluster property details (type, draft, erp, spp etc)
+ * Get an icon type for the specified cluster property details.
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
   if (feature.properties.IS_PROPERTY_OF_INTEREST || feature.properties.isPropertyOfInterest) {
     if (selected) {
-      return pointOfInterestIconSelect;
+      return propertyOfInterestIconSelect;
     } else {
-      return pointOfInterestIcon;
+      return propertyOfInterestIcon;
     }
   } else if (selected) {
     return parcelIconSelect;
@@ -201,12 +201,12 @@ export const toCqlFilterValue = (object: Record<string, string>, forceSimplePid?
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
-      if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
-        cql.push(
-          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'  OR PID_PADDED ilike '%${object[key]}%'`,
-        );
-      } else if (key === 'PID' && object[key]?.length === 9) {
+      if ((key === 'PID' || key === 'PID_PADDED') && object[key]?.length === 9) {
         cql.push(`${key} = '${object[key]}'`);
+      } else if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
+        cql.push(
+          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%' OR PID_PADDED ilike '%${object[key]}%'`,
+        );
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }
