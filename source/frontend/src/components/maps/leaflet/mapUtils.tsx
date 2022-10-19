@@ -201,12 +201,12 @@ export const toCqlFilterValue = (object: Record<string, string>, forceSimplePid?
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
-      if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
-        cql.push(
-          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'  OR PID_PADDED ilike '%${object[key]}%'`,
-        );
-      } else if (key === 'PID' && object[key]?.length === 9) {
+      if ((key === 'PID' || key === 'PID_PADDED') && object[key]?.length === 9) {
         cql.push(`${key} = '${object[key]}'`);
+      } else if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
+        cql.push(
+          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%' OR PID_PADDED ilike '%${object[key]}%'`,
+        );
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }
