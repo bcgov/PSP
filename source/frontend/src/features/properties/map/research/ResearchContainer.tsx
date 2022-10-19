@@ -11,7 +11,7 @@ import { FormikProps } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { MdLocationPin, MdTopic } from 'react-icons/md';
 import styled from 'styled-components';
@@ -45,9 +45,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
 
-  const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
-    undefined,
-  );
+  const formikRef = useRef<FormikProps<any>>(null);
 
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
   const { search } = useMapSearch();
@@ -210,7 +208,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
                   onSuccess={onSuccess}
                   setEditMode={setIsEditing}
                   setEditKey={setEditKey}
-                  setFormikRef={setFormikRef}
+                  ref={formikRef}
                 />
               </>
             </StyledFormWrapper>

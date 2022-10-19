@@ -1,4 +1,5 @@
 import { InventoryTabNames, InventoryTabs } from 'features/mapSideBar/tabs/InventoryTabs';
+import { UpdatePropertyDetailsContainer } from 'features/mapSideBar/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import { FormikProps } from 'formik';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
 import React from 'react';
@@ -33,7 +34,17 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           );
 
         case EditFormNames.propertyDetails:
-          return <></>;
+          const propertyFile = getAcquisitionFileProperty(
+            props.acquisitionFile,
+            props.selectedMenuIndex,
+          );
+          return (
+            <UpdatePropertyDetailsContainer
+              id={propertyFile?.property?.id as number}
+              onSuccess={props.onSuccess}
+              ref={formikRef}
+            />
+          );
 
         default:
           throw Error('Active edit form not defined');
@@ -48,11 +59,7 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           />
         );
       } else {
-        const properties = props.acquisitionFile?.fileProperties || [];
-        const selectedPropertyIndex = props.selectedMenuIndex - 1;
-        const acquisitionFileProperty = properties[selectedPropertyIndex];
-        acquisitionFileProperty.file = props.acquisitionFile;
-        return (
+        return !!props.acquisitionFile ? (
           <PropertyFileContainer
             setEditFileProperty={() =>
               props.setContainerState({
@@ -60,15 +67,29 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
                 activeEditForm: EditFormNames.propertyDetails,
               })
             }
-            fileProperty={acquisitionFileProperty}
+            fileProperty={getAcquisitionFileProperty(
+              props.acquisitionFile,
+              props.selectedMenuIndex,
+            )}
             defaultTab={InventoryTabNames.property}
             customTabs={[]}
             View={InventoryTabs}
           />
-        );
+        ) : null;
       }
     }
   },
 );
+
+const getAcquisitionFileProperty = (
+  acquisitionFile: Api_AcquisitionFile,
+  selectedMenuIndex: number,
+) => {
+  const properties = acquisitionFile?.fileProperties || [];
+  const selectedPropertyIndex = selectedMenuIndex - 1;
+  const acquisitionFileProperty = properties[selectedPropertyIndex];
+  acquisitionFileProperty.file = acquisitionFile;
+  return acquisitionFileProperty;
+};
 
 export default ViewSelector;

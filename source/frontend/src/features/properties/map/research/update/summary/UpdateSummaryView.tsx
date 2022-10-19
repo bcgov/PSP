@@ -12,50 +12,50 @@ import UpdateResearchForm from './UpdateSummaryForm';
 
 export interface IUpdateResearchViewProps {
   researchFile: Api_ResearchFile;
-  setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
   onSuccess: () => void;
 }
 
-export const UpdateResearchView: React.FunctionComponent<IUpdateResearchViewProps> = props => {
-  const formikRef = useRef<FormikProps<UpdateResearchSummaryFormModel>>(null);
+export const UpdateResearchView = React.forwardRef<FormikProps<any>, IUpdateResearchViewProps>(
+  (props, formikRef) => {
+    const { updateResearchFile } = useUpdateResearch();
 
-  props.setFormikRef(formikRef);
+    const saveResearchFile = async (researchFile: Api_ResearchFile) => {
+      const response = await updateResearchFile(researchFile);
+      if (typeof formikRef === 'function' || formikRef === null) {
+        throw Error('unexpected ref prop');
+      }
+      formikRef.current?.setSubmitting(false);
+      if (!!response?.fileName) {
+        formikRef.current?.resetForm();
+        props.onSuccess();
+      }
+    };
 
-  const { updateResearchFile } = useUpdateResearch();
+    return (
+      <Formik<UpdateResearchSummaryFormModel>
+        enableReinitialize
+        innerRef={formikRef}
+        validationSchema={UpdateResearchFileYupSchema}
+        initialValues={UpdateResearchSummaryFormModel.fromApi(props.researchFile)}
+        onSubmit={async (values: UpdateResearchSummaryFormModel) => {
+          const researchFile: Api_ResearchFile = values.toApi();
+          await saveResearchFile(researchFile);
+        }}
+      >
+        {formikProps => (
+          <StyledFormWrapper>
+            <UpdateResearchForm formikProps={formikProps} />
 
-  const saveResearchFile = async (researchFile: Api_ResearchFile) => {
-    const response = await updateResearchFile(researchFile);
-    formikRef.current?.setSubmitting(false);
-    if (!!response?.fileName) {
-      formikRef.current?.resetForm();
-      props.onSuccess();
-    }
-  };
-
-  return (
-    <Formik<UpdateResearchSummaryFormModel>
-      enableReinitialize
-      innerRef={formikRef}
-      validationSchema={UpdateResearchFileYupSchema}
-      initialValues={UpdateResearchSummaryFormModel.fromApi(props.researchFile)}
-      onSubmit={async (values: UpdateResearchSummaryFormModel) => {
-        const researchFile: Api_ResearchFile = values.toApi();
-        await saveResearchFile(researchFile);
-      }}
-    >
-      {formikProps => (
-        <StyledFormWrapper>
-          <UpdateResearchForm formikProps={formikProps} />
-
-          <Prompt
-            when={formikProps.dirty && formikProps.submitCount === 0}
-            message="You have made changes on this form. Do you wish to leave without saving?"
-          />
-        </StyledFormWrapper>
-      )}
-    </Formik>
-  );
-};
+            <Prompt
+              when={formikProps.dirty && formikProps.submitCount === 0}
+              message="You have made changes on this form. Do you wish to leave without saving?"
+            />
+          </StyledFormWrapper>
+        )}
+      </Formik>
+    );
+  },
+);
 
 export default UpdateResearchView;
 

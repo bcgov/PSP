@@ -12,50 +12,50 @@ import { UpdatePropertyYupSchema } from './UpdatePropertyYupSchema';
 
 export interface IUpdatePropertyViewProps {
   researchFileProperty: Api_ResearchFileProperty;
-  setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
   onSuccess: () => void;
 }
 
-export const UpdatePropertyView: React.FunctionComponent<IUpdatePropertyViewProps> = props => {
-  const formikRef = useRef<FormikProps<UpdatePropertyFormModel>>(null);
+export const UpdatePropertyView = React.forwardRef<FormikProps<any>, IUpdatePropertyViewProps>(
+  (props, formikRef) => {
+    const { updatePropertyResearchFile } = useUpdatePropertyResearch();
 
-  props.setFormikRef(formikRef);
+    const savePropertyFile = async (researchFile: Api_ResearchFileProperty) => {
+      const response = await updatePropertyResearchFile(researchFile);
+      if (typeof formikRef === 'function' || formikRef === null) {
+        throw Error('unexpected ref prop');
+      }
+      formikRef.current?.setSubmitting(false);
+      if (!!response?.fileName) {
+        formikRef.current?.resetForm();
+        props.onSuccess();
+      }
+    };
 
-  const { updatePropertyResearchFile } = useUpdatePropertyResearch();
+    return (
+      <Formik<UpdatePropertyFormModel>
+        enableReinitialize
+        innerRef={formikRef}
+        initialValues={UpdatePropertyFormModel.fromApi(props.researchFileProperty)}
+        validationSchema={UpdatePropertyYupSchema}
+        onSubmit={async (values: UpdatePropertyFormModel) => {
+          const researchFile: Api_ResearchFileProperty = values.toApi();
+          await savePropertyFile(researchFile);
+        }}
+      >
+        {formikProps => (
+          <StyledFormWrapper>
+            <UpdatePropertyForm formikProps={formikProps} />
 
-  const savePropertyFile = async (researchFile: Api_ResearchFileProperty) => {
-    const response = await updatePropertyResearchFile(researchFile);
-    formikRef.current?.setSubmitting(false);
-    if (!!response?.fileName) {
-      formikRef.current?.resetForm();
-      props.onSuccess();
-    }
-  };
-
-  return (
-    <Formik<UpdatePropertyFormModel>
-      enableReinitialize
-      innerRef={formikRef}
-      initialValues={UpdatePropertyFormModel.fromApi(props.researchFileProperty)}
-      validationSchema={UpdatePropertyYupSchema}
-      onSubmit={async (values: UpdatePropertyFormModel) => {
-        const researchFile: Api_ResearchFileProperty = values.toApi();
-        await savePropertyFile(researchFile);
-      }}
-    >
-      {formikProps => (
-        <StyledFormWrapper>
-          <UpdatePropertyForm formikProps={formikProps} />
-
-          <Prompt
-            when={formikProps.dirty && formikProps.submitCount === 0}
-            message="You have made changes on this form. Do you wish to leave without saving?"
-          />
-        </StyledFormWrapper>
-      )}
-    </Formik>
-  );
-};
+            <Prompt
+              when={formikProps.dirty && formikProps.submitCount === 0}
+              message="You have made changes on this form. Do you wish to leave without saving?"
+            />
+          </StyledFormWrapper>
+        )}
+      </Formik>
+    );
+  },
+);
 
 export default UpdatePropertyView;
 
