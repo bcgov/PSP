@@ -56,7 +56,7 @@ export const parcelIconSelect = L.icon({
  * @param properties
  */
 export const createPoints = (properties: IProperty[], type: string = 'Point') =>
-  properties.map((x) => {
+  properties.map(x => {
     return {
       type: 'Feature',
       properties: {
@@ -139,7 +139,7 @@ export const createClusterMarker = (feature: ICluster, latlng: LatLngExpression)
   } = feature?.properties as Supercluster.ClusterProperties;
 
   if (!isCluster) {
-    return null as unknown as Layer;
+    return (null as unknown) as Layer;
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
