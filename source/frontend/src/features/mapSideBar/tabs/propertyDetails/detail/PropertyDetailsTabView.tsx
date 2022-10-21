@@ -1,5 +1,7 @@
 import { EditButton } from 'components/common/EditButton';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import AreaContainer from 'components/measurements/AreaContainer';
+import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -11,10 +13,8 @@ import styled from 'styled-components';
 import { booleanToYesNoUnknownString, stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../../Section';
-import { SectionField, StyledFieldLabel } from '../../SectionField';
-import { InlineContainer, LeftBorderCol } from '../../SectionStyles';
-import { LandMeasurementTable } from './components/LandMeasurementTable';
-import { VolumetricMeasurementTable } from './components/VolumetricMeasurementTable';
+import { SectionField } from '../../SectionField';
+import { InlineContainer } from '../../SectionStyles';
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 
 export interface IPropertyDetailsTabView {
@@ -45,10 +45,6 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   const tenureStatus = property?.tenures;
   const roadType = property?.roadTypes;
   const adjacentLand = property?.adjacentLands;
-
-  // measurement tables
-  const landMeasurement = property?.landMeasurementTable;
-  const volumeMeasurement = property?.volumetricMeasurementTable;
 
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
@@ -158,54 +154,49 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           </Section>
         )}
 
-        <Section header="Area">
-          <Row>
-            <Col>
+        <Section header="Measurements">
+          <SectionField label="Area" labelWidth="2">
+            <AreaContainer landArea={property?.landArea} unitCode={property?.areaUnit?.id} />
+          </SectionField>
+          <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
+            <Form.Check
+              inline
+              label="Yes"
+              name="is-volumetric-radio"
+              type="radio"
+              id={`inline-isVolumetric-yes`}
+              checked={property?.isVolumetricParcel === 'true'}
+              disabled
+            />
+            <Form.Check
+              inline
+              label="No"
+              name="is-volumetric-radio"
+              type="radio"
+              id={`inline-isVolumetric-no`}
+              value={'yes'}
+              checked={property?.isVolumetricParcel === 'false'}
+              disabled
+            />
+          </SectionField>
+          {isVolumetricParcel && (
+            <SectionField label="Volume" labelWidth="2">
               <Row>
-                <Col className="col-10">
-                  <LandMeasurementTable data={landMeasurement} />
-                </Col>
-              </Row>
-            </Col>
-            <LeftBorderCol>
-              <StyledFieldLabel>Is this a volumetric parcel?</StyledFieldLabel>
-              <Row className="pb-3">
                 <Col>
-                  <Form.Check
-                    inline
-                    label="Yes"
-                    name="is-volumetric-radio"
-                    type="radio"
-                    id={`inline-isVolumetric-yes`}
-                    checked={property?.isVolumetricParcel === 'true'}
-                    disabled
-                  />
-                  <Form.Check
-                    inline
-                    label="No"
-                    name="is-volumetric-radio"
-                    type="radio"
-                    id={`inline-isVolumetric-no`}
-                    value={'yes'}
-                    checked={property?.isVolumetricParcel === 'false'}
-                    disabled
+                  <VolumeContainer
+                    volumetricMeasurement={property?.volumetricMeasurement}
+                    volumetricUnit={property?.volumetricUnit?.id}
+                    volumetricType={property?.volumetricType?.description}
                   />
                 </Col>
+                <Col>
+                  <SectionField label="Type" labelWidth="auto">
+                    {property?.volumetricType?.description}
+                  </SectionField>
+                </Col>
               </Row>
-
-              {isVolumetricParcel && (
-                <>
-                  <SectionField label="Type">{property?.volumetricType?.description}</SectionField>
-
-                  <Row>
-                    <Col>
-                      <VolumetricMeasurementTable data={volumeMeasurement} />
-                    </Col>
-                  </Row>
-                </>
-              )}
-            </LeftBorderCol>
-          </Row>
+            </SectionField>
+          )}
         </Section>
 
         <Section header="Notes">
