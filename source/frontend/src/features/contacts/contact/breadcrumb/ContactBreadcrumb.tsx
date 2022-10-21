@@ -9,9 +9,7 @@ interface IContactAndLicenseBreadCrumbProps {}
  * breadcrumb navigation for Contacts pages.
  * @param {IContactAndLicenseBreadCrumbProps} param0
  */
-export const ContactBreadcrumb: React.FunctionComponent<
-  IContactAndLicenseBreadCrumbProps
-> = props => {
+export const ContactBreadcrumb: React.FunctionComponent<IContactAndLicenseBreadCrumbProps> = props => {
   return (
     <CommonStyled.Breadcrumb>
       <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/contact/list' }}>

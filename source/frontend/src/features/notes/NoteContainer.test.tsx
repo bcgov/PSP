@@ -120,8 +120,13 @@ describe('NoteContainer component', () => {
     });
 
     it('changes to edit mode when Edit button is clicked', async () => {
-      const { getEditButton, getSaveButton, getCancelButton, findByText, findByLabelText } =
-        setup();
+      const {
+        getEditButton,
+        getSaveButton,
+        getCancelButton,
+        findByText,
+        findByLabelText,
+      } = setup();
       const modalTitle = await findByText(/Notes/i);
       expect(modalTitle).toBeVisible();
 

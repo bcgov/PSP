@@ -7,9 +7,7 @@ import * as Styled from './styles';
 
 export interface IPropertyInformationSubFormProps {}
 
-const PropertyInformationSubForm: React.FunctionComponent<
-  IPropertyInformationSubFormProps
-> = () => {
+const PropertyInformationSubForm: React.FunctionComponent<IPropertyInformationSubFormProps> = () => {
   return (
     <>
       <Row>

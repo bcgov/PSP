@@ -35,10 +35,9 @@ export function useLookupCodeHelpers() {
     [lookupCodes],
   );
 
-  const getOptionsByType = useCallback(
-    (type: string) => getByType(type).map(mapLookupCode),
-    [getByType],
-  );
+  const getOptionsByType = useCallback((type: string) => getByType(type).map(mapLookupCode), [
+    getByType,
+  ]);
 
   /**
    * Return an array of SelectOptions containing property classifications.

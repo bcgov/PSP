@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function (app) {
+module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
@@ -12,10 +12,10 @@ module.exports = function (app) {
       logLevel: 'debug',
       cookiePathRewrite: '/',
       cookieDomainRewrite: '',
-      pathRewrite: function (path, req) {
+      pathRewrite: function(path, req) {
         return path;
       },
-      onProxyReq: function (proxyReq, req, res) {
+      onProxyReq: function(proxyReq, req, res) {
         proxyReq.setHeader('x-powered-by', 'onProxyReq');
       },
     }),
@@ -34,7 +34,7 @@ module.exports = function (app) {
       pathRewrite: {
         '^/ogs-internal/': '/', // remove base path
       },
-      onProxyReq: function (proxyReq, req, res) {
+      onProxyReq: function(proxyReq, req, res) {
         proxyReq.setHeader('x-powered-by', 'onProxyReq');
       },
     }),

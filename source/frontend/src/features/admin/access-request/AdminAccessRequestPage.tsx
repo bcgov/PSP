@@ -18,9 +18,7 @@ export interface IAdminAccessRequestPageProps {
  * If they have an active access request already submitted, it will allow them to update it until it has been approved or disabled.
  * If their prior request was disabled they will then be able to submit a new request.
  */
-export const AdminAccessRequestPage: React.FunctionComponent<
-  IAdminAccessRequestPageProps
-> = props => {
+export const AdminAccessRequestPage: React.FunctionComponent<IAdminAccessRequestPageProps> = props => {
   const history = useHistory();
   return (
     <StyledContainer>

@@ -39,7 +39,7 @@ export function useQueryMapLayersByLocation() {
   const firstNationsService = useLayerQuery(INDIAN_RESERVES_LAYER_URL);
 
   const queryAllCallback = useCallback(
-    async function (location: LatLngLiteral | null): Promise<IMapLayerResults> {
+    async function(location: LatLngLiteral | null): Promise<IMapLayerResults> {
       // Query BC Geographic Warehouse layers - ONLY if lat, long have been provided!
       if (location === null) {
         return initialState;

@@ -28,7 +28,7 @@ function startAndEndDate({ row: { original, index } }: CellProps<ILeaseTerm, str
 }
 
 const renderExpectedTotal = () =>
-  function ({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
+  function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
     return original.paymentAmount !== undefined
       ? formatMoney(original.paymentAmount + (original?.gstAmount ?? 0))
       : '-';
@@ -46,7 +46,7 @@ function renderActualTotal({ row: { original, index } }: CellProps<ILeaseTerm, s
 }
 
 const renderExpectedTerm = () =>
-  function ({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
+  function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
       return '-';
     }
@@ -103,7 +103,7 @@ const termActions = (
   onEdit: (values: IFormLeaseTerm) => void,
   onDelete: (values: IFormLeaseTerm) => void,
 ) => {
-  return function ({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
+  return function({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>

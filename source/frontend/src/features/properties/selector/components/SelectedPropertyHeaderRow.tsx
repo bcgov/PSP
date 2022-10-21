@@ -6,9 +6,7 @@ import styled from 'styled-components';
 
 interface ISelectedPropertyHeaderRowProps {}
 
-export const SelectedPropertyHeaderRow: React.FunctionComponent<
-  ISelectedPropertyHeaderRowProps
-> = props => {
+export const SelectedPropertyHeaderRow: React.FunctionComponent<ISelectedPropertyHeaderRowProps> = props => {
   return (
     <HeaderRow>
       <Col md={3}>Identifier</Col>

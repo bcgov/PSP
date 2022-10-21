@@ -21,7 +21,7 @@ export const useGeoServer = () => {
   const baseUrl = tenant.propertiesUrl || '';
 
   const getPropertyWfs = useCallback(
-    async function (id: number): Promise<Feature<Point> | null> {
+    async function(id: number): Promise<Feature<Point> | null> {
       if (isNaN(Number(id))) {
         return null;
       }
@@ -45,7 +45,7 @@ export const useGeoServer = () => {
   });
 
   const getPropertyWithPidWfs = useCallback(
-    async function (pid: string): Promise<Feature<Point> | null> {
+    async function(pid: string): Promise<Feature<Point> | null> {
       if (!pid) {
         return null;
       }

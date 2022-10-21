@@ -12,9 +12,11 @@ export interface IPropertyMapSelectorSubFormProps {
   selectedProperty?: IMapProperty;
 }
 
-export const PropertyMapSelectorSubForm: React.FunctionComponent<
-  IPropertyMapSelectorSubFormProps
-> = ({ onClickDraftMarker, onClickAway, selectedProperty }) => {
+export const PropertyMapSelectorSubForm: React.FunctionComponent<IPropertyMapSelectorSubFormProps> = ({
+  onClickDraftMarker,
+  onClickAway,
+  selectedProperty,
+}) => {
   const pid = selectedProperty?.pid;
   const planNumber = selectedProperty?.planNumber;
   const address = selectedProperty?.address;

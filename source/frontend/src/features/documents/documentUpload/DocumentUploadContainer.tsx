@@ -20,9 +20,7 @@ export interface IDocumentUploadContainerProps {
   onCancel: () => void;
 }
 
-export const DocumentUploadContainer: React.FunctionComponent<
-  IDocumentUploadContainerProps
-> = props => {
+export const DocumentUploadContainer: React.FunctionComponent<IDocumentUploadContainerProps> = props => {
   const deleteModalProps = getCancelModalProps();
 
   const { setDisplayModal } = useModalContext({
@@ -50,8 +48,11 @@ export const DocumentUploadContainer: React.FunctionComponent<
   };
 
   const isMounted = useIsMounted();
-  const { retrieveDocumentMetadataLoading, retrieveDocumentTypeMetadata, retrieveDocumentTypes } =
-    useDocumentProvider();
+  const {
+    retrieveDocumentMetadataLoading,
+    retrieveDocumentTypeMetadata,
+    retrieveDocumentTypes,
+  } = useDocumentProvider();
 
   const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
 

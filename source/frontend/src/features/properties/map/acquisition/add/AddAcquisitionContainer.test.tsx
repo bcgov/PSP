@@ -98,8 +98,9 @@ describe('AddAcquisitionContainer component', () => {
     formValues.acquisitionType = 'CONSEN';
     formValues.region = '1';
 
-    const { getSaveButton, getNameTextbox, getAcquisitionTypeDropdown, getRegionDropdown } =
-      setup(DEFAULT_PROPS);
+    const { getSaveButton, getNameTextbox, getAcquisitionTypeDropdown, getRegionDropdown } = setup(
+      DEFAULT_PROPS,
+    );
 
     await waitFor(() => userEvent.paste(getNameTextbox(), formValues.fileName as string));
     await userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType);

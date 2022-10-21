@@ -202,7 +202,12 @@ export const prettyFormatDate = (date?: string | Date | Moment) => {
 };
 
 export const prettyFormatDateTime = (date?: string | Date | Moment) => {
-  return !!date ? moment.utc(date).local().format('MMM D, YYYY hh:mm a') : '';
+  return !!date
+    ? moment
+        .utc(date)
+        .local()
+        .format('MMM D, YYYY hh:mm a')
+    : '';
 };
 
 /**
@@ -211,15 +216,26 @@ export const prettyFormatDateTime = (date?: string | Date | Moment) => {
  * @param date utc date/time string.
  */
 export const formatApiDateTime = (date?: string | Date | Moment) => {
-  if (typeof date === 'string') return moment.utc(date).local().format('YYYY-MM-DD hh:mm a');
-  return !!date ? moment.utc(date).local().format('YYYY-MM-DD hh:mm a') : '';
+  if (typeof date === 'string')
+    return moment
+      .utc(date)
+      .local()
+      .format('YYYY-MM-DD hh:mm a');
+  return !!date
+    ? moment
+        .utc(date)
+        .local()
+        .format('YYYY-MM-DD hh:mm a')
+    : '';
 };
 
 /**
  * Get the current date time in the UTC timezone. This allows the frontend to create timestamps that are compatible with timestamps created by the API.
  */
 export const generateUtcNowDateTime = () =>
-  moment(new Date()).utc().format('YYYY-MM-DDTHH:mm:ss.SSSSSSS');
+  moment(new Date())
+    .utc()
+    .format('YYYY-MM-DDTHH:mm:ss.SSSSSSS');
 
 /**
  * Returns true only if the passed mouse event occurred within the last 500ms, or the mouse event is null.

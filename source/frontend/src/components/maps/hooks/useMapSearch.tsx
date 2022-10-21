@@ -58,7 +58,9 @@ export const useMapSearch = () => {
  */
 const getLatLng = (feature: any) => {
   if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-    const latLng = geoJSON(feature.geometry).getBounds().getCenter();
+    const latLng = geoJSON(feature.geometry)
+      .getBounds()
+      .getCenter();
     return [latLng.lng, latLng.lat];
   }
   return feature.geometry.coordinates;

@@ -28,9 +28,8 @@ const primaryResearchFilterOptions = [
 /**
  * Provides a dropdown with list of search options for the user who created/updated the row.
  */
-export const ResearchFileSelect: React.FC<
-  IResearchFileSelectProps & React.HTMLAttributes<HTMLElement>
-> = ({ disabled, options, placeholders, ...rest }) => {
+export const ResearchFileSelect: React.FC<IResearchFileSelectProps &
+  React.HTMLAttributes<HTMLElement>> = ({ disabled, options, placeholders, ...rest }) => {
   const state: {
     options: { label: string; value: string }[];
     placeholders: Record<string, string>;

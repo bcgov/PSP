@@ -23,10 +23,8 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   const planNumbers =
     ltsaData === undefined
       ? []
-      : (
-          (ltsaData?.parcelInfo?.orderedProduct.fieldedData.associatedPlans ??
-            []) as AssociatedPlan[]
-        ).map(x => x.planNumber);
+      : ((ltsaData?.parcelInfo?.orderedProduct.fieldedData.associatedPlans ??
+          []) as AssociatedPlan[]).map(x => x.planNumber);
 
   const isLoading = props.composedProperty.composedLoading;
   return (

@@ -27,9 +27,10 @@ export interface IPropertySelectorSearchContainerProps {
   setSelectedProperties: (properties: IMapProperty[]) => void;
 }
 
-export const PropertySelectorSearchContainer: React.FunctionComponent<
-  IPropertySelectorSearchContainerProps
-> = ({ selectedProperties, setSelectedProperties }) => {
+export const PropertySelectorSearchContainer: React.FunctionComponent<IPropertySelectorSearchContainerProps> = ({
+  selectedProperties,
+  setSelectedProperties,
+}) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
@@ -124,8 +125,9 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
         return;
       }
 
-      const findByPidCalls: Promise<FeatureCollection<Geometry, GeoJsonProperties> | undefined>[] =
-        [];
+      const findByPidCalls: Promise<
+        FeatureCollection<Geometry, GeoJsonProperties> | undefined
+      >[] = [];
       pidResults.pids.forEach(async (pid: string) => {
         findByPidCalls.push(findByPid(pid));
       });
@@ -209,19 +211,21 @@ export const featuresToIdentifiedMapProperty = (
 ) =>
   values?.features
     ?.filter(feature => feature?.geometry?.type === 'Polygon')
-    .map((feature): IMapProperty => {
-      const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
-      const property: IMapProperty = {
-        pid: feature?.properties?.PID?.toString() ?? '',
-        pin: feature?.properties?.PIN?.toString() ?? '',
-        planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? '',
-        latitude: boundedCenter[1],
-        longitude: boundedCenter[0],
-        legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
-        address: address,
-      };
-      return property;
-    });
+    .map(
+      (feature): IMapProperty => {
+        const boundedCenter = polylabel((feature.geometry as Polygon).coordinates);
+        const property: IMapProperty = {
+          pid: feature?.properties?.PID?.toString() ?? '',
+          pin: feature?.properties?.PIN?.toString() ?? '',
+          planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? '',
+          latitude: boundedCenter[1],
+          longitude: boundedCenter[0],
+          legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
+          address: address,
+        };
+        return property;
+      },
+    );
 
 // Not thread safe. Modifies the passed property.
 async function matchRegionAndDistrict(

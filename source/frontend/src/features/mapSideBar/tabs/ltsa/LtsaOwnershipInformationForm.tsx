@@ -12,9 +12,9 @@ export interface ILtsaOwnershipInformationFormProps {
   nameSpace?: string;
 }
 
-export const LtsaOwnershipInformationForm: React.FunctionComponent<
-  ILtsaOwnershipInformationFormProps
-> = ({ nameSpace }) => {
+export const LtsaOwnershipInformationForm: React.FunctionComponent<ILtsaOwnershipInformationFormProps> = ({
+  nameSpace,
+}) => {
   const { values } = useFormikContext<LtsaOrders>();
   const ownershipGroups = getIn(values, withNameSpace(nameSpace, 'ownershipGroups')) ?? [];
   return (

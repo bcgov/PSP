@@ -38,10 +38,9 @@ const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});
   return currentStore;
 };
-const getWrapper =
-  (store: any) =>
-  ({ children }: any) =>
-    <Provider store={store}>{children}</Provider>;
+const getWrapper = (store: any) => ({ children }: any) => (
+  <Provider store={store}>{children}</Provider>
+);
 
 const setup = (values?: any) => {
   const { result } = renderHook(useUpdateInsurance, { wrapper: getWrapper(getStore(values)) });

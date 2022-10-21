@@ -18,9 +18,7 @@ export interface IUpdatePropertyDetailsContainerProps {
   onSuccess: () => void;
 }
 
-export const UpdatePropertyDetailsContainer: React.FC<
-  IUpdatePropertyDetailsContainerProps
-> = props => {
+export const UpdatePropertyDetailsContainer: React.FC<IUpdatePropertyDetailsContainerProps> = props => {
   const isMounted = useIsMounted();
   const getPropertyWrapper = useGetProperty();
   const { updateProperty } = useUpdateProperty();

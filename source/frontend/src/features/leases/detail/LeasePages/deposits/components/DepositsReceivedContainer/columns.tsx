@@ -60,7 +60,7 @@ function depositActions(
   onDelete: (id: number) => void,
   onReturn: (id: number) => void,
 ) {
-  return function ({ row: { original, index } }: CellProps<DepositListEntry, string>) {
+  return function({ row: { original, index } }: CellProps<DepositListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>

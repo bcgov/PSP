@@ -22,10 +22,10 @@ export const DocumentResults: React.FunctionComponent<IDocumentResultProps> = ({
   onDelete,
   ...rest
 }) => {
-  const columns = useMemo(
-    () => getDocumentColumns({ onViewDetails, onDelete }),
-    [onViewDetails, onDelete],
-  );
+  const columns = useMemo(() => getDocumentColumns({ onViewDetails, onDelete }), [
+    onViewDetails,
+    onDelete,
+  ]);
 
   return (
     <Table<Api_Document>

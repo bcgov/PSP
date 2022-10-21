@@ -24,9 +24,7 @@ export interface IPropertyResearchTabViewProps {
   setEditMode: (isEditing: boolean) => void;
 }
 
-export const PropertyResearchTabView: React.FunctionComponent<
-  IPropertyResearchTabViewProps
-> = props => {
+export const PropertyResearchTabView: React.FunctionComponent<IPropertyResearchTabViewProps> = props => {
   const detail: PropertyResearchFile = {
     id: props.researchFile.id || 0,
     descriptiveName: props.researchFile.propertyName || '',

@@ -12,8 +12,10 @@ import { downloadFile } from 'utils/download';
  * hook that allows the user to export the currently filtered lease data.
  */
 export const useLeaseExport = () => {
-  const { exportLeases: apiExportLeases, exportAggregatedLeases: apiExportAggregatedLeases } =
-    useApiLeases();
+  const {
+    exportLeases: apiExportLeases,
+    exportAggregatedLeases: apiExportAggregatedLeases,
+  } = useApiLeases();
   const dispatch = useDispatch();
 
   const exportLeases = useCallback(

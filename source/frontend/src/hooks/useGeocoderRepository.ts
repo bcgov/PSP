@@ -13,10 +13,9 @@ export const useGeocoderRepository = () => {
   const { execute: executeSitePids, loading: isLoadingSitePids } = useApiRequestWrapper<
     (siteId: string) => Promise<AxiosResponse<IGeocoderPidsResponse>>
   >({
-    requestFunction: useCallback(
-      async (siteId: string) => await getSitePidsApi(siteId),
-      [getSitePidsApi],
-    ),
+    requestFunction: useCallback(async (siteId: string) => await getSitePidsApi(siteId), [
+      getSitePidsApi,
+    ]),
     requestName: 'getSitePids',
     onError: useCallback(axiosError => {
       toast.error(

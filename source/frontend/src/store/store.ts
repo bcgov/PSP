@@ -8,7 +8,9 @@ import { reducer } from './rootReducer';
 export const store = configureStore({
   reducer: reducer,
   middleware: (getDefaultMiddleware: () => any[]) =>
-    getDefaultMiddleware().concat(logger).concat(loadingBarMiddleware()),
+    getDefaultMiddleware()
+      .concat(logger)
+      .concat(loadingBarMiddleware()),
   devTools: process.env.NODE_ENV !== 'production',
 });
 export type AppDispatch = typeof store.dispatch;

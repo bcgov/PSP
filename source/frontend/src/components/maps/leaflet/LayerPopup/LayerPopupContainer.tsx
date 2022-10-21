@@ -20,8 +20,9 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
   onViewPropertyInfo,
 }) => {
   const history = useHistory();
-  const { setSelectedFileFeature: setSelectedResearchFeature, selectedFeature } =
-    useContext(SelectedPropertyContext);
+  const { setSelectedFileFeature: setSelectedResearchFeature, selectedFeature } = useContext(
+    SelectedPropertyContext,
+  );
 
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;

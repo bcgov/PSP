@@ -16,9 +16,8 @@ export interface ITenantPersonContactInfoProps {
  * Sub-form displaying a person tenant associated to the current lease.
  * @param {ITenantPersonContactInfoProps} param0
  */
-export const TenantPersonContactInfo: React.FunctionComponent<
-  ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>
-> = ({ nameSpace, disabled }) => {
+export const TenantPersonContactInfo: React.FunctionComponent<ITenantPersonContactInfoProps &
+  Partial<FieldArrayRenderProps>> = ({ nameSpace, disabled }) => {
   return (
     <>
       <Styled.FormGrid>

@@ -10,8 +10,11 @@ import { handleAxiosResponse } from 'utils';
  * hook providing lease return deposits methods
  */
 export const useLeaseDepositReturns = () => {
-  const { putLeaseDepositReturn, postLeaseDepositReturn, deleteLeaseDepositReturn } =
-    useApiLeaseDepositReturns();
+  const {
+    putLeaseDepositReturn,
+    postLeaseDepositReturn,
+    deleteLeaseDepositReturn,
+  } = useApiLeaseDepositReturns();
   const dispatch = useDispatch();
 
   const updateLeaseDepositReturn = async (

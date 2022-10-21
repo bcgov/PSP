@@ -73,8 +73,9 @@ export const Input: React.FC<InputProps> = ({
   onChange,
   ...rest
 }) => {
-  const { handleChange, handleBlur, errors, touched, values, setFieldValue } =
-    useFormikContext<any>();
+  const { handleChange, handleBlur, errors, touched, values, setFieldValue } = useFormikContext<
+    any
+  >();
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
   const value = getIn(values, field);

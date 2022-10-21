@@ -12,10 +12,9 @@ export const usePropertyAssociations = () => {
   const getPropertyAssociationsWrapper = useApiRequestWrapper<
     (id: number) => Promise<AxiosResponse<Api_PropertyAssociations>>
   >({
-    requestFunction: useCallback(
-      async (id: number) => await getPropertyAssociations(id),
-      [getPropertyAssociations],
-    ),
+    requestFunction: useCallback(async (id: number) => await getPropertyAssociations(id), [
+      getPropertyAssociations,
+    ]),
     requestName: 'getPropertyAssociations',
     onError: useCallback(axiosError => {
       toast.error(

@@ -69,8 +69,15 @@ export const Check: React.FC<CheckProps> = ({
   toolTipId,
   ...rest
 }) => {
-  const { values, initialValues, setFieldValue, setFieldTouched, errors, touched, handleBlur } =
-    useFormikContext();
+  const {
+    values,
+    initialValues,
+    setFieldValue,
+    setFieldTouched,
+    errors,
+    touched,
+    handleBlur,
+  } = useFormikContext();
   const initialChecked = getIn(initialValues, field);
   const touch = getIn(touched, field);
   const checked = getIn(values, field);

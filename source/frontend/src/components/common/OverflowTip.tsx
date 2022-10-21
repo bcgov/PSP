@@ -8,9 +8,8 @@ interface IOverflowTextProps {
 }
 
 /** Creates a dynamic tooltip that displays over text when that text is overflowing and displaying an ellipsis via textOverflow css property */
-const OverflowTip: React.FunctionComponent<
-  IOverflowTextProps & React.HTMLAttributes<HTMLDivElement>
-> = ({ fullText, className }) => {
+const OverflowTip: React.FunctionComponent<IOverflowTextProps &
+  React.HTMLAttributes<HTMLDivElement>> = ({ fullText, className }) => {
   const textElementRef = useRef<HTMLDivElement>();
 
   const compareSize = () => {
