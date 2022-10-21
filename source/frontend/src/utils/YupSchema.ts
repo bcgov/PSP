@@ -12,20 +12,14 @@ Yup.addMethod(Yup.string, 'optional', function optional() {
 
 export const AccessRequestSchema = Yup.object().shape({
   showOrganization: Yup.boolean(),
-  roleId: Yup.number()
-    .min(0, 'Invalid Role')
-    .required('Required'),
-  regionCodeId: Yup.number()
-    .min(0, 'Invalid Region')
-    .required('Required'),
+  roleId: Yup.number().min(0, 'Invalid Role').required('Required'),
+  regionCodeId: Yup.number().min(0, 'Invalid Region').required('Required'),
   note: Yup.string().max(4000, 'Note must be less than 4000 characters'),
   position: Yup.string().max(100, 'Position must be less than 100 characters'),
 });
 
 export const UserUpdateSchema = Yup.object().shape({
-  email: Yup.string()
-    .email()
-    .max(200, 'Email must be less than 200 characters'),
+  email: Yup.string().email().max(200, 'Email must be less than 200 characters'),
   firstName: Yup.string()
     .required('First Name is required')
     .max(50, 'First Name must be less than 50 characters'),

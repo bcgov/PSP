@@ -44,9 +44,10 @@ export const useProperties = () => {
   const { execute: getPropertyWrapped, loading: getPropertyLoading } = useApiRequestWrapper<
     (id: number) => Promise<AxiosResponse<Api_Property>>
   >({
-    requestFunction: useCallback(async (id: number) => await getPropertyConceptWithId(id), [
-      getPropertyConceptWithId,
-    ]),
+    requestFunction: useCallback(
+      async (id: number) => await getPropertyConceptWithId(id),
+      [getPropertyConceptWithId],
+    ),
     requestName: actionTypes.GET_PARCELS,
     skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,

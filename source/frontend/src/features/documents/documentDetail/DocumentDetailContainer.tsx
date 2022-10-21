@@ -22,7 +22,9 @@ export interface IDocumentDetailContainerProps {
   onUpdateSuccess: () => void;
 }
 
-export const DocumentDetailContainer: React.FunctionComponent<IDocumentDetailContainerProps> = props => {
+export const DocumentDetailContainer: React.FunctionComponent<
+  IDocumentDetailContainerProps
+> = props => {
   const [document, setDocument] = useState<ComposedDocument>({ pimsDocument: props.pimsDocument });
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     Api_Storage_DocumentTypeMetadataType[]

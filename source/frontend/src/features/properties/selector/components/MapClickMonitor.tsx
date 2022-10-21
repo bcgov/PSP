@@ -36,9 +36,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
 export const mapFeatureToProperty = (
   selectedFeature: Feature<Geometry, GeoJsonProperties>,
 ): IMapProperty => {
-  const latLng = geoJSON(selectedFeature.geometry)
-    .getBounds()
-    .getCenter();
+  const latLng = geoJSON(selectedFeature.geometry).getBounds().getCenter();
   return {
     pid: selectedFeature?.properties?.PID ?? undefined,
     pin: selectedFeature?.properties?.PIN ?? undefined,
