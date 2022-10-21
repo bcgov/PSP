@@ -19,4 +19,4 @@ etl/**/obj
 *.database
 *.bak
 *._*
-
+package-lock.json
