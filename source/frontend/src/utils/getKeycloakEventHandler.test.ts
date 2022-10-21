@@ -16,14 +16,14 @@ jest.mock('store/store', () => ({
   },
 }));
 
-const keycloak = ({
+const keycloak = {
   subject: 'test',
   userInfo: {
     roles: [],
     organizations: ['1'],
   },
   token: '123456789',
-} as any) as KeycloakInstance;
+} as any as KeycloakInstance;
 const keyclockEventHandler = getKeycloakEventHandler(keycloak);
 describe('KeycloakEventHandler ', () => {
   beforeEach(() => {

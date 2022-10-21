@@ -27,9 +27,9 @@ const setDraftProperties = jest.fn();
 
 describe('ResearchProperties component', () => {
   const setup = (
-    renderOptions: RenderOptions & { initialForm: ResearchForm } & Partial<
-        ISelectedPropertyContext
-      >,
+    renderOptions: RenderOptions & {
+      initialForm: ResearchForm;
+    } & Partial<ISelectedPropertyContext>,
   ) => {
     // render component under test
     const component = render(

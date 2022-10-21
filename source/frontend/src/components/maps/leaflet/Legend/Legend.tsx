@@ -15,7 +15,7 @@ export const Legend = () => {
       },
       {
         pin: require('assets/images/pins/land-poi.svg').default,
-        label: 'Point of Interest',
+        label: 'Property of Interest',
       },
     ];
   }, []);

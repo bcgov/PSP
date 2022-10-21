@@ -1,4 +1,5 @@
-import { config, defaultTenant, ITenantConfig } from 'tenants';
+import { config, ITenantConfig } from 'tenants';
+import defaultTenant from 'tenants/config/defaultTenant';
 import { useTenant } from 'tenants/useTenant';
 import { render } from 'utils/test-utils';
 

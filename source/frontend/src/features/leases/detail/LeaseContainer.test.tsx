@@ -25,7 +25,7 @@ const storeState = {
 
 const getLease = jest.fn();
 jest.mock('hooks/pims-api/useApiLeases');
-((useApiLeases as unknown) as jest.Mock<Partial<typeof useApiLeases>>).mockReturnValue({
+(useApiLeases as unknown as jest.Mock<Partial<typeof useApiLeases>>).mockReturnValue({
   getLease,
 });
 jest.mock('@react-keycloak/web');

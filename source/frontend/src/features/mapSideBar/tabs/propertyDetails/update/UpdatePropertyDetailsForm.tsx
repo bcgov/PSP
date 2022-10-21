@@ -30,9 +30,9 @@ export interface IUpdatePropertyDetailsFormProps {
   formikProps: FormikProps<UpdatePropertyDetailsFormModel>;
 }
 
-export const UpdatePropertyDetailsForm: React.FunctionComponent<IUpdatePropertyDetailsFormProps> = ({
-  formikProps,
-}) => {
+export const UpdatePropertyDetailsForm: React.FunctionComponent<
+  IUpdatePropertyDetailsFormProps
+> = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
 
   // Lookup codes

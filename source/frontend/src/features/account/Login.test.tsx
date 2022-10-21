@@ -51,7 +51,7 @@ const TestLogin = ({
 
 //boilerplate function used by most tests to wrap the Login component with a router.
 const renderLogin = () => {
-  process.env.REACT_APP_TENANT = 'CITZ';
+  process.env.REACT_APP_TENANT = 'MOTI';
   const history = createMemoryHistory();
   return render(<TestLogin history={history} />);
 };
@@ -89,7 +89,7 @@ describe('login', () => {
   });
 
   it('new users are sent to the guest page', () => {
-    process.env.REACT_APP_TENANT = 'CITZ';
+    process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: { authenticated: true, realmAccess: { roles: [{}] } },
     });
@@ -114,10 +114,10 @@ describe('login', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const { getAllByRole } = renderLogin();
     expect(getAllByRole('heading')[0]).toHaveTextContent(
-      'Search and visualize government property information',
+      'TRAN Property Information Management System (PIMS)',
     );
     expect(getAllByRole('heading')[1]).toHaveTextContent(
-      'PIMS enables you to search properties owned by the Government of British Columbia',
+      'PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure',
     );
   });
 

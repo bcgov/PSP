@@ -35,9 +35,8 @@ export const AddAcquisitionForm = React.forwardRef<
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
-  const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] = React.useState<boolean>(
-    false,
-  );
+  const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
+    React.useState<boolean>(false);
   const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
     const selectedPropRegions = values.properties.map(x => x.region);
     return (

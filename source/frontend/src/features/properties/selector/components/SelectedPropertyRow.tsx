@@ -33,7 +33,6 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       break;
     case NameSourceType.LOCATION:
       propertyIdentifier = `${propertyName.value}`;
-      propertyIdentifier = `${propertyName.value}`;
       break;
     default:
       propertyIdentifier = '';
