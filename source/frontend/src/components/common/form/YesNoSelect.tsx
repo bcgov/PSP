@@ -26,15 +26,8 @@ export interface IYesNoSelectProps {
 }
 
 export const YesNoSelect: React.FC<IYesNoSelectProps> = props => {
-  const {
-    field,
-    label,
-    formGroupClassName,
-    required,
-    tooltip,
-    displayErrorTooltips,
-    onChange,
-  } = props;
+  const { field, label, formGroupClassName, required, tooltip, displayErrorTooltips, onChange } =
+    props;
 
   const { values, errors, touched, handleBlur, setFieldValue } = useFormikContext();
   const value = getIn(values, field) as boolean | null;

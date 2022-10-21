@@ -83,9 +83,8 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
     defaultFilter.leaseStatusTypes.includes(x.id),
   );
 
-  const [selectedStatus, setInitialSelectedStatus] = useState<MultiSelectOption[]>(
-    initialLeaseStatusList,
-  );
+  const [selectedStatus, setInitialSelectedStatus] =
+    useState<MultiSelectOption[]>(initialLeaseStatusList);
 
   // Necessary since the lookup codes might have not been loaded before the first render
   useEffect(() => {

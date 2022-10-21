@@ -15,7 +15,9 @@ export interface IDocumentTemplateManagementViewProp {
   setActivityTemplateId: (templateId?: number) => void;
 }
 
-export const DocumentTemplateManagementView: React.FunctionComponent<IDocumentTemplateManagementViewProp> = props => {
+export const DocumentTemplateManagementView: React.FunctionComponent<
+  IDocumentTemplateManagementViewProp
+> = props => {
   const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
     var typeId = Number.parseInt(selectedType.target.value);
     if (!Number.isNaN(typeId)) {

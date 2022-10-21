@@ -20,7 +20,9 @@ import { FormTenant } from './Tenant';
 
 interface IAddLeaseTenantContainerProps {}
 
-export const AddLeaseTenantContainer: React.FunctionComponent<IAddLeaseTenantContainerProps> = () => {
+export const AddLeaseTenantContainer: React.FunctionComponent<
+  IAddLeaseTenantContainerProps
+> = () => {
   const formikRef = React.useRef<FormikProps<IFormLease>>(null);
   const { lease, setLease } = useContext(LeaseStateContext);
   const [selectedTenants, setSelectedTenants] = useState<FormTenant[]>([]);

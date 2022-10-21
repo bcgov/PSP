@@ -28,13 +28,8 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
   namespace,
   disabled = false,
 }) => {
-  const {
-    countries,
-    provinces,
-    formLabels,
-    selectedCountryCode,
-    setSelectedCountryId,
-  } = useAddressHelpers();
+  const { countries, provinces, formLabels, selectedCountryCode, setSelectedCountryId } =
+    useAddressHelpers();
 
   const { setFieldValue, values } = useFormikContext();
   const countryId = getIn(values, withNameSpace(namespace, 'countryId'));

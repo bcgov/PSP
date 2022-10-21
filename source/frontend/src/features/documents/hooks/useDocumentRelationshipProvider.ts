@@ -25,63 +25,59 @@ export const useDocumentRelationshipProvider = () => {
   } = useApiDocuments();
 
   // Provides functionality to retrieve document relationship
-  const {
-    execute: retrieveDocumentRelationship,
-    loading: retrieveDocumentRelationshipLoading,
-  } = useApiRequestWrapper<
-    (
-      relationshipType: DocumentRelationshipType,
-      parentId: number,
-    ) => Promise<AxiosResponse<Api_DocumentRelationship[], any>>
-  >({
-    requestFunction: useCallback(
-      async (relationshipType: DocumentRelationshipType, parentId: number) =>
-        await getDocumentRelationship(relationshipType, parentId),
-      [getDocumentRelationship],
-    ),
-    requestName: 'retrieveDocumentRelationship',
-    onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
-      } else {
-        toast.error('Retrieve document relationship error. Check responses and try again.');
-      }
-    }, []),
-  });
+  const { execute: retrieveDocumentRelationship, loading: retrieveDocumentRelationshipLoading } =
+    useApiRequestWrapper<
+      (
+        relationshipType: DocumentRelationshipType,
+        parentId: number,
+      ) => Promise<AxiosResponse<Api_DocumentRelationship[], any>>
+    >({
+      requestFunction: useCallback(
+        async (relationshipType: DocumentRelationshipType, parentId: number) =>
+          await getDocumentRelationship(relationshipType, parentId),
+        [getDocumentRelationship],
+      ),
+      requestName: 'retrieveDocumentRelationship',
+      onError: useCallback((axiosError: AxiosError<IApiError>) => {
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response.data.error);
+        } else {
+          toast.error('Retrieve document relationship error. Check responses and try again.');
+        }
+      }, []),
+    });
 
   // Provides functionality for deleting a document relationship
-  const {
-    execute: deleteDocumentRelationship,
-    loading: deleteDocumentRelationshipLoading,
-  } = useApiRequestWrapper<
-    (
-      relationshipType: DocumentRelationshipType,
-      documentRelationship: Api_DocumentRelationship,
-    ) => Promise<AxiosResponse<boolean, any>>
-  >({
-    requestFunction: useCallback(
-      async (
+  const { execute: deleteDocumentRelationship, loading: deleteDocumentRelationshipLoading } =
+    useApiRequestWrapper<
+      (
         relationshipType: DocumentRelationshipType,
         documentRelationship: Api_DocumentRelationship,
-      ) => await deleteDocumentRelationshipApiCall(relationshipType, documentRelationship),
-      [deleteDocumentRelationshipApiCall],
-    ),
-    requestName: 'deleteDocumentRelationship',
-    onSuccess: useCallback((response?: boolean) => {
-      if (response !== undefined && response) {
-        toast.success('Deleted document relationship');
-      } else {
-        toast.error('Delete document relationship error. Check responses and try again.');
-      }
-    }, []),
-    onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
-      } else {
-        toast.error('Delete document relationship error. Check responses and try again.');
-      }
-    }, []),
-  });
+      ) => Promise<AxiosResponse<boolean, any>>
+    >({
+      requestFunction: useCallback(
+        async (
+          relationshipType: DocumentRelationshipType,
+          documentRelationship: Api_DocumentRelationship,
+        ) => await deleteDocumentRelationshipApiCall(relationshipType, documentRelationship),
+        [deleteDocumentRelationshipApiCall],
+      ),
+      requestName: 'deleteDocumentRelationship',
+      onSuccess: useCallback((response?: boolean) => {
+        if (response !== undefined && response) {
+          toast.success('Deleted document relationship');
+        } else {
+          toast.error('Delete document relationship error. Check responses and try again.');
+        }
+      }, []),
+      onError: useCallback((axiosError: AxiosError<IApiError>) => {
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response.data.error);
+        } else {
+          toast.error('Delete document relationship error. Check responses and try again.');
+        }
+      }, []),
+    });
 
   // Provides functionality for uploading a document for a given relationship
   const { execute: uploadDocument, loading: uploadDocumentLoading } = useApiRequestWrapper<
