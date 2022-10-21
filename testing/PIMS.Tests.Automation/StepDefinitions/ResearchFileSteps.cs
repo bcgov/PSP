@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SearchResearchFiles searchResearchFile;
 
-        private readonly string userName = "sutairak";
+        private readonly string userName = "TRANPSP1";
 
         private readonly string researchFileName = "Automated Research File";
         private readonly string researchFileRoadName = "The Automated Road";

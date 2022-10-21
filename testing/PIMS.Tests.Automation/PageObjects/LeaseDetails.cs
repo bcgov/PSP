@@ -28,6 +28,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsTypeSelector = By.Id("input-type");
         private By licenseDetailsOtherTypeInput = By.Id("input-otherType");
         private By licenseDetailsCategorySelector = By.Id("input-categoryType");
+        private By licenseDetailsCategoryOtherInput = By.Id("input-otherCategoryType");
         private By licenseDetailsPurposeSelector = By.Id("input-purposeType");
         private By licenseDetailsOtherPurposeInput = By.Id("input-otherPurposeType");
         private By licenseDetailsInitiatorSelector = By.Id("input-initiatorType");
@@ -90,16 +91,22 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseRandomSelectOption(licenseDetailsTypeSelector, "input-type", 2);
 
             //Selecting other Type if required
-            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0)
+            if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count() > 0)
             {
                 webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys("Automation Test - Other Type");
             }
 
             Wait();
             //Selecting Category if required
-            if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0)
+            if (webDriver.FindElements(licenseDetailsCategorySelector).Count() > 0)
             {
                 ChooseRandomSelectOption(licenseDetailsCategorySelector, "input-categoryType", 2);
+            }
+
+            //If Other Category is selected
+            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count() > 0)
+            {
+                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys("Automation Test - Other Category");
             }
 
             //Selecting Purpose

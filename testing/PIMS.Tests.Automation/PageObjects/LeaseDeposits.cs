@@ -8,6 +8,9 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private By licenseDepositsLink = By.XPath("//a[contains(text(),'Deposit')]");
 
+        private By licenseDepositsModal = By.CssSelector("div[class='modal-content']");
+        private By licenseDepositsModalOkBttn = By.CssSelector("button[title='ok-modal']");
+
         private By licenseDepositAddBttn = By.XPath("//button/div[contains(text(),'Add a deposit')]/ancestor::button");
         private By licenseDepositModal = By.CssSelector("div[class='modal-content']");
         private By licenseDepositTypeSelect = By.Id("input-depositTypeCode");
@@ -36,6 +39,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositEditNotesBttn = By.CssSelector("svg[data-testid='edit-notes']");
         private By licenseDepositNotesTextarea = By.Id("input-returnNotes");
         private By licenseDepositSaveButton = By.XPath("//button/div[contains(text(),'Save')]/ancestor::button");
+
+        private By licenseDepositTableTotal = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By licenseDepositDeleteReturnBttn = By.CssSelector("button[title='delete deposit return']");
+        private By licenseDepositsNoRowsDiv = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='no-rows-message']");
+
 
         public LeaseDeposits(IWebDriver webDriver) : base(webDriver)
         {}
@@ -130,6 +138,33 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             saveButton.Click();
 
+        }
+
+        public void DeleteLastReturn()
+        {
+            Wait();
+            FocusAndClick(licenseDepositDeleteReturnBttn);
+
+            WaitUntil(licenseDepositsModal);
+            webDriver.FindElement(licenseDepositsModalOkBttn).Click();
+        }
+
+        public void DeleteLastDeposit()
+        {
+            Wait();
+            var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count();
+            var lastDepositDeleteIcon = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='delete deposit']");
+            FocusAndClick(lastDepositDeleteIcon);
+
+            WaitUntil(licenseDepositsModal);
+            webDriver.FindElement(licenseDepositsModalOkBttn).Click();
+
+        }
+
+        public Boolean LeaseDespositExist()
+        {
+            Wait();
+            return webDriver.FindElement(licenseDepositsNoRowsDiv).Displayed;
         }
     }
 }
