@@ -2,7 +2,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useFormikContext } from 'formik';
-import { IGeocoderResponse } from 'hooks/useApi';
+import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import { GeocoderAutoComplete } from './GeocoderAutoComplete';
