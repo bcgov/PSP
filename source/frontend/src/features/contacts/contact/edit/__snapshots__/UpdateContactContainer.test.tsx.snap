@@ -340,44 +340,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c4#updateForm .form-control.is-invalid {
-  border: 2px solid #d8292f;
-}
-
-.c4#updateForm .invalid-feedback {
-  color: #d8292f;
-}
-
-.c4#updateForm .form-group label {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c4#updateForm .form-group input,
-.c4#updateForm .form-group select,
-.c4#updateForm .form-group textarea {
-  border: 2px solid #606060;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 1.6rem;
-  color: #000000;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c4#updateForm .form-group input.form-control:disabled,
-.c4#updateForm .form-group select.form-control:disabled,
-.c4#updateForm .form-group textarea.form-control:disabled,
-.c4#updateForm .form-group input.form-control[readonly],
-.c4#updateForm .form-group select.form-control[readonly],
-.c4#updateForm .form-group textarea.form-control[readonly] {
-  opacity: 1;
-}
-
-.c4#updateForm .form-group.required label:after {
+.c4 .form-group.required label:after {
   content: ' *';
   color: red;
 }
@@ -636,7 +599,7 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                         aria-hidden="true"
                         class="rbt-input-hint"
                         readonly=""
-                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 1.6rem; line-height: normal; padding: 1px 1px 1px 1px;"
+                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
                         tabindex="-1"
                         value=""
                       />

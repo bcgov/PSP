@@ -37,9 +37,9 @@ jest.mock('../network/networkSlice', () => {
   };
 });
 
-const mockLogRequest = (logRequest as unknown) as jest.Mock;
-const mockLogSuccess = (logSuccess as unknown) as jest.Mock;
-const mockLogError = (logError as unknown) as jest.Mock;
+const mockLogRequest = logRequest as unknown as jest.Mock;
+const mockLogSuccess = logSuccess as unknown as jest.Mock;
+const mockLogError = logError as unknown as jest.Mock;
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
@@ -47,9 +47,10 @@ const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});
   return currentStore;
 };
-const getWrapper = (store: any) => ({ children }: any) => (
-  <Provider store={store}>{children}</Provider>
-);
+const getWrapper =
+  (store: any) =>
+  ({ children }: any) =>
+    <Provider store={store}>{children}</Provider>;
 
 describe('useTenant slice hook', () => {
   beforeEach(() => {});

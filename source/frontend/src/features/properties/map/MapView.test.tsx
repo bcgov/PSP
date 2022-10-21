@@ -139,7 +139,7 @@ describe('MapView', () => {
         },
       },
     });
-    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
       loadProperties: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(mockParcels),
@@ -148,7 +148,7 @@ describe('MapView', () => {
         }),
       },
     });
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+    (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getProperty: async () => {
         return {} as IProperty;
       },
@@ -195,15 +195,13 @@ describe('MapView', () => {
       basemaps: [
         {
           name: 'BC Roads',
-          url:
-            'https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}',
+          url: 'https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}',
           attribution: '&copy; Government of British Columbia, DataBC, GeoBC',
           thumbnail: '/streets.jpg',
         },
         {
           name: 'Satellite',
-          url:
-            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
           attribution:
             'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
           thumbnail: '/satellite.jpg',
@@ -230,7 +228,7 @@ describe('MapView', () => {
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
-    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
       loadProperties: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(smallMockParcels),
@@ -239,7 +237,7 @@ describe('MapView', () => {
         }),
       },
     });
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+    (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getParcel: async () => {
         return {} as IProperty;
       },
@@ -256,16 +254,19 @@ describe('MapView', () => {
   });
 
   it('the map can handle features with invalid geometry', async () => {
-    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
       loadProperties: {
         execute: jest.fn().mockResolvedValue({
-          features: createPoints(smallMockParcels).map(feature => ({ ...feature, geometry: null })),
+          features: createPoints(smallMockParcels).map(feature => ({
+            ...feature,
+            geometry: null,
+          })),
           type: 'FeatureCollection',
           bbox: undefined,
         }),
       },
     });
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+    (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getParcel: async () => {
         return {} as IProperty;
       },
@@ -352,12 +353,12 @@ describe('MapView', () => {
   });
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+    (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getProperty: async () => {
         return {} as IProperty;
       },
     });
-    ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
+    (useMapProperties as unknown as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
       loadProperties: {
         execute: jest.fn().mockResolvedValue({
           features: createPoints(largeMockParcels),

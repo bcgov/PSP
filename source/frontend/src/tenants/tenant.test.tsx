@@ -1,6 +1,10 @@
 import { render } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
 import { TenantConsumer, TenantProvider } from '.';
+
+const mockAxios = new MockAdapter(axios);
 
 const renderTenant = () => {
   return (
@@ -15,6 +19,7 @@ describe('Tenant configuration', () => {
 
   beforeEach(() => {
     jest.resetModules();
+    mockAxios.onAny().reply(200);
     process.env = {
       ...OLD_ENV,
       REACT_APP_TENANT: undefined,
@@ -23,6 +28,7 @@ describe('Tenant configuration', () => {
 
   afterAll(() => {
     process.env = OLD_ENV;
+    mockAxios.reset();
     jest.restoreAllMocks();
   });
 

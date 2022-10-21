@@ -10,16 +10,16 @@ jest.mock('hooks/useKeycloakWrapper');
 // This is required to mock react-redux so that the App can render.
 const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
-  connect: (mapStateToProps: any, mapDispatchToProps: (arg0: any, arg1: any) => any) => (
-    reactComponent: any,
-  ) => ({
-    mapStateToProps,
-    mapDispatchToProps: jest.fn((dispatch = mockDispatch, ownProps) =>
-      mapDispatchToProps(dispatch, ownProps),
-    ),
-    reactComponent,
-    mockDispatch: jest.fn(),
-  }),
+  connect:
+    (mapStateToProps: any, mapDispatchToProps: (arg0: any, arg1: any) => any) =>
+    (reactComponent: any) => ({
+      mapStateToProps,
+      mapDispatchToProps: jest.fn((dispatch = mockDispatch, ownProps) =>
+        mapDispatchToProps(dispatch, ownProps),
+      ),
+      reactComponent,
+      mockDispatch: jest.fn(),
+    }),
   useSelector: jest.fn(),
   useDispatch: () => mockDispatch,
 }));

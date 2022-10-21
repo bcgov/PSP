@@ -15,7 +15,9 @@ import AddImprovementsForm from './AddImprovementsForm';
 
 interface IAddImprovementsContainerProps {}
 
-export const AddImprovementsContainer: React.FunctionComponent<IAddImprovementsContainerProps> = () => {
+export const AddImprovementsContainer: React.FunctionComponent<
+  IAddImprovementsContainerProps
+> = () => {
   const formikRef = React.useRef<FormikProps<IFormLease>>(null);
   const { lease, setLease } = useContext(LeaseStateContext);
   const { updateLease } = useUpdateLease();

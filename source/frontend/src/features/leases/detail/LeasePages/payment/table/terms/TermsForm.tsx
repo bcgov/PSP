@@ -35,10 +35,10 @@ export const TermsForm: React.FunctionComponent<ITermsFormProps> = ({
   isReceivable,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
-  const columns = useMemo(() => getLeaseTermColumns({ onEdit, onDelete: onDelete }), [
-    onEdit,
-    onDelete,
-  ]);
+  const columns = useMemo(
+    () => getLeaseTermColumns({ onEdit, onDelete: onDelete }),
+    [onEdit, onDelete],
+  );
   const { hasClaim } = useKeycloakWrapper();
 
   //Get the most recent payment for display, if one exists.

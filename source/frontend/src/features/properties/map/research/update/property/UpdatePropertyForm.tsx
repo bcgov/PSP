@@ -33,11 +33,10 @@ const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = pr
 
   const propertyResearchPurposeOptions = getByType(API.PROPERTY_RESEARCH_PURPOSE_TYPES);
 
-  const purposeFilterOptions: MultiSelectOption[] = propertyResearchPurposeOptions.map<
-    MultiSelectOption
-  >(x => {
-    return { id: x.id as string, text: x.name };
-  });
+  const purposeFilterOptions: MultiSelectOption[] =
+    propertyResearchPurposeOptions.map<MultiSelectOption>(x => {
+      return { id: x.id as string, text: x.name };
+    });
 
   const initialPurposeList = purposeFilterOptions.filter(x =>
     values.purposeTypes?.map(x => x.propertyPurposeTypeCode).includes(x.id),

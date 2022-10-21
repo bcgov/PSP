@@ -9,12 +9,8 @@ import { handleAxiosResponse } from 'utils';
  * hook providing lease deposits methods
  */
 export const useLeaseDeposits = () => {
-  const {
-    putLeaseDeposit,
-    putLeaseDepositNote,
-    postLeaseDeposit,
-    deleteLeaseDeposit,
-  } = useApiLeaseDeposits();
+  const { putLeaseDeposit, putLeaseDepositNote, postLeaseDeposit, deleteLeaseDeposit } =
+    useApiLeaseDeposits();
   const dispatch = useDispatch();
 
   const updateLeaseDeposit = async (request: IParentConcurrencyGuard<Api_SecurityDeposit>) => {

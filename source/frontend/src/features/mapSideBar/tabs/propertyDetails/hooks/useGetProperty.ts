@@ -11,9 +11,10 @@ export const useGetProperty = () => {
   const { getPropertyConceptWithId } = useApiProperties();
 
   const getApiPropertyWrapper = useApiRequestWrapper({
-    requestFunction: useCallback(async (id: number) => await getPropertyConceptWithId(id), [
-      getPropertyConceptWithId,
-    ]),
+    requestFunction: useCallback(
+      async (id: number) => await getPropertyConceptWithId(id),
+      [getPropertyConceptWithId],
+    ),
     requestName: 'getPropertyApiById',
     onSuccess: useCallback(() => toast.success('Property information retrieved'), []),
     onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
