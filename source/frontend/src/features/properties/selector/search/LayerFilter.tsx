@@ -32,7 +32,7 @@ export interface ILayerFilterProps {
  * Filter bar for research files.
  * @param {IResearchFilterProps} props
  */
-export const LayerFilter: React.FunctionComponent<ILayerFilterProps> = ({
+export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayerFilterProps>> = ({
   setFilter,
   filter,
   addressResults,

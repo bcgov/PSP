@@ -83,7 +83,7 @@ const defaultBounds = new LatLngBounds([60.09114547, -119.49609429], [48.7837042
  * Creates a Leaflet map and by default includes a number of preconfigured layers.
  * @param param0
  */
-const Map: React.FC<MapProps> = ({
+const Map: React.FC<React.PropsWithChildren<MapProps>> = ({
   lat,
   lng,
   zoom: zoomProp,

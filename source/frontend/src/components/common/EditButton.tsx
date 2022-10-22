@@ -7,7 +7,10 @@ interface IEditButtonProps {
   title?: string;
 }
 
-export const EditButton: React.FunctionComponent<IEditButtonProps> = ({ onClick, title }) => {
+export const EditButton: React.FunctionComponent<React.PropsWithChildren<IEditButtonProps>> = ({
+  onClick,
+  title,
+}) => {
   return (
     <Button
       variant="link"

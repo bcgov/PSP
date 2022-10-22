@@ -11,7 +11,9 @@ export interface ILtsaLandSubFormProps {
   nameSpace?: string;
 }
 
-export const LtsaLandSubForm: React.FunctionComponent<ILtsaLandSubFormProps> = ({ nameSpace }) => {
+export const LtsaLandSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILtsaLandSubFormProps>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const lands = getIn(values, withNameSpace(nameSpace, 'descriptionsOfLand')) ?? [];
   return (

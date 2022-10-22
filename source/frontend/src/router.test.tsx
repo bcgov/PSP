@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 // import { waitFor } from '@testing-library/react';
 // import AppRouter from 'AppRouter';
@@ -185,3 +185,6 @@ describe('PSP routing - Enzyme Tests - NEEDS REFACTORING', () => {
   //   });
   // });
 });
+
+// TODO: Remove this line when unit tests above are fixed
+export {};

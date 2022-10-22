@@ -16,12 +16,9 @@ export interface ISelectedPropertyRowProps {
   property: IMapProperty;
 }
 
-export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
-  nameSpace,
-  onRemove,
-  index,
-  property,
-}) => {
+export const SelectedPropertyRow: React.FunctionComponent<
+  React.PropsWithChildren<ISelectedPropertyRowProps>
+> = ({ nameSpace, onRemove, index, property }) => {
   const propertyName = getPropertyName(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {

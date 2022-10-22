@@ -82,7 +82,7 @@ export const convertToProperty = (
  * Clusters pins that are close together geographically based on the zoom level into a single clustered object.
  * @param param0 Point cluster properties.
  */
-export const PointClusterer: React.FC<PointClustererProps> = ({
+export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProps>> = ({
   points,
   draftPoints,
   bounds,

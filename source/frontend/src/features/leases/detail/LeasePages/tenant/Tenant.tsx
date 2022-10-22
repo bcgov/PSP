@@ -125,7 +125,9 @@ export interface ITenantProps {
  * Tenant lease page displays all tenant information (persons and organizations)
  * @param {ITenantProps} param0
  */
-export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => {
+export const Tenant: React.FunctionComponent<React.PropsWithChildren<ITenantProps>> = ({
+  nameSpace,
+}) => {
   const { values: lease } = useFormikContext<ILease>();
   const tenants: FormTenant[] = getIn(lease, withNameSpace(nameSpace, 'tenants')) ?? [];
   return (

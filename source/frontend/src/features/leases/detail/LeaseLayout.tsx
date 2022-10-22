@@ -7,7 +7,9 @@ interface ILeaseLayoutProps {}
  * layout wrapper for leases, applies styling.
  * @param {ILeaseLayoutProps} param0
  */
-export const LeaseLayout: React.FunctionComponent<ILeaseLayoutProps> = ({ children }) => {
+export const LeaseLayout: React.FunctionComponent<React.PropsWithChildren<ILeaseLayoutProps>> = ({
+  children,
+}) => {
   return <DetailScreenGrid>{children}</DetailScreenGrid>;
 };
 

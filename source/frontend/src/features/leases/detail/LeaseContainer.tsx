@@ -135,7 +135,9 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
  * Top level container for lease details, provides logic for loading and controlling lease display
  * @param {ILeaseAndLicenseContainerProps} props
  */
-export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerProps> = props => {
+export const LeaseContainer: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseAndLicenseContainerProps>
+> = props => {
   const { setTrayPage } = useContext(SidebarStateContext);
   const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
 

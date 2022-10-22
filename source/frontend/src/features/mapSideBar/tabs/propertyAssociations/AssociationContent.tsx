@@ -23,7 +23,9 @@ export interface IAssociationContentProps {
   linkUrlMask: string;
 }
 
-const AssociationContent: React.FunctionComponent<IAssociationContentProps> = props => {
+const AssociationContent: React.FunctionComponent<
+  React.PropsWithChildren<IAssociationContentProps>
+> = props => {
   const noDataMessage = `There are no ${props.associationName} files available`;
   if (props.associations === undefined) {
     return <>{noDataMessage}</>;

@@ -17,10 +17,9 @@ export interface IPropertyMapSelectorFormViewProps {
   initialSelectedProperty?: IMapProperty;
 }
 
-const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorFormViewProps> = ({
-  onSelectedProperty,
-  initialSelectedProperty,
-}) => {
+const PropertyMapSelectorFormView: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyMapSelectorFormViewProps>
+> = ({ onSelectedProperty, initialSelectedProperty }) => {
   const { setState, cursor } = React.useContext(MapStateContext);
 
   const [selectedProperty, setSelectedProperty] = React.useState<IMapProperty | undefined>(

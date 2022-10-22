@@ -21,7 +21,9 @@ import * as Styled from './styles';
 /**
  * Page that displays acquisition files information.
  */
-export const AcquisitionListView: React.FunctionComponent = () => {
+export const AcquisitionListView: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = () => {
   const history = useHistory();
   const { getAcquisitionFiles } = useApiAcquisitionFile();
   const { hasClaim } = useKeycloakWrapper();

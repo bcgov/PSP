@@ -8,7 +8,9 @@ import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
 import { Tenant } from './Tenant';
 interface ITenantContainerProps {}
 
-const TenantContainer: React.FunctionComponent<ITenantContainerProps> = props => {
+const TenantContainer: React.FunctionComponent<
+  React.PropsWithChildren<ITenantContainerProps>
+> = props => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);
   return !!edit ? (

@@ -9,8 +9,8 @@ import styled from 'styled-components';
 interface IMapSideBarLayoutProps {
   title: React.ReactNode;
   header?: React.ReactNode;
-  icon: React.ReactNode | React.FunctionComponent;
-  footer?: React.ReactNode | React.FunctionComponent;
+  icon: React.ReactNode | React.FunctionComponent<React.PropsWithChildren<unknown>>;
+  footer?: React.ReactNode | React.FunctionComponent<React.PropsWithChildren<unknown>>;
   showCloseButton?: boolean;
   onClose?: () => void;
 }
@@ -19,13 +19,9 @@ interface IMapSideBarLayoutProps {
  * SideBar layout with control bar and then form content passed as child props.
  * @param param0
  */
-const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
-  title,
-  header,
-  icon,
-  showCloseButton,
-  ...props
-}) => {
+const MapSideBarLayout: React.FunctionComponent<
+  React.PropsWithChildren<IMapSideBarLayoutProps>
+> = ({ title, header, icon, showCloseButton, ...props }) => {
   return (
     <VisibilitySensor partialVisibility={true}>
       {({ isVisible }: any) => (

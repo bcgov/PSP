@@ -23,7 +23,7 @@ const LegendButton = styled(Button as any)`
   }
 `;
 
-export const LegendControl: React.FC = () => {
+export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [visible, setVisible] = React.useState<boolean>(false);
   const target = React.useRef(null);
 

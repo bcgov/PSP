@@ -26,7 +26,7 @@ export interface IActivityTrayProps {
   currentFormContent?: IActivityFormContent;
 }
 
-export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
+export const ActivityTray: React.FunctionComponent<React.PropsWithChildren<IActivityTrayProps>> = ({
   activity,
   onClose,
   onSave,

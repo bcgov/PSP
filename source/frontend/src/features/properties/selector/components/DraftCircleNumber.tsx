@@ -6,7 +6,9 @@ interface IDraftCircleNumberProps {
   text?: string;
 }
 
-export const DraftCircleNumber: React.FunctionComponent<IDraftCircleNumberProps> = ({ text }) => {
+export const DraftCircleNumber: React.FunctionComponent<
+  React.PropsWithChildren<IDraftCircleNumberProps>
+> = ({ text }) => {
   return (
     <DraftMarker text={text}>
       <StyledText x={text?.length === 1 ? 7 : 4} y="15" textLength="1.25rem">

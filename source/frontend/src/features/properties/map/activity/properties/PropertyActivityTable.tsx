@@ -43,11 +43,9 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
   },
 ];
 
-const PropertyActivityTable: React.FunctionComponent<IPropertyActivityFormProps> = ({
-  fileProperties,
-  selectedFileProperties,
-  setSelectedFileProperties,
-}) => {
+const PropertyActivityTable: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyActivityFormProps>
+> = ({ fileProperties, selectedFileProperties, setSelectedFileProperties }) => {
   return (
     <>
       <p>Select the properties from the parent file that this activity relates to:</p>

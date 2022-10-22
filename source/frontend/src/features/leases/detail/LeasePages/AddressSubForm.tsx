@@ -11,10 +11,9 @@ export interface IAddressSubFormProps {
   nameSpace?: string;
 }
 
-export const AddressSubForm: React.FunctionComponent<IAddressSubFormProps> = ({
-  disabled,
-  nameSpace,
-}) => {
+export const AddressSubForm: React.FunctionComponent<
+  React.PropsWithChildren<IAddressSubFormProps>
+> = ({ disabled, nameSpace }) => {
   const formikProps = useFormikContext<IFormLease>();
   const address = getIn(formikProps.values, withNameSpace(nameSpace));
   const municipality = getIn(formikProps.values, withNameSpace(nameSpace, 'municipality'));

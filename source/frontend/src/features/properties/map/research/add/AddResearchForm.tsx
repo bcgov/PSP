@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import ResearchProperties from './ResearchProperties';
 
-const AddResearchForm: React.FunctionComponent = () => {
+const AddResearchForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   return (
     <>
       <Row className="py-4 no-gutters">

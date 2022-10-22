@@ -14,7 +14,7 @@ export interface ILayerPopupContainerProps {
   onViewPropertyInfo: (pid?: string | null, id?: number) => void;
 }
 
-export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
+export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupContainerProps>> = ({
   layerPopup,
   onClose,
   onViewPropertyInfo,

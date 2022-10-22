@@ -28,7 +28,7 @@ export interface IPropertySelectorSearchContainerProps {
 }
 
 export const PropertySelectorSearchContainer: React.FunctionComponent<
-  IPropertySelectorSearchContainerProps
+  React.PropsWithChildren<IPropertySelectorSearchContainerProps>
 > = ({ selectedProperties, setSelectedProperties }) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);

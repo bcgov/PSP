@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 // import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 // import { getIn, useFormikContext } from 'formik';
@@ -67,3 +67,6 @@ describe('LimitedSelect - Enzyme Tests - NEEDS REFACTORING', () => {
   //   expect(component.find('option')).toHaveLength(2);
   // });
 });
+
+// TODO: Remove this line when unit tests above are fixed
+export {};

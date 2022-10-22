@@ -10,7 +10,7 @@ import { Improvements } from './Improvements';
 interface IImprovementsContainerProps {}
 
 export const ImprovementsContainer: React.FunctionComponent<
-  IImprovementsContainerProps
+  React.PropsWithChildren<IImprovementsContainerProps>
 > = props => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);

@@ -40,7 +40,7 @@ export interface ILayerPopupProps {
   onViewPropertyInfo: (pid?: string | null) => void;
 }
 
-export const LayerPopup: React.FC<ILayerPopupProps> = props => {
+export const LayerPopup: React.FC<React.PropsWithChildren<ILayerPopupProps>> = props => {
   return (
     <Popup
       position={props.layerPopup.latlng}

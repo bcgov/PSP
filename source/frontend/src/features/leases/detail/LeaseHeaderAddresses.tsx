@@ -7,9 +7,9 @@ export interface ILeaseHeaderAddressesProps {
   lease?: ILease;
 }
 
-export const LeaseHeaderAddresses: React.FunctionComponent<ILeaseHeaderAddressesProps> = ({
-  lease,
-}) => {
+export const LeaseHeaderAddresses: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseHeaderAddressesProps>
+> = ({ lease }) => {
   return (
     <ExpandableTextList<IProperty>
       items={lease?.properties ?? []}

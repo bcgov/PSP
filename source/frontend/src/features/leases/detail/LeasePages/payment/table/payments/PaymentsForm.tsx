@@ -28,7 +28,7 @@ export interface IPaymentsFormProps {
   termId?: number;
 }
 
-export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
+export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaymentsFormProps>> = ({
   onEdit,
   onDelete,
   onSave,

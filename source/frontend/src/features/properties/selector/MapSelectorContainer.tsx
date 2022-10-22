@@ -24,11 +24,9 @@ export interface IMapSelectorContainerProps {
   existingProperties: PropertyForm[];
 }
 
-export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
-  onSelectedProperty,
-  onRemoveProperty,
-  existingProperties,
-}) => {
+export const MapSelectorContainer: React.FunctionComponent<
+  React.PropsWithChildren<IMapSelectorContainerProps>
+> = ({ onSelectedProperty, onRemoveProperty, existingProperties }) => {
   const { setState } = React.useContext(MapStateContext);
   const [selectedProperties, setSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(

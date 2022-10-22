@@ -51,7 +51,7 @@ const columns: ColumnWithProps<IDeclaration>[] = [
   },
 ];
 
-const Surplus: React.FunctionComponent = () => {
+const Surplus: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values } = useFormikContext<ILease>();
   const properties: IProperty[] = getIn(values, 'properties') ?? [];
 

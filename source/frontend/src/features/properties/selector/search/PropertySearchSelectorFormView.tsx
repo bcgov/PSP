@@ -26,7 +26,7 @@ interface SelectableProperty extends IMapProperty {
 }
 
 export const PropertySearchSelectorFormView: React.FunctionComponent<
-  IPropertySearchSelectorFormViewProps
+  React.PropsWithChildren<IPropertySearchSelectorFormViewProps>
 > = ({
   onSelectedProperties,
   selectedProperties,

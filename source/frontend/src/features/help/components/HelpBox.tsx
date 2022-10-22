@@ -33,7 +33,7 @@ const TopicSelector = styled(ButtonGroup)``;
 /**
  * Display a list of topics, as well as the content component corresponding to the active topic.
  */
-const HelpBox: React.FunctionComponent<IHelpBoxProps> = ({
+const HelpBox: React.FunctionComponent<React.PropsWithChildren<IHelpBoxProps>> = ({
   helpPage,
   activeTopic,
   setActiveTopic,

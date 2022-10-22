@@ -16,7 +16,7 @@ export interface INotesModalProps {
   field?: string;
 }
 
-export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
+export const NotesModal: React.FunctionComponent<React.PropsWithChildren<INotesModalProps>> = ({
   nameSpace,
   onSave,
   notesLabel,
