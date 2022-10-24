@@ -41,7 +41,7 @@ export const UpdateResearchView = React.forwardRef<FormikProps<any>, IUpdateRese
           await saveResearchFile(researchFile);
         }}
       >
-        {(formikProps) => (
+        {formikProps => (
           <StyledFormWrapper>
             <UpdateResearchForm formikProps={formikProps} />
 
