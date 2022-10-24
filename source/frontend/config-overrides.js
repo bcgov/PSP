@@ -1,7 +1,7 @@
 // customize CRA configuration, add compression to js.
 const CompressionPlugin = require('compression-webpack-plugin'); //gzip
 
-const addCompressionPlugin = (config) => {
+const addCompressionPlugin = config => {
   if (process.env.NODE_ENV === 'production') {
     config.devtool = false;
     config.plugins.push(
