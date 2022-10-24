@@ -1,7 +1,6 @@
 import { Formik, FormikProps } from 'formik';
 import { Api_ResearchFile } from 'models/api/ResearchFile';
 import * as React from 'react';
-import { useRef } from 'react';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -42,7 +41,7 @@ export const UpdateResearchView = React.forwardRef<FormikProps<any>, IUpdateRese
           await saveResearchFile(researchFile);
         }}
       >
-        {formikProps => (
+        {(formikProps) => (
           <StyledFormWrapper>
             <UpdateResearchForm formikProps={formikProps} />
 
