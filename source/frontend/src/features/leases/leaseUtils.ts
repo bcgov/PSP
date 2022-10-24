@@ -33,7 +33,7 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
   return {
     ...formLease,
     renewalCount: parseInt(formLease.renewalCount.toString()) || 0,
-    tfaFileNo: parseInt(formLease?.tfaFileNo?.toString() || '') || 0,
+    tfaFileNumber: stringToNull(formLease?.tfaFileNumber?.toString() || '') || 0,
     amount: parseFloat(formLease.amount.toString()) || 0.0,
     expiryDate: stringToNull(formLease.expiryDate),
     renewalDate: stringToNull(formLease.renewalDate),
@@ -59,7 +59,7 @@ export const apiLeaseToFormLease = (lease?: ILease): IFormLease | undefined => {
   const formLease: IFormLease = {
     ...lease,
     amount: lease.amount ?? '',
-    tfaFileNo: lease.tfaFileNo ?? '',
+    tfaFileNumber: lease.tfaFileNumber ?? '',
     hasDigitalLicense: booleanToYesNoUnknownString(lease.hasDigitalLicense),
     hasPhysicalLicense: booleanToYesNoUnknownString(lease.hasPhysicalLicense),
     terms: lease.terms.map<IFormLeaseTerm>(term => apiLeaseTermToFormLeaseTerm(term)) ?? [],
@@ -72,7 +72,7 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
   return {
     ...formLease,
     renewalCount: parseInt(formLease.renewalCount.toString()) || 0,
-    tfaFileNo: parseInt(formLease?.tfaFileNo?.toString() || '') || 0,
+    tfaFileNumber: stringToNull(formLease?.tfaFileNumber),
     amount: parseFloat(formLease.amount.toString()) || 0.0,
     paymentReceivableType: toTypeCode(formLease.paymentReceivableType),
     categoryType: toTypeCode(formLease.categoryType),

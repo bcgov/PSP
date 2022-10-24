@@ -1,6 +1,7 @@
 import { LeaseSchema } from 'features/leases/add/AddLeaseYupSchema';
 import AdministrationSubForm from 'features/leases/add/AdministrationSubForm';
 import LeaseDatesSubForm from 'features/leases/add/LeaseDatesSubForm';
+import NoteSubForm from 'features/leases/add/NoteSubForm';
 import PropertyInformationSubForm from 'features/leases/add/PropertyInformationSubForm';
 import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
 import * as Styled from 'features/leases/add/styles';
@@ -44,6 +45,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
             <ReferenceSubForm />
             <PropertyInformationSubForm />
+            <NoteSubForm />
           </Styled.LeaseForm>
           <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
         </>

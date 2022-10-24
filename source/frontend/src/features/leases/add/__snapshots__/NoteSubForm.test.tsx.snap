@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertyInformationSubForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+<h3
+    class="c0"
+  >
+    Notes
+  </h3>
+  .c0 textarea.form-control {
+  min-width: 80rem;
+  height: 18rem;
+  width: 80rem;
+  resize: none;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 textarea input form-group"
+      >
+        <textarea
+          class="form-control"
+          id="input-note"
+          name="note"
+          title=""
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

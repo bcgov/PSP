@@ -26,6 +26,11 @@ namespace Pims.Dal.Entities.Models
         public string Address { get; set; }
 
         /// <summary>
+        /// get/set - Search by historical LIS or PS file numbers.
+        /// </summary>
+        public string Historical { get; set; }
+
+        /// <summary>
         /// get/set - The lease status types.
         /// </summary>
         public IList<string> LeaseStatusTypes { get; set; } = new List<string>();
@@ -70,11 +75,12 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public DateTime? ExpiryEndDate { get; set; }
 
-        public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string[] sort)
+        public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string historical, string[] sort)
         {
             this.LFileNo = lFileNo;
             this.TenantName = tenantName;
             this.PinOrPid = pinOrPid;
+            this.Historical = historical;
             this.Sort = sort;
         }
 
@@ -116,6 +122,7 @@ namespace Pims.Dal.Entities.Models
                 || !string.IsNullOrWhiteSpace(PinOrPid)
                 || !string.IsNullOrWhiteSpace(LFileNo)
                 || !string.IsNullOrWhiteSpace(Address)
+                || !string.IsNullOrWhiteSpace(Historical)
                 || (LeaseStatusTypes.Count != 0)
                 || !string.IsNullOrWhiteSpace(TenantName)
                 || (Programs.Count != 0)
