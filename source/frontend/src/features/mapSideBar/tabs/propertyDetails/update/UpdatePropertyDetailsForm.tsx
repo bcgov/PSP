@@ -3,6 +3,8 @@ import { RadioGroup } from 'components/common/form/RadioGroup';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
+import AreaContainer from 'components/measurements/AreaContainer';
+import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
 import { FormikProps, getIn, useFormikContext } from 'formik';
@@ -14,10 +16,7 @@ import { prettyFormatDate } from 'utils';
 import { stringToBoolean } from 'utils/formUtils';
 
 import { Section } from '../../Section';
-import { SectionField, StyledFieldLabel } from '../../SectionField';
-import { LeftBorderCol } from '../../SectionStyles';
-import { LandMeasurementEditTable } from './components/LandMeasurementEditTable';
-import { VolumetricMeasurementEditTable } from './components/VolumetricMeasurementTable';
+import { SectionField } from '../../SectionField';
 import {
   PropertyAdjacentLandFormModel,
   PropertyAnomalyFormModel,
@@ -210,63 +209,62 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           </SectionField>
         </Section>
       )}
-
-      <Section header="Area">
-        <Row>
-          <Col>
-            <LandMeasurementEditTable
-              area={landArea}
-              areaUnitTypeCode={areaUnit}
-              onChange={(landArea, areaUnitTypeCode) => {
-                formikProps.setFieldValue('landArea', landArea);
-                formikProps.setFieldValue('areaUnitTypeCode', areaUnitTypeCode);
-              }}
-            />
-          </Col>
-          <LeftBorderCol>
-            <StyledFieldLabel>Is this a volumetric parcel?</StyledFieldLabel>
-            <RadioGroup
-              flexDirection="row"
-              field="isVolumetricParcel"
-              radioGroupClassName="pb-3"
-              radioValues={[
-                {
-                  radioLabel: 'Yes',
-                  radioValue: 'true',
-                },
-                {
-                  radioLabel: 'No',
-                  radioValue: 'false',
-                },
-              ]}
-            />
-
-            {isVolumetricParcel && (
-              <>
-                <SectionField label="Type">
+      <Section header="Measurements">
+        <SectionField label="Area" labelWidth="2">
+          <AreaContainer
+            landArea={landArea}
+            unitCode={areaUnit}
+            isEditable={true}
+            onChange={(landArea, areaUnitTypeCode) => {
+              formikProps.setFieldValue('landArea', landArea);
+              formikProps.setFieldValue('areaUnitTypeCode', areaUnitTypeCode);
+            }}
+          />
+        </SectionField>
+        <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
+          <RadioGroup
+            flexDirection="row"
+            field="isVolumetricParcel"
+            radioGroupClassName="pb-3"
+            radioValues={[
+              {
+                radioLabel: 'Yes',
+                radioValue: 'true',
+              },
+              {
+                radioLabel: 'No',
+                radioValue: 'false',
+              },
+            ]}
+          />
+        </SectionField>
+        {isVolumetricParcel && (
+          <SectionField label="Volume" labelWidth="2">
+            <Row>
+              <Col>
+                <VolumeContainer
+                  volumetricMeasurement={volumetricMeasurement}
+                  volumetricUnit={volumetricUnit}
+                  volumetricType={values.volumetricParcelTypeCode}
+                  isEditable={true}
+                  onChange={(volume, volumeUnitTypeCode) => {
+                    formikProps.setFieldValue('volumetricMeasurement', volume);
+                    formikProps.setFieldValue('volumetricUnitTypeCode', volumeUnitTypeCode);
+                  }}
+                />
+              </Col>
+              <Col>
+                <SectionField label="Type" labelWidth="3" contentWidth="auto">
                   <Select
                     field="volumetricParcelTypeCode"
                     options={volumetricTypeOptions}
                     placeholder={values.volumetricParcelTypeCode ? undefined : 'Please Select'}
                   />
                 </SectionField>
-
-                <Row>
-                  <Col>
-                    <VolumetricMeasurementEditTable
-                      volume={volumetricMeasurement}
-                      volumeUnitTypeCode={volumetricUnit}
-                      onChange={(volume, volumeUnitTypeCode) => {
-                        formikProps.setFieldValue('volumetricMeasurement', volume);
-                        formikProps.setFieldValue('volumetricUnitTypeCode', volumeUnitTypeCode);
-                      }}
-                    />
-                  </Col>
-                </Row>
-              </>
-            )}
-          </LeftBorderCol>
-        </Row>
+              </Col>
+            </Row>
+          </SectionField>
+        )}
       </Section>
 
       <Section header="Notes">

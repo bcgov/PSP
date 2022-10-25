@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LandMeasurementTable component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c1 {
+  max-width: 9rem;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="text-right col"
+          >
+            <input
+              aria-label="square metres"
+              class="c1"
+              name="area-sq-meters"
+              step=".01"
+              type="number"
+              value="0"
+            />
+          </div>
+          <div
+            class="col"
+          >
+            sq. metres
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="text-right col"
+          >
+            <input
+              aria-label="hectares"
+              class="c1"
+              name="area-hectares"
+              step=".01"
+              type="number"
+              value="0"
+            />
+          </div>
+          <div
+            class="col"
+          >
+            hectares
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="text-right col"
+          >
+            <input
+              aria-label="square feet"
+              class="c1"
+              name="area-sq-feet"
+              step=".01"
+              type="number"
+              value="0"
+            />
+          </div>
+          <div
+            class="col"
+          >
+            sq. feet
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="text-right col"
+          >
+            <input
+              aria-label="acres"
+              class="c1"
+              name="area-acres"
+              step=".01"
+              type="number"
+              value="0"
+            />
+          </div>
+          <div
+            class="col"
+          >
+            acres
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,17 +1,17 @@
 import { VolumeUnitTypes } from 'constants/index';
-import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { convertVolume, round } from 'utils';
 
-import { StyledTable } from '../styles';
+import { StyledGreenBlue, StyledInput } from './styles';
 
-export interface IVolumetricMeasurementTableProps {
+export interface IVolumeFormProps {
   volume?: number;
   volumeUnitTypeCode?: string;
-  onChange?: (volume: number, volumeUnitTypeCode: string) => void;
+  onChange: (volume: number, volumeUnitTypeCode: string) => void;
 }
 
-export const VolumetricMeasurementEditTable: React.FC<IVolumetricMeasurementTableProps> = ({
+export const VolumeForm: React.FC<IVolumeFormProps> = ({
   volume = 0,
   volumeUnitTypeCode = VolumeUnitTypes.CubicMeters,
   onChange,
@@ -78,22 +78,20 @@ export const VolumetricMeasurementEditTable: React.FC<IVolumetricMeasurementTabl
     (newValue: number, volumeUnitTypeCode: string) => {
       setFocus(volumeUnitTypeCode);
       setState(prevState => ({ ...prevState, [volumeUnitTypeCode]: newValue }));
-      if (typeof onChange === 'function') {
-        onChange(newValue, volumeUnitTypeCode);
-      }
+
+      onChange(newValue, volumeUnitTypeCode);
     },
     [onChange],
   );
 
   return (
     <>
-      <TableCaption>Volumetric measurement</TableCaption>
-      <StyledTable role="table" className="table">
-        <div role="rowgroup" className="tbody">
-          <div className="tr-wrapper">
-            <div role="row" className="tr">
-              <div role="cell" title="" className="td right">
-                <input
+      <Row>
+        <Col>
+          <StyledGreenBlue>
+            <Row className="pb-2">
+              <Col className="text-right">
+                <StyledInput
                   name="volume-cubic-meters"
                   aria-label="cubic metres"
                   type="number"
@@ -103,18 +101,16 @@ export const VolumetricMeasurementEditTable: React.FC<IVolumetricMeasurementTabl
                     handleInputChange(e.target.valueAsNumber, VolumeUnitTypes.CubicMeters)
                   }
                 />
-              </div>
-              <div role="cell" title="" className="td left">
+              </Col>
+              <Col>
                 <span>
                   metres<sup>3</sup>
                 </span>
-              </div>
-            </div>
-          </div>
-          <div className="tr-wrapper">
-            <div role="row" className="tr">
-              <div role="cell" title="" className="td right">
-                <input
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-right">
+                <StyledInput
                   name="volume-cubic-feet"
                   aria-label="cubic feet"
                   type="number"
@@ -124,16 +120,16 @@ export const VolumetricMeasurementEditTable: React.FC<IVolumetricMeasurementTabl
                     handleInputChange(e.target.valueAsNumber, VolumeUnitTypes.CubicFeet)
                   }
                 />
-              </div>
-              <div role="cell" title="" className="td left">
+              </Col>
+              <Col>
                 <span>
                   feet<sup>3</sup>
                 </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </StyledTable>
+              </Col>
+            </Row>
+          </StyledGreenBlue>
+        </Col>
+      </Row>
     </>
   );
 };

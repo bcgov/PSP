@@ -1,16 +1,13 @@
 import { VolumeUnitTypes } from 'constants/index';
 import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import {
-  IVolumetricMeasurementTableProps,
-  VolumetricMeasurementEditTable,
-} from './VolumetricMeasurementTable';
+import { IVolumeFormProps, VolumeForm } from './VolumeForm';
 
-describe('VolumetricMeasurementTable component', () => {
+describe('VolumeForm component', () => {
   // render component under test
-  const setup = (props: RenderOptions & IVolumetricMeasurementTableProps = {}) => {
+  const setup = (props: RenderOptions & IVolumeFormProps) => {
     const utils = render(
-      <VolumetricMeasurementEditTable
+      <VolumeForm
         volume={props.volume}
         volumeUnitTypeCode={props.volumeUnitTypeCode}
         onChange={props.onChange}
@@ -36,7 +33,9 @@ describe('VolumetricMeasurementTable component', () => {
   });
 
   it('renders as expected', () => {
-    const { asFragment } = setup();
+    const { asFragment } = setup({
+      onChange: () => {},
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -48,7 +47,9 @@ describe('VolumetricMeasurementTable component', () => {
   });
 
   it('performs unit conversions when values are changed', async () => {
-    const { container, getCubicFeetInput } = setup();
+    const { container, getCubicFeetInput } = setup({
+      onChange: () => {},
+    });
     await fillInput(container, 'volume-cubic-meters', 15000);
     await waitFor(() => expect(getCubicFeetInput().valueAsNumber).toBe(535714.29));
   });
