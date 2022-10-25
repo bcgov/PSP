@@ -126,7 +126,6 @@ exports[`AddResearchForm component renders as expected 1`] = `
   background-color: #f0f7fc;
   margin-bottom: 2rem;
   font-size: 16px;
-  color: #313132;
   -webkit-text-decoration: none solid rgb(49,49,50);
   text-decoration: none solid rgb(49,49,50);
   line-height: 24px;

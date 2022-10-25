@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VolumeForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c1 {
+  max-width: 9rem;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="text-right col"
+          >
+            <input
+              aria-label="cubic metres"
+              class="c1"
+              name="volume-cubic-meters"
+              step=".01"
+              type="number"
+              value="0"
+            />
+          </div>
+          <div
+            class="col"
+          >
+            <span>
+              metres
+              <sup>
+                3
+              </sup>
+            </span>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="text-right col"
+          >
+            <input
+              aria-label="cubic feet"
+              class="c1"
+              name="volume-cubic-feet"
+              step=".01"
+              type="number"
+              value="0"
+            />
+          </div>
+          <div
+            class="col"
+          >
+            <span>
+              feet
+              <sup>
+                3
+              </sup>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

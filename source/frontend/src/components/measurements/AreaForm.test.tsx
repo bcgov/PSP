@@ -1,16 +1,13 @@
 import { AreaUnitTypes } from 'constants/index';
 import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import {
-  IUpdateLandMeasurementEditTableProps,
-  LandMeasurementEditTable,
-} from './LandMeasurementEditTable';
+import { AreaForm, IAreaFormProps } from './AreaForm';
 
 describe('LandMeasurementTable component', () => {
   // render component under test
-  const setup = (props: RenderOptions & IUpdateLandMeasurementEditTableProps = {}) => {
+  const setup = (props: RenderOptions & IAreaFormProps) => {
     const utils = render(
-      <LandMeasurementEditTable
+      <AreaForm
         area={props.area}
         areaUnitTypeCode={props.areaUnitTypeCode}
         onChange={props.onChange}
@@ -39,7 +36,9 @@ describe('LandMeasurementTable component', () => {
   });
 
   it('renders as expected', () => {
-    const { asFragment } = setup();
+    const { asFragment } = setup({
+      onChange: () => {},
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -51,7 +50,9 @@ describe('LandMeasurementTable component', () => {
   });
 
   it('performs unit conversions when values are changed', async () => {
-    const { container, getSqFeetInput, getHectaresInput, getAcresInput } = setup();
+    const { container, getSqFeetInput, getHectaresInput, getAcresInput } = setup({
+      onChange: () => {},
+    });
     await fillInput(container, 'area-sq-meters', 15000);
     // assert
     await waitFor(() => expect(getSqFeetInput().valueAsNumber).toBe(161458.66));
