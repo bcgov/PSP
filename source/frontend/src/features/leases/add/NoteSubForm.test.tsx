@@ -13,7 +13,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('PropertyInformationSubForm component', () => {
+describe('NoteSubForm component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<INoteSubFormProps> = {}) => {
     // render component under test
     const component = await renderAsync(
