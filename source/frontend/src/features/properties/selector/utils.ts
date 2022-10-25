@@ -65,8 +65,7 @@ export const getFilePropertyName = (
       latitude: property.latitude,
       longitude: property.longitude,
       planNumber: property.planNumber,
-      address:
-        property.address !== undefined ? formatApiAddress(property.address) : undefined,
+      address: property.address !== undefined ? formatApiAddress(property.address) : undefined,
     };
     return getPropertyName(mapProperty);
   }

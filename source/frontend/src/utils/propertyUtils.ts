@@ -64,7 +64,10 @@ export const formatAddress = (address?: IAddress) => {
     address?.municipality ?? '',
     address?.province ?? '',
   ];
-  return values.filter(text => text !== '').join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
+  return (
+    values.filter(text => text !== '').join(' ') +
+    (address?.postal ? ', ' + (address?.postal ?? '') : '')
+  );
 };
 
 /**
@@ -80,7 +83,10 @@ export const formatApiAddress = (address?: Api_Address) => {
     address?.municipality ?? '',
     address?.province ?? '',
   ];
-  return values.filter(text => text !== '').join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
+  return (
+    values.filter(text => text !== '').join(' ') +
+    (address?.postal ? ', ' + (address?.postal ?? '') : '')
+  );
 };
 
 /**
