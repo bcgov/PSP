@@ -1,9 +1,7 @@
 import { IMapProperty } from 'features/properties/selector/models';
 import { compact } from 'lodash';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { pidFormatter } from 'utils';
-
-import { formatApiSummaryAddress } from './../../../utils/propertyUtils';
+import { formatApiAddress, pidFormatter } from 'utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -68,7 +66,7 @@ export const getFilePropertyName = (
       longitude: property.longitude,
       planNumber: property.planNumber,
       address:
-        property.address !== undefined ? formatApiSummaryAddress(property.address) : undefined,
+        property.address !== undefined ? formatApiAddress(property.address) : undefined,
     };
     return getPropertyName(mapProperty);
   }

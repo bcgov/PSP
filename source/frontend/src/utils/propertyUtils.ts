@@ -61,9 +61,10 @@ export const formatAddress = (address?: IAddress) => {
     address?.streetAddress1 ?? '',
     address?.streetAddress2 ?? '',
     address?.streetAddress3 ?? '',
+    address?.municipality ?? '',
     address?.province ?? '',
   ];
-  return values.join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
+  return values.filter(text => text !== '').join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
 };
 
 /**
@@ -76,23 +77,10 @@ export const formatApiAddress = (address?: Api_Address) => {
     address?.streetAddress1 ?? '',
     address?.streetAddress2 ?? '',
     address?.streetAddress3 ?? '',
+    address?.municipality ?? '',
     address?.province ?? '',
   ];
-  return values.join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
-};
-
-/**
- * Provides a formatted address as a string.
- * @param address Address object from property.
- * @returns Civic address string value.
- */
-export const formatApiSummaryAddress = (address?: Api_Address) => {
-  const values = [
-    address?.streetAddress1 ?? '',
-    address?.streetAddress2 ?? '',
-    address?.streetAddress3 ?? '',
-  ];
-  return values.join(' ') + (address?.municipality ? ', ' + (address?.municipality ?? '') : '');
+  return values.filter(text => text !== '').join(' ') + (address?.postal ? ', ' + (address?.postal ?? '') : '');
 };
 
 /**
