@@ -10,10 +10,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentsTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper'] div[class='td expander svg-btn']");
 
         private By licensePaymentsModal = By.CssSelector("div[class='modal-content']");
+        private By licensePaymentsModalOkBttn = By.CssSelector("button[title='ok-modal']");
+
         private By licensePaymentTermStartDateInput = By.Id("datepicker-startDate");
-
-        private By licensePaymentTermStartCalPicker = By.XPath("//div[contains(@class,'--selected')]");
-
         private By licensePaymentTermEndDateInput = By.Id("datepicker-expiryDate");
         private By licensePaymentFrequencySelect = By.Id("input-leasePmtFreqTypeCode.id");
         private By licensePaymentAgreedPaymentInput = By.Id("input-paymentAmount");
@@ -27,13 +26,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentExpPaymentInput = By.Id("input-amountPreTax");
         private By licensePaymentGSTInput = By.Id("input-amountGst");
 
-
-        //private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
-        private By licencePaymentsTable = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']");
-        private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
-
-        //private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
-
+        private By licencePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']");
+        private By licenseTermPaymentsTableTotal = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By licensePaymentDeleteTermBttn = By.CssSelector("button[title='delete term']");
 
         private int totalTermsInLease;
 
@@ -63,7 +58,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             Wait();
-            //webDriver.FindElement(licensePaymentTermStartCalPicker).Click();
 
             webDriver.FindElement(licensePaymentTermEndDateInput).Click();
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(endDate);
@@ -101,6 +95,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licensePaymentSendDateInput).Click();
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(sentDate);
+            webDriver.FindElement(licensePaymentSendDateInput).SendKeys(Keys.Enter);
             webDriver.FindElement(licensePaymentsModal).Click();
 
             ChooseRandomSelectOption(licensePaymentMethodSelect, "input-leasePaymentMethodType.id", 1);
@@ -111,10 +106,31 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
 
-            var totalPayments = webDriver.FindElements(licencePaymentsTable).Count();
+            var totalPayments = webDriver.FindElements(licencePaymentsTermTable).Count();
             var paymentStatus = webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']:nth-child("+ totalPayments +") div:nth-child(6)")).Text;
 
             Assert.True(paymentStatus.Equals(status));
+        }
+
+        public void DeleteLastTerm()
+        {
+            Wait();
+            webDriver.FindElement(licensePaymentDeleteTermBttn).Click();
+
+            WaitUntil(licensePaymentsModal);
+            webDriver.FindElement(licensePaymentsModalOkBttn).Click();
+        }
+
+        public void DeleteLastPayment()
+        {
+            Wait();
+            var totalPayments = webDriver.FindElements(licenseTermPaymentsTableTotal).Count();
+            var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+totalPayments+") button[title='delete actual']");
+            webDriver.FindElement(lastPaymentDeleteIcon).Click();
+
+            WaitUntil(licensePaymentsModal);
+            webDriver.FindElement(licensePaymentsModalOkBttn).Click();
+
         }
     }
 }

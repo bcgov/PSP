@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToAddPropertiesReseachFile()
         {
-            WaitUntil(researchEditPropertiesBttn);
+            WaitUntil(researchFileEditButton);
             webDriver.FindElement(researchEditPropertiesBttn).Click();
         }
 
