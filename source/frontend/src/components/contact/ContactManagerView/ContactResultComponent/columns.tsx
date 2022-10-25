@@ -12,6 +12,7 @@ import { MdContactMail, MdEdit } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+import { stringToFragment } from 'utils';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
@@ -50,7 +51,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
       if (hasClaim(Claims.CONTACT_VIEW)) {
         return <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>;
       }
-      return <>{props.row.original.summary}</>;
+      return stringToFragment(props.row.original.summary);
     },
   },
   {

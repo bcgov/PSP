@@ -3,6 +3,7 @@ import { Claims } from 'constants/claims';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import { stringToFragment } from 'utils';
 
 import AcquisitionProperties from './AcquisitionProperties';
 import { AcquisitionSearchResultModel } from './models';
@@ -25,7 +26,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
           </Link>
         );
       }
-      return <>{props.row.original.fileNumber}</>;
+      return stringToFragment(props.row.original.fileNumber);
     },
   },
   {
@@ -44,7 +45,8 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => <>{props.row.original.regionCode}</>,
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) =>
+      stringToFragment(props.row.original.regionCode),
   },
   {
     Header: 'Ministry project',
@@ -56,7 +58,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     Cell: (props: React.PropsWithChildren<CellProps<AcquisitionSearchResultModel>>) => {
       const { ministryProjectNumber, ministryProjectName } = props.row.original;
       const formattedValue = [ministryProjectNumber, ministryProjectName].filter(Boolean).join(' ');
-      return <>{formattedValue}</>;
+      return stringToFragment(formattedValue);
     },
   },
   {
