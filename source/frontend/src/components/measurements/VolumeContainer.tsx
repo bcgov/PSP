@@ -6,7 +6,7 @@ interface ViewOnlyProps {
   volumetricUnit?: string;
   volumetricType?: string;
 
-  isEdditable?: never;
+  isEditable?: never;
   onChange?: never;
 }
 
@@ -15,15 +15,14 @@ interface EditableProps {
   volumetricUnit?: string;
   volumetricType?: string;
 
-  isEdditable: boolean;
+  isEditable: boolean;
   onChange: (volume: number, volumetricUnit: string) => void;
 }
 
 type IVolumeContainerProps = EditableProps | ViewOnlyProps;
 
 function isViewOnly(areaComponent: ViewOnlyProps | EditableProps): areaComponent is ViewOnlyProps {
-  var editable = areaComponent as EditableProps;
-  return editable.onChange === undefined || editable.isEdditable === false;
+  return areaComponent.onChange === undefined || areaComponent.isEditable === false;
 }
 
 const VolumeContainer: React.FunctionComponent<IVolumeContainerProps> = props => {

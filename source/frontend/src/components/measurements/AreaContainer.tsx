@@ -5,7 +5,7 @@ interface ViewOnlyProps {
   landArea?: number;
   unitCode?: string;
 
-  isEdditable?: never;
+  isEditable?: never;
   onChange?: never;
 }
 
@@ -13,15 +13,14 @@ interface EditableProps {
   landArea?: number;
   unitCode?: string;
 
-  isEdditable: boolean;
+  isEditable: boolean;
   onChange: (landArea: number, areaUnitTypeCode: string) => void;
 }
 
 type IAreaContainerProps = EditableProps | ViewOnlyProps;
 
 function isViewOnly(areaComponent: ViewOnlyProps | EditableProps): areaComponent is ViewOnlyProps {
-  var editable = areaComponent as EditableProps;
-  return editable.onChange === undefined || editable.isEdditable === false;
+  return areaComponent.onChange === undefined || areaComponent.isEditable === false;
 }
 
 const AreaContainer: React.FunctionComponent<IAreaContainerProps> = props => {

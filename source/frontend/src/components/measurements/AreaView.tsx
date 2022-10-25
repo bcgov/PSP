@@ -11,7 +11,7 @@ interface IAreaViewProps {
 
 const AreaView: React.FunctionComponent<IAreaViewProps> = props => {
   const meters = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.SquareMeters);
-  const feets = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.SquareFeet);
+  const feet = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.SquareFeet);
   const hectars = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.Hectares);
   const acres = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.Acres);
   return (
@@ -32,7 +32,7 @@ const AreaView: React.FunctionComponent<IAreaViewProps> = props => {
         <Col>
           <StyledGreenGrey>
             <Row>
-              <Col className="text-right">{formatNumber(feets, 0, 2)}</Col>
+              <Col className="text-right">{formatNumber(feet, 0, 2)}</Col>
               <Col>sq. feet</Col>
             </Row>
             <Row>

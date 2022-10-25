@@ -11,7 +11,7 @@ interface IVolumeViewProps {
 
 const VolumeView: React.FunctionComponent<IVolumeViewProps> = ({ volume, unitCode }) => {
   const meters = convertVolume(volume || 0, unitCode || '', VolumeUnitTypes.CubicMeters);
-  const feets = convertVolume(volume || 0, unitCode || '', VolumeUnitTypes.CubicFeet);
+  const feet = convertVolume(volume || 0, unitCode || '', VolumeUnitTypes.CubicFeet);
 
   return (
     <Row>
@@ -26,7 +26,7 @@ const VolumeView: React.FunctionComponent<IVolumeViewProps> = ({ volume, unitCod
             </Col>
           </Row>
           <Row>
-            <Col className="text-right">{formatNumber(feets)}</Col>
+            <Col className="text-right">{formatNumber(feet)}</Col>
             <Col>
               <span>
                 feet<sup>3</sup>

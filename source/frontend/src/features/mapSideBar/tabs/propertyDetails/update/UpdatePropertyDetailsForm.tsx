@@ -214,7 +214,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           <AreaContainer
             landArea={landArea}
             unitCode={areaUnit}
-            isEdditable={true}
+            isEditable={true}
             onChange={(landArea, areaUnitTypeCode) => {
               formikProps.setFieldValue('landArea', landArea);
               formikProps.setFieldValue('areaUnitTypeCode', areaUnitTypeCode);
@@ -246,7 +246,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
                   volumetricMeasurement={volumetricMeasurement}
                   volumetricUnit={volumetricUnit}
                   volumetricType={values.volumetricParcelTypeCode}
-                  isEdditable={true}
+                  isEditable={true}
                   onChange={(volume, volumeUnitTypeCode) => {
                     formikProps.setFieldValue('volumetricMeasurement', volume);
                     formikProps.setFieldValue('volumetricUnitTypeCode', volumeUnitTypeCode);
