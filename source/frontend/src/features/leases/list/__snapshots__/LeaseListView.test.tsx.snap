@@ -359,6 +359,12 @@ exports[`Lease and License List View matches snapshot 1`] = `
                                     >
                                       L-File #
                                     </option>
+                                    <option
+                                      class="option"
+                                      value="historical"
+                                    >
+                                      Historical File #
+                                    </option>
                                   </select>
                                 </div>
                               </div>
