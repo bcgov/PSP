@@ -11,7 +11,21 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   <div
     class="Toastify"
   />
-  .c5 {
+  .c6 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c7 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -27,18 +41,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   -ms-flex-align: center;
   align-items: center;
   gap: 0.8rem;
-}
-
-.c8 {
-  border-left: 1px solid #8c8c8c;
-}
-
-.c6 {
-  width: 100%;
-  font-weight: bold;
-  padding-bottom: 0.7rem;
-  margin-bottom: 0;
-  border-bottom: 2px solid #8c8c8c;
 }
 
 .c2 {
@@ -63,17 +65,6 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
 
 .c3 {
   font-weight: bold;
-}
-
-.c7.table .no-rows-message {
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-}
-
-.c7.table .tbody .tr .td {
-  min-height: 3.6rem;
 }
 
 .c0 {
@@ -408,7 +399,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
           <div
             class="col"
           >
-            Area
+            Measurements
           </div>
           <div
             class="col-1"
@@ -419,227 +410,150 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
         class="collapse show"
       >
         <div
-          class="row"
+          class="pb-2 row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-2"
+          >
+            <label
+              class="c3"
+            >
+              Area:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
           >
             <div
               class="row"
             >
               <div
-                class="col-10 col"
+                class="col"
               >
-                <label
+                <div
                   class="c6"
                 >
-                  Land measurement
-                </label>
-                <div
-                  class="table c7"
-                  data-testid="land-measurements"
-                  role="table"
-                >
                   <div
-                    class="thead thead-light"
+                    class="row"
                   >
                     <div
-                      class="tr"
-                      role="row"
-                      style="display: flex; flex: 1 0 auto; min-width: 60px;"
+                      class="text-right col"
                     >
-                      <div
-                        class="th"
-                        colspan="1"
-                        role="columnheader"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: none;"
-                      >
-                        <div
-                          class="sortable-column"
-                        >
-                           
-                        </div>
-                      </div>
-                      <div
-                        class="th"
-                        colspan="1"
-                        role="columnheader"
-                        style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: none;"
-                      >
-                        <div
-                          class="sortable-column"
-                        >
-                           
-                        </div>
-                      </div>
+                      10,000
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      sq. metres
                     </div>
                   </div>
                   <div
-                    class="tbody"
-                    role="rowgroup"
+                    class="row"
                   >
                     <div
-                      class="tr-wrapper"
+                      class="text-right col"
                     >
-                      <div
-                        class="tr"
-                        role="row"
-                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
-                      >
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          10,000
-                        </div>
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          sq. metres
-                        </div>
-                      </div>
+                      1
                     </div>
                     <div
-                      class="tr-wrapper"
+                      class="col"
                     >
-                      <div
-                        class="tr"
-                        role="row"
-                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
-                      >
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          107,639.1
-                        </div>
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          sq. feet
-                        </div>
-                      </div>
+                      hectares
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="c7"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      107,639.1
                     </div>
                     <div
-                      class="tr-wrapper"
+                      class="col"
                     >
-                      <div
-                        class="tr"
-                        role="row"
-                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
-                      >
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          1
-                        </div>
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          hectares
-                        </div>
-                      </div>
+                      sq. feet
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      2.47
                     </div>
                     <div
-                      class="tr-wrapper"
+                      class="col"
                     >
-                      <div
-                        class="tr"
-                        role="row"
-                        style="display: flex; flex: 1 0 auto; min-width: 60px;"
-                      >
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          2.47
-                        </div>
-                        <div
-                          class="td"
-                          role="cell"
-                          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                          title=""
-                        >
-                          acres
-                        </div>
-                      </div>
+                      acres
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div
+          class="py-4 row"
+        >
           <div
-            class="c8 col"
+            class="pr-0 text-left col-auto"
           >
             <label
               class="c3"
             >
-              Is this a volumetric parcel?
+              Is this a volumetric parcel?:
             </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
             <div
-              class="pb-3 row"
+              class="form-check form-check-inline"
             >
-              <div
-                class="col"
+              <input
+                class="form-check-input"
+                disabled=""
+                id="inline-isVolumetric-yes"
+                name="is-volumetric-radio"
+                type="radio"
+              />
+              <label
+                class="form-check-label"
+                for="inline-isVolumetric-yes"
+                title=""
               >
-                <div
-                  class="form-check form-check-inline"
-                >
-                  <input
-                    class="form-check-input"
-                    disabled=""
-                    id="inline-isVolumetric-yes"
-                    name="is-volumetric-radio"
-                    type="radio"
-                  />
-                  <label
-                    class="form-check-label"
-                    for="inline-isVolumetric-yes"
-                    title=""
-                  >
-                    Yes
-                  </label>
-                </div>
-                <div
-                  class="form-check form-check-inline"
-                >
-                  <input
-                    checked=""
-                    class="form-check-input"
-                    disabled=""
-                    id="inline-isVolumetric-no"
-                    name="is-volumetric-radio"
-                    type="radio"
-                    value="yes"
-                  />
-                  <label
-                    class="form-check-label"
-                    for="inline-isVolumetric-no"
-                    title=""
-                  >
-                    No
-                  </label>
-                </div>
-              </div>
+                Yes
+              </label>
+            </div>
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                disabled=""
+                id="inline-isVolumetric-no"
+                name="is-volumetric-radio"
+                type="radio"
+                value="yes"
+              />
+              <label
+                class="form-check-label"
+                for="inline-isVolumetric-no"
+                title=""
+              >
+                No
+              </label>
             </div>
           </div>
         </div>

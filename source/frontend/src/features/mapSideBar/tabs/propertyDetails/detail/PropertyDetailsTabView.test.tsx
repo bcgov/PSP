@@ -94,7 +94,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
-    expect(getByText(/Volumetric measurement/i)).toBeVisible();
+    expect(getByText(/Volume/)).toBeVisible();
   });
 
   it('shows Provincial public hwy field', () => {
@@ -114,7 +114,7 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { queryByText } = setup({ property });
-    expect(queryByText(/Volumetric measurement/i)).toBeNull();
+    expect(queryByText(/Volume/)).toBeNull();
   });
 });
 

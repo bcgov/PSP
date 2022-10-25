@@ -78,16 +78,29 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c8 {
-  border-left: 1px solid #8c8c8c;
+.c6 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
 }
 
-.c6 {
-  width: 100%;
-  font-weight: bold;
-  padding-bottom: 0.7rem;
-  margin-bottom: 0;
-  border-bottom: 2px solid #8c8c8c;
+.c8 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c11 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c7 {
+  max-width: 9rem;
 }
 
 .c1 {
@@ -112,65 +125,6 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
-}
-
-.c7.table .no-rows-message {
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-}
-
-.c7.table .tbody .tr {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex: 1 0 auto;
-  -ms-flex: 1 0 auto;
-  flex: 1 0 auto;
-  min-width: 60px;
-}
-
-.c7.table .tbody .tr .td {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex: 100 0 auto;
-  -ms-flex: 100 0 auto;
-  flex: 100 0 auto;
-  box-sizing: border-box;
-  min-height: 3.6rem;
-  min-width: 30px;
-  width: 100px;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c7.table .tbody .tr .td.right {
-  -webkit-box-pack: right;
-  -webkit-justify-content: right;
-  -ms-flex-pack: right;
-  justify-content: right;
-  text-align: right;
-}
-
-.c7.table .tbody .tr .td.left {
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  text-align: left;
-}
-
-.c7.table .tbody .tr .td input {
-  max-width: 12.5rem;
 }
 
 <div
@@ -1289,7 +1243,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
           <div
             class="col"
           >
-            Area
+            Measurements
           </div>
           <div
             class="col-1"
@@ -1300,38 +1254,38 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="row"
+          class="pb-2 row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-2"
           >
             <label
-              class="c6"
+              class="c2"
             >
-              Land measurement
+              Area:
             </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
             <div
-              class="c7 table"
-              role="table"
+              class="row"
             >
               <div
-                class="tbody"
-                role="rowgroup"
+                class="col"
               >
                 <div
-                  class="tr-wrapper"
+                  class="c6"
                 >
                   <div
-                    class="tr"
-                    role="row"
+                    class="pb-2 row"
                   >
                     <div
-                      class="td right"
-                      role="cell"
-                      title=""
+                      class="text-right col"
                     >
                       <input
                         aria-label="square metres"
+                        class="c7"
                         name="area-sq-meters"
                         step=".01"
                         type="number"
@@ -1339,57 +1293,20 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="td left"
-                      role="cell"
-                      title=""
+                      class="col"
                     >
                       sq. metres
                     </div>
                   </div>
-                </div>
-                <div
-                  class="tr-wrapper"
-                >
                   <div
-                    class="tr"
-                    role="row"
+                    class="row"
                   >
                     <div
-                      class="td right"
-                      role="cell"
-                      title=""
-                    >
-                      <input
-                        aria-label="square feet"
-                        name="area-sq-feet"
-                        step=".01"
-                        type="number"
-                        value="269097.76"
-                      />
-                    </div>
-                    <div
-                      class="td left"
-                      role="cell"
-                      title=""
-                    >
-                      sq. feet
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="tr-wrapper"
-                >
-                  <div
-                    class="tr"
-                    role="row"
-                  >
-                    <div
-                      class="td right"
-                      role="cell"
-                      title=""
+                      class="text-right col"
                     >
                       <input
                         aria-label="hectares"
+                        class="c7"
                         name="area-hectares"
                         step=".01"
                         type="number"
@@ -1397,28 +1314,49 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="td left"
-                      role="cell"
-                      title=""
+                      class="col"
                     >
                       hectares
                     </div>
                   </div>
                 </div>
+              </div>
+              <div
+                class="col"
+              >
                 <div
-                  class="tr-wrapper"
+                  class="c8"
                 >
                   <div
-                    class="tr"
-                    role="row"
+                    class="pb-2 row"
                   >
                     <div
-                      class="td right"
-                      role="cell"
-                      title=""
+                      class="text-right col"
+                    >
+                      <input
+                        aria-label="square feet"
+                        class="c7"
+                        name="area-sq-feet"
+                        step=".01"
+                        type="number"
+                        value="269097.76"
+                      />
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      sq. feet
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
                     >
                       <input
                         aria-label="acres"
+                        class="c7"
                         name="area-acres"
                         step=".01"
                         type="number"
@@ -1426,9 +1364,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                       />
                     </div>
                     <div
-                      class="td left"
-                      role="cell"
-                      title=""
+                      class="col"
                     >
                       acres
                     </div>
@@ -1437,14 +1373,22 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
               </div>
             </div>
           </div>
+        </div>
+        <div
+          class="py-4 row"
+        >
           <div
-            class="c8 col"
+            class="pr-0 text-left col-auto"
           >
             <label
               class="c2"
             >
-              Is this a volumetric parcel?
+              Is this a volumetric parcel?:
             </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
             <div
               class="c9 form-group"
             >
@@ -1496,78 +1440,47 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              class="pb-2 row"
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-2"
+          >
+            <label
+              class="c2"
             >
-              <div
-                class="pr-0 text-left col-4"
-              >
-                <label
-                  class="c2"
-                >
-                  Type:
-                </label>
-              </div>
-              <div
-                class="c3 text-left col"
-              >
-                <div
-                  class="form-group"
-                >
-                  <select
-                    class="form-select form-control"
-                    id="input-volumetricParcelTypeCode"
-                    name="volumetricParcelTypeCode"
-                  >
-                    <option
-                      class="option"
-                      value="AIRSPACE"
-                    >
-                      Airspace
-                    </option>
-                    <option
-                      class="option"
-                      value="SUBSURF"
-                    >
-                      Sub-surface
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
+              Volume:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
             <div
               class="row"
             >
               <div
                 class="col"
               >
-                <label
-                  class="c6"
-                >
-                  Volumetric measurement
-                </label>
                 <div
-                  class="c7 table"
-                  role="table"
+                  class="row"
                 >
                   <div
-                    class="tbody"
-                    role="rowgroup"
+                    class="col"
                   >
                     <div
-                      class="tr-wrapper"
+                      class="c11"
                     >
                       <div
-                        class="tr"
-                        role="row"
+                        class="pb-2 row"
                       >
                         <div
-                          class="td right"
-                          role="cell"
-                          title=""
+                          class="text-right col"
                         >
                           <input
                             aria-label="cubic metres"
+                            class="c7"
                             name="volume-cubic-meters"
                             step=".01"
                             type="number"
@@ -1575,9 +1488,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           />
                         </div>
                         <div
-                          class="td left"
-                          role="cell"
-                          title=""
+                          class="col"
                         >
                           <span>
                             metres
@@ -1587,21 +1498,15 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           </span>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="tr-wrapper"
-                    >
                       <div
-                        class="tr"
-                        role="row"
+                        class="row"
                       >
                         <div
-                          class="td right"
-                          role="cell"
-                          title=""
+                          class="text-right col"
                         >
                           <input
                             aria-label="cubic feet"
+                            class="c7"
                             name="volume-cubic-feet"
                             step=".01"
                             type="number"
@@ -1609,9 +1514,7 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           />
                         </div>
                         <div
-                          class="td left"
-                          role="cell"
-                          title=""
+                          class="col"
                         >
                           <span>
                             feet
@@ -1621,6 +1524,49 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
                           </span>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c2"
+                    >
+                      Type:
+                    </label>
+                  </div>
+                  <div
+                    class="c3 text-left col-auto"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-volumetricParcelTypeCode"
+                        name="volumetricParcelTypeCode"
+                      >
+                        <option
+                          class="option"
+                          value="AIRSPACE"
+                        >
+                          Airspace
+                        </option>
+                        <option
+                          class="option"
+                          value="SUBSURF"
+                        >
+                          Sub-surface
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>
