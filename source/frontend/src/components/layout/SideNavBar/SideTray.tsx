@@ -2,6 +2,7 @@ import clsx from 'classnames';
 import { AdminTools, LeaseAndLicenses, ResearchTray } from 'components/layout';
 import { ReactElement, useEffect, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
+import { boolean } from 'yup';
 
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
@@ -44,7 +45,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   const TrayPage = () => (context ? sideTrayPages.get(context) ?? <></> : <></>);
   return (
     <ReactVisibilitySensor
-      onChange={isVisible => {
+      onChange={(isVisible: boolean) => {
         !isVisible && setContext(undefined);
       }}
     >

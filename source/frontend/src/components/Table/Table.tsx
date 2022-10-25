@@ -350,7 +350,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                 // The header can use the table's getToggleAllRowsSelectedProps method
                 // to render a checkbox
                 Header: ({ getToggleAllRowsSelectedProps }) =>
-                  isSingleSelect !== true && (
+                  isSingleSelect !== true ? (
                     <div>
                       <IndeterminateCheckbox
                         {...getToggleAllRowsSelectedProps()}
@@ -360,7 +360,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                         allDataRef={dataRef}
                       />
                     </div>
-                  ),
+                  ) : null,
                 // The cell can use the individual row's getToggleRowSelectedProps method
                 // to the render a checkbox
                 Cell: ({ row }: { row: any }) => (

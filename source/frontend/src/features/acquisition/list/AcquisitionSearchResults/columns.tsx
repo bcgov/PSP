@@ -25,7 +25,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
           </Link>
         );
       }
-      return props.row.original.fileNumber;
+      return <>{props.row.original.fileNumber}</>;
     },
   },
   {
@@ -44,7 +44,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => props.row.original.regionCode,
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => <>{props.row.original.regionCode}</>,
   },
   {
     Header: 'Ministry project',
@@ -53,10 +53,10 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     clickable: true,
     width: 20,
     maxWidth: 30,
-    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+    Cell: (props: React.PropsWithChildren<CellProps<AcquisitionSearchResultModel>>) => {
       const { ministryProjectNumber, ministryProjectName } = props.row.original;
       const formattedValue = [ministryProjectNumber, ministryProjectName].filter(Boolean).join(' ');
-      return formattedValue;
+      return <>{formattedValue}</>;
     },
   },
   {

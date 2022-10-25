@@ -50,7 +50,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
       if (hasClaim(Claims.CONTACT_VIEW)) {
         return <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>;
       }
-      return props.row.original.summary;
+      return <>{props.row.original.summary}</>;
     },
   },
   {
