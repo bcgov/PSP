@@ -76,8 +76,10 @@ export const ActivityForm = ({
           functionErrors = formContent?.validationFunction
             ? formContent?.validationFunction(values)
             : {};
-          validateYupSchema(values, activityYupSchema, true);
-          validateYupSchema(values, formContent?.validationSchema, true);
+          if (values.activityStatusTypeCode?.id !== 'CANCELLED') {
+            validateYupSchema(values, activityYupSchema, true);
+            validateYupSchema(values, formContent?.validationSchema, true);
+          }
           return functionErrors;
         } catch (err) {
           return { ...functionErrors, ...yupToFormErrors(err) };
@@ -100,6 +102,7 @@ export const ActivityForm = ({
             activity={activity}
             file={file}
             editMode={editMode}
+            setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}
           >
             {(EditForm || ViewForm) && (

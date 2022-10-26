@@ -15,6 +15,7 @@ export interface IActivityViewProps {
   activity: Activity;
   file: ActivityFile;
   editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
   onEditRelatedProperties: () => void;
 }
 
@@ -22,13 +23,18 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   file,
   activity,
   editMode,
+  setEditMode,
   onEditRelatedProperties,
   children,
 }) => {
   return (
     <>
-      <ActivityHeader editMode={editMode} file={file} activity={activity} />
-      <ActivityControlsBar onEditRelatedProperties={onEditRelatedProperties} />
+      <ActivityHeader file={file} activity={activity} />
+      <ActivityControlsBar
+        editMode={editMode}
+        setEditMode={setEditMode}
+        onEditRelatedProperties={onEditRelatedProperties}
+      />
       <Section header="Description" isCollapsable initiallyExpanded title="description">
         <ActivityDescription editMode={editMode} />
       </Section>
