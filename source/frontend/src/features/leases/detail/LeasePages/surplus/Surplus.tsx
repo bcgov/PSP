@@ -3,7 +3,7 @@ import { ColumnWithProps, Table } from 'components/Table';
 import { PidCell } from 'components/Table/PidCell';
 import { getIn, useFormikContext } from 'formik';
 import { ILease, IProperty } from 'interfaces';
-import { prettyFormatDate } from 'utils';
+import { prettyFormatDate, stringToFragment } from 'utils';
 
 interface IDeclaration {
   id?: number;
@@ -41,7 +41,7 @@ const columns: ColumnWithProps<IDeclaration>[] = [
   {
     Header: 'Declaration Date',
     accessor: 'date',
-    Cell: ({ cell: { value } }) => prettyFormatDate(value),
+    Cell: ({ cell: { value } }) => stringToFragment(prettyFormatDate(value)),
     maxWidth: 50,
   },
   {

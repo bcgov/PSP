@@ -30,8 +30,10 @@ const MapSideBarLayout: React.FunctionComponent<
             <Row>
               <Col>
                 <Styled.H1 className="mr-auto">
-                  {icon}
-                  {title}
+                  <>
+                    {icon}
+                    {title}
+                  </>
                 </Styled.H1>
               </Col>
 

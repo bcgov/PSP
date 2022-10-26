@@ -10,7 +10,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaTrash, FaUserAlt } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
-import { prettyFormatDate } from 'utils';
+import { prettyFormatDate, stringToFragment } from 'utils';
 
 export interface IDocumentColumnProps {
   onViewDetails: (values: Api_Document) => void;
@@ -55,12 +55,12 @@ export const getDocumentColumns = ({
   ];
 };
 
-function renderDocumentType({ value }: CellProps<Api_Document, Api_DocumentType>) {
-  return value?.documentType ?? '';
+function renderDocumentType({ value }: CellProps<Api_Document, Api_DocumentType | undefined>) {
+  return stringToFragment(value?.documentType ?? '');
 }
 
 const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
-  return function (cell: CellProps<Api_Document, string>) {
+  return function (cell: CellProps<Api_Document, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <>

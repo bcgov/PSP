@@ -1,4 +1,6 @@
+import axios, { AxiosError } from 'axios';
 import { useApiLeasePayments } from 'hooks/pims-api/useApiLeasePayments';
+import { IApiError } from 'interfaces/IApiError';
 import { ILeasePayment } from 'interfaces/ILeasePayment';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
@@ -20,11 +22,14 @@ export const useLeasePayments = () => {
         const response = await handleAxiosResponse(dispatch, 'UpdateLeasePayment', axiosPromise);
         toast.success('Lease payment saved');
         return response;
-      } catch (axiosError) {
-        if (axiosError?.response?.status === 400) {
-          toast.error(axiosError?.response?.data.error);
-        } else {
-          toast.error('Error saving lease payment, refresh your page and try again');
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 400) {
+            toast.error(axiosError?.response?.data.error);
+          } else {
+            toast.error('Error saving lease payment, refresh your page and try again');
+          }
         }
       } finally {
         dispatch(hideLoading());
@@ -40,11 +45,14 @@ export const useLeasePayments = () => {
         const response = await handleAxiosResponse(dispatch, 'DeleteLeasePayment', axiosPromise);
         toast.success('Lease payment deleted');
         return response;
-      } catch (axiosError) {
-        if (axiosError?.response?.status === 400) {
-          toast.error(axiosError?.response?.data.error);
-        } else {
-          toast.error('Error deleting lease payment, refresh your page and try again');
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 400) {
+            toast.error(axiosError?.response?.data.error);
+          } else {
+            toast.error('Error deleting lease payment, refresh your page and try again');
+          }
         }
       } finally {
         dispatch(hideLoading());

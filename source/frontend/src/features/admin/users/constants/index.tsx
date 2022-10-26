@@ -94,7 +94,7 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     align: 'left',
     clickable: true,
     minWidth: 100,
-    Cell: DateTimeCell as any,
+    Cell: DateTimeCell,
   },
   {
     Header: ' ',

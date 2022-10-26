@@ -9,16 +9,18 @@ import { formatMoney, formatNumber, prettyFormatDate, stringToFragment } from 'u
  *  - percentages
  */
 
-export const renderDate = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
-  stringToFragment(prettyFormatDate(value));
+export const renderDate = <T extends object>({
+  cell: { value },
+}: CellProps<T, string | Date | undefined>) => stringToFragment(prettyFormatDate(value));
 
-export const renderMoney = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
-  stringToFragment(formatMoney(value as any));
+export const renderMoney = <T extends object>({
+  cell: { value },
+}: CellProps<T, number | '' | undefined>) => stringToFragment(formatMoney(value));
 
-export const renderPercentage = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
-  stringToFragment(`${formatNumber(value as any, 0, 2)}%`);
+export const renderPercentage = <T extends object>({ cell: { value } }: CellProps<T, number>) =>
+  stringToFragment(`${formatNumber(value, 0, 2)}%`);
 
-export const renderBooleanAsYesNo = ({ value }: CellProps<any, boolean>) =>
+export const renderBooleanAsYesNo = ({ value }: CellProps<any, boolean | undefined>) =>
   stringToFragment(value ? 'Y' : 'N');
 
 export const renderTypeCode = ({ value }: CellProps<any, Api_TypeCode<any> | undefined>) =>
