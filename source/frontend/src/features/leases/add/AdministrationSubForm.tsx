@@ -179,6 +179,11 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
           />
         </InlineCol>
       </Row>
+      <Row>
+        <Col>
+          <Styled.LargeTextArea label="Description" field="description" />
+        </Col>
+      </Row>
     </>
   );
 };

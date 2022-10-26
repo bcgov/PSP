@@ -284,6 +284,38 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       <label
         class="form-label"
       >
+        LIS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-tfaFileNumber"
+          name="tfaFileNumber"
+          title="333"
+          value="333"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        PS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-psFileNo"
+          name="psFileNo"
+          title="444"
+          value="444"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
         MoTI contact:
       </label>
       <div
@@ -625,6 +657,38 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-lFileNo"
           name="lFileNo"
+          title=""
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        LIS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-tfaFileNumber"
+          name="tfaFileNumber"
+          title=""
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        PS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-psFileNo"
+          name="psFileNo"
           title=""
           value=""
         />

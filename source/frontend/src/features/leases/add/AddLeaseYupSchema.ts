@@ -1,4 +1,3 @@
-import { MAX_SQL_INT_SIZE } from 'constants/API';
 import * as Yup from 'yup';
 
 import { isLeaseCategoryVisible } from './AdministrationSubForm';
@@ -56,7 +55,7 @@ export const LeaseSchema = Yup.object().shape({
   ),
   description: Yup.string().max(4000, 'Description must be at most 4000 characters'),
   note: Yup.string().max(4000, 'Notes must be at most 4000 characters'),
-  tfaFileNo: Yup.number().max(MAX_SQL_INT_SIZE, `LIS # must be less than ${MAX_SQL_INT_SIZE}`),
+  tfaFileNumber: Yup.string().max(50, `LIS # must be at most 50 characters`),
   psFileNo: Yup.string().max(50, 'PS # must be at most 50 characters'),
   properties: Yup.array().of(
     Yup.object().shape(
