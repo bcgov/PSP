@@ -26,8 +26,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchResultExpropiationYesRadioBttn = By.Id("input-true");
         private By researchExpropiationNotes = By.Id("input-expropriationNotes");
 
-        private By researchFileSaveButton = By.XPath("//button/div[contains(text(),'Save')]/parent::button");
-
         private By researchEditPropertiesBttn = By.XPath("//button/div[contains(text(),'Edit properties')]");
 
         private By researchFileConfirmationModal = By.CssSelector("div[class='modal-content']");

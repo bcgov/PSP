@@ -71,6 +71,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Individual Contact with minimum fields")]
         public void MinimumIndividualContact()
         {
+            /* TEST COVERAGE: PSP-2705, 
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -88,6 +91,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Individual Contact with maximum fields")]
         public void MaximumIndividualContact()
         {
+            /* TEST COVERAGE: PSP-2705
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -108,6 +114,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Organization Contact with minimum fields")]
         public void MinimumOrganizationContact()
         {
+            /* TEST COVERAGE: PSP-4208
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -124,6 +133,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Organization Contact with maximum fields")]
         public void MaximumOrganizationContact()
         {
+            /* TEST COVERAGE: PSP-4208
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -144,6 +156,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing Organization Contact")]
         public void UpdateOrganizationContact()
         {
+            /* TEST COVERAGE: PSP-3021, PSP-4200
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -164,6 +179,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I search for an existing contact")]
         public void SearchExistingContact()
         {
+            /* TEST COVERAGE: PSP-4200
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -177,6 +195,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I search for an non-existing contact")]
         public void SearchNonExistantContact()
         {
+            /* TEST COVERAGE: PSP-4200
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -190,6 +211,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I cancel creating a new contact")]
         public void CancelContactCreation()
         {
+            /* TEST COVERAGE: PSP-2706
+             */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -210,6 +234,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new Organization contact is successfully created")]
         public void NewOrganizationContactCreated()
         {
+            /* TEST COVERAGE: PSP-4208
+             */
+
             contacts.Wait();
             Assert.True(contacts.GetContactOrgStatus().Equals("ACTIVE"));
         }
@@ -217,6 +244,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new Individual contact is successfully created")]
         public void NewIndividualContactCreated()
         {
+            /* TEST COVERAGE: PSP-2705
+             */
+
             contacts.Wait();
             Assert.True(contacts.GetContactIndStatus().Equals("ACTIVE"));
         }
@@ -224,6 +254,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Search Contacts screen is correctly rendered")]
         public void CorrectSearchContact()
         {
+            /* TEST COVERAGE: PSP-2704, PSP-2541
+             */
+
             contacts.Wait();
             Assert.True(searchContacts.SearchContactRender());
         }
@@ -231,6 +264,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"No contacts results are found")]
         public void NoContactResults()
         {
+            /* TEST COVERAGE: PSP-4200
+             */
+
             contacts.Wait();
             Assert.True(searchContacts.GetNoSearchMessage().Equals("No Contacts match the search criteria"));
         }

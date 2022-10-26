@@ -7,9 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By menuResearchButton = By.XPath("//a/label[contains(text(),'Research')]/parent::a");
         private By searchResearchButton = By.XPath("//a[contains(text(),'Manage Research File')]");
 
-        private By searchResearchFileNumberSelect = By.Id("input-researchSearchBy");
         private By searchResearchFileInput = By.Id("input-rfileNumber");
-        private By searchResearchStatusSelect = By.Id("input-researchFileStatusTypeCode");
         private By searchResearchFileButton = By.Id("search-button");
 
         private By searchResearchFileSortByRFileBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");

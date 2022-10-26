@@ -47,6 +47,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Research File")]
         public void CreateResearchFile()
         {
+            /* TEST COVERAGE: PSP-3266, PSP-3267, PSP-4556 */
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -67,6 +69,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add additional information to an existing Research File")]
         public void AddInfoToResearchFile()
         {
+            /* TEST COVERAGE: PSP-3358, PSP-3357 */
 
             //Add additional info to the reseach File
             researchFile.AddAdditionalResearchFileInfo(researchFileRoadName, researchFileAliasName, researchFilePurposesNbr, researchFileRequestDate, researchFileRequester,
@@ -79,6 +82,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add a Property by PID to the Research File")]
         public void AddOnePIDPropertyResearchFile()
         {
+            /* TEST COVERAGE: PSP-3721, PSP-4556, PSP-3596 */
+
             //Navigate to Edit Research File
             researchFile.NavigateToAddPropertiesReseachFile();
 
@@ -100,6 +105,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I look for a Property by Legal Description")]
         public void LookPlanPropertyResearchFile()
         {
+            /* TEST COVERAGE: PSP-3721, PSP-3597 */
+
             //Navigate to Edit Research File
             researchFile.NavigateToAddPropertiesReseachFile();
 
@@ -111,6 +118,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I look for an incorrect PID")]
         public void LookIncorrectPID()
         {
+            /* TEST COVERAGE: PSP-3596, PSP-3598 */
+
             //Navigate to Edit Research File
             researchFile.NavigateToAddPropertiesReseachFile();
 
@@ -122,6 +131,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add several Properties to the research File")]
         public void AddAllPropertiesResearchFile()
         {
+            /* TEST COVERAGE: PSP-3266, PSP-3721, PSP-4333, PSP-3597, PSP-3596, PSP-3595, PSP-3849, PSP-3598 */
+
             //Navigate to Edit Research File
             researchFile.NavigateToAddPropertiesReseachFile();
 
@@ -135,16 +146,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Plan
-            //sharedSearchProperties.SelectPropertyByPlan(Plan1Search);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectPropertyByPlan(Plan1Search);
+            sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Address
-            //sharedSearchProperties.SelectPropertyByAddress(address1Search);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectPropertyByAddress(address1Search);
+            sharedSearchProperties.SelectFirstOption();
 
             //Search for a property by Legal Description
-            //sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedSearchProperties.SelectPropertyByLegalDescription(legalDescription1Search);
+            sharedSearchProperties.SelectFirstOption();
 
             //Save Research File
             researchFile.SaveResearchFile();
@@ -156,6 +167,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new research file is created successfully")]
         public void NewResearchFileCreated()
         {
+            /* TEST COVERAGE: PSP-4556 */
+
             searchResearchFile.NavigateToSearchResearchFile();
             searchResearchFile.SearchResearchFileByRFile(researchFileCode);
 
@@ -165,12 +178,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"More than 15 results are found")]
         public void TooManyResultsFound()
         {
+            /* TEST COVERAGE: PSP-3598 */
+
             Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
         }
 
         [StepDefinition(@"No results are found")]
         public void NoResultsFound()
-        {  
+        {
+            /* TEST COVERAGE: PSP-3598 */
+
             Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("No results found for your search criteria."));
         }
     }

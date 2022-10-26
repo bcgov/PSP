@@ -7,7 +7,8 @@ namespace PIMS.Tests.Automation.PageObjects
     public abstract class PageObjectBase
     {
         protected readonly IWebDriver webDriver;
-       
+
+        protected By toastifyMessage = By.CssSelector("div[class='Toastify__toast-body']");
 
         protected PageObjectBase(IWebDriver webDriver)
         {
