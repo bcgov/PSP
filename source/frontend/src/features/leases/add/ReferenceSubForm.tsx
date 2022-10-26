@@ -18,6 +18,16 @@ const ReferenceSubForm: React.FunctionComponent<IReferenceSubFormProps> = props 
       </Row>
       <Row>
         <Col>
+          <Styled.LargeInlineInput label="LIS #:" field="tfaFileNumber" />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Styled.LargeInlineInput label="PS #:" field="psFileNo" />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <InlineSelect
             label="Physical lease/license exists:"
             field="hasPhysicalLicense"

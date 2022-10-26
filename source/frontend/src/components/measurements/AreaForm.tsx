@@ -1,17 +1,17 @@
 import { AreaUnitTypes } from 'constants/index';
-import { TableCaption } from 'features/mapSideBar/tabs/SectionStyles';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { convertArea, round } from 'utils';
 
-import { StyledTable } from '../styles';
+import { StyledGreenCol, StyledGreenGrey, StyledInput } from './styles';
 
-export interface IUpdateLandMeasurementEditTableProps {
+export interface IAreaFormProps {
   area?: number;
   areaUnitTypeCode?: string;
-  onChange?: (landArea: number, areaUnitTypeCode: string) => void;
+  onChange: (landArea: number, areaUnitTypeCode: string) => void;
 }
 
-export const LandMeasurementEditTable: React.FC<IUpdateLandMeasurementEditTableProps> = ({
+export const AreaForm: React.FC<IAreaFormProps> = ({
   area = 0,
   areaUnitTypeCode = AreaUnitTypes.Hectares,
   onChange,
@@ -117,22 +117,19 @@ export const LandMeasurementEditTable: React.FC<IUpdateLandMeasurementEditTableP
     (newValue: number, areaUnitTypeCode: string) => {
       setFocus(areaUnitTypeCode);
       setState(prevState => ({ ...prevState, [areaUnitTypeCode]: newValue }));
-      if (typeof onChange === 'function') {
-        onChange(newValue, areaUnitTypeCode);
-      }
+      onChange(newValue, areaUnitTypeCode);
     },
     [onChange],
   );
 
   return (
     <>
-      <TableCaption>Land measurement</TableCaption>
-      <StyledTable role="table" className="table">
-        <div role="rowgroup" className="tbody">
-          <div className="tr-wrapper">
-            <div role="row" className="tr">
-              <div role="cell" title="" className="td right">
-                <input
+      <Row>
+        <Col>
+          <StyledGreenCol>
+            <Row className="pb-2">
+              <Col className="text-right">
+                <StyledInput
                   name="area-sq-meters"
                   aria-label="square metres"
                   type="number"
@@ -142,16 +139,29 @@ export const LandMeasurementEditTable: React.FC<IUpdateLandMeasurementEditTableP
                     handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareMeters)
                   }
                 />
-              </div>
-              <div role="cell" title="" className="td left">
-                sq. metres
-              </div>
-            </div>
-          </div>
-          <div className="tr-wrapper">
-            <div role="row" className="tr">
-              <div role="cell" title="" className="td right">
-                <input
+              </Col>
+              <Col>sq. metres</Col>
+            </Row>
+            <Row>
+              <Col className="text-right">
+                <StyledInput
+                  name="area-hectares"
+                  aria-label="hectares"
+                  type="number"
+                  step=".01"
+                  value={ha}
+                  onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Hectares)}
+                />
+              </Col>
+              <Col>hectares</Col>
+            </Row>
+          </StyledGreenCol>
+        </Col>
+        <Col>
+          <StyledGreenGrey>
+            <Row className="pb-2">
+              <Col className="text-right">
+                <StyledInput
                   name="area-sq-feet"
                   aria-label="square feet"
                   type="number"
@@ -161,33 +171,12 @@ export const LandMeasurementEditTable: React.FC<IUpdateLandMeasurementEditTableP
                     handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareFeet)
                   }
                 />
-              </div>
-              <div role="cell" title="" className="td left">
-                sq. feet
-              </div>
-            </div>
-          </div>
-          <div className="tr-wrapper">
-            <div role="row" className="tr">
-              <div role="cell" title="" className="td right">
-                <input
-                  name="area-hectares"
-                  aria-label="hectares"
-                  type="number"
-                  step=".01"
-                  value={ha}
-                  onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Hectares)}
-                />
-              </div>
-              <div role="cell" title="" className="td left">
-                hectares
-              </div>
-            </div>
-          </div>
-          <div className="tr-wrapper">
-            <div role="row" className="tr">
-              <div role="cell" title="" className="td right">
-                <input
+              </Col>
+              <Col>sq. feet</Col>
+            </Row>
+            <Row>
+              <Col className="text-right">
+                <StyledInput
                   name="area-acres"
                   aria-label="acres"
                   type="number"
@@ -195,14 +184,12 @@ export const LandMeasurementEditTable: React.FC<IUpdateLandMeasurementEditTableP
                   value={acres}
                   onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Acres)}
                 />
-              </div>
-              <div role="cell" title="" className="td left">
-                acres
-              </div>
-            </div>
-          </div>
-        </div>
-      </StyledTable>
+              </Col>
+              <Col>acres</Col>
+            </Row>
+          </StyledGreenGrey>
+        </Col>
+      </Row>
     </>
   );
 };

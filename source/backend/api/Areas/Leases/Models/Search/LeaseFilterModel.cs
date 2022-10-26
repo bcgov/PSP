@@ -25,6 +25,11 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string Address { get; set; }
 
         /// <summary>
+        /// get/set - Search by historical LIS or PS file numbers.
+        /// </summary>
+        public string Historical { get; set; }
+
+        /// <summary>
         /// get/set - The lease status types.
         /// </summary>
         public IList<string> LeaseStatusTypes { get; set; } = new List<string>();
@@ -82,6 +87,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
             this.Address = filter.GetStringValue(nameof(this.Address));
+            this.Historical = filter.GetStringValue(nameof(this.Historical));
             this.LeaseStatusTypes = filter.GetStringArrayValue(nameof(this.LeaseStatusTypes));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
@@ -109,6 +115,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 PinOrPid = model.PinOrPid,
                 LFileNo = model.LFileNo,
                 Address = model.Address,
+                Historical = model.Historical,
                 LeaseStatusTypes = model.LeaseStatusTypes,
                 TenantName = model.TenantName,
                 Programs = model.Programs,
@@ -138,6 +145,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 || !string.IsNullOrWhiteSpace(PinOrPid)
                 || !string.IsNullOrWhiteSpace(LFileNo)
                 || !string.IsNullOrWhiteSpace(Address)
+                || !string.IsNullOrWhiteSpace(Historical)
                 || (LeaseStatusTypes.Count != 0)
                 || !string.IsNullOrWhiteSpace(TenantName)
                 || (Programs.Count != 0)

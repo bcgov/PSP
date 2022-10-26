@@ -10,3 +10,10 @@ export interface ILeaseFilter {
   regionType: string;
   details: string;
 }
+
+export interface ILeaseSearchBy {
+  pinOrPid: string;
+  address: string;
+  lFileNo: string;
+  historical: string;
+}
