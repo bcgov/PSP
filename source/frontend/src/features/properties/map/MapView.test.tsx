@@ -259,7 +259,10 @@ describe('MapView', () => {
     ((useMapProperties as unknown) as jest.Mock<Partial<typeof useMapProperties>>).mockReturnValue({
       loadProperties: {
         execute: jest.fn().mockResolvedValue({
-          features: createPoints(smallMockParcels).map(feature => ({ ...feature, geometry: null })),
+          features: createPoints(smallMockParcels).map(feature => ({
+            ...feature,
+            geometry: null,
+          })),
           type: 'FeatureCollection',
           bbox: undefined,
         }),
