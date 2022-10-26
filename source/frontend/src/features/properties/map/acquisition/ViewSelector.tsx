@@ -38,9 +38,12 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
             props.acquisitionFile,
             props.selectedMenuIndex,
           );
+          if (propertyFile?.property?.id === undefined) {
+            throw Error('Cannot edit property without a valid id');
+          }
           return (
             <UpdatePropertyDetailsContainer
-              id={propertyFile?.property?.id as number}
+              id={propertyFile?.property?.id}
               onSuccess={props.onSuccess}
               ref={formikRef}
             />
@@ -59,23 +62,27 @@ export const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProp
           />
         );
       } else {
-        return !!props.acquisitionFile ? (
-          <PropertyFileContainer
-            setEditFileProperty={() =>
-              props.setContainerState({
-                isEditing: true,
-                activeEditForm: EditFormNames.propertyDetails,
-              })
-            }
-            fileProperty={getAcquisitionFileProperty(
-              props.acquisitionFile,
-              props.selectedMenuIndex,
-            )}
-            defaultTab={InventoryTabNames.property}
-            customTabs={[]}
-            View={InventoryTabs}
-          />
-        ) : null;
+        if (!!props.acquisitionFile) {
+          return (
+            <PropertyFileContainer
+              setEditFileProperty={() =>
+                props.setContainerState({
+                  isEditing: true,
+                  activeEditForm: EditFormNames.propertyDetails,
+                })
+              }
+              fileProperty={getAcquisitionFileProperty(
+                props.acquisitionFile,
+                props.selectedMenuIndex,
+              )}
+              defaultTab={InventoryTabNames.property}
+              customTabs={[]}
+              View={InventoryTabs}
+            />
+          );
+        } else {
+          return null;
+        }
       }
     }
   },
