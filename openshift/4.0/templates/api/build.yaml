@@ -58,7 +58,7 @@ parameters:
   - name: SOURCE_CONTEXT_DIR
     displayName: Context Directory
     description: Set this to use a subdirectory of the source code repository
-    value: backend
+    value: source/backend
 
   - name: OUTPUT_IMAGE_TAG
     displayName: Output Image Tag
