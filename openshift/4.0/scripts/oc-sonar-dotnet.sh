@@ -32,7 +32,7 @@ SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY:-pims-api-${TARGET}}
 SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME:-PIMS Backend [${TARGET}]}
 SONAR_URL=${SONAR_URL:-https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca}
 
-BACKEND_DIR="${BACKEND_DIR:-../../../backend}"
+BACKEND_DIR="${BACKEND_DIR:-../../../source/backend}"
 TEST_DIR="${TEST_DIR:-${BACKEND_DIR}/tests/unit}"
 COVERAGE_DIR="${COVERAGE_DIR:-${TEST_DIR}/TestResults}"
 
