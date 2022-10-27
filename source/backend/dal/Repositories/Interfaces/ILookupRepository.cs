@@ -4,9 +4,9 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// ILookupService interface, provides a way to fetch lookup lists from the datasource.
+    /// ILookupRepository interface, provides a way to fetch lookup lists from the datasource.
     /// </summary>
-    public interface ILookupService : IRepository
+    public interface ILookupRepository : IRepository
     {
         IEnumerable<PimsOrganization> GetOrganizations();
 

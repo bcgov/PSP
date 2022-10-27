@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Insurance.Models;
 using Pims.Api.Policies;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
     public class InsuranceController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IInsuranceRepository _insuranceRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -31,12 +31,12 @@ namespace Pims.Api.Areas.Insurance.Controllers
         /// <summary>
         /// Creates a new instance of a InsuranceController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="insuranceRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public InsuranceController(IPimsRepository pimsService, IMapper mapper)
+        public InsuranceController(IInsuranceRepository insuranceRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _insuranceRepository = insuranceRepository;
             _mapper = mapper;
         }
         #endregion
@@ -61,22 +61,22 @@ namespace Pims.Api.Areas.Insurance.Controllers
                 insuranceEntity.LeaseId = leaseId;
                 if (modification.Operation == Constants.UpdateType.Update)
                 {
-                    var insurance = _pimsService.Insurance.Update(insuranceEntity, false);
+                    var insurance = _insuranceRepository.Update(insuranceEntity, false);
                     updatedEntities.Add(insurance);
                 }
                 else if (modification.Operation == Constants.UpdateType.Add)
                 {
-                    var insurance = _pimsService.Insurance.Add(insuranceEntity, false);
+                    var insurance = _insuranceRepository.Add(insuranceEntity, false);
                     updatedEntities.Add(insurance);
                 }
                 else if (modification.Operation == Constants.UpdateType.Delete)
                 {
-                    var insurance = _pimsService.Insurance.Delete(insuranceEntity, false);
+                    var insurance = _insuranceRepository.Delete(insuranceEntity, false);
                     updatedEntities.Add(insurance);
                 }
             }
 
-            _pimsService.Insurance.CommitTransaction();
+            _insuranceRepository.CommitTransaction();
 
             var insuranceModels = _mapper.Map<IList<Models.InsuranceModel>>(updatedEntities);
 

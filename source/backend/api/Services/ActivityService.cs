@@ -19,9 +19,6 @@ namespace Pims.Api.Services
         private readonly IActivityTemplateRepository _activityTemplateRepository;
         private readonly IDocumentActivityService _documentActivityService;
         private readonly IEntityNoteRepository _entityNoteRepository;
-        private readonly IResearchFileService _researchFileService;
-        private readonly IAcquisitionFileService _acquisitionFileService;
-        private readonly IDocumentService _documentService;
         private readonly INoteService _noteService;
 
         public ActivityService(
@@ -30,9 +27,6 @@ namespace Pims.Api.Services
             IActivityRepository activityRepository,
             IActivityTemplateRepository activityTemplateRepository,
             IEntityNoteRepository entityNoteRepository,
-            IAcquisitionFileService acquisitionFileService,
-            IResearchFileService researchFileService,
-            IDocumentService documentService,
             INoteService noteService,
             IDocumentActivityService documentActivityService)
             : base(user, logger)
@@ -42,7 +36,6 @@ namespace Pims.Api.Services
             _activityTemplateRepository = activityTemplateRepository;
             _noteService = noteService;
             _documentActivityService = documentActivityService;
-            _documentService = documentService;
             _entityNoteRepository = entityNoteRepository;
         }
 
@@ -206,7 +199,7 @@ namespace Pims.Api.Services
                     Note = new PimsNote()
                     {
                         IsSystemGenerated = true,
-                        NoteTxt = $"Activity status changed from { currentActivity.ActivityInstanceStatusTypeCodeNavigation?.Description } to { instance.ActivityInstanceStatusTypeCodeNavigation?.Description }",
+                        NoteTxt = $"Activity status changed from {currentActivity.ActivityInstanceStatusTypeCodeNavigation?.Description} to {instance.ActivityInstanceStatusTypeCodeNavigation?.Description}",
                         AppCreateTimestamp = System.DateTime.Now,
                         AppCreateUserid = this.User.GetUsername(),
                     },

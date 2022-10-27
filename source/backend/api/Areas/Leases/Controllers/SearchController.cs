@@ -8,8 +8,8 @@ using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Policies;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class SearchController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly ILeaseRepository _leaseRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,12 +36,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <summary>
         /// Creates a new instance of a SearchController(LIS) class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="leaseRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public SearchController(IPimsRepository pimsService, IMapper mapper)
+        public SearchController(ILeaseRepository leaseRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _leaseRepository = leaseRepository;
             _mapper = mapper;
         }
         #endregion
@@ -85,7 +85,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 throw new BadRequestException("Property filter must contain valid values.");
             }
 
-            var leases = _pimsService.Lease.GetPage((LeaseFilter)filter);
+            var leases = _leaseRepository.GetPage((LeaseFilter)filter);
             return new JsonResult(_mapper.Map<Api.Models.PageModel<LeaseModel>>(leases));
         }
         #endregion

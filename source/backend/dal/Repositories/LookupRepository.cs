@@ -8,19 +8,19 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// LookupService interface, provides a way to fetch lookup lists from the datasource.
+    /// LookRepository interface, provides a way to fetch lookup lists from the datasource.
     /// </summary>
-    public class LookupService : BaseRepository, ILookupService
+    public class LookupRepository : BaseRepository, ILookupRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a LookService, and initializes it with the specified arguments.
+        /// Creates a new instance of a LookRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LookupService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger)
+        public LookupRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupRepository> logger)
             : base(dbContext, user, logger)
         {
         }
