@@ -15,9 +15,9 @@ using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -35,8 +35,9 @@ namespace Pims.Api.Areas.Reports.Controllers
     public class LeaseController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsRepository;
-        private readonly IPimsService _pimsService;
+        private readonly ILookupRepository _lookupRepository;
+        private readonly ILeaseRepository _leaseRepository;
+        private readonly ILeaseReportsService _leaseReportService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         #endregion
@@ -46,16 +47,18 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
-        /// <param name="pimsRepository"></param>
+        /// <param name="lookupRepository"></param>
+        /// <param name="leaseRepository"></param>
+        /// <param name="leaseReportService"></param>
         /// <param name="webHostEnvironment"></param>
         /// <param name="mapper"></param>
-        public LeaseController(IPimsRepository pimsRepository, IPimsService pimsService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+        public LeaseController(ILookupRepository lookupRepository, ILeaseRepository leaseRepository, ILeaseReportsService leaseReportService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _lookupRepository = lookupRepository;
+            _leaseRepository = leaseRepository;
+            _leaseReportService = leaseReportService;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
-            _pimsRepository = pimsRepository;
         }
         #endregion
 
@@ -136,9 +139,9 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException("Fiscal year invalid.");
             }
 
-            IEnumerable<PimsLease> leasesForFiscal = _pimsService.LeaseReportsService.GetAggregatedLeaseReport(fiscalYearStart);
-            var programs = _pimsRepository.Lookup.GetLeaseProgramTypes();
-            var regions = _pimsRepository.Lookup.GetRegions();
+            IEnumerable<PimsLease> leasesForFiscal = _leaseReportService.GetAggregatedLeaseReport(fiscalYearStart);
+            var programs = _lookupRepository.GetLeaseProgramTypes();
+            var regions = _lookupRepository.GetRegions();
 
             AggregatedLeasesModel model = new AggregatedLeasesModel(leasesForFiscal, fiscalYearStart, programs, regions);
 
@@ -164,8 +167,8 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <returns></returns>
         public IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
         {
-            filter.Quantity = all ? _pimsRepository.Lease.Count() : filter.Quantity;
-            var page = _pimsRepository.Lease.GetPage((LeaseFilter)filter);
+            filter.Quantity = all ? _leaseRepository.Count() : filter.Quantity;
+            var page = _leaseRepository.GetPage((LeaseFilter)filter);
             var allLeases = page.Items.SelectMany(l => l.PimsLeaseTerms.DefaultIfEmpty(), (lease, term) => (lease, term))
                 .SelectMany(lt => lt.lease.PimsPropertyLeases.DefaultIfEmpty(), (leaseTerm, property) => (leaseTerm.term, leaseTerm.lease, property))
                 .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leaseTermProperty, tenant) => (leaseTermProperty.term, leaseTermProperty.lease, leaseTermProperty.property, tenant));

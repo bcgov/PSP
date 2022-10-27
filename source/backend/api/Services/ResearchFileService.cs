@@ -157,7 +157,7 @@ namespace Pims.Api.Services
                         researchProperty.PropertyId = foundProperty.Id;
                         researchProperty.Property = foundProperty;
                     }
-                    catch (KeyNotFoundException e)
+                    catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pid:{pid}", pid);
                         PopulateNewProperty(researchProperty.Property);
@@ -172,7 +172,7 @@ namespace Pims.Api.Services
                         researchProperty.PropertyId = foundProperty.Id;
                         researchProperty.Property = foundProperty;
                     }
-                    catch (KeyNotFoundException e)
+                    catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pin:{pin}", pin);
                         PopulateNewProperty(researchProperty.Property);

@@ -8,7 +8,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using EModel = Pims.Dal.Entities.Models;
@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Reports.Controllers
     public class UserController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,11 +36,11 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Creates a new instance of a UserController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="userRepository"></param>
         /// <param name="mapper"></param>
-        public UserController(IPimsRepository pimsService, IMapper mapper)
+        public UserController(IUserRepository userRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
         #endregion
@@ -94,8 +94,8 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
             }
 
-            filter.Quantity = all ? _pimsService.User.Count() : filter.Quantity;
-            var page = _pimsService.User.Get(filter);
+            filter.Quantity = all ? _userRepository.Count() : filter.Quantity;
+            var page = _userRepository.Get(filter);
             var report = _mapper.Map<Api.Models.PageModel<Models.User.UserModel>>(page);
 
             return accept.ToString() switch

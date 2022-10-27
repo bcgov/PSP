@@ -13,9 +13,9 @@ using Pims.Dal.Security;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// RoleService class, provides a service layer to administrate roles within the datasource.
+    /// RoleRepository class, provides a service layer to administrate roles within the datasource.
     /// </summary>
-    public class RoleService : BaseRepository<PimsRole>, IRoleService
+    public class RoleRepository : BaseRepository<PimsRole>, IRoleRepository
     {
         #region Variables
         #endregion
@@ -23,12 +23,12 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a RoleService, and initializes it with the specified arguments.
+        /// Creates a new instance of a RoleRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public RoleService(PimsContext dbContext, ClaimsPrincipal user, ILogger<RoleService> logger)
+        public RoleRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<RoleRepository> logger)
             : base(dbContext, user, logger)
         {
         }
@@ -131,7 +131,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Updates the specified role in the datasource.
         /// </summary>
-        /// <param name="role"></param>
+        /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
         public PimsRole Update(PimsRole update)
@@ -144,7 +144,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Updates the specified role in the datasource.
         /// </summary>
-        /// <param name="role"></param>
+        /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
         public PimsRole UpdateWithoutSave(PimsRole update)
@@ -162,7 +162,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Remove the specified role from the datasource.
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="delete"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         public void Delete(PimsRole delete)
         {

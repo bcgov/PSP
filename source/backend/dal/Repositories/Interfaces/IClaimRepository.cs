@@ -5,9 +5,9 @@ using Pims.Dal.Entities.Models;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// IClaimService interface, provides a service layer to administer roles within the datasource.
+    /// IClaimRepository interface, provides a service layer to administer roles within the datasource.
     /// </summary>
-    public interface IClaimService : IRepository<PimsClaim>
+    public interface IClaimRepository : IRepository<PimsClaim>
     {
         Paged<PimsClaim> Get(int page, int quantity, string name = null);
 

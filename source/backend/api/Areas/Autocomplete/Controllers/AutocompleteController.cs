@@ -7,8 +7,8 @@ using Pims.Api.Areas.Autocomplete.Models;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Policies;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -26,7 +26,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
     public class AutocompleteController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IAutocompleteRepository _autocompleteRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -35,12 +35,12 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
         /// <summary>
         /// Creates a new instance of a AutocompleteController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="autocompleteRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public AutocompleteController(IPimsRepository pimsService, IMapper mapper)
+        public AutocompleteController(IAutocompleteRepository autocompleteRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _autocompleteRepository = autocompleteRepository;
             _mapper = mapper;
         }
         #endregion
@@ -83,7 +83,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
                 throw new BadRequestException("Autocomplete request must contain valid values.");
             }
 
-            var predictions = _pimsService.Autocomplete.GetOrganizationPredictions(filter);
+            var predictions = _autocompleteRepository.GetOrganizationPredictions(filter);
 
             return new JsonResult(_mapper.Map<Models.AutocompleteResponseModel>(predictions));
         }

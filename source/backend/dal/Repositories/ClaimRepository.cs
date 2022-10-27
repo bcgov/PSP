@@ -12,9 +12,9 @@ using Pims.Dal.Security;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// ClaimService class, provides a service layer to administrate users within the datasource.
+    /// ClaimRepository class, provides a service layer to administrate users within the datasource.
     /// </summary>
-    public class ClaimService : BaseRepository<PimsClaim>, IClaimService
+    public class ClaimRepository : BaseRepository<PimsClaim>, IClaimRepository
     {
         #region Variables
         #endregion
@@ -22,12 +22,12 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a ClaimService, and initializes it with the specified arguments.
+        /// Creates a new instance of a ClaimRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ILogger<ClaimService> logger)
+        public ClaimRepository(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, ILogger<ClaimRepository> logger)
             : base(dbContext, user, logger)
         {
         }
