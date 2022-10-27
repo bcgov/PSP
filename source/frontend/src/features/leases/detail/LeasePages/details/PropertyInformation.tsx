@@ -16,8 +16,9 @@ export interface IPropertyInformationProps {
  * Sub-form displaying a property associated to the current lease.
  * @param {IPropertyInformationProps} param0
  */
-export const PropertyInformation: React.FunctionComponent<IPropertyInformationProps &
-  Partial<FieldArrayRenderProps>> = ({ nameSpace, disabled }) => {
+export const PropertyInformation: React.FunctionComponent<
+  IPropertyInformationProps & Partial<FieldArrayRenderProps>
+> = ({ nameSpace, disabled }) => {
   const formikProps = useFormikContext<IFormLease>();
 
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));

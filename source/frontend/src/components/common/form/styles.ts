@@ -1,5 +1,5 @@
 import { Col } from 'react-bootstrap';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { FastCurrencyInput, Form, Input, Select } from '.';
 import { FastDatePicker } from './FastDatePicker';
@@ -86,54 +86,4 @@ export const FormSectionClear = styled.div`
   padding-top: 1rem;
   padding-left: 2.5rem;
   padding-bottom: 1rem;
-`;
-
-// These are common base styles to apply to every form.
-// For now it is opt-in but should be refactored to include on all forms by default
-export const sharedFormStyles = css`
-  .form-control {
-    &.is-invalid {
-      border: 2px solid #d8292f;
-    }
-  }
-
-  .invalid-feedback {
-    color: #d8292f;
-  }
-
-  .form-group {
-    label {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: ${props => props.theme.css.formTextColor};
-      text-decoration: none solid rgb(33, 37, 41);
-      line-height: 2rem;
-    }
-
-    input,
-    select,
-    textarea {
-      border: 2px solid #606060;
-      border-radius: 4px;
-      background-color: #ffffff;
-      font-size: 1.6rem;
-      color: #000000;
-      text-decoration: none;
-
-      &.form-control {
-        &:disabled,
-        &[readonly] {
-          background-color: ${props => props.theme.css.disabledFieldBackgroundColor};
-          opacity: 1;
-        }
-      }
-    }
-
-    &.required {
-      label:after {
-        content: ' *';
-        color: red;
-      }
-    }
-  }
 `;

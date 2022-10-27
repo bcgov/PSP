@@ -33,9 +33,10 @@ export const useAcquisitionProvider = () => {
   const getAcquisitionFileApi = useApiRequestWrapper<
     (...args: any[]) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
-    requestFunction: useCallback(async (acqFileId: number) => await getAcquisitionFile(acqFileId), [
-      getAcquisitionFile,
-    ]),
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionFile(acqFileId),
+      [getAcquisitionFile],
+    ),
     requestName: 'RetrieveAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File retrieved'),
     onError: useAxiosErrorHandler('Failed to load Acquisition File'),

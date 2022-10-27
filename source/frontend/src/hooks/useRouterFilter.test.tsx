@@ -18,11 +18,14 @@ const getStore = (filter: any) =>
     [filterSlice.name]: filter,
   });
 
-const getWrapper = (store: any) => ({ children }: any) => (
-  <Provider store={store}>
-    <Router history={history}>{children}</Router>
-  </Provider>
-);
+const getWrapper =
+  (store: any) =>
+  ({ children }: any) =>
+    (
+      <Provider store={store}>
+        <Router history={history}>{children}</Router>
+      </Provider>
+    );
 
 const emptyFilter = {
   searchBy: 'address',

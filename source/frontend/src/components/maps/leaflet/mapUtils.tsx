@@ -9,30 +9,30 @@ import { ICluster, PointFeature } from '../types';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
-  iconUrl: require('assets/images/pins/land-reg.png').default ?? 'assets/images/pins/land-reg.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  iconUrl: require('assets/images/pins/land-reg.png') ?? 'assets/images/pins/land-reg.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 });
 
-// point of interest icon (blue) highlighted
-export const pointOfInterestIcon = L.icon({
+// property of interest icon (blue) highlighted
+export const propertyOfInterestIcon = L.icon({
   iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 });
 
-// point of interest icon (blue) highlighted
-export const pointOfInterestIconSelect = L.icon({
+// property of interest icon (blue) highlighted
+export const propertyOfInterestIconSelect = L.icon({
   iconUrl:
     require('assets/images/pins/land-poi-selected.svg').default ??
     'assets/images/pins/land-poi-selected.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -42,9 +42,9 @@ export const pointOfInterestIconSelect = L.icon({
 // parcel icon (green) highlighted
 export const parcelIconSelect = L.icon({
   iconUrl:
-    require('assets/images/pins/land-reg-highlight.png').default ??
+    require('assets/images/pins/land-reg-highlight.png') ??
     'assets/images/pins/land-reg-highlight.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -87,14 +87,14 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
 };
 
 /**
- * Get an icon type for the specified cluster property details (type, draft, erp, spp etc)
+ * Get an icon type for the specified cluster property details.
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
   if (feature.properties.IS_PROPERTY_OF_INTEREST || feature.properties.isPropertyOfInterest) {
     if (selected) {
-      return pointOfInterestIconSelect;
+      return propertyOfInterestIconSelect;
     } else {
-      return pointOfInterestIcon;
+      return propertyOfInterestIcon;
     }
   } else if (selected) {
     return parcelIconSelect;
@@ -139,7 +139,7 @@ export const createClusterMarker = (feature: ICluster, latlng: LatLngExpression)
   } = feature?.properties as Supercluster.ClusterProperties;
 
   if (!isCluster) {
-    return (null as unknown) as Layer;
+    return null as unknown as Layer;
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
@@ -201,12 +201,12 @@ export const toCqlFilterValue = (object: Record<string, string>, forceSimplePid?
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
-      if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
-        cql.push(
-          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%'  OR PID_PADDED ilike '%${object[key]}%'`,
-        );
-      } else if (key === 'PID' && object[key]?.length === 9) {
+      if ((key === 'PID' || key === 'PID_PADDED') && object[key]?.length === 9) {
         cql.push(`${key} = '${object[key]}'`);
+      } else if ((key === 'PID' || key === 'PID_PADDED') && object[key] && !forceSimplePid) {
+        cql.push(
+          `PIN ilike '%${object[key]}%' OR PID ilike '%${object[key]}%' OR PID_PADDED ilike '%${object[key]}%'`,
+        );
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }

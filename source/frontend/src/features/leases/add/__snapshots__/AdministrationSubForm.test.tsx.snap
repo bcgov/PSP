@@ -1029,5 +1029,36 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       </div>
     </div>
   </div>
+  .c0 textarea.form-control {
+  min-width: 80rem;
+  height: 18rem;
+  width: 80rem;
+  resize: none;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 textarea input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-description"
+        >
+          Description 
+        </label>
+        <textarea
+          class="form-control"
+          id="input-description"
+          name="description"
+          title=""
+        />
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;

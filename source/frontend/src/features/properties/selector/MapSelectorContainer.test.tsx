@@ -169,9 +169,9 @@ describe('MapSelectorContainer component', () => {
 
   it('selected properties display a warning if added multiple times', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
-      existingProperties: featuresToIdentifiedMapProperty(
-        mockFAParcelLayerResponse as any,
-      )?.map(p => PropertyForm.fromMapProperty(p)),
+      existingProperties: featuresToIdentifiedMapProperty(mockFAParcelLayerResponse as any)?.map(
+        p => PropertyForm.fromMapProperty(p),
+      ),
     });
 
     const searchTab = getByText('Search');

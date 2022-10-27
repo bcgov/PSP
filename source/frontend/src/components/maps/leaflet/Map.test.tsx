@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
-import { useApi } from 'hooks/useApi';
+import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
 import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
@@ -24,7 +24,6 @@ const mockParcels = [
   { id: 2, latitude: 53.917065, longitude: -122.749672 },
 ] as IProperty[];
 
-jest.mock('hooks/useApi');
 jest.mock('hooks/pims-api');
 
 const onPropertyMarkerClick = jest.fn();
@@ -56,8 +55,7 @@ const baseMapLayers = {
     },
     {
       name: 'Satellite',
-      url:
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       attribution:
         'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
       thumbnail: '/satellite.jpg',
@@ -158,12 +156,12 @@ xdescribe('MapProperties View', () => {
     );
     mockGetParcel = jest.fn(async () => ({} as IProperty));
 
-    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+    (useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
       loadProperties: mockLoadProperties,
       getProperty: mockGetParcel,
     });
 
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+    (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getProperty: mockGetParcel,
     });
   });
@@ -250,7 +248,11 @@ xdescribe('MapProperties View', () => {
 
   it('makes the correct calls to load map data when filter is updated', async () => {
     const props = createProps();
-    const { ready, findPidOrPidField: findPidField, findSearchButton } = setup({
+    const {
+      ready,
+      findPidOrPidField: findPidField,
+      findSearchButton,
+    } = setup({
       ...props,
       properties: noParcels,
       selectedProperty: null,
@@ -282,7 +284,12 @@ xdescribe('MapProperties View', () => {
 
   it('makes the correct calls to load the map data when the reset filter is clicked', async () => {
     const props = createProps();
-    const { ready, findPidOrPidField: findPidField, findSearchButton, findResetButton } = setup({
+    const {
+      ready,
+      findPidOrPidField: findPidField,
+      findSearchButton,
+      findResetButton,
+    } = setup({
       ...props,
       properties: noParcels,
       selectedProperty: null,

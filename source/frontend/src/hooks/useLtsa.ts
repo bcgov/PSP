@@ -16,9 +16,10 @@ export const useLtsa = () => {
   const ltsaRequestWrapper = useApiRequestWrapper<
     (pid: string) => Promise<AxiosResponse<LtsaOrders>>
   >({
-    requestFunction: useCallback(async (pid: string) => await getLtsaOrders(pidFormatter(pid)), [
-      getLtsaOrders,
-    ]),
+    requestFunction: useCallback(
+      async (pid: string) => await getLtsaOrders(pidFormatter(pid)),
+      [getLtsaOrders],
+    ),
     requestName: 'getLtsaData',
     onError: useCallback(axiosError => {
       toast.error(`Failed to get LTSA data. error from LTSA: ${axiosError?.response?.data.error}`);

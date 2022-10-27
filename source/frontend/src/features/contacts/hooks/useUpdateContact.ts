@@ -24,9 +24,10 @@ export const useUpdateContact = () => {
   const { execute: updatePerson } = useApiRequestWrapper<
     (person: IEditablePerson) => Promise<AxiosResponse<IEditablePerson, any>>
   >({
-    requestFunction: useCallback(async (person: IEditablePerson) => await putPerson(person), [
-      putPerson,
-    ]),
+    requestFunction: useCallback(
+      async (person: IEditablePerson) => await putPerson(person),
+      [putPerson],
+    ),
     requestName: 'UpdatePerson',
     onSuccess: onSuccess,
     onError: onError,

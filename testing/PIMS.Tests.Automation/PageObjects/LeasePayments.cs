@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -8,6 +10,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentsTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper'] div[class='td expander svg-btn']");
 
         private By licensePaymentsModal = By.CssSelector("div[class='modal-content']");
+        private By licensePaymentsModalOkBttn = By.CssSelector("button[title='ok-modal']");
+
         private By licensePaymentTermStartDateInput = By.Id("datepicker-startDate");
         private By licensePaymentTermEndDateInput = By.Id("datepicker-expiryDate");
         private By licensePaymentFrequencySelect = By.Id("input-leasePmtFreqTypeCode.id");
@@ -22,8 +26,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentExpPaymentInput = By.Id("input-amountPreTax");
         private By licensePaymentGSTInput = By.Id("input-amountGst");
 
-        //private By licensePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable']");
-        private By licencePaymentsTable = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']");
+        private By licencePaymentsTermTable = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']");
+        private By licenseTermPaymentsTableTotal = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By licensePaymentDeleteTermBttn = By.CssSelector("button[title='delete term']");
 
         private int totalTermsInLease;
 
@@ -56,19 +61,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licensePaymentTermEndDateInput).Click();
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(endDate);
+            webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(Keys.Enter);
 
-            var paymentFrequencyElement = webDriver.FindElement(licensePaymentFrequencySelect);
-            ChooseRandomOption(paymentFrequencyElement, "input-leasePmtFreqTypeCode.id", 2);
+            ChooseRandomSelectOption(licensePaymentFrequencySelect, "input-leasePmtFreqTypeCode.id", 2);
 
             webDriver.FindElement(licensePaymentAgreedPaymentInput).Click();
             webDriver.FindElement(licensePaymentAgreedPaymentInput).SendKeys(agreedPayment);
             webDriver.FindElement(licensePaymentDueInput).SendKeys(paymentDue);
 
             ChooseSpecificRadioButton("isGstEligible", gst);
-            ChooseSpecificOption("input-statusTypeCode.id", termStatus); 
-
+            ChooseSpecificSelectOption("input-statusTypeCode.id", termStatus); 
             ButtonElement("Save term");
         }
+
 
         public void OpenLastPaymentTab()
         {
@@ -90,10 +95,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(licensePaymentSendDateInput).Click();
             webDriver.FindElement(licensePaymentSendDateInput).SendKeys(sentDate);
-
-            var paymentMethodElement = webDriver.FindElement(licensePaymentMethodSelect);
+            webDriver.FindElement(licensePaymentSendDateInput).SendKeys(Keys.Enter);
             webDriver.FindElement(licensePaymentsModal).Click();
-            ChooseRandomOption(paymentMethodElement, "input-leasePaymentMethodType.id", 1);
+
+            ChooseRandomSelectOption(licensePaymentMethodSelect, "input-leasePaymentMethodType.id", 1);
 
             webDriver.FindElement(licensePaymentAmountReceivedInput).SendKeys(totalReceived);
 
@@ -101,10 +106,31 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
 
-            var totalPayments = webDriver.FindElements(licencePaymentsTable).Count();
+            var totalPayments = webDriver.FindElements(licencePaymentsTermTable).Count();
             var paymentStatus = webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tr-wrapper']:nth-child("+ totalPayments +") div:nth-child(6)")).Text;
 
             Assert.True(paymentStatus.Equals(status));
+        }
+
+        public void DeleteLastTerm()
+        {
+            Wait();
+            webDriver.FindElement(licensePaymentDeleteTermBttn).Click();
+
+            WaitUntil(licensePaymentsModal);
+            webDriver.FindElement(licensePaymentsModalOkBttn).Click();
+        }
+
+        public void DeleteLastPayment()
+        {
+            Wait();
+            var totalPayments = webDriver.FindElements(licenseTermPaymentsTableTotal).Count();
+            var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+totalPayments+") button[title='delete actual']");
+            webDriver.FindElement(lastPaymentDeleteIcon).Click();
+
+            WaitUntil(licensePaymentsModal);
+            webDriver.FindElement(licensePaymentsModalOkBttn).Click();
+
         }
     }
 }

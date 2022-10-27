@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -11,6 +7,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly LoginSteps loginSteps;
         private readonly LeaseDetails leaseDetails;
+
         private readonly LeaseTenants tenant;
         private readonly LeasePayments payments;
         private readonly LeaseImprovements improvements;
@@ -19,7 +16,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LeaseSurplus surplus;
         private readonly SearchLease searchLease;
 
-        private readonly string userName = "sutairak";
+        private readonly string userName = "TRANPSP1";
 
         private readonly string leaseStartDate = "02/22/2022";
         private readonly string leaseExpiryDate = "03/22/2024";
@@ -37,6 +34,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private readonly string firstTermEndDate = "04/22/2022";
         private readonly string firstTermAgreedPayment = "2500";
+
         private readonly string firstTermPaymentSentDate = "02/23/2022";
         private readonly string firstTermPaymentStatus = "Paid";
         private readonly string firstTermPaymentReceived = "2625";
@@ -46,6 +44,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string secondTermStartDate = "05/22/2022";
         private readonly string secondTermEndDate = "06/30/2022";
         private readonly string secondTermAgreedPayment = "3500";
+        private readonly string secondTermPaymentSentDate = "04/23/2022";
+        private readonly string secondTermPaymentReceived = "3000";
+
+
         private readonly string termPaymentDue = "Automation Test Due";
         private readonly string noGST = "N";
         private readonly string yesGST = "Y";
@@ -104,6 +106,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             deposits = new LeaseDeposits(driver.Current);
             surplus = new LeaseSurplus(driver.Current);
             searchLease = new SearchLease(driver.Current);
+
         }
 
         [StepDefinition(@"I create a new Lease with minimum fields")]
@@ -149,6 +152,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
 
             //INSURANCE
+            //Navigate to Improvements
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Improvement Section
+            insurance.EditInsurance();
+
             //Add Vehicle Insurance
             insurance.AddVehicleInsurance(insuranceVechicleLimit, insuranceVehicleExpiryDate, insuranceVehicleDescription);
 
@@ -298,6 +307,59 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
+        [StepDefinition(@"I update an existing lease")]
+        public void EditExistingLease()
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Search Leases
+            searchLease.NavigateToSearchLicense();
+
+            //Look for the last created lease
+            searchLease.SearchLastLease();
+
+            //PAYMENTS
+            //Navigate to Payments
+            payments.NavigateToPaymentSection();
+
+            //Delete last term
+            payments.DeleteLastTerm();
+
+            //Navigate to first term payments
+            payments.OpenLastPaymentTab();
+
+            //Delete first term last payment
+            payments.DeleteLastPayment();
+
+
+            //INSURANCE
+            //Navigate to Improvements
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Improvement Section
+            insurance.EditInsurance();
+
+            //Add Vehicle Insurance
+            insurance.AddVehicleInsurance(insuranceVechicleLimit, insuranceVehicleExpiryDate, insuranceVehicleDescription);
+
+            //Add Other Insurance
+            insurance.AddOtherInsurance(insuranceOtherType, insuranceOtherLimit, insuranceOtherExpiryDate, insuranceOtherDescription);
+
+            //Save Insurances
+            insurance.SaveInsurance();
+
+            //DEPOSITS
+            //Navigate to Deposits
+            deposits.NavigateToDepositSection();
+
+            //Delete last return
+            deposits.DeleteLastReturn();
+
+            //Delete last deposit
+            deposits.DeleteLastDeposit();
+        }
+
         [StepDefinition(@"A new lease is created successfully")]
         public void NewLeaseCreated()
         {
@@ -305,6 +367,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLease.SearchFoundResults());
+        }
+
+        [StepDefinition(@"An existing lease is updated successfully")]
+        public void LeaseEditedSuccessfully()
+        {
+            Assert.True(deposits.LeaseDespositExist());
         }
     }
 }

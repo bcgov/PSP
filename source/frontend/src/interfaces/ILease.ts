@@ -13,7 +13,7 @@ export interface ILease {
   id?: number;
   lFileNo?: string;
   psFileNo?: string;
-  tfaFileNo?: number;
+  tfaFileNumber?: string;
   expiryDate?: string;
   renewalDate?: string;
   startDate: string;
@@ -61,7 +61,6 @@ export interface IFormLease
   extends ExtendOverride<
     ILease,
     {
-      tfaFileNo: NumberFieldValue;
       amount: NumberFieldValue;
       renewalCount: NumberFieldValue;
       paymentReceivableType?: ITypeCode<string>;
@@ -85,7 +84,6 @@ export interface IAddFormLease
     {
       amount: NumberFieldValue;
       renewalCount: NumberFieldValue;
-      tfaFileNo: NumberFieldValue;
       securityDeposits?: Api_SecurityDeposit[];
       securityDepositReturn?: Api_SecurityDepositReturn[];
       paymentReceivableType?: string;
@@ -104,7 +102,7 @@ export interface IAddFormLease
   > {}
 
 export const defaultLease: ILease = {
-  tfaFileNo: undefined,
+  tfaFileNumber: undefined,
   organizations: [],
   persons: [],
   properties: [],
@@ -144,7 +142,7 @@ export const defaultFormLease: IFormLease = {
   expiryDate: '',
   renewalDate: '',
   lFileNo: '',
-  tfaFileNo: '',
+  tfaFileNumber: '',
   psFileNo: '',
   programName: '',
   motiName: '',
@@ -165,7 +163,7 @@ export const defaultFormLease: IFormLease = {
 export const defaultAddFormLease: IAddFormLease = {
   lFileNo: '',
   psFileNo: '',
-  tfaFileNo: '',
+  tfaFileNumber: '',
   expiryDate: '',
   renewalDate: '',
   startDate: '',

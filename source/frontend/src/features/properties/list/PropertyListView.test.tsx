@@ -17,7 +17,7 @@ jest.mock('@react-keycloak/web');
 jest.mock('hooks/pims-api');
 
 const mockApiGetPropertiesPaged = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
-((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+(useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
   getPropertiesPaged: mockApiGetPropertiesPaged,
 });
 

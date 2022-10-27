@@ -17,7 +17,9 @@ export interface IPropertyAssociationTabViewProps {
   associations?: Api_PropertyAssociations;
 }
 
-const PropertyAssociationTabView: React.FunctionComponent<IPropertyAssociationTabViewProps> = props => {
+const PropertyAssociationTabView: React.FunctionComponent<
+  IPropertyAssociationTabViewProps
+> = props => {
   return (
     <StyledSummarySection>
       <Section>This property is associated with the following files.</Section>
