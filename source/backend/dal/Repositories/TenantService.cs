@@ -10,7 +10,7 @@ using Pims.Dal.Security;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// TenantService class, provides a service layer to interact with tenants within the datasource.
+    /// TenantRepository class, provides a service layer to interact with tenants within the datasource.
     /// </summary>
     public class TenantRepository : BaseRepository<PimsTenant>, ITenantRepository
     {
@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a TenantService, and initializes it with the specified arguments.
+        /// Creates a new instance of a TenantRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>

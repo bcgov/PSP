@@ -35,10 +35,10 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             var leasePayment = new Dal.Entities.PimsLeasePayment() { LeasePaymentId = 1 };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<ILeasePaymentService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.LeasePaymentService.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(lease);
+            service.Setup(m => m.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(lease);
 
             // Act
             var result = controller.UpdatePayment(lease.LeaseId, leasePayment.LeasePaymentId, mapper.Map<Model.PaymentModel>(lease));
@@ -48,7 +48,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.LeasePaymentService.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
+            service.Verify(m => m.UpdatePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
         }
 
         /// <summary>
@@ -64,10 +64,10 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             var leasePayment = new Dal.Entities.PimsLeasePayment();
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<ILeasePaymentService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.LeasePaymentService.DeletePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(lease);
+            service.Setup(m => m.DeletePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(lease);
 
             // Act
             var result = controller.DeletePayment(lease.LeaseId, mapper.Map<Model.PaymentModel>(lease));
@@ -77,7 +77,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.LeasePaymentService.DeletePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
+            service.Verify(m => m.DeletePayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             var leasePayment = new Dal.Entities.PimsLeasePayment();
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<ILeasePaymentService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.LeasePaymentService.AddPayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(lease);
+            service.Setup(m => m.AddPayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>())).Returns(lease);
 
             // Act
             var result = controller.AddPayment(lease.LeaseId, mapper.Map<Model.PaymentModel>(lease));
@@ -106,7 +106,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.LeasePaymentService.AddPayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
+            service.Verify(m => m.AddPayment(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Pims.Dal.Entities.PimsLeasePayment>()), Times.Once());
         }
         #endregion
     }

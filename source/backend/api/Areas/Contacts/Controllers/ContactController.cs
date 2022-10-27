@@ -3,7 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -21,7 +21,9 @@ namespace Pims.Api.Areas.Contact.Controllers
     public class ContactController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IContactRepository _contactRepository;
+        private readonly IPersonRepository _personRepository;
+        private readonly IOrganizationRepository _organizationRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -30,12 +32,20 @@ namespace Pims.Api.Areas.Contact.Controllers
         /// <summary>
         /// Creates a new instance of a ContactController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="contactRepository"></param>
+        /// <param name="personRepository"></param>
+        /// <param name="organizationRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public ContactController(IPimsRepository pimsService, IMapper mapper)
+        public ContactController(
+            IContactRepository contactRepository,
+            IPersonRepository personRepository,
+            IOrganizationRepository organizationRepository,
+            IMapper mapper)
         {
-            _pimsService = pimsService;
+            _contactRepository = contactRepository;
+            _personRepository = personRepository;
+            _organizationRepository = organizationRepository;
             _mapper = mapper;
         }
         #endregion
@@ -53,18 +63,18 @@ namespace Pims.Api.Areas.Contact.Controllers
         [SwaggerOperation(Tags = new[] { "contact" })]
         public IActionResult GetContact(string id)
         {
-            var contactView = _pimsService.Contact.Get(id);
+            var contactView = _contactRepository.Get(id);
 
             if (id.StartsWith("P"))
             {
-                var person = _pimsService.Person.Get(contactView.PersonId.Value);
+                var person = _personRepository.Get(contactView.PersonId.Value);
                 var mappedPerson = _mapper.Map<Models.Contact.ContactModel>(person);
                 mappedPerson.Id = contactView.Id;
                 return new JsonResult(mappedPerson);
             }
             else
             {
-                var organization = _pimsService.Organization.Get(contactView.OrganizationId.Value);
+                var organization = _organizationRepository.Get(contactView.OrganizationId.Value);
                 var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
                 mappedOrganization.Id = contactView.Id;
                 return new JsonResult(mappedOrganization);

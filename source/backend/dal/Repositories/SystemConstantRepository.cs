@@ -10,17 +10,17 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// Provides a service layer to administrate static variables within the datasource.
     /// </summary>
-    public class SystemConstantService : BaseRepository<PimsStaticVariable>, ISystemConstantService
+    public class SystemConstantRepository : BaseRepository<PimsStaticVariable>, ISystemConstantRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a SystemConstantService, and initializes it with the specified arguments.
+        /// Creates a new instance of a SystemConstantRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public SystemConstantService(PimsContext dbContext, ClaimsPrincipal user, ILogger<SystemConstantService> logger)
+        public SystemConstantRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<SystemConstantRepository> logger)
             : base(dbContext, user, logger)
         {
         }

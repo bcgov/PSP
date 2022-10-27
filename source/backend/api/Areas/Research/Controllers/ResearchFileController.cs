@@ -23,7 +23,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
     public class ResearchFileController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IResearchFileService _researchFileService;
         private readonly IActivityService _activityService;
         private readonly IMapper _mapper;
         #endregion
@@ -33,13 +33,13 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// <summary>
         /// Creates a new instance of a ResearchFileController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="researchFileService"></param>
         /// <param name="activityService"></param>
         /// <param name="mapper"></param>
         ///
-        public ResearchFileController(IPimsService pimsService, IActivityService activityService, IMapper mapper)
+        public ResearchFileController(IResearchFileService researchFileService, IActivityService activityService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _researchFileService = researchFileService;
             _activityService = activityService;
             _mapper = mapper;
         }
@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [SwaggerOperation(Tags = new[] { "researchfile" })]
         public IActionResult GetResearchFile(long id)
         {
-            var researchFile = _pimsService.ResearchFileService.GetById(id);
+            var researchFile = _researchFileService.GetById(id);
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
 
@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         public IActionResult AddResearchFile(ResearchFileModel researchFileModel)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
-            var researchFile = _pimsService.ResearchFileService.Add(researchFileEntity);
+            var researchFile = _researchFileService.Add(researchFileEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
@@ -141,7 +141,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         public IActionResult UpdateResearchFile([FromBody] ResearchFileModel researchFileModel)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
-            var researchFile = _pimsService.ResearchFileService.Update(researchFileEntity);
+            var researchFile = _researchFileService.Update(researchFileEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
@@ -158,7 +158,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         public IActionResult UpdateResearchFileProperties([FromBody] ResearchFileModel researchFileModel)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
-            var researchFile = _pimsService.ResearchFileService.UpdateProperties(researchFileEntity);
+            var researchFile = _researchFileService.UpdateProperties(researchFileEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }
@@ -180,7 +180,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
             }
 
             var researchFilePropertyEntity = _mapper.Map<Dal.Entities.PimsPropertyResearchFile>(researchFilePropertyModel);
-            var researchFile = _pimsService.ResearchFileService.UpdateProperty(researchFileId, researchFilePropertyModel.File.RowVersion, researchFilePropertyEntity);
+            var researchFile = _researchFileService.UpdateProperty(researchFileId, researchFilePropertyModel.File.RowVersion, researchFilePropertyEntity);
 
             return new JsonResult(_mapper.Map<ResearchFileModel>(researchFile));
         }

@@ -376,7 +376,6 @@ namespace Pims.Api
             services.AddScoped<INoteService, NoteService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
-            services.AddScoped<IPimsService, PimsService>();
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseReportsService, LeaseReportsService>();
             services.AddScoped<ILeaseTermService, LeaseTermService>();

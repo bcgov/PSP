@@ -12,6 +12,7 @@ using Pims.Api.Models;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -56,11 +57,11 @@ namespace Pims.Api.Test.Controllers.Property
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
 
-            service.Setup(m => m.Property.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.GetProperties(filter);
@@ -70,7 +71,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
             expectedResult.Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Property.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -86,11 +87,11 @@ namespace Pims.Api.Test.Controllers.Property
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
 
-            service.Setup(m => m.Property.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.GetProperties();
@@ -100,7 +101,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
             expectedResult.Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Property.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -115,12 +116,12 @@ namespace Pims.Api.Test.Controllers.Property
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetProperties());
-            service.Verify(m => m.Property.Get(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -133,12 +134,12 @@ namespace Pims.Api.Test.Controllers.Property
             var helper = new TestHelper();
             var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetProperties(null));
-            service.Verify(m => m.Property.Get(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
         #endregion
         #endregion

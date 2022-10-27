@@ -10,6 +10,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -63,10 +64,10 @@ namespace Pims.Api.Test.Controllers.Reports
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers(filter);
@@ -75,7 +76,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -93,10 +94,10 @@ namespace Pims.Api.Test.Controllers.Reports
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
-            service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers();
@@ -105,7 +106,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -124,10 +125,10 @@ namespace Pims.Api.Test.Controllers.Reports
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers(filter);
@@ -137,7 +138,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -156,10 +157,10 @@ namespace Pims.Api.Test.Controllers.Reports
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
-            service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers();
@@ -169,7 +170,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -188,10 +189,10 @@ namespace Pims.Api.Test.Controllers.Reports
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
-            service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers(filter);
@@ -201,7 +202,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -220,10 +221,10 @@ namespace Pims.Api.Test.Controllers.Reports
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), "username", "firstname", "lastname");
             var users = new[] { user };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsUser>(users);
-            service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
+            repository.Setup(m => m.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportUsers();
@@ -233,7 +234,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -246,12 +247,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers());
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -264,12 +265,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers(null));
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -282,13 +283,13 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var filter = new UserFilter() { };
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers(filter));
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -301,7 +302,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<UserController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IUserRepository>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
             var filter = new UserFilter() { };
@@ -309,7 +310,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportUsers(filter));
-            service.Verify(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
+            repository.Verify(m => m.Get(It.IsAny<Entity.Models.UserFilter>()), Times.Never());
         }
         #endregion
         #endregion

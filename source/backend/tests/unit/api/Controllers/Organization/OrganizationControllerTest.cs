@@ -34,10 +34,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var organization = EntityHelper.CreateOrganization(1, "Test Name");
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IOrganizationService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.OrganizationService.GetOrganization(It.IsAny<long>())).Returns(organization);
+            service.Setup(m => m.GetOrganization(It.IsAny<long>())).Returns(organization);
 
             // Act
             var result = controller.GetOrganization(1);
@@ -47,7 +47,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.OrganizationModel>(organization);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.OrganizationService.GetOrganization(It.IsAny<long>()), Times.Once());
+            service.Verify(m => m.GetOrganization(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region Update
@@ -63,10 +63,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var organization = EntityHelper.CreateOrganization(1, "Test Name");
 
-            var repository = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IOrganizationService>>();
             var mapper = helper.GetService<IMapper>();
 
-            repository.Setup(m => m.OrganizationService.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>())).Returns(organization);
+            service.Setup(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>())).Returns(organization);
 
             // Act
             var result = controller.UpdateOrganization(mapper.Map<Model.OrganizationModel>(organization));
@@ -76,7 +76,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.OrganizationModel>(organization);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.OrganizationService.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>()), Times.Once());
+            service.Verify(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>()), Times.Once());
         }
         #endregion
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Api.Policies;
 using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
@@ -21,7 +22,7 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly PimsOptions _pimsOptions;
-        private readonly IPimsRepository _pimsService;
+        private readonly ITenantRepository _tenantRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -31,12 +32,12 @@ namespace Pims.Api.Controllers
         /// Creates a new instance of a TenantController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="pimsOptions"></param>
-        /// <param name="pimsService"></param>
+        /// <param name="tenantRepository"></param>
         /// <param name="mapper"></param>
-        public TenantController(IOptionsMonitor<PimsOptions> pimsOptions, IPimsRepository pimsService, IMapper mapper)
+        public TenantController(IOptionsMonitor<PimsOptions> pimsOptions, ITenantRepository tenantRepository, IMapper mapper)
         {
             _pimsOptions = pimsOptions.CurrentValue;
-            _pimsService = pimsService;
+            _tenantRepository = tenantRepository;
             _mapper = mapper;
         }
         #endregion
@@ -54,7 +55,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "tenants" })]
         public IActionResult Settings()
         {
-            var tenant = _pimsService.Tenant.GetTenant(_pimsOptions.Tenant);
+            var tenant = _tenantRepository.GetTenant(_pimsOptions.Tenant);
 
             if (tenant == null)
             {
@@ -77,7 +78,7 @@ namespace Pims.Api.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/{code})")]
         public IActionResult UpdateTenant(string code, Model.TenantModel model)
         {
-            var tenant = _pimsService.Tenant.UpdateTenant(_mapper.Map<Entity.PimsTenant>(model));
+            var tenant = _tenantRepository.UpdateTenant(_mapper.Map<Entity.PimsTenant>(model));
             return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
         }
         #endregion

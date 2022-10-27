@@ -7,8 +7,8 @@ using Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Policies;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using BModel = Pims.Api.Models;
@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Property.Controllers
     public class SearchController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IPropertyRepository _propertyRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,12 +36,12 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Creates a new instance of a SearchController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="propertyRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public SearchController(IPimsRepository pimsService, IMapper mapper)
+        public SearchController(IPropertyRepository propertyRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _propertyRepository = propertyRepository;
             _mapper = mapper;
         }
         #endregion
@@ -83,7 +83,7 @@ namespace Pims.Api.Areas.Property.Controllers
                 throw new BadRequestException("Property filter must contain valid values.");
             }
 
-            var page = _pimsService.Property.GetPage((PropertyFilter)filter);
+            var page = _propertyRepository.GetPage((PropertyFilter)filter);
             var result = _mapper.Map<BModel.PageModel<Models.Search.PropertyModel>>(page);
             return new JsonResult(result);
         }

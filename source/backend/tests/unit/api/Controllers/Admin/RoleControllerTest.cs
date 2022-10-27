@@ -7,6 +7,7 @@ using Moq;
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -37,10 +38,10 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
-            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetRoles(1, 10);
@@ -50,7 +51,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
             mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Role.Get(1, 10, null), Times.Once());
+            repository.Verify(m => m.Get(1, 10, null), Times.Once());
         }
 
         [Fact]
@@ -61,10 +62,10 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
-            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetRoles(0, 10);
@@ -74,7 +75,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
             mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Role.Get(1, 10, null), Times.Once());
+            repository.Verify(m => m.Get(1, 10, null), Times.Once());
         }
 
         [Fact]
@@ -85,10 +86,10 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
-            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetRoles(1, 0);
@@ -98,7 +99,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
             mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Role.Get(1, 1, null), Times.Once());
+            repository.Verify(m => m.Get(1, 1, null), Times.Once());
         }
 
         [Fact]
@@ -109,10 +110,10 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
-            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetRoles(1, 51);
@@ -122,7 +123,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
             mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Role.Get(1, 50, null), Times.Once());
+            repository.Verify(m => m.Get(1, 50, null), Times.Once());
         }
 
         [Fact]
@@ -133,10 +134,10 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
-            service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
+            repository.Setup(m => m.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
             var result = controller.GetRoles(1, 10, "test");
@@ -146,7 +147,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.RoleModel>>(actionResult.Value);
             mapper.Map<Model.RoleModel[]>(roles).Should().BeEquivalentTo(actualResult.Items);
-            service.Verify(m => m.Role.Get(1, 10, "test"), Times.Once());
+            repository.Verify(m => m.Get(1, 10, "test"), Times.Once());
         }
         #endregion
 
@@ -159,9 +160,9 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Get(It.IsAny<Guid>())).Returns(role);
+            repository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(role);
 
             // Act
             var result = controller.GetRole(role.RoleUid);
@@ -171,7 +172,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Role.Get(role.RoleUid), Times.Once());
+            repository.Verify(m => m.Get(role.RoleUid), Times.Once());
         }
         #endregion
 
@@ -184,9 +185,9 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Add(It.IsAny<Entity.PimsRole>()));
+            repository.Setup(m => m.Add(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
@@ -197,7 +198,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Role.Add(It.IsAny<Entity.PimsRole>()), Times.Once());
+            repository.Verify(m => m.Add(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
 
@@ -210,9 +211,9 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Update(It.IsAny<Entity.PimsRole>()));
+            repository.Setup(m => m.Update(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
@@ -223,7 +224,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Role.Update(It.IsAny<Entity.PimsRole>()), Times.Once());
+            repository.Verify(m => m.Update(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
 
@@ -236,9 +237,9 @@ namespace Pims.Api.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IRoleRepository>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Delete(It.IsAny<Entity.PimsRole>()));
+            repository.Setup(m => m.Delete(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
@@ -249,7 +250,7 @@ namespace Pims.Api.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             mapper.Map<Model.RoleModel>(role).Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Role.Delete(It.IsAny<Entity.PimsRole>()), Times.Once());
+            repository.Verify(m => m.Delete(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
         #endregion

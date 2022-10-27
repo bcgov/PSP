@@ -8,9 +8,9 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// ProvinceService class, provides a service layer to administrate provinces within the datasource.
+    /// ProvinceRepository class, provides a service layer to administrate provinces within the datasource.
     /// </summary>
-    public class ProvinceService : BaseRepository<PimsProvinceState>, IProvinceService
+    public class ProvinceRepository : BaseRepository<PimsProvinceState>, IProvinceRepository
     {
         #region Variables
         #endregion
@@ -18,12 +18,12 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a ProvinceService, and initializes it with the specified arguments.
+        /// Creates a new instance of a ProvinceRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProvinceService> logger)
+        public ProvinceRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProvinceRepository> logger)
             : base(dbContext, user, logger)
         {
         }
