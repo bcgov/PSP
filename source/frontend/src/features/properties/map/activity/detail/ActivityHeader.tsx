@@ -19,7 +19,7 @@ export const ActivityHeader: React.FunctionComponent<IActivityHeaderProps> = ({
   const leftColumnWidth = '5';
   const leftColumnLabel = '3';
   return (
-    <Row className="no-gutters pl-4 pr-4">
+    <Row className="no-gutters">
       <Col>
         <Row className="no-gutters">
           <Col xs={leftColumnWidth}>

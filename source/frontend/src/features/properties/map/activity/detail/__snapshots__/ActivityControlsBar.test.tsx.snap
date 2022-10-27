@@ -11,7 +11,7 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c5.btn {
+  .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +41,49 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c3.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c3.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c3.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c3.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c3.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +104,9 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +115,14 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,146 +133,139 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c3.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c3.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c3.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3.required::before {
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c2.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c1 {
   font-weight: bold;
 }
 
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  width: 100%;
-}
-
-.c4 {
-  width: inherit;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-}
-
-.c1 {
-  width: inherit;
-}
-
 <div
-    class="c0"
+    class="c0 form-section"
   >
     <div
-      class="c1"
+      class="collapse show"
     >
       <div
-        class="pb-2 row"
+        class="row"
       >
         <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c2"
-          >
-            Status:
-          </label>
-        </div>
-        <div
-          class="c3 text-left col"
+          class="col"
         >
           <div
-            class="form-group"
+            class="pb-2 row"
           >
-            <select
-              class="form-select form-control"
-              disabled=""
-              id="input-activityStatusTypeCode.id"
-              name="activityStatusTypeCode.id"
+            <div
+              class="pr-0 text-left col-auto"
             >
-              <option
-                class="option"
-                value="NOSTART"
+              <label
+                class="c1"
               >
-                Not Started
-              </option>
-              <option
-                class="option"
-                value="INPROG"
+                Status:
+              </label>
+            </div>
+            <div
+              class="c2 text-left col"
+            >
+              <div
+                class="form-group"
               >
-                In Progress
-              </option>
-              <option
-                class="option"
-                value="COMPLETE"
-              >
-                Complete
-              </option>
-              <option
-                class="option"
-                value="CANCELLED"
-              >
-                Cancelled
-              </option>
-            </select>
+                <select
+                  class="form-select form-control"
+                  disabled=""
+                  id="input-activityStatusTypeCode.id"
+                  name="activityStatusTypeCode.id"
+                >
+                  <option
+                    class="option"
+                    value="NOSTART"
+                  >
+                    Not Started
+                  </option>
+                  <option
+                    class="option"
+                    value="INPROG"
+                  >
+                    In Progress
+                  </option>
+                  <option
+                    class="option"
+                    value="COMPLETE"
+                  >
+                    Complete
+                  </option>
+                  <option
+                    class="option"
+                    value="CANCELLED"
+                  >
+                    Cancelled
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div
-      class="c4"
-    >
-      <button
-        class="btn btn-link"
-        title="edit"
-        type="button"
-      >
-        <svg
-          fill="currentColor"
-          height="2rem"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 576 512"
-          width="2rem"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-          />
-        </svg>
-      </button>
-      <button
-        class="c5 Button btn btn-secondary mr-4"
-        type="button"
-      >
         <div
-          class="Button__value"
+          class="pr-0 mr-0 col-auto"
         >
-          Related properties
+          <button
+            class="c3 Button btn btn-secondary "
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Related properties
+            </div>
+          </button>
         </div>
-      </button>
+        <div
+          class="px-0 mx-0 col-auto"
+        >
+          <button
+            class="btn btn-link"
+            title="edit"
+            type="button"
+          >
+            <svg
+              fill="currentColor"
+              height="2rem"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 576 512"
+              width="2rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
