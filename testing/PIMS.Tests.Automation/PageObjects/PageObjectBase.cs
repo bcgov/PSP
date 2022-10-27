@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void WaitUntil(By element)
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(20));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
             wait.Until(ExpectedConditions.ElementIsVisible(element));
         }
 
@@ -33,8 +33,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var buttons = webDriver.FindElements(By.TagName("button"));
             var selectedBtn = buttons.Should().ContainSingle(b => b.Text.Contains(btnContent)).Subject;
-            //js.ExecuteScript("arguments[0].click()", selectedBtn);
-
             selectedBtn.Click();
         }
 
@@ -48,7 +46,7 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
 
             Wait();
-            selectedElement.Click();
+            js.ExecuteScript("arguments[0].click();", selectedElement);
         }
 
         protected void ScrollToElement(By element)

@@ -57,6 +57,9 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsPropertyResearchFiles)
                     .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
                     .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
+                .Include(r => r.PimsPropertyResearchFiles)
+                    .ThenInclude(rp => rp.Property)
+                    .ThenInclude(p => p.Address)
                 .Include(r => r.PimsResearchFilePurposes)
                     .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();

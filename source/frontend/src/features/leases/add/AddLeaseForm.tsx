@@ -8,6 +8,7 @@ import SaveCancelButtons from '../SaveCancelButtons';
 import { LeaseSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import LeaseDatesSubForm from './LeaseDatesSubForm';
+import NoteSubForm from './NoteSubForm';
 import PropertyInformationSubForm from './PropertyInformationSubForm';
 import ReferenceSubForm from './ReferenceSubForm';
 import * as Styled from './styles';
@@ -47,6 +48,7 @@ const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
             <ReferenceSubForm />
             <PropertyInformationSubForm />
+            <NoteSubForm />
             <SaveCancelButtons formikProps={formikProps} onCancel={onCancel} />
           </Styled.LeaseForm>
         </>

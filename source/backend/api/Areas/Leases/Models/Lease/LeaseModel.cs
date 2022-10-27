@@ -70,7 +70,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The LIS TFA File #.
         /// </summary>
-        public string TfaFileNo { get; set; }
+        public string TfaFileNumber { get; set; }
 
         /// <summary>
         /// get/set - The LIS Ps File #.

@@ -13,7 +13,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Contacts contacts;
         private readonly SearchContacts searchContacts;
 
-        private readonly string userName = "sutairak";
+        private readonly string userName = "TRANPSP1";
 
         private readonly string nonExistingContact = "A non existing contact";
         private readonly string legacyOrganizationName = "Bishop of Victoria";
