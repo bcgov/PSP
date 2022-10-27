@@ -4,7 +4,8 @@ import useIsMounted from 'hooks/useIsMounted';
 import { useQueryMapLayersByLocation } from 'hooks/useQueryMapLayersByLocation';
 import isNumber from 'lodash/isNumber';
 import { Api_Property } from 'models/api/Property';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useGetProperty, useUpdateProperty } from '../hooks';
@@ -14,21 +15,17 @@ import { UpdatePropertyDetailsYupSchema } from './validation';
 
 export interface IUpdatePropertyDetailsContainerProps {
   id: number;
-  setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
   onSuccess: () => void;
 }
 
-export const UpdatePropertyDetailsContainer: React.FC<
+export const UpdatePropertyDetailsContainer = React.forwardRef<
+  FormikProps<any>,
   IUpdatePropertyDetailsContainerProps
-> = props => {
+>((props, ref) => {
   const isMounted = useIsMounted();
   const getPropertyWrapper = useGetProperty();
   const { updateProperty } = useUpdateProperty();
   const { queryAll } = useQueryMapLayersByLocation();
-
-  const formikRef = useRef<FormikProps<UpdatePropertyDetailsFormModel>>(null);
-
-  props.setFormikRef(formikRef);
 
   const [initialForm, setForm] = useState<UpdatePropertyDetailsFormModel | undefined>(undefined);
   const executeGetProperty = getPropertyWrapper.execute;
@@ -76,7 +73,7 @@ export const UpdatePropertyDetailsContainer: React.FC<
   return (
     <Formik<UpdatePropertyDetailsFormModel>
       enableReinitialize
-      innerRef={formikRef}
+      innerRef={ref}
       validationSchema={UpdatePropertyDetailsYupSchema}
       initialValues={initialForm || new UpdatePropertyDetailsFormModel()}
       onSubmit={savePropertyInformation}
@@ -92,7 +89,7 @@ export const UpdatePropertyDetailsContainer: React.FC<
       )}
     </Formik>
   );
-};
+});
 
 const StyledFormWrapper = styled.div`
   display: flex;
