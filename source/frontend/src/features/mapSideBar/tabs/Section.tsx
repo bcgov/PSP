@@ -68,5 +68,4 @@ const StyledFormSection = styled.div`
   padding: 1.5rem;
   background-color: white;
   text-align: left;
-  //border: 1px solid red;
 `;
