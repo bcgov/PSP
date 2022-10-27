@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
-import { useApi } from 'hooks/useApi';
+import { useApiGeocoder } from 'hooks/pims-api/useApiGeocoder';
 import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
@@ -24,7 +24,6 @@ const mockParcels = [
   { id: 2, latitude: 53.917065, longitude: -122.749672 },
 ] as IProperty[];
 
-jest.mock('hooks/useApi');
 jest.mock('hooks/pims-api');
 
 const onPropertyMarkerClick = jest.fn();
@@ -157,7 +156,7 @@ xdescribe('MapProperties View', () => {
     );
     mockGetParcel = jest.fn(async () => ({} as IProperty));
 
-    (useApi as unknown as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+    (useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
       loadProperties: mockLoadProperties,
       getProperty: mockGetParcel,
     });

@@ -11,7 +11,7 @@ exports[`Update lease container component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c11.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +41,49 @@ exports[`Update lease container component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c11.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c11.btn:focus {
+.c12.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c11.btn.btn-primary {
+.c12.btn.btn-primary {
   border: none;
 }
 
-.c11.btn.btn-secondary {
+.c12.btn.btn-secondary {
   background: none;
 }
 
-.c11.btn.btn-info {
+.c12.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c11.btn.btn-info:hover,
-.c11.btn.btn-info:active,
-.c11.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
   background: none;
 }
 
-.c11.btn.btn-light {
+.c12.btn.btn-light {
   border: none;
 }
 
-.c11.btn.btn-dark {
+.c12.btn.btn-dark {
   border: none;
 }
 
-.c11.btn.btn-link {
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +104,9 @@ exports[`Update lease container component renders as expected 1`] = `
   padding: 0;
 }
 
-.c11.btn.btn-link:hover,
-.c11.btn.btn-link:active,
-.c11.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +115,14 @@ exports[`Update lease container component renders as expected 1`] = `
   outline: none;
 }
 
-.c11.btn.btn-link:disabled,
-.c11.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c11.btn:disabled,
-.c11.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,15 +133,15 @@ exports[`Update lease container component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c11.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c11.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c11.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -235,13 +235,13 @@ exports[`Update lease container component renders as expected 1`] = `
   max-width: 50rem;
 }
 
-.c10 textarea.form-control {
+.c11 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
 }
 
-.c12 textarea.form-control {
+.c10 textarea.form-control {
   min-width: 80rem;
   height: 18rem;
   width: 80rem;
@@ -1289,11 +1289,84 @@ exports[`Update lease container component renders as expected 1`] = `
       <div
         class="col"
       >
+        <div
+          class="c10 textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-description"
+          >
+            Description 
+          </label>
+          <textarea
+            class="form-control"
+            id="input-description"
+            name="description"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
         <h3
           class="c5"
         >
           Reference Information
         </h3>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-tfaFileNumber"
+          >
+            LIS #: 
+          </label>
+          <input
+            class="form-control"
+            id="input-tfaFileNumber"
+            name="tfaFileNumber"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c7 c8 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-psFileNo"
+          >
+            PS #: 
+          </label>
+          <input
+            class="form-control"
+            id="input-psFileNo"
+            name="psFileNo"
+            title=""
+            value=""
+          />
+        </div>
       </div>
     </div>
     <div
@@ -1387,7 +1460,7 @@ exports[`Update lease container component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c10 textarea input form-group"
+          class="c11 textarea input form-group"
         >
           <label
             class="form-label"
@@ -1438,7 +1511,7 @@ exports[`Update lease container component renders as expected 1`] = `
       </div>
     </div>
     <button
-      class="c11 Button btn btn-link"
+      class="c12 Button btn btn-link"
       type="button"
     >
       <div
@@ -1447,6 +1520,11 @@ exports[`Update lease container component renders as expected 1`] = `
         + Add another property
       </div>
     </button>
+    <h3
+      class="c5"
+    >
+      Notes
+    </h3>
     <div
       class="row"
     >
@@ -1454,38 +1532,8 @@ exports[`Update lease container component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c12 textarea input form-group"
+          class="c10 textarea input form-group"
         >
-          <label
-            class="form-label"
-            for="input-description"
-          >
-            Description 
-          </label>
-          <textarea
-            class="form-control"
-            id="input-description"
-            name="description"
-            title=""
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
-        <div
-          class="c12 textarea input form-group"
-        >
-          <label
-            class="form-label"
-            for="input-note"
-          >
-            Notes 
-          </label>
           <textarea
             class="form-control"
             id="input-note"

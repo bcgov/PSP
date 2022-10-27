@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using EModel = Pims.Dal.Entities.Models;
@@ -23,7 +23,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class AccessRequestController : Controller
     {
         #region Properties
-        private readonly IPimsRepository _pimsService;
+        private readonly IAccessRequestRepository _accessRequestRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,11 +32,11 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new instance of an AccessRequestController object, initializes with specified parameters.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="accessRequestRepository"></param>
         /// <param name="mapper"></param>
-        public AccessRequestController(IPimsRepository pimsService, IMapper mapper)
+        public AccessRequestController(IAccessRequestRepository accessRequestRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _accessRequestRepository = accessRequestRepository;
             _mapper = mapper;
         }
         #endregion
@@ -76,7 +76,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             var filter = new EModel.AccessRequestFilter(page, quantity, searchText, new[] { sort });
             filter.StatusType = new Entity.PimsAccessRequestStatusType() { Id = "Received" };
 
-            var result = _pimsService.AccessRequest.Get(filter);
+            var result = _accessRequestRepository.Get(filter);
             var models = _mapper.Map<AccessRequestModel[]>(result.Items);
             var paged = new PageModel<AccessRequestModel>(models, page, quantity, result.Total);
             return new JsonResult(paged);
@@ -95,7 +95,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult GetAccessRequest(long id)
         {
-            var accessRequest = _pimsService.AccessRequest.Get(id);
+            var accessRequest = _accessRequestRepository.Get(id);
             return new JsonResult(_mapper.Map<AccessRequestModel>(accessRequest));
         }
 
@@ -113,7 +113,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult Delete(long id, [FromBody] AccessRequestModel model)
         {
             var entity = _mapper.Map<Entity.PimsAccessRequest>(model);
-            _pimsService.AccessRequest.Delete(entity);
+            _accessRequestRepository.Delete(entity);
             return new JsonResult(model);
         }
         #endregion

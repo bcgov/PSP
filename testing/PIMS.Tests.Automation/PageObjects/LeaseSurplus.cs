@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licenseSurplusTableBody = By.CssSelector("div[data-testid='leasesTable'] div[class='tbody']");
 
-        private By licenseHeaderLeaseCode = By.CssSelector("div[class='sc-iuqSNk ljWffs active'] b:nth-child(2)");
+        private By licenseHeaderLeaseCode = By.XPath("//b[contains(text(),'L-')]");
 
         public LeaseSurplus(IWebDriver webDriver) : base(webDriver)
         { }

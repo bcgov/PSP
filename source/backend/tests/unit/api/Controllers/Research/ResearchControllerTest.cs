@@ -60,10 +60,10 @@ namespace Pims.Api.Test.Controllers.Research
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IResearchFileService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
+            service.Setup(m => m.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
             // Act
             var result = controller.GetResearchFiles(filter);
@@ -73,7 +73,7 @@ namespace Pims.Api.Test.Controllers.Research
             var actualResult = Assert.IsType<Models.PageModel<ResearchFileModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
+            service.Verify(m => m.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace Pims.Api.Test.Controllers.Research
 
             var researchFiles = new[] { EntityHelper.CreateResearchFile(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IResearchFileService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
+            service.Setup(m => m.GetPage(It.IsAny<ResearchFilter>())).Returns(new Paged<Entity.PimsResearchFile>(researchFiles));
 
             // Act
             var result = controller.GetResearchFiles();
@@ -102,7 +102,7 @@ namespace Pims.Api.Test.Controllers.Research
             var actualResult = Assert.IsType<Models.PageModel<ResearchFileModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<ResearchFileModel>>(new Paged<Entity.PimsResearchFile>(researchFiles));
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
+            service.Verify(m => m.GetPage(It.IsAny<ResearchFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -117,12 +117,12 @@ namespace Pims.Api.Test.Controllers.Research
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IResearchFileService>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetResearchFiles());
-            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
+            service.Verify(m => m.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -135,12 +135,12 @@ namespace Pims.Api.Test.Controllers.Research
             var helper = new TestHelper();
             var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IResearchFileService>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetResearchFiles(null));
-            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
+            service.Verify(m => m.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -153,13 +153,13 @@ namespace Pims.Api.Test.Controllers.Research
             var helper = new TestHelper();
             var controller = helper.CreateController<SearchController>(Permissions.ResearchFileView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IResearchFileService>>();
             var filter = new ResearchFilterModel() { CreatedOnStartDate = DateTime.Now, CreatedOnEndDate = DateTime.Now.AddDays(-1) };
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetResearchFiles(filter));
-            service.Verify(m => m.ResearchFileService.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
+            service.Verify(m => m.GetPage(It.IsAny<Entity.Models.ResearchFilter>()), Times.Never());
         }
         #endregion
         #endregion

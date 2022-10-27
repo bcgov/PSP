@@ -1,7 +1,7 @@
 import * as Styled from 'components/common/styles';
 import { Table } from 'components/Table';
 import { Section } from 'features/mapSideBar/tabs/Section';
-import { IGeocoderResponse } from 'hooks/useApi';
+import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import * as React from 'react';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';

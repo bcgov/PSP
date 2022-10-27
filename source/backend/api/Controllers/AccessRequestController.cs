@@ -2,7 +2,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
 
@@ -19,7 +19,7 @@ namespace Pims.Api.Controllers
     public class AccessRequestController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IAccessRequestRepository _accessRequestRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -28,11 +28,11 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instance of a AccessRequestController class.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="accessRequestRepository"></param>
         /// <param name="mapper"></param>
-        public AccessRequestController(IPimsRepository pimsService, IMapper mapper)
+        public AccessRequestController(IAccessRequestRepository accessRequestRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _accessRequestRepository = accessRequestRepository;
             _mapper = mapper;
         }
         #endregion
@@ -50,7 +50,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult GetAccessRequest()
         {
-            var accessRequest = _pimsService.AccessRequest.Get();
+            var accessRequest = _accessRequestRepository.Get();
             if (accessRequest == null)
             {
                 return NoContent();
@@ -75,7 +75,7 @@ namespace Pims.Api.Controllers
                 throw new BadRequestException("Invalid access request specified");
             }
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
-            accessRequest = _pimsService.AccessRequest.Add(accessRequest);
+            accessRequest = _accessRequestRepository.Add(accessRequest);
 
             return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.AccessRequestId }, _mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
         }
@@ -99,7 +99,7 @@ namespace Pims.Api.Controllers
             }
 
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
-            accessRequest = _pimsService.AccessRequest.Update(accessRequest);
+            accessRequest = _accessRequestRepository.Update(accessRequest);
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.AccessRequestModel>(accessRequest));
         }
         #endregion

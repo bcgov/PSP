@@ -31,10 +31,10 @@ namespace Pims.Api.Test.Controllers.Property
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(pid);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPropertyService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.PropertyService.GetById(It.IsAny<long>())).Returns(property);
+            service.Setup(m => m.GetById(It.IsAny<long>())).Returns(property);
 
             // Act
             var result = controller.GetConceptPropertyWithId(property.Id);
@@ -44,7 +44,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<Models.Concepts.PropertyModel>(actionResult.Value);
             var expectedResult = mapper.Map<Models.Concepts.PropertyModel>(property);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.PropertyService.GetById(It.IsAny<long>()), Times.Once());
+            service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region Update
@@ -59,10 +59,10 @@ namespace Pims.Api.Test.Controllers.Property
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(12345);
 
-            var repository = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPropertyService>>();
             var mapper = helper.GetService<IMapper>();
 
-            repository.Setup(m => m.PropertyService.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>())).Returns(property);
+            service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>())).Returns(property);
 
             // Act
             var result = controller.UpdateConceptProperty(mapper.Map<Models.Concepts.PropertyModel>(property));
@@ -72,7 +72,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<Models.Concepts.PropertyModel>(actionResult.Value);
             var expectedResult = mapper.Map<Models.Concepts.PropertyModel>(property);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.PropertyService.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
+            service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
         }
         #endregion
     }

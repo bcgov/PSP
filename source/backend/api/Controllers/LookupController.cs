@@ -3,7 +3,7 @@ using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Lookup;
 
@@ -20,7 +20,7 @@ namespace Pims.Api.Controllers
     public class LookupController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly ILookupRepository _lookupRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -29,11 +29,11 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instance of a LookupController class.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="lookupRepository"></param>
         /// <param name="mapper"></param>
-        public LookupController(IPimsRepository pimsService, IMapper mapper)
+        public LookupController(ILookupRepository lookupRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _lookupRepository = lookupRepository;
             _mapper = mapper;
         }
         #endregion
@@ -50,7 +50,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "lookup" })]
         public IActionResult GetRoles()
         {
-            var roleCodes = _mapper.Map<Model.RoleModel[]>(_pimsService.Lookup.GetRoles());
+            var roleCodes = _mapper.Map<Model.RoleModel[]>(_lookupRepository.GetRoles());
             return new JsonResult(roleCodes.ToArray());
         }
 
@@ -64,7 +64,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "lookup" })]
         public IActionResult GetPropertyClassificationTypes()
         {
-            var classifications = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyClassificationTypes());
+            var classifications = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyClassificationTypes());
             return new JsonResult(classifications.ToArray());
         }
 
@@ -78,49 +78,49 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "lookup" })]
         public IActionResult GetAll()
         {
-            var areaUnitTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAreaUnitTypes());
-            var classificationTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyClassificationTypes());
-            var contactMethodTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetContactMethodTypes());
-            var countries = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetCountries());
-            var districts = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetDistricts());
-            var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetInsuranceTypes());
-            var leaseCategoryTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseCategoryTypes());
-            var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseInitiatorTypes());
-            var leasePaymentFrequencyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePmtFreqTypes());
-            var leasePaymentMethodTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePaymentMethodTypes());
-            var leasePaymentReceivableTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPaymentReceivableTypes());
-            var leasePaymentStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePaymentStatusTypes());
-            var leaseProgramTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseProgramTypes());
-            var leasePurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePurposeTypes());
-            var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseResponsibilityTypes());
-            var leaseStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseStatusTypes());
-            var leaseTermStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseTermStatusTypes());
-            var leaseTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseTypes());
-            var organizationTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetOrganizationTypes());
-            var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyImprovementTypes());
-            var propertyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTypes());
-            var provinces = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetProvinces());
-            var regions = _mapper.Map<Model.LookupModel<short>[]>(_pimsService.Lookup.GetRegions());
-            var roleCodes = _mapper.Map<Model.RoleModel[]>(_pimsService.Lookup.GetRoles());
-            var securityDepositTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetSecurityDepositTypes());
-            var tenureTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTenureTypes());
-            var researchStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchFileStatusTypes());
-            var requestSourceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GeRequestSourceTypes());
-            var researchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetResearchPurposeTypes());
-            var propertyResearchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyResearchPurposeTypes());
-            var propertyAnomalyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAnomalyTypes());
-            var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyRoadTypes());
-            var propertyAdjacentLandTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAdjacentLandTypes());
-            var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumeUnitTypes());
-            var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyVolumetricTypes());
-            var pphStatusType = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPPHStatusType());
-            var documentStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetDocumentStatusTypes());
-            var acquisitionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionFileStatusTypes());
-            var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionPhysFileStatusTypes());
-            var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcquisitionTypes());
-            var activityTemplateTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetActivityTemplateTypes());
-            var activityStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetActivityStatusTypes());
-            var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetAcqFilePersonProfileTypes());
+            var areaUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyAreaUnitTypes());
+            var classificationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyClassificationTypes());
+            var contactMethodTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetContactMethodTypes());
+            var countries = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetCountries());
+            var districts = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetDistricts());
+            var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetInsuranceTypes());
+            var leaseCategoryTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseCategoryTypes());
+            var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseInitiatorTypes());
+            var leasePaymentFrequencyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeasePmtFreqTypes());
+            var leasePaymentMethodTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeasePaymentMethodTypes());
+            var leasePaymentReceivableTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPaymentReceivableTypes());
+            var leasePaymentStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeasePaymentStatusTypes());
+            var leaseProgramTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseProgramTypes());
+            var leasePurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeasePurposeTypes());
+            var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseResponsibilityTypes());
+            var leaseStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseStatusTypes());
+            var leaseTermStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseTermStatusTypes());
+            var leaseTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetLeaseTypes());
+            var organizationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetOrganizationTypes());
+            var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyImprovementTypes());
+            var propertyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyTypes());
+            var provinces = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetProvinces());
+            var regions = _mapper.Map<Model.LookupModel<short>[]>(_lookupRepository.GetRegions());
+            var roleCodes = _mapper.Map<Model.RoleModel[]>(_lookupRepository.GetRoles());
+            var securityDepositTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetSecurityDepositTypes());
+            var tenureTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyTenureTypes());
+            var researchStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetResearchFileStatusTypes());
+            var requestSourceTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GeRequestSourceTypes());
+            var researchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetResearchPurposeTypes());
+            var propertyResearchPurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyResearchPurposeTypes());
+            var propertyAnomalyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyAnomalyTypes());
+            var propertyRoadTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyRoadTypes());
+            var propertyAdjacentLandTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyAdjacentLandTypes());
+            var volumeUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyVolumeUnitTypes());
+            var propertyVolumetricTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPropertyVolumetricTypes());
+            var pphStatusType = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetPPHStatusType());
+            var documentStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetDocumentStatusTypes());
+            var acquisitionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAcquisitionFileStatusTypes());
+            var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAcquisitionPhysFileStatusTypes());
+            var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAcquisitionTypes());
+            var activityTemplateTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetActivityTemplateTypes());
+            var activityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetActivityStatusTypes());
+            var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAcqFilePersonProfileTypes());
 
             var codes = new List<object>();
             codes.AddRange(areaUnitTypes);

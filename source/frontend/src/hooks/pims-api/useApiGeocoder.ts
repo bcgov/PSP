@@ -1,8 +1,8 @@
 import { IResearchFilter } from 'features/research/interfaces';
-import { IGeocoderPidsResponse, IGeocoderResponse } from 'hooks/useApi';
 import React from 'react';
 
 import { IPaginateRequest, useAxiosApi } from '.';
+import { IGeocoderPidsResponse, IGeocoderResponse } from './interfaces/IGeocoder';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the geocoder endpoints.

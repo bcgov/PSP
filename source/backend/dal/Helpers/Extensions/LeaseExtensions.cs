@@ -172,6 +172,11 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.Historical))
+            {
+                query = query.Where(l => EF.Functions.Like(l.PsFileNo, $"%{filter.Historical}%") || EF.Functions.Like(l.TfaFileNumber, $"%{filter.Historical}%"));
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
                 query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null &&

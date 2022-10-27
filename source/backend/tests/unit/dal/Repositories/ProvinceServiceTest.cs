@@ -12,7 +12,7 @@ namespace Pims.Dal.Test.Services
     [Trait("area", "admin")]
     [Trait("group", "province")]
     [ExcludeFromCodeCoverage]
-    public class ProvinceServiceTest
+    public class ProvinceRepositoryTest
     {
         #region Tests
         #region Get
@@ -24,7 +24,7 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
             using var init = helper.InitializeDatabase(user);
 
-            var service = helper.CreateRepository<ProvinceService>(user);
+            var service = helper.CreateRepository<ProvinceRepository>(user);
 
             // Act
             var result = service.Get();
