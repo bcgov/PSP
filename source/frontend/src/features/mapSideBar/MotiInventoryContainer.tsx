@@ -5,7 +5,7 @@ import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { FormikProps } from 'formik';
 import { PROPERTY_TYPES, useComposedProperties } from 'hooks/useComposedProperties';
 import { Api_Property } from 'models/api/Property';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import MapSideBarLayout from './layout/MapSideBarLayout';
@@ -26,9 +26,7 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const [formikRef, setFormikRef] = useState<React.RefObject<FormikProps<any>> | undefined>(
-    undefined,
-  );
+  const formikRef = useRef<FormikProps<any>>(null);
 
   const composedProperty = useComposedProperties({
     id: props.id,
@@ -94,8 +92,8 @@ export const MotiInventoryContainer: React.FunctionComponent<IMotiInventoryConta
           composedProperty={composedProperty}
           isEditMode={isEditing}
           setEditMode={setIsEditing}
-          setFormikRef={setFormikRef}
           onSuccess={onSuccess}
+          ref={formikRef}
         />
         <GenericModal
           display={showCancelConfirmModal}
