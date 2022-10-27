@@ -18,6 +18,7 @@ export interface IActivityFormProps {
   activity: Activity;
   file: ActivityFile;
   editMode: boolean;
+  isEditable: boolean;
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
@@ -28,6 +29,7 @@ export const ActivityForm = ({
   activity,
   file,
   editMode,
+  isEditable,
   setEditMode,
   onSave,
   onEditRelatedProperties,
@@ -101,6 +103,7 @@ export const ActivityForm = ({
           <ActivityView
             activity={activity}
             file={file}
+            isEditable={isEditable}
             editMode={editMode}
             setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}

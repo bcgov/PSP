@@ -43,6 +43,7 @@ describe('ActivityForm test', () => {
         setEditMode={renderOptions?.setEditMode ?? setEditMode}
         onEditRelatedProperties={onEditRelatedProperties}
         onSave={onSave}
+        isEditable={true}
         formContent={renderOptions?.formContent}
       />,
       {
@@ -190,6 +191,7 @@ describe('ActivityForm test', () => {
           version: '1.0',
         },
         editMode: true,
+        isEditable: true,
       });
       await findByText('No matching Documents found');
 
@@ -254,6 +256,7 @@ describe('ActivityForm test', () => {
           version: '1.0',
         },
         editMode: true,
+        isEditable: true,
       });
       await findByText('No matching Documents found');
 

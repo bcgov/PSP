@@ -1,5 +1,4 @@
 import { Button } from 'components/common/buttons';
-import EditButton from 'components/common/EditButton';
 import { Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
@@ -53,7 +52,6 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
             </LeftAligned>
           )}
           <RightAligned>
-            {!editMode && <EditButton onClick={() => setEditMode(true)} />}
             {hasClaim(Claims.PROPERTY_EDIT) && (
               <Col xs="auto" className="pr-0 mr-0">
                 <Button onClick={onEditRelatedProperties} variant="secondary ">
