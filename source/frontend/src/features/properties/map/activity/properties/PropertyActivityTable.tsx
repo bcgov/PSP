@@ -6,6 +6,7 @@ import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import * as React from 'react';
 import { CellProps } from 'react-table';
+import { stringToFragment } from 'utils';
 
 interface IPropertyActivityFormProps {
   fileProperties: Api_PropertyFile[];
@@ -21,7 +22,7 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
     minWidth: 7,
     maxWidth: 7,
     Cell: (cellProps: CellProps<Api_PropertyFile>) => {
-      return cellProps.row.index + 1;
+      return stringToFragment(cellProps.row.index + 1);
     },
   },
   {
@@ -36,7 +37,7 @@ const columns: ColumnWithProps<Api_PropertyFile>[] = [
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
-    Cell: (cellProps: CellProps<Api_PropertyFile, Api_Property>) => {
+    Cell: (cellProps: CellProps<Api_PropertyFile, Api_Property | undefined>) => {
       const propertyName = getFilePropertyName(cellProps.row.original, true);
       return <OverflowTip fullText={`${propertyName.label}: ${propertyName.value}`} />;
     },

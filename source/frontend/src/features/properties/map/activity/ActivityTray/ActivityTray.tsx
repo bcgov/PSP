@@ -68,7 +68,7 @@ export const ActivityTray: React.FunctionComponent<React.PropsWithChildren<IActi
 
   return (
     <ReactVisibilitySensor
-      onChange={isVisible => {
+      onChange={(isVisible: boolean) => {
         !isVisible && setShow(true);
       }}
     >

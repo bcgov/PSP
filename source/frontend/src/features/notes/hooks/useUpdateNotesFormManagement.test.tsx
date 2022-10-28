@@ -32,7 +32,7 @@ const BASIC_PROPS: IUseUpdateNotesFormManagementProps = {
 describe('useUpdateNotesFormManagement hook', () => {
   const setup = (hookProps: IUseUpdateNotesFormManagementProps = { ...BASIC_PROPS }) => {
     const { result } = renderHook(() => useUpdateNotesFormManagement({ ...hookProps }), {
-      wrapper: props => (
+      wrapper: (props: React.PropsWithChildren) => (
         <TestCommonWrapper store={mockStore} history={history}>
           {props.children}
         </TestCommonWrapper>

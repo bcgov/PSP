@@ -54,7 +54,7 @@ const MapSideBarLayout: React.FunctionComponent<
             <Content>{isVisible ? props.children : null}</Content>
           </StyledBody>
 
-          {props.footer && isVisible && <Footer>{props.footer}</Footer>}
+          {props.footer && isVisible && <Footer>{props.footer as React.ReactNode}</Footer>}
         </>
       )}
     </VisibilitySensor>
