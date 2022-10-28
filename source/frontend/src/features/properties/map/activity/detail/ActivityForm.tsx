@@ -1,7 +1,9 @@
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
+import { Claims } from 'constants/claims';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import SidebarFooter from 'features/properties/map/shared/SidebarFooter';
 import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { getCancelModalProps, useModalContext } from 'hooks/useModalContext';
 import { Api_Activity } from 'models/api/Activity';
 import * as React from 'react';
@@ -16,6 +18,7 @@ export interface IActivityFormProps {
   activity: Activity;
   file: ActivityFile;
   editMode: boolean;
+  isEditable: boolean;
   setEditMode: (editMode: boolean) => void;
   onSave: (activity: Api_Activity) => Promise<Api_Activity | undefined>;
   onEditRelatedProperties: () => void;
@@ -26,13 +29,14 @@ export const ActivityForm = ({
   activity,
   file,
   editMode,
+  isEditable,
   setEditMode,
   onSave,
   onEditRelatedProperties,
   formContent,
 }: IActivityFormProps) => {
   const { setModalContent, setDisplayModal } = useModalContext();
-
+  const { hasClaim } = useKeycloakWrapper();
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     const onCancel = () => {
       resetForm();
@@ -74,8 +78,10 @@ export const ActivityForm = ({
           functionErrors = formContent?.validationFunction
             ? formContent?.validationFunction(values)
             : {};
-          validateYupSchema(values, activityYupSchema, true);
-          validateYupSchema(values, formContent?.validationSchema, true);
+          if (values.activityStatusTypeCode?.id !== 'CANCELLED') {
+            validateYupSchema(values, activityYupSchema, true);
+            validateYupSchema(values, formContent?.validationSchema, true);
+          }
           return functionErrors;
         } catch (err) {
           return { ...functionErrors, ...yupToFormErrors(err) };
@@ -97,6 +103,7 @@ export const ActivityForm = ({
           <ActivityView
             activity={activity}
             file={file}
+            isEditable={isEditable}
             editMode={editMode}
             setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}
@@ -113,13 +120,15 @@ export const ActivityForm = ({
               </Section>
             )}
           </ActivityView>
-          {editMode && (
-            <SidebarFooter
-              onSave={() => submitForm()}
-              isOkDisabled={isSubmitting || !dirty}
-              onCancel={() => cancelFunc(resetForm, dirty)}
-            />
-          )}
+
+          <SidebarFooter
+            editMode={editMode}
+            showEdit={hasClaim(Claims.ACTIVITY_EDIT)}
+            onEdit={setEditMode}
+            onSave={() => submitForm()}
+            isOkDisabled={isSubmitting || !dirty}
+            onCancel={() => cancelFunc(resetForm, dirty)}
+          />
         </>
       )}
     </Formik>

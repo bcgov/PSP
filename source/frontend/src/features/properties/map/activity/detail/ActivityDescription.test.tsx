@@ -19,7 +19,11 @@ describe('ActivityDescription test', () => {
     // render component under test
     const component = render(
       <Formik onSubmit={noop} initialValues={getMockActivityResponse()}>
-        <ActivityDescription nameSpace="" editMode={renderOptions?.editMode ?? false} />
+        <ActivityDescription
+          nameSpace=""
+          isEditable={true}
+          editMode={renderOptions?.editMode ?? false}
+        />
       </Formik>,
       {
         ...renderOptions,

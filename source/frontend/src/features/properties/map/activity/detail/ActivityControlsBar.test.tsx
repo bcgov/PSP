@@ -83,20 +83,9 @@ describe('ActivityControlsBar test', () => {
     expect(queryByLabelText('Status')).toBeNull();
   });
 
-  it('calls expected function when edit is clicked', async () => {
-    const { getByTitle } = setup({
-      editMode: false,
-      setEditMode,
-      onEditRelatedProperties,
-    });
-    const editButton = getByTitle('edit');
-    userEvent.click(editButton);
-    expect(setEditMode).toHaveBeenCalled();
-  });
-
   it('populates status field as expected', async () => {
     const { getByRole } = setup({
-      editMode: false,
+      editMode: true,
       setEditMode,
       onEditRelatedProperties,
     });
