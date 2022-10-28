@@ -345,7 +345,6 @@ exports[`AcquisitionContainer component renders as expected 1`] = `
 
 .c11 .tab-content .tab-pane {
   position: relative;
-  height: 100%;
 }
 
 .c4 {

@@ -40,14 +40,14 @@ export function createActivityTableColumns(
       Header: 'Description',
       accessor: 'description',
       sortable: true,
-      width: 50,
-      maxWidth: 100,
+      width: 40,
+      maxWidth: 50,
     },
     {
       Header: 'Property',
       accessor: 'actInstPropRsrchFiles',
       width: 20,
-      maxWidth: 20,
+      maxWidth: 30,
       Cell: (cellProps: CellProps<Api_Activity, Api_ActivityTemplate>) => {
         const activityProperties =
           cellProps.row.original.actInstPropAcqFiles?.length !== 0
@@ -67,8 +67,8 @@ export function createActivityTableColumns(
       Header: 'Status',
       accessor: 'activityStatusTypeCode',
       sortable: true,
-      width: 10,
-      maxWidth: 20,
+      width: 30,
+      maxWidth: 30,
       Cell: renderTypeCode,
     },
     {
