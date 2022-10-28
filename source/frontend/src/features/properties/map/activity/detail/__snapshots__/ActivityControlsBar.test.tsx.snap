@@ -173,15 +173,19 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
     <div
       class="c1"
     >
-      <button
-        class="c2 Button btn btn-secondary mr-4"
-        type="button"
+      <div
+        class="pr-0 mr-0 col-auto"
       >
-        <div
-          class="Button__value"
+        <button
+          class="c2 Button btn btn-secondary "
+          type="button"
         >
-          Related properties
-        </div>
+          <div
+            class="Button__value"
+          >
+            Related properties
+          </div>
+        </button>
       </div>
     </div>
   </div>

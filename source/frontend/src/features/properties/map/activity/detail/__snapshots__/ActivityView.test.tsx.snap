@@ -279,11 +279,6 @@ exports[`ActivityView test Renders as expected 1`] = `
   -ms-flex-direction: row;
   flex-direction: row;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 .c1 {
@@ -292,34 +287,31 @@ exports[`ActivityView test Renders as expected 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
       class="c1"
     >
-      <button
-        class="c2 Button btn btn-secondary mr-4"
-        type="button"
+      <div
+        class="pr-0 mr-0 col-auto"
       >
-        <div
-          class="Button__value"
+        <button
+          class="c2 Button btn btn-secondary "
+          type="button"
         >
-          Related properties
-        </div>
-      </button>
+          <div
+            class="Button__value"
+          >
+            Related properties
+          </div>
+        </button>
+      </div>
     </div>
   </div>
   .c2 {

@@ -4,7 +4,6 @@ import DocumentListContainer from 'features/documents/list/DocumentListContainer
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { NoteListView } from 'features/notes/list/NoteListView';
 import * as React from 'react';
-import styled from 'styled-components';
 
 import { Activity, ActivityFile } from './ActivityContainer';
 import { ActivityControlsBar } from './ActivityControlsBar';
@@ -51,7 +50,3 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
 };
 
 export default ActivityView;
-
-const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;

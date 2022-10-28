@@ -7,7 +7,8 @@ import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { ActivityModel } from './models';
 
@@ -59,13 +60,8 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
                 </Button>
               </Col>
             )}
-            {!editMode && (
-              <Col xs="auto" className="px-0 mx-0">
-                <EditButton onClick={() => setEditMode(true)} />
-              </Col>
-            )}
-          </Row>
-        </Section>
+          </RightAligned>
+        </StyledRow>
       )}
     </>
   );
