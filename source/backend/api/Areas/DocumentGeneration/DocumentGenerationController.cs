@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models;
-using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -43,7 +41,8 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("supported_types")]
-        //[HasPermission(Permissions.DocumentView)]
+
+        // [HasPermission(Permissions.DocumentView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResult<Models.Cdogs.FileTypes>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
@@ -57,7 +56,8 @@ namespace Pims.Api.Controllers
         /// Uploads the passed document.
         /// </summary>
         [HttpPost("upload_template")]
-        //[HasPermission(Permissions.DocumentAdd)]
+
+        // [HasPermission(Permissions.DocumentAdd)]
         [ProducesResponseType(typeof(ExternalResult<string>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> UploadTemplate([FromForm] IFormFile file)

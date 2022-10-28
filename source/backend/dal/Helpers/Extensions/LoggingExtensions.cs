@@ -35,7 +35,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// // 1. Add property "Query" with value "TwitterService-GetTweets"
         /// public class TwitterService
         /// {
-        ///     public Task<IEnumerable<Tweet>> GetTweets(CancellationToken ct)
+        ///     public Task.<IEnumerable<Tweet>> GetTweets(CancellationToken ct)
         ///     {
         ///         using var _ = _logger.QueryScope();
         ///         return await _context.Tweets

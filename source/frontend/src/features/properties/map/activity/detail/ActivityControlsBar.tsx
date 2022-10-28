@@ -1,5 +1,4 @@
 import { Button } from 'components/common/buttons';
-import EditButton from 'components/common/EditButton';
 import { Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
@@ -8,6 +7,7 @@ import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
+import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ActivityModel } from './models';
@@ -40,22 +40,25 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
     <>
       {hasClaim(Claims.ACTIVITY_EDIT) && (
         <StyledRow>
-          <LeftAligned>
-            <SectionField label="Status">
-              <Select
-                disabled={!editMode}
-                field="activityStatusTypeCode.id"
-                options={activityStatusTypeOptions}
-                onChange={handleStatusChange}
-              />
-            </SectionField>
-          </LeftAligned>
+          {editMode && (
+            <LeftAligned>
+              <SectionField label="Status">
+                <Select
+                  disabled={!editMode}
+                  field="activityStatusTypeCode.id"
+                  options={activityStatusTypeOptions}
+                  onChange={handleStatusChange}
+                />
+              </SectionField>
+            </LeftAligned>
+          )}
           <RightAligned>
-            {!editMode && <EditButton onClick={() => setEditMode(true)} />}
             {hasClaim(Claims.PROPERTY_EDIT) && (
-              <Button className="" onClick={onEditRelatedProperties} variant="secondary mr-4">
-                Related properties
-              </Button>
+              <Col xs="auto" className="pr-0 mr-0">
+                <Button onClick={onEditRelatedProperties} variant="secondary ">
+                  Related properties
+                </Button>
+              </Col>
             )}
           </RightAligned>
         </StyledRow>

@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class LeasePaymentController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly ILeasePaymentService _leasePaymentService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -31,12 +31,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <summary>
         /// Creates a new instance of a LeasePaymentController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="leasePaymentService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeasePaymentController(IPimsService pimsService, IMapper mapper)
+        public LeasePaymentController(ILeasePaymentService leasePaymentService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _leasePaymentService = leasePaymentService;
             _mapper = mapper;
         }
         #endregion
@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult AddPayment(long leaseId, [FromBody] Models.Lease.PaymentModel paymentModel)
         {
             var paymentEntity = _mapper.Map<PimsLeasePayment>(paymentModel);
-            var updatedLease = _pimsService.LeasePaymentService.AddPayment(leaseId, paymentModel.LeaseRowVersion, paymentEntity);
+            var updatedLease = _leasePaymentService.AddPayment(leaseId, paymentModel.LeaseRowVersion, paymentEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult UpdatePayment(long leaseId, long paymentId, [FromBody] Models.Lease.PaymentModel paymentModel)
         {
             var paymentEntity = _mapper.Map<PimsLeasePayment>(paymentModel);
-            var updatedLease = _pimsService.LeasePaymentService.UpdatePayment(leaseId, paymentId, paymentModel.LeaseRowVersion, paymentEntity);
+            var updatedLease = _leasePaymentService.UpdatePayment(leaseId, paymentId, paymentModel.LeaseRowVersion, paymentEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult DeletePayment(long leaseId, Models.Lease.PaymentModel paymentModel)
         {
             var paymentEntity = _mapper.Map<PimsLeasePayment>(paymentModel);
-            var updatedLease = _pimsService.LeasePaymentService.DeletePayment(leaseId, paymentModel.LeaseRowVersion, paymentEntity);
+            var updatedLease = _leasePaymentService.DeletePayment(leaseId, paymentModel.LeaseRowVersion, paymentEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }

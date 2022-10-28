@@ -7,6 +7,7 @@ using Moq;
 using Pims.Api.Areas.Lease.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
@@ -37,10 +38,10 @@ namespace Pims.Api.Test.Controllers.Lease
             lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId });
             lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId });
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease);
+            repository.Setup(m => m.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease);
 
             // Act
             var result = controller.UpdateTenants(lease.LeaseId, mapper.Map<Model.LeaseModel>(lease));
@@ -50,7 +51,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Lease.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
+            repository.Verify(m => m.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
         }
         #endregion
         #endregion

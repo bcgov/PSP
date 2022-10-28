@@ -24,7 +24,7 @@ exports[`ActivityHeader component renders as expected 1`] = `
 }
 
 <div
-    class="no-gutters pl-4 pr-4 row"
+    class="no-gutters row"
   >
     <div
       class="col"

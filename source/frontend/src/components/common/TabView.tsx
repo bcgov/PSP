@@ -22,7 +22,6 @@ const StyledTabWrapper = styled.div`
   .tab-content {
     .tab-pane {
       position: relative;
-      height: 100%;
     }
     border-radius: 0 0.4rem 0.4rem 0.4rem;
     height: calc(100% - 2.4rem); // substract nav height

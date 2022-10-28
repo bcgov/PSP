@@ -14,6 +14,7 @@ export interface IActivityViewProps {
   activity: Activity;
   file: ActivityFile;
   editMode: boolean;
+  isEditable: boolean;
   setEditMode: (editMode: boolean) => void;
   onEditRelatedProperties: () => void;
 }
@@ -22,6 +23,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   file,
   activity,
   editMode,
+  isEditable,
   setEditMode,
   onEditRelatedProperties,
   children,
@@ -35,7 +37,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
         onEditRelatedProperties={onEditRelatedProperties}
       />
       <Section header="Description" isCollapsable initiallyExpanded title="description">
-        <ActivityDescription editMode={editMode} />
+        <ActivityDescription isEditable={isEditable} editMode={editMode} />
       </Section>
       {children}
       <DocumentListContainer

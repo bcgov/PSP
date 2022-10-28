@@ -26,7 +26,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class SecurityDepositReturnController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly ISecurityDepositReturnService _securityDepositReturnService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -35,12 +35,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <summary>
         /// Creates a new instance of a SecurityDepositReturnController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="securityDepositReturnService"></param>
         /// <param name="mapper"></param>
         ///
-        public SecurityDepositReturnController(IPimsService pimsService, IMapper mapper)
+        public SecurityDepositReturnController(ISecurityDepositReturnService securityDepositReturnService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _securityDepositReturnService = securityDepositReturnService;
             _mapper = mapper;
         }
         #endregion
@@ -70,7 +70,7 @@ namespace Pims.Api.Areas.Lease.Controllers
 
             var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(addRequest.Payload);
 
-            var updatedLease = _pimsService.SecurityDepositReturnService.AddLeaseDepositReturn(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositReturnService.AddLeaseDepositReturn(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
@@ -97,7 +97,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             }
 
             var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(updateRequest.Payload);
-            var updatedLease = _pimsService.SecurityDepositReturnService.UpdateLeaseDepositReturn(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositReturnService.UpdateLeaseDepositReturn(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             }
 
             var depositEntity = _mapper.Map<PimsSecurityDepositReturn>(deleteRequest.Payload);
-            var updatedLease = _pimsService.SecurityDepositReturnService.DeleteLeaseDepositReturn(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositReturnService.DeleteLeaseDepositReturn(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
