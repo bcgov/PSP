@@ -101,15 +101,17 @@ export const ActivityForm = ({
             setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}
           >
-            <Section
-              header={formContent?.header ?? ''}
-              initiallyExpanded={editMode}
-              isCollapsable
-              title={formContent?.header?.toLocaleLowerCase() ?? ''}
-            >
-              {editMode && EditForm && <EditForm />}
-              {!editMode && ViewForm && <ViewForm />}
-            </Section>
+            {(EditForm || ViewForm) && (
+              <Section
+                header={formContent?.header ?? ''}
+                initiallyExpanded={editMode}
+                isCollapsable
+                title={formContent?.header?.toLocaleLowerCase() ?? ''}
+              >
+                {editMode && EditForm && <EditForm />}
+                {!editMode && ViewForm && <ViewForm />}
+              </Section>
+            )}
           </ActivityView>
           {editMode && (
             <SidebarFooter

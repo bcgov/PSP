@@ -5,7 +5,8 @@ import { DisplayError } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { useFormikContext } from 'formik';
-import { IGeocoderResponse, useApi } from 'hooks/useApi';
+import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
+import { useGeocoderRepository } from 'hooks/useGeocoderRepository';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
 import Form from 'react-bootstrap/Form';
@@ -48,16 +49,15 @@ export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
   ...rest
 }) => {
   const [options, setOptions] = React.useState<IGeocoderResponse[]>([]);
-  const api = useApi();
   const { handleBlur } = useFormikContext<any>();
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
-
+  const { searchAddress } = useGeocoderRepository();
   const debouncedSearch = React.useRef(
     debounce(
       async (val: string, abort: boolean) => {
         if (!abort) {
-          const data = await api.searchAddress(val);
-          setOptions(data);
+          const addresses = (await searchAddress(val)) || [];
+          setOptions(addresses);
         }
       },
       debounceTimeout || 500,

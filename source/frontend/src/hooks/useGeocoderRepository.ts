@@ -2,9 +2,9 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
+import { IGeocoderPidsResponse, IGeocoderResponse } from './pims-api/interfaces/IGeocoder';
 import { useApiGeocoder } from './pims-api/useApiGeocoder';
 import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
-import { IGeocoderPidsResponse, IGeocoderResponse } from './useApi';
 
 export const useGeocoderRepository = () => {
   const { getSitePidsApi, searchAddressApi, getNearestToPointApi } = useApiGeocoder();

@@ -9,8 +9,8 @@ import { ICluster, PointFeature } from '../types';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
-  iconUrl: require('assets/images/pins/land-reg.png').default ?? 'assets/images/pins/land-reg.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  iconUrl: require('assets/images/pins/land-reg.png') ?? 'assets/images/pins/land-reg.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -20,7 +20,7 @@ export const parcelIcon = L.icon({
 // property of interest icon (blue) highlighted
 export const propertyOfInterestIcon = L.icon({
   iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -32,7 +32,7 @@ export const propertyOfInterestIconSelect = L.icon({
   iconUrl:
     require('assets/images/pins/land-poi-selected.svg').default ??
     'assets/images/pins/land-poi-selected.svg',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -42,9 +42,9 @@ export const propertyOfInterestIconSelect = L.icon({
 // parcel icon (green) highlighted
 export const parcelIconSelect = L.icon({
   iconUrl:
-    require('assets/images/pins/land-reg-highlight.png').default ??
+    require('assets/images/pins/land-reg-highlight.png') ??
     'assets/images/pins/land-reg-highlight.png',
-  shadowUrl: require('assets/images/pins/marker-shadow.png').default ?? 'marker-shadow.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
