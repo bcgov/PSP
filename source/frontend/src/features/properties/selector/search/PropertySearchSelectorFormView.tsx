@@ -4,7 +4,7 @@ import { Section } from 'features/mapSideBar/tabs/Section';
 import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import * as React from 'react';
 
-import { ILayerSearchCriteria, IMapProperty } from '../models';
+import { ILayerSearchCriteria, IMapProperty, SelectableProperty } from '../models';
 import { getPropertyName } from '../utils';
 import { LayerFilter } from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
@@ -19,10 +19,6 @@ export interface IPropertySearchSelectorFormViewProps {
   addressResults?: IGeocoderResponse[];
   onAddressChange: (searchText: string) => void;
   onAddressSelect: (selectedItem: IGeocoderResponse) => void;
-}
-
-interface SelectableProperty extends IMapProperty {
-  id: string;
 }
 
 export const PropertySearchSelectorFormView: React.FunctionComponent<
