@@ -1,15 +1,14 @@
 import { Button } from 'components/common/buttons';
-import EditButton from 'components/common/EditButton';
 import { Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
-import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { ActivityModel } from './models';
 
@@ -40,10 +39,10 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
   return (
     <>
       {hasClaim(Claims.ACTIVITY_EDIT) && (
-        <Section>
-          <Row>
-            <Col>
-              <SectionField label="Status" labelWidth="auto">
+        <StyledRow>
+          {editMode && (
+            <LeftAligned>
+              <SectionField label="Status">
                 <Select
                   disabled={!editMode}
                   field="activityStatusTypeCode.id"
@@ -51,7 +50,9 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
                   onChange={handleStatusChange}
                 />
               </SectionField>
-            </Col>
+            </LeftAligned>
+          )}
+          <RightAligned>
             {hasClaim(Claims.PROPERTY_EDIT) && (
               <Col xs="auto" className="pr-0 mr-0">
                 <Button onClick={onEditRelatedProperties} variant="secondary ">
@@ -59,16 +60,24 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
                 </Button>
               </Col>
             )}
-            {!editMode && (
-              <Col xs="auto" className="px-0 mx-0">
-                <EditButton onClick={() => setEditMode(true)} />
-              </Col>
-            )}
-          </Row>
-        </Section>
+          </RightAligned>
+        </StyledRow>
       )}
     </>
   );
 };
+const StyledRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+const RightAligned = styled.div`
+  width: inherit;
+  display: flex;
+  flex-direction: row-reverse;
+`;
+const LeftAligned = styled.div`
+  width: inherit;
+`;
 
 export default ActivityControlsBar;

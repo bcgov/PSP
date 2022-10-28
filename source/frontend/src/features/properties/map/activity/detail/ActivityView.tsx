@@ -4,7 +4,6 @@ import DocumentListContainer from 'features/documents/list/DocumentListContainer
 import { Section } from 'features/mapSideBar/tabs/Section';
 import { NoteListView } from 'features/notes/list/NoteListView';
 import * as React from 'react';
-import styled from 'styled-components';
 
 import { Activity, ActivityFile } from './ActivityContainer';
 import { ActivityControlsBar } from './ActivityControlsBar';
@@ -15,6 +14,7 @@ export interface IActivityViewProps {
   activity: Activity;
   file: ActivityFile;
   editMode: boolean;
+  isEditable: boolean;
   setEditMode: (editMode: boolean) => void;
   onEditRelatedProperties: () => void;
 }
@@ -23,6 +23,7 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   file,
   activity,
   editMode,
+  isEditable,
   setEditMode,
   onEditRelatedProperties,
   children,
@@ -30,28 +31,22 @@ export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
   return (
     <>
       <ActivityHeader file={file} activity={activity} />
-      <StyledContent>
-        <ActivityControlsBar
-          editMode={editMode}
-          setEditMode={setEditMode}
-          onEditRelatedProperties={onEditRelatedProperties}
-        />
-        <Section header="Description" isCollapsable initiallyExpanded title="description">
-          <ActivityDescription editMode={editMode} />
-        </Section>
-        {children}
-        <DocumentListContainer
-          relationshipType={DocumentRelationshipType.ACTIVITIES}
-          parentId={activity.id}
-        />
-        <NoteListView type={NoteTypes.Activity} entityId={activity.id} />
-      </StyledContent>
+      <ActivityControlsBar
+        editMode={editMode}
+        setEditMode={setEditMode}
+        onEditRelatedProperties={onEditRelatedProperties}
+      />
+      <Section header="Description" isCollapsable initiallyExpanded title="description">
+        <ActivityDescription isEditable={isEditable} editMode={editMode} />
+      </Section>
+      {children}
+      <DocumentListContainer
+        relationshipType={DocumentRelationshipType.ACTIVITIES}
+        parentId={activity.id}
+      />
+      <NoteListView type={NoteTypes.Activity} entityId={activity.id} />
     </>
   );
 };
 
 export default ActivityView;
-
-const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
