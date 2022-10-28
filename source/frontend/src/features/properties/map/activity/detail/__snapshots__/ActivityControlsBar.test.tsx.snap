@@ -145,47 +145,58 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  width: 100%;
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
 }
 
-.c1 {
-  width: inherit;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse;
-  flex-direction: row-reverse;
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
 }
 
 <div
-    class="c0"
+    class="c0 form-section"
   >
-    <div
+    <h2
       class="c1"
     >
       <div
-        class="pr-0 mr-0 col-auto"
+        class="row"
       >
-        <button
-          class="c2 Button btn btn-secondary "
-          type="button"
+        <div
+          class="col"
         >
-          <div
-            class="Button__value"
+          Details
+        </div>
+        <div
+          class="col-1"
+        />
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <button
+            class="c2 Button ml-auto btn btn-secondary "
+            type="button"
           >
-            Related properties
-          </div>
-        </button>
+            <div
+              class="Button__value"
+            >
+              Related properties
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -105,7 +105,6 @@ export const ActivityForm = ({
             file={file}
             isEditable={isEditable}
             editMode={editMode}
-            setEditMode={setEditMode}
             onEditRelatedProperties={onEditRelatedProperties}
           >
             {(EditForm || ViewForm) && (
