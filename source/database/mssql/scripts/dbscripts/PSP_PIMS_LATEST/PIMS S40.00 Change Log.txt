@@ -2,6 +2,10 @@ PSP_PIMS S40.00 Sprint 39 2022-Oct-25
 - Added table:
   - PIMS_LEASE_ACTIVITY_INSTANCE
   - PIMS_LEASE_ACTIVITY_INSTANCE_HIST
+- Altered test scripts:
+  - 07_DML_PROPERTY_LEASE.sql
+  - 25_PIMS_ACTIVITY_INSTANCE.sql
+  - 32_PIMS_ACQUISITION_OWNER.sql
 - Requires additional metadata to meet standards
 
 PSP_PIMS S39.01 Sprint 38 2022-Oct-05
