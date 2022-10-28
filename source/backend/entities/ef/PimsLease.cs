@@ -27,6 +27,7 @@ namespace Pims.Dal.Entities
         public PimsLease()
         {
             PimsInsurances = new HashSet<PimsInsurance>();
+            PimsLeaseActivityInstances = new HashSet<PimsLeaseActivityInstance>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
             PimsLeaseTerms = new HashSet<PimsLeaseTerm>();
             PimsPropertyImprovements = new HashSet<PimsPropertyImprovement>();
@@ -204,6 +205,8 @@ namespace Pims.Dal.Entities
         public virtual PimsRegion RegionCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsInsurance.Lease))]
         public virtual ICollection<PimsInsurance> PimsInsurances { get; set; }
+        [InverseProperty(nameof(PimsLeaseActivityInstance.Lease))]
+        public virtual ICollection<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Lease))]
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; }
         [InverseProperty(nameof(PimsLeaseTerm.Lease))]
