@@ -1,4 +1,6 @@
+import axios, { AxiosError } from 'axios';
 import { useApiTenants } from 'hooks/pims-api';
+import { IApiError } from 'interfaces/IApiError';
 import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { useAppDispatch } from 'store/hooks';
@@ -26,8 +28,11 @@ export const useTenants = () => {
       dispatch(logSuccess({ name: tenantsSlice.name, status: response.status }));
       dispatch(storeSettings(response.data));
       return response;
-    } catch (error) {
-      dispatch(logError({ name: tenantsSlice.name, status: error?.response?.status, error }));
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const error = e as AxiosError<IApiError>;
+        dispatch(logError({ name: tenantsSlice.name, status: error?.response?.status, error }));
+      }
     } finally {
       dispatch(hideLoading());
     }
