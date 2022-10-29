@@ -30,20 +30,30 @@ export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Control position="topleft">
       <ClickAwayListener onClickAway={() => setVisible(false)}>
-        <TooltipWrapper toolTipId="marker-legendId" toolTip={visible ? undefined : 'Marker legend'}>
-          <LegendButton ref={target} onClick={() => setVisible(!visible)}>
-            <FiMapPin />
-          </LegendButton>
-        </TooltipWrapper>
-        <Overlay target={target.current} show={visible} placement="right">
-          {(props: any) => {
-            return (
-              <Tooltip id="overlay-legend" {...props} show={`${visible}`} className="legendTooltip">
-                <Legend />
-              </Tooltip>
-            );
-          }}
-        </Overlay>
+        <>
+          <TooltipWrapper
+            toolTipId="marker-legendId"
+            toolTip={visible ? undefined : 'Marker legend'}
+          >
+            <LegendButton ref={target} onClick={() => setVisible(!visible)}>
+              <FiMapPin />
+            </LegendButton>
+          </TooltipWrapper>
+          <Overlay target={target.current} show={visible} placement="right">
+            {(props: any) => {
+              return (
+                <Tooltip
+                  id="overlay-legend"
+                  {...props}
+                  show={`${visible}`}
+                  className="legendTooltip"
+                >
+                  <Legend />
+                </Tooltip>
+              );
+            }}
+          </Overlay>
+        </>
       </ClickAwayListener>
     </Control>
   );

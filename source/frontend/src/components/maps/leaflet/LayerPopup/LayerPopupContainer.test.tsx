@@ -16,7 +16,6 @@ const storeState = {
 };
 
 const onViewPropertyInfo = jest.fn();
-const onClose = jest.fn();
 const history = createMemoryHistory();
 (useMap as jest.Mock).mockReturnValue({});
 
@@ -27,7 +26,6 @@ describe('LayerPopupContainer component', () => {
       <LayerPopupContainer
         layerPopup={renderOptions.layerPopup}
         onViewPropertyInfo={renderOptions.onViewPropertyInfo}
-        onClose={onClose}
       />,
       {
         ...renderOptions,

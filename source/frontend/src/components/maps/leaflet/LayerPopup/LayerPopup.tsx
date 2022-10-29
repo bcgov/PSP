@@ -1,5 +1,5 @@
 import { Feature, GeoJsonProperties } from 'geojson';
-import { LatLng, LatLngBounds } from 'leaflet';
+import { LatLng, LatLngBounds, Popup as LeafletPopup } from 'leaflet';
 import React from 'react';
 import { Popup } from 'react-leaflet';
 
@@ -36,20 +36,21 @@ export type LayerPopupInformation = {
 
 export interface ILayerPopupProps {
   layerPopup: LayerPopupInformation;
-  onClose?: () => void;
   onViewPropertyInfo: (pid?: string | null) => void;
 }
 
-export const LayerPopup: React.FC<React.PropsWithChildren<ILayerPopupProps>> = props => {
-  return (
-    <Popup
-      position={props.layerPopup.latlng}
-      offset={[0, -25]}
-      onClose={props?.onClose}
-      closeButton={true}
-      autoPan={false}
-    >
-      <LayerPopupContainer {...props} />
-    </Popup>
-  );
-};
+export const LayerPopup = React.forwardRef<LeafletPopup, React.PropsWithChildren<ILayerPopupProps>>(
+  (props, ref) => {
+    return (
+      <Popup
+        ref={ref}
+        position={props.layerPopup.latlng}
+        offset={[0, -25]}
+        closeButton={true}
+        autoPan={false}
+      >
+        <LayerPopupContainer {...props} />
+      </Popup>
+    );
+  },
+);
