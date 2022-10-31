@@ -17,6 +17,7 @@ import noop from 'lodash/noop';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
@@ -24,7 +25,7 @@ import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import { SearchToggleOption } from '../filter/PropertySearchToggle';
-import { columns as columnDefinitions } from './columns';
+import { createTableColumns } from './columns';
 
 const defaultFilterValues: IPropertyFilter = {
   searchBy: 'pinOrPid',
@@ -37,8 +38,6 @@ const PropertyListView: React.FC = () => {
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
 
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
-
-  const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
   // We'll start our table without any data
   const [data, setData] = useState<IProperty[] | undefined>();
@@ -53,7 +52,19 @@ const PropertyListView: React.FC = () => {
   const [sort, setSort] = useState<TableSort<IProperty>>({});
 
   const fetchIdRef = useRef(0);
-
+  const history = useHistory();
+  const onShowPropertyInfo = useCallback(
+    (property: IProperty, inNewTab: boolean) => {
+      !inNewTab && history.push(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`);
+      inNewTab &&
+        window.open(`/mapview/sidebar/property/${property.id}?pid=${property.pid}`, '_blank');
+    },
+    [history],
+  );
+  const columns = useMemo(
+    () => createTableColumns({ municipalities }, onShowPropertyInfo),
+    [municipalities, onShowPropertyInfo],
+  );
   const parsedFilter = useMemo(() => {
     const data = { ...filter };
     return data;

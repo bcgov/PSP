@@ -116,4 +116,17 @@ describe('Property list view', () => {
     expect(getByTestId('excel-icon')).toBeInTheDocument();
     expect(getByTestId('csv-icon')).toBeInTheDocument();
   });
+
+  it('displays column icons', async () => {
+    setupMockApi([mockParcel]);
+    const {
+      component: { getByTestId },
+      findSpinner,
+    } = setup();
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    expect(getByTestId('view-prop-tab')).toBeInTheDocument();
+  });
 });
