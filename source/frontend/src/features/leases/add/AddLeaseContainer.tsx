@@ -1,6 +1,7 @@
 import GenericModal from 'components/common/GenericModal';
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
+import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
 import { AddLeaseLayout, LeaseBreadCrumb, LeaseHeader, LeaseIndex } from 'features/leases';
 import { FormikProps } from 'formik';
 import { IAddFormLease, ILease } from 'interfaces';
@@ -31,7 +32,6 @@ export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps>
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
-
   const onSubmit = async (lease: ILease) => {
     const leaseResponse = await addLease(lease, (userOverrideMessage?: string) =>
       setAddLeaseParams({ lease: lease, userOverride: userOverrideMessage }),
@@ -46,30 +46,39 @@ export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps>
   };
 
   return (
-    <>
-      <AddLeaseLayout>
-        <LeaseBreadCrumb leasePage={leasePage} onClickManagement={onClickManagement} />
-        <LeaseHeader />
-        <LeaseIndex currentPageName={LeasePageNames.DETAILS}></LeaseIndex>
-        <AddLeaseForm onCancel={onCancel} onSubmit={onSubmit} formikRef={formikRef} />
-        <GenericModal
-          title="Warning"
-          display={!!addLeaseParams}
-          message={addLeaseParams?.userOverride}
-          handleOk={async () => {
-            if (!!addLeaseParams?.lease) {
-              const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
-              setAddLeaseParams(undefined);
-              history.push(`/lease/${leaseResponse?.id}`);
-            }
-          }}
-          handleCancel={() => setAddLeaseParams(undefined)}
-          okButtonText="Save Anyways"
-          okButtonVariant="warning"
-          cancelButtonText="Cancel"
-        />
-      </AddLeaseLayout>
-    </>
+    <SelectedPropertyContext.Consumer>
+      {({ propertyInfo }) => (
+        <>
+          <AddLeaseLayout>
+            <LeaseBreadCrumb leasePage={leasePage} onClickManagement={onClickManagement} />
+            <LeaseHeader />
+            <LeaseIndex currentPageName={LeasePageNames.DETAILS}></LeaseIndex>
+            <AddLeaseForm
+              propertyInfo={propertyInfo}
+              onCancel={onCancel}
+              onSubmit={onSubmit}
+              formikRef={formikRef}
+            />
+            <GenericModal
+              title="Warning"
+              display={!!addLeaseParams}
+              message={addLeaseParams?.userOverride}
+              handleOk={async () => {
+                if (!!addLeaseParams?.lease) {
+                  const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
+                  setAddLeaseParams(undefined);
+                  history.push(`/lease/${leaseResponse?.id}`);
+                }
+              }}
+              handleCancel={() => setAddLeaseParams(undefined)}
+              okButtonText="Save Anyways"
+              okButtonVariant="warning"
+              cancelButtonText="Cancel"
+            />
+          </AddLeaseLayout>
+        </>
+      )}
+    </SelectedPropertyContext.Consumer>
   );
 };
 

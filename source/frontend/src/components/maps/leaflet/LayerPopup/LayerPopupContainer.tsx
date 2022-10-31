@@ -54,6 +54,11 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
     history.push('/mapview/sidebar/acquisition/new');
   };
 
+  const handleCreateLeaseLicence = () => {
+    selectedFeature && setSelectedResearchFeature(selectedFeature);
+    history.push('/lease/new');
+  };
+
   return (
     <StyledContainer>
       <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
@@ -66,9 +71,11 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
       {showFlyout && (
         <StyledFlyoutContainer>
           <LayerPopupFlyout
+            pimsPropertyId={id}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
+            onCreateLeaseLicense={handleCreateLeaseLicence}
           />
         </StyledFlyoutContainer>
       )}

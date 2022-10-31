@@ -1,5 +1,5 @@
 import { Formik, FormikProps } from 'formik';
-import { defaultAddFormLease, IAddFormLease, ILease } from 'interfaces';
+import { defaultAddFormLease, IAddFormLease, ILease, IProperty } from 'interfaces';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
@@ -18,6 +18,7 @@ interface IAddLeaseFormProps {
   onSubmit: (lease: ILease) => void;
   formikRef: React.Ref<FormikProps<IAddFormLease>>;
   initialValues?: IAddFormLease;
+  propertyInfo: IProperty | null;
 }
 
 const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
@@ -25,7 +26,12 @@ const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
   onSubmit,
   formikRef,
   initialValues,
+  propertyInfo,
 }) => {
+  if (propertyInfo) {
+    defaultAddFormLease.properties = [propertyInfo];
+    defaultAddFormLease.region = propertyInfo.regionId || '';
+  }
   return (
     <Formik<IAddFormLease>
       initialValues={defaultAddFormLease ?? initialValues}
