@@ -38,10 +38,10 @@ export const SelectedPropertyRow: React.FunctionComponent<
   return (
     <NoPaddingRow className="align-items-center mb-3">
       <Col md={3}>
-        <p className="mb-0 d-flex align-items-center">
+        <div className="mb-0 d-flex align-items-center">
           <DraftCircleNumber text={(index + 1).toString()} />
           <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
-        </p>
+        </div>
       </Col>
       <Col md={7}>
         <InlineInput
