@@ -193,9 +193,6 @@ exports[`UpdateNoteFormModal component renders as expected 1`] = `
       class="container"
     />
     <div
-      class="Toastify"
-    />
-    <div
       class="container"
     />
   </div>
