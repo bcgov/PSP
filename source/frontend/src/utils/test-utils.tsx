@@ -217,14 +217,6 @@ function render(
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
       <TestCommonWrapper store={store} history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
         <FilterProvider>{children}</FilterProvider>
       </TestCommonWrapper>
     );
@@ -261,14 +253,6 @@ async function renderAsync(
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
       <TestCommonWrapper store={store} history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
         <FilterProvider>{children}</FilterProvider>
       </TestCommonWrapper>
     );
