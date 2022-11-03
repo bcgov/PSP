@@ -10,7 +10,6 @@ import { useWfsLayer } from './useWfsLayer';
 export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
   const getAllFeaturesWrapper = useWfsLayer(url, {
     name,
-    withCredentials: true,
   });
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
