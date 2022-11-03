@@ -4,8 +4,9 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
+import { act } from 'react-dom/test-utils';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 
@@ -42,7 +43,9 @@ describe('AddLeaseContainer component', () => {
 
   beforeEach(() => {
     mockAxios.resetHistory();
+    mockAxios.resetHandlers();
   });
+
   it('renders as expected', async () => {
     const { component } = await setup({});
     expect(component.asFragment()).toMatchSnapshot();
@@ -68,13 +71,17 @@ describe('AddLeaseContainer component', () => {
     await fillInput(container, 'type.id', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType.id', 'BCFERRIES', 'select');
     await fillInput(container, 'statusType.id', 'DRAFT', 'select');
-    userEvent.click(getByText('Remove'));
+    await act(async () => {
+      userEvent.click(getByText('Remove'));
+    });
 
     mockAxios.onPost().reply(200, {});
-    userEvent.click(getByText('Save'));
-    await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
+
+    await act(async () => {
+      userEvent.click(getByText('Save'));
     });
+
+    expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
   });
 
   it('triggers the confirm popup', async () => {
@@ -89,10 +96,16 @@ describe('AddLeaseContainer component', () => {
     await fillInput(container, 'type.id', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType.id', 'BCFERRIES', 'select');
     await fillInput(container, 'statusType.id', 'DRAFT', 'select');
-    userEvent.click(getByText('Remove'));
+    await act(async () => {
+      userEvent.click(getByText('Remove'));
+    });
 
     mockAxios.onPost().reply(409, { error: 'test message' });
-    userEvent.click(getByText('Save'));
+
+    await act(async () => {
+      userEvent.click(getByText('Save'));
+    });
+
     expect(await findByText('test message')).toBeVisible();
   });
 
@@ -108,14 +121,21 @@ describe('AddLeaseContainer component', () => {
     await fillInput(container, 'type.id', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType.id', 'BCFERRIES', 'select');
     await fillInput(container, 'statusType.id', 'DRAFT', 'select');
-    userEvent.click(getByText('Remove'));
+    await act(async () => {
+      userEvent.click(getByText('Remove'));
+    });
 
     mockAxios.onPost().reply(409, { error: 'test message' });
-    userEvent.click(getByText('Save'));
-    userEvent.click(await findByText('Save Anyways'));
-    await waitFor(() => {
-      expect(mockAxios.history.post[1].data).toEqual(expectedFormData);
+
+    await act(async () => {
+      userEvent.click(getByText('Save'));
     });
+
+    await act(async () => {
+      userEvent.click(await findByText('Save Anyways'));
+    });
+
+    expect(mockAxios.history.post[1].data).toEqual(expectedFormData);
   });
 });
 

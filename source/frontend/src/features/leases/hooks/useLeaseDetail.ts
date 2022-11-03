@@ -27,9 +27,9 @@ export function useLeaseDetail(leaseId?: number) {
         const { data } = await getLease(id);
         setLease(data);
       } catch (e) {
+        toast.error('Failed to load lease, reload this page to try again.');
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
-          toast.error('Failed to load lease, reload this page to try again.');
           dispatch(
             logError({
               name: 'getLeaseById',

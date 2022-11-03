@@ -6,6 +6,7 @@ import { noop } from 'lodash';
 import { mockLtsaResponse, mockWfsGetPropertyById } from 'mocks';
 import { mockLookups } from 'mocks/mockLookups';
 import { getMockResearchFile } from 'mocks/mockResearchFile';
+import { toast } from 'react-toastify';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, waitForElementToBeRemoved } from 'utils/test-utils';
 
@@ -93,22 +94,25 @@ describe('PropertyFileContainer component', () => {
   });
 
   it('renders as expected', async () => {
+    // Need to mock toasts or snapshots will change with each test run
+    jest.spyOn(toast, 'success').mockReturnValue(1);
     const { asFragment, getByTestId } = setup();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading'));
     expect(asFragment()).toMatchSnapshot();
+    jest.restoreAllMocks();
   });
 
   it('sets the default tab using the prop value', async () => {
     const { getByTestId } = setup();
 
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading'));
     expect(viewProps?.defaultTabKey).toBe(InventoryTabNames.property);
   });
 
   it('loads from the expected sources', async () => {
     const { getByTestId } = setup();
 
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading'));
     expect(mockAxios.history.get).toContainEqual(
       expect.objectContaining({ url: '/properties/495' }),
     );
@@ -143,7 +147,7 @@ describe('PropertyFileContainer component', () => {
   it('passes on the expected BASE tabs', async () => {
     const { getByTestId } = setup();
 
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading'));
     expect(viewProps?.tabViews).toHaveLength(4);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
@@ -167,7 +171,7 @@ describe('PropertyFileContainer component', () => {
     mockAxios.onGet(new RegExp('properties/495/associations')).reply(200, {});
     const { getByTestId } = setup();
 
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading'));
     expect(viewProps?.tabViews).toHaveLength(3);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
@@ -180,7 +184,7 @@ describe('PropertyFileContainer component', () => {
       customTabs: [{ key: InventoryTabNames.research, name: 'research', content: <></> }],
     });
 
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('filter-backdrop-loading'));
     expect(viewProps?.tabViews).toHaveLength(5);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);

@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import PropertyInformationSubForm, {
@@ -52,7 +52,9 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText, container },
     } = await setup({});
-    await fillInput(container, 'properties.0.property.pid', '1');
+    await act(async () => {
+      fillInput(container, 'properties.0.property.pid', '1');
+    });
     expect(getByLabelText('Lease Area:')).not.toBeDisabled();
   });
 
@@ -60,7 +62,9 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText, container },
     } = await setup({});
-    await fillInput(container, 'properties.0.property.pid', '1');
+    await act(async () => {
+      fillInput(container, 'properties.0.property.pid', '1');
+    });
     expect(getByLabelText('PIN:')).toBeDisabled();
   });
 
@@ -68,25 +72,33 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText, container },
     } = await setup({});
-    await fillInput(container, 'properties.0.property.pin', '1');
+    await act(async () => {
+      fillInput(container, 'properties.0.property.pin', '1');
+    });
     expect(getByLabelText('PID:')).toBeDisabled();
   });
 
   it('can add another row', async () => {
     const {
-      component: { getByText, findAllByText },
+      component: { getByText, getAllByText },
     } = await setup({});
-    userEvent.click(getByText('+ Add another property'));
-    expect(await (await findAllByText('PID:')).length).toBe(2);
+
+    await act(async () => {
+      userEvent.click(getByText('+ Add another property'));
+    });
+
+    expect(getAllByText('PID:')).toHaveLength(2);
   });
 
   it('can remove a row', async () => {
     const {
       component: { getByText, queryByText },
     } = await setup({});
-    userEvent.click(getByText('Remove'));
-    await waitFor(() => {
-      expect(queryByText('PID:')).toBeNull();
+
+    await act(async () => {
+      userEvent.click(getByText('Remove'));
     });
+
+    expect(queryByText('PID:')).toBeNull();
   });
 });

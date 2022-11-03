@@ -32,6 +32,8 @@ export const useTenants = () => {
       if (axios.isAxiosError(e)) {
         const error = e as AxiosError<IApiError>;
         dispatch(logError({ name: tenantsSlice.name, status: error?.response?.status, error }));
+      } else {
+        dispatch(logError({ name: tenantsSlice.name, error: e as any }));
       }
     } finally {
       dispatch(hideLoading());
