@@ -167,6 +167,7 @@ describe('MapView', () => {
     jest.clearAllMocks();
     mockAxios.onAny().reply(200);
     history = createMemoryHistory();
+    history.push('/mapview');
   });
 
   afterEach(cleanup);
@@ -415,5 +416,31 @@ describe('MapView', () => {
     expect(text).toBeVisible();
     const label = await screen.queryByText('Search:');
     expect(label).toBeNull();
+  });
+
+  it('clicking a marker while in a research file does not display property details', async () => {
+    await waitFor(() => render(getMap()));
+    history.push('/mapview/sidebar/research/new');
+    const fileText = await screen.findByText('Create Research File');
+    expect(fileText).toBeVisible();
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.queryByText('Property Information');
+    expect(text).toBeNull();
+  });
+
+  it('clicking a marker while in an acquisition file does not display property details', async () => {
+    await waitFor(() => render(getMap()));
+    history.push('/mapview/sidebar/acquisition/new');
+    const fileText = await screen.findByText('Create Acquisition File');
+    expect(fileText).toBeVisible();
+    const cluster = document.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.queryByText('Property Information');
+    expect(text).toBeNull();
   });
 });
