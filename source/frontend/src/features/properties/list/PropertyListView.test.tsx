@@ -128,5 +128,6 @@ describe('Property list view', () => {
     await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
 
     expect(getByTestId('view-prop-tab')).toBeInTheDocument();
+    expect(getByTestId('view-prop-ext')).toBeInTheDocument();
   });
 });
