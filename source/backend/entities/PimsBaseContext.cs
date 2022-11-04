@@ -121,6 +121,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
         public virtual DbSet<PimsLandSurveyorType> PimsLandSurveyorTypes { get; set; }
         public virtual DbSet<PimsLease> PimsLeases { get; set; }
+        public virtual DbSet<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
+        public virtual DbSet<PimsLeaseActivityInstanceHist> PimsLeaseActivityInstanceHists { get; set; }
         public virtual DbSet<PimsLeaseCategoryType> PimsLeaseCategoryTypes { get; set; }
         public virtual DbSet<PimsLeaseHist> PimsLeaseHists { get; set; }
         public virtual DbSet<PimsLeaseInitiatorType> PimsLeaseInitiatorTypes { get; set; }
@@ -3435,6 +3437,64 @@ namespace Pims.Dal
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.RegionCode)
                     .HasConstraintName("PIM_REGION_PIM_LEASE_FK");
+            });
+
+            modelBuilder.Entity<PimsLeaseActivityInstance>(entity =>
+            {
+                entity.HasKey(e => e.LeaseActivityInstanceId)
+                    .HasName("LSACIN_PK");
+
+                entity.HasComment("Associative entity between leases/licenses and activity instances.");
+
+                entity.Property(e => e.LeaseActivityInstanceId)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]')");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.ActivityInstance)
+                    .WithMany(p => p.PimsLeaseActivityInstances)
+                    .HasForeignKey(d => d.ActivityInstanceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_ACTINS_PIM_LSACIN_FK");
+
+                entity.HasOne(d => d.Lease)
+                    .WithMany(p => p.PimsLeaseActivityInstances)
+                    .HasForeignKey(d => d.LeaseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_LEASE_PIM_LSACIN_FK");
+            });
+
+            modelBuilder.Entity<PimsLeaseActivityInstanceHist>(entity =>
+            {
+                entity.HasKey(e => e.LeaseActivityInstanceHistId)
+                    .HasName("PIMS_LSACIN_H_PK");
+
+                entity.Property(e => e.LeaseActivityInstanceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.LeaseActivityInstanceId).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsLeaseCategoryType>(entity =>
@@ -6804,6 +6864,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_INSTANCE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
