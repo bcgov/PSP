@@ -8,8 +8,8 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Reports.Controllers
     public class PropertyController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IPropertyRepository _propertyRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,11 +36,11 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="propertyRepository"></param>
         /// <param name="mapper"></param>
-        public PropertyController(IPimsRepository pimsService, IMapper mapper)
+        public PropertyController(IPropertyRepository propertyRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _propertyRepository = propertyRepository;
             _mapper = mapper;
         }
         #endregion
@@ -95,8 +95,8 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
             }
 
-            filter.Quantity = all ? _pimsService.Property.Count() : filter.Quantity;
-            var page = _pimsService.Property.GetPage((PropertyFilter)filter);
+            filter.Quantity = all ? _propertyRepository.Count() : filter.Quantity;
+            var page = _propertyRepository.GetPage((PropertyFilter)filter);
             var report = _mapper.Map<Api.Models.PageModel<Models.Property.PropertyModel>>(page);
 
             return accept.ToString() switch

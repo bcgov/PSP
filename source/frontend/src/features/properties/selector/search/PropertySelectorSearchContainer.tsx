@@ -5,8 +5,8 @@ import {
 } from 'components/maps/leaflet/LayerPopup';
 import { DistrictCodes, RegionCodes } from 'constants/index';
 import { FeatureCollection, GeoJsonProperties, Geometry, Polygon } from 'geojson';
+import { IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 import { useFullyAttributedParcelMapLayer } from 'hooks/pims-api/useFullyAttributedParcelMapLayer';
-import { IGeocoderResponse } from 'hooks/useApi';
 import { useGeocoderRepository } from 'hooks/useGeocoderRepository';
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';

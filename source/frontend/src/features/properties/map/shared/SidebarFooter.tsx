@@ -5,22 +5,47 @@ import styled from 'styled-components';
 interface ISidebarFooterProps {
   isOkDisabled?: boolean;
   onSave: () => void;
+  showEdit?: boolean;
+  editMode?: boolean;
+  onEdit?: (editMode: boolean) => void;
   onCancel: () => void;
 }
 
-const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = props => {
+const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
+  showEdit,
+  editMode,
+  onEdit,
+  onSave,
+  onCancel,
+  isOkDisabled,
+}) => {
   return (
     <SidebarFooterBar className="justify-content-end mt-auto no-gutters">
-      <Col xs="auto" className="pr-4">
-        <Button variant="secondary" onClick={props.onCancel}>
-          Cancel
-        </Button>
-      </Col>
-      <Col xs="auto">
-        <Button disabled={props.isOkDisabled} onClick={props.onSave}>
-          Save
-        </Button>
-      </Col>
+      {(!showEdit || editMode) && (
+        <>
+          <Col xs="auto" className="pr-4">
+            <Button variant="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+          </Col>
+          <Col xs="auto">
+            <Button disabled={isOkDisabled} onClick={onSave}>
+              Save
+            </Button>
+          </Col>
+        </>
+      )}
+      {showEdit && !editMode && (
+        <Col xs="auto">
+          <Button
+            onClick={() => {
+              onEdit && onEdit(true);
+            }}
+          >
+            Edit
+          </Button>
+        </Col>
+      )}
     </SidebarFooterBar>
   );
 };

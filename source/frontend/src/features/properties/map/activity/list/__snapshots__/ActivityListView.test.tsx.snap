@@ -11,7 +11,7 @@ exports[`Activity List View renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c5.btn {
+  .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +41,49 @@ exports[`Activity List View renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn:hover {
+.c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c3.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c3.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c3.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c3.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c3.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +104,9 @@ exports[`Activity List View renders as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +115,14 @@ exports[`Activity List View renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,42 +133,55 @@ exports[`Activity List View renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c3.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c3.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c3.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11.c11.btn {
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c9.c9.btn {
   background-color: unset;
   border: none;
 }
 
-.c11.c11.btn:hover,
-.c11.c11.btn:focus,
-.c11.c11.btn:active {
+.c9.c9.btn:hover,
+.c9.c9.btn:focus,
+.c9.c9.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c11.c11.btn svg {
+.c9.c9.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c11.c11.btn svg:hover {
+.c9.c9.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c6 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -187,17 +200,17 @@ exports[`Activity List View renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c8 {
+.c6 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c5 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
 .c7 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -207,19 +220,19 @@ exports[`Activity List View renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c12.c12.btn.btn-primary {
+.c10.c10.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c12.c12.btn.btn-primary .text {
+.c10.c10.btn.btn-primary .text {
   display: none;
 }
 
-.c12.c12.btn.btn-primary:hover,
-.c12.c12.btn.btn-primary:active,
-.c12.c12.btn.btn-primary:focus {
+.c10.c10.btn.btn-primary:hover,
+.c10.c10.btn.btn-primary:active,
+.c10.c10.btn.btn-primary:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -233,18 +246,18 @@ exports[`Activity List View renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c12.c12.btn.btn-primary:hover .text,
-.c12.c12.btn.btn-primary:active .text,
-.c12.c12.btn.btn-primary:focus .text {
+.c10.c10.btn.btn-primary:hover .text,
+.c10.c10.btn.btn-primary:active .text,
+.c10.c10.btn.btn-primary:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c4 {
+.c2 {
   border-radius: 0.5rem;
 }
 
-.c10 {
+.c8 {
   -webkit-box-pack: space-around;
   -webkit-justify-content: space-around;
   -ms-flex-pack: space-around;
@@ -252,68 +265,44 @@ exports[`Activity List View renders as expected 1`] = `
   width: 100%;
 }
 
-.c1 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
-}
-
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
-}
-
-.c3 {
-  text-align: left;
-}
-
 <div
-    class="c0"
+    class="c0 form-section"
   >
-    <div
-      class="c1 c2"
+    <h2
+      class="c1"
     >
-      <h3
-        class="c3"
+      <div
+        class="row"
       >
-        Activities
-      </h3>
+        <div
+          class="col"
+        >
+          Activities
+        </div>
+        <div
+          class="col-1"
+        />
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
       <form
-        class="c4 p-3"
+        class="c2 p-3"
         novalidate=""
       >
         <div
           class="row"
         >
           <div
-            class="col-md-1"
+            class="col-auto"
           >
             <label>
               Filter by:
             </label>
           </div>
           <div
-            class="col-md-4"
+            class="col-4"
           >
             <div
               class="form-group"
@@ -357,7 +346,7 @@ exports[`Activity List View renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="col-md-4"
+            class="col-4"
           >
             <div
               class="form-group"
@@ -401,10 +390,10 @@ exports[`Activity List View renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="col-md-1"
+            class="col-1"
           >
             <button
-              class="c5 Button Button--icon-only primary btn btn-primary"
+              class="c3 Button Button--icon-only primary btn btn-primary"
               data-testid="search"
               id="search-button"
               title="search"
@@ -430,10 +419,10 @@ exports[`Activity List View renders as expected 1`] = `
             </button>
           </div>
           <div
-            class="col-md-1"
+            class="col-1"
           >
             <button
-              class="c5 Button Button--icon-only btn btn-info"
+              class="c3 Button Button--icon-only btn btn-info"
               data-testid="reset-button"
               id="reset-button"
               title="reset-button"
@@ -484,11 +473,11 @@ exports[`Activity List View renders as expected 1`] = `
               >
                 Activity type
                 <div
-                  class="c6"
+                  class="c4"
                   data-testid="sort-column-activityTemplate"
                 >
                   <svg
-                    class="c7"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -503,7 +492,7 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c6"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -523,18 +512,18 @@ exports[`Activity List View renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Description
                 <div
-                  class="c6"
+                  class="c4"
                   data-testid="sort-column-description"
                 >
                   <svg
-                    class="c7"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -549,7 +538,7 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c6"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -569,7 +558,7 @@ exports[`Activity List View renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -581,18 +570,18 @@ exports[`Activity List View renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Status
                 <div
-                  class="c6"
+                  class="c4"
                   data-testid="sort-column-activityStatusTypeCode"
                 >
                   <svg
-                    class="c7"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -607,7 +596,7 @@ exports[`Activity List View renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c8"
+                    class="c6"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -656,7 +645,7 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 <button
-                  class="c5 Button btn btn-link"
+                  class="c3 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -669,7 +658,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Survey Activity
@@ -677,7 +666,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 All
@@ -685,7 +674,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Draft
@@ -697,10 +686,10 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c9 c10"
+                  class="c7 c8"
                 >
                   <button
-                    class="c5 Button c11 btn btn-light"
+                    class="c3 Button c9 btn btn-light"
                     title="View Activity"
                     type="button"
                   >
@@ -724,7 +713,7 @@ exports[`Activity List View renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c5 Button c11 c12 btn btn-primary"
+                    class="c3 Button c9 c10 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -767,7 +756,7 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 <button
-                  class="c5 Button btn btn-link"
+                  class="c3 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -780,7 +769,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 General Activity
@@ -788,7 +777,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 All
@@ -796,7 +785,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Draft
@@ -808,10 +797,10 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c9 c10"
+                  class="c7 c8"
                 >
                   <button
-                    class="c5 Button c11 btn btn-light"
+                    class="c3 Button c9 btn btn-light"
                     title="View Activity"
                     type="button"
                   >
@@ -835,7 +824,7 @@ exports[`Activity List View renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c5 Button c11 c12 btn btn-primary"
+                    class="c3 Button c9 c10 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -878,7 +867,7 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 <button
-                  class="c5 Button btn btn-link"
+                  class="c3 Button btn btn-link"
                   type="button"
                 >
                   <div
@@ -891,7 +880,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Site Visit Activity
@@ -899,7 +888,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 All
@@ -907,7 +896,7 @@ exports[`Activity List View renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Draft
@@ -919,10 +908,10 @@ exports[`Activity List View renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c9 c10"
+                  class="c7 c8"
                 >
                   <button
-                    class="c5 Button c11 btn btn-light"
+                    class="c3 Button c9 btn btn-light"
                     title="View Activity"
                     type="button"
                   >
@@ -946,7 +935,7 @@ exports[`Activity List View renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c5 Button c11 c12 btn btn-primary"
+                    class="c3 Button c9 c10 btn btn-primary"
                     type="button"
                   >
                     <div

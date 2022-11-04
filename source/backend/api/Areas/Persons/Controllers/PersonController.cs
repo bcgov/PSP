@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Concepts = Pims.Api.Models.Concepts;
@@ -24,8 +24,8 @@ namespace Pims.Api.Areas.Persons.Controllers
     public class PersonController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
-        private readonly IPimsRepository _pimsRepository;
+        private readonly IPersonService _personService;
+        private readonly ILookupRepository _lookupRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -34,14 +34,14 @@ namespace Pims.Api.Areas.Persons.Controllers
         /// <summary>
         /// Creates a new instance of a PersonController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
-        /// <param name="pimsRepository"></param>
+        /// <param name="personService"></param>
+        /// <param name="lookupRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public PersonController(IPimsService pimsService, IPimsRepository pimsRepository, IMapper mapper)
+        public PersonController(IPersonService personService, ILookupRepository lookupRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
-            _pimsRepository = pimsRepository;
+            _personService = personService;
+            _lookupRepository = lookupRepository;
             _mapper = mapper;
         }
         #endregion
@@ -59,7 +59,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult GetPerson(int id)
         {
-            var person = _pimsService.PersonService.GetPerson(id);
+            var person = _personService.GetPerson(id);
             return new JsonResult(_mapper.Map<Models.Person.PersonModel>(person));
         }
 
@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult GetPersonConcept(int id)
         {
-            var person = _pimsService.PersonService.GetPerson(id);
+            var person = _personService.GetPerson(id);
             return new JsonResult(_mapper.Map<Concepts.PersonModel>(person));
         }
 
@@ -91,7 +91,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         public IActionResult AddPerson([FromBody] Models.Person.PersonModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
-            var otherCountry = _pimsRepository.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
+            var otherCountry = _lookupRepository.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
             foreach (var address in model?.Addresses)
             {
                 if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
@@ -104,7 +104,7 @@ namespace Pims.Api.Areas.Persons.Controllers
 
             try
             {
-                var created = _pimsService.PersonService.AddPerson(entity, userOverride);
+                var created = _personService.AddPerson(entity, userOverride);
                 var response = _mapper.Map<Areas.Contact.Models.Contact.PersonModel>(created);
 
                 return new JsonResult(response);
@@ -127,7 +127,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         public IActionResult UpdatePerson([FromBody] Models.Person.PersonModel personModel)
         {
             var personEntity = _mapper.Map<Pims.Dal.Entities.PimsPerson>(personModel);
-            var updatedPerson = _pimsService.PersonService.UpdatePerson(personEntity, personModel.RowVersion);
+            var updatedPerson = _personService.UpdatePerson(personEntity, personModel.RowVersion);
 
             return new JsonResult(_mapper.Map<Models.Person.PersonModel>(updatedPerson));
         }

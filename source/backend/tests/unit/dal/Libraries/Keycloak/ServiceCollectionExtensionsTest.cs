@@ -9,6 +9,7 @@ using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
+using Pims.Dal.Repositories;
 using Pims.Keycloak;
 using Pims.Keycloak.Configuration;
 using Xunit;
@@ -74,10 +75,14 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             // Arrange
             var services = new ServiceCollection();
 
-            var mockPimsService = new Mock<IPimsRepository>();
-            services.AddScoped((s) => mockPimsService.Object);
             var mockMapper = new Mock<IMapper>();
             services.AddScoped((s) => mockMapper.Object);
+            var mockAccessRepository = new Mock<IAccessRequestRepository>();
+            services.AddScoped((s) => mockAccessRepository.Object);
+            var mockUserRepository = new Mock<IUserRepository>();
+            services.AddScoped((s) => mockUserRepository.Object);
+            var mockRoleRepository = new Mock<IRoleRepository>();
+            services.AddScoped((s) => mockRoleRepository.Object);
             var mockLogger = new Mock<ILogger<IPimsKeycloakService>>();
             services.AddScoped((s) => mockLogger.Object);
             var user = PrincipalHelper.CreateForPermission();
@@ -119,7 +124,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Assert
             result.Should().NotBeNull();
-            result.Count.Should().Be(8);
+            result.Count.Should().Be(10);
             provider.Should().NotBeNull();
             service.Should().NotBeNull();
         }

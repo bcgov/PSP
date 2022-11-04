@@ -28,18 +28,16 @@ export interface IViewSelectorProps {
   //  - 'none' means no form is being edited.
   editKey: FormKeys;
   setEditKey: (editKey: FormKeys) => void;
-
-  setFormikRef: (ref: React.RefObject<FormikProps<any>> | undefined) => void;
   onSuccess: () => void;
 }
 
-const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
+const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>((props, formikRef) => {
   if (props.selectedIndex === 0) {
     if (props.isEditMode && !!props.researchFile) {
       return (
         <UpdateSummaryView
           researchFile={props.researchFile}
-          setFormikRef={props.setFormikRef}
+          ref={formikRef}
           onSuccess={props.onSuccess}
         />
       );
@@ -64,14 +62,12 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
           <UpdatePropertyDetailsContainer
             id={researchFileProperty.property?.id as number}
             onSuccess={props.onSuccess}
-            setFormikRef={props.setFormikRef}
           />
         );
       } else {
         return (
           <UpdatePropertyView
             researchFileProperty={researchFileProperty}
-            setFormikRef={props.setFormikRef}
             onSuccess={props.onSuccess}
           />
         );
@@ -105,6 +101,6 @@ const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props => {
       );
     }
   }
-};
+});
 
 export default ViewSelector;

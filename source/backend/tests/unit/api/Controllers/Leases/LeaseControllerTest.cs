@@ -9,6 +9,7 @@ using Pims.Api.Areas.Lease.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
@@ -35,10 +36,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.Get(It.IsAny<long>())).Returns(lease);
+            repository.Setup(m => m.Get(It.IsAny<long>())).Returns(lease);
 
             // Act
             var result = controller.GetLease(1);
@@ -48,7 +49,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Lease.Get(It.IsAny<long>()), Times.Once());
+            repository.Verify(m => m.Get(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region UpdateLeases
@@ -64,11 +65,11 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
-            service.Setup(m => m.Lease.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
+            repository.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
+            repository.Setup(m => m.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
 
             // Act
             var result = controller.UpdateLease(mapper.Map<Model.LeaseModel>(lease));
@@ -78,7 +79,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+            repository.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
         }
 
         [Fact]
@@ -93,11 +94,11 @@ namespace Pims.Api.Test.Controllers.Lease
             lease.PimsPropertyLeases.Clear();
             lease.PimsPropertyLeases.Add(propertyLease);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
-            service.Setup(m => m.Lease.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
+            repository.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
+            repository.Setup(m => m.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
 
             // Act
             var result = controller.UpdateLease(mapper.Map<Model.LeaseModel>(lease));
@@ -109,7 +110,7 @@ namespace Pims.Api.Test.Controllers.Lease
             expectedResult.Should().BeEquivalentTo(actualResult);
             Assert.Equal("HA", actualResult.Properties.First().AreaUnitType.Id);
             Assert.Equal(1, actualResult.Properties.First().LandArea);
-            service.Verify(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+            repository.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
         }
         #endregion
         #region UpdateImprovements
@@ -126,10 +127,10 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Id = 1 } };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease);
+            repository.Setup(m => m.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease);
 
             // Act
             var result = controller.UpdateImprovements(lease.Id, mapper.Map<Model.LeaseModel>(lease));
@@ -139,7 +140,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Lease.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
+            repository.Verify(m => m.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
         }
         #endregion
         #endregion

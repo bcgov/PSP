@@ -13,7 +13,6 @@ const storeState = {
 };
 
 jest.mock('@react-keycloak/web');
-const setEditMode = jest.fn();
 const onEditRelatedProperties = jest.fn();
 
 describe('ActivityControlsBar test', () => {
@@ -23,7 +22,6 @@ describe('ActivityControlsBar test', () => {
       <Formik onSubmit={noop} initialValues={getMockActivityResponse()}>
         <ActivityControlsBar
           editMode={renderOptions.editMode}
-          setEditMode={renderOptions.setEditMode}
           onEditRelatedProperties={renderOptions.onEditRelatedProperties}
         />
       </Formik>,
@@ -44,19 +42,18 @@ describe('ActivityControlsBar test', () => {
   });
 
   it('Renders as expected', async () => {
-    const { asFragment } = setup({ editMode: false, setEditMode, onEditRelatedProperties });
+    const { asFragment } = setup({ editMode: false, onEditRelatedProperties });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('hides the edit button when in edit mode', async () => {
-    const { queryByTitle } = setup({ editMode: true, setEditMode, onEditRelatedProperties });
+    const { queryByTitle } = setup({ editMode: true, onEditRelatedProperties });
     expect(queryByTitle('edit')).toBeNull();
   });
 
   it('hides the edit button when user does not have edit activity claim', async () => {
     const { queryByTitle } = setup({
       editMode: true,
-      setEditMode,
       claims: [],
       onEditRelatedProperties,
     });
@@ -66,7 +63,6 @@ describe('ActivityControlsBar test', () => {
   it('hides the Related Properties button when user does not have correct claims', async () => {
     const { queryByText } = setup({
       editMode: true,
-      setEditMode,
       claims: [],
       onEditRelatedProperties,
     });
@@ -76,28 +72,15 @@ describe('ActivityControlsBar test', () => {
   it('renders the activity status select', async () => {
     const { queryByLabelText } = setup({
       editMode: false,
-      setEditMode,
       claims: [],
       onEditRelatedProperties,
     });
     expect(queryByLabelText('Status')).toBeNull();
   });
 
-  it('calls expected function when edit is clicked', async () => {
-    const { getByTitle } = setup({
-      editMode: false,
-      setEditMode,
-      onEditRelatedProperties,
-    });
-    const editButton = getByTitle('edit');
-    userEvent.click(editButton);
-    expect(setEditMode).toHaveBeenCalled();
-  });
-
   it('populates status field as expected', async () => {
     const { getByRole } = setup({
-      editMode: false,
-      setEditMode,
+      editMode: true,
       onEditRelatedProperties,
     });
     expect((getByRole('option', { name: 'In Progress' }) as any).selected).toBe(true);
@@ -106,7 +89,6 @@ describe('ActivityControlsBar test', () => {
   it('calls expected function when related properties is clicked', async () => {
     const { getByText } = setup({
       editMode: true,
-      setEditMode,
       onEditRelatedProperties,
     });
     const relatedPropertiesButton = getByText('Related properties');

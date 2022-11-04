@@ -9,19 +9,19 @@ using Pims.Dal.Entities.Models;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// AutocompleteService retrieves autocomplete predictions based on the supplied autocomplete request.
+    /// AutocompleteRepository retrieves autocomplete predictions based on the supplied autocomplete request.
     /// </summary>
-    public class AutocompleteService : BaseRepository, IAutocompleteService
+    public class AutocompleteRepository : BaseRepository, IAutocompleteRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a AutocompleteService, and initializes it with the specified arguments.
+        /// Creates a new instance of a AutocompleteRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AutocompleteService(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupService> logger)
+        public AutocompleteRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LookupRepository> logger)
             : base(dbContext, user, logger)
         {
         }

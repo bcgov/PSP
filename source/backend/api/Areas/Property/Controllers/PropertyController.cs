@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Property.Models.Property;
 using Pims.Api.Policies;
 using Pims.Api.Services;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -23,8 +23,8 @@ namespace Pims.Api.Areas.Property.Controllers
     public class PropertyController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsRepository;
-        private readonly IPimsService _pimsService;
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -33,14 +33,14 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Creates a new instance of a PropertyController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsRepository"></param>
-        /// <param name="pimsService"></param>
+        /// <param name="propertyRepository"></param>
+        /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
         ///
-        public PropertyController(IPimsRepository pimsRepository, IPimsService pimsService, IMapper mapper)
+        public PropertyController(IPropertyRepository propertyRepository, IPropertyService propertyService, IMapper mapper)
         {
-            _pimsRepository = pimsRepository;
-            _pimsService = pimsService;
+            _propertyRepository = propertyRepository;
+            _propertyService = propertyService;
             _mapper = mapper;
         }
         #endregion
@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetPropertyAssociationsWithId(long id)
         {
-            var property = _pimsRepository.Property.GetAssociations(id);
+            var property = _propertyRepository.GetAssociations(id);
 
             return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
         }
@@ -77,7 +77,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetConceptPropertyWithId(long id)
         {
-            var property = _pimsService.PropertyService.GetById(id);
+            var property = _propertyService.GetById(id);
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(property));
         }
 
@@ -93,7 +93,7 @@ namespace Pims.Api.Areas.Property.Controllers
         public IActionResult UpdateConceptProperty([FromBody] Pims.Api.Models.Concepts.PropertyModel propertyModel)
         {
             var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);
-            var updatedProperty = _pimsService.PropertyService.Update(propertyEntity);
+            var updatedProperty = _propertyService.Update(propertyEntity);
 
             return new JsonResult(_mapper.Map<Pims.Api.Models.Concepts.PropertyModel>(updatedProperty));
         }

@@ -1,4 +1,4 @@
-import { IGeocoderPidsResponse, IGeocoderResponse } from 'hooks/useApi';
+import { IGeocoderPidsResponse, IGeocoderResponse } from 'hooks/pims-api/interfaces/IGeocoder';
 
 export const mockGeocoderPidsResponse: IGeocoderPidsResponse = {
   siteId: '1',

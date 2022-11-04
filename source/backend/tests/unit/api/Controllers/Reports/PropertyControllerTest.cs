@@ -11,6 +11,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -69,10 +70,10 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportProperties(filter);
@@ -81,7 +82,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -99,10 +100,10 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportProperties();
@@ -111,7 +112,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<ContentResult>(result);
             var actualResult = Assert.IsType<string>(actionResult.Content);
             Assert.Equal(ContentTypes.CONTENT_TYPE_CSV, actionResult.ContentType);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -129,10 +130,10 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportProperties(filter);
@@ -142,7 +143,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -160,10 +161,10 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportProperties();
@@ -173,7 +174,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -191,10 +192,10 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportProperties(filter);
@@ -204,7 +205,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -222,10 +223,10 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.ExportProperties();
@@ -235,7 +236,7 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -248,12 +249,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportProperties());
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -266,12 +267,12 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportProperties(null));
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -284,13 +285,13 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportProperties(filter));
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -303,7 +304,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IPropertyRepository>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
             var filter = new PropertyFilterModel() { };
@@ -311,7 +312,7 @@ namespace Pims.Api.Test.Controllers.Reports
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportProperties(filter));
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
         #endregion
         #endregion

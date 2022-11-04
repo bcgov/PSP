@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class LeaseTermController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly ILeaseTermService _leaseTermService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -31,12 +31,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <summary>
         /// Creates a new instance of a LeaseTermController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="leaseTermService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeaseTermController(IPimsService pimsService, IMapper mapper)
+        public LeaseTermController(ILeaseTermService leaseTermService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _leaseTermService = leaseTermService;
             _mapper = mapper;
         }
         #endregion
@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult AddTerm(long leaseId, [FromBody] Models.Lease.TermModel termModel)
         {
             var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _pimsService.LeaseTermService.AddTerm(leaseId, termModel.LeaseRowVersion, termEntity);
+            var updatedLease = _leaseTermService.AddTerm(leaseId, termModel.LeaseRowVersion, termEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult UpdateTerm(long leaseId, long termId, [FromBody] Models.Lease.TermModel termModel)
         {
             var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _pimsService.LeaseTermService.UpdateTerm(leaseId, termId, termModel.LeaseRowVersion, termEntity);
+            var updatedLease = _leaseTermService.UpdateTerm(leaseId, termId, termModel.LeaseRowVersion, termEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult DeleteTerm(long leaseId, Models.Lease.TermModel termModel)
         {
             var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _pimsService.LeaseTermService.DeleteTerm(leaseId, termModel.LeaseRowVersion, termEntity);
+            var updatedLease = _leaseTermService.DeleteTerm(leaseId, termModel.LeaseRowVersion, termEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
