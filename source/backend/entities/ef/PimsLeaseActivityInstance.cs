@@ -16,8 +16,7 @@ namespace Pims.Dal.Entities
     {
         [Key]
         [Column("LEASE_ACTIVITY_INSTANCE_ID")]
-        [StringLength(40)]
-        public string LeaseActivityInstanceId { get; set; }
+        public long LeaseActivityInstanceId { get; set; }
         [Column("ACTIVITY_INSTANCE_ID")]
         public long ActivityInstanceId { get; set; }
         [Column("LEASE_ID")]

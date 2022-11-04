@@ -3446,9 +3446,7 @@ namespace Pims.Dal
 
                 entity.HasComment("Associative entity between leases/licenses and activity instances.");
 
-                entity.Property(e => e.LeaseActivityInstanceId)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]')");
+                entity.Property(e => e.LeaseActivityInstanceId).HasDefaultValueSql("('NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]')");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3493,8 +3491,6 @@ namespace Pims.Dal
                 entity.Property(e => e.LeaseActivityInstanceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.LeaseActivityInstanceId).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsLeaseCategoryType>(entity =>
@@ -4689,9 +4685,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
 
-                entity.Property(e => e.FileNumberSuffix)
-                    .IsUnicode(false)
-                    .HasComment("A suffix to distinguish between Property Files with the same number.");
+                entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
 
                 entity.Property(e => e.IsOwned)
                     .HasDefaultValueSql("(CONVERT([bit],(1)))")
@@ -5021,8 +5015,6 @@ namespace Pims.Dal
                 entity.Property(e => e.PropertyHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.FileNumberSuffix).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsPropertyImprovement>(entity =>
