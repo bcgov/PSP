@@ -62,6 +62,7 @@ const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
           <UpdatePropertyDetailsContainer
             id={researchFileProperty.property?.id as number}
             onSuccess={props.onSuccess}
+            ref={formikRef}
           />
         );
       } else {
@@ -69,6 +70,7 @@ const ViewSelector = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
           <UpdatePropertyView
             researchFileProperty={researchFileProperty}
             onSuccess={props.onSuccess}
+            ref={formikRef}
           />
         );
       }
