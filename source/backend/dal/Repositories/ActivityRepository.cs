@@ -43,6 +43,7 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
                 .Include(a => a.PimsActInstPropAcqFiles)
                 .Include(a => a.PimsActInstPropRsrchFiles)
+                .Include(a => a.PimsLeaseActivityInstances)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.ActivityInstanceId == id) ?? throw new KeyNotFoundException();
         }
@@ -76,6 +77,20 @@ namespace Pims.Dal.Repositories
                .Include(a => a.PimsActInstPropAcqFiles)
                 .Include(a => a.PimsActInstPropRsrchFiles)
                .Where(x => x.PimsAcquisitionActivityInstances.Any(ra => ra.AcquisitionFileId == acquisitionFileId))
+               .ToList();
+        }
+
+        /// <summary>
+        /// Retrieves the activities with the specified lease id.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <returns></returns>
+        public IList<PimsActivityInstance> GetAllByLeaseId(long leaseId)
+        {
+            return this.Context.PimsActivityInstances.AsNoTracking()
+               .Include(r => r.ActivityTemplate).ThenInclude(y => y.ActivityTemplateTypeCodeNavigation)
+               .Include(a => a.ActivityInstanceStatusTypeCodeNavigation)
+               .Where(x => x.PimsLeaseActivityInstances.Any(la => la.LeaseId == leaseId))
                .ToList();
         }
 

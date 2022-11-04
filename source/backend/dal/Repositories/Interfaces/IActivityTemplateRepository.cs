@@ -7,5 +7,7 @@ namespace Pims.Dal.Repositories
     {
 
         IList<PimsActivityTemplate> GetAllActivityTemplates();
+
+        PimsActivityTemplate GetActivityTemplateByCode(string templateType);
     }
 }

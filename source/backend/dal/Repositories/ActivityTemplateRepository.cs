@@ -4,6 +4,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -38,6 +39,17 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsActivityTemplates.AsNoTracking()
                 .Include(x => x.ActivityTemplateTypeCodeNavigation)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Retrieves template for the matching template type.
+        /// </summary>
+        /// <returns></returns>
+        public PimsActivityTemplate GetActivityTemplateByCode(string templateType)
+        {
+            return this.Context.PimsActivityTemplates.AsNoTracking()
+                .Include(x => x.ActivityTemplateTypeCodeNavigation)
+                .FirstOrDefault(x => x.ActivityTemplateTypeCode == templateType);
         }
 
         #endregion
