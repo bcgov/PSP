@@ -9,13 +9,15 @@ const toggle = jest.fn();
 const baseMaps = [
   {
     name: 'Map',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    urls: ['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'],
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     thumbnail: 'streets.jpg',
   },
   {
     name: 'Satellite',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    urls: [
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    ],
     attribution:
       'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
     thumbnail: 'satellite.jpg',
@@ -26,14 +28,16 @@ const baseMaps = [
 const toggledLayers = [
   {
     name: 'Satellite',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    urls: [
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    ],
     attribution:
       'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
     thumbnail: 'satellite.jpg',
   },
   {
     name: 'Map',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    urls: ['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'],
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     thumbnail: 'streets.jpg',
   },

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 export type BaseLayer = {
   name: string;
-  url: string;
+  urls: string[];
   attribution: string;
   thumbnail: string;
 };
