@@ -1,4 +1,4 @@
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import { PointFeature } from 'components/maps/types';
 import { getIn, useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
@@ -56,11 +56,11 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
  */
 const useDraftMarkerSynchronizer = (nameSpace: string) => {
   const { values, initialValues } = useFormikContext();
-  const { setDraftProperties } = useContext(SelectedPropertyContext);
+  const { setState } = useContext(MapStateContext);
   const isMounted = useIsMounted();
   useEffect(() => {
-    return () => setDraftProperties([]);
-  }, [setDraftProperties]);
+    return () => setState({ type: MapStateActionTypes.DRAFT_PROPERTIES, draftProperties: [] });
+  }, [setState]);
 
   /**
    * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers as drafts.
@@ -74,13 +74,16 @@ const useDraftMarkerSynchronizer = (nameSpace: string) => {
       if (isMounted()) {
         const draftMarkers = getDraftMarkers(values, initialValues, nameSpace);
         if (draftMarkers.length) {
-          setDraftProperties(draftMarkers as PointFeature[]);
+          setState({
+            type: MapStateActionTypes.DRAFT_PROPERTIES,
+            draftProperties: draftMarkers as PointFeature[],
+          });
         } else {
-          setDraftProperties([]);
+          setState({ type: MapStateActionTypes.DRAFT_PROPERTIES, draftProperties: [] });
         }
       }
     },
-    [setDraftProperties, isMounted],
+    [setState, isMounted],
   );
 
   const synchronize = React.useRef(
