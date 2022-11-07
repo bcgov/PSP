@@ -18,7 +18,7 @@ import {
   PIMS_BOUNDARY_LAYER_URL,
   useLayerQuery,
 } from '../leaflet/LayerPopup';
-import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
+import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
@@ -50,7 +50,7 @@ const useActiveFeatureLayer = ({
 
   const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
 
-  const { isSelecting, setSelectedFeature } = useContext(SelectedPropertyContext);
+  const { isSelecting, setState } = useContext(MapStateContext);
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
     setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
@@ -136,7 +136,7 @@ const useActiveFeatureLayer = ({
         DISTRICT_NAME: district.DISTRICT_NAME ?? 'Cannot determine',
       };
       activeFeatureLayer?.addData(feature);
-      setSelectedFeature(feature);
+      setState({ type: MapStateActionTypes.SELECTED_FEATURE, selectedFeature: feature });
     }
   };
 

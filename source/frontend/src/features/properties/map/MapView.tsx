@@ -1,15 +1,14 @@
 import DraftSvg from 'assets/images/pins/icon-draft.svg';
 import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import {
-  SelectedPropertyContext,
-  SelectedPropertyContextProvider,
-} from 'components/maps/providers/SelectedPropertyContext';
+  MapStateContext,
+  MapStateContextProvider,
+} from 'components/maps/providers/MapStateContext';
+import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import { IProperty } from 'interfaces';
 import { Api_Property } from 'models/api/Property';
-import queryString from 'query-string';
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -40,13 +39,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [showActionBar, setShowActionBar] = useState(false);
 
-  const onMarkerClicked = (property: IProperty) => {
-    history.push({
-      pathname: `/mapview/sidebar/property/${property.id}`,
-      search: queryString.stringify({ pid: property.pid }),
-    });
-  };
-
   const onPropertyViewClicked = (pid?: string | null, id?: number) => {
     if (id !== undefined) {
       history.push(`/mapview/sidebar/property/${id}?pid=${pid}`);
@@ -74,8 +66,8 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   );
 
   return (
-    <SelectedPropertyContextProvider>
-      <SelectedPropertyContext.Consumer>
+    <MapStateContextProvider>
+      <MapStateContext.Consumer>
         {({ cursor }) => (
           <PropertyContextProvider>
             <StyleMapView data-test="map-view" className={clsx(cursor)}>
@@ -101,7 +93,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
                     }}
                     showParcelBoundaries={props.showParcelBoundaries ?? true}
                     zoom={6}
-                    onPropertyMarkerClick={onMarkerClicked}
                     onViewPropertyClick={onPropertyViewClicked}
                     showSideBar={showSideBar}
                     whenCreated={setMapInstance}
@@ -111,8 +102,8 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
             </StyleMapView>
           </PropertyContextProvider>
         )}
-      </SelectedPropertyContext.Consumer>
-    </SelectedPropertyContextProvider>
+      </MapStateContext.Consumer>
+    </MapStateContextProvider>
   );
 };
 
