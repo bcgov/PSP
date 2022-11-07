@@ -96,7 +96,9 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
               title="View Property Info"
               variant="light"
             >
-              <Link to={`/lease/${cellProps.row.original.id}`}>
+              <Link
+                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
+              >
                 <FaEye />
               </Link>
             </StyledIconButton>
@@ -105,7 +107,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
           {hasClaim(Claims.PROPERTY_VIEW) && (
             <StyledIconButton data-testid="view-prop-ext" title="View Property" variant="light">
               <Link
-                to={`/lease/${cellProps.row.original.id}`}
+                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
