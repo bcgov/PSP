@@ -55,6 +55,7 @@ export const useComposedProperties = ({
   const executeGetApiProperty = getApiPropertyWrapper.execute;
   const executeGetPropertyWfs = getPropertyWfsWrapper.execute;
   const executeGetPropertyAssociations = getPropertyAssociationsWrapper.execute;
+  const executeGetAllFeatures = getAllFeaturesWrapper.execute;
 
   useEffect(() => {
     if (id !== undefined && !isNaN(id)) {
@@ -62,11 +63,27 @@ export const useComposedProperties = ({
       typeCheckWrapper(() => executeGetPropertyWfs(id), PROPERTY_TYPES.PIMS_GEOSERVER);
       typeCheckWrapper(() => executeGetPropertyAssociations(id), PROPERTY_TYPES.ASSOCIATIONS);
     }
+    if (!!retrievedPid) {
+      typeCheckWrapper(
+        () =>
+          executeGetAllFeatures({ PID: retrievedPid }, { forceSimplePid: true, timeout: 30000 }),
+        PROPERTY_TYPES.PARCEL_MAP,
+      );
+    }
+    if (!!retrievedPin) {
+      typeCheckWrapper(
+        () => executeGetAllFeatures({ PIN: retrievedPin }, { timeout: 30000 }),
+        PROPERTY_TYPES.PARCEL_MAP,
+      );
+    }
   }, [
     executeGetApiProperty,
     executeGetPropertyAssociations,
     executeGetPropertyWfs,
+    executeGetAllFeatures,
     id,
+    retrievedPid,
+    retrievedPin,
     typeCheckWrapper,
   ]);
 
