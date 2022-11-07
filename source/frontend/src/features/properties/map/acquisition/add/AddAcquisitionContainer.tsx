@@ -1,6 +1,6 @@
 import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-agent.svg';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { FormikProps } from 'formik';
@@ -26,7 +26,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
-  const { selectedFileFeature, setSelectedFileFeature } = React.useContext(SelectedPropertyContext);
+  const { selectedFileFeature, setState } = React.useContext(MapStateContext);
   const { search } = useMapSearch();
 
   const initialForm = useMemo(() => {
@@ -47,9 +47,9 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       ]);
     }
     return () => {
-      setSelectedFileFeature(null);
+      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
     };
-  }, [initialForm, selectedFileFeature, setSelectedFileFeature]);
+  }, [initialForm, selectedFileFeature, setState]);
 
   const handleSave = () => {
     formikRef.current?.setSubmitting(true);

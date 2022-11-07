@@ -11,7 +11,7 @@ import { tilesInBbox } from 'tiles-in-bbox';
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
 import { useMapSearch } from '../hooks/useMapSearch';
 import { useFilterContext } from '../providers/FIlterProvider';
-import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
+import { MapStateContext } from '../providers/MapStateContext';
 import { PointFeature } from '../types';
 import PointClusterer from './PointClusterer';
 
@@ -132,7 +132,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const mapInstance = useMap();
   const { search, properties, loading } = useMapSearch();
   const { changed: filterChanged } = useFilterContext();
-  const { draftProperties } = useContext(SelectedPropertyContext);
+  const { draftProperties } = useContext(MapStateContext);
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
