@@ -6472,7 +6472,7 @@ CREATE TABLE [dbo].[PIMS_PROPERTY]  (
 	[PID]                                	int NULL,
 	[PIN]                                	int NULL,
 	[FILE_NUMBER]                        	int NULL,
-	[FILE_NUMBER_SUFFIX]                 	varchar(2) NULL,
+	[FILE_NUMBER_SUFFIX]                 	nvarchar(2) NULL,
 	[LAND_AREA]                          	real NULL,
 	[LAND_LEGAL_DESCRIPTION]             	nvarchar(max) NULL,
 	[BOUNDARY]                           	[sys].[geometry] NULL,
@@ -7937,7 +7937,7 @@ EXEC sp_addextendedproperty
 GO
 
 CREATE TABLE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE]  ( 
-	[LEASE_ACTIVITY_INSTANCE_ID]    	varchar(40) NOT NULL CONSTRAINT [LSACIN_LEASE_ACTIVITY_INSTANCE_ID_DEF]  DEFAULT ('NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]'),
+	[LEASE_ACTIVITY_INSTANCE_ID]    	bigint NOT NULL CONSTRAINT [LSACIN_LEASE_ACTIVITY_INSTANCE_ID_DEF]  DEFAULT ('NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]'),
 	[ACTIVITY_INSTANCE_ID]          	bigint NOT NULL,
 	[LEASE_ID]                      	bigint NOT NULL,
 	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL CONSTRAINT [LSACIN_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
@@ -7966,7 +7966,7 @@ CREATE TABLE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE_HIST]  (
 	[_LEASE_ACTIVITY_INSTANCE_HIST_ID]	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_H_ID_SEQ]),
 	[EFFECTIVE_DATE_HIST]             	datetime NOT NULL DEFAULT (getutcdate()),
 	[END_DATE_HIST]                   	datetime NULL,
-	[LEASE_ACTIVITY_INSTANCE_ID]      	varchar(40) NOT NULL,
+	[LEASE_ACTIVITY_INSTANCE_ID]      	bigint NOT NULL,
 	[ACTIVITY_INSTANCE_ID]            	bigint NOT NULL,
 	[LEASE_ID]                        	bigint NOT NULL,
 	[CONCURRENCY_CONTROL_NUMBER]      	bigint NOT NULL,
@@ -9038,7 +9038,7 @@ CREATE TABLE [dbo].[PIMS_PROPERTY_HIST]  (
 	[PID]                                	int NULL,
 	[PIN]                                	int NULL,
 	[FILE_NUMBER]                        	int NULL,
-	[FILE_NUMBER_SUFFIX]                 	varchar(2) NULL,
+	[FILE_NUMBER_SUFFIX]                 	nvarchar(2) NULL,
 	[LAND_AREA]                          	real NULL,
 	[SURVEY_PLAN_NUMBER]                 	nvarchar(250) NULL,
 	[ENCUMBRANCE_REASON]                 	nvarchar(500) NULL,
