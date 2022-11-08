@@ -14,7 +14,7 @@ export type BasemapToggleEvent = {
   previous: BaseLayer;
 };
 
-type BasemapToggleProps = {
+export type BasemapToggleProps = {
   baseLayers: BaseLayer[];
   onToggle?: (e: BasemapToggleEvent) => void;
 };
