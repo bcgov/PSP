@@ -1,5 +1,5 @@
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { SelectedPropertyContextProvider } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
@@ -78,7 +78,7 @@ const AppRouter: React.FC = () => {
         )
       }
     >
-      <SelectedPropertyContextProvider>
+      <MapStateContextProvider>
         <Switch>
           <Redirect exact from="/" to="/login" />
           <AppRoute
@@ -272,7 +272,7 @@ const AppRouter: React.FC = () => {
           />
           <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />
         </Switch>
-      </SelectedPropertyContextProvider>
+      </MapStateContextProvider>
     </Suspense>
   );
 };

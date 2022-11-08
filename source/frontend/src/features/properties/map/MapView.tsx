@@ -1,10 +1,7 @@
 import DraftSvg from 'assets/images/pins/icon-draft.svg';
 import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import {
-  MapStateContext,
-  MapStateContextProvider,
-} from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import { IProperty } from 'interfaces';
@@ -66,7 +63,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   );
 
   return (
-    <SelectedPropertyContext.Consumer>
+    <MapStateContext.Consumer>
       {({ cursor }) => (
         <PropertyContextProvider>
           <StyleMapView data-test="map-view" className={clsx(cursor)}>
@@ -92,7 +89,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
                   }}
                   showParcelBoundaries={props.showParcelBoundaries ?? true}
                   zoom={6}
-                  onPropertyMarkerClick={onMarkerClicked}
                   onViewPropertyClick={onPropertyViewClicked}
                   showSideBar={showSideBar}
                   whenCreated={setMapInstance}
@@ -102,7 +98,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
           </StyleMapView>
         </PropertyContextProvider>
       )}
-    </SelectedPropertyContext.Consumer>
+    </MapStateContext.Consumer>
   );
 };
 

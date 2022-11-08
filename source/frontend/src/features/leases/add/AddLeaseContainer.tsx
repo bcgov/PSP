@@ -1,7 +1,7 @@
 import GenericModal from 'components/common/GenericModal';
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import { AddLeaseLayout, LeaseBreadCrumb, LeaseHeader, LeaseIndex } from 'features/leases';
 import { FormikProps } from 'formik';
 import { IAddFormLease, ILease } from 'interfaces';
@@ -46,15 +46,15 @@ export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps>
   };
 
   return (
-    <SelectedPropertyContext.Consumer>
-      {({ propertyInfo }) => (
+    <MapStateContext.Consumer>
+      {({ selectedInventoryProperty }) => (
         <>
           <AddLeaseLayout>
             <LeaseBreadCrumb leasePage={leasePage} onClickManagement={onClickManagement} />
             <LeaseHeader />
             <LeaseIndex currentPageName={LeasePageNames.DETAILS}></LeaseIndex>
             <AddLeaseForm
-              propertyInfo={propertyInfo}
+              propertyInfo={selectedInventoryProperty}
               onCancel={onCancel}
               onSubmit={onSubmit}
               formikRef={formikRef}
@@ -78,7 +78,7 @@ export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps>
           </AddLeaseLayout>
         </>
       )}
-    </SelectedPropertyContext.Consumer>
+    </MapStateContext.Consumer>
   );
 };
 

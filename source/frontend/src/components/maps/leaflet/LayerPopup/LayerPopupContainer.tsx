@@ -55,7 +55,11 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
   };
 
   const handleCreateLeaseLicence = () => {
-    selectedFeature && setSelectedResearchFeature(selectedFeature);
+    selectedFeature &&
+      setState({
+        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
+        selectedFileFeature: selectedFeature,
+      });
     history.push('/lease/new');
   };
 
