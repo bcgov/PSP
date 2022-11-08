@@ -4,6 +4,8 @@ import { IFormLease } from 'interfaces';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
+import { FieldValue } from '../styles';
+
 export interface IAddressSubFormProps {
   disabled?: boolean;
   nameSpace?: string;
@@ -14,12 +16,22 @@ export const AddressSubForm: React.FunctionComponent<IAddressSubFormProps> = ({
   nameSpace,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
+  const address = getIn(formikProps.values, withNameSpace(nameSpace));
   const municipality = getIn(formikProps.values, withNameSpace(nameSpace, 'municipality'));
   const postal = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));
   const country = getIn(formikProps.values, withNameSpace(nameSpace, 'country'));
   const streetAddress1 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress1'));
   const streetAddress2 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress2'));
   const streetAddress3 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress3'));
+
+  if (!address) {
+    return (
+      <>
+        <Form.Label>Address:</Form.Label>
+        <FieldValue>Address not available in PIMS</FieldValue>
+      </>
+    );
+  }
 
   return (
     <>
