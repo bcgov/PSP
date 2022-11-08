@@ -884,69 +884,71 @@ exports[`Document List View renders as expected 1`] = `
         <div
           class="align-self-center col-auto"
         >
-          <div
-            class="Menu-root"
-          >
+          <div>
             <div
-              class="Menu-button"
+              class="Menu-root"
             >
               <div
-                style="display: flex;"
+                class="Menu-button"
               >
-                <span
-                  class="c10"
+                <div
+                  style="display: flex;"
                 >
-                  Show
-                </span>
-                <input
-                  class="form-control form-control-sm"
-                  style="width: 50px; margin-left: 10px; margin-right: 10px;"
-                  type="number"
-                  value="10"
-                />
-                <span
-                  class="c10"
-                >
-                  Entries
-                </span>
+                  <span
+                    class="c10"
+                  >
+                    Show
+                  </span>
+                  <input
+                    class="form-control form-control-sm"
+                    style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                    type="number"
+                    value="10"
+                  />
+                  <span
+                    class="c10"
+                  >
+                    Entries
+                  </span>
+                </div>
               </div>
-            </div>
-            <div
-              class="Menu-items"
-              style="width: 10.0rem;"
-            >
               <div
-                class="Menu-options scrollable list-group"
+                class="Menu-items"
+                style="width: 10.0rem;"
               >
                 <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-5"
+                  class="Menu-options scrollable list-group"
                 >
-                  5
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-10"
-                >
-                  10
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-20"
-                >
-                  20
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-50"
-                >
-                  50
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-100"
-                >
-                  100
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-5"
+                  >
+                    5
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-10"
+                  >
+                    10
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-20"
+                  >
+                    20
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-50"
+                  >
+                    50
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-100"
+                  >
+                    100
+                  </div>
                 </div>
               </div>
             </div>
@@ -964,10 +966,10 @@ exports[`Document List View renders as expected 1`] = `
               <a
                 aria-disabled="true"
                 aria-label="Previous page"
-                class="page-link "
+                class="page-link"
                 rel="prev"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 &lt;
               </a>
@@ -979,9 +981,8 @@ exports[`Document List View renders as expected 1`] = `
                 aria-current="page"
                 aria-label="Page 1 is your current page"
                 class="page-link"
-                rel="canonical"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 1
               </a>
@@ -992,10 +993,10 @@ exports[`Document List View renders as expected 1`] = `
               <a
                 aria-disabled="true"
                 aria-label="Next page"
-                class="page-link "
+                class="page-link"
                 rel="next"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 &gt;
               </a>
@@ -1901,69 +1902,71 @@ exports[`Document List View renders as expected 2`] = `
         <div
           class="align-self-center col-auto"
         >
-          <div
-            class="Menu-root"
-          >
+          <div>
             <div
-              class="Menu-button"
+              class="Menu-root"
             >
               <div
-                style="display: flex;"
+                class="Menu-button"
               >
-                <span
-                  class="c10"
+                <div
+                  style="display: flex;"
                 >
-                  Show
-                </span>
-                <input
-                  class="form-control form-control-sm"
-                  style="width: 50px; margin-left: 10px; margin-right: 10px;"
-                  type="number"
-                  value="10"
-                />
-                <span
-                  class="c10"
-                >
-                  Entries
-                </span>
+                  <span
+                    class="c10"
+                  >
+                    Show
+                  </span>
+                  <input
+                    class="form-control form-control-sm"
+                    style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                    type="number"
+                    value="10"
+                  />
+                  <span
+                    class="c10"
+                  >
+                    Entries
+                  </span>
+                </div>
               </div>
-            </div>
-            <div
-              class="Menu-items"
-              style="width: 10.0rem;"
-            >
               <div
-                class="Menu-options scrollable list-group"
+                class="Menu-items"
+                style="width: 10.0rem;"
               >
                 <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-5"
+                  class="Menu-options scrollable list-group"
                 >
-                  5
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-10"
-                >
-                  10
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-20"
-                >
-                  20
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-50"
-                >
-                  50
-                </div>
-                <div
-                  class="Menu-item list-group-item"
-                  title="menu-item-100"
-                >
-                  100
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-5"
+                  >
+                    5
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-10"
+                  >
+                    10
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-20"
+                  >
+                    20
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-50"
+                  >
+                    50
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-100"
+                  >
+                    100
+                  </div>
                 </div>
               </div>
             </div>
@@ -1981,10 +1984,10 @@ exports[`Document List View renders as expected 2`] = `
               <a
                 aria-disabled="true"
                 aria-label="Previous page"
-                class="page-link "
+                class="page-link"
                 rel="prev"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 &lt;
               </a>
@@ -1996,9 +1999,8 @@ exports[`Document List View renders as expected 2`] = `
                 aria-current="page"
                 aria-label="Page 1 is your current page"
                 class="page-link"
-                rel="canonical"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 1
               </a>
@@ -2009,10 +2011,10 @@ exports[`Document List View renders as expected 2`] = `
               <a
                 aria-disabled="true"
                 aria-label="Next page"
-                class="page-link "
+                class="page-link"
                 rel="next"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 &gt;
               </a>

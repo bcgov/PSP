@@ -987,10 +987,10 @@ exports[`Activity List View renders as expected 1`] = `
               <a
                 aria-disabled="true"
                 aria-label="Previous page"
-                class="page-link "
+                class="page-link"
                 rel="prev"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 &lt;
               </a>
@@ -1002,9 +1002,8 @@ exports[`Activity List View renders as expected 1`] = `
                 aria-current="page"
                 aria-label="Page 1 is your current page"
                 class="page-link"
-                rel="canonical"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 1
               </a>
@@ -1015,10 +1014,10 @@ exports[`Activity List View renders as expected 1`] = `
               <a
                 aria-disabled="true"
                 aria-label="Next page"
-                class="page-link "
+                class="page-link"
                 rel="next"
                 role="button"
-                tabindex="-1"
+                tabindex="0"
               >
                 &gt;
               </a>
