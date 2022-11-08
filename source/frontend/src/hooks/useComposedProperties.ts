@@ -63,27 +63,11 @@ export const useComposedProperties = ({
       typeCheckWrapper(() => executeGetPropertyWfs(id), PROPERTY_TYPES.PIMS_GEOSERVER);
       typeCheckWrapper(() => executeGetPropertyAssociations(id), PROPERTY_TYPES.ASSOCIATIONS);
     }
-    if (!!retrievedPid) {
-      typeCheckWrapper(
-        () =>
-          executeGetAllFeatures({ PID: retrievedPid }, { forceSimplePid: true, timeout: 30000 }),
-        PROPERTY_TYPES.PARCEL_MAP,
-      );
-    }
-    if (!!retrievedPin) {
-      typeCheckWrapper(
-        () => executeGetAllFeatures({ PIN: retrievedPin }, { timeout: 30000 }),
-        PROPERTY_TYPES.PARCEL_MAP,
-      );
-    }
   }, [
     executeGetApiProperty,
     executeGetPropertyAssociations,
     executeGetPropertyWfs,
-    executeGetAllFeatures,
     id,
-    retrievedPid,
-    retrievedPin,
     typeCheckWrapper,
   ]);
 
@@ -98,6 +82,11 @@ export const useComposedProperties = ({
         () => executeBcAssessmentSummary(retrievedPid),
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
+      typeCheckWrapper(
+        () =>
+          executeGetAllFeatures({ PID: retrievedPid }, { forceSimplePid: true, timeout: 30000 }),
+        PROPERTY_TYPES.PARCEL_MAP,
+      );
     } else if (!!retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
@@ -109,6 +98,7 @@ export const useComposedProperties = ({
     retrievedPin,
     typeCheckWrapper,
     executeBcAssessmentSummary,
+    executeGetAllFeatures,
   ]);
 
   return {
