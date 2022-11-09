@@ -20,7 +20,6 @@ export interface IMotiInventoryHeaderProps {
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
-
   const parcelMapData = props.composedProperty.parcelMapWrapper?.response;
   let property: IMapProperty | null = null;
   if (parcelMapData?.features[0]) {
