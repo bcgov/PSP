@@ -6,6 +6,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
+using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -36,10 +37,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
+            var service = helper.GetService<Mock<ILeaseService>>();
             var mapper = helper.GetService<IMapper>();
 
-            repository.Setup(m => m.Get(It.IsAny<long>())).Returns(lease);
+            service.Setup(m => m.GetById(It.IsAny<long>())).Returns(lease);
 
             // Act
             var result = controller.GetLease(1);
@@ -49,7 +50,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.Get(It.IsAny<long>()), Times.Once());
+            service.Verify(m => m.GetById(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #region UpdateLeases
@@ -65,21 +66,20 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
+            var service = helper.GetService<Mock<ILeaseService>>();
             var mapper = helper.GetService<IMapper>();
 
-            repository.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
-            repository.Setup(m => m.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
+            service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
 
             // Act
-            var result = controller.UpdateLease(mapper.Map<Model.LeaseModel>(lease));
+            var result = controller.UpdateLease(mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
-            var expectedResult = mapper.Map<Model.LeaseModel>(lease);
+            var actualResult = Assert.IsType<Pims.Api.Models.Concepts.LeaseModel>(actionResult.Value);
+            var expectedResult = mapper.Map<Pims.Api.Models.Concepts.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
-            repository.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+            service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
         }
 
         [Fact]
@@ -94,23 +94,22 @@ namespace Pims.Api.Test.Controllers.Lease
             lease.PimsPropertyLeases.Clear();
             lease.PimsPropertyLeases.Add(propertyLease);
 
-            var repository = helper.GetService<Mock<ILeaseRepository>>();
+            var service = helper.GetService<Mock<ILeaseService>>();
             var mapper = helper.GetService<IMapper>();
 
-            repository.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
-            repository.Setup(m => m.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
-
+            service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
+            
             // Act
-            var result = controller.UpdateLease(mapper.Map<Model.LeaseModel>(lease));
+            var result = controller.UpdateLease(mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
-            var expectedResult = mapper.Map<Model.LeaseModel>(lease);
+            var actualResult = Assert.IsType<Pims.Api.Models.Concepts.LeaseModel>(actionResult.Value);
+            var expectedResult = mapper.Map<Pims.Api.Models.Concepts.LeaseModel>(lease);
             expectedResult.Should().BeEquivalentTo(actualResult);
             Assert.Equal("HA", actualResult.Properties.First().AreaUnitType.Id);
-            Assert.Equal(1, actualResult.Properties.First().LandArea);
-            repository.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+            Assert.Equal(1, actualResult.Properties.First().LeaseArea);
+            service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
         }
         #endregion
         #region UpdateImprovements

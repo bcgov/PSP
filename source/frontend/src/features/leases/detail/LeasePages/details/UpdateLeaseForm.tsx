@@ -5,17 +5,17 @@ import NoteSubForm from 'features/leases/add/NoteSubForm';
 import PropertyInformationSubForm from 'features/leases/add/PropertyInformationSubForm';
 import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
 import * as Styled from 'features/leases/add/styles';
+import { defaultFormLease, FormLease } from 'features/leases/models';
 import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
-import { defaultAddFormLease, IAddFormLease } from 'interfaces';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
 interface IUpdateLeaseFormProps {
   onCancel: () => void;
-  onSubmit: (lease: IAddFormLease) => Promise<void>;
-  initialValues?: IAddFormLease;
-  formikRef: React.Ref<FormikProps<IAddFormLease>>;
+  onSubmit: (lease: FormLease) => Promise<void>;
+  initialValues?: FormLease;
+  formikRef: React.Ref<FormikProps<FormLease>>;
 }
 
 export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = ({
@@ -28,11 +28,8 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
     <Formik
       validationSchema={LeaseSchema}
       onSubmit={values => onSubmit(values)}
-      initialValues={
-        !!initialValues ? { ...defaultAddFormLease, ...initialValues } : defaultAddFormLease
-      }
+      initialValues={initialValues ?? defaultFormLease}
       innerRef={formikRef}
-      enableReinitialize
     >
       {formikProps => (
         <>

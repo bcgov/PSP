@@ -18,15 +18,15 @@ export interface ILease {
   renewalDate?: string;
   startDate: string;
   responsibilityEffectiveDate?: string;
-  paymentReceivableType: ITypeCode<string>;
-  categoryType: ITypeCode<string>;
-  purposeType: ITypeCode<string>;
-  responsibilityType: ITypeCode<string>;
-  initiatorType: ITypeCode<string>;
+  paymentReceivableType?: ITypeCode<string>;
+  categoryType?: ITypeCode<string>;
+  purposeType?: ITypeCode<string>;
+  responsibilityType?: ITypeCode<string>;
+  initiatorType?: ITypeCode<string>;
   type?: ITypeCode<string>;
-  statusType: ITypeCode<string>;
-  region: IRegion;
-  programType: ITypeCode<string>;
+  statusType?: ITypeCode<string>;
+  region?: IRegion;
+  programType?: ITypeCode<string>;
   otherType?: string;
   otherProgramType?: string;
   otherCategoryType?: string;
@@ -42,8 +42,8 @@ export interface ILease {
   isOtherImprovement: boolean;
   returnNotes?: string; // security deposit notes (free form text)
   documentationReference?: string;
-  hasPhysicalLicense?: boolean;
-  hasDigitalLicense?: boolean;
+  hasPhysicalLicense: boolean | null;
+  hasDigitalLicense: boolean | null;
   tenantNotes: string[];
   insurances: IInsurance[];
   tenants: Api_LeaseTenant[];
@@ -129,6 +129,8 @@ export const defaultLease: ILease = {
   returnNotes: '',
   terms: [],
   tenants: [],
+  hasDigitalLicense: false,
+  hasPhysicalLicense: false,
 };
 
 export const defaultFormLease: IFormLease = {
@@ -156,51 +158,6 @@ export const defaultFormLease: IFormLease = {
   returnNotes: '',
   terms: [],
   tenants: [],
-  hasDigitalLicense: 'Unknown',
-  hasPhysicalLicense: 'Unknown',
-};
-
-export const defaultAddFormLease: IAddFormLease = {
-  lFileNo: '',
-  psFileNo: '',
-  tfaFileNumber: '',
-  expiryDate: '',
-  renewalDate: '',
-  startDate: '',
-  responsibilityEffectiveDate: '',
-  paymentReceivableType: '',
-  categoryType: '',
-  purposeType: '',
-  responsibilityType: '',
-  initiatorType: '',
-  type: '',
-  statusType: 'DRAFT',
-  region: '',
-  programType: '',
-  otherType: '',
-  otherProgramType: '',
-  otherCategoryType: '',
-  otherPurposeType: '',
-  note: '',
-  motiName: '',
-  amount: '',
-  renewalCount: '',
-  description: '',
-  isResidential: false,
-  isCommercialBuilding: false,
-  isOtherImprovement: false,
-  returnNotes: '',
-  documentationReference: '',
-  tenantNotes: [],
-  insurances: [],
-  terms: [],
-  tenants: [],
-  properties: [{ pid: '', pin: '', areaUnitType: { id: '' } }],
-  persons: [],
-  organizations: [],
-  improvements: [],
-  securityDeposits: [],
-  securityDepositReturns: [],
   hasDigitalLicense: 'Unknown',
   hasPhysicalLicense: 'Unknown',
 };

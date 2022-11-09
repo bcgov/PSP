@@ -1,12 +1,12 @@
 import userEvent from '@testing-library/user-event';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultAddFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
+import { defaultFormLease } from '../models';
 import PropertyInformationSubForm, {
   IPropertyInformationSubFormProps,
 } from './PropertyInformationSubForm';
@@ -22,7 +22,7 @@ describe('PropertyInformationSubForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={defaultAddFormLease}>
+      <Formik onSubmit={noop} initialValues={defaultFormLease}>
         {formikProps => <PropertyInformationSubForm />}
       </Formik>,
       {
@@ -52,7 +52,7 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText, container },
     } = await setup({});
-    await fillInput(container, 'properties.0.pid', '1');
+    await fillInput(container, 'properties.0.property.pid', '1');
     expect(getByLabelText('Lease Area:')).not.toBeDisabled();
   });
 
@@ -60,7 +60,7 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText, container },
     } = await setup({});
-    await fillInput(container, 'properties.0.pid', '1');
+    await fillInput(container, 'properties.0.property.pid', '1');
     expect(getByLabelText('PIN:')).toBeDisabled();
   });
 
@@ -68,7 +68,7 @@ describe('PropertyInformationSubForm component', () => {
     const {
       component: { getByLabelText, container },
     } = await setup({});
-    await fillInput(container, 'properties.0.pin', '1');
+    await fillInput(container, 'properties.0.property.pin', '1');
     expect(getByLabelText('PID:')).toBeDisabled();
   });
 

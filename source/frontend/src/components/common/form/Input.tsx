@@ -131,7 +131,7 @@ export const Input: React.FC<InputProps> = ({
           isInvalid={!!touch && !!error}
           {...rest}
           isValid={false}
-          value={pattern ? restricted : rest.value ?? (value || defaultValue)}
+          value={pattern ? restricted : rest.value ?? value ?? defaultValue}
           title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
           aria-describedby={helpText ? `${field}-help-text` : undefined}

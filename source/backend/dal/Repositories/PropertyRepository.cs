@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -230,6 +231,14 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.Country)
                 .FirstOrDefault(p => p.Pin == pin) ?? throw new KeyNotFoundException();
             return property;
+        }
+
+        public PimsProperty GetByLocation(Geometry location)
+        {
+            return this.Context.PimsProperties
+                    .AsNoTracking()
+                    .Include(p => p.PimsPropertyLeases)
+                    .FirstOrDefault(p => (p != null && p.Location.IsWithinDistance(location, .1)));
         }
 
         /// <summary>

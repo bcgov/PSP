@@ -100,7 +100,7 @@ describe('DetailAdministration component', () => {
 
   it('renders the Physical lease/license exists field', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getAllByDisplayValue },
     } = setup({
       lease: {
         ...defaultFormLease,
@@ -108,12 +108,12 @@ describe('DetailAdministration component', () => {
         hasDigitalLicense: 'Yes',
       },
     });
-    expect(getByDisplayValue('Unknown')).toBeVisible();
+    expect(getAllByDisplayValue('Unknown')[1]).toBeVisible();
   });
 
   it('renders the Digital lease/license exists field', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getAllByDisplayValue },
     } = setup({
       lease: {
         ...defaultFormLease,
@@ -121,7 +121,7 @@ describe('DetailAdministration component', () => {
         hasDigitalLicense: 'Unknown',
       },
     });
-    expect(getByDisplayValue('Unknown')).toBeVisible();
+    expect(getAllByDisplayValue('Unknown')[0]).toBeVisible();
   });
 
   it('renders the Location of documents field', () => {

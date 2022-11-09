@@ -1,9 +1,9 @@
 import { Formik, FormikProps } from 'formik';
-import { defaultAddFormLease, IAddFormLease, ILease, IProperty } from 'interfaces';
+import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
-import { addFormLeaseToApiLease } from '../leaseUtils';
+import { defaultFormLease, FormLease } from '../models';
 import SaveCancelButtons from '../SaveCancelButtons';
 import { LeaseSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
@@ -15,9 +15,9 @@ import * as Styled from './styles';
 
 interface IAddLeaseFormProps {
   onCancel: () => void;
-  onSubmit: (lease: ILease) => void;
-  formikRef: React.Ref<FormikProps<IAddFormLease>>;
-  initialValues?: IAddFormLease;
+  onSubmit: (lease: Api_Lease) => void;
+  formikRef: React.Ref<FormikProps<FormLease>>;
+  initialValues?: FormLease;
   propertyInfo: IProperty | null;
 }
 
@@ -33,10 +33,10 @@ const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
     defaultAddFormLease.region = propertyInfo.regionId || '';
   }
   return (
-    <Formik<IAddFormLease>
-      initialValues={defaultAddFormLease ?? initialValues}
-      onSubmit={async (values: IAddFormLease, formikHelpers) => {
-        const apiLease = addFormLeaseToApiLease(values);
+    <Formik<FormLease>
+      initialValues={defaultFormLease ?? initialValues}
+      onSubmit={async (values: FormLease, formikHelpers) => {
+        const apiLease = values.toApi();
         formikHelpers.setSubmitting(false);
         onSubmit(apiLease);
       }}

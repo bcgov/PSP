@@ -113,6 +113,6 @@ describe('ResearchContainer component', () => {
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
-    expect(await findByText('1.00000, 2.00000')).toBeVisible();
+    expect(await findByText('1.000000, 2.000000')).toBeVisible();
   });
 });

@@ -3,15 +3,15 @@ import { InlineCol } from 'components/common/form/styles';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
-import { IAddFormLease } from 'interfaces';
 import * as React from 'react';
 import { Row } from 'react-bootstrap';
 
 import { Spacer } from '../list/styles';
+import { FormLease } from '../models';
 import * as Styled from './styles';
 
 export interface ILeaseDatesSubFormProps {
-  formikProps: FormikProps<IAddFormLease>;
+  formikProps: FormikProps<FormLease>;
 }
 
 export const LeaseDatesSubForm: React.FunctionComponent<ILeaseDatesSubFormProps> = ({
@@ -37,7 +37,7 @@ export const LeaseDatesSubForm: React.FunctionComponent<ILeaseDatesSubFormProps>
         <Select
           placeholder="Select Status"
           label="Status:"
-          field="statusType"
+          field="statusType.id"
           options={leaseStatusTypes}
         />
       </InlineCol>

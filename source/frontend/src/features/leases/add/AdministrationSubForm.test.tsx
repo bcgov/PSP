@@ -1,11 +1,11 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultAddFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
+import { defaultFormLease } from '../models';
 import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
 
 const history = createMemoryHistory();
@@ -19,7 +19,7 @@ describe('AdministrationSubForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={defaultAddFormLease}>
+      <Formik onSubmit={noop} initialValues={defaultFormLease}>
         {formikProps => <AdministrationSubForm formikProps={formikProps} />}
       </Formik>,
       {
@@ -49,7 +49,7 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByText },
     } = await setup({});
-    await fillInput(container, 'type', 'LSREG', 'select');
+    await fillInput(container, 'type.id', 'LSREG', 'select');
     expect(await findByText('Category:')).toBeVisible();
   });
 
@@ -57,8 +57,8 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByLabelText },
     } = await setup({});
-    await fillInput(container, 'type', 'LSREG', 'select');
-    await fillInput(container, 'categoryType', 'OTHER', 'select');
+    await fillInput(container, 'type.id', 'LSREG', 'select');
+    await fillInput(container, 'categoryType.id', 'OTHER', 'select');
     const otherText = await findByLabelText('Describe other:');
     expect(otherText).toBeVisible();
     expect(otherText).toHaveAttribute('name', 'otherCategoryType');
@@ -67,14 +67,14 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByLabelText },
     } = await setup({});
-    await fillInput(container, 'type', 'LSREG', 'select');
-    await fillInput(container, 'categoryType', 'OTHER', 'select');
+    await fillInput(container, 'type.id', 'LSREG', 'select');
+    await fillInput(container, 'categoryType.id', 'OTHER', 'select');
     await fillInput(container, 'otherCategory', 'other category');
     await findByLabelText('Describe other:');
-    await fillInput(container, 'type', 'OTHER', 'select');
+    await fillInput(container, 'type.id', 'OTHER', 'select');
     await findByLabelText('Describe other:');
-    await fillInput(container, 'type', 'LSREG', 'select');
-    await fillInput(container, 'categoryType', 'OTHER', 'select');
+    await fillInput(container, 'type.id', 'LSREG', 'select');
+    await fillInput(container, 'categoryType.id', 'OTHER', 'select');
     const otherText = await findByLabelText('Describe other:');
 
     expect(otherText).toBeVisible();
@@ -84,7 +84,7 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByLabelText },
     } = await setup({});
-    await fillInput(container, 'type', 'OTHER', 'select');
+    await fillInput(container, 'type.id', 'OTHER', 'select');
     const otherText = await findByLabelText('Describe other:');
     expect(otherText).toBeVisible();
     expect(otherText).toHaveAttribute('name', 'otherType');
@@ -93,7 +93,7 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByLabelText },
     } = await setup({});
-    await fillInput(container, 'purposeType', 'OTHER', 'select');
+    await fillInput(container, 'purposeType.id', 'OTHER', 'select');
     const otherText = await findByLabelText('Describe other:');
     expect(otherText).toBeVisible();
     expect(otherText).toHaveAttribute('name', 'otherPurposeType');
@@ -102,7 +102,7 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByLabelText },
     } = await setup({});
-    await fillInput(container, 'programType', 'OTHER', 'select');
+    await fillInput(container, 'programType.id', 'OTHER', 'select');
     const otherText = await findByLabelText('Other Program:');
     expect(otherText).toBeVisible();
     expect(otherText).toHaveAttribute('name', 'otherProgramType');

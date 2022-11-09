@@ -1,11 +1,11 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultAddFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
+import { defaultFormLease } from '../models';
 import { LeaseSchema } from './AddLeaseYupSchema';
 import LeaseDatesSubForm, { ILeaseDatesSubFormProps } from './LeaseDatesSubForm';
 
@@ -18,7 +18,7 @@ describe('LeaseDatesSubForm component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<ILeaseDatesSubFormProps> = {}) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={defaultAddFormLease} validationSchema={LeaseSchema}>
+      <Formik onSubmit={noop} initialValues={defaultFormLease} validationSchema={LeaseSchema}>
         {formikProps => <LeaseDatesSubForm formikProps={formikProps} />}
       </Formik>,
       {

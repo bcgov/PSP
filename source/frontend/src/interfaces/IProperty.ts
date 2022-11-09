@@ -73,5 +73,6 @@ export interface IFormProperty
       address?: IAddress;
       landArea?: number;
       landLegalDescription?: string;
+      coordinates?: string;
     }
   > {}

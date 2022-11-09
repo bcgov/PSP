@@ -3,6 +3,8 @@ import { compact } from 'lodash';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
 import { formatApiAddress, pidFormatter } from 'utils';
 
+import { Api_Geometry, Api_Property } from './../../../models/api/Property';
+
 export enum NameSourceType {
   PID = 'PID',
   PIN = 'PIN',
@@ -32,7 +34,7 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   } else if (property.latitude !== undefined && property.longitude !== undefined) {
     return {
       label: NameSourceType.LOCATION,
-      value: compact([property.latitude?.toFixed(5), property.longitude?.toFixed(5)]).join(', '),
+      value: compact([property.latitude?.toFixed(6), property.longitude?.toFixed(6)]).join(', '),
     };
   } else if (property.address !== undefined) {
     return {
@@ -42,6 +44,12 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   }
   return { label: NameSourceType.NONE, value: '' };
 };
+
+export const getPrettyLatLng = (location?: Api_Geometry) =>
+  compact([
+    location?.coordinate?.x?.toFixed(6) ?? 0,
+    location?.coordinate?.y?.toFixed(6) ?? 0,
+  ]).join(', ');
 
 export const getFilePropertyName = (
   fileProperty?: Api_PropertyFile,
@@ -59,15 +67,23 @@ export const getFilePropertyName = (
     return { label: NameSourceType.NAME, value: fileProperty.propertyName };
   } else if (fileProperty.property !== undefined) {
     const property = fileProperty.property;
-    let mapProperty: IMapProperty = {
-      pin: property.pin?.toString(),
-      pid: property.pid?.toString(),
-      latitude: property.latitude,
-      longitude: property.longitude,
-      planNumber: property.planNumber,
-      address: property.address !== undefined ? formatApiAddress(property.address) : undefined,
-    };
-    return getPropertyName(mapProperty);
+    return getApiPropertyName(property);
   }
   return { label: NameSourceType.NONE, value: '' };
+};
+
+export const getApiPropertyName = (property?: Api_Property): PropertyName => {
+  if (property === undefined) {
+    return { label: NameSourceType.NONE, value: '' };
+  }
+
+  let mapProperty: IMapProperty = {
+    pin: property.pin?.toString(),
+    pid: property.pid?.toString(),
+    latitude: property.latitude,
+    longitude: property.longitude,
+    planNumber: property.planNumber,
+    address: property.address !== undefined ? formatApiAddress(property.address) : undefined,
+  };
+  return getPropertyName(mapProperty);
 };
