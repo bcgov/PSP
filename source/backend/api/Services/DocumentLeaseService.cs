@@ -73,7 +73,6 @@ namespace Pims.Api.Services
 
                 activity.PimsLeaseActivityInstances.Add(new PimsLeaseActivityInstance()
                 {
-                    LeaseActivityInstanceId = Guid.NewGuid().ToString(), // TODO: SQL sequence needs to be fixed and this line removed.
                     LeaseId = leaseId,
                     ActivityInstance = activity,
                 });
