@@ -55,7 +55,6 @@ export const useComposedProperties = ({
   const executeGetApiProperty = getApiPropertyWrapper.execute;
   const executeGetPropertyWfs = getPropertyWfsWrapper.execute;
   const executeGetPropertyAssociations = getPropertyAssociationsWrapper.execute;
-  const executeGetAllFeatures = getAllFeaturesWrapper.execute;
 
   useEffect(() => {
     if (id !== undefined && !isNaN(id)) {
@@ -73,6 +72,7 @@ export const useComposedProperties = ({
 
   const executeGetLtsa = getLtsaWrapper.execute;
   const executeBcAssessmentSummary = getSummaryWrapper.execute;
+  const executeGetAllFeatures = getAllFeaturesWrapper.execute;
 
   useEffect(() => {
     if (!!retrievedPid) {
@@ -89,10 +89,6 @@ export const useComposedProperties = ({
       );
     } else if (!!retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin), PROPERTY_TYPES.PARCEL_MAP);
-      typeCheckWrapper(
-        () => executeGetAllFeatures({ PIN: retrievedPin }, { timeout: 30000 }),
-        PROPERTY_TYPES.PARCEL_MAP,
-      );
     }
   }, [
     findByPid,
