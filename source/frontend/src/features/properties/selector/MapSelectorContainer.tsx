@@ -1,6 +1,10 @@
 import { Button } from 'components/common/buttons';
 import * as Styled from 'components/common/styles';
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import {
+  MapCursors,
+  MapStateActionTypes,
+  MapStateContext,
+} from 'components/maps/providers/MapStateContext';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
 import { useState } from 'react';
@@ -25,14 +29,14 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
   onRemoveProperty,
   existingProperties,
 }) => {
-  const { setCursor } = React.useContext(SelectedPropertyContext);
+  const { setState } = React.useContext(MapStateContext);
   const [selectedProperties, setSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
     SelectorTabNames.map,
   );
   React.useEffect(() => {
-    return () => setCursor(undefined);
-  }, [setCursor]);
+    return () => setState({ type: MapStateActionTypes.CURSOR, cursor: MapCursors.DEFAULT });
+  }, [setState]);
 
   return (
     <>

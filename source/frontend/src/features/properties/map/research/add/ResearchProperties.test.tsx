@@ -1,7 +1,8 @@
 import {
-  ISelectedPropertyContext,
-  SelectedPropertyContextProvider,
-} from 'components/maps/providers/SelectedPropertyContext';
+  IMapStateContext,
+  MapStateActionTypes,
+  MapStateContextProvider,
+} from 'components/maps/providers/MapStateContext';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import { act } from 'react-dom/test-utils';
@@ -29,15 +30,15 @@ describe('ResearchProperties component', () => {
   const setup = (
     renderOptions: RenderOptions & {
       initialForm: ResearchForm;
-    } & Partial<ISelectedPropertyContext>,
+    } & Partial<IMapStateContext>,
   ) => {
     // render component under test
     const component = render(
-      <SelectedPropertyContextProvider values={{ setDraftProperties: setDraftProperties }}>
+      <MapStateContextProvider values={{ setState: setDraftProperties }}>
         <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
           <ResearchProperties />
         </Formik>
-      </SelectedPropertyContextProvider>,
+      </MapStateContextProvider>,
       {
         ...renderOptions,
         store: store,
@@ -66,7 +67,10 @@ describe('ResearchProperties component', () => {
     } = await setup({ initialForm: testForm });
 
     await waitFor(async () => {
-      expect(setDraftProperties).toHaveBeenCalledWith([]);
+      expect(setDraftProperties).toHaveBeenCalledWith({
+        type: MapStateActionTypes.DRAFT_PROPERTIES,
+        draftProperties: [],
+      });
     });
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
@@ -81,7 +85,10 @@ describe('ResearchProperties component', () => {
     await act(async () => {
       userEvent.click(pidRow);
       await waitFor(async () => {
-        expect(setDraftProperties).toHaveBeenCalledWith([]);
+        expect(setDraftProperties).toHaveBeenCalledWith({
+          type: MapStateActionTypes.DRAFT_PROPERTIES,
+          draftProperties: [],
+        });
       });
     });
 
@@ -94,7 +101,10 @@ describe('ResearchProperties component', () => {
     } = await setup({ initialForm: testForm });
 
     await waitFor(async () => {
-      expect(setDraftProperties).toHaveBeenCalledWith([]);
+      expect(setDraftProperties).toHaveBeenCalledWith({
+        type: MapStateActionTypes.DRAFT_PROPERTIES,
+        draftProperties: [],
+      });
     });
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
@@ -108,13 +118,16 @@ describe('ResearchProperties component', () => {
 
     await act(async () => {
       await waitFor(async () => {
-        expect(setDraftProperties).toHaveBeenCalledWith([
-          {
-            geometry: { coordinates: [2, 1], type: 'Point' },
-            properties: { id: 0, name: 'New Parcel' },
-            type: 'Feature',
-          },
-        ]);
+        expect(setDraftProperties).toHaveBeenCalledWith({
+          type: MapStateActionTypes.DRAFT_PROPERTIES,
+          draftProperties: [
+            {
+              geometry: { coordinates: [2, 1], type: 'Point' },
+              properties: { id: 0, name: 'New Parcel' },
+              type: 'Feature',
+            },
+          ],
+        });
       });
     });
   });
@@ -130,18 +143,21 @@ describe('ResearchProperties component', () => {
 
     await act(async () => {
       await waitFor(async () => {
-        expect(setDraftProperties).toHaveBeenCalledWith([
-          {
-            geometry: { coordinates: [2, 1], type: 'Point' },
-            properties: { id: 0, name: 'New Parcel' },
-            type: 'Feature',
-          },
-          {
-            geometry: { coordinates: [4, 3], type: 'Point' },
-            properties: { id: 0, name: 'New Parcel' },
-            type: 'Feature',
-          },
-        ]);
+        expect(setDraftProperties).toHaveBeenCalledWith({
+          type: MapStateActionTypes.DRAFT_PROPERTIES,
+          draftProperties: [
+            {
+              geometry: { coordinates: [2, 1], type: 'Point' },
+              properties: { id: 0, name: 'New Parcel' },
+              type: 'Feature',
+            },
+            {
+              geometry: { coordinates: [4, 3], type: 'Point' },
+              properties: { id: 0, name: 'New Parcel' },
+              type: 'Feature',
+            },
+          ],
+        });
       });
     });
   });

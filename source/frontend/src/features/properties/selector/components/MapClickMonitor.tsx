@@ -1,4 +1,4 @@
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDraftMarkerSynchronizer from 'hooks/useDraftMarkerSynchronizer';
@@ -16,7 +16,7 @@ interface IMapClickMonitorProps {
 export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = ({
   addProperty,
 }) => {
-  const { selectedFeature } = useContext(SelectedPropertyContext);
+  const { selectedFeature } = useContext(MapStateContext);
   const previous = usePrevious(selectedFeature);
   useDraftMarkerSynchronizer('properties');
 
