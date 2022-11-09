@@ -238,7 +238,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsProperties
                     .AsNoTracking()
                     .Include(p => p.PimsPropertyLeases)
-                    .FirstOrDefault(p => (p != null && p.Location.IsWithinDistance(location, .1)));
+                    .Where(p => (p != null && p.Location.IsWithinDistance(location, 1)))
+                    .OrderBy(p => p.Location.Distance(location))
+                    .FirstOrDefault();
         }
 
         /// <summary>

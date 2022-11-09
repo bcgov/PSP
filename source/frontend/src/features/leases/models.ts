@@ -100,7 +100,7 @@ export class FormLease {
       responsibilityEffectiveDate: stringToNull(this.responsibilityEffectiveDate),
       amount: parseFloat(this.amount?.toString() ?? '') || 0.0,
       paymentReceivableType: this.paymentReceivableType,
-      categoryType: this.categoryType ? this.categoryType : undefined,
+      categoryType: this.categoryType?.id ? this.categoryType : undefined,
       purposeType: this.purposeType,
       responsibilityType: this.responsibilityType,
       initiatorType: this.initiatorType || { id: LeaseInitiatorTypes.Hq },

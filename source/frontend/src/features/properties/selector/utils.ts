@@ -34,7 +34,7 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   } else if (property.latitude !== undefined && property.longitude !== undefined) {
     return {
       label: NameSourceType.LOCATION,
-      value: compact([property.latitude?.toFixed(6), property.longitude?.toFixed(6)]).join(', '),
+      value: compact([property.longitude?.toFixed(6), property.latitude?.toFixed(6)]).join(', '),
     };
   } else if (property.address !== undefined) {
     return {
