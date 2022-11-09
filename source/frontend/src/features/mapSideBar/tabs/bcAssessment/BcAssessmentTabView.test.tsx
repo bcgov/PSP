@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 import { IBcAssessmentSummary, mockBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
-import { IFormLease } from 'interfaces';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import BcAssessmentTabView, { IBcAssessmentTabViewProps } from './BcAssessmentTabView';
