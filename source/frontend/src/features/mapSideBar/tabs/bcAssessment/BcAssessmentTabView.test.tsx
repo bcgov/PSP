@@ -9,7 +9,7 @@ const history = createMemoryHistory();
 
 describe('BcAssessmentTabView component', () => {
   const setup = (
-    renderOptions: RenderOptions & IBcAssessmentTabViewProps & { lease?: IFormLease } = {
+    renderOptions: RenderOptions & IBcAssessmentTabViewProps = {
       loading: false,
     },
   ) => {
