@@ -21,6 +21,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(PsFileNo), Name = "LEASE_PS_FILE_NO_IDX")]
     [Index(nameof(RegionCode), Name = "LEASE_REGION_CODE_IDX")]
     [Index(nameof(TfaFileNo), Name = "LEASE_TFA_FILE_NO_IDX")]
+    [Index(nameof(TfaFileNumber), Name = "LEASE_TFA_FILE_NUMBER_IDX")]
     public partial class PimsLease
     {
         public PimsLease()
@@ -73,6 +74,9 @@ namespace Pims.Dal.Entities
         public string LFileNo { get; set; }
         [Column("TFA_FILE_NO")]
         public int? TfaFileNo { get; set; }
+        [Column("TFA_FILE_NUMBER")]
+        [StringLength(50)]
+        public string TfaFileNumber { get; set; }
         [Column("PS_FILE_NO")]
         [StringLength(50)]
         public string PsFileNo { get; set; }

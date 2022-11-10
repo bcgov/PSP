@@ -60,7 +60,7 @@ function renderHolder({ row: { original } }: CellProps<ReturnListEntry, string>)
 }
 
 function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => void) {
-  return function({ row: { original, index } }: CellProps<ReturnListEntry, string>) {
+  return function ({ row: { original, index } }: CellProps<ReturnListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>

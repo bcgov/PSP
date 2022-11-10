@@ -13,7 +13,7 @@ import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
-import { ILeaseFilter } from '../../interfaces';
+import { ILeaseFilter, ILeaseSearchBy } from '../../interfaces';
 import { LeaseFilterSchema } from './LeaseFilterYupSchema';
 
 export interface ILeaseFilterProps {
@@ -83,9 +83,8 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
     defaultFilter.leaseStatusTypes.includes(x.id),
   );
 
-  const [selectedStatus, setInitialSelectedStatus] = useState<MultiSelectOption[]>(
-    initialLeaseStatusList,
-  );
+  const [selectedStatus, setInitialSelectedStatus] =
+    useState<MultiSelectOption[]>(initialLeaseStatusList);
 
   // Necessary since the lookup codes might have not been loaded before the first render
   useEffect(() => {
@@ -114,14 +113,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                 <Col>
                   <Row>
                     <Col xl="7">
-                      <SelectInput<
-                        {
-                          pinOrPid: string;
-                          address: string;
-                          lFileNo: string;
-                        },
-                        ILeaseFilter
-                      >
+                      <SelectInput<ILeaseSearchBy, ILeaseFilter>
                         field="searchBy"
                         defaultKey="pinOrPid"
                         selectOptions={[
@@ -131,6 +123,11 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                             label: 'L-File #',
                             key: 'lFileNo',
                             placeholder: 'Enter an L-File number',
+                          },
+                          {
+                            label: 'Historical File #',
+                            key: 'historical',
+                            placeholder: 'Enter a LIS or PS file Number',
                           },
                         ]}
                         className="idir-input-group"

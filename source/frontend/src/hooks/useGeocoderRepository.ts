@@ -2,9 +2,9 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
+import { IGeocoderPidsResponse, IGeocoderResponse } from './pims-api/interfaces/IGeocoder';
 import { useApiGeocoder } from './pims-api/useApiGeocoder';
 import { useApiRequestWrapper } from './pims-api/useApiRequestWrapper';
-import { IGeocoderPidsResponse, IGeocoderResponse } from './useApi';
 
 export const useGeocoderRepository = () => {
   const { getSitePidsApi, searchAddressApi, getNearestToPointApi } = useApiGeocoder();
@@ -13,9 +13,10 @@ export const useGeocoderRepository = () => {
   const { execute: executeSitePids, loading: isLoadingSitePids } = useApiRequestWrapper<
     (siteId: string) => Promise<AxiosResponse<IGeocoderPidsResponse>>
   >({
-    requestFunction: useCallback(async (siteId: string) => await getSitePidsApi(siteId), [
-      getSitePidsApi,
-    ]),
+    requestFunction: useCallback(
+      async (siteId: string) => await getSitePidsApi(siteId),
+      [getSitePidsApi],
+    ),
     requestName: 'getSitePids',
     onError: useCallback(axiosError => {
       toast.error(

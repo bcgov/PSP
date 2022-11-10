@@ -27,9 +27,10 @@ const getStore = (values?: any) => {
   return currentStore;
 };
 
-const getWrapper = (store: any) => ({ children }: any) => (
-  <Provider store={store}>{children}</Provider>
-);
+const getWrapper =
+  (store: any) =>
+  ({ children }: any) =>
+    <Provider store={store}>{children}</Provider>;
 
 describe('useAcquisitionProvider hook', () => {
   const setup = (values?: any) => {

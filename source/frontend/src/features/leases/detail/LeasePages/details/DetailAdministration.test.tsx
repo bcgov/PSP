@@ -47,7 +47,7 @@ describe('DetailAdministration component', () => {
         description: 'a test description',
         programName: 'A program',
         lFileNo: '222',
-        tfaFileNo: 333,
+        tfaFileNumber: '333',
         psFileNo: '444',
         motiName: 'test moti name',
         note: 'a test note',

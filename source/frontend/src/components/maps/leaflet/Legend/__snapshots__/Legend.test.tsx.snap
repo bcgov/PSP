@@ -22,6 +22,7 @@ exports[`Map Legend View renders correctly 1`] = `
           <img
             class=""
             height="25"
+            src="land-reg.png"
           />
         </div>
         <div
@@ -45,7 +46,7 @@ exports[`Map Legend View renders correctly 1`] = `
         <div
           class="label col"
         >
-          Point of Interest
+          Property of Interest
         </div>
       </div>
     </div>

@@ -3,11 +3,12 @@ import { Col, Row } from 'react-bootstrap';
 
 import { LeaseH3 } from '../detail/styles';
 import { PropertyRows } from './PropertyRows';
-import * as Styled from './styles';
 
 export interface IPropertyInformationSubFormProps {}
 
-const PropertyInformationSubForm: React.FunctionComponent<IPropertyInformationSubFormProps> = () => {
+const PropertyInformationSubForm: React.FunctionComponent<
+  IPropertyInformationSubFormProps
+> = () => {
   return (
     <>
       <Row>
@@ -16,16 +17,6 @@ const PropertyInformationSubForm: React.FunctionComponent<IPropertyInformationSu
         </Col>
       </Row>
       <PropertyRows />
-      <Row>
-        <Col>
-          <Styled.LargeTextArea label="Description" field="description" />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Styled.LargeTextArea label="Notes" field="note" />
-        </Col>
-      </Row>
     </>
   );
 };

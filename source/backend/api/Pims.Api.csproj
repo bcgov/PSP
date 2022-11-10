@@ -2,9 +2,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
-    <Version>2.2.0-38.24</Version>
-    <Version>2.2.0-38.24</Version>
-    <AssemblyVersion>2.2.0.38</AssemblyVersion>
+    <Version>2.2.0-39.24</Version>
+    <Version>2.2.0-39.24</Version>
+    <AssemblyVersion>2.2.0.39</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ProjectGuid>16BC0468-78F6-4C91-87DA-7403C919E646</ProjectGuid>
   </PropertyGroup>
@@ -38,7 +38,7 @@
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.0.0" />
     <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="2.0.4" />
-    <PackageReference Include="NuGet.CommandLine" Version="5.11.2">
+    <PackageReference Include="NuGet.CommandLine" Version="5.11.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

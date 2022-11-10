@@ -1,8 +1,7 @@
 // customize CRA configuration, add compression to js.
-const { override, addExternalBabelPlugins } = require('customize-cra');
 const CompressionPlugin = require('compression-webpack-plugin'); //gzip
 
-const addCompressionPlugin = () => config => {
+const addCompressionPlugin = config => {
   if (process.env.NODE_ENV === 'production') {
     config.devtool = false;
     config.plugins.push(
@@ -15,9 +14,11 @@ const addCompressionPlugin = () => config => {
   return config;
 };
 
-module.exports = {
-  webpack: override(
-    ...addExternalBabelPlugins('@babel/plugin-proposal-nullish-coalescing-operator'),
-    addCompressionPlugin(),
-  ),
+module.exports = function override(config) {
+  const fallback = config.resolve.fallback || {};
+
+  config.resolve.fallback = fallback;
+  addCompressionPlugin(config);
+  config.ignoreWarnings = [/Failed to parse source map/, /autoprefixer/];
+  return config;
 };
