@@ -20,7 +20,9 @@ export interface IPropertyFileContainerProps {
   defaultTab: InventoryTabNames;
 }
 
-export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContainerProps> = props => {
+export const PropertyFileContainer: React.FunctionComponent<
+  IPropertyFileContainerProps
+> = props => {
   const pid = props.fileProperty?.property?.pid;
   const id = props.fileProperty?.property?.id;
 
@@ -62,7 +64,7 @@ export const PropertyFileContainer: React.FunctionComponent<IPropertyFileContain
       content: (
         <PropertyDetailsTabView
           property={propertyViewForm}
-          loading={composedProperties.apiWrapper?.loading ?? false}
+          loading={composedProperties.composedLoading ?? false}
           setEditMode={editable => {
             props.setEditFileProperty();
           }}

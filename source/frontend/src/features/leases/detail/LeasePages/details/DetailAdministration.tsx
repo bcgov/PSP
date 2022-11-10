@@ -86,6 +86,10 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
         <br />
         <Form.Label>L-file #:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'lFileNo')} />
+        <Form.Label>LIS #:</Form.Label>
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'tfaFileNumber')} />
+        <Form.Label>PS #:</Form.Label>
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'psFileNo')} />
         <Form.Label>MoTI contact:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
         <Form.Label>Physical lease/license exists:</Form.Label>

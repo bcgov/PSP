@@ -10,6 +10,8 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_ACQUISITION_OWNER")]
     [Index(nameof(AcquisitionFileId), Name = "ACQOWN_ACQUISITION_FILE_ID_IDX")]
+    [Index(nameof(AddressId), Name = "ACQOWN_ADDRESS_ID_IDX")]
+    [Index(nameof(LastNameOrCorpName1), Name = "ACQOWN_LAST_NAME_OR_CORP_NAME_1_IDX")]
     public partial class PimsAcquisitionOwner
     {
         [Key]
@@ -17,13 +19,21 @@ namespace Pims.Dal.Entities
         public long AcquisitionOwnerId { get; set; }
         [Column("ACQUISITION_FILE_ID")]
         public long? AcquisitionFileId { get; set; }
+        [Column("ADDRESS_ID")]
+        public long? AddressId { get; set; }
         [Required]
-        [Column("OWNER_NAME")]
+        [Column("LAST_NAME_OR_CORP_NAME_1")]
         [StringLength(300)]
-        public string OwnerName { get; set; }
-        [Column("OWNER_COMMENT")]
-        [StringLength(2000)]
-        public string OwnerComment { get; set; }
+        public string LastNameOrCorpName1 { get; set; }
+        [Column("LAST_NAME_OR_CORP_NAME_2")]
+        [StringLength(300)]
+        public string LastNameOrCorpName2 { get; set; }
+        [Column("GIVEN_NAME")]
+        [StringLength(300)]
+        public string GivenName { get; set; }
+        [Column("INCORPORATION_NUMBER")]
+        [StringLength(50)]
+        public string IncorporationNumber { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -66,5 +76,8 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(AcquisitionFileId))]
         [InverseProperty(nameof(PimsAcquisitionFile.PimsAcquisitionOwners))]
         public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+        [ForeignKey(nameof(AddressId))]
+        [InverseProperty(nameof(PimsAddress.PimsAcquisitionOwners))]
+        public virtual PimsAddress Address { get; set; }
     }
 }

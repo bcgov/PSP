@@ -116,7 +116,8 @@ export const fillInput = async (
   return { input };
 };
 
-export const flushPromises = () => new Promise(setImmediate);
+window.setImmediate = window.setTimeout as any;
+export const flushPromises = () => new Promise(window.setImmediate);
 
 export const deferred = () => {
   let resolve: (value?: unknown) => void = noop;

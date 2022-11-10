@@ -290,44 +290,7 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c1#updateForm .form-control.is-invalid {
-  border: 2px solid #d8292f;
-}
-
-.c1#updateForm .invalid-feedback {
-  color: #d8292f;
-}
-
-.c1#updateForm .form-group label {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c1#updateForm .form-group input,
-.c1#updateForm .form-group select,
-.c1#updateForm .form-group textarea {
-  border: 2px solid #606060;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 1.6rem;
-  color: #000000;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c1#updateForm .form-group input.form-control:disabled,
-.c1#updateForm .form-group select.form-control:disabled,
-.c1#updateForm .form-group textarea.form-control:disabled,
-.c1#updateForm .form-group input.form-control[readonly],
-.c1#updateForm .form-group select.form-control[readonly],
-.c1#updateForm .form-group textarea.form-control[readonly] {
-  opacity: 1;
-}
-
-.c1#updateForm .form-group.required label:after {
+.c1 .form-group.required label:after {
   content: ' *';
   color: red;
 }

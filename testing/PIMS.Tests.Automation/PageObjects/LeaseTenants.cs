@@ -34,7 +34,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Tenants Section
         public void NavigateToTenantSection()
         {
-            Wait(700);
+            WaitUntil(tenantEditIcon);
             webDriver.FindElement(licenseTenantLink).Click();
         }
 
@@ -103,8 +103,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(By.Id(selectElementId)).Count() > 0)
             {
-                var selectContactElement = webDriver.FindElement(By.Id(selectElementId));
-                ChooseRandomOption(selectContactElement, selectElementId, 2);
+                ChooseRandomSelectOption(By.Id(selectElementId), selectElementId, 2);
             }
         }
 

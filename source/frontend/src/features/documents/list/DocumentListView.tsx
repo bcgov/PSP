@@ -62,6 +62,15 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     fetch();
   }, [props.relationshipType, retrieveDocumentTypes]);
 
+  const mapSortField = (sortField: string) => {
+    if (sortField === 'documentType') {
+      return 'documentType.documentType';
+    } else if (sortField === 'statusTypeCode') {
+      return 'statusTypeCode.description';
+    }
+    return sortField;
+  };
+
   const sortedFilteredDocuments = React.useMemo(() => {
     if (documentResults?.length > 0) {
       let documentItems: Api_Document[] = [
@@ -87,11 +96,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
           const keyName = (sort as any)[sortFields[0]];
-          return orderBy(
-            documentItems,
-            sortFields[0] === 'documentType' ? 'documentType.documentType' : sortFields[0],
-            keyName,
-          );
+          return orderBy(documentItems, mapSortField(sortFields[0]), keyName);
         }
       }
       return documentItems;

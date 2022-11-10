@@ -1,6 +1,5 @@
 import { Button } from 'components/common/buttons/Button';
 import { Form as FormBase } from 'components/common/form';
-import { sharedFormStyles } from 'components/common/form/styles';
 import { FlexBox } from 'components/common/styles';
 import { Form as FormikForm } from 'formik';
 import styled from 'styled-components';
@@ -25,8 +24,13 @@ export const H3 = styled.h3`
 `;
 
 export const Form = styled(FormikForm)`
-  &#updateForm {
-    ${sharedFormStyles}
+  .form-group {
+    &.required {
+      label:after {
+        content: ' *';
+        color: red;
+      }
+    }
   }
 `;
 

@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { tenantsSlice, useTenants } from 'store/slices/tenants';
 import { config } from 'tenants';
-import { defaultTenant } from 'tenants';
+import defaultTenant from 'tenants/config/defaultTenant';
 import { cleanup, mockKeycloak, render } from 'utils/test-utils';
 
 import Header from './Header';
