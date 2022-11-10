@@ -1,7 +1,13 @@
+import { StyledIconButton } from 'components/common/buttons';
 import { Input } from 'components/common/form';
 import { TypeaheadField } from 'components/common/form/Typeahead';
+import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
+import { Claims } from 'constants/index';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
+import { FaExternalLinkAlt, FaEye } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
@@ -73,4 +79,53 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
       },
     },
   },
+  {
+    Header: '',
+    accessor: 'controls' as any, // this column is not part of the data model
+    align: 'right',
+    sortable: false,
+    width: 20,
+    Cell: (cellProps: CellProps<IProperty, number>) => {
+      const { hasClaim } = useKeycloakWrapper();
+
+      return (
+        <StyledDiv>
+          {hasClaim(Claims.PROPERTY_VIEW) && (
+            <StyledIconButton
+              data-testid="view-prop-tab"
+              title="View Property Info"
+              variant="light"
+            >
+              <Link
+                to={`/mapview/sidebar/property/${
+                  cellProps.row.original.id
+                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+              >
+                <FaEye />
+              </Link>
+            </StyledIconButton>
+          )}
+
+          {hasClaim(Claims.PROPERTY_VIEW) && (
+            <StyledIconButton data-testid="view-prop-ext" title="View Property" variant="light">
+              <Link
+                to={`/mapview/sidebar/property/${
+                  cellProps.row.original.id
+                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaExternalLinkAlt />
+              </Link>
+            </StyledIconButton>
+          )}
+        </StyledDiv>
+      );
+    },
+  },
 ];
+
+const StyledDiv = styled(InlineFlexDiv)`
+  justify-content: space-around;
+  width: 100%;
+`;
