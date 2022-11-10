@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from 'styled-components';
 
 interface IDraftMarkerProps {
   text?: string;
@@ -6,7 +7,13 @@ interface IDraftMarkerProps {
 
 export const DraftMarker: React.FunctionComponent<IDraftMarkerProps> = ({ text, children }) => {
   return (
-    <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 30" width="30" height="45">
+    <StyledMarker
+      id="Layer_2"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 30"
+      width="30"
+      height="45"
+    >
       <defs>
         <style></style>
       </defs>
@@ -53,8 +60,13 @@ export const DraftMarker: React.FunctionComponent<IDraftMarkerProps> = ({ text, 
         {children}
       </svg>
       <title>{text}</title>
-    </svg>
+    </StyledMarker>
   );
 };
+
+const StyledMarker = styled.svg`
+  min-width: 3rem;
+  min-height: 4.5rem;
+`;
 
 export default DraftMarker;
