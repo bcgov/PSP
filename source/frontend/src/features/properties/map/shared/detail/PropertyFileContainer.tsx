@@ -1,4 +1,5 @@
 import { usePropertyDetails } from 'features/mapSideBar/hooks/usePropertyDetails';
+import BcAssessmentTabView from 'features/mapSideBar/tabs/bcAssessment/BcAssessmentTabView';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
@@ -29,7 +30,12 @@ export const PropertyFileContainer: React.FunctionComponent<
   const composedProperties = useComposedProperties({
     pid,
     id,
-    propertyTypes: [PROPERTY_TYPES.ASSOCIATIONS, PROPERTY_TYPES.LTSA, PROPERTY_TYPES.PIMS_API],
+    propertyTypes: [
+      PROPERTY_TYPES.ASSOCIATIONS,
+      PROPERTY_TYPES.LTSA,
+      PROPERTY_TYPES.PIMS_API,
+      PROPERTY_TYPES.BC_ASSESSMENT,
+    ],
   });
 
   // After API property object has been received, we query relevant map layers to find
@@ -52,7 +58,14 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Title',
   });
   tabViews.push({
-    content: <></>,
+    content: (
+      <BcAssessmentTabView
+        summaryData={composedProperties.bcAssessmentWrapper?.response}
+        requestedOn={composedProperties.bcAssessmentWrapper?.requestedOn}
+        loading={composedProperties.bcAssessmentWrapper?.loading ?? false}
+        pid={pid?.toString()}
+      />
+    ),
     key: InventoryTabNames.value,
     name: 'Value',
   });

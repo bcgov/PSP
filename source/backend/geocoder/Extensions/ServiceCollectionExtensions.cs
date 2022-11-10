@@ -20,7 +20,7 @@ namespace Pims.Geocoder
             return services
                 .Configure<Configuration.GeocoderOptions>(section)
                 .AddSingleton<IGeocoderService, GeocoderService>()
-                .AddScoped<IHttpRequestClient, HttpRequestClient>();
+                .AddSingleton<IHttpRequestClient, HttpRequestClient>();
         }
     }
 }

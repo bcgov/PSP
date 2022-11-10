@@ -38,7 +38,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             helper.Create<LtsaService>(options, user);
 
             var exception = new HttpClientRequestException(message, status);
-            var client = helper.GetService<Mock<IHttpRequestClient>>().Object;
+            var client = new HttpClient();
             var error = new Error() { ErrorMessages = new List<string>() { "errorMessages" } };
             // Act
             var ltsaException = new LtsaException(exception, client, error);

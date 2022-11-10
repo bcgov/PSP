@@ -33,7 +33,12 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const composedProperty = useComposedProperties({
     id: props.id,
     pid: props.pid !== undefined ? +props.pid : undefined,
-    propertyTypes: [PROPERTY_TYPES.ASSOCIATIONS, PROPERTY_TYPES.LTSA, PROPERTY_TYPES.PIMS_API],
+    propertyTypes: [
+      PROPERTY_TYPES.ASSOCIATIONS,
+      PROPERTY_TYPES.LTSA,
+      PROPERTY_TYPES.PIMS_API,
+      PROPERTY_TYPES.BC_ASSESSMENT,
+    ],
   });
 
   useEffect(() => {
