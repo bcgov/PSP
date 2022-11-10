@@ -1,66 +1,75 @@
-import { mount } from 'enzyme';
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
-import BasemapToggle, { BaseLayer } from './BasemapToggle';
+import BasemapToggle, { BaseLayer, BasemapToggleEvent, BasemapToggleProps } from './BasemapToggle';
 
-const toggle = jest.fn();
+const onToggle = jest.fn();
 
-const baseMaps = [
+const basemaps: BaseLayer[] = [
   {
     name: 'Map',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    urls: ['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'],
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     thumbnail: 'streets.jpg',
   },
   {
     name: 'Satellite',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    urls: [
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    ],
     attribution:
       'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
     thumbnail: 'satellite.jpg',
   },
-] as BaseLayer[];
+];
 
-// Just changes default layer - using this to simulate a toggle
-const toggledLayers = [
-  {
-    name: 'Satellite',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution:
-      'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
-    thumbnail: 'satellite.jpg',
-  },
-  {
-    name: 'Map',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    thumbnail: 'streets.jpg',
-  },
-] as BaseLayer[];
+const DEFAULT_PROPS: BasemapToggleProps = {
+  baseLayers: basemaps,
+  onToggle,
+};
 
-const component = mount(<BasemapToggle baseLayers={baseMaps} onToggle={toggle} />);
+describe('Basemap Toggle', () => {
+  // render component under test
+  function setup(
+    props: BasemapToggleProps = { ...DEFAULT_PROPS },
+    renderOptions: RenderOptions = {},
+  ) {
+    const utils = render(
+      <BasemapToggle baseLayers={props.baseLayers} onToggle={props.onToggle} />,
+      {
+        ...renderOptions,
+      },
+    );
+    return { ...utils };
+  }
 
-it('renders correctly - defaults on street layer', () => {
-  const tree = renderer.create(<BasemapToggle baseLayers={baseMaps} onToggle={toggle} />).toJSON();
-  expect(tree).toMatchSnapshot();
+  it('renders correctly - defaults to street layer', () => {
+    const { asFragment } = setup();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('calls toggle event handler when toggled', () => {
+    const { getByAltText } = setup();
+    act(() => userEvent.click(getByAltText(/Map Thumbnail/i)));
+    expect(onToggle).toBeCalledTimes(1);
+    expect(onToggle).toBeCalledWith<[BasemapToggleEvent]>({
+      current: basemaps[1],
+      previous: basemaps[0],
+    });
+  });
+
+  it('shows satellite layer thumbnail when street layer is active', () => {
+    const { getByAltText } = setup();
+    const img = getByAltText(/Map Thumbnail/i);
+    expect(img).toHaveAttribute('src', 'satellite.jpg');
+  });
+
+  it('shows street layer thumbnail when satellite layer is active', () => {
+    const { getByAltText } = setup({
+      ...DEFAULT_PROPS,
+      baseLayers: [basemaps[1], basemaps[0]],
+    });
+    const img = getByAltText(/Map Thumbnail/i);
+    expect(img).toHaveAttribute('src', 'streets.jpg');
+  });
 });
-
-it('toggle handler called correctly', () => {
-  component.prop('onToggle')();
-  expect(toggle).toBeCalledTimes(1);
-});
-
-it('thumbnail shows satellite layer when on street layer', () => {
-  expect(component.find('img').prop('src')).toEqual('satellite.jpg');
-});
-
-it('thumbnail shows street layer when on satellite layer', () => {
-  const component = mount(<BasemapToggle baseLayers={toggledLayers} onToggle={toggle} />);
-  expect(component.find('img').prop('src')).toEqual('streets.jpg');
-});
-
-// it('handles updating state correctly', ()=> {
-//     component.setState({updating: true});
-//     expect(component.find("div").first().prop("className")).toEqual("basemap-container view-busy");
-// });

@@ -73,6 +73,9 @@ describe('PropertyFileContainer component', () => {
     mockAxios
       .onGet(new RegExp('https://openmaps.gov.bc.ca.*'))
       .reply(200, { features: [{ properties: { PROPERTY_ID: 200 } }] });
+    mockAxios
+      .onGet(new RegExp('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca*'))
+      .reply(200, { features: [{ properties: { FOLIO_ID: 1, ROLL_NUMBER: 1 } }] });
 
     mockAxios.onPost(new RegExp('tools/ltsa/*')).reply(200, mockLtsaResponse);
     mockAxios.onGet(new RegExp('properties/495/associations')).reply(200, {
@@ -106,18 +109,35 @@ describe('PropertyFileContainer component', () => {
     const { getByTestId } = setup();
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(mockAxios.history.get[0].url).toEqual('/properties/495');
-    expect(mockAxios.history.get[1].url).toEqual('/properties/495/associations');
-    expect(mockAxios.history.get[2].url).toEqual(
-      'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.128633565 49.27720127104871))',
+    expect(mockAxios.history.get).toContainEqual(
+      expect.objectContaining({ url: '/properties/495' }),
     );
-    expect(mockAxios.history.get[3].url).toEqual(
-      `https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
+    expect(mockAxios.history.get).toContainEqual(
+      expect.objectContaining({ url: '/properties/495/associations' }),
     );
-    expect(mockAxios.history.get[4].url).toEqual(
-      `https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
+    expect(mockAxios.history.get).toContainEqual(
+      expect.objectContaining({
+        url: 'https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca?service=WFS&version=2.0.0&outputFormat=json&typeNames=geo.bca%3AWHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_LEGAL_DESCRIPTS_SV&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID_NUMBER+%3D+%27123456789%27',
+      }),
     );
-    expect(mockAxios.history.post[0].url).toEqual('/tools/ltsa/all?pid=123-456-789');
+    expect(mockAxios.history.get).toContainEqual(
+      expect.objectContaining({
+        url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.128633565 49.27720127104871))',
+      }),
+    );
+    expect(mockAxios.history.get).toContainEqual(
+      expect.objectContaining({
+        url: `https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
+      }),
+    );
+    expect(mockAxios.history.get).toContainEqual(
+      expect.objectContaining({
+        url: `https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
+      }),
+    );
+    expect(mockAxios.history.post).toContainEqual(
+      expect.objectContaining({ url: '/tools/ltsa/all?pid=123-456-789' }),
+    );
   });
 
   it('passes on the expected BASE tabs', async () => {

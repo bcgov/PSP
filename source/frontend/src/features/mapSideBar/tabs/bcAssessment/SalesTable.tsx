@@ -1,0 +1,38 @@
+import { ColumnWithProps, Table } from 'components/Table';
+import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
+import { CellProps } from 'react-table';
+import { formatMoney } from 'utils';
+import { prettyFormatDate } from 'utils/utils';
+
+interface ISalesTableProps {
+  salesData?: IBcAssessmentSummary['SALES'];
+}
+
+const SalesTable: React.FunctionComponent<ISalesTableProps> = props => {
+  return (
+    <Table
+      columns={columns}
+      data={props.salesData ?? []}
+      name="Property Sales"
+      noRowsMessage="No Sale data found"
+      hideToolbar
+    ></Table>
+  );
+};
+
+const columns: ColumnWithProps<IBcAssessmentSummary['SALES'][0] & { id?: number }>[] = [
+  {
+    Header: 'Description',
+    accessor: 'CONVEYANCE_DATE',
+    align: 'left',
+    width: 40,
+    Cell: ({ cell }: CellProps<IBcAssessmentSummary['SALES'][0], string>) =>
+      `A ${cell.row.original?.CONVEYANCE_TYPE_DESCRIPTION} occurred on ${prettyFormatDate(
+        cell.row.original?.CONVEYANCE_DATE,
+      )}. The sale price was ${formatMoney(
+        cell.row.original?.CONVEYANCE_PRICE,
+      )}. The document # was ${cell.row.original?.DOCUMENT_NUMBER}`,
+  },
+];
+
+export default SalesTable;

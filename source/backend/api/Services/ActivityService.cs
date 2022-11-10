@@ -71,6 +71,17 @@ namespace Pims.Api.Services
             return activityInstances;
         }
 
+        public IList<PimsActivityInstance> GetAllByLeaseId(long leaseId)
+        {
+            _logger.LogInformation("Getting activities by lease id {leaseId}", leaseId);
+            this.User.ThrowIfNotAuthorized(Permissions.ActivityView);
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            var activityInstances = _activityRepository.GetAllByLeaseId(leaseId);
+
+            return activityInstances;
+        }
+
         public IList<PimsActivityTemplate> GetAllActivityTemplates()
         {
             _logger.LogInformation("Getting activity templates");

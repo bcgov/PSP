@@ -28,7 +28,8 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             []) as AssociatedPlan[]
         ).map(x => x.planNumber);
 
-  const isLoading = props.composedProperty.composedLoading;
+  const isLoading =
+    props.composedProperty.ltsaWrapper?.loading || props.composedProperty.apiWrapper?.loading;
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />

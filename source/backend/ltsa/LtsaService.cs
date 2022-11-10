@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -25,13 +27,13 @@ namespace Pims.Ltsa
     public class LtsaService : ILtsaService
     {
         #region Variables
-        private TokenModel _token = null;
         private readonly JsonSerializerOptions _jsonSerializerOptions = null;
         private readonly ILogger<ILtsaService> _logger;
         private readonly AsyncRetryPolicy _authPolicy;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private TokenModel _token = null;
         #endregion
         #region Properties
-        protected IHttpRequestClient Client { get; }
         public LtsaOptions Options { get; }
         #endregion
 
@@ -44,19 +46,18 @@ namespace Pims.Ltsa
         /// <param name="tokenHandler"></param>
         /// <param name="logger"></param>
         /// <param name="serializerOptions"></param>
-        public LtsaService(IOptions<LtsaOptions> options, IHttpRequestClient client, ILogger<ILtsaService> logger, IOptions<JsonSerializerOptions> serializerOptions)
+        public LtsaService(IOptions<LtsaOptions> options, ILogger<ILtsaService> logger, IOptions<JsonSerializerOptions> serializerOptions, IHttpClientFactory httpClientFactory)
         {
             this.Options = options.Value;
-            this.Client = client;
+            this._httpClientFactory = httpClientFactory;
             _logger = logger;
             _jsonSerializerOptions = serializerOptions.Value;
             _authPolicy = Policy
                 .Handle<HttpClientRequestException>(ex => ex.StatusCode == HttpStatusCode.Forbidden || ex.StatusCode == HttpStatusCode.Unauthorized)
-                .RetryAsync(async (exception, retryCount) =>
+                .RetryAsync(async (exception, retryCount, context) =>
                 {
-                    _token = await RefreshAccessTokenAsync();
-                    this.Client.Client?.DefaultRequestHeaders?.Clear();
-                    this.Client.Client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {_token.AccessToken}");
+                    _token = await RefreshAccessTokenAsync((TokenModel)context["access_token"]);
+                    context["access_token"] = _token;
                 });
         }
         #endregion
@@ -70,16 +71,37 @@ namespace Pims.Ltsa
         /// <param name="url"></param>
         /// <param name="method"></param>
         /// <returns></returns>
-        private async Task<TR> SendAsync<TR>(string url, HttpMethod method)
+        private async Task<TR> GetAsync<TR>(string url)
         {
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             try
             {
-                return await _authPolicy.ExecuteAsync(async () => await this.Client.SendAsync<TR>(url, method));
+                return await _authPolicy.ExecuteAsync(async (context) =>
+                {
+                    var token = (TokenModel)context["access_token"];
+                    if (token != null)
+                    {
+                        client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {token?.AccessToken}");
+                    }
+
+                    var response = await client.GetAsync(url);
+                    if(!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpClientRequestException(response);
+                    }
+                    string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                    var finalResult = JsonSerializer.Deserialize<TR>(payload, _jsonSerializerOptions);
+                    return finalResult;
+
+                }, new Dictionary<string, object>
+                {
+                    { "access_token", _token }
+                });
             }
             catch (HttpClientRequestException ex)
             {
                 Error error = await GetLtsaError(ex, url);
-                throw new LtsaException(ex, this.Client, error);
+                throw new LtsaException(ex, client, error);
             }
         }
 
@@ -93,9 +115,10 @@ namespace Pims.Ltsa
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        private async Task<OrderWrapper<OrderParent<TR>>> SendOrderAsync<TR, TD>(string url, HttpMethod method, TD data) where TR : IFieldedData
+        private async Task<OrderWrapper<OrderParent<TR>>> PostOrderAsync<TR, TD>(string url, TD data) where TR : IFieldedData
             where TD : class
         {
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             var orderProcessingPolicy = Policy
                 .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
                  .Or<JsonException>()
@@ -103,21 +126,43 @@ namespace Pims.Ltsa
 
             try
             {
-                var response = await _authPolicy.ExecuteAsync(async () => await this.Client.SendJsonAsync<OrderWrapper<OrderParent<TR>>, TD>(url, method, data));
-                if (IsResponseMissingJsonAndProcessing(response))
+                var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
+                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+
+                var response = await _authPolicy.ExecuteAsync(async (context) => {
+                    var token = (TokenModel)context["access_token"];
+                    if (token != null)
+                    {
+                        client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {token?.AccessToken}");
+                    }
+
+                    var response = await client.PostAsync(url, content);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpClientRequestException(response);
+                    }
+                    return response;
+                }, new Dictionary<string, object>
                 {
-                    response = await _authPolicy.WrapAsync(orderProcessingPolicy).ExecuteAsync(async () => await GetOrderById<TR>(response?.Order?.OrderId));
-                    if (IsResponseMissingJsonAndProcessing(response))
+                    { "access_token", _token }
+                });
+
+                string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                var processedResponse = JsonSerializer.Deserialize<OrderWrapper<OrderParent<TR>>>(payload, _jsonSerializerOptions);
+                if (IsResponseMissingJsonAndProcessing(processedResponse))
+                {
+                    processedResponse = await _authPolicy.WrapAsync(orderProcessingPolicy).ExecuteAsync(async () => await GetOrderById<TR>(processedResponse?.Order?.OrderId));
+                    if (IsResponseMissingJsonAndProcessing(processedResponse))
                     {
                         throw new LtsaException("Request timed out waiting for ltsa response", HttpStatusCode.RequestTimeout);
                     }
                 }
-                return response;
+                return processedResponse;
             }
             catch (HttpClientRequestException ex)
             {
                 Error error = await GetLtsaError(ex, url);
-                throw new LtsaException(ex, this.Client, error);
+                throw new LtsaException(ex, client, error);
             }
             catch (JsonException ex)
             {
@@ -156,18 +201,21 @@ namespace Pims.Ltsa
         /// Make an HTTP request if one is needed.
         /// </summary>
         /// <returns></returns>
-        private async Task<TokenModel> RefreshAccessTokenAsync()
+        private async Task<TokenModel> RefreshAccessTokenAsync(TokenModel token)
         {
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             // If the refresh token exists, try and refresh the token.
-            if (_token?.RefreshToken != null)
+            if (token?.RefreshToken != null)
             {
                 try
                 {
-                    var refreshToken = _token?.RefreshToken;
-                    _token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
-                    var response = await _authPolicy.ExecuteAsync(async () => await this.Client.PostJsonAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), new { refreshToken }));
+                    var refreshToken = token?.RefreshToken;
+                    token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
+                    var stringContent = JsonSerializer.Serialize(refreshToken, _jsonSerializerOptions);
+                    var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                    var response = await _authPolicy.ExecuteAsync(async () => await client.PostAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), content));
                     var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
-                    _token = new TokenModel(tokens.AccessToken, tokens.RefreshToken);
+                    token = new TokenModel(tokens.AccessToken, tokens.RefreshToken);
                 }
                 catch (HttpClientRequestException ex)
                 {
@@ -177,9 +225,9 @@ namespace Pims.Ltsa
             }
             else
             {
-                _token = await GetTokenAsync();
+                token = await GetTokenAsync();
             }
-            return _token;
+            return token;
         }
 
         /// <summary>
@@ -201,9 +249,12 @@ namespace Pims.Ltsa
             };
 
             string url = this.Options.AuthUrl.AppendToURL(this.Options.LoginIntegratorEndpoint);
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             try
             {
-                var response = await this.Client.PostJsonAsync(url, creds);
+                var stringContent = JsonSerializer.Serialize(creds, _jsonSerializerOptions);
+                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(url, content);
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new LtsaException("Received error response from LTSA when retrieving authorization token", response.StatusCode);
@@ -214,7 +265,7 @@ namespace Pims.Ltsa
             catch (HttpClientRequestException ex)
             {
                 Error error = await GetLtsaError(ex, url);
-                throw new LtsaException(ex, this.Client, error);
+                throw new LtsaException(ex, client, error);
             }
         }
 
@@ -226,7 +277,7 @@ namespace Pims.Ltsa
         public async Task<TitleSummariesResponse> GetTitleSummariesAsync(int pid)
         {
             var url = this.Options.HostUri.AppendToURL(new string[] { this.Options.TitleSummariesEndpoint, $"?filter=parcelIdentifier:{pid}" });
-            return await SendAsync<TitleSummariesResponse>(url, HttpMethod.Get);
+            return await GetAsync<TitleSummariesResponse>(url);
         }
 
         /// <summary>
@@ -239,7 +290,7 @@ namespace Pims.Ltsa
         {
             TitleOrder order = new(new TitleOrderParameters(titleNumber, Enum.Parse<LandTitleDistrictCode>(landTitleDistrictCode)));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
-            return await SendOrderAsync<Title, OrderWrapper<TitleOrder>>(url, HttpMethod.Post, new OrderWrapper<TitleOrder>(order));
+            return await PostOrderAsync<Title, OrderWrapper<TitleOrder>>(url, new OrderWrapper<TitleOrder>(order));
         }
 
         /// <summary>
@@ -251,7 +302,7 @@ namespace Pims.Ltsa
         {
             ParcelInfoOrder order = new(new ParcelInfoOrderParameters(pid));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
-            return await SendOrderAsync<ParcelInfo, OrderWrapper<ParcelInfoOrder>>(url, HttpMethod.Post, new OrderWrapper<ParcelInfoOrder>(order));
+            return await PostOrderAsync<ParcelInfo, OrderWrapper<ParcelInfoOrder>>(url, new OrderWrapper<ParcelInfoOrder>(order));
         }
 
         /// <summary>
@@ -263,7 +314,7 @@ namespace Pims.Ltsa
         {
             SpcpOrder order = new(new StrataPlanCommonPropertyOrderParameters(strataPlanNumber));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
-            return await SendOrderAsync<StrataPlanCommonProperty, OrderWrapper<SpcpOrder>>(url, HttpMethod.Post, new OrderWrapper<SpcpOrder>(order));
+            return await PostOrderAsync<StrataPlanCommonProperty, OrderWrapper<SpcpOrder>>(url, new OrderWrapper<SpcpOrder>(order));
         }
 
         /// <summary>
@@ -274,7 +325,7 @@ namespace Pims.Ltsa
         public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
-            return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);
+            return await GetAsync<OrderWrapper<OrderParent<T>>>(url);
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
+import { convertToProperty } from '../PointClusterer';
 import { LayerPopupContent, LayerPopupInformation } from '.';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
 import { LayerPopupLinks } from './components/LayerPopupLinks';
@@ -54,6 +55,15 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
     history.push('/mapview/sidebar/acquisition/new');
   };
 
+  const handleCreateLeaseLicence = () => {
+    selectedFeature &&
+      setState({
+        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+        selectedInventoryProperty: convertToProperty(layerPopup?.pimsProperty?.properties),
+      });
+    history.push('/lease/new');
+  };
+
   return (
     <StyledContainer>
       <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
@@ -66,9 +76,11 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
       {showFlyout && (
         <StyledFlyoutContainer>
           <LayerPopupFlyout
+            pimsPropertyId={id}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
+            onCreateLeaseLicense={handleCreateLeaseLicence}
           />
         </StyledFlyoutContainer>
       )}

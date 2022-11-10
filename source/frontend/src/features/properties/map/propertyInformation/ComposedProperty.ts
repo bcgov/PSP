@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { IWfsGetAllFeaturesOptions } from 'hooks/pims-api';
 import { IResponseWrapper } from 'hooks/pims-api/useApiRequestWrapper';
+import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import { LtsaOrders } from 'interfaces/ltsaModels';
 import { Api_Property, Api_PropertyAssociations } from 'models/api/Property';
 
@@ -22,6 +23,9 @@ export default interface ComposedProperty {
   >;
   geoserverWrapper?: IResponseWrapper<
     (id: number) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>, any>>
+  >;
+  bcAssessmentWrapper?: IResponseWrapper<
+    (pid: string) => Promise<AxiosResponse<IBcAssessmentSummary, any>>
   >;
   composedLoading: boolean;
 }
