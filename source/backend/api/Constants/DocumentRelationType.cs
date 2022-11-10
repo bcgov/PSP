@@ -12,5 +12,7 @@ namespace Pims.Api.Constants
         Files,
         [EnumMember(Value = "templates")]
         Templates,
+        [EnumMember(Value = "leases")]
+        Leases,
     }
 }

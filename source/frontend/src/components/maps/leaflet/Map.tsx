@@ -6,12 +6,12 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLngBounds, Map as LeafletMap, TileLayer as LeafletTileLayer } from 'leaflet';
+import { LatLngBounds, Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
+import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
@@ -109,8 +109,6 @@ const Map: React.FC<MapProps> = ({
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
-  // a reference to the basemap tile layer since the layer url is immutable
-  const tileRef = useRef<LeafletTileLayer>(null);
 
   const { setState, selectedInventoryProperty, selectedFeature } = useContext(MapStateContext);
   const { propertiesLoading } = useContext(PropertyContext);
@@ -167,7 +165,6 @@ const Map: React.FC<MapProps> = ({
     const { previous, current } = e;
     setBaseLayers([current, previous]);
     setActiveBasemap(current);
-    tileRef?.current?.setUrl(current.url);
   };
 
   useEffect(() => {
@@ -243,14 +240,17 @@ const Map: React.FC<MapProps> = ({
             moveend={handleBounds}
           />
           {activeBasemap && (
-            <TileLayer
-              ref={tileRef}
-              attribution={activeBasemap.attribution}
-              url={activeBasemap.url}
-              zIndex={0}
-              maxZoom={MAP_MAX_ZOOM}
-              maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
-            />
+            <LayerGroup attribution={activeBasemap.attribution}>
+              {activeBasemap.urls?.map((tileUrl, index) => (
+                <TileLayer
+                  key={`${activeBasemap.name}-${index}`}
+                  zIndex={index}
+                  url={tileUrl}
+                  maxZoom={MAP_MAX_ZOOM}
+                  maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+                />
+              ))}
+            </LayerGroup>
           )}
           {!!layerPopup && (
             <LayerPopup
