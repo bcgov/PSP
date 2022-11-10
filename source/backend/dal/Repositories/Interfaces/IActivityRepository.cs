@@ -13,6 +13,8 @@ namespace Pims.Dal.Repositories
 
         IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId);
 
+        IList<PimsActivityInstance> GetAllByLeaseId(long leaseId);
+
         PimsActivityInstance Add(PimsActivityInstance instance);
 
         PimsActivityInstance Update(PimsActivityInstance instance);

@@ -100,6 +100,12 @@ exports[`LeaseIndex component renders as expected 1`] = `
     >
       Surplus Declaration
     </a>
+    <a
+      class="c1 disabled"
+      href="/"
+    >
+      Documents
+    </a>
   </div>
 </DocumentFragment>
 `;

@@ -1,26 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly - defaults on street layer 1`] = `
-<div
-  className="basemap-container"
->
-  <button
-    className="basemap-item current"
-  />
-  <label
-    className="caption"
-  >
-    Satellite
-  </label>
+exports[`Basemap Toggle renders correctly - defaults to street layer 1`] = `
+<DocumentFragment>
   <div
-    className="basemap-item basemap-item-button secondary"
-    onClick={[Function]}
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="basemap-container"
   >
-    <img
-      alt="Map Thumbnail"
-      role="presentation"
-      src="satellite.jpg"
+    <button
+      class="basemap-item current"
     />
+    <label
+      class="caption"
+    >
+      Satellite
+    </label>
+    <div
+      class="basemap-item basemap-item-button secondary"
+    >
+      <img
+        alt="Map Thumbnail"
+        role="presentation"
+        src="satellite.jpg"
+      />
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;

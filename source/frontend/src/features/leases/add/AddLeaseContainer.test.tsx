@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -7,6 +8,17 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
+
+jest.mock('@react-keycloak/web');
+(useKeycloak as jest.Mock).mockReturnValue({
+  keycloak: {
+    subject: 'test',
+    authenticated: true,
+    userInfo: {
+      roles: [],
+    },
+  },
+});
 
 const history = createMemoryHistory();
 const storeState = {
