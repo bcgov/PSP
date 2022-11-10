@@ -5,7 +5,7 @@ import NoteSubForm from 'features/leases/add/NoteSubForm';
 import PropertyInformationSubForm from 'features/leases/add/PropertyInformationSubForm';
 import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
 import * as Styled from 'features/leases/add/styles';
-import { defaultFormLease, FormLease } from 'features/leases/models';
+import { FormLease, getDefaultFormLease } from 'features/leases/models';
 import SaveCancelButtons from 'features/leases/SaveCancelButtons';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
@@ -28,7 +28,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
     <Formik
       validationSchema={LeaseSchema}
       onSubmit={values => onSubmit(values)}
-      initialValues={initialValues ?? defaultFormLease}
+      initialValues={initialValues ?? getDefaultFormLease()}
       innerRef={formikRef}
     >
       {formikProps => (

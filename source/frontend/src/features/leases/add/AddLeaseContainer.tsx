@@ -1,7 +1,7 @@
 import GenericModal from 'components/common/GenericModal';
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
-import { MapStateContext } from 'components/maps/providers/MapStateContext';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import { AddLeaseLayout, LeaseBreadCrumb, LeaseHeader, LeaseIndex } from 'features/leases';
 import { FormikProps } from 'formik';
 import { Api_Lease } from 'models/api/Lease';
@@ -19,6 +19,7 @@ export interface IAddLeaseContainerProps {}
 export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps> = props => {
   const leasePage = leasePages.get(LeasePageNames.DETAILS);
   const { setTrayPage } = useContext(SidebarStateContext);
+  const { setState } = useContext(MapStateContext);
   const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
   const history = useHistory();
   const { addLease } = useAddLease();
@@ -39,20 +40,30 @@ export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps>
     }
   };
 
+  // when leaving this page, reset any selected lease properties to ensure that future uses of this page do not include previously selected values.
+  React.useEffect(() => {
+    return () => {
+      setState({
+        type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
+        selectedLeaseProperty: null,
+      });
+    };
+  }, [setState]);
+
   const onCancel = () => {
     history.push('/lease/list');
   };
 
   return (
     <MapStateContext.Consumer>
-      {({ selectedInventoryProperty }) => (
+      {({ selectedLeaseProperty }) => (
         <>
           <AddLeaseLayout>
             <LeaseBreadCrumb leasePage={leasePage} onClickManagement={onClickManagement} />
             <LeaseHeader />
             <LeaseIndex currentPageName={LeasePageNames.DETAILS}></LeaseIndex>
             <AddLeaseForm
-              propertyInfo={selectedInventoryProperty}
+              propertyInfo={selectedLeaseProperty}
               onCancel={onCancel}
               onSubmit={onSubmit}
               formikRef={formikRef}
@@ -65,9 +76,9 @@ export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps>
                 if (!!addLeaseParams?.lease) {
                   const leaseResponse = await addLease(addLeaseParams.lease, undefined, true);
                   setAddLeaseParams(undefined);
-              if (!!leaseResponse?.id) {
-                history.push(`/lease/${leaseResponse?.id}`);
-              }
+                  if (!!leaseResponse?.id) {
+                    history.push(`/lease/${leaseResponse?.id}`);
+                  }
                 }
               }}
               handleCancel={() => setAddLeaseParams(undefined)}

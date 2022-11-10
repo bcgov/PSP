@@ -5,7 +5,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
-import { defaultFormLease } from '../models';
+import { getDefaultFormLease } from '../models';
 import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
 
 const history = createMemoryHistory();
@@ -19,7 +19,7 @@ describe('AdministrationSubForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={getDefaultFormLease()}>
         {formikProps => <AdministrationSubForm formikProps={formikProps} />}
       </Formik>,
       {

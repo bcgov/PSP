@@ -224,20 +224,21 @@ export class FormProperty {
   }
 }
 
-export const defaultFormLease: FormLease = FormLease.fromApi({
-  properties: [{}],
-  startDate: '',
-  expiryDate: '',
-  lFileNo: '',
-  tfaFileNumber: '',
-  psFileNo: '',
-  motiName: '',
-  amount: 0,
-  isResidential: false,
-  isCommercialBuilding: false,
-  isOtherImprovement: false,
-  returnNotes: '',
-  hasDigitalLicense: undefined,
-  hasPhysicalLicense: undefined,
-  statusType: { id: 'DRAFT' },
-});
+export const getDefaultFormLease: () => FormLease = () =>
+  FormLease.fromApi({
+    properties: [{}],
+    startDate: '',
+    expiryDate: '',
+    lFileNo: '',
+    tfaFileNumber: '',
+    psFileNo: '',
+    motiName: '',
+    amount: 0,
+    isResidential: false,
+    isCommercialBuilding: false,
+    isOtherImprovement: false,
+    returnNotes: '',
+    hasDigitalLicense: undefined,
+    hasPhysicalLicense: undefined,
+    statusType: { id: 'DRAFT' },
+  });

@@ -6,7 +6,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
-import { defaultFormLease } from '../models';
+import { getDefaultFormLease } from '../models';
 import PropertyInformationSubForm, {
   IPropertyInformationSubFormProps,
 } from './PropertyInformationSubForm';
@@ -22,7 +22,7 @@ describe('PropertyInformationSubForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={getDefaultFormLease()}>
         {formikProps => <PropertyInformationSubForm />}
       </Formik>,
       {

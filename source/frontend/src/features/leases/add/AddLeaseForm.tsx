@@ -1,9 +1,10 @@
 import { Formik, FormikProps } from 'formik';
+import { IProperty } from 'interfaces';
 import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
-import { defaultFormLease, FormLease } from '../models';
+import { FormLease, FormLeaseProperty, getDefaultFormLease } from '../models';
 import SaveCancelButtons from '../SaveCancelButtons';
 import { LeaseSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
@@ -17,7 +18,6 @@ interface IAddLeaseFormProps {
   onCancel: () => void;
   onSubmit: (lease: Api_Lease) => void;
   formikRef: React.Ref<FormikProps<FormLease>>;
-  initialValues?: FormLease;
   propertyInfo: IProperty | null;
 }
 
@@ -25,16 +25,29 @@ const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
   onCancel,
   onSubmit,
   formikRef,
-  initialValues,
   propertyInfo,
 }) => {
+  const defaultFormLease = getDefaultFormLease();
   if (propertyInfo) {
-    defaultAddFormLease.properties = [propertyInfo];
-    defaultAddFormLease.region = propertyInfo.regionId || '';
+    defaultFormLease.properties = [];
+    defaultFormLease.properties.push(
+      FormLeaseProperty.fromApi({
+        property: {
+          pid: propertyInfo.pid ? +propertyInfo.pid : undefined,
+          pin: propertyInfo?.pin ? +propertyInfo.pin : undefined,
+          latitude: propertyInfo.latitude,
+          longitude: propertyInfo.longitude,
+          location: { coordinate: { x: propertyInfo.longitude, y: propertyInfo.latitude } },
+        },
+        leaseArea: propertyInfo.landArea,
+        areaUnitType: { id: propertyInfo.areaUnit },
+      }),
+    );
+    defaultFormLease.region = propertyInfo.regionId ? { id: propertyInfo.regionId } : undefined;
   }
   return (
     <Formik<FormLease>
-      initialValues={defaultFormLease ?? initialValues}
+      initialValues={defaultFormLease}
       onSubmit={async (values: FormLease, formikHelpers) => {
         const apiLease = values.toApi();
         formikHelpers.setSubmitting(false);

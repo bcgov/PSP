@@ -5,7 +5,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from 'utils/test-utils';
 
-import { defaultFormLease } from '../models';
+import { getDefaultFormLease } from '../models';
 import NoteSubForm, { INoteSubFormProps } from './NoteSubForm';
 
 const history = createMemoryHistory();
@@ -17,7 +17,7 @@ describe('NoteSubForm component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<INoteSubFormProps> = {}) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={defaultFormLease}>
+      <Formik onSubmit={noop} initialValues={getDefaultFormLease()}>
         {formikProps => <NoteSubForm />}
       </Formik>,
       {
