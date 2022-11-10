@@ -1,10 +1,7 @@
 import DraftSvg from 'assets/images/pins/icon-draft.svg';
 import clsx from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import {
-  MapStateContext,
-  MapStateContextProvider,
-} from 'components/maps/providers/MapStateContext';
+import { MapStateContext } from 'components/maps/providers/MapStateContext';
 import { PropertyContextProvider } from 'components/maps/providers/PropertyContext';
 import { MAP_MAX_ZOOM } from 'constants/strings';
 import { IProperty } from 'interfaces';
@@ -66,44 +63,42 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   );
 
   return (
-    <MapStateContextProvider>
-      <MapStateContext.Consumer>
-        {({ cursor }) => (
-          <PropertyContextProvider>
-            <StyleMapView data-test="map-view" className={clsx(cursor)}>
-              <SideBarContextProvider>
-                <MapSideBar
+    <MapStateContext.Consumer>
+      {({ cursor }) => (
+        <PropertyContextProvider>
+          <StyleMapView data-test="map-view" className={clsx(cursor)}>
+            <SideBarContextProvider>
+              <MapSideBar
+                showSideBar={showSideBar}
+                setShowSideBar={setShowSideBar}
+                onZoom={onZoom}
+              />
+              <MapActionWindow showWindow={showActionBar}>
+                <ActivityRouter setShowActionBar={setShowActionBar} />
+              </MapActionWindow>
+            </SideBarContextProvider>
+            {!showActionBar && (
+              <FilterProvider>
+                <Map
+                  lat={defaultLatLng.lat}
+                  lng={defaultLatLng.lng}
+                  onViewportChanged={() => {
+                    if (!loadedProperties) {
+                      setLoadedProperties(true);
+                    }
+                  }}
+                  showParcelBoundaries={props.showParcelBoundaries ?? true}
+                  zoom={6}
+                  onViewPropertyClick={onPropertyViewClicked}
                   showSideBar={showSideBar}
-                  setShowSideBar={setShowSideBar}
-                  onZoom={onZoom}
+                  whenCreated={setMapInstance}
                 />
-                <MapActionWindow showWindow={showActionBar}>
-                  <ActivityRouter setShowActionBar={setShowActionBar} />
-                </MapActionWindow>
-              </SideBarContextProvider>
-              {!showActionBar && (
-                <FilterProvider>
-                  <Map
-                    lat={defaultLatLng.lat}
-                    lng={defaultLatLng.lng}
-                    onViewportChanged={() => {
-                      if (!loadedProperties) {
-                        setLoadedProperties(true);
-                      }
-                    }}
-                    showParcelBoundaries={props.showParcelBoundaries ?? true}
-                    zoom={6}
-                    onViewPropertyClick={onPropertyViewClicked}
-                    showSideBar={showSideBar}
-                    whenCreated={setMapInstance}
-                  />
-                </FilterProvider>
-              )}
-            </StyleMapView>
-          </PropertyContextProvider>
-        )}
-      </MapStateContext.Consumer>
-    </MapStateContextProvider>
+              </FilterProvider>
+            )}
+          </StyleMapView>
+        </PropertyContextProvider>
+      )}
+    </MapStateContext.Consumer>
   );
 };
 

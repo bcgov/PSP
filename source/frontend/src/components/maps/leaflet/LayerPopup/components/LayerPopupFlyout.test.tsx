@@ -22,6 +22,7 @@ describe('LayerPopupFlyout component', () => {
     // render component under test
     const component = render(
       <LayerPopupFlyout
+        pimsPropertyId={''}
         onViewPropertyInfo={onViewPropertyInfo}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
