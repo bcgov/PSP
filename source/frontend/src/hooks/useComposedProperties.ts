@@ -87,6 +87,7 @@ export const useComposedProperties = ({
           executeGetAllFeatures({ PID: retrievedPid }, { forceSimplePid: true, timeout: 30000 }),
         PROPERTY_TYPES.PARCEL_MAP,
       );
+      typeCheckWrapper(() => findByPid(retrievedPid, true), PROPERTY_TYPES.PARCEL_MAP);
     } else if (!!retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
