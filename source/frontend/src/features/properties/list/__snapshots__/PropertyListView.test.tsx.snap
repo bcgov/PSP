@@ -524,7 +524,7 @@ exports[`Property list view matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 220px;"
+            style="display: flex; flex: 1 0 auto; min-width: 250px;"
           >
             <div
               class="th"
@@ -585,6 +585,16 @@ exports[`Property list view matches snapshot 1`] = `
               >
                 Lot Size (in ha)
               </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              />
             </div>
           </div>
         </div>
