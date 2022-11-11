@@ -72,7 +72,6 @@ export const useComposedProperties = ({
 
   const executeGetLtsa = getLtsaWrapper.execute;
   const executeBcAssessmentSummary = getSummaryWrapper.execute;
-  const executeGetAllFeatures = getAllFeaturesWrapper.execute;
 
   useEffect(() => {
     if (!!retrievedPid) {
@@ -82,12 +81,6 @@ export const useComposedProperties = ({
         () => executeBcAssessmentSummary(retrievedPid),
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
-      typeCheckWrapper(
-        () =>
-          executeGetAllFeatures({ PID: retrievedPid }, { forceSimplePid: true, timeout: 30000 }),
-        PROPERTY_TYPES.PARCEL_MAP,
-      );
-      typeCheckWrapper(() => findByPid(retrievedPid, true), PROPERTY_TYPES.PARCEL_MAP);
     } else if (!!retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
@@ -99,7 +92,6 @@ export const useComposedProperties = ({
     retrievedPin,
     typeCheckWrapper,
     executeBcAssessmentSummary,
-    executeGetAllFeatures,
   ]);
 
   return {
