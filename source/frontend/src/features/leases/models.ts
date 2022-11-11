@@ -85,6 +85,10 @@ export class FormLease {
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement;
     leaseDetail.rowVersion = apiModel?.rowVersion;
     leaseDetail.description = apiModel?.description;
+    leaseDetail.otherCategoryType = apiModel?.otherCategoryType;
+    leaseDetail.otherProgramType = apiModel?.otherProgramType;
+    leaseDetail.otherPurposeType = apiModel?.otherPurposeType;
+    leaseDetail.otherType = apiModel?.otherType;
 
     return leaseDetail;
   }
@@ -120,6 +124,10 @@ export class FormLease {
       isOtherImprovement: this.isOtherImprovement,
       description: this.description,
       rowVersion: this.rowVersion,
+      otherCategoryType: this.otherCategoryType,
+      otherProgramType: this.otherProgramType,
+      otherPurposeType: this.otherPurposeType,
+      otherType: this.otherType,
     };
   }
 }
