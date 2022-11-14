@@ -16,6 +16,7 @@ export const useMapSearch = () => {
   } = useMapProperties();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
+
   useEffect(() => {
     setPropertiesLoading(loading);
   }, [loading, setPropertiesLoading]);
