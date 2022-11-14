@@ -17,6 +17,16 @@ export const parcelIcon = L.icon({
   shadowSize: [41, 41],
 });
 
+// not owned property icon (red)
+export const notOwnedPropertyIcon = L.icon({
+  iconUrl: require('assets/images/pins/land-erp.png') ?? 'assets/images/pins/land-erp.png',
+  shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // property of interest icon (blue) highlighted
 export const propertyOfInterestIcon = L.icon({
   iconUrl: require('assets/images/pins/land-poi.svg').default ?? 'assets/images/pins/land-poi.svg',
