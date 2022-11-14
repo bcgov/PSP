@@ -187,8 +187,12 @@ export const asProperty = (point: PointFeature): IProperty => {
  * The resulting filter is URL-encoded
  * @param object an object to convert to a cql filter string.
  */
-export const toCqlFilter = (object: Record<string, any>, pidOverride?: boolean) => {
-  const cqlValue: string = toCqlFilterValue(object, pidOverride);
+export const toCqlFilter = (
+  object: Record<string, any>,
+  pidOverride?: boolean,
+  forcePerfectMatch?: boolean,
+) => {
+  const cqlValue: string = toCqlFilterValue(object, pidOverride, forcePerfectMatch);
   return cqlValue.length ? `cql_filter=${encodeURIComponent(cqlValue)}` : '';
 };
 

@@ -151,12 +151,14 @@ export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProp
 
   const params = useMemo((): any => {
     const tiles = getTiles(defaultBounds, 5);
-
     return tiles.map(tile => ({
       STREET_ADDRESS_1: filter?.STREET_ADDRESS_1,
       PID: filter?.PID,
       PIN: filter?.PIN,
       BBOX: tile.bbox,
+      forceExactMatch: filter?.forceExactMatch,
+      latitude: filter?.latitude,
+      longitude: filter?.longitude,
     }));
   }, [filter]);
   useMapRefreshEvent(() => search(params));

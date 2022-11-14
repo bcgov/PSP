@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Property list view matches snapshot 1`] = `
+exports[`MapView Renders the map 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -8,10 +8,7 @@ exports[`Property list view matches snapshot 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
-  .c4.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +38,49 @@ exports[`Property list view matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c4.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c4.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c4.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c4.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c4.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c4.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +101,9 @@ exports[`Property list view matches snapshot 1`] = `
   padding: 0;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +112,14 @@ exports[`Property list view matches snapshot 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,72 +130,49 @@ exports[`Property list view matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c4.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.btn {
-  background-color: unset;
-  border: none;
-}
-
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
-  background-color: unset;
-  outline: none;
-  box-shadow: none;
-}
-
-.c8.c8.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c8.c8.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-}
-
-.c5 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c5 div:nth-child(2) div:nth-child(1) {
+.c9 div:nth-child(1) div:nth-child(1) {
   cursor: auto;
 }
 
-.c5 div:nth-child(2) div:nth-child(1) svg {
+.c9 div:nth-child(1) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c5 div:nth-child(1) div:nth-child(1) {
+.c9 div:nth-child(2) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c5 div:nth-child(1) div:nth-child(1) svg {
+.c9 div:nth-child(2) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c6 {
+.c10 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c7 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -215,45 +189,118 @@ exports[`Property list view matches snapshot 1`] = `
   align-items: center;
 }
 
-.c7 svg {
+.c11 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
 }
 
-.c2 {
+.c6 {
   padding-right: 0 !important;
 }
 
-.c2 .form-control {
+.c6 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c1 {
+.c5 {
   padding-right: 0 !important;
   border-right: 0 !important;
 }
 
-.c3 {
+.c7 {
   padding-left: 0 !important;
 }
 
-.c3 .form-control {
+.c7 .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c0 {
+.c12 {
+  grid-area: map;
+}
+
+.c12 .leaflet-div-icon {
+  background: none;
+  border: none;
+}
+
+.c12 .leaflet-div-icon img {
+  width: inherit;
+  height: inherit;
+  -webkit-filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+  filter: drop-shadow(3px 1px 10px rgb(0 0 0 / 0.6));
+}
+
+.c12 .leaflet-container {
+  height: 100%;
+  margin: auto;
+}
+
+.c12 .leaflet-container .leaflet-popup-content-wrapper {
+  border-radius: 0;
+}
+
+.c12 .leaflet-container .leaflet-popup-content {
+  margin: 0rem;
+}
+
+.c12 .leaflet-container .leaflet-control-container .leaflet-top {
+  z-index: 500;
+}
+
+.c12 .leaflet-control-layers.leaflet-control-layers-expanded {
+  border-radius: 0rem;
+}
+
+.c12 .leaflet-control-layers .leaflet-control-layers-overlays {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 1rem;
+  width: 15rem;
+}
+
+.c12 .leaflet-control-layers .leaflet-control-layers-overlays label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: 'filter filter' 'map map';
+  -webkit-transition: margin 1s,width 1s;
+  transition: margin 1s,width 1s;
+  position: relative;
+}
+
+.c3.sidebar {
+  grid-template-rows: 0 1fr;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.c4 {
   -webkit-transition: margin 1s;
   transition: margin 1s;
   grid-area: filter;
-  background-color: $filter-background-color;
+  background-color: #f2f2f2;
   box-shadow: 0px 4px 5px rgba(0,0,0,0.2);
   z-index: 500;
 }
 
-.c0 .map-filter-bar {
+.c4 .map-filter-bar {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -263,9 +310,10 @@ exports[`Property list view matches snapshot 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.5rem 0;
+  margin: 0;
 }
 
-.c0 .map-filter-bar .vl {
+.c4 .map-filter-bar .vl {
   border-left: 6px solid rgba(96,96,96,0.2);
   height: 4rem;
   margin-left: 1%;
@@ -273,7 +321,7 @@ exports[`Property list view matches snapshot 1`] = `
   border-width: 0.2rem;
 }
 
-.c0 .map-filter-bar .btn-primary {
+.c4 .map-filter-bar .btn-primary {
   color: white;
   font-weight: bold;
   height: 3.5rem;
@@ -282,22 +330,82 @@ exports[`Property list view matches snapshot 1`] = `
   padding: 0;
 }
 
-.c0 .map-filter-bar .form-control {
+.c4 .map-filter-bar .form-control {
   font-size: 1.4rem;
 }
 
-.c0 .form-group {
+.c4 .form-group {
   margin-bottom: 0;
 }
 
+.c2 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  border-radius: 1rem;
+  border: none;
+  overflow: hidden;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  min-width: 93rem;
+  max-width: 93rem;
+  margin-left: -93rem;
+  padding: 1.4rem 1.6rem;
+  padding-bottom: 2rem;
+  overflow: hidden;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.c1 h1 {
+  border-bottom: none;
+  margin-bottom: 0.2rem;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+}
+
+.c0.draft-cursor,
+.c0.draft-cursor .leaflet-grab,
+.c0.draft-cursor .leaflet-interactive {
+  cursor: url(icon-draft.svg) 15 45,pointer;
+}
+
 <div
-    class="PropertyListView container-fluid"
+    class="c0 default"
+    data-test="map-view"
   >
     <div
-      class="filter-container border-bottom container-fluid"
+      class="c1"
+    />
+    <div
+      class="c2"
+      data-testid="map-action-window"
+    />
+    <div
+      class="c3 px-0 map"
     >
       <div
-        class="c0 px-0 container-fluid"
+        class="c4 px-0 container-fluid"
       >
         <form
           class=""
@@ -314,10 +422,10 @@ exports[`Property list view matches snapshot 1`] = `
               </span>
             </div>
             <div
-              class="c1 col-xl-1 col-lg-1 col-md-1 col-1"
+              class="c5 col-xl-1 col-lg-1 col-md-1 col-1"
             >
               <div
-                class="c2 idir-input-group form-group"
+                class="c6 idir-input-group form-group"
               >
                 <select
                   class="form-select form-control"
@@ -340,7 +448,7 @@ exports[`Property list view matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="c3 col-xl-3 col-lg-4 col-md-2 col-3"
+              class="c7 col-xl-3 col-lg-4 col-md-2 col-3"
             >
               <div
                 class="input form-group"
@@ -359,7 +467,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-auto"
             >
               <button
-                class="c4 Button Button--icon-only primary btn btn-primary"
+                class="c8 Button Button--icon-only primary btn btn-primary"
                 data-testid="search"
                 id="search-button"
                 title="search"
@@ -388,7 +496,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="col-auto"
             >
               <button
-                class="c4 Button Button--icon-only btn btn-info"
+                class="c8 Button Button--icon-only btn btn-info"
                 data-testid="reset-button"
                 id="reset-button"
                 title="reset-button"
@@ -417,13 +525,13 @@ exports[`Property list view matches snapshot 1`] = `
               class="bar-item col-auto"
             >
               <div
-                class="c5"
+                class="c9"
               >
                 <div
-                  class="c6"
+                  class="c10"
                 >
                   <div
-                    class="c7"
+                    class="c11"
                   >
                     <svg>
                       icon-map.svg
@@ -431,10 +539,10 @@ exports[`Property list view matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c6"
+                  class="c10"
                 >
                   <div
-                    class="c7"
+                    class="c11"
                   >
                     <svg>
                       icon-table.svg
@@ -446,169 +554,10 @@ exports[`Property list view matches snapshot 1`] = `
           </div>
         </form>
       </div>
-    </div>
-    <div
-      class="ScrollContainer"
-    >
       <div
-        class="TableToolbar px-0 container-fluid"
+        class="c12"
       >
-        <h3>
-          Property Information
-        </h3>
-        <div
-          class="menu"
-        />
-        <button
-          class="c4 Button c8 btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            <svg
-              data-testid="excel-icon"
-              fill="currentColor"
-              height="36"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 384 512"
-              width="36"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-              />
-            </svg>
-          </div>
-        </button>
-        <button
-          class="c4 Button c8 btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            <svg
-              data-testid="csv-icon"
-              fill="currentColor"
-              height="36"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 384 512"
-              width="36"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-              />
-            </svg>
-          </div>
-        </button>
-      </div>
-      <div
-        class="table"
-        data-testid="propertiesTable"
-        role="table"
-      >
-        <div
-          class="thead thead-light"
-        >
-          <div
-            class="tr"
-            role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 250px;"
-          >
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                PID
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                PIN
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 150 0 auto; min-width: 100px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Civic Address
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Location
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Lot Size (in ha)
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          class="no-rows-message"
-        >
-          No rows to display
-        </div>
-      </div>
-      <div
-        class="row"
-      >
-        <div
-          class="align-self-center col-auto"
-        />
-        <div
-          class="ml-auto align-self-center col-auto"
-        />
-        <div
-          class="align-self-center col-auto"
-        />
+        <div />
       </div>
     </div>
   </div>

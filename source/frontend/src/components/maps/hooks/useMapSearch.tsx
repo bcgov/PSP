@@ -6,6 +6,7 @@ import { geoJSON } from 'leaflet';
 import { useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+import { PARCELS_LAYER_URL, PIMS_BOUNDARY_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
 import { PropertyContext } from '../providers/PropertyContext';
 
 export const useMapSearch = () => {
@@ -13,7 +14,8 @@ export const useMapSearch = () => {
   const {
     loadProperties: { execute: loadProperties, loading, response },
   } = useMapProperties();
-
+  const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
+  const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
   useEffect(() => {
     setPropertiesLoading(loading);
   }, [loading, setPropertiesLoading]);
@@ -23,9 +25,49 @@ export const useMapSearch = () => {
   ): Promise<Feature<Geometry, GeoJsonProperties>[]> => {
     //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
     try {
-      const tileData = await loadProperties(
-        filters?.length && filters.length > 1 ? filters[0] : undefined,
-      );
+      const filter = filters?.length && filters.length > 1 ? filters[0] : undefined;
+      let tileData;
+      if (filter?.latitude && filter.longitude) {
+        const task1 = parcelsService.findOneWhereContains({
+          lat: filter.latitude,
+          lng: filter.longitude,
+        });
+        const task2 = pimsService.findOneWhereContains(
+          {
+            lat: filter.latitude,
+            lng: filter.longitude,
+          },
+          'GEOMETRY',
+        );
+        const parcel = await task1;
+        const pimsProperties = await task2;
+        //if found in inventory return or else non inventory
+        tileData = pimsProperties.features.length ? pimsProperties : parcel;
+      } else {
+        let task1, task2, task3;
+        task1 = loadProperties(filter);
+        if (filter?.PIN) {
+          task2 = parcelsService.findByPin(filter?.PIN);
+        }
+        if (filter?.PID) {
+          task3 = parcelsService.findByPid(filter?.PID);
+        }
+
+        const pidPinInventoryData = await task1;
+        const pinNonInventoryData = await task2;
+        const pidNonInventoryData = await task3;
+
+        tileData = pidPinInventoryData?.features.length
+          ? pidPinInventoryData
+          : ({
+              type: 'FeatureCollection',
+              features: [
+                ...(pinNonInventoryData?.features || []),
+                ...(pidNonInventoryData?.features || []),
+              ],
+              bbox: pinNonInventoryData?.bbox || pidNonInventoryData?.bbox,
+            } as FeatureCollection);
+      }
       if (tileData) {
         const validFeatures = tileData.features.filter(feature => !!feature?.geometry);
         setProperties(propertiesResponseToPointFeature(tileData));
