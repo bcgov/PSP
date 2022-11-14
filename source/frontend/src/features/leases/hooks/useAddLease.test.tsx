@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { defaultLease } from 'interfaces';
 import find from 'lodash/find';
 import * as MOCK from 'mocks/dataMocks';
+import { defaultApiLease } from 'models/api/Lease';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
@@ -50,14 +50,14 @@ describe('useAddLease functions', () => {
   describe('addLease', () => {
     const url = `/leases?userOverride=false`;
     it('Request successful, dispatches success with correct response', async () => {
-      mockAxios.onPost(url).reply(200, defaultLease);
+      mockAxios.onPost(url).reply(200, defaultApiLease);
 
       const { addLease } = setup();
-      const leaseResponse = await addLease(defaultLease);
+      const leaseResponse = await addLease(defaultApiLease);
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(leaseResponse).toEqual(defaultLease);
+      expect(leaseResponse).toEqual(defaultApiLease);
       expect(toastSuccessSpy).toHaveBeenCalled();
     });
 
@@ -65,7 +65,7 @@ describe('useAddLease functions', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
 
       const { addLease } = setup();
-      await addLease(defaultLease);
+      await addLease(defaultApiLease);
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
       expect(toastErrorSpy).toHaveBeenCalled();

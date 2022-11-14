@@ -6,7 +6,6 @@ using Pims.Api.Areas.Lease.Models.Lease;
 using Pims.Api.Areas.Leases.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities;
@@ -57,7 +56,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<SecurityDepositModel> addRequest)
+        public IActionResult AddDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> addRequest)
         {
             if (leaseId != addRequest.ParentId)
             {
@@ -80,7 +79,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateDeposit(long leaseId, long depositId, ParentConcurrencyGuardModel<SecurityDepositModel> updateRequest)
+        public IActionResult UpdateDeposit(long leaseId, long depositId, ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> updateRequest)
         {
             if (leaseId != updateRequest.ParentId)
             {
@@ -109,7 +108,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<SecurityDepositModel> deleteRequest)
+        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> deleteRequest)
         {
             if (leaseId != deleteRequest.ParentId)
             {

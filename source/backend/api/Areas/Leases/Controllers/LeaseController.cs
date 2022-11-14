@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Api.Services;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -22,6 +23,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     {
         #region Variables
         private readonly ILeaseRepository _leaseRepository;
+        private readonly ILeaseService _leaseService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -31,12 +33,14 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Creates a new instance of a LeaseController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="leaseRepository"></param>
+        /// <param name="leaseService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeaseController(ILeaseRepository leaseRepository, IMapper mapper)
+        public LeaseController(ILeaseRepository leaseRepository, ILeaseService leaseService, IMapper mapper)
         {
             _leaseRepository = leaseRepository;
             _mapper = mapper;
+            _leaseService = leaseService;
         }
         #endregion
 
@@ -49,12 +53,28 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpGet("{id:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(Models.Lease.LeaseModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         public IActionResult GetLease(int id)
         {
-            var lease = _leaseRepository.Get(id);
+            var lease = _leaseService.GetById(id);
             var mapped = _mapper.Map<Models.Lease.LeaseModel>(lease);
+            return new JsonResult(mapped);
+        }
+
+        /// <summary>
+        /// Get the lease for the specified primary key 'id'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("concept/{id:long}")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult GetLeaseConcept(int id)
+        {
+            var lease = _leaseService.GetById(id);
+            var mapped = _mapper.Map<Api.Models.Concepts.LeaseModel>(lease);
             return new JsonResult(mapped);
         }
 
@@ -67,12 +87,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddLease(Models.Lease.LeaseModel leaseModel, bool userOverride = false)
+        public IActionResult AddLease(Api.Models.Concepts.LeaseModel leaseModel, bool userOverride = false)
         {
             var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
-            var lease = _leaseRepository.Add(leaseEntity, userOverride);
+            var lease = _leaseService.Add(leaseEntity, userOverride);
 
-            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+            return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(lease));
         }
 
         /// <summary>
@@ -82,15 +102,14 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPut("{id:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Api.Models.Concepts.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateLease(Models.Lease.LeaseModel leaseModel, bool userOverride = false)
+        public IActionResult UpdateLease(Api.Models.Concepts.LeaseModel leaseModel, bool userOverride = false)
         {
             var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
-            _leaseRepository.Update(leaseEntity, false);
-            var lease = _leaseRepository.UpdatePropertyLeases(leaseModel.Id, leaseModel.RowVersion, leaseEntity.PimsPropertyLeases, userOverride);
+            var updatedLease = _leaseService.Update(leaseEntity, userOverride);
 
-            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+            return new JsonResult(_mapper.Map<Api.Models.Concepts.LeaseModel>(updatedLease));
         }
         #endregion
     }

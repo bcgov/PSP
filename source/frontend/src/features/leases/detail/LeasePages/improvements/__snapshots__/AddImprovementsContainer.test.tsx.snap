@@ -183,7 +183,7 @@ exports[`Add lease container component renders as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c4 > .input,
+.c4 > .form-group,
 .c4 > .notes {
   grid-column: controls;
   grid-row: auto;

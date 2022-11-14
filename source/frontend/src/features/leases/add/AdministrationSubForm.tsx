@@ -7,16 +7,16 @@ import {
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IAddFormLease } from 'interfaces';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { LeaseH3 } from '../detail/styles';
+import { FormLease } from '../models';
 import * as Styled from './styles';
 
 export interface IAdministrationSubFormProps {
-  formikProps: FormikProps<IAddFormLease>;
+  formikProps: FormikProps<FormLease>;
 }
 
 const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps> = ({
@@ -36,27 +36,27 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
 
   //clear the associated other fields if the corresponding type has its value changed from other to something else.
   useEffect(() => {
-    if (!!categoryType && categoryType !== 'OTHER') {
+    if (!!categoryType?.id && categoryType?.id !== 'OTHER') {
       setFieldValue('otherCategoryType', '');
     }
-    if (!!type && type !== 'OTHER') {
+    if (!!type?.id && type?.id !== 'OTHER') {
       setFieldValue('otherType', '');
     }
-    if (!!type && !isLeaseCategoryVisible(type)) {
+    if (!!type?.id && !isLeaseCategoryVisible(type?.id)) {
       setFieldValue('otherCategoryType', '');
-      setFieldValue('categoryType', '');
+      setFieldValue('categoryType.id', '');
     }
-    if (!!purposeType && purposeType !== 'OTHER') {
+    if (!!purposeType?.id && purposeType?.id !== 'OTHER') {
       setFieldValue('otherPurposeType', '');
     }
-    if (!!programType && programType !== 'OTHER') {
+    if (!!programType?.id && programType?.id !== 'OTHER') {
       setFieldValue('otherProgramType', '');
     }
   }, [categoryType, type, purposeType, programType, setFieldValue]);
 
   useEffect(() => {
-    if (!!type && !isLeaseCategoryVisible(type)) {
-      setFieldValue('categoryType', '');
+    if (!!type?.id && !isLeaseCategoryVisible(type?.id)) {
+      setFieldValue('categoryType.id', '');
     }
   }, [type, setFieldValue]);
 
@@ -72,7 +72,7 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
           <InlineSelect
             label="Receivable or Payable:"
             required
-            field="paymentReceivableType"
+            field="paymentReceivableType.id"
             options={paymentReceivableTypes}
             placeholder="Select"
           />
@@ -87,7 +87,7 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
         <Col>
           <InlineSelect
             label="MOTI Region:"
-            field="region"
+            field="region.id"
             options={regionTypes}
             placeholder="Select region"
             required
@@ -98,12 +98,12 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
         <InlineCol>
           <InlineSelect
             label="Program:"
-            field="programType"
+            field="programType.id"
             options={programTypes}
             placeholder="Select program"
             required
           />
-          {values?.programType === 'OTHER' && (
+          {values?.programType?.id === 'OTHER' && (
             <InlineInput label="Other Program:" field="otherProgramType" required />
           )}
         </InlineCol>
@@ -112,27 +112,27 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
         <InlineCol>
           <InlineSelect
             label="Type:"
-            field="type"
+            field="type.id"
             options={types}
             placeholder="Select type"
             required
           />
-          {values?.type === 'OTHER' && (
+          {values?.type?.id === 'OTHER' && (
             <InlineInput label="Describe other:" field="otherType" required />
           )}
         </InlineCol>
       </Row>
-      {isLeaseCategoryVisible(values?.type) && (
+      {isLeaseCategoryVisible(values?.type?.id) && (
         <Row>
           <InlineCol>
             <InlineSelect
               label="Category:"
-              field="categoryType"
+              field="categoryType.id"
               options={categoryTypes}
               placeholder="Select category"
               required
             />
-            {values?.categoryType === 'OTHER' && (
+            {values?.categoryType?.id === 'OTHER' && (
               <InlineInput label="Describe other:" field="otherCategoryType" required />
             )}
           </InlineCol>
@@ -143,11 +143,11 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
           <InlineSelect
             label="Purpose:"
             required
-            field="purposeType"
+            field="purposeType.id"
             options={purposeTypes}
             placeholder="Select purpose"
           />
-          {values?.purposeType === 'OTHER' && (
+          {values?.purposeType?.id === 'OTHER' && (
             <InlineInput label="Describe other:" field="otherPurposeType" required />
           )}
         </InlineCol>
@@ -156,7 +156,7 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
         <Col>
           <InlineSelect
             label="Initiator:"
-            field="initiatorType"
+            field="initiatorType.id"
             placeholder="Select initiator"
             options={initiatorTypes}
             tooltip="Where did this lease/license initiate?"
@@ -167,7 +167,7 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
         <InlineCol>
           <InlineSelect
             label="Responsibility:"
-            field="responsibilityType"
+            field="responsibilityType.id"
             placeholder="Select group responsible"
             options={responsibilityTypes}
             tooltip="Who is currently responsible?"

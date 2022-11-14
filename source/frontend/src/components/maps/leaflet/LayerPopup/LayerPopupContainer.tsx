@@ -3,7 +3,6 @@ import React, { useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { convertToProperty } from '../PointClusterer';
 import { LayerPopupContent, LayerPopupInformation } from '.';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
 import { LayerPopupLinks } from './components/LayerPopupLinks';
@@ -21,7 +20,7 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
   onViewPropertyInfo,
 }) => {
   const history = useHistory();
-  const { setState, selectedFeature } = useContext(MapStateContext);
+  const { setState, selectedFeature, selectedInventoryProperty } = useContext(MapStateContext);
 
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;
@@ -58,8 +57,8 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
   const handleCreateLeaseLicence = () => {
     selectedFeature &&
       setState({
-        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
-        selectedInventoryProperty: convertToProperty(layerPopup?.pimsProperty?.properties),
+        type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
+        selectedLeaseProperty: selectedInventoryProperty,
       });
     history.push('/lease/new');
   };

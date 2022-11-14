@@ -1,16 +1,18 @@
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
+import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import { useContext, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 import { logError } from 'store/slices/network/networkSlice';
+import { useAxiosErrorHandler } from 'utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
 
 export function useLeaseDetail(leaseId?: number) {
   const { lease, setLease } = useContext(LeaseStateContext);
   leaseId = leaseId ?? lease?.id;
-  const { getLease } = useApiLeases();
+  const { getLease, getApiLease } = useApiLeases();
   const dispatch = useDispatch();
 
   const getLeaseById = useMemo(
@@ -38,6 +40,12 @@ export function useLeaseDetail(leaseId?: number) {
     [dispatch, getLease, setLease],
   );
 
+  const getApiLeaseById = useApiRequestWrapper({
+    requestFunction: getApiLease,
+    requestName: 'getApiLease',
+    onError: useAxiosErrorHandler('Failed to load lease, reload this page to try again.'),
+  });
+
   useEffect(() => {
     if (leaseId) {
       getLeaseById(leaseId);
@@ -48,5 +56,6 @@ export function useLeaseDetail(leaseId?: number) {
     lease,
     setLease,
     refresh: () => leaseId && getLeaseById(leaseId),
+    getApiLeaseById,
   };
 }

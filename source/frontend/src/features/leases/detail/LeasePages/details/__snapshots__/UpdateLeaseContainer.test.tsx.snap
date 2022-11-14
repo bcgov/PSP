@@ -11,7 +11,41 @@ exports[`Update lease container component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c12.btn {
+  .c0 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="spinner-border text-warning"
+      data-testid="filter-backdrop-loading"
+    />
+  </div>
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41,49 +75,49 @@ exports[`Update lease container component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   border: none;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   background: none;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -104,9 +138,9 @@ exports[`Update lease container component renders as expected 1`] = `
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -115,14 +149,14 @@ exports[`Update lease container component renders as expected 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -133,15 +167,15 @@ exports[`Update lease container component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -184,6 +218,24 @@ exports[`Update lease container component renders as expected 1`] = `
 }
 
 .c6 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c11 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -235,7 +287,7 @@ exports[`Update lease container component renders as expected 1`] = `
   max-width: 50rem;
 }
 
-.c11 textarea.form-control {
+.c12 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -337,7 +389,7 @@ exports[`Update lease container component renders as expected 1`] = `
                 placeholder="--/--/----"
                 required=""
                 type="text"
-                value="01/01/2020"
+                value=""
               />
             </div>
           </div>
@@ -377,14 +429,14 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-statusType"
+            for="input-statusType.id"
           >
             Status: 
           </label>
           <select
             class="form-select form-control"
-            id="input-statusType"
-            name="statusType"
+            id="input-statusType.id"
+            name="statusType.id"
           >
             <option
               value=""
@@ -449,14 +501,14 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-paymentReceivableType"
+            for="input-paymentReceivableType.id"
           >
             Receivable or Payable: 
           </label>
           <select
             class="form-select form-control"
-            id="input-paymentReceivableType"
-            name="paymentReceivableType"
+            id="input-paymentReceivableType.id"
+            name="paymentReceivableType.id"
             required=""
           >
             <option
@@ -505,8 +557,7 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-motiName"
             name="motiName"
-            title="Moti, Name, Name"
-            value="Moti, Name, Name"
+            value=""
           />
         </div>
       </div>
@@ -522,14 +573,14 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-region"
+            for="input-region.id"
           >
             MOTI Region: 
           </label>
           <select
             class="form-select form-control"
-            id="input-region"
-            name="region"
+            id="input-region.id"
+            name="region.id"
             required=""
           >
             <option
@@ -576,14 +627,14 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-programType"
+            for="input-programType.id"
           >
             Program: 
           </label>
           <select
             class="form-select form-control"
-            id="input-programType"
-            name="programType"
+            id="input-programType.id"
+            name="programType.id"
             required=""
           >
             <option
@@ -659,23 +710,6 @@ exports[`Update lease container component renders as expected 1`] = `
             </option>
           </select>
         </div>
-        <div
-          class="required c7 input form-group"
-        >
-          <label
-            class="form-label"
-            for="input-otherProgramType"
-          >
-            Other Program: 
-          </label>
-          <input
-            class="form-control"
-            id="input-otherProgramType"
-            name="otherProgramType"
-            title=""
-            value=""
-          />
-        </div>
       </div>
     </div>
     <div
@@ -689,14 +723,14 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-type"
+            for="input-type.id"
           >
             Type: 
           </label>
           <select
             class="form-select form-control"
-            id="input-type"
-            name="type"
+            id="input-type.id"
+            name="type.id"
             required=""
           >
             <option
@@ -803,80 +837,14 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-categoryType"
-          >
-            Category: 
-          </label>
-          <select
-            class="form-select form-control"
-            id="input-categoryType"
-            name="categoryType"
-            required=""
-          >
-            <option
-              value=""
-            >
-              Select category
-            </option>
-            <option
-              class="option"
-              value="AGRIC"
-            >
-              Agricultural
-            </option>
-            <option
-              class="option"
-              value="COMM"
-            >
-              Commercial
-            </option>
-            <option
-              class="option"
-              value="GOVGOV"
-            >
-              Gov't to Gov't
-            </option>
-            <option
-              class="option"
-              value="INDUS"
-            >
-              Industrial
-            </option>
-            <option
-              class="option"
-              value="OTHER"
-            >
-              Other
-            </option>
-            <option
-              class="option"
-              value="RESID"
-            >
-              Residential
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="c1 col"
-      >
-        <div
-          class="required c6 form-group"
-        >
-          <label
-            class="form-label"
-            for="input-purposeType"
+            for="input-purposeType.id"
           >
             Purpose: 
           </label>
           <select
             class="form-select form-control"
-            id="input-purposeType"
-            name="purposeType"
+            id="input-purposeType.id"
+            name="purposeType.id"
             required=""
           >
             <option
@@ -1133,13 +1101,13 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-initiatorType"
+            for="input-initiatorType.id"
           >
             Initiator: 
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
-              id="initiatorType-tooltip"
+              id="initiatorType.id-tooltip"
             >
               <svg
                 class="tooltip-icon"
@@ -1159,8 +1127,8 @@ exports[`Update lease container component renders as expected 1`] = `
           </label>
           <select
             class="form-select form-control"
-            id="input-initiatorType"
-            name="initiatorType"
+            id="input-initiatorType.id"
+            name="initiatorType.id"
           >
             <option
               value=""
@@ -1200,13 +1168,13 @@ exports[`Update lease container component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-responsibilityType"
+            for="input-responsibilityType.id"
           >
             Responsibility: 
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon"
-              id="responsibilityType-tooltip"
+              id="responsibilityType.id-tooltip"
             >
               <svg
                 class="tooltip-icon"
@@ -1226,8 +1194,8 @@ exports[`Update lease container component renders as expected 1`] = `
           </label>
           <select
             class="form-select form-control"
-            id="input-responsibilityType"
-            name="responsibilityType"
+            id="input-responsibilityType.id"
+            name="responsibilityType.id"
           >
             <option
               value=""
@@ -1302,7 +1270,6 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-description"
             name="description"
-            title=""
           />
         </div>
       </div>
@@ -1363,7 +1330,6 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-psFileNo"
             name="psFileNo"
-            title=""
             value=""
           />
         </div>
@@ -1376,34 +1342,31 @@ exports[`Update lease container component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c6 form-group"
+          class="c11 form-group"
         >
           <label
             class="form-label"
             for="input-hasPhysicalLicense"
           >
-            Physical lease/license exists: 
+            Physical lease/license exists:
           </label>
           <select
-            class="form-select form-control"
+            class="form-control"
             id="input-hasPhysicalLicense"
             name="hasPhysicalLicense"
           >
             <option
-              class="option"
-              value=""
+              value="null"
             >
               Unknown
             </option>
             <option
-              class="option"
-              value="Yes"
+              value="true"
             >
               Yes
             </option>
             <option
-              class="option"
-              value="No"
+              value="false"
             >
               No
             </option>
@@ -1418,34 +1381,31 @@ exports[`Update lease container component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c6 form-group"
+          class="c11 form-group"
         >
           <label
             class="form-label"
             for="input-hasDigitalLicense"
           >
-            Digital lease/license exists: 
+            Digital lease/license exists:
           </label>
           <select
-            class="form-select form-control"
+            class="form-control"
             id="input-hasDigitalLicense"
             name="hasDigitalLicense"
           >
             <option
-              class="option"
-              value=""
+              value="null"
             >
               Unknown
             </option>
             <option
-              class="option"
-              value="Yes"
+              value="true"
             >
               Yes
             </option>
             <option
-              class="option"
-              value="No"
+              value="false"
             >
               No
             </option>
@@ -1460,7 +1420,7 @@ exports[`Update lease container component renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c11 textarea input form-group"
+          class="c12 textarea input form-group"
         >
           <label
             class="form-label"
@@ -1492,7 +1452,6 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-documentationReference"
             name="documentationReference"
-            title=""
           />
         </div>
       </div>
@@ -1511,7 +1470,7 @@ exports[`Update lease container component renders as expected 1`] = `
       </div>
     </div>
     <button
-      class="c12 Button btn btn-link"
+      class="c13 Button btn btn-link"
       type="button"
     >
       <div
@@ -1538,7 +1497,6 @@ exports[`Update lease container component renders as expected 1`] = `
             class="form-control"
             id="input-note"
             name="note"
-            title=""
           />
         </div>
       </div>

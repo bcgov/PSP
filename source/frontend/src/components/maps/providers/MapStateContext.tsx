@@ -21,6 +21,7 @@ export enum MapStateActionTypes {
   MAP_STATE = 'MAP_STATE',
   SELECTED_FEATURE = 'SELECTED_FEATURE',
   SELECTED_INVENTORY_PROPERTY = 'SELECTED_INVENTORY_PROPERTY',
+  SELECTED_LEASE_PROPERTY = 'SELECTED_LEASE_PROPERTY',
   SELECTED_FILE_FEATURE = 'SELECTED_FILE_FEATURE',
   DRAFT_PROPERTIES = 'DRAFT_PROPERTIES',
   LOADING = 'LOADING',
@@ -34,6 +35,8 @@ export interface IMapStateContext {
   mapState: MapState;
   /** The currently selected property from the PIMS inventory */
   selectedInventoryProperty: IProperty | null;
+  /** The currently selected property from the PIMS inventory intended for L&L */
+  selectedLeaseProperty: IProperty | null;
   /** The currently selected feature from the LTSA ParcelMap */
   selectedFeature: Feature<Geometry, GeoJsonProperties> | null;
   /** The currently selected feature in the context of an active file */
@@ -53,6 +56,7 @@ export interface IMapStateContext {
 const initialState = {
   mapState: MapState.MAP,
   selectedInventoryProperty: null,
+  selectedLeaseProperty: null,
   selectedFeature: null,
   selectedFileFeature: null,
   draftProperties: [],
@@ -75,6 +79,10 @@ export type MapStateActions =
   | {
       type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY;
       selectedInventoryProperty: IProperty | null;
+    }
+  | {
+      type: MapStateActionTypes.SELECTED_LEASE_PROPERTY;
+      selectedLeaseProperty: IProperty | null;
     }
   | {
       type: MapStateActionTypes.SELECTED_FILE_FEATURE;
@@ -117,6 +125,10 @@ export const MapStateContextProvider: React.FC<IMapStateContextComponent> = ({
         case MapStateActionTypes.SELECTED_INVENTORY_PROPERTY:
           return produce(prevState, draft => {
             draft.selectedInventoryProperty = action.selectedInventoryProperty;
+          });
+        case MapStateActionTypes.SELECTED_LEASE_PROPERTY:
+          return produce(prevState, draft => {
+            draft.selectedLeaseProperty = action.selectedLeaseProperty;
           });
         case MapStateActionTypes.LOADING:
           return produce(prevState, draft => {
