@@ -1,7 +1,7 @@
 import ExpandableTextList from 'components/common/ExpandableTextList';
+import { getPropertyName } from 'features/properties/selector/utils';
 import { ILease, IProperty } from 'interfaces';
 import * as React from 'react';
-import { pidFormatter } from 'utils';
 
 export interface ILeaseHeaderAddressesProps {
   lease?: ILease;
@@ -14,7 +14,7 @@ export const LeaseHeaderAddresses: React.FunctionComponent<ILeaseHeaderAddresses
     <ExpandableTextList<IProperty>
       items={lease?.properties ?? []}
       keyFunction={(item: IProperty, index: number) =>
-        `lease-property-${item.id}-address-${item.addressId}`
+        `lease-property-${item.id}-address-${item?.address?.id}`
       }
       renderFunction={(item: IProperty) => <>{getFormattedAddress(item)}</>}
       delimiter="; "
@@ -26,13 +26,20 @@ export const LeaseHeaderAddresses: React.FunctionComponent<ILeaseHeaderAddresses
 const getFormattedAddress = (property: IProperty) => {
   const address = property?.address;
   if (!!address?.streetAddress1) {
-    return !!address.municipality
+    return !!address?.municipality
       ? `${address.streetAddress1}, ${address.municipality}`
       : address.streetAddress1;
   } else {
     return !!address?.municipality
       ? address.municipality
-      : `${pidFormatter(property.pid)} - Address not available in PIMS`;
+      : `${
+          getPropertyName({
+            pid: property.pid,
+            pin: property.pin?.toString(),
+            latitude: property.latitude,
+            longitude: property.longitude,
+          }).value
+        } - Address not available in PIMS`;
   }
 };
 

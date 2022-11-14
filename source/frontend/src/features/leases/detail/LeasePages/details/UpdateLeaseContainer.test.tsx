@@ -7,9 +7,9 @@ import { createMemoryHistory } from 'history';
 import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
-import React from 'react';
+import { defaultApiLease } from 'models/api/Lease';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { UpdateLeaseContainer } from './UpdateLeaseContainer';
 
@@ -39,6 +39,7 @@ describe('Update lease container component', () => {
   };
 
   beforeEach(() => {
+    mockAxios.onGet().reply(200, { id: 1, ...defaultApiLease });
     mockAxios.resetHistory();
   });
   it('renders as expected', async () => {
@@ -51,25 +52,19 @@ describe('Update lease container component', () => {
       component: { getAllByText },
     } = await setup({});
     userEvent.click(getAllByText('Cancel')[0]);
-    expect(history.location.pathname).toBe('/lease/1');
+    expect(history.location.pathname).toBe('/lease/undefined');
   });
 
   it('saves the form with minimal data', async () => {
     const {
-      component: { getByText, container },
+      component: { getByText, findByDisplayValue },
     } = await setup({});
-    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-    await fillInput(container, 'region', '1', 'select');
-    await fillInput(container, 'programType', 'BCFERRIES', 'select');
-    await fillInput(container, 'type', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
-    await fillInput(container, 'hasPhysicalLicense', 'Unknown', 'select');
-    await fillInput(container, 'hasDigitalLicense', 'Unknown', 'select');
+
+    await findByDisplayValue('BC Ferries');
 
     mockAxios.onPut().reply(200, {});
     userEvent.click(getByText('Save'));
+
     await waitFor(() => {
       expect(mockAxios.history.put[0].data).toEqual(expectedFormData);
     });
@@ -77,15 +72,10 @@ describe('Update lease container component', () => {
 
   it('triggers the confirm popup', async () => {
     const {
-      component: { getByText, findByText, container },
+      component: { getByText, findByText, findByDisplayValue },
     } = await setup({});
-    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-    await fillInput(container, 'region', '1', 'select');
-    await fillInput(container, 'programType', 'BCFERRIES', 'select');
-    await fillInput(container, 'type', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
+
+    await findByDisplayValue('BC Ferries');
 
     mockAxios.onPut().reply(409, { error: 'test message' });
     userEvent.click(getByText('Save'));
@@ -94,18 +84,10 @@ describe('Update lease container component', () => {
 
   it('clicking on the save anyways popup saves the form', async () => {
     const {
-      component: { getByText, findByText, container },
+      component: { getByText, findByText, findByDisplayValue },
     } = await setup({});
-    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-    await fillInput(container, 'region', '1', 'select');
-    await fillInput(container, 'programType', 'BCFERRIES', 'select');
-    await fillInput(container, 'type', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
 
-    await fillInput(container, 'hasPhysicalLicense', 'Unknown', 'select');
-    await fillInput(container, 'hasDigitalLicense', 'Unknown', 'select');
+    await findByDisplayValue('BC Ferries');
 
     mockAxios.onPut().reply(409, { error: 'test message' });
     userEvent.click(getByText('Save'));
@@ -117,4 +99,4 @@ describe('Update lease container component', () => {
 });
 
 const expectedFormData =
-  '{"lFileNo":"","expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"responsibilityType":{"id":"HQ"},"initiatorType":{"id":"PROJECT"},"type":{"id":"LICONSTRC"},"statusType":{"id":"ACTIVE"},"region":{"regionCode":"1"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"description":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"hasDigitalLicense":null,"hasPhysicalLicense":null,"id":1}';
+  '{"id":1,"startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL","description":"Receivable","isDisabled":false},"categoryType":{"id":"COMM","description":"Commercial","isDisabled":false},"purposeType":{"id":"BCFERRIES","description":"BC Ferries","isDisabled":false},"responsibilityType":{"id":"HQ","description":"Headquarters","isDisabled":false},"initiatorType":{"id":"PROJECT","description":"Project","isDisabled":false},"statusType":{"id":"ACTIVE","description":"Active","isDisabled":false},"type":{"id":"LSREG","description":"Lease - Registered","isDisabled":false},"region":{"id":1,"description":"South Coast Region"},"programType":{"id":"OTHER","description":"Other","isDisabled":false},"returnNotes":"","motiName":"Moti, Name, Name","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"otherCategoryType":"","otherPurposeType":"","otherType":""}';

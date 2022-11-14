@@ -137,7 +137,7 @@ export const FormGrid = styled.div`
     margin: 0 0.5rem 0 0;
   }
 
-  & > .input,
+  & > .form-group,
   & > .notes {
     grid-column: controls;
     grid-row: auto;

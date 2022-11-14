@@ -1,4 +1,5 @@
 import { Form, Input, TextArea } from 'components/common/form';
+import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as Styled from 'features/leases/detail/styles';
 import { FormControl } from 'features/leases/detail/styles';
@@ -93,9 +94,9 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
         <Form.Label>MoTI contact:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
         <Form.Label>Physical lease/license exists:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'hasPhysicalLicense')} />
+        <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'hasPhysicalLicense')} />
         <Form.Label>Digital lease/license exists:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'hasDigitalLicense')} />
+        <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'hasDigitalLicense')} />
         <Form.Label>Location of documents:</Form.Label>
         <TextAreaInput
           disabled={disabled}

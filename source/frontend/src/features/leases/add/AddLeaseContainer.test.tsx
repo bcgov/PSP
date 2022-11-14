@@ -62,11 +62,12 @@ describe('AddLeaseContainer component', () => {
     } = await setup({});
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-    await fillInput(container, 'region', '1', 'select');
-    await fillInput(container, 'programType', 'BCFERRIES', 'select');
-    await fillInput(container, 'type', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
+    await fillInput(container, 'paymentReceivableType.id', 'RCVBL', 'select');
+    await fillInput(container, 'region.id', '1', 'select');
+    await fillInput(container, 'programType.id', 'BCFERRIES', 'select');
+    await fillInput(container, 'type.id', 'LICONSTRC', 'select');
+    await fillInput(container, 'purposeType.id', 'BCFERRIES', 'select');
+    await fillInput(container, 'statusType.id', 'DRAFT', 'select');
     userEvent.click(getByText('Remove'));
 
     mockAxios.onPost().reply(200, {});
@@ -82,11 +83,12 @@ describe('AddLeaseContainer component', () => {
     } = await setup({});
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-    await fillInput(container, 'region', '1', 'select');
-    await fillInput(container, 'programType', 'BCFERRIES', 'select');
-    await fillInput(container, 'type', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
+    await fillInput(container, 'paymentReceivableType.id', 'RCVBL', 'select');
+    await fillInput(container, 'region.id', '1', 'select');
+    await fillInput(container, 'programType.id', 'BCFERRIES', 'select');
+    await fillInput(container, 'type.id', 'LICONSTRC', 'select');
+    await fillInput(container, 'purposeType.id', 'BCFERRIES', 'select');
+    await fillInput(container, 'statusType.id', 'DRAFT', 'select');
     userEvent.click(getByText('Remove'));
 
     mockAxios.onPost().reply(409, { error: 'test message' });
@@ -100,11 +102,12 @@ describe('AddLeaseContainer component', () => {
     } = await setup({});
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-    await fillInput(container, 'region', '1', 'select');
-    await fillInput(container, 'programType', 'BCFERRIES', 'select');
-    await fillInput(container, 'type', 'LICONSTRC', 'select');
-    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
+    await fillInput(container, 'paymentReceivableType.id', 'RCVBL', 'select');
+    await fillInput(container, 'region.id', '1', 'select');
+    await fillInput(container, 'programType.id', 'BCFERRIES', 'select');
+    await fillInput(container, 'type.id', 'LICONSTRC', 'select');
+    await fillInput(container, 'purposeType.id', 'BCFERRIES', 'select');
+    await fillInput(container, 'statusType.id', 'DRAFT', 'select');
     userEvent.click(getByText('Remove'));
 
     mockAxios.onPost().reply(409, { error: 'test message' });
@@ -117,4 +120,4 @@ describe('AddLeaseContainer component', () => {
 });
 
 const expectedFormData =
-  '{"lFileNo":"","expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"initiatorType":{"id":"HQ"},"type":{"id":"LICONSTRC"},"statusType":{"id":"DRAFT"},"region":{"regionCode":"1"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"","amount":0,"renewalCount":0,"description":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"hasDigitalLicense":null,"hasPhysicalLicense":null}';
+  '{"expiryDate":"2020-01-02","startDate":"2020-01-01","amount":0,"paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"initiatorType":{"id":"HQ"},"statusType":{"id":"DRAFT"},"type":{"id":"LICONSTRC"},"region":{"id":"1"},"programType":{"id":"BCFERRIES"},"returnNotes":"","motiName":"","properties":[],"isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"otherCategoryType":"","otherProgramType":"","otherPurposeType":"","otherType":""}';
