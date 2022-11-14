@@ -10,7 +10,6 @@ import { useWfsLayer } from './useWfsLayer';
 export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
   const getAllFeaturesWrapper = useWfsLayer(url, {
     name,
-    withCredentials: true,
   });
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
@@ -23,12 +22,12 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
   );
 
   const findByPid = useCallback(
-    async (pid: string) => {
+    async (pid: string, forceExactMatch = false) => {
       // Removes dashes to match expectations of the map layer.
       const formattedPid = pid.replace(/-/g, '');
       const data = await getAllFeatures(
         { PID: formattedPid },
-        { forceSimplePid: true, timeout: 30000 },
+        { forceSimplePid: true, forceExactMatch: forceExactMatch, timeout: 30000 },
       );
 
       return data;
@@ -37,8 +36,11 @@ export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
   );
 
   const findByPin = useCallback(
-    async (pin: string) => {
-      const data = await getAllFeatures({ PIN: pin }, { timeout: 30000 });
+    async (pin: string, forceExactMatch = false) => {
+      const data = await getAllFeatures(
+        { PIN: pin },
+        { forceExactMatch: forceExactMatch, timeout: 30000 },
+      );
       return data;
     },
     [getAllFeatures],

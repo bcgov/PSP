@@ -45,6 +45,7 @@ dotnet_diagnostic.SA1309.severity = none
 dotnet_diagnostic.SA1117.severity = none
 
 # -- Set to 'error' before running formatter
+# dotnet format --severity error --exclude entities/ef/** --exclude entities/PimsBaseContext.cs
 # SA1208: Using directive for X should appear before directive for Y
 dotnet_diagnostic.SA1208.severity = warning
 # SA1121 Use built-in type alias 

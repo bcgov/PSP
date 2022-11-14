@@ -1,7 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -16,7 +16,7 @@ namespace Pims.Api.Controllers
     public class SystemConstantController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsRepository;
+        private readonly ISystemConstantRepository _systemConstantRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -25,11 +25,11 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instances of a SystemConstantController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsRepository"></param>
+        /// <param name="systemConstantRepository"></param>
         /// <param name="mapper"></param>
-        public SystemConstantController(IPimsRepository pimsRepository, IMapper mapper)
+        public SystemConstantController(ISystemConstantRepository systemConstantRepository, IMapper mapper)
         {
-            _pimsRepository = pimsRepository;
+            _systemConstantRepository = systemConstantRepository;
             _mapper = mapper;
         }
         #endregion
@@ -46,7 +46,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "systemConstant" })]
         public IActionResult Environment()
         {
-            var systemConstants = _mapper.Map<SystemConstantModel[]>(_pimsRepository.SystemConstant.GetAll());
+            var systemConstants = _mapper.Map<SystemConstantModel[]>(_systemConstantRepository.GetAll());
             return new JsonResult(systemConstants);
         }
         #endregion

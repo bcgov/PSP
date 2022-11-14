@@ -1,5 +1,6 @@
 import { Form, InputGroup } from 'components/common/form';
 import * as Styled from 'features/leases/detail/styles';
+import { getApiPropertyName } from 'features/properties/selector/utils';
 import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
@@ -23,11 +24,21 @@ export const PropertyInformation: React.FunctionComponent<
 
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'landArea'));
+  const address = getIn(formikProps.values, withNameSpace(nameSpace, 'address'));
+  const property = getIn(formikProps.values, withNameSpace(nameSpace));
+  const propertyName = getApiPropertyName(property);
   return (
-    <li>
+    <li key={`property-${property.id}`}>
       <Styled.LeaseH3>Property Information</Styled.LeaseH3>
       <Styled.FormGrid>
-        <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+        {!!address ? (
+          <AddressSubForm nameSpace={withNameSpace(nameSpace, 'address')} disabled={disabled} />
+        ) : (
+          <>
+            <Form.Label>{`${propertyName.label}:`}</Form.Label>
+            <Styled.FormControl disabled={disabled} value={propertyName.value} />
+          </>
+        )}
         <br />
         {landArea !== undefined ? (
           <>

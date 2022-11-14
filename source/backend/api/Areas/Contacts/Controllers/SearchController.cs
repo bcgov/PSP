@@ -8,8 +8,8 @@ using Pims.Api.Areas.Contact.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Policies;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Contact.Controllers
     public class SearchController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IContactRepository _contactRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,12 +36,12 @@ namespace Pims.Api.Areas.Contact.Controllers
         /// <summary>
         /// Creates a new instance of a SearchController(Contacts) class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="contactRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public SearchController(IPimsRepository pimsService, IMapper mapper)
+        public SearchController(IContactRepository contactRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _contactRepository = contactRepository;
             _mapper = mapper;
         }
         #endregion
@@ -85,7 +85,7 @@ namespace Pims.Api.Areas.Contact.Controllers
                 throw new BadRequestException("Contact filter must contain valid values.");
             }
 
-            Paged<Dal.Entities.PimsContactMgrVw> contacts = _pimsService.Contact.GetPage((ContactFilter)filter);
+            Paged<Dal.Entities.PimsContactMgrVw> contacts = _contactRepository.GetPage((ContactFilter)filter);
             return new JsonResult(_mapper.Map<Api.Models.PageModel<ContactSummaryModel>>(contacts));
         }
         #endregion

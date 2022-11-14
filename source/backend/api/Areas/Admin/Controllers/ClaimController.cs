@@ -2,8 +2,8 @@ using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
-using Pims.Dal;
 using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
@@ -23,7 +23,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class ClaimController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IClaimRepository _claimRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,11 +32,11 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new instance of a ClaimController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="claimRepository"></param>
         /// <param name="mapper"></param>
-        public ClaimController(IPimsRepository pimsService, IMapper mapper)
+        public ClaimController(IClaimRepository claimRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _claimRepository = claimRepository;
             _mapper = mapper;
         }
         #endregion
@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Admin.Controllers
                 quantity = 50;
             }
 
-            var paged = _pimsService.Claim.Get(page, quantity, name);
+            var paged = _claimRepository.Get(page, quantity, name);
             var result = _mapper.Map<Api.Models.PageModel<Model.ClaimModel>>(paged);
             return new JsonResult(result);
         }
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
         public IActionResult GetClaim(Guid key)
         {
-            var entity = _pimsService.Claim.Get(key);
+            var entity = _claimRepository.Get(key);
             var claim = _mapper.Map<Model.ClaimModel>(entity);
             return new JsonResult(claim);
         }
@@ -107,7 +107,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult AddClaim([FromBody] Model.ClaimModel model)
         {
             var entity = _mapper.Map<Entity.PimsClaim>(model); // TODO: Return bad request.
-            _pimsService.Claim.Add(entity);
+            _claimRepository.Add(entity);
             var claim = _mapper.Map<Model.ClaimModel>(entity);
 
             return CreatedAtAction(nameof(GetClaim), new { id = claim.Id }, claim);
@@ -128,7 +128,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult UpdateClaim(Guid key, [FromBody] Model.ClaimModel model)
         {
             var entity = _mapper.Map<PimsClaim>(model);
-            _pimsService.Claim.Update(entity);
+            _claimRepository.Update(entity);
 
             var claim = _mapper.Map<Model.ClaimModel>(entity);
             return new JsonResult(claim);
@@ -149,7 +149,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult DeleteClaim(Guid key, [FromBody] Model.ClaimModel model)
         {
             var entity = _mapper.Map<PimsClaim>(model);
-            _pimsService.Claim.Delete(entity);
+            _claimRepository.Delete(entity);
 
             return new JsonResult(model);
         }

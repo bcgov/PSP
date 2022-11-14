@@ -38,7 +38,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   margin: 0 0.5rem 0 0;
 }
 
-.c1 > .input,
+.c1 > .form-group,
 .c1 > .notes {
   grid-column: controls;
   grid-row: auto;
@@ -335,15 +335,29 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
         Physical lease/license exists:
       </label>
       <div
-        class="input form-group"
+        class="form-group"
       >
-        <input
+        <select
           class="form-control"
           id="input-hasPhysicalLicense"
           name="hasPhysicalLicense"
-          title="No"
-          value="No"
-        />
+        >
+          <option
+            value="null"
+          >
+            Unknown
+          </option>
+          <option
+            value="true"
+          >
+            Yes
+          </option>
+          <option
+            value="false"
+          >
+            No
+          </option>
+        </select>
       </div>
       <label
         class="form-label"
@@ -351,15 +365,29 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
         Digital lease/license exists:
       </label>
       <div
-        class="input form-group"
+        class="form-group"
       >
-        <input
+        <select
           class="form-control"
           id="input-hasDigitalLicense"
           name="hasDigitalLicense"
-          title="Yes"
-          value="Yes"
-        />
+        >
+          <option
+            value="null"
+          >
+            Unknown
+          </option>
+          <option
+            value="true"
+          >
+            Yes
+          </option>
+          <option
+            value="false"
+          >
+            No
+          </option>
+        </select>
       </div>
       <label
         class="form-label"
@@ -418,7 +446,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c1 > .input,
+.c1 > .form-group,
 .c1 > .notes {
   grid-column: controls;
   grid-row: auto;
@@ -715,15 +743,29 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
         Physical lease/license exists:
       </label>
       <div
-        class="input form-group"
+        class="form-group"
       >
-        <input
+        <select
           class="form-control"
           id="input-hasPhysicalLicense"
           name="hasPhysicalLicense"
-          title="Unknown"
-          value="Unknown"
-        />
+        >
+          <option
+            value="null"
+          >
+            Unknown
+          </option>
+          <option
+            value="true"
+          >
+            Yes
+          </option>
+          <option
+            value="false"
+          >
+            No
+          </option>
+        </select>
       </div>
       <label
         class="form-label"
@@ -731,15 +773,29 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
         Digital lease/license exists:
       </label>
       <div
-        class="input form-group"
+        class="form-group"
       >
-        <input
+        <select
           class="form-control"
           id="input-hasDigitalLicense"
           name="hasDigitalLicense"
-          title="Unknown"
-          value="Unknown"
-        />
+        >
+          <option
+            value="null"
+          >
+            Unknown
+          </option>
+          <option
+            value="true"
+          >
+            Yes
+          </option>
+          <option
+            value="false"
+          >
+            No
+          </option>
+        </select>
       </div>
       <label
         class="form-label"

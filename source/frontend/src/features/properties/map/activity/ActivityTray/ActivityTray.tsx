@@ -45,6 +45,12 @@ export const ActivityTray: React.FunctionComponent<IActivityTrayProps> = ({
         <ActivityForm
           activity={{ ...activity, id: +activity.id }}
           file={file}
+          isEditable={
+            !(
+              activity.activityStatusTypeCode?.id === 'CANCELLED' ||
+              activity.activityStatusTypeCode?.id === 'COMPLETE'
+            )
+          }
           editMode={editMode}
           setEditMode={setEditMode}
           onSave={onSave}

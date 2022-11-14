@@ -6,12 +6,12 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import { LatLngBounds, Map as LeafletMap, TileLayer as LeafletTileLayer } from 'leaflet';
+import { LatLngBounds, Map as LeafletMap } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
+import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
@@ -23,8 +23,8 @@ import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
+import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
 import { PropertyContext } from '../providers/PropertyContext';
-import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
 import { InventoryLayer } from './InventoryLayer';
 import { LayerPopup, LayerPopupInformation } from './LayerPopup';
 import LayersControl from './LayersControl';
@@ -48,8 +48,7 @@ export type MapProps = {
   showParcelBoundaries?: boolean;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
-  onPropertyMarkerClick: (property: IProperty) => void;
-  onViewPropertyClick: (pid?: string | null) => void;
+  onViewPropertyClick: (pid?: string | null, id?: number) => void;
 };
 
 type BaseLayerFile = {
@@ -91,7 +90,6 @@ const Map: React.FC<MapProps> = ({
   showSideBar,
   whenReady,
   whenCreated,
-  onPropertyMarkerClick,
   onViewPropertyClick,
 }) => {
   const keycloak = useKeycloakWrapper();
@@ -111,13 +109,11 @@ const Map: React.FC<MapProps> = ({
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
-  // a reference to the basemap tile layer since the layer url is immutable
-  const tileRef = useRef<LeafletTileLayer>(null);
 
-  const { setPropertyInfo, propertyInfo, selectedFeature } = useContext(SelectedPropertyContext);
+  const { setState, selectedInventoryProperty, selectedFeature } = useContext(MapStateContext);
   const { propertiesLoading } = useContext(PropertyContext);
 
-  if (mapRef.current && !propertyInfo) {
+  if (mapRef.current && !selectedInventoryProperty) {
     const center = mapRef.current.getCenter();
     lat = center.lat;
     lng = center.lng;
@@ -125,7 +121,7 @@ const Map: React.FC<MapProps> = ({
 
   const parcelLayerFeature = selectedFeature;
   const { showLocationDetails } = useActiveFeatureLayer({
-    selectedProperty: propertyInfo,
+    selectedProperty: selectedInventoryProperty,
     layerPopup,
     mapRef,
     parcelLayerFeature,
@@ -155,7 +151,10 @@ const Map: React.FC<MapProps> = ({
     };
     // Search button will always trigger filter changed (triggerFilterChanged is set to true when search button is clicked)
     if (!isEqualWith(geoFilter, getQueryParams(filter), compareValues) || triggerFilterChanged) {
-      setPropertyInfo(null);
+      setState({
+        type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+        selectedInventoryProperty: null,
+      });
       setGeoFilter(getQueryParams(filter));
       setChanged(true);
       setTriggerFilterChanged(false);
@@ -166,7 +165,6 @@ const Map: React.FC<MapProps> = ({
     const { previous, current } = e;
     setBaseLayers([current, previous]);
     setActiveBasemap(current);
-    tileRef?.current?.setUrl(current.url);
   };
 
   useEffect(() => {
@@ -242,14 +240,17 @@ const Map: React.FC<MapProps> = ({
             moveend={handleBounds}
           />
           {activeBasemap && (
-            <TileLayer
-              ref={tileRef}
-              attribution={activeBasemap.attribution}
-              url={activeBasemap.url}
-              zIndex={0}
-              maxZoom={MAP_MAX_ZOOM}
-              maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
-            />
+            <LayerGroup attribution={activeBasemap.attribution}>
+              {activeBasemap.urls?.map((tileUrl, index) => (
+                <TileLayer
+                  key={`${activeBasemap.name}-${index}`}
+                  zIndex={index}
+                  url={tileUrl}
+                  maxZoom={MAP_MAX_ZOOM}
+                  maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+                />
+              ))}
+            </LayerGroup>
           )}
           {!!layerPopup && (
             <LayerPopup
@@ -257,7 +258,10 @@ const Map: React.FC<MapProps> = ({
               onViewPropertyInfo={onViewPropertyClick}
               onClose={() => {
                 setLayerPopup(undefined);
-                setPropertyInfo(null);
+                setState({
+                  type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+                  selectedInventoryProperty: null,
+                });
               }}
             />
           )}
@@ -274,7 +278,7 @@ const Map: React.FC<MapProps> = ({
             bounds={bounds}
             onMarkerClick={(property: IProperty) => {
               setLayersOpen(false);
-              onPropertyMarkerClick(property);
+              onViewPropertyClick(property.pid, property.id);
             }}
             filter={geoFilter}
           ></InventoryLayer>

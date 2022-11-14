@@ -15,7 +15,7 @@ namespace Pims.Dal.Test.Services
     [Trait("category", "dal")]
     [Trait("group", "tenants")]
     [ExcludeFromCodeCoverage]
-    public class TenantServiceTest
+    public class TenantRepositoryTest
     {
         #region Data
         public static IEnumerable<object[]> TenantsWithId =>

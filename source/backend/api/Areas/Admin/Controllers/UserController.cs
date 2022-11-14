@@ -3,7 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using EModel = Pims.Dal.Entities.Models;
@@ -24,7 +24,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class UserController : ControllerBase
     {
         #region Variables
-        private readonly IPimsRepository _pimsService;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -33,11 +33,11 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="userRepository"></param>
         /// <param name="mapper"></param>
-        public UserController(IPimsRepository pimsService, IMapper mapper)
+        public UserController(IUserRepository userRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
         #endregion
@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUsers(EModel.UserFilter filter)
         {
-            var page = _pimsService.User.Get(filter);
+            var page = _userRepository.Get(filter);
             var result = _mapper.Map<Api.Models.PageModel<Model.UserModel>>(page);
             return new JsonResult(result);
         }
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUser(long id)
         {
-            var entity = _pimsService.User.Get(id);
+            var entity = _userRepository.Get(id);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }
@@ -106,7 +106,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUser(Guid key)
         {
-            var entity = _pimsService.User.Get(key);
+            var entity = _userRepository.Get(key);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }
@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult AddUser([FromBody] Model.UserModel model)
         {
             var entity = _mapper.Map<Entity.PimsUser>(model);
-            _pimsService.User.Add(entity);
+            _userRepository.Add(entity);
 
             var user = _mapper.Map<Model.UserModel>(entity);
 
@@ -146,7 +146,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult UpdateUser(Guid key, [FromBody] Model.UserModel model)
         {
             var entity = _mapper.Map<Entity.PimsUser>(model);
-            _pimsService.User.Update(entity);
+            _userRepository.Update(entity);
 
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
@@ -167,7 +167,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult DeleteUser(Guid key, [FromBody] Model.UserModel model)
         {
             var entity = _mapper.Map<Entity.PimsUser>(model);
-            _pimsService.User.Delete(entity);
+            _userRepository.Delete(entity);
 
             return new JsonResult(model);
         }

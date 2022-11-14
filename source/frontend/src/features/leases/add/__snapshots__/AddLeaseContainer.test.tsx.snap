@@ -59,7 +59,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 <div
     class="Toastify"
   />
-  .c28.btn {
+  .c29.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -89,49 +89,49 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c28.btn:hover {
+.c29.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c28.btn:focus {
+.c29.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c28.btn.btn-primary {
+.c29.btn.btn-primary {
   border: none;
 }
 
-.c28.btn.btn-secondary {
+.c29.btn.btn-secondary {
   background: none;
 }
 
-.c28.btn.btn-info {
+.c29.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c28.btn.btn-info:hover,
-.c28.btn.btn-info:active,
-.c28.btn.btn-info:focus {
+.c29.btn.btn-info:hover,
+.c29.btn.btn-info:active,
+.c29.btn.btn-info:focus {
   background: none;
 }
 
-.c28.btn.btn-light {
+.c29.btn.btn-light {
   border: none;
 }
 
-.c28.btn.btn-dark {
+.c29.btn.btn-dark {
   border: none;
 }
 
-.c28.btn.btn-link {
+.c29.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -152,9 +152,9 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 0;
 }
 
-.c28.btn.btn-link:hover,
-.c28.btn.btn-link:active,
-.c28.btn.btn-link:focus {
+.c29.btn.btn-link:hover,
+.c29.btn.btn-link:active,
+.c29.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -163,14 +163,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   outline: none;
 }
 
-.c28.btn.btn-link:disabled,
-.c28.btn.btn-link.disabled {
+.c29.btn.btn-link:disabled,
+.c29.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c28.btn:disabled,
-.c28.btn:disabled:hover {
+.c29.btn:disabled,
+.c29.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -181,15 +181,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c28.Button .Button__icon {
+.c29.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c28.Button--icon-only:focus {
+.c29.Button--icon-only:focus {
   outline: none;
 }
 
-.c28.Button--icon-only .Button__icon {
+.c29.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -232,6 +232,24 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c18 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c23 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c23 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -374,7 +392,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   padding: 1rem;
 }
 
-.c24 {
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -382,26 +400,26 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   gap: 3rem;
 }
 
-.c24 div {
+.c25 div {
   -webkit-align-items: baseline !important;
   -webkit-box-align: baseline !important;
   -ms-flex-align: baseline !important;
   align-items: baseline !important;
 }
 
-.c24 .form-label {
+.c25 .form-label {
   min-width: 0 !important;
 }
 
-.c29.c29.btn {
+.c30.c30.btn {
   padding: 0;
 }
 
-.c29.c29.btn:hover {
+.c30.c30.btn:hover {
   color: red;
 }
 
-.c30 {
+.c31 {
   z-index: 100;
   width: 100%;
   padding: 0.5rem 0;
@@ -420,7 +438,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   background-color: white;
 }
 
-.c30 .btn {
+.c31 .btn {
   min-height: 3rem;
 }
 
@@ -429,17 +447,17 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   max-width: 50rem;
 }
 
-.c25 input.form-control {
+.c26 input.form-control {
   min-width: 12rem;
   max-width: 12rem;
 }
 
-.c27 select.form-control {
+.c28 select.form-control {
   min-width: 12rem;
   max-width: 12rem;
 }
 
-.c23 textarea.form-control {
+.c24 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
@@ -498,7 +516,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c26 {
+.c27 {
   gap: 1rem;
 }
 
@@ -850,14 +868,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-statusType"
+              for="input-statusType.id"
             >
               Status: 
             </label>
             <select
               class="form-select form-control"
-              id="input-statusType"
-              name="statusType"
+              id="input-statusType.id"
+              name="statusType.id"
             >
               <option
                 value=""
@@ -922,14 +940,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-paymentReceivableType"
+              for="input-paymentReceivableType.id"
             >
               Receivable or Payable: 
             </label>
             <select
               class="form-select form-control"
-              id="input-paymentReceivableType"
-              name="paymentReceivableType"
+              id="input-paymentReceivableType.id"
+              name="paymentReceivableType.id"
               required=""
             >
               <option
@@ -995,14 +1013,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-region"
+              for="input-region.id"
             >
               MOTI Region: 
             </label>
             <select
               class="form-select form-control"
-              id="input-region"
-              name="region"
+              id="input-region.id"
+              name="region.id"
               required=""
             >
               <option
@@ -1049,14 +1067,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-programType"
+              for="input-programType.id"
             >
               Program: 
             </label>
             <select
               class="form-select form-control"
-              id="input-programType"
-              name="programType"
+              id="input-programType.id"
+              name="programType.id"
               required=""
             >
               <option
@@ -1145,14 +1163,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-type"
+              for="input-type.id"
             >
               Type: 
             </label>
             <select
               class="form-select form-control"
-              id="input-type"
-              name="type"
+              id="input-type.id"
+              name="type.id"
               required=""
             >
               <option
@@ -1259,14 +1277,14 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-purposeType"
+              for="input-purposeType.id"
             >
               Purpose: 
             </label>
             <select
               class="form-select form-control"
-              id="input-purposeType"
-              name="purposeType"
+              id="input-purposeType.id"
+              name="purposeType.id"
               required=""
             >
               <option
@@ -1523,13 +1541,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-initiatorType"
+              for="input-initiatorType.id"
             >
               Initiator: 
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
-                id="initiatorType-tooltip"
+                id="initiatorType.id-tooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -1549,8 +1567,8 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
             </label>
             <select
               class="form-select form-control"
-              id="input-initiatorType"
-              name="initiatorType"
+              id="input-initiatorType.id"
+              name="initiatorType.id"
             >
               <option
                 value=""
@@ -1590,13 +1608,13 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           >
             <label
               class="form-label"
-              for="input-responsibilityType"
+              for="input-responsibilityType.id"
             >
               Responsibility: 
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon"
-                id="responsibilityType-tooltip"
+                id="responsibilityType.id-tooltip"
               >
                 <svg
                   class="tooltip-icon"
@@ -1616,8 +1634,8 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
             </label>
             <select
               class="form-select form-control"
-              id="input-responsibilityType"
-              name="responsibilityType"
+              id="input-responsibilityType.id"
+              name="responsibilityType.id"
             >
               <option
                 value=""
@@ -1692,7 +1710,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               class="form-control"
               id="input-description"
               name="description"
-              title=""
             />
           </div>
         </div>
@@ -1767,34 +1784,31 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="col"
         >
           <div
-            class="c18 form-group"
+            class="c23 form-group"
           >
             <label
               class="form-label"
               for="input-hasPhysicalLicense"
             >
-              Physical lease/license exists: 
+              Physical lease/license exists:
             </label>
             <select
-              class="form-select form-control"
+              class="form-control"
               id="input-hasPhysicalLicense"
               name="hasPhysicalLicense"
             >
               <option
-                class="option"
-                value=""
+                value="null"
               >
                 Unknown
               </option>
               <option
-                class="option"
-                value="Yes"
+                value="true"
               >
                 Yes
               </option>
               <option
-                class="option"
-                value="No"
+                value="false"
               >
                 No
               </option>
@@ -1809,34 +1823,31 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="col"
         >
           <div
-            class="c18 form-group"
+            class="c23 form-group"
           >
             <label
               class="form-label"
               for="input-hasDigitalLicense"
             >
-              Digital lease/license exists: 
+              Digital lease/license exists:
             </label>
             <select
-              class="form-select form-control"
+              class="form-control"
               id="input-hasDigitalLicense"
               name="hasDigitalLicense"
             >
               <option
-                class="option"
-                value=""
+                value="null"
               >
                 Unknown
               </option>
               <option
-                class="option"
-                value="Yes"
+                value="true"
               >
                 Yes
               </option>
               <option
-                class="option"
-                value="No"
+                value="false"
               >
                 No
               </option>
@@ -1851,7 +1862,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="col"
         >
           <div
-            class="c23 textarea input form-group"
+            class="c24 textarea input form-group"
           >
             <label
               class="form-label"
@@ -1883,7 +1894,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               class="form-control"
               id="input-documentationReference"
               name="documentationReference"
-              title=""
             />
           </div>
         </div>
@@ -1905,49 +1915,64 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         class="row"
       >
         <div
-          class="c24 col"
+          class="c25 col"
         >
           <div
-            class="c19 c25 input form-group"
+            class="c19 c26 input form-group"
           >
             <label
               class="form-label"
-              for="input-properties.0.pid"
+              for="input-properties.0.property.pid"
             >
               PID: 
             </label>
             <input
               class="form-control"
-              id="input-properties.0.pid"
-              name="properties.0.pid"
-              title=""
+              id="input-properties.0.property.pid"
+              name="properties.0.property.pid"
               type="number"
               value=""
             />
           </div>
           <div
-            class="c19 c25 input form-group"
+            class="c19 c26 input form-group"
           >
             <label
               class="form-label"
-              for="input-properties.0.pin"
+              for="input-properties.0.property.pin"
             >
               PIN: 
             </label>
             <input
               class="form-control"
-              id="input-properties.0.pin"
-              name="properties.0.pin"
-              title=""
+              id="input-properties.0.property.pin"
+              name="properties.0.property.pin"
               type="number"
               value=""
             />
           </div>
           <div
-            class="c2 c26"
+            class="c19 c26 input form-group"
+          >
+            <label
+              class="form-label"
+              for="input-properties.0.property.coordinates"
+            >
+              Coordinates: 
+            </label>
+            <input
+              class="form-control"
+              id="input-properties.0.property.coordinates"
+              name="properties.0.property.coordinates"
+              title=""
+              value=""
+            />
+          </div>
+          <div
+            class="c2 c27"
           >
             <div
-              class="c19 c25 input form-group"
+              class="c19 c26 input form-group"
             >
               <label
                 class="form-label"
@@ -1964,7 +1989,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               />
             </div>
             <div
-              class="c18 c27 form-group"
+              class="c18 c28 form-group"
             >
               <select
                 class="form-select form-control"
@@ -2004,7 +2029,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               </select>
             </div>
             <button
-              class="c28 Button c29 btn btn-link"
+              class="c29 Button c30 btn btn-link"
               type="button"
             >
               <div
@@ -2034,7 +2059,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         </div>
       </div>
       <button
-        class="c28 Button btn btn-link"
+        class="c29 Button btn btn-link"
         type="button"
       >
         <div
@@ -2061,16 +2086,15 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               class="form-control"
               id="input-note"
               name="note"
-              title=""
             />
           </div>
         </div>
       </div>
       <div
-        class="c30"
+        class="c31"
       >
         <button
-          class="c28 Button btn btn-secondary"
+          class="c29 Button btn btn-secondary"
           type="button"
         >
           <div
@@ -2080,7 +2104,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="c28 Button Button--disabled btn btn-primary"
+          class="c29 Button Button--disabled btn btn-primary"
           disabled=""
           type="button"
         >

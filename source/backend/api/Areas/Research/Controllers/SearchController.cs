@@ -28,8 +28,8 @@ namespace Pims.Api.Areas.Research.Controllers
     public class SearchController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService pimsService;
-        private readonly IMapper mapper;
+        private readonly IResearchFileService _researchFileService;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
@@ -37,13 +37,13 @@ namespace Pims.Api.Areas.Research.Controllers
         /// <summary>
         /// Creates a new instance of a SearchController(Research) class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="researchFileService"></param>
         /// <param name="mapper"></param>
         ///
-        public SearchController(IPimsService pimsService, IMapper mapper)
+        public SearchController(IResearchFileService researchFileService, IMapper mapper)
         {
-            this.pimsService = pimsService;
-            this.mapper = mapper;
+            _researchFileService = researchFileService;
+            _mapper = mapper;
         }
         #endregion
 
@@ -86,8 +86,8 @@ namespace Pims.Api.Areas.Research.Controllers
                 throw new BadRequestException("Research filter must contain valid values.");
             }
 
-            var researchFiles = pimsService.ResearchFileService.GetPage((ResearchFilter)filter);
-            return new JsonResult(mapper.Map<Api.Models.PageModel<ResearchFileModel>>(researchFiles));
+            var researchFiles = _researchFileService.GetPage((ResearchFilter)filter);
+            return new JsonResult(_mapper.Map<Api.Models.PageModel<ResearchFileModel>>(researchFiles));
         }
         #endregion
         #endregion

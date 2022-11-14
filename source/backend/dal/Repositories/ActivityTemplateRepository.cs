@@ -4,6 +4,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -20,9 +21,8 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ActivityTemplateRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<ResearchFileRepository> logger, IMapper mapper)
+        public ActivityTemplateRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
         }
@@ -39,6 +39,17 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsActivityTemplates.AsNoTracking()
                 .Include(x => x.ActivityTemplateTypeCodeNavigation)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Retrieves template for the matching template type.
+        /// </summary>
+        /// <returns></returns>
+        public PimsActivityTemplate GetActivityTemplateByCode(string templateType)
+        {
+            return this.Context.PimsActivityTemplates.AsNoTracking()
+                .Include(x => x.ActivityTemplateTypeCodeNavigation)
+                .FirstOrDefault(x => x.ActivityTemplateTypeCode == templateType);
         }
 
         #endregion

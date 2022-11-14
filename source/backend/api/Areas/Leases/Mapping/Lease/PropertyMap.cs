@@ -1,4 +1,7 @@
 using Mapster;
+using Pims.Dal.Constants;
+using Pims.Dal.Helpers;
+using System;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
@@ -20,7 +23,9 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Description, src => src.Property.Description)
                 .Map(dest => dest.SurplusDeclaration, src => src.Property)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
-                .Map(dest => dest.LandArea, src => src.LeaseArea);
+                .Map(dest => dest.LandArea, src => src.LeaseArea)
+                .Map(dest => dest.Latitude, src => src.Property.Location.Coordinate.Y)
+                .Map(dest => dest.Longitude, src => src.Property.Location.Coordinate.X);
 
             config.NewConfig<Model.PropertyModel, Entity.PimsPropertyLease>()
                 .Map(dest => dest.PropertyId, src => src.Id)

@@ -19,8 +19,13 @@ namespace Pims.Core.Http
     public class OpenIdConnectRequestClient : HttpRequestClient, IOpenIdConnectRequestClient
     {
         #region Variables
-        public Models.TokenModel _accessToken = null;
+        public Models.TokenModel AccessToken
+        {
+            get { return _accessToken; }
+        }
+
         private readonly JwtSecurityTokenHandler _tokenHandler;
+        private Models.TokenModel _accessToken = null;
         #endregion
 
         #region Properties

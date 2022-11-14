@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { ILease } from 'interfaces';
 import { IApiError } from 'interfaces/IApiError';
+import { Api_Lease } from 'models/api/Lease';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ export const useAddLease = () => {
   const dispatch = useDispatch();
 
   const addLease = async (
-    lease: ILease,
+    lease: Api_Lease,
     setUserOverrideMessage?: (message?: string) => void,
     userOverride: boolean = false,
   ) => {

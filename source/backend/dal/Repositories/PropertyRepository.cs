@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -232,6 +233,16 @@ namespace Pims.Dal.Repositories
             return property;
         }
 
+        public PimsProperty GetByLocation(Geometry location)
+        {
+            return this.Context.PimsProperties
+                    .AsNoTracking()
+                    .Include(p => p.PimsPropertyLeases)
+                    .Where(p => (p != null && p.Location.IsWithinDistance(location, 1)))
+                    .OrderBy(p => p.Location.Distance(location))
+                    .FirstOrDefault();
+        }
+
         /// <summary>
         /// Get the property for the specified id value.
         /// </summary>
@@ -249,7 +260,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropertyAcquisitionFiles)
                     .ThenInclude(pa => pa.AcquisitionFile)
                     .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
-                   
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;

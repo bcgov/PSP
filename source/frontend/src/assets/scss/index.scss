@@ -36,3 +36,10 @@ input::-webkit-inner-spin-button {
     width: 100%;
   }
 }
+
+select:disabled {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}

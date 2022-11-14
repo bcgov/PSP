@@ -5,7 +5,7 @@ import * as rax from 'retry-axios';
 
 const MAX_RETRIES = 2;
 
-export const wfsAxios = (timeout?: number) => {
+export const wfsAxios = (timeout?: number, onLayerError?: () => void) => {
   const instance = axios.create({ timeout: timeout ?? 5000 });
   instance.defaults.raxConfig = {
     retry: MAX_RETRIES,
@@ -14,7 +14,7 @@ export const wfsAxios = (timeout?: number) => {
       const cfg = rax.getConfig(error);
       if (cfg?.currentRetryAttempt === MAX_RETRIES) {
         toast.dismiss(layerData.LAYER_DATA_LOADING_ID);
-        layerData.LAYER_DATA_ERROR();
+        !!onLayerError ? onLayerError() : layerData.LAYER_DATA_ERROR();
       }
       return rax.shouldRetryRequest(error);
     },

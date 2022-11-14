@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Pims.Api.Areas.Autocomplete.Models
 {
     /// <summary>
-    /// Represents an Autocomplete response returned by the call to AutocompleteService.
+    /// Represents an Autocomplete response returned by the call to AutocompleteRepository.
     /// </summary>
     public class AutocompleteResponseModel
     {

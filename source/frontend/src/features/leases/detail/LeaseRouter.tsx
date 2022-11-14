@@ -16,6 +16,7 @@ export const LeaseRouter: React.FunctionComponent<ILeaseRouterProps> = React.mem
           path={`${path}/${pageName}`}
           customComponent={page.component}
           title={`${page.title}`}
+          claim={page.claims}
           exact
           key={pageName}
         ></AppRoute>

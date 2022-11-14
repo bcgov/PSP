@@ -34,7 +34,7 @@ describe('MotiInventoryHeader component', () => {
 
   it('renders a spinner when the data is loading', () => {
     const { getByTestId } = setup({
-      composedProperty: { ...defaultComposedProperty, composedLoading: true },
+      composedProperty: { ...defaultComposedProperty, apiWrapper: { loading: true } as any },
     });
 
     const spinner = getByTestId('filter-backdrop-loading');

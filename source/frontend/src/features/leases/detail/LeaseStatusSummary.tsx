@@ -14,7 +14,7 @@ export const LeaseStatusSummary: React.FunctionComponent<ILeaseStatusSummaryProp
   lease,
 }) => {
   return !!lease ? (
-    <StyledLeaseStatusSummary className={lease.statusType.id.toLowerCase()}>
+    <StyledLeaseStatusSummary className={lease?.statusType?.id.toLowerCase()}>
       <b>{lease?.statusType?.description}</b>
       <b>{lease?.lFileNo ?? ''}</b>
     </StyledLeaseStatusSummary>

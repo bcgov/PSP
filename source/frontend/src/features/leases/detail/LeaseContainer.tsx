@@ -23,6 +23,7 @@ import { LeaseSchema } from '../add/AddLeaseYupSchema';
 import LeaseEditButton from './LeaseEditButton';
 import DepositsContainer from './LeasePages/deposits/DepositsContainer';
 import DetailContainer from './LeasePages/details/DetailContainer';
+import DocumentsPage from './LeasePages/documents/DocumentsPage';
 import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
 import PaymentsContainer from './LeasePages/payment/TermPaymentsContainer';
@@ -40,6 +41,7 @@ export interface ILeasePage {
   header?: ReactNode;
   description?: string;
   validation?: Yup.ObjectSchema<any>;
+  claims?: string[] | string;
 }
 
 export enum LeasePageNames {
@@ -51,6 +53,7 @@ export enum LeasePageNames {
   INSURANCE = 'insurance',
   DEPOSIT = 'deposit',
   SURPLUS = 'surplus',
+  DOCUMENTS = 'documents',
 }
 
 export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
@@ -122,6 +125,10 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   ],
   [LeasePageNames.DEPOSIT, { component: DepositsContainer, title: 'Deposit' }],
   [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
+  [
+    LeasePageNames.DOCUMENTS,
+    { component: DocumentsPage, title: 'Documents', claims: Claims.DOCUMENT_VIEW },
+  ],
 ]);
 
 /**

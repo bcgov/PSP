@@ -25,7 +25,7 @@ export class FormLeaseDeposit {
     return new FormLeaseDeposit();
   }
 
-  public static createFromModel(baseModel: Api_SecurityDeposit): FormLeaseDeposit {
+  public static fromApi(baseModel: Api_SecurityDeposit): FormLeaseDeposit {
     let model = new FormLeaseDeposit();
     model.id = baseModel.id;
     model.description = baseModel.description;
@@ -40,7 +40,7 @@ export class FormLeaseDeposit {
     return model;
   }
 
-  public toInterfaceModel(): Api_SecurityDeposit {
+  public toApi(): Api_SecurityDeposit {
     return {
       id: this.id,
       description: this.description,

@@ -1,4 +1,5 @@
 import clsx from 'classnames';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,7 +7,7 @@ import styled from 'styled-components';
 import { leasePages } from './LeaseContainer';
 
 export interface ILeaseAndLicenseIndexProps {
-  currentPageName?: string | string[] | null;
+  currentPageName?: string;
   leaseId?: number;
 }
 
@@ -19,16 +20,21 @@ export const LeaseIndex: React.FunctionComponent<ILeaseAndLicenseIndexProps> = (
   leaseId,
 }) => {
   const { url } = useRouteMatch();
+  const { hasClaim } = useKeycloakWrapper();
   return (
     <StyledLeaseIndex>
       {Array.from(leasePages.entries()).map(([pageName, page]) => (
-        <StyledLeaseIndexLink
-          key={`lease-${pageName}`}
-          to={!!leaseId ? `${url}/${pageName}` : '#'}
-          className={clsx({ active: currentPageName === pageName, disabled: !leaseId })}
-        >
-          {page.title}
-        </StyledLeaseIndexLink>
+        <>
+          {(page.claims === undefined || hasClaim(page.claims)) && (
+            <StyledLeaseIndexLink
+              key={`lease-${pageName}`}
+              to={!!leaseId ? `${url}/${pageName}` : '#'}
+              className={clsx({ active: currentPageName === pageName, disabled: !leaseId })}
+            >
+              {page.title}
+            </StyledLeaseIndexLink>
+          )}
+        </>
       ))}
     </StyledLeaseIndex>
   );

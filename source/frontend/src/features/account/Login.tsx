@@ -50,7 +50,7 @@ const Login = () => {
             <h1>{tenant.login.title}</h1>
             <h6>{tenant.login.heading}</h6>
             <p>{tenant.login.body}</p>
-            <Button variant="primary" onClick={() => keycloak.login()}>
+            <Button variant="primary" onClick={() => keycloak.login({ idpHint: 'idir' })}>
               Sign In
             </Button>
             <p>Sign into PIMS with your government issued IDIR</p>
