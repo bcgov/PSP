@@ -37,9 +37,13 @@ const PropertyMapSelectorFormView: React.FunctionComponent<
   };
 
   const onClickAway = () => {
-    if (cursor !== MapCursors.DEFAULT) {
-      setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false });
-    }
+    // Prevent this handler from getting triggered immediately.
+    // We need a timeout here to give the map time to process its own click event while selecting properties on the map.
+    setTimeout(() => {
+      if (cursor !== MapCursors.DEFAULT) {
+        setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false });
+      }
+    }, 100);
   };
 
   const addProperty = (property: IMapProperty) => {
