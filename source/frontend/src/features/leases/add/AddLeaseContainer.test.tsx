@@ -4,9 +4,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
-import { act } from 'react-dom/test-utils';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 

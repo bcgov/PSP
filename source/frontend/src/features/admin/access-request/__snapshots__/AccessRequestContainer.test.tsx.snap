@@ -193,9 +193,9 @@ exports[`AccessRequestContainer component makes a request based on the access re
             name="businessIdentifierValue"
             placeholder="desmith@idir"
             readonly=""
-            title="desmith@idir"
+            title=""
             type="text"
-            value="desmith@idir"
+            value=""
           />
         </div>
       </div>
@@ -224,9 +224,9 @@ exports[`AccessRequestContainer component makes a request based on the access re
             name="firstName"
             placeholder="Devin"
             readonly=""
-            title="Devin"
+            title=""
             type="text"
-            value="Devin"
+            value=""
           />
         </div>
       </div>
@@ -255,9 +255,9 @@ exports[`AccessRequestContainer component makes a request based on the access re
             name="surname"
             placeholder="Smith"
             readonly=""
-            title="Smith"
+            title=""
             type="text"
-            value="Smith"
+            value=""
           />
         </div>
       </div>
@@ -286,9 +286,9 @@ exports[`AccessRequestContainer component makes a request based on the access re
             name="email"
             placeholder="devin.smith@gov.bc.ca"
             readonly=""
-            title="devin.smith@gov.bc.ca"
+            title=""
             type="email"
-            value="devin.smith@gov.bc.ca"
+            value=""
           />
         </div>
       </div>
@@ -316,9 +316,9 @@ exports[`AccessRequestContainer component makes a request based on the access re
             id="input-position"
             name="position"
             placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
-            title="pos"
+            title=""
             type="text"
-            value="pos"
+            value=""
           />
         </div>
       </div>
@@ -727,9 +727,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             name="businessIdentifierValue"
             placeholder="desmith@idir"
             readonly=""
-            title="desmith@idir"
+            title=""
             type="text"
-            value="desmith@idir"
+            value=""
           />
         </div>
       </div>
@@ -758,9 +758,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             name="firstName"
             placeholder="Devin"
             readonly=""
-            title="Devin"
+            title=""
             type="text"
-            value="Devin"
+            value=""
           />
         </div>
       </div>
@@ -789,9 +789,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             name="surname"
             placeholder="Smith"
             readonly=""
-            title="Smith"
+            title=""
             type="text"
-            value="Smith"
+            value=""
           />
         </div>
       </div>
@@ -820,9 +820,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             name="email"
             placeholder="devin.smith@gov.bc.ca"
             readonly=""
-            title="devin.smith@gov.bc.ca"
+            title="test@test.com"
             type="email"
-            value="devin.smith@gov.bc.ca"
+            value="test@test.com"
           />
         </div>
       </div>
@@ -850,9 +850,9 @@ exports[`AccessRequestContainer component makes a request when no id is provided
             id="input-position"
             name="position"
             placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
-            title="pos"
+            title=""
             type="text"
-            value="pos"
+            value=""
           />
         </div>
       </div>

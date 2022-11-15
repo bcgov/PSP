@@ -429,9 +429,7 @@ exports[`ActivityPropertyModal tests Renders as expected 1`] = `
                         role="cell"
                         style="box-sizing: border-box; flex: 100 0 auto; min-width: 40px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                         title=""
-                      >
-                        
-                      </div>
+                      />
                       <div
                         class="td"
                         role="cell"

@@ -8,9 +8,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c1 {
   min-width: 3rem;
   min-height: 4.5rem;
@@ -229,7 +226,7 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
     <div
       class="col-md-3"
     >
-      <p
+      <div
         class="mb-0 d-flex align-items-center"
       >
         <svg
@@ -302,11 +299,10 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
             1
           </title>
         </svg>
-      </p>
-      <div
-        class="c3 pl-3"
-      />
-      <p />
+        <div
+          class="c3 pl-3"
+        />
+      </div>
     </div>
     <div
       class="col-md-7"

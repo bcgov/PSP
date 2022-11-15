@@ -5,7 +5,7 @@ import { IProperty } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
 import { getMockProperties } from 'mocks/mockProperties';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import LeaseHeaderAddresses, { ILeaseHeaderAddressesProps } from './LeaseHeaderAddresses';
 
@@ -56,7 +56,7 @@ describe('LeaseHeaderAddresses component', () => {
     });
 
     const moreButton = getByText('[+3 more...]');
-    userEvent.click(moreButton);
+    await act(() => userEvent.click(moreButton));
 
     expect(
       getAllByText('000-000-000 - Address not available in PIMS', { exact: false }),

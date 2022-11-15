@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
 import { AddNotesFormModal } from './AddNotesFormModal';
 import { AddNotesYupSchema } from './AddNotesYupSchema';
@@ -82,16 +82,16 @@ describe('AddNotesFormModal component', () => {
     // note cannot exceed 4000 characters
     const textarea = await findByLabelText(/Type a note/i);
     userEvent.paste(textarea, fakeText(4001));
-    userEvent.click(getSaveButton());
+    await act(() => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Notes must be at most 4000 characters/i)).toBeVisible();
   });
 
-  it('should cancel form when Cancel button is clicked', () => {
+  it('should cancel form when Cancel button is clicked', async () => {
     const { getCancelButton } = setup({ initialValues });
 
-    userEvent.click(getCancelButton());
+    await act(() => userEvent.click(getCancelButton()));
 
     expect(handleCancelClick).toBeCalled();
     expect(validationSchema).not.toBeCalled();
@@ -108,7 +108,7 @@ describe('AddNotesFormModal component', () => {
     initialValues.note.note = 'foo bar baz';
     const { getSaveButton } = setup({ initialValues });
 
-    await waitFor(() => userEvent.click(getSaveButton()));
+    await act(() => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();
     expect(handleSubmit).toBeCalledWith(initialValues, expect.anything());
