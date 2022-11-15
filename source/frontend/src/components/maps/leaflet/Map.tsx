@@ -6,13 +6,7 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import {
-  LatLngBounds,
-  Map as LeafletMap,
-  Popup as LeafletPopup,
-  PopupEvent,
-  TileLayer as LeafletTileLayer,
-} from 'leaflet';
+import { LatLngBounds, Map as LeafletMap, Popup as LeafletPopup, PopupEvent } from 'leaflet';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useContext, useEffect, useRef, useState } from 'react';

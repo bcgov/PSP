@@ -11,7 +11,6 @@ import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 
 import TestCommonWrapper from './TestCommonWrapper';
 

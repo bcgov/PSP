@@ -1,6 +1,5 @@
-import { act, cleanup, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { IApiVersion } from 'hooks/pims-api';
-import React from 'react';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
 
