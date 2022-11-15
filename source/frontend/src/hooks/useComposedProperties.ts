@@ -82,7 +82,7 @@ export const useComposedProperties = ({
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
     } else if (!!retrievedPin) {
-      typeCheckWrapper(() => findByPin(retrievedPin), PROPERTY_TYPES.PARCEL_MAP);
+      typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
   }, [
     findByPid,
