@@ -72,77 +72,73 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     }
   }, [isAcquisition, isResearch, matched, setShowSideBar, setState]);
 
-    const onClose = () => {
-      history.push('/mapview');
-    };
+  const onClose = () => {
+    history.push('/mapview');
+  };
 
-    const pidQueryString = queryString.parse(location.search).pid?.toString() ?? '';
-    return (
-      <Switch>
-        <AppRoute
-          path={`/mapview/sidebar/research/new`}
-          customRender={() => <AddResearchContainer onClose={onClose} />}
-          claim={Claims.RESEARCH_ADD}
-          exact
-          key={'NewResearch'}
-          title={'Create Research File'}
-        />
-        <AppRoute
-          path={`/mapview/sidebar/research/:researchId`}
-          customRender={({ match }) => (
-            <ResearchContainer researchFileId={Number(match.params.researchId)} onClose={onClose} />
-          )}
-          claim={Claims.RESEARCH_VIEW}
-          key={'Research'}
-          title={'Research File'}
-        />
-        <AppRoute
-          path={`/mapview/sidebar/acquisition/new`}
-          customRender={() => <AddAcquisitionContainer onClose={onClose} />}
-          claim={Claims.ACQUISITION_ADD}
-          key={'NewAcquisition'}
-          title={'Create Acquisition File'}
-        />
-        <AppRoute
-          path={`/mapview/sidebar/acquisition/:id`}
-          customRender={({ match }) => (
-            <AcquisitionContainer acquisitionFileId={Number(match.params.id)} onClose={onClose} />
-          )}
-          claim={Claims.ACQUISITION_VIEW}
-          key={'Acquisition'}
-          title={'Acquisition File'}
-        />
-        <AppRoute
-          path={`/mapview/sidebar/property/:propertyId`}
-          customRender={({ match }) => (
-            <MotiInventoryContainer
-              onClose={onClose}
-              id={Number(match.params.propertyId)}
-              pid={pidQueryString}
-              onZoom={props.onZoom}
-            />
-          )}
-          claim={Claims.PROPERTY_VIEW}
-          exact
-          key={'Property'}
-          title={'Property Information'}
-        />
-        <AppRoute
-          path={`/mapview/sidebar/non-inventory-property/:pid`}
-          customRender={({ match }) => (
-            <MotiInventoryContainer
-              onClose={onClose}
-              pid={match.params.pid}
-              onZoom={props.onZoom}
-            />
-          )}
-          claim={Claims.PROPERTY_VIEW}
-          exact
-          key={'PropertyNonInventory'}
-          title={'Property Information - Non Inventory'}
-        />
-      </Switch>
-    );
-  });
+  const pidQueryString = queryString.parse(location.search).pid?.toString() ?? '';
+  return (
+    <Switch>
+      <AppRoute
+        path={`/mapview/sidebar/research/new`}
+        customRender={() => <AddResearchContainer onClose={onClose} />}
+        claim={Claims.RESEARCH_ADD}
+        exact
+        key={'NewResearch'}
+        title={'Create Research File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/research/:researchId`}
+        customRender={({ match }) => (
+          <ResearchContainer researchFileId={Number(match.params.researchId)} onClose={onClose} />
+        )}
+        claim={Claims.RESEARCH_VIEW}
+        key={'Research'}
+        title={'Research File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/acquisition/new`}
+        customRender={() => <AddAcquisitionContainer onClose={onClose} />}
+        claim={Claims.ACQUISITION_ADD}
+        key={'NewAcquisition'}
+        title={'Create Acquisition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/acquisition/:id`}
+        customRender={({ match }) => (
+          <AcquisitionContainer acquisitionFileId={Number(match.params.id)} onClose={onClose} />
+        )}
+        claim={Claims.ACQUISITION_VIEW}
+        key={'Acquisition'}
+        title={'Acquisition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/property/:propertyId`}
+        customRender={({ match }) => (
+          <MotiInventoryContainer
+            onClose={onClose}
+            id={Number(match.params.propertyId)}
+            pid={pidQueryString}
+            onZoom={props.onZoom}
+          />
+        )}
+        claim={Claims.PROPERTY_VIEW}
+        exact
+        key={'Property'}
+        title={'Property Information'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/non-inventory-property/:pid`}
+        customRender={({ match }) => (
+          <MotiInventoryContainer onClose={onClose} pid={match.params.pid} onZoom={props.onZoom} />
+        )}
+        claim={Claims.PROPERTY_VIEW}
+        exact
+        key={'PropertyNonInventory'}
+        title={'Property Information - Non Inventory'}
+      />
+    </Switch>
+  );
+});
 
 export default MapRouter;
