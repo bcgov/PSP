@@ -1,3 +1,4 @@
+import { FeatureCollection } from 'geojson';
 import { useCallback } from 'react';
 
 import { useWfsLayer } from './useWfsLayer';
@@ -8,7 +9,7 @@ import { useWfsLayer } from './useWfsLayer';
  * Note: according to https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric/resource/959af382-fb31-4f57-b8ea-e6dcb6ce2e0b
  */
 export const useFullyAttributedParcelMapLayer = (url: string, name: string) => {
-  const getAllFeaturesWrapper = useWfsLayer(url, {
+  const getAllFeaturesWrapper = useWfsLayer<FeatureCollection>(url, {
     name,
   });
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
