@@ -1,5 +1,3 @@
-// import React from 'react';
-
 // import { waitFor } from '@testing-library/react';
 // import AppRouter from 'AppRouter';
 // import axios from 'axios';
@@ -33,6 +31,8 @@
 // const history = createMemoryHistory();
 
 describe('PSP routing - Enzyme Tests - NEEDS REFACTORING', () => {
+  it('should be implemented', async () => {});
+
   // beforeEach(() => {
   //   fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
   // });
