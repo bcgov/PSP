@@ -9,9 +9,8 @@ export const fetchWithRetryTimeout = async (
   try {
     const promise = fetch(url ?? '', { ...remainingOptions, signal: controller.signal });
     const timeout = setTimeout(() => {
-      console.log('aborting request', options.url);
       controller.abort();
-    }, 5000);
+    }, options.timeout ?? 5000);
     return await promise.finally(() => clearTimeout(timeout));
   } catch (error) {
     // if the retryCount has not been exceeded, call again

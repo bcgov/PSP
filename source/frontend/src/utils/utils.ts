@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
@@ -140,8 +140,10 @@ export const handleAxiosResponse = <ResponseType>(
     })
     .catch((axiosError: AxiosError) => {
       if (
-        !skipErrorLogCodes ||
-        (axiosError?.response?.status && !skipErrorLogCodes.includes(axiosError?.response?.status))
+        axios.isAxiosError(axiosError) &&
+        (!skipErrorLogCodes ||
+          (axiosError?.response?.status &&
+            !skipErrorLogCodes.includes(axiosError?.response?.status)))
       ) {
         dispatch(
           logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
