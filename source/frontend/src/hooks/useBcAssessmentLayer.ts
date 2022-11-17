@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Feature, FeatureCollection } from 'geojson';
+import { FeatureCollection } from 'geojson';
 import { getMockAddresses, getMockLegalDescriptions } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
