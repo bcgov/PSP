@@ -1,7 +1,7 @@
 import { ColumnWithProps, MoneyCell, Table } from 'components/Table';
 import { IBcAssessmentSummary } from 'hooks/useBcAssessmentLayer';
 import { CellProps } from 'react-table';
-import { formatMoney } from 'utils';
+import { formatMoney, stringToFragment } from 'utils';
 
 interface IAssessedValuesTableProps {
   valuesData?: IBcAssessmentSummary['SALES'];
@@ -19,28 +19,32 @@ const AssessedValuesTable: React.FunctionComponent<IAssessedValuesTableProps> = 
   );
 };
 
-const columns: ColumnWithProps<IBcAssessmentSummary['VALUES'][0] & { id?: number }>[] = [
+type BcAssessmentValuesModelType = IBcAssessmentSummary['VALUES'][0] & { id?: number };
+
+const columns: ColumnWithProps<BcAssessmentValuesModelType>[] = [
   {
     Header: 'Year',
     accessor: 'BCA_FGPV_SYSID',
     align: 'left',
     width: 20,
-    Cell: ({ cell }: CellProps<IBcAssessmentSummary['VALUES'][0], string>) => 'Current',
+    Cell: ({ cell }: CellProps<BcAssessmentValuesModelType, number | undefined>) => <>'Current'</>,
   },
   {
     Header: 'Property Class',
     accessor: 'GEN_PROPERTY_CLASS_DESC',
     align: 'left',
     width: 40,
-    Cell: ({ cell }: CellProps<IBcAssessmentSummary['VALUES'][0], string>) =>
-      [
-        cell.row.original.GEN_PROPERTY_CLASS_CODE,
-        cell.row.original.GEN_PROPERTY_CLASS_DESC,
-        cell.row.original.GEN_PROPERTY_SUBCLASS_CODE,
-        cell.row.original.GEN_PROPERTY_SUBCLASS_DESC,
-      ]
-        .filter(a => !!a)
-        .join(' - '),
+    Cell: ({ cell }: CellProps<BcAssessmentValuesModelType, string | undefined>) =>
+      stringToFragment(
+        [
+          cell.row.original.GEN_PROPERTY_CLASS_CODE,
+          cell.row.original.GEN_PROPERTY_CLASS_DESC,
+          cell.row.original.GEN_PROPERTY_SUBCLASS_CODE,
+          cell.row.original.GEN_PROPERTY_SUBCLASS_DESC,
+        ]
+          .filter(a => !!a)
+          .join(' - '),
+      ),
   },
   {
     Header: 'Land',
@@ -61,10 +65,12 @@ const columns: ColumnWithProps<IBcAssessmentSummary['VALUES'][0] & { id?: number
     accessor: 'GEN_NET_IMPROVEMENT_VALUE',
     align: 'left',
     width: 60,
-    Cell: ({ cell }: CellProps<IBcAssessmentSummary['VALUES'][0], string>) =>
-      formatMoney(
-        +(cell.row.original.GEN_GROSS_LAND_VALUE ?? 0) +
-          +(cell.row.original.GEN_GROSS_IMPROVEMENT_VALUE ?? 0),
+    Cell: ({ cell }: CellProps<BcAssessmentValuesModelType, number | undefined>) =>
+      stringToFragment(
+        formatMoney(
+          +(cell.row.original.GEN_GROSS_LAND_VALUE ?? 0) +
+            +(cell.row.original.GEN_GROSS_IMPROVEMENT_VALUE ?? 0),
+        ),
       ),
   },
 ];
