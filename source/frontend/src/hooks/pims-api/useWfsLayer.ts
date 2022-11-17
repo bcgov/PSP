@@ -28,7 +28,7 @@ export interface IWfsGetAllFeaturesOptions {
  * API wrapper to centralize all AJAX requests to WFS endpoints.
  * @returns Object containing functions to make requests to the WFS layer.
  */
-export const useWfsLayer = (
+export const useWfsLayer = <T>(
   url: string,
   layerOptions: IUseWfsLayerOptions,
   requestWrapperOptions?: Partial<IApiRequestWrapper<any>>,
@@ -72,7 +72,7 @@ export const useWfsLayer = (
           };
           throw error;
         }
-        const data: AxiosResponse = {
+        const data: AxiosResponse<T> = {
           data: await response.json(),
           status: response.status,
           statusText: response.statusText,
