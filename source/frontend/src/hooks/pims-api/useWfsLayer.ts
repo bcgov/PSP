@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { toCqlFilterValue } from 'components/maps/leaflet/mapUtils';
 import { layerData } from 'constants/toasts';
 import { IApiRequestWrapper, useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
@@ -72,7 +72,13 @@ export const useWfsLayer = (
           };
           throw error;
         }
-        const data = await response.json();
+        const data: AxiosResponse = {
+          data: await response.json(),
+          status: response.status,
+          statusText: response.statusText,
+          headers: {},
+          config: {},
+        };
         return data;
       },
       [layerOptions, url],
