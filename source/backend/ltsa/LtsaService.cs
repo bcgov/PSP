@@ -31,7 +31,6 @@ namespace Pims.Ltsa
         private readonly ILogger<ILtsaService> _logger;
         private readonly AsyncRetryPolicy _authPolicy;
         private readonly IHttpClientFactory _httpClientFactory;
-        private TokenModel _token = null;
         #endregion
         #region Properties
         public LtsaOptions Options { get; }
@@ -56,8 +55,8 @@ namespace Pims.Ltsa
                 .Handle<HttpClientRequestException>(ex => ex.StatusCode == HttpStatusCode.Forbidden || ex.StatusCode == HttpStatusCode.Unauthorized)
                 .RetryAsync(async (exception, retryCount, context) =>
                 {
-                    _token = await RefreshAccessTokenAsync((TokenModel)context["access_token"]);
-                    context["access_token"] = _token;
+                    var token = await RefreshAccessTokenAsync((TokenModel)context["access_token"]);
+                    context["access_token"] = token;
                 });
         }
         #endregion
@@ -95,13 +94,18 @@ namespace Pims.Ltsa
 
                 }, new Dictionary<string, object>
                 {
-                    { "access_token", _token }
+                    { "access_token", null }
                 });
             }
             catch (HttpClientRequestException ex)
             {
                 Error error = await GetLtsaError(ex, url);
                 throw new LtsaException(ex, client, error);
+            }
+            catch (JsonException ex)
+            {
+                this._logger.LogError("Failed to process LTSA json: ", ex);
+                throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -144,7 +148,7 @@ namespace Pims.Ltsa
                     return response;
                 }, new Dictionary<string, object>
                 {
-                    { "access_token", _token }
+                    { "access_token", null }
                 });
 
                 string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
@@ -222,6 +226,12 @@ namespace Pims.Ltsa
                     _logger.LogError(ex, $"Failed to send/receive auth refresh request: ${this.Options.AuthUrl}");
                     throw new LtsaException(ex.Message, ex, ex.StatusCode.Value);
                 }
+                catch (JsonException ex)
+                {
+                    _logger.LogError(ex, $"Failed to parse refresh token JSON response");
+                    throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
+                }
+                token = await GetTokenAsync();
             }
             else
             {
@@ -266,6 +276,11 @@ namespace Pims.Ltsa
             {
                 Error error = await GetLtsaError(ex, url);
                 throw new LtsaException(ex, client, error);
+            }
+            catch (JsonException ex)
+            {
+                this._logger.LogError($"Failed to process LTSA json:", ex);
+                throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
