@@ -633,16 +633,14 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                 <div
                                   class="d-flex flex-column align-items-center"
                                 >
-                                  <div>
-                                    <svg
-                                      class="c14"
-                                      height="97"
-                                      title="select properties on the map"
-                                      width="97"
-                                    >
-                                      icon-draft.svg
-                                    </svg>
-                                  </div>
+                                  <svg
+                                    class="c14"
+                                    height="97"
+                                    title="select properties on the map"
+                                    width="97"
+                                  >
+                                    icon-draft.svg
+                                  </svg>
                                   <ol>
                                     <li>
                                       Click pin above
