@@ -1,10 +1,11 @@
+import { AxiosError } from 'axios';
 import { toCqlFilterValue } from 'components/maps/leaflet/mapUtils';
-import { FeatureCollection } from 'geojson';
+import { layerData } from 'constants/toasts';
 import { IApiRequestWrapper, useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import isAbsoluteUrl from 'is-absolute-url';
 
-import { wfsAxios } from './wfsAxios';
+import { fetchWithRetryTimeout } from './../../utils/fetchTimeout';
 
 export interface IUseWfsLayerOptions {
   name?: string;
@@ -51,15 +52,27 @@ export const useWfsLayer = (
         if (cqlFilter) {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }
-
-        // call WFS service
-        const data = await wfsAxios(options?.timeout, options?.onLayerError).get<FeatureCollection>(
-          urlObj.href,
-          {
-            withCredentials: layerOptions.withCredentials,
-          },
-        );
-
+        const response = await fetchWithRetryTimeout({
+          credentials: layerOptions.withCredentials ? 'include' : 'same-origin',
+          url: urlObj.href,
+          timeout: options?.timeout ?? 5000,
+          redirect: 'error',
+          onError: options?.onLayerError ?? (() => layerData.LAYER_DATA_ERROR()),
+        });
+        if (!response.ok) {
+          const error: Partial<AxiosError> = {
+            isAxiosError: true,
+            response: {
+              data: {},
+              status: response.status,
+              statusText: response.statusText,
+              headers: {},
+              config: {},
+            },
+          };
+          throw error;
+        }
+        const data = await response.json();
         return data;
       },
       [layerOptions, url],

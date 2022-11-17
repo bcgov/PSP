@@ -1,5 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { IApiError } from 'interfaces/IApiError';
+import axios, { AxiosResponse } from 'axios';
 import { getMockAddresses, getMockLegalDescriptions } from 'mocks/bcAssessmentMock';
 import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -100,11 +99,8 @@ export const useBcAssessmentLayer = (
           { timeout: 40000, forceExactMatch: true, onLayerError: bcAssessmentError },
         );
       } catch (e: any) {
-        if (axios.isAxiosError(e)) {
-          const axiosError = e as AxiosError<IApiError>;
-          if (axiosError.response === undefined) {
-            setDisplayModal(true);
-          }
+        if (!axios.isAxiosError(e)) {
+          setDisplayModal(true);
         }
       }
 
@@ -197,7 +193,7 @@ export const useBcAssessmentLayer = (
   };
 };
 
-export const LAYER_UNAVAILABLE = [
+export const ASSESSMENT_LAYER_UNAVAILABLE = [
   'The BC Assessment map layers used in this application are unavailable at this time.',
   'Please notify ',
   'pims@gov.bc.ca',
@@ -205,7 +201,7 @@ export const LAYER_UNAVAILABLE = [
 ];
 
 const bcAssessmentError = () =>
-  toast.error(LAYER_UNAVAILABLE.join('\n'), { toastId: 'LAYER_DATA_ERROR_ID' });
+  toast.error(ASSESSMENT_LAYER_UNAVAILABLE.join('\n'), { toastId: 'LAYER_DATA_ERROR_ID' });
 
 export const mockBcAssessmentSummary: IBcAssessmentSummary = {
   LEGAL_DESCRIPTION: getMockLegalDescriptions()?.features[0].properties ?? {},
