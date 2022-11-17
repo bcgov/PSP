@@ -144,7 +144,11 @@ export const handleAxiosResponse = <ResponseType>(
         (axiosError?.response?.status && !skipErrorLogCodes.includes(axiosError?.response?.status))
       ) {
         dispatch(
-          logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
+          logError({
+            name: actionType,
+            status: axiosError?.response?.status,
+            error: axiosError ?? {},
+          }),
         );
       }
       throw axiosError;
