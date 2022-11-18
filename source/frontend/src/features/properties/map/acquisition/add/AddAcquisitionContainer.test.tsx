@@ -1,9 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import {
-  MapStateContext,
-  MapStateContextProvider,
-} from 'components/maps/providers/MapStateContext';
+import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
