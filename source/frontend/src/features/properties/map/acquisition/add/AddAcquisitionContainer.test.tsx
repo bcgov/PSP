@@ -1,5 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import {
+  MapStateContext,
+  MapStateContextProvider,
+} from 'components/maps/providers/MapStateContext';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { mockLookups } from 'mocks/mockLookups';
@@ -34,14 +39,20 @@ describe('AddAcquisitionContainer component', () => {
   const setup = (
     props: IAddAcquisitionContainerProps = DEFAULT_PROPS,
     renderOptions: RenderOptions = {},
+    selectedProperty: Feature<Geometry, GeoJsonProperties> | null = null,
   ) => {
-    const utils = render(<AddAcquisitionContainer {...props} />, {
-      ...renderOptions,
-      store: {
-        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+    const utils = render(
+      <MapStateContextProvider values={{ selectedFileFeature: selectedProperty }}>
+        <AddAcquisitionContainer {...props} />
+      </MapStateContextProvider>,
+      {
+        ...renderOptions,
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+        history,
       },
-      history,
-    });
+    );
 
     return {
       ...utils,
@@ -90,6 +101,30 @@ describe('AddAcquisitionContainer component', () => {
     userEvent.click(getCancelButton());
 
     expect(onClose).toBeCalled();
+  });
+
+  it('should pre-populate the region if a property is selected', async () => {
+    const { findByDisplayValue } = setup(undefined, undefined, {
+      properties: { REGION_NUMBER: 1 },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-120.69195885, 50.25163372],
+            [-120.69176022, 50.2588544],
+            [-120.69725103, 50.25889407],
+            [-120.70326422, 50.25893724],
+            [-120.70352697, 50.25172245],
+            [-120.70287648, 50.25171749],
+            [-120.70200152, 50.25171082],
+            [-120.69622707, 50.2516666],
+            [-120.69195885, 50.25163372],
+          ],
+        ],
+      },
+    } as any);
+    const text = await findByDisplayValue(/South Coast Region/i);
+    expect(text).toBeVisible();
   });
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
