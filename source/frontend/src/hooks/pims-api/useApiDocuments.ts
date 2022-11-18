@@ -85,12 +85,11 @@ export const useApiDocuments = () => {
         );
       },
       updateDocumentMetadataApiCall: (
-        relationshipType: DocumentRelationshipType,
         documentId: number,
         updateRequest: Api_DocumentUpdateRequest,
       ) => {
         return api.put<Api_DocumentUpdateResponse>(
-          `/documents/${documentId}/relationship/${relationshipType}/metadata`,
+          `/documents/${documentId}/metadata`,
           updateRequest,
         );
       },

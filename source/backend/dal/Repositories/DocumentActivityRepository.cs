@@ -47,6 +47,40 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get a list of all the document activity relationships for a given research file.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PimsActivityInstanceDocument> GetAllByResearchFile(long fileId)
+        {
+            return this.Context.PimsActivityInstanceDocuments
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentType)
+                .Where(ad => ad.ActivityInstance.PimsResearchActivityInstances.Any(x => x.ResearchFileId == fileId))
+                .AsNoTracking()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Get a list of all the document activity relationships for a a given aquisition file.
+        /// </summary>
+        /// <returns></returns>
+        public IList<PimsActivityInstanceDocument> GetAllByAcquisitionFile(long fileId)
+        {
+            return this.Context.PimsActivityInstanceDocuments
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentType)
+                .Include(ad => ad.Document)
+                    .ThenInclude(d => d.DocumentType)
+                .Where(ad => ad.ActivityInstance.PimsAcquisitionActivityInstances.Any(x => x.AcquisitionFileId == fileId))
+                .AsNoTracking()
+                .ToList();
+        }
+
+        /// <summary>
         /// Get a list of all the document relationships for a given activity.
         /// </summary>
         /// <returns></returns>

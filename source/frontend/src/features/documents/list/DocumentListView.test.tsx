@@ -36,7 +36,9 @@ describe('Document List View', () => {
       <DocumentListView
         isLoading={false}
         parentId={renderOptions?.parentId || 0}
-        relationshipType={renderOptions?.relationshipType || DocumentRelationshipType.FILES}
+        relationshipType={
+          renderOptions?.relationshipType || DocumentRelationshipType.RESEARCH_FILES
+        }
         documentResults={renderOptions?.documentResults || mockDocumentsResponse()}
         onDelete={renderOptions?.onDelete || deleteMock}
         refreshDocumentList={renderOptions?.refreshDocumentList || noop}
@@ -81,7 +83,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: 0,
-      relationshipType: DocumentRelationshipType.FILES,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
       refreshDocumentList: noop,
@@ -94,7 +96,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: 0,
-      relationshipType: DocumentRelationshipType.FILES,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
       refreshDocumentList: noop,
@@ -108,7 +110,7 @@ describe('Document List View', () => {
       hideFilters: false,
       isLoading: false,
       parentId: 0,
-      relationshipType: DocumentRelationshipType.FILES,
+      relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
       refreshDocumentList: noop,

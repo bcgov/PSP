@@ -12,7 +12,6 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
-import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import { DocumentDetailForm } from './DocumentDetailForm';
 import { DocumentDetailView } from './DocumentDetailView';
 
@@ -29,10 +28,14 @@ export const DocumentDetailContainer: React.FunctionComponent<
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     Api_Storage_DocumentTypeMetadataType[]
   >([]);
-  const { updateDocument, updateDocumentLoading } = useDocumentRelationshipProvider();
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
-  const { retrieveDocumentMetadata, retrieveDocumentMetadataLoading } = useDocumentProvider();
+  const {
+    retrieveDocumentMetadata,
+    retrieveDocumentMetadataLoading,
+    updateDocument,
+    updateDocumentLoading,
+  } = useDocumentProvider();
   const { getDocumentTypeMetadata } = useApiDocuments();
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
@@ -114,11 +117,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
   const onUpdateDocument = async (updateRequest: Api_DocumentUpdateRequest) => {
     if (props.pimsDocument.id) {
-      let result = await updateDocument(
-        props.relationshipType,
-        props.pimsDocument.id,
-        updateRequest,
-      );
+      let result = await updateDocument(props.pimsDocument.id, updateRequest);
       result && props.onUpdateSuccess();
     }
   };

@@ -2,6 +2,7 @@ import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentRelationship } from 'models/api/Document';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
@@ -9,6 +10,7 @@ import DocumentListView from './DocumentListView';
 interface IDocumentListContainerProps {
   parentId: number;
   relationshipType: DocumentRelationshipType;
+  disableAdd?: boolean;
 }
 
 const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
@@ -36,12 +38,21 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
   const onDelete = async (
     documentRelationship: Api_DocumentRelationship,
   ): Promise<boolean | undefined> => {
-    let result = await deleteDocumentRelationship(props.relationshipType, documentRelationship);
-    if (result && isMounted()) {
-      retrieveDocuments();
-    }
+    if (documentRelationship.relationshipType !== undefined) {
+      let result = await deleteDocumentRelationship(
+        documentRelationship.relationshipType,
+        documentRelationship,
+      );
+      if (result && isMounted()) {
+        retrieveDocuments();
+      }
 
-    return result;
+      return result;
+    } else {
+      toast.error(
+        'Invalid document relationship error during delete. Check responses and try again.',
+      );
+    }
   };
 
   return (
@@ -52,6 +63,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       documentResults={documentResults}
       onDelete={onDelete}
       refreshDocumentList={retrieveDocuments}
+      disableAdd={props.disableAdd}
     />
   );
 };
