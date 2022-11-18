@@ -18,12 +18,10 @@ const usePimsIdleTimer = () => {
   };
 
   const onActive = () => {
-    console.log('onActive');
     idleProps.start();
   };
 
   const onAction = () => {
-    console.log('onEvent');
     idleProps.start();
   };
 
