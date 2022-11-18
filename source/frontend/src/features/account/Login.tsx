@@ -31,10 +31,13 @@ const Login = () => {
   if (keycloak?.authenticated) {
     if (activated?.status === 201 || !keyCloakWrapper?.roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
+    } else if (typeof redirect === 'string' && redirect.length) {
+      return <Redirect to={redirect} />;
     } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
       return <Redirect to="/lease/list" />;
+    } else {
+      return <Redirect to={'/mapview'} />;
     }
-    return <Redirect to={{ pathname: (redirect as string) || '/mapview' }} />;
   }
   if (isIE) {
     return <Redirect to={{ pathname: '/ienotsupported' }} />;
