@@ -134,6 +134,9 @@
   "jest": {
     "resetMocks": false,
     "clearMocks": true,
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/styleMock.js"
+    },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/**",
