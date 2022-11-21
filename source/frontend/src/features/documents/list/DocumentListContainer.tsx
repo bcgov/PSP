@@ -9,6 +9,7 @@ import DocumentListView from './DocumentListView';
 interface IDocumentListContainerProps {
   parentId: number;
   relationshipType: DocumentRelationshipType;
+  addButtonText?: string;
 }
 
 const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
@@ -48,6 +49,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     <DocumentListView
       parentId={props.parentId}
       relationshipType={props.relationshipType}
+      addButtonText={props.addButtonText}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
       onDelete={onDelete}
