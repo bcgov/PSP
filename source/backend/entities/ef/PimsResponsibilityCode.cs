@@ -8,26 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_ACTIVITY_TEMPLATE")]
-    [Index(nameof(ActivityTemplateTypeCode), Name = "ACTTMP_ACTIVITY_TEMPLATE_TYPE_CODE_IDX")]
-    public partial class PimsActivityTemplate
+    [Table("PIMS_RESPONSIBILITY_CODE")]
+    [Index(nameof(Code), Name = "RESPCD_CODE_IDX")]
+    public partial class PimsResponsibilityCode
     {
-        public PimsActivityTemplate()
-        {
-            PimsActivityInstances = new HashSet<PimsActivityInstance>();
-            PimsActivityTemplateDocuments = new HashSet<PimsActivityTemplateDocument>();
-        }
-
         [Key]
-        [Column("ACTIVITY_TEMPLATE_ID")]
-        public long ActivityTemplateId { get; set; }
+        [Column("ID")]
+        public long Id { get; set; }
+        [Column("CODE")]
+        public int Code { get; set; }
         [Required]
-        [Column("ACTIVITY_TEMPLATE_TYPE_CODE")]
-        [StringLength(20)]
-        public string ActivityTemplateTypeCode { get; set; }
-        [Required]
-        [Column("ACTIVITY_TEMPLATE_JSON")]
-        public string ActivityTemplateJson { get; set; }
+        [Column("DESCRIPTION")]
+        [StringLength(200)]
+        public string Description { get; set; }
+        [Column("DISPLAY_ORDER")]
+        public int? DisplayOrder { get; set; }
+        [Column("EFFECTIVE_DATE", TypeName = "datetime")]
+        public DateTime EffectiveDate { get; set; }
+        [Column("EXPIRY_DATE", TypeName = "datetime")]
+        public DateTime? ExpiryDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -66,13 +65,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [ForeignKey(nameof(ActivityTemplateTypeCode))]
-        [InverseProperty(nameof(PimsActivityTemplateType.PimsActivityTemplates))]
-        public virtual PimsActivityTemplateType ActivityTemplateTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsActivityInstance.ActivityTemplate))]
-        public virtual ICollection<PimsActivityInstance> PimsActivityInstances { get; set; }
-        [InverseProperty(nameof(PimsActivityTemplateDocument.ActivityTemplate))]
-        public virtual ICollection<PimsActivityTemplateDocument> PimsActivityTemplateDocuments { get; set; }
     }
 }
