@@ -25,7 +25,8 @@ export interface IDocumentListViewProps {
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
   onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
-  refreshDocumentList: () => void;
+  onSuccess: () => void;
+  disableAdd?: boolean;
 }
 /**
  * Page that displays document information as a list.
@@ -146,29 +147,30 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const onUploadSuccess = () => {
     handleModalUploadClose();
-    props.refreshDocumentList();
+    props.onSuccess();
   };
 
   const onUpdateSuccess = () => {
     handleModalDetailsClose();
-    props.refreshDocumentList();
+    props.onSuccess();
   };
 
+  const getHeader = () => {
+    if (props.disableAdd === true) {
+      return 'Documents';
+    }
+    return (
+      <SectionListHeader
+        claims={[Claims.DOCUMENT_ADD]}
+        title="Documents"
+        addButtonText={props.addButtonText || 'Add a Document'}
+        onAdd={() => setIsUploadVisible(true)}
+      />
+    );
+  };
   return (
     <>
-      <Section
-        header={
-          <SectionListHeader
-            claims={[Claims.DOCUMENT_ADD]}
-            title="Documents"
-            addButtonText={props.addButtonText || 'Add a Document'}
-            onAdd={() => setIsUploadVisible(true)}
-          />
-        }
-        title="documents"
-        isCollapsable
-        initiallyExpanded
-      >
+      <Section header={getHeader()} title="documents" isCollapsable initiallyExpanded>
         {!hideFilters && (
           <DocumentFilterForm
             onSetFilter={setFilters}

@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
+using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Policies;
@@ -59,6 +61,31 @@ namespace Pims.Api.Controllers
             var documentTypes = _documentService.GetPimsDocumentTypes();
             var mappedDocumentTypes = _mapper.Map<List<Concepts.DocumentTypeModel>>(documentTypes);
             return new JsonResult(mappedDocumentTypes);
+        }
+
+        /// <summary>
+        /// Updates document metadata and status.
+        /// </summary>
+        /// <param name="documentId">Used to identify document.</param>
+        /// <param name="updateRequest">Contains information about the document metadata.</param>
+        /// <returns></returns>
+        [HttpPut("{documentId}/metadata")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.DocumentEdit)]
+        [ProducesResponseType(typeof(DocumentUpdateResponse), 200)]
+        [SwaggerOperation(Tags = new[] { "documents" })]
+        public async Task<IActionResult> UpdateDocumentMetadata(
+            long documentId,
+            [FromBody] DocumentUpdateRequest updateRequest)
+        {
+            if (documentId != updateRequest.DocumentId)
+            {
+                throw new BadRequestException("Invalid id.");
+            }
+
+            var response = await _documentService.UpdateDocumentAsync(updateRequest);
+            return new JsonResult(response);
+
         }
 
         /// <summary>
