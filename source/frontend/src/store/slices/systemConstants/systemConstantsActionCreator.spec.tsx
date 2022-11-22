@@ -34,7 +34,7 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-describe('SystemConstants slice action creator', () => {
+describe('TODO: SystemConstants slice action creator', () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
