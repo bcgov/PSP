@@ -209,7 +209,7 @@ describe('MapView', () => {
 
   afterEach(cleanup);
 
-  it('Renders the map', async () => {
+  xit('Renders the map', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     expect(document.querySelector('.leaflet-container')).toBeVisible();
