@@ -25,7 +25,7 @@ export interface IDocumentListViewProps {
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
   onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
-  refreshDocumentList: () => void;
+  onSuccess: () => void;
   disableAdd?: boolean;
 }
 /**
@@ -147,12 +147,12 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const onUploadSuccess = () => {
     handleModalUploadClose();
-    props.refreshDocumentList();
+    props.onSuccess();
   };
 
   const onUpdateSuccess = () => {
     handleModalDetailsClose();
-    props.refreshDocumentList();
+    props.onSuccess();
   };
 
   const getHeader = () => {

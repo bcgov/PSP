@@ -1,7 +1,8 @@
 import { DocumentRelationshipType } from 'constants/documentRelationshipType';
+import { SideBarContext } from 'features/properties/map/context/sidebarContext';
 import useIsMounted from 'hooks/useIsMounted';
 import { Api_DocumentRelationship } from 'models/api/Document';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
@@ -18,6 +19,8 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<Api_DocumentRelationship[]>([]);
+
+  const { file, staleFile, setStaleFile } = useContext(SideBarContext);
 
   const {
     retrieveDocumentRelationship,
@@ -36,6 +39,12 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     retrieveDocuments();
   }, [retrieveDocuments]);
 
+  useEffect(() => {
+    if (staleFile) {
+      retrieveDocuments();
+    }
+  }, [staleFile, retrieveDocuments]);
+
   const onDelete = async (
     documentRelationship: Api_DocumentRelationship,
   ): Promise<boolean | undefined> => {
@@ -45,7 +54,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
         documentRelationship,
       );
       if (result && isMounted()) {
-        retrieveDocuments();
+        updateCallback();
       }
 
       return result;
@@ -56,6 +65,19 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     }
   };
 
+  const onSuccess = async () => {
+    updateCallback();
+  };
+
+  const updateCallback = useCallback(() => {
+    // Check if the component is working in a File context. If it is, delegate the update.
+    if (file === undefined) {
+      retrieveDocuments();
+    } else {
+      setStaleFile(true);
+    }
+  }, [file, setStaleFile, retrieveDocuments]);
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -64,7 +86,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
       onDelete={onDelete}
-      refreshDocumentList={retrieveDocuments}
+      onSuccess={onSuccess}
       disableAdd={props.disableAdd}
     />
   );

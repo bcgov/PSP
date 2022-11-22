@@ -41,7 +41,7 @@ describe('Document List View', () => {
         }
         documentResults={renderOptions?.documentResults || mockDocumentsResponse()}
         onDelete={renderOptions?.onDelete || deleteMock}
-        refreshDocumentList={renderOptions?.refreshDocumentList || noop}
+        onSuccess={renderOptions?.onSuccess || noop}
       />,
       {
         ...renderOptions,
@@ -86,7 +86,7 @@ describe('Document List View', () => {
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
-      refreshDocumentList: noop,
+      onSuccess: noop,
     });
     expect(getByTestId('document-type')).toBeInTheDocument();
   });
@@ -99,7 +99,7 @@ describe('Document List View', () => {
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
-      refreshDocumentList: noop,
+      onSuccess: noop,
     });
     expect(getByTestId('document-filename')).toBeInTheDocument();
   });
@@ -113,7 +113,7 @@ describe('Document List View', () => {
       relationshipType: DocumentRelationshipType.RESEARCH_FILES,
       documentResults: mockDocumentsResponse(),
       onDelete: deleteMock,
-      refreshDocumentList: noop,
+      onSuccess: noop,
     });
     expect(getByText('Add a Document')).toBeInTheDocument();
   });

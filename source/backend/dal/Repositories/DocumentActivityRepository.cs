@@ -73,8 +73,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
                 .Where(ad => ad.ActivityInstance.PimsAcquisitionActivityInstances.Any(x => x.AcquisitionFileId == fileId))
                 .AsNoTracking()
                 .ToList();
