@@ -23,6 +23,7 @@ export interface IDocumentListViewProps {
   documentResults: Api_DocumentRelationship[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
+  addButtonText?: string;
   onDelete: (relationship: Api_DocumentRelationship) => Promise<boolean | undefined>;
   refreshDocumentList: () => void;
   disableAdd?: boolean;
@@ -162,7 +163,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       <SectionListHeader
         claims={[Claims.DOCUMENT_ADD]}
         title="Documents"
-        addButtonText="Add a Document"
+        addButtonText={props.addButtonText || 'Add a Document'}
         onAdd={() => setIsUploadVisible(true)}
       />
     );
