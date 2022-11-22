@@ -7,7 +7,6 @@ import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,
-  fillInput,
   render,
   RenderOptions,
   userEvent,

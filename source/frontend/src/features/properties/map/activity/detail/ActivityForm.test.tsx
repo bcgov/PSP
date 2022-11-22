@@ -10,7 +10,7 @@ import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { getMockActivityResponse } from 'mocks/mockActivities';
 import { act } from 'react-test-renderer';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 import * as Yup from 'yup';
 
 import { ActivityForm, IActivityFormProps } from './ActivityForm';

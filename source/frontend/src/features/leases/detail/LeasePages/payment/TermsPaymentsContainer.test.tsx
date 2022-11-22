@@ -9,7 +9,7 @@ import { defaultFormLease, defaultFormLeaseTerm, defaultLease, IFormLease } from
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';
 import TermPaymentsContainer, { ITermPaymentsContainerProps } from './TermPaymentsContainer';

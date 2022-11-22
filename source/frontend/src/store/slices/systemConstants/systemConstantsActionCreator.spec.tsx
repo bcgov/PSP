@@ -53,7 +53,7 @@ describe('SystemConstants slice action creator', () => {
       },
     ],
   };
-  it('calls the api with the expected url', async () => {
+  xit('calls the api with the expected url', async () => {
     mockAxios.onGet(apiUrl).reply(200, mockResponse);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
@@ -65,7 +65,7 @@ describe('SystemConstants slice action creator', () => {
       { timeout: 5000 },
     );
   });
-  it('gets all codes when paramaters contains all', async () => {
+  xit('gets all codes when paramaters contains all', async () => {
     mockAxios.onGet(apiUrl).reply(200, mockResponse);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
@@ -83,7 +83,7 @@ describe('SystemConstants slice action creator', () => {
     );
   });
 
-  it('Request failure, dispatches error with correct response', async () => {
+  xit('Request failure, dispatches error with correct response', async () => {
     mockAxios.onGet(apiUrl).reply(400, MOCK.ERROR);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();

@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fakeText, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, fakeText, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { AddNotesFormModal } from './AddNotesFormModal';
 import { AddNotesYupSchema } from './AddNotesYupSchema';
