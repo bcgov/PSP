@@ -213,6 +213,124 @@ exports[`MapView Renders the map 1`] = `
   min-width: max-content;
 }
 
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 0rem;
+  border: none;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.c18 .form-group .form-check label {
+  font-weight: bold;
+  color: textColor;
+  font-size: 1.3rem;
+}
+
+.c19 {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+}
+
+.c20 {
+  margin-bottom: 0rem;
+}
+
+.c20 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c20 .form-check input {
+  margin-top: 0rem;
+}
+
+.c20 .form-check label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c14 {
+  margin-right: -1rem;
+  width: 34.1rem;
+  min-height: 5.2rem;
+  height: 50rem;
+  max-height: 50rem;
+  background-color: #fff;
+  position: relative;
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.c14.closed {
+  width: 0rem;
+  height: 0rem;
+}
+
+.c17 {
+  width: 100%;
+  height: calc(100% - 8rem);
+  padding: 1.6rem;
+}
+
+.c17.open {
+  overflow-y: scroll;
+}
+
+.c16 {
+  font-size: 3rem;
+}
+
+.c15.btn {
+  width: 5.2rem;
+  height: 5.2rem;
+  position: absolute;
+  top: 0;
+  left: -5.1rem;
+  background-color: #fff;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+}
+
+.c15.btn.open {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  top: 2.6rem;
+}
+
+.c12.c12.btn {
+  background-color: #ffffff;
+  width: 4rem;
+  height: 4rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 .c11 {
   grid-area: map;
 }
@@ -284,6 +402,12 @@ exports[`MapView Renders the map 1`] = `
   grid-template-rows: 0 1fr;
   -webkit-transition: 1s;
   transition: 1s;
+}
+
+.c13.c13.btn {
+  background-color: #ffffff;
+  width: 4rem;
+  height: 4rem;
 }
 
 .c4 {
@@ -564,7 +688,484 @@ exports[`MapView Renders the map 1`] = `
       <div
         class="c11"
       >
-        <div />
+        <div
+          class="basemap-container"
+        >
+          <button
+            class="basemap-item current"
+          />
+          <label
+            class="caption"
+          >
+            Satellite
+          </label>
+          <div
+            class="basemap-item basemap-item-button secondary"
+          >
+            <img
+              alt="Map Thumbnail"
+              role="presentation"
+              src="/satellite.jpg"
+            />
+          </div>
+        </div>
+        <div
+          class="leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
+          style="position: relative;"
+          tabindex="0"
+        >
+          <div
+            class="leaflet-pane leaflet-map-pane"
+            style="left: 0px; top: 0px;"
+          >
+            <div
+              class="leaflet-pane leaflet-tile-pane"
+            >
+              <div
+                class="leaflet-layer "
+                style="z-index: 15; opacity: 0.3;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23ff9800&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+              <div
+                class="leaflet-layer "
+                style="z-index: 0;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="leaflet-pane leaflet-overlay-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-shadow-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-marker-pane"
+            >
+              <div
+                class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
+                role="button"
+                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 88px; top: -242px; z-index: -242;"
+                tabindex="0"
+              >
+                <div>
+                  <span>
+                    3
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="leaflet-pane leaflet-tooltip-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-popup-pane"
+            />
+          </div>
+          <div
+            class="leaflet-control-container"
+          >
+            <div
+              class="leaflet-top leaflet-left"
+            >
+              <div
+                class="leaflet-control-zoom leaflet-bar leaflet-control"
+              >
+                <a
+                  aria-disabled="false"
+                  aria-label="Zoom in"
+                  class="leaflet-control-zoom-in"
+                  href="#"
+                  role="button"
+                  title="Zoom in"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
+                </a>
+                <a
+                  aria-disabled="false"
+                  aria-label="Zoom out"
+                  class="leaflet-control-zoom-out"
+                  href="#"
+                  role="button"
+                  title="Zoom out"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    −
+                  </span>
+                </a>
+              </div>
+              <div
+                class="leaflet-control"
+              >
+                <button
+                  class="c7 Button c12 btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                      />
+                      <circle
+                        cx="12"
+                        cy="10"
+                        r="3"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+              <div
+                class="leaflet-control"
+              >
+                <button
+                  class="c7 Button c13 btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M448 344v112a23.94 23.94 0 0 1-24 24H312c-21.39 0-32.09-25.9-17-41l36.2-36.2L224 295.6 116.77 402.9 153 439c15.09 15.1 4.39 41-17 41H24a23.94 23.94 0 0 1-24-24V344c0-21.4 25.89-32.1 41-17l36.19 36.2L184.46 256 77.18 148.7 41 185c-15.1 15.1-41 4.4-41-17V56a23.94 23.94 0 0 1 24-24h112c21.39 0 32.09 25.9 17 41l-36.2 36.2L224 216.4l107.23-107.3L295 73c-15.09-15.1-4.39-41 17-41h112a23.94 23.94 0 0 1 24 24v112c0 21.4-25.89 32.1-41 17l-36.19-36.2L263.54 256l107.28 107.3L407 327.1c15.1-15.2 41-4.5 41 16.9z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div
+              class="leaflet-top leaflet-right"
+            >
+              <div
+                class="leaflet-control"
+              >
+                <div
+                  class="c14 closed"
+                  id="layersContainer"
+                >
+                  <button
+                    class="c7 Button c15 btn btn-outline-secondary"
+                    id="layersControlButton"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        class="c16"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <div
+                    class="c17"
+                  >
+                    <form
+                      action="#"
+                    >
+                      <div
+                        tabindex="0"
+                      >
+                        <div
+                          class="list-group"
+                        >
+                          <div
+                            class="c18 list-group-item"
+                            id="Administrative Boundaries"
+                          >
+                            <svg
+                              class="c19"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 256 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                              />
+                            </svg>
+                            <div
+                              class="c20 form-group"
+                            >
+                              <div
+                                class="form-check"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  title=""
+                                >
+                                  Administrative Boundaries
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="c18 list-group-item"
+                            id="firstNations"
+                          >
+                            <svg
+                              class="c19"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 256 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                              />
+                            </svg>
+                            <div
+                              class="c20 form-group"
+                            >
+                              <div
+                                class="form-check"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  title=""
+                                >
+                                  First Nations
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="c18 list-group-item"
+                            id="landOwnership"
+                          >
+                            <svg
+                              class="c19"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 256 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                              />
+                            </svg>
+                            <div
+                              class="c20 form-group"
+                            >
+                              <div
+                                class="form-check"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  title=""
+                                >
+                                  Land Ownership
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="c18 list-group-item"
+                            id="zoning"
+                          >
+                            <svg
+                              class="c19"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 256 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                              />
+                            </svg>
+                            <div
+                              class="c20 form-group"
+                            >
+                              <div
+                                class="form-check"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  title=""
+                                >
+                                  Zoning
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="c18 list-group-item"
+                            id="electoral"
+                          >
+                            <svg
+                              class="c19"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 256 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                              />
+                            </svg>
+                            <div
+                              class="c20 form-group"
+                            >
+                              <div
+                                class="form-check"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  title=""
+                                >
+                                  Electoral
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="leaflet-bottom leaflet-left"
+            />
+            <div
+              class="leaflet-bottom leaflet-right"
+            >
+              <div
+                class="leaflet-control-attribution leaflet-control"
+              >
+                <a
+                  href="https://leafletjs.com"
+                  title="A JavaScript library for interactive maps"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="leaflet-attribution-flag"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    width="12"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h12v4H0z"
+                      fill="#4C7BE1"
+                    />
+                    <path
+                      d="M0 4h12v3H0z"
+                      fill="#FFD500"
+                    />
+                    <path
+                      d="M0 7h12v1H0z"
+                      fill="#E0BC00"
+                    />
+                  </svg>
+                   Leaflet
+                </a>
+                 
+                <span
+                  aria-hidden="true"
+                >
+                  |
+                </span>
+                 © Government of British Columbia, DataBC, GeoBC
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

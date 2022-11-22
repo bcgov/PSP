@@ -1,10 +1,9 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
+import { debug } from 'console';
 import {
   Claims,
   PropertyAreaUnitTypes,
@@ -22,21 +21,22 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { act, cleanup, render, RenderOptions, screen, userEvent, waitFor } from 'utils/test-utils';
 import { mockKeycloak } from 'utils/test-utils';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import { useMapProperties } from './hooks/useMapProperties';
 import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-const mockStore = configureMockStore([thunk]);
 jest.mock('./hooks/useMapProperties');
 jest.mock('components/maps/leaflet/LayerPopup');
 jest.mock('hooks/useComposedProperties');
 jest.mock('hooks/usePropertyAssociations');
 jest.mock('hooks/pims-api');
 jest.mock('hooks/useLtsa');
+
+const mockStore = configureMockStore([thunk]);
 
 (useComposedProperties as any).mockImplementation(() => ({
   composedLoading: false,
@@ -126,8 +126,24 @@ const store = mockStore({
 });
 
 let history = createMemoryHistory();
+
 describe('MapView', () => {
   const onMarkerClick = jest.fn();
+  const onMarkerPopupClosed = jest.fn();
+
+  const setup = async (renderOptions: RenderOptions = {}) => {
+    const utils = render(
+      <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />,
+      {
+        store,
+        history,
+        ...renderOptions,
+      },
+    );
+    await act(async () => {}); // Wait for async mount actions to settle
+
+    return { ...utils };
+  };
 
   beforeEach(() => {
     useLayerQueryMock.findMetadataByLocation.mockResolvedValue({});
@@ -163,46 +179,24 @@ describe('MapView', () => {
       disconnect: jest.fn(),
     }));
     onMarkerClick.mockClear();
-    mockAxios.reset();
     jest.clearAllMocks();
-    mockAxios.onAny().reply(200);
-    history = createMemoryHistory();
-    history.push('/mapview');
-  });
-
-  afterEach(cleanup);
-
-  const getMap = () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
-    const onMarkerPopupClosed = jest.fn();
-    return (
-      <TestCommonWrapper store={store} history={history}>
-        <MapView showParcelBoundaries={true} onMarkerPopupClosed={onMarkerPopupClosed} />
-      </TestCommonWrapper>
-    );
-  };
-
-  it('Renders the map', async () => {
-    await waitFor(() => {
-      const { asFragment } = render(getMap());
-      expect(asFragment()).toMatchSnapshot();
-    });
-    expect(document.querySelector('.leaflet-container')).toBeVisible();
-  });
-
-  it('Can toggle the base map', async () => {
     mockAxios.reset();
     mockAxios.onGet('/basemaps.json').reply(200, {
       basemaps: [
         {
           name: 'BC Roads',
-          url: 'https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}',
+          urls: [
+            'https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}',
+          ],
           attribution: '&copy; Government of British Columbia, DataBC, GeoBC',
           thumbnail: '/streets.jpg',
         },
         {
           name: 'Satellite',
-          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          urls: [
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
+          ],
           attribution:
             'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
           thumbnail: '/satellite.jpg',
@@ -210,21 +204,32 @@ describe('MapView', () => {
       ],
     });
     mockAxios.onAny().reply(200, {});
-    await waitFor(() => render(getMap()));
+    history = createMemoryHistory();
+    history.push('/mapview');
+  });
+
+  afterEach(cleanup);
+
+  it('Renders the map', async () => {
+    const { asFragment } = await setup();
+    expect(asFragment()).toMatchSnapshot();
+    expect(document.querySelector('.leaflet-container')).toBeVisible();
+  });
+
+  it('Can toggle the base map', async () => {
+    await setup();
     // find basemap toggle button
-    const basemapButton = document.querySelector<HTMLElement>('.basemap-item-button.secondary');
-    expect(basemapButton).toBeDefined();
-    const { getByAltText } = within(basemapButton!);
-    const image = getByAltText('Map Thumbnail');
-    expect(image).toHaveAttribute('src', '/satellite.jpg');
+    const basemapToggle = await screen.findByAltText(/Map Thumbnail/i);
+    expect(basemapToggle).toBeInTheDocument();
+    expect(basemapToggle).toHaveAttribute('src', '/satellite.jpg');
     // click it
-    fireEvent.click(basemapButton!);
+    await act(() => userEvent.click(basemapToggle));
     // expect image to change
-    expect(image).toHaveAttribute('src', '/streets.jpg');
+    expect(basemapToggle).toHaveAttribute('src', '/streets.jpg');
   });
 
   it('Renders markers when provided', async () => {
-    await waitFor(() => render(getMap()));
+    await setup();
     expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
 
@@ -244,14 +249,16 @@ describe('MapView', () => {
       },
     });
 
-    const { container } = render(getMap());
+    const { container } = await setup();
 
-    await waitFor(() => {
-      const icon = container.querySelector('.leaflet-control-zoom-in');
-      fireEvent.click(icon!);
-      const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
-      expect(cluster).toBeNull();
-    });
+    // click the zoom-in button 10 times
+    const zoomIn = container.querySelector('.leaflet-control-zoom-in');
+    for (let i = 1; i <= 10; i++) {
+      await act(() => userEvent.click(zoomIn!));
+    }
+
+    const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
+    expect(cluster).toBeNull();
   });
 
   it('the map can handle features with invalid geometry', async () => {
@@ -272,37 +279,39 @@ describe('MapView', () => {
         return {} as IProperty;
       },
     });
-    const { findByText } = render(getMap());
 
+    const { findByText } = await setup();
     expect(await findByText('No search results found')).toBeVisible();
   });
 
   it('the map can zoom out until the markers are clustered', async () => {
-    const { container } = render(getMap());
-    await waitFor(() => {
-      const icon = container.querySelector('.leaflet-control-zoom-out');
-      userEvent.click(icon!);
-      const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
-      expect(cluster).toBeVisible();
-    });
+    const { container } = await setup();
+
+    // click the zoom-out button 10 times
+    const zoomOut = container.querySelector('.leaflet-control-zoom-out');
+    for (let i = 1; i <= 10; i++) {
+      await act(() => userEvent.click(zoomOut!));
+    }
+
+    const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
+    expect(cluster).toBeVisible();
   });
 
   it('clusters can be clicked to zoom and spiderfy', async () => {
-    const { container } = render(getMap());
-    await waitFor(() => {
-      const icon = container.querySelector('.leaflet-control-zoom-out');
-      fireEvent.click(icon!);
-      const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
-      expect(cluster).toBeVisible();
-      fireEvent.click(cluster!);
-    });
-    await waitFor(() => {
-      const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
-      expect(cluster).toBeVisible();
-      fireEvent.click(cluster!);
-      const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
-      expect(polyline).toBeVisible();
-    });
+    const { container } = await setup();
+
+    // click the zoom-out button 10 times
+    const zoomOut = container.querySelector('.leaflet-control-zoom-out');
+    for (let i = 1; i <= 10; i++) {
+      await act(() => userEvent.click(zoomOut!));
+    }
+
+    const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
+    expect(cluster).toBeVisible();
+    await act(() => userEvent.click(cluster!));
+
+    const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
+    expect(polyline).toBeVisible();
   });
 
   it('the map can be clicked', async () => {
@@ -315,42 +324,17 @@ describe('MapView', () => {
         },
       ],
     });
-    const { container } = render(getMap());
-    await waitFor(() => {
-      const map = container.querySelector('.leaflet-container');
-      expect(map).toBeVisible();
-      fireEvent.click(map!);
-    });
-    expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 52.81604319154934,
-      lng: -124.67285156250001,
-    });
-  });
 
-  xit('When the map is clicked, the resulting popup can be closed', async () => {
-    useLayerQueryMock.findOneWhereContains.mockResolvedValue({
-      features: [
-        {
-          type: 'Feature',
-          geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
-          properties: { pid: '123-456-789' },
-        },
-      ],
-    });
-    const { container } = render(getMap());
-    await waitFor(() => {
-      const map = container.querySelector('.leaflet-container');
-      expect(map).toBeVisible();
-      userEvent.click(map!);
-    });
+    const { container } = await setup();
+
+    const map = container.querySelector('.leaflet-container');
+    expect(map).toBeVisible();
+    await act(() => userEvent.click(map!));
+
     expect(useLayerQueryMock.findOneWhereContains).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });
-    const closeButton = container.querySelector('.leaflet-popup-close-button');
-    fireEvent.click(closeButton!);
-    const layerPopup = container.querySelector('.leaflet-popup');
-    expect(layerPopup).not.toBeInTheDocument();
   });
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
@@ -368,52 +352,57 @@ describe('MapView', () => {
         }),
       },
     });
-    const { container } = render(getMap());
+
+    const { container } = await setup();
+
+    const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
+    expect(cluster).toBeVisible();
     await waitFor(() => {
-      const icon = container.querySelector('.leaflet-control-zoom-out');
-      fireEvent.click(icon!);
-      const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
-      expect(cluster).toBeVisible();
-      fireEvent.click(cluster!);
-    });
-    await waitFor(() => {
-      const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
-      expect(cluster).toBeVisible();
-      fireEvent.click(cluster!);
+      act(() => userEvent.click(cluster!));
       const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
       expect(polyline).toBeVisible();
     });
   });
 
   it('Rendered markers can be clicked normally', async () => {
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
+    await setup();
+    // click on clustered markers to expand into single markers
+    const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
+    await act(() => userEvent.click(cluster!));
+    // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
+    await act(() => userEvent.click(marker!));
+    // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
   });
 
   it('Rendered markers can be clicked and displayed with permissions', async () => {
     mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
+    await setup();
+    // click on clustered markers to expand into single markers
+    const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
+    await act(() => userEvent.click(cluster!));
+    // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
+    await act(() => userEvent.click(marker!));
+    // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
   });
 
   it('Rendered markers can be clicked which hides the filter', async () => {
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
+    await setup();
+    // click on clustered markers to expand into single markers
+    const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
+    await act(() => userEvent.click(cluster!));
+    // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
+    await act(() => userEvent.click(marker!));
+    // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
+    // when showing the property information slide-out, the map filter bar is hidden
     const label = await screen.queryByText('Search:');
     expect(label).toBeNull();
   });
