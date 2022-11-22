@@ -1,5 +1,4 @@
-import { act } from 'react-dom/test-utils';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
