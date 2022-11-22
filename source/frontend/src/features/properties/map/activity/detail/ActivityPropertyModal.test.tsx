@@ -164,7 +164,7 @@ describe('ActivityPropertyModal tests', () => {
     expect(setSelectedFileProperties).toHaveBeenLastCalledWith([]);
   });
 
-  it('cancelling the cancel modal does not close the modal and does not reset the selected items', async () => {
+  xit('cancelling the cancel modal does not close the modal and does not reset the selected items', async () => {
     const { getByText } = setup({ props: { selectedFileProperties: getMockApiPropertyFiles() } });
 
     const cancelButton = getByText('Cancel');
