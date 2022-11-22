@@ -1,5 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import ModalContainer from 'components/common/ModalContainer';
+import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { ModalContextProvider } from 'contexts/modalContext';
 import { MemoryHistory } from 'history';
 import { IOrganization } from 'interfaces';
@@ -52,16 +53,18 @@ const TestCommonWrapper: React.FunctionComponent<
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css: {} }}>
                 <ModalContextProvider>
-                  <ToastContainer
-                    autoClose={5000}
-                    hideProgressBar
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss={false}
-                  />
-                  <ModalContainer />
-                  {children}
+                  <MapStateContextProvider>
+                    <ToastContainer
+                      autoClose={5000}
+                      hideProgressBar
+                      newestOnTop={false}
+                      closeOnClick={false}
+                      rtl={false}
+                      pauseOnFocusLoss={false}
+                    />
+                    <ModalContainer />
+                    {children}
+                  </MapStateContextProvider>
                 </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>
