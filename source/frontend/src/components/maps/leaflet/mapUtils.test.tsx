@@ -15,6 +15,7 @@ import {
   createPoints,
   generateKey,
   getMarkerIcon,
+  notOwnedPropertyIcon,
   parcelIcon,
   parcelIconSelect,
   pointToLayer,
@@ -29,7 +30,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: {},
+        properties: { PROPERTY_ID: 1 },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -89,11 +90,22 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: {},
+            properties: { PROPERTY_ID: 1 },
           },
           true,
         ),
       ).toEqual(parcelIconSelect);
+    });
+    it('returns a not owned property icon', () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: {},
+          },
+          true,
+        ),
+      ).toEqual(notOwnedPropertyIcon);
     });
     describe('convert feature to property', () => {
       const property: IProperty = {
