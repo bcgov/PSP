@@ -36,6 +36,8 @@ export const defaultTenant: ITenantConfig = {
       SALE: 'geo.bca:WHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_SALES_SV',
     },
   },
+  idlePromptTimeout: 15,
+  idleTimeout: 15,
 };
 
 export default defaultTenant;
