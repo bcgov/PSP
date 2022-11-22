@@ -1,22 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+VisualStudioVersion = 16.0.32510.428
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "PAIMS_PIMS_LEASE", "PAIMS_PIMS_LEASE\PAIMS_PIMS_LEASE.dtproj", "{3826BF53-48E2-4F6F-BC90-66CD6486CBD7}"
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "PAIMS_PIMS_LEASE", "PAIMS_PIMS_LEASE\PAIMS_PIMS_LEASE.dtproj", "{57B1FC8C-5B86-4688-953D-B21AFE3B5974}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Default = Development|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3826BF53-48E2-4F6F-BC90-66CD6486CBD7}.Development|Default.ActiveCfg = Development
-		{3826BF53-48E2-4F6F-BC90-66CD6486CBD7}.Development|Default.Build.0 = Development
+		{57B1FC8C-5B86-4688-953D-B21AFE3B5974}.Development|Default.ActiveCfg = Development
+		{57B1FC8C-5B86-4688-953D-B21AFE3B5974}.Development|Default.Build.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {35C0BA42-EE23-4095-9415-0097E10DD4EB}
+		SolutionGuid = {6460174D-B3A6-43FE-86CD-ED3635EB3BF6}
 	EndGlobalSection
 EndGlobal
