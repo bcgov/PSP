@@ -235,5 +235,6 @@ export const toCqlFilterValue = (
       }
     }
   });
-  return cql.length ? cql.join(' AND ') : '';
+
+  return cql.length ? (forceExactMatch ? cql.join(' OR ') : cql.join(' AND ')) : '';
 };
