@@ -310,7 +310,7 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
               data-testid="search"
               id="search-button"
               title="search"
-              type="submit"
+              type="button"
             >
               <div
                 class="Button__icon"
@@ -677,7 +677,7 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
               data-testid="search"
               id="search-button"
               title="search"
-              type="submit"
+              type="button"
             >
               <div
                 class="Button__icon"

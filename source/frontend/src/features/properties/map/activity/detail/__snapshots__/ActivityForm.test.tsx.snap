@@ -653,7 +653,7 @@ exports[`ActivityForm test Renders as expected 1`] = `
                     data-testid="search"
                     id="search-button"
                     title="search"
-                    type="submit"
+                    type="button"
                   >
                     <div
                       class="Button__icon"
