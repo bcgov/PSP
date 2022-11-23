@@ -14,6 +14,17 @@ const usePimsIdleTimer = () => {
 
   // when the prompt timer expires, display the idle prompt.
   const onPrompt = () => {
+    setModalContent({
+      title: 'Still Working?',
+      message: 'You have been idle for some time. Would you like to remain logged in?',
+      okButtonText: 'Keep working',
+      cancelButtonText: 'Log out',
+      handleOk: () => {
+        idleProps.activate();
+        setDisplayModal(false);
+      },
+      handleCancel: onIdle,
+    });
     setDisplayModal(true);
   };
 
@@ -26,17 +37,7 @@ const usePimsIdleTimer = () => {
   };
 
   // a custom styled pims prompt that resets the active timer if ok is clicked or immediately triggers the idle action if canceled
-  const { setDisplayModal } = useModalContext({
-    title: 'Still Working?',
-    message: 'You have been idle for some time. Would you like to remain logged in?',
-    okButtonText: 'Keep working',
-    cancelButtonText: 'Log out',
-    handleOk: () => {
-      idleProps.activate();
-      setDisplayModal(false);
-    },
-    handleCancel: onIdle,
-  });
+  const { setDisplayModal, setModalContent } = useModalContext();
 
   const idleProps = useIdleTimer({
     onIdle,
