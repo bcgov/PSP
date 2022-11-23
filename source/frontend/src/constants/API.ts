@@ -43,8 +43,8 @@ export interface IGeoSearchParams {
   PID?: string;
   PIN?: string;
   BBOX?: string;
-  latitude?: number;
-  longitude?: number;
+  latitude?: number | string;
+  longitude?: number | string;
   forceExactMatch?: boolean;
 }
 

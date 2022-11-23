@@ -38,6 +38,8 @@ const defaultFilter = {
   pid: '',
   pin: '',
   searchBy: 'pid',
+  latitude: '',
+  longitude: '',
 };
 
 /**

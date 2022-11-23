@@ -18,8 +18,15 @@ export const useMapSearch = () => {
   const pimsService = useLayerQuery(PIMS_BOUNDARY_LAYER_URL, true);
 
   useEffect(() => {
-    setPropertiesLoading(loading);
-  }, [loading, setPropertiesLoading]);
+    setPropertiesLoading(
+      loading || parcelsService.findByPidLoading || parcelsService.findByPinLoading,
+    );
+  }, [
+    loading,
+    parcelsService.findByPidLoading,
+    parcelsService.findByPinLoading,
+    setPropertiesLoading,
+  ]);
 
   const search = async (
     filters?: IGeoSearchParams[],
@@ -30,13 +37,13 @@ export const useMapSearch = () => {
       let tileData;
       if (filter?.latitude && filter.longitude) {
         const task1 = parcelsService.findOneWhereContains({
-          lat: filter.latitude,
-          lng: filter.longitude,
+          lat: +filter.latitude,
+          lng: +filter.longitude,
         });
         const task2 = pimsService.findOneWhereContains(
           {
-            lat: filter.latitude,
-            lng: filter.longitude,
+            lat: +filter.latitude,
+            lng: +filter.longitude,
           },
           'GEOMETRY',
         );

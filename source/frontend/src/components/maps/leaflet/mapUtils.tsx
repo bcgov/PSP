@@ -108,6 +108,8 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
     }
   } else if (selected) {
     return parcelIconSelect;
+  } else if (!feature.properties.PROPERTY_ID) {
+    return notOwnedPropertyIcon;
   }
   return parcelIcon;
 };

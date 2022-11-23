@@ -15,7 +15,6 @@ import {
   createPoints,
   generateKey,
   getMarkerIcon,
-  notOwnedPropertyIcon,
   parcelIcon,
   parcelIconSelect,
   pointToLayer,
@@ -96,17 +95,7 @@ describe('mapUtils tests', () => {
         ),
       ).toEqual(parcelIconSelect);
     });
-    it('returns a not owned property icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: {},
-          },
-          true,
-        ),
-      ).toEqual(notOwnedPropertyIcon);
-    });
+
     describe('convert feature to property', () => {
       const property: IProperty = {
         id: 1,
