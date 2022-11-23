@@ -62,7 +62,11 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
             <ColButtons xl="auto">
               <Row>
                 <Col xs="auto" className="pr-0">
-                  <SearchButton disabled={formikProps.isSubmitting} />
+                  <SearchButton
+                    onClick={() => formikProps.handleSubmit()}
+                    type="button"
+                    disabled={formikProps.isSubmitting}
+                  />
                 </Col>
                 <Col xs="auto">
                   <ResetButton
