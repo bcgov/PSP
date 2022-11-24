@@ -82,6 +82,13 @@ export const layersTree: ILayerItem[] = [
     ],
   },
   {
+    // The actual layers are populated via tenant.json configuration for each live environment
+    key: 'legalHighwayResearch',
+    label: 'Legal Highway Research',
+    on: false,
+    nodes: [],
+  },
+  {
     key: 'firstNations',
     label: 'First Nations',
     on: false,

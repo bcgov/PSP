@@ -106,7 +106,7 @@ const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = pr
         </SectionField>
       </Section>
 
-      <Section header="Research Request">
+      <Section header="Research Summary">
         <SectionField label="Summary notes" />
         <TextArea field="researchSummary" />
       </Section>

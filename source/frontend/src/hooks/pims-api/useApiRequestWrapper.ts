@@ -80,7 +80,7 @@ export const useApiRequestWrapper = <
         onSuccess && onSuccess(response);
         return response;
       } catch (e) {
-        if (!axios.isAxiosError(e)) {
+        if (!axios.isAxiosError(e) && throwError) {
           throw e;
         }
         if (!isMounted()) {
