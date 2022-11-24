@@ -123,39 +123,45 @@ namespace Pims.Api.Services
                 MetadataExternalResult = new List<ExternalResult<DocumentMetadata>>(),
             };
 
-            var metadataUpdateSucessful = false;
-            if (updateRequest.DocumentMetadata.Count > 0)
+            // Retrieve the existing metadata and check if it needs to be updated.
+            ExternalResult<QueryResult<DocumentMetadata>> existingMetadata = await documentStorageRepository.GetDocumentMetadataAsync(updateRequest.MayanDocumentId);
+
+            List<DocumentMetadataUpdateModel> updates = new List<DocumentMetadataUpdateModel>();
+            List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
+            List<DocumentMetadataUpdateModel> deletes = new List<DocumentMetadataUpdateModel>();
+
+            foreach (var updateMetadata in updateRequest.DocumentMetadata)
             {
-                // Retrieve the existing metadata and check if it needs to be updated.
-                ExternalResult<QueryResult<DocumentMetadata>> existingMetadata = await documentStorageRepository.GetDocumentMetadataAsync(updateRequest.MayanDocumentId);
+                var existing = existingMetadata.Payload.Results.FirstOrDefault(x => x.MetadataType.Id == updateMetadata.MetadataTypeId);
 
-                List<DocumentMetadataUpdateModel> updates = new List<DocumentMetadataUpdateModel>();
-                List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
-                List<DocumentMetadataUpdateModel> deletes = new List<DocumentMetadataUpdateModel>();
-
-                foreach (var updateMetadata in updateRequest.DocumentMetadata)
+                if (existing == null)
                 {
-                    var existing = existingMetadata.Payload.Results.FirstOrDefault(x => x.MetadataType.Id == updateMetadata.MetadataTypeId);
-
-                    if (existing == null)
+                    if (!string.IsNullOrEmpty(updateMetadata.Value))
                     {
-                        if (!string.IsNullOrEmpty(updateMetadata.Value))
-                        {
-                            creates.Add(updateMetadata);
-                        }
-                    }
-                    else if (existing.Value != updateMetadata.Value && !string.IsNullOrEmpty(updateMetadata.Value))
-                    {
-                        updateMetadata.Id = existing.Id;
-                        updates.Add(updateMetadata);
-                    }
-                    else if (string.IsNullOrEmpty(updateMetadata.Value))
-                    {
-                        updateMetadata.Id = existing.Id;
-                        deletes.Add(updateMetadata);
+                        creates.Add(updateMetadata);
                     }
                 }
+                else if (existing.Value != updateMetadata.Value && !string.IsNullOrEmpty(updateMetadata.Value))
+                {
+                    updateMetadata.Id = existing.Id;
+                    updates.Add(updateMetadata);
+                }
+                else if (string.IsNullOrEmpty(updateMetadata.Value))
+                {
+                    updateMetadata.Id = existing.Id;
+                    deletes.Add(updateMetadata);
+                }
+            }
 
+            var metadataUpdateSucessful = false;
+
+            // If there are no changes, mark the external update as successfull
+            if (updates.Count == 0 && creates.Count == 0 && deletes.Count == 0)
+            {
+                metadataUpdateSucessful = true;
+            }
+            else
+            {
                 // Update metadata of document
                 response.MetadataExternalResult.AddRange(await UpdateMetadata(updateRequest.MayanDocumentId, updates));
 
@@ -165,16 +171,11 @@ namespace Pims.Api.Services
                 // Delete metadata of document
                 response.MetadataExternalResult.AddRange(await DeleteMetadata(updateRequest.MayanDocumentId, deletes));
 
-                // Add the metadata response
                 foreach (var task in response.MetadataExternalResult)
                 {
                     // Flag to know if at least one call was successful.
                     metadataUpdateSucessful = metadataUpdateSucessful || task.Status == ExternalResultStatus.Success;
                 }
-            }
-            else
-            {
-                metadataUpdateSucessful = true;
             }
 
             if (metadataUpdateSucessful)
