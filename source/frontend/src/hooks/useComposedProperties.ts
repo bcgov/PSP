@@ -41,7 +41,7 @@ export const useComposedProperties = ({
     parcelMapFullyAttributed.name,
   );
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
-  const retrievedPid = getApiPropertyWrapper?.response?.pid?.toString();
+  const retrievedPid = getApiPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
   const retrievedPin = getApiPropertyWrapper?.response?.pin?.toString();
 
   const typeCheckWrapper = useDeepCompareCallback(
@@ -74,11 +74,14 @@ export const useComposedProperties = ({
   const executeBcAssessmentSummary = getSummaryWrapper.execute;
 
   useEffect(() => {
-    if (!!retrievedPid) {
-      typeCheckWrapper(() => executeGetLtsa(retrievedPid), PROPERTY_TYPES.LTSA);
-      typeCheckWrapper(() => findByPid(retrievedPid), PROPERTY_TYPES.PARCEL_MAP);
+    if (retrievedPid !== undefined) {
+      typeCheckWrapper(() => executeGetLtsa(retrievedPid ?? ''), PROPERTY_TYPES.LTSA);
       typeCheckWrapper(
-        () => executeBcAssessmentSummary(retrievedPid),
+        () => findByPid((retrievedPid ?? '').padStart(9, '0'), true),
+        PROPERTY_TYPES.PARCEL_MAP,
+      );
+      typeCheckWrapper(
+        () => executeBcAssessmentSummary(retrievedPid ?? ''),
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
     } else if (!!retrievedPin) {
