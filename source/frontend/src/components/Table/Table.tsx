@@ -259,6 +259,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const filterFormRef = useRef<FormikProps<any>>();
 
   const [expandedRows, setExpandedRows] = React.useState<T[]>([]);
+  const [internalPageSize, setInternalPageSize] = React.useState<number>(DEFAULT_PAGE_SIZE);
   const defaultColumn = React.useMemo(
     () => ({
       // When using the useFlexLayout:
@@ -289,7 +290,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   } = props;
   const manualSortBy = !!externalSort || props.manualSortBy;
   const totalItems = externalTotalItems ?? data?.length;
-  const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? 10));
+  const pageCount = externalPageCount ?? Math.ceil(totalItems / (pageSizeProp ?? internalPageSize));
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
 
   const dataRef = React.useRef<T[]>(data ?? []);
@@ -322,7 +323,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ? {
             sortBy,
             pageIndex: pageIndexProp ?? 0,
-            pageSize: pageSizeProp,
+            pageSize: pageSizeProp ?? internalPageSize,
           }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
       manualPagination: (props.hideToolbar || manualPagination) ?? true, // Tell the usePagination hook
@@ -534,6 +535,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const onPageSizeChange = (size: number) => {
     props.onPageSizeChange && props.onPageSizeChange(size);
     if (!instance.manualPagination) {
+      setInternalPageSize(size);
       instance.setPageSize(size);
     }
   };
