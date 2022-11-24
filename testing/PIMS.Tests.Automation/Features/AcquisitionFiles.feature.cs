@@ -137,6 +137,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 13
  testRunner.Given("I create an Acquisition File from a pin on map", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 14
+ testRunner.When("I edit an existing Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

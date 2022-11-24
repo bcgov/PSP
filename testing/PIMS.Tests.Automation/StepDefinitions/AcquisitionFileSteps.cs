@@ -17,8 +17,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly string acquisitionFileName = "Automated Acquisition File";
 
         private readonly string acquisitionFileDeliveryDate = "12/27/2023";
-        private readonly string teamMember1 = "Alma Mosley Addison";
-        private readonly string teamMember2 = "Tao Sebastian Karkabe";
+        private readonly string teamMember1 = "Alejandro Sanchez";
+        private readonly string teamMember2 = "Mahesh Babu";
 
         private readonly string PID1Search = "014-083-736";
         private readonly string PID2Search = "023-212-047";

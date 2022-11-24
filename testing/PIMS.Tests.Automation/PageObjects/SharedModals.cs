@@ -11,6 +11,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalModalContent = By.CssSelector("div[class='modal-body']");
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
 
+        private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
+
         public SharedModals(IWebDriver webDriver) : base(webDriver)
         {}
 
@@ -30,6 +32,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntil(generalModal);
             webDriver.FindElement(generalModalOkBttn).Click();
+        }
+
+        public string ToastifyText()
+        {
+            WaitUntil(generalToastBody);
+            return (webDriver.FindElement(generalToastBody).Text);
         }
     }
 }

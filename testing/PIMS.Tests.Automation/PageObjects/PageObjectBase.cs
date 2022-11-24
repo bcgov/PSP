@@ -115,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
-        protected void ChooseMultiSelectRandomOpions(By element, string optionsContainerName, int options)
+        protected void ChooseMultiSelectRandomOptions(By element, string optionsContainerName, int options)
         {
             Random random = new Random();
             var js = (IJavaScriptExecutor)webDriver;

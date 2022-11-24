@@ -24,9 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
             webDriver.FindElement(selectContactSearchButton).Click();
 
-            //WaitUntil(selectContactSearch1stResultRadioBttn);
-
-            Wait(1000);
+            Wait(2000);
             webDriver.FindElement(selectContactSearch1stResultRadioBttn).Click();
 
             Wait();
