@@ -63,7 +63,14 @@ const defaultFilterValues: IPropertyFilter = {
   longitude: '',
 };
 
-const whitelistedFilterKeys = ['PID', 'PIN', 'STREET_ADDRESS_1', 'LOCATION'];
+const whitelistedFilterKeys = [
+  'PID',
+  'PIN',
+  'STREET_ADDRESS_1',
+  'LOCATION',
+  'latitude',
+  'longitude',
+];
 
 /**
  * Converts the map filter to a geo search filter.
