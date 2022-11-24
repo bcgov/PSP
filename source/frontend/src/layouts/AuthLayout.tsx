@@ -1,6 +1,7 @@
 import { SideNavBar } from 'components/layout';
 import { SidebarStateContextProvider } from 'components/layout/SideNavBar/SideNavbarContext';
 import { AuthStateContext } from 'contexts/authStateContext';
+import usePimsIdleTimer from 'hooks/usePimsIdleTimer';
 import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
@@ -8,6 +9,7 @@ import styled from 'styled-components';
 import PublicLayout from './PublicLayout';
 
 const AuthLayout: React.FC = ({ children }) => {
+  usePimsIdleTimer();
   return (
     <AuthStateContext.Consumer>
       {context => {

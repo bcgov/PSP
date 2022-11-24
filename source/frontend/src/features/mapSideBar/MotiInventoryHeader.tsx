@@ -27,7 +27,9 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   }
 
   const isLoading =
-    props.composedProperty.ltsaWrapper?.loading || props.composedProperty.apiWrapper?.loading;
+    props.composedProperty.ltsaWrapper?.loading ||
+    props.composedProperty.apiWrapper?.loading ||
+    props.composedProperty.parcelMapWrapper?.loading;
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
