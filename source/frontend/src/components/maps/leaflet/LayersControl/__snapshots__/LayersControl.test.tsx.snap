@@ -267,7 +267,7 @@ exports[`LayersControl View renders correctly 1`] = `
         >
           <div
             class="leaflet-layer "
-            style="z-index: 15; opacity: 0.3;"
+            style="z-index: 20; opacity: 0.3;"
           >
             <div
               class="leaflet-tile-container leaflet-zoom-animated"

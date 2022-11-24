@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Dal.Entities;
@@ -35,6 +37,22 @@ namespace Pims.Api.Services
             this.documentActivityTemplateRepository = documentActivityTemplateRepository;
             this.documentService = documentService;
             this.mapper = mapper;
+        }
+
+        public IList<PimsActivityInstanceDocument> GetFileDocuments(FileType fileType, long fileId)
+        {
+            this.Logger.LogInformation("Retrieving PIMS document for activities related to the file of type $fileType", fileType);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            switch (fileType)
+            {
+                case FileType.Research:
+                    return documentActivityRepository.GetAllByResearchFile(fileId);
+                case FileType.Acquisition:
+                    return documentActivityRepository.GetAllByAcquisitionFile(fileId);
+                default:
+                    throw new BadRequestException("FileT type not valid to get documents.");
+            }
         }
 
         public IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId)

@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities
     [Table("PIMS_PROPERTY")]
     [Index(nameof(AddressId), Name = "PRPRTY_ADDRESS_ID_IDX")]
     [Index(nameof(DistrictCode), Name = "PRPRTY_DISTRICT_CODE_IDX")]
+    [Index(nameof(Pid), Name = "PRPRTY_PID_IDX")]
     [Index(nameof(PphStatusTypeCode), Name = "PRPRTY_PPH_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(PropertyAreaUnitTypeCode), Name = "PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX")]
     [Index(nameof(PropertyClassificationTypeCode), Name = "PRPRTY_PROPERTY_CLASSIFICATION_TYPE_CODE_IDX")]
