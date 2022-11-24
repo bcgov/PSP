@@ -17,6 +17,7 @@ namespace Pims.Geocoder
         /// <returns></returns>
         public static IServiceCollection AddGeocoderService(this IServiceCollection services, IConfigurationSection section)
         {
+            // In this instance the auth service is bundled with the geocoder service itself, and the auth service is intended to be a singleton.
             return services
                 .Configure<Configuration.GeocoderOptions>(section)
                 .AddSingleton<IGeocoderService, GeocoderService>()
