@@ -43,19 +43,19 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
           <Row key={index} style={{ wordBreak: 'break-all' }}>
             {process.env.NODE_ENV === 'development' ? (
               <Col>
-                <abbr title={error.error?.response?.config?.url}>
-                  {error.error?.response?.config?.url?.substr(0, 20)}
+                <abbr title={error?.error?.response?.config?.url}>
+                  {error?.error?.response?.config?.url?.substr(0, 20)}
                 </abbr>
-                : {error.error?.response?.statusText} data:{' '}
-                {JSON.stringify(error.error?.response?.data)}
+                : {error?.error?.response?.statusText} data:{' '}
+                {JSON.stringify(error?.error?.response?.data)}
               </Col>
             ) : (
               <Col>
-                <abbr title={error.error?.response?.config?.url}>
-                  {error.error?.response?.config?.url?.substr(0, 20)}
+                <abbr title={error?.error?.response?.config?.url}>
+                  {error?.error?.response?.config?.url?.substr(0, 20)}
                 </abbr>
-                : ({error.error?.response?.statusText ?? 'unknown'}){' '}
-                {(error.error?.response?.data as unknown & { error: string }).error}
+                : ({error?.error?.response?.statusText ?? 'unknown'}){' '}
+                {(error?.error?.response?.data as unknown & { error: string })?.error ?? ''}
               </Col>
             )}
           </Row>

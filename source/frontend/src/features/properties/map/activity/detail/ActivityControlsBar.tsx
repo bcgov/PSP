@@ -1,26 +1,24 @@
 import { Button } from 'components/common/buttons';
-import EditButton from 'components/common/EditButton';
 import { Select } from 'components/common/form';
 import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import { SectionField } from 'features/mapSideBar/tabs/SectionField';
 import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as React from 'react';
-import styled from 'styled-components';
+import { Col, Row } from 'react-bootstrap';
 
 import { ActivityModel } from './models';
 
 export interface IActivityControlsBarProps {
   editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
   onEditRelatedProperties: () => void;
 }
 
 export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarProps> = ({
   editMode,
-  setEditMode,
   onEditRelatedProperties,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
@@ -39,42 +37,31 @@ export const ActivityControlsBar: React.FunctionComponent<IActivityControlsBarPr
   return (
     <>
       {hasClaim(Claims.ACTIVITY_EDIT) && (
-        <StyledRow>
-          <LeftAligned>
-            <SectionField label="Status">
-              <Select
-                disabled={!editMode}
-                field="activityStatusTypeCode.id"
-                options={activityStatusTypeOptions}
-                onChange={handleStatusChange}
-              />
-            </SectionField>
-          </LeftAligned>
-          <RightAligned>
-            {!editMode && <EditButton onClick={() => setEditMode(true)} />}
-            {hasClaim(Claims.PROPERTY_EDIT) && (
-              <Button className="" onClick={onEditRelatedProperties} variant="secondary mr-4">
-                Related properties
-              </Button>
+        <Section header="Details">
+          <Row>
+            {editMode && (
+              <Col>
+                <SectionField label="Status" labelWidth="auto">
+                  <Select
+                    disabled={!editMode}
+                    field="activityStatusTypeCode.id"
+                    options={activityStatusTypeOptions}
+                    onChange={handleStatusChange}
+                  />
+                </SectionField>
+              </Col>
             )}
-          </RightAligned>
-        </StyledRow>
+            {hasClaim(Claims.PROPERTY_EDIT) && (
+              <Col>
+                <Button className="ml-auto" onClick={onEditRelatedProperties} variant="secondary ">
+                  Related properties
+                </Button>
+              </Col>
+            )}
+          </Row>
+        </Section>
       )}
     </>
   );
 };
-const StyledRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-`;
-const RightAligned = styled.div`
-  width: inherit;
-  display: flex;
-  flex-direction: row-reverse;
-`;
-const LeftAligned = styled.div`
-  width: inherit;
-`;
-
 export default ActivityControlsBar;

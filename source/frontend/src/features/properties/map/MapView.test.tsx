@@ -167,6 +167,7 @@ describe('MapView', () => {
     jest.clearAllMocks();
     mockAxios.onAny().reply(200);
     history = createMemoryHistory();
+    history.push('/mapview');
   });
 
   afterEach(cleanup);

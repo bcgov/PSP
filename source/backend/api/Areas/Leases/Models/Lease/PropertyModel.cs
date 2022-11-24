@@ -67,6 +67,16 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - A unique identifier for an untitled parcel.
         /// </summary>
         public string PIN { get; set; }
+
+        /// <summary>
+        /// get/set - Latitude of untitled parcel.
+        /// </summary>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// get/set - Longitude of untitled parcel.
+        /// </summary>
+        public double Longitude { get; set; }
         #endregion
         #endregion
     }

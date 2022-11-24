@@ -265,15 +265,14 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-properties.0.pid"
+          for="input-properties.0.property.pid"
         >
           PID: 
         </label>
         <input
           class="form-control"
-          id="input-properties.0.pid"
-          name="properties.0.pid"
-          title=""
+          id="input-properties.0.property.pid"
+          name="properties.0.property.pid"
           type="number"
           value=""
         />
@@ -283,16 +282,32 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-properties.0.pin"
+          for="input-properties.0.property.pin"
         >
           PIN: 
         </label>
         <input
           class="form-control"
-          id="input-properties.0.pin"
-          name="properties.0.pin"
-          title=""
+          id="input-properties.0.property.pin"
+          name="properties.0.property.pin"
           type="number"
+          value=""
+        />
+      </div>
+      <div
+        class="c1 c2 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-properties.0.property.coordinates"
+        >
+          Coordinates: 
+        </label>
+        <input
+          class="form-control"
+          id="input-properties.0.property.coordinates"
+          name="properties.0.property.coordinates"
+          title=""
           value=""
         />
       </div>

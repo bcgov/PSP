@@ -20,6 +20,7 @@ namespace Pims.Dal.Entities
             PimsActInstPropRsrchFiles = new HashSet<PimsActInstPropRsrchFile>();
             PimsActivityInstanceDocuments = new HashSet<PimsActivityInstanceDocument>();
             PimsActivityInstanceNotes = new HashSet<PimsActivityInstanceNote>();
+            PimsLeaseActivityInstances = new HashSet<PimsLeaseActivityInstance>();
             PimsResearchActivityInstances = new HashSet<PimsResearchActivityInstance>();
         }
 
@@ -93,6 +94,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsActivityInstanceDocument> PimsActivityInstanceDocuments { get; set; }
         [InverseProperty(nameof(PimsActivityInstanceNote.ActivityInstance))]
         public virtual ICollection<PimsActivityInstanceNote> PimsActivityInstanceNotes { get; set; }
+        [InverseProperty(nameof(PimsLeaseActivityInstance.ActivityInstance))]
+        public virtual ICollection<PimsLeaseActivityInstance> PimsLeaseActivityInstances { get; set; }
         [InverseProperty(nameof(PimsResearchActivityInstance.ActivityInstance))]
         public virtual ICollection<PimsResearchActivityInstance> PimsResearchActivityInstances { get; set; }
     }

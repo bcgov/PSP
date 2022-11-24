@@ -1,6 +1,6 @@
 import { toCqlFilterValue } from 'components/maps/leaflet/mapUtils';
 import { FeatureCollection } from 'geojson';
-import { useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
+import { IApiRequestWrapper, useApiRequestWrapper } from 'hooks/pims-api/useApiRequestWrapper';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import isAbsoluteUrl from 'is-absolute-url';
 
@@ -19,14 +19,21 @@ export interface IWfsGetAllFeaturesOptions {
   maxCount?: number;
   timeout?: number;
   forceSimplePid?: boolean;
+  forceExactMatch?: boolean;
+  onLayerError?: () => void;
 }
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints.
  * @returns Object containing functions to make requests to the WFS layer.
  */
-export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
+export const useWfsLayer = (
+  url: string,
+  layerOptions: IUseWfsLayerOptions,
+  requestWrapperOptions?: Partial<IApiRequestWrapper<any>>,
+) => {
   const getAllFeaturesWrapper = useApiRequestWrapper({
+    ...(requestWrapperOptions ?? {}),
     requestFunction: useDeepCompareCallback(
       async (filter: Record<string, string> = {}, options?: IWfsGetAllFeaturesOptions) => {
         const urlObj = buildUrl(url, getUrlParams(layerOptions));
@@ -36,21 +43,28 @@ export const useWfsLayer = (url: string, layerOptions: IUseWfsLayerOptions) => {
         if (options?.maxCount !== undefined) {
           urlObj.searchParams.set('count', options.maxCount.toString());
         }
-        const cqlFilter = toCqlFilterValue(filter, options?.forceSimplePid);
+        const cqlFilter = toCqlFilterValue(
+          filter,
+          options?.forceSimplePid,
+          options?.forceExactMatch,
+        );
         if (cqlFilter) {
           urlObj.searchParams.set('cql_filter', cqlFilter);
         }
 
         // call WFS service
-        const data = await wfsAxios(options?.timeout).get<FeatureCollection>(urlObj.href, {
-          withCredentials: layerOptions.withCredentials,
-        });
+        const data = await wfsAxios(options?.timeout, options?.onLayerError).get<FeatureCollection>(
+          urlObj.href,
+          {
+            withCredentials: layerOptions.withCredentials,
+          },
+        );
 
         return data;
       },
       [layerOptions, url],
     ),
-    requestName: 'getAllFeatures',
+    requestName: requestWrapperOptions?.requestName ?? 'getAllFeatures',
   });
 
   return getAllFeaturesWrapper;

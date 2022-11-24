@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 
@@ -227,7 +226,7 @@ namespace Pims.Dal.Repositories
 
             this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
-            lease = AssociatePropertyLeases(lease, userOverride);
+            lease = this.Context.GenerateLFileNo(lease);
 
             this.Context.PimsLeases.Add(lease);
             this.Context.CommitTransaction();
@@ -283,6 +282,7 @@ namespace Pims.Dal.Repositories
         /// update the tenants on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
+        /// <param name="rowVersion"></param>
         /// <param name="pimsPropertyImprovements"></param>
         /// <returns></returns>
         public PimsLease UpdateLeaseImprovements(long leaseId, long rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements)
@@ -305,6 +305,7 @@ namespace Pims.Dal.Repositories
         /// update the properties on the lease.
         /// </summary>
         /// <param name="leaseId"></param>
+        /// <param name="rowVersion"></param>
         /// <param name="pimsPropertyLeases"></param>
         /// <returns></returns>
         public PimsLease UpdatePropertyLeases(long leaseId, long rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false)
@@ -317,63 +318,9 @@ namespace Pims.Dal.Repositories
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            bool newLeaseProperties = pimsPropertyLeases.Any(p => !existingLease.PimsPropertyLeases.Any(xp => xp.PropertyId == p.PropertyId));
-            existingLease.PimsPropertyLeases = pimsPropertyLeases;
-            var leaseWithAssociatedProperties = AssociatePropertyLeases(existingLease, userOverride, newLeaseProperties);
-
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease>(l => l.PimsPropertyLeases, leaseId, leaseWithAssociatedProperties.PimsPropertyLeases.ToArray());
-            this.Context.CommitTransaction();
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
 
             return Get(existingLease.LeaseId);
-        }
-
-        /// <summary>
-        /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
-        /// Do not attempt to update any preexisiting properties, simply refer to them by id.
-        ///
-        /// By default, do not allow a property with existing leases to be associated unless the userOverride flag is true.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <param name="userOverride"></param>
-        /// <returns></returns>
-        private PimsLease AssociatePropertyLeases(PimsLease lease, bool userOverride = false, bool newLeaseProperties = true)
-        {
-            lease.PimsPropertyLeases.ForEach(propertyLease =>
-            {
-                PimsProperty property = this.Context.PimsProperties
-                    .Include(p => p.PimsPropertyLeases)
-                    .ThenInclude(l => l.Lease)
-                    .AsNoTracking()
-                    .FirstOrDefault(p => (propertyLease.Property != null && p.Pid == propertyLease.Property.Pid) ||
-                        (propertyLease.Property != null && propertyLease.Property.Pin != null && p.Pin == propertyLease.Property.Pin));
-                if (property?.PropertyId == null)
-                {
-                    if (propertyLease?.Property?.Pid != -1)
-                    {
-                        throw new InvalidOperationException($"Property with PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} does not exist");
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException($"Property with PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} does not exist");
-                    }
-                }
-                if (property?.PimsPropertyLeases.Any(p => p.LeaseId != lease.Id) == true && !userOverride && newLeaseProperties)
-                {
-                    var genericOverrideErrorMsg = $"is attached to L-File # {property.PimsPropertyLeases.FirstOrDefault().Lease.LFileNo}";
-                    if (propertyLease?.Property?.Pin != null)
-                    {
-                        throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
-                    }
-                    throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? string.Empty} {genericOverrideErrorMsg}");
-                }
-                propertyLease.PropertyId = property.PropertyId;
-                propertyLease.Property = null; // Do not attempt to update the associated property, just refer to it by id.
-            });
-            if (lease.LeaseId == 0)
-            {
-                return this.Context.GenerateLFileNo(lease);
-            }
-            return lease;
         }
         #endregion
     }

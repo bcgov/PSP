@@ -22,6 +22,11 @@ export interface ITenantConfig {
   propertiesUrl?: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
   parcelMapFullyAttributed: IFullyAttributedParcelLayerConfig;
+  bcAssessment: IBcAssessmentLayerConfig;
+  // the amount of time it takes to time out the idle prompt (in minutes)
+  idlePromptTimeout: number;
+  // the amount of time it takes to display the idle prompt (in minutes)
+  idleTimeout: number;
 }
 
 export interface ITenantLoginConfig {
@@ -47,4 +52,9 @@ export interface ITenantLogoConfig {
 export interface IFullyAttributedParcelLayerConfig {
   url: string;
   name: string;
+}
+
+export interface IBcAssessmentLayerConfig {
+  url: string;
+  names: { [key: string]: string };
 }

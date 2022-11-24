@@ -50,21 +50,23 @@ export const NoteDetailsFormModal: React.FC<INoteDetailsFormModalProps> = props 
           </span>
         </Col>
       </Row>
-      <Row className="no-gutters">
-        <Col md={2} className="mr-2">
-          Last updated:
-        </Col>
-        <Col>
-          <span>
-            <strong>{prettyFormatDate(note?.appLastUpdateTimestamp)}</strong> by{' '}
-            <UserNameTooltip
-              userName={note?.appLastUpdateUserid}
-              userGuid={note?.appLastUpdateUserGuid}
-            />
-          </span>
-        </Col>
-        <StyledCol>{editButton}</StyledCol>
-      </Row>
+      {!note?.isSystemGenerated ? (
+        <Row className="no-gutters">
+          <Col md={2} className="mr-2">
+            Last updated:
+          </Col>
+          <Col>
+            <span>
+              <strong>{prettyFormatDate(note?.appLastUpdateTimestamp)}</strong> by{' '}
+              <UserNameTooltip
+                userName={note?.appLastUpdateUserid}
+                userGuid={note?.appLastUpdateUserGuid}
+              />
+            </span>
+          </Col>
+          <StyledCol>{editButton}</StyledCol>
+        </Row>
+      ) : null}
       <Row className="no-gutters">
         <Col>
           <Form.Control as="textarea" title="Note" readOnly rows={15} value={note?.note} />

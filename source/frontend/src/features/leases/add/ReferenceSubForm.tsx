@@ -1,7 +1,6 @@
-import { InlineSelect } from 'components/common/form/styles';
+import { InlineYesNoSelect } from 'components/common/form/styles';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { yesNoUnknownOptions } from 'utils/formUtils';
 
 import { LeaseH3 } from '../detail/styles';
 import * as Styled from './styles';
@@ -28,22 +27,12 @@ const ReferenceSubForm: React.FunctionComponent<IReferenceSubFormProps> = props 
       </Row>
       <Row>
         <Col>
-          <InlineSelect
-            label="Physical lease/license exists:"
-            field="hasPhysicalLicense"
-            options={yesNoUnknownOptions}
-            placeholder=""
-          />
+          <InlineYesNoSelect label="Physical lease/license exists:" field="hasPhysicalLicense" />
         </Col>
       </Row>
       <Row>
         <Col>
-          <InlineSelect
-            label="Digital lease/license exists:"
-            field="hasDigitalLicense"
-            options={yesNoUnknownOptions}
-            placeholder=""
-          />
+          <InlineYesNoSelect label="Digital lease/license exists:" field="hasDigitalLicense" />
         </Col>
       </Row>
       <Row>

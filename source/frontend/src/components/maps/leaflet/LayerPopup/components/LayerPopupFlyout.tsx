@@ -6,15 +6,19 @@ import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 
 export interface ILayerPopupFlyoutProps {
+  pimsPropertyId: any;
   onViewPropertyInfo: () => void;
   onCreateResearchFile?: () => void;
   onCreateAcquisitionFile?: () => void;
+  onCreateLeaseLicense?: () => void;
 }
 
 export const LayerPopupFlyout: React.FC<ILayerPopupFlyoutProps> = ({
+  pimsPropertyId,
   onViewPropertyInfo,
   onCreateResearchFile,
   onCreateAcquisitionFile,
+  onCreateLeaseLicense,
 }) => {
   const keycloak = useKeycloakWrapper();
   return (
@@ -31,6 +35,13 @@ export const LayerPopupFlyout: React.FC<ILayerPopupFlyoutProps> = ({
         <ListGroup.Item>
           <LinkButton onClick={onCreateAcquisitionFile ?? noop}>
             Acquisition File - Create new
+          </LinkButton>
+        </ListGroup.Item>
+      )}
+      {keycloak.hasClaim(Claims.LEASE_ADD) && (
+        <ListGroup.Item>
+          <LinkButton disabled={!pimsPropertyId} onClick={onCreateLeaseLicense ?? noop}>
+            Lease/License - Create new
           </LinkButton>
         </ListGroup.Item>
       )}

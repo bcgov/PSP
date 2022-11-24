@@ -157,14 +157,14 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
       class="row"
     >
       <div
-        class="col-md-1"
+        class="col-auto"
       >
         <label>
           Filter by:
         </label>
       </div>
       <div
-        class="col-md-4"
+        class="col-4"
       >
         <div
           class="form-group"
@@ -208,7 +208,7 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="col-md-4"
+        class="col-4"
       >
         <div
           class="form-group"
@@ -252,7 +252,7 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="col-md-1"
+        class="col-1"
       >
         <button
           class="c1 Button Button--icon-only primary btn btn-primary"
@@ -281,7 +281,7 @@ exports[`ActivityFilterForm component renders as expected 1`] = `
         </button>
       </div>
       <div
-        class="col-md-1"
+        class="col-1"
       >
         <button
           class="c1 Button Button--icon-only btn btn-info"
@@ -471,14 +471,14 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
       class="row"
     >
       <div
-        class="col-md-1"
+        class="col-auto"
       >
         <label>
           Filter by:
         </label>
       </div>
       <div
-        class="col-md-4"
+        class="col-4"
       >
         <div
           class="form-group"
@@ -522,7 +522,7 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
         </div>
       </div>
       <div
-        class="col-md-4"
+        class="col-4"
       >
         <div
           class="form-group"
@@ -566,7 +566,7 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
         </div>
       </div>
       <div
-        class="col-md-1"
+        class="col-1"
       >
         <button
           class="c1 Button Button--icon-only primary btn btn-primary"
@@ -595,7 +595,7 @@ exports[`ActivityFilterForm component renders with data as expected 1`] = `
         </button>
       </div>
       <div
-        class="col-md-1"
+        class="col-1"
       >
         <button
           class="c1 Button Button--icon-only btn btn-info"

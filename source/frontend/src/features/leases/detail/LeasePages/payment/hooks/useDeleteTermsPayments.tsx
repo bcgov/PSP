@@ -50,9 +50,9 @@ export const useDeleteTermsPayments = () => {
         setDeleteModalWarning({ title: 'Delete Term', message: deleteWithPayments });
         return false;
       } else if (
-        leaseTerm.id === lease?.terms[0].id &&
         lease?.terms?.length !== undefined &&
-        lease.terms.length > 1
+        lease.terms.length > 1 &&
+        leaseTerm.id === lease?.terms[0].id
       ) {
         setDeleteModalWarning({ title: 'Delete Term', message: deleteInitialWithRenewals });
         return false;

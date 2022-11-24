@@ -43,28 +43,35 @@ describe('LeaseHeaderAddresses component', () => {
     expect(getByText('[+1 more...]')).toBeVisible();
   });
   it('formats addresses as expected', async () => {
-    const { getByText } = setup({
+    const { getByText, getAllByText } = setup({
       lease: {
         properties: [
           noStreetOrMunicipality,
           streetNoMunicipality,
           noStreetButMunicipality,
           streetAndMunicipality,
+          undefinedAddress,
         ],
       } as any,
     });
 
-    const moreButton = getByText('[+2 more...]');
+    const moreButton = getByText('[+3 more...]');
     userEvent.click(moreButton);
 
     expect(
-      getByText('000-000-000 - Address not available in PIMS', { exact: false }),
-    ).toBeVisible();
+      getAllByText('000-000-000 - Address not available in PIMS', { exact: false }),
+    ).toHaveLength(2);
     expect(getByText('1234 fake st', { exact: false })).toBeVisible();
     expect(getByText('Victoria', { exact: false })).toBeVisible();
     expect(getByText('4321 real st, Vancouver', { exact: false })).toBeVisible();
   });
 });
+
+const undefinedAddress: Partial<IProperty> = {
+  id: 1,
+  pid: '000-000-000',
+  address: undefined as any,
+};
 
 const noStreetOrMunicipality: Partial<IProperty> = {
   id: 1,

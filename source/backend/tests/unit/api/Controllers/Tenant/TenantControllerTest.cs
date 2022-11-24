@@ -7,6 +7,7 @@ using Moq;
 using Pims.Api.Controllers;
 using Pims.Core.Test;
 using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -39,10 +40,10 @@ namespace Pims.Api.Test.Controllers
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
             var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ITenantRepository>>();
             var mapper = helper.GetService<IMapper>();
             var tenant = EntityHelper.CreateTenant(1, "TEST");
-            service.Setup(m => m.Tenant.GetTenant(tenant.Code)).Returns(tenant);
+            repository.Setup(m => m.GetTenant(tenant.Code)).Returns(tenant);
 
             // Act
             var result = controller.Settings();
@@ -52,7 +53,7 @@ namespace Pims.Api.Test.Controllers
             var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
             Assert.Null(actionResult.StatusCode);
             mapper.Map<Model.TenantModel>(tenant).Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Tenant.GetTenant(tenant.Code), Times.Once());
+            repository.Verify(m => m.GetTenant(tenant.Code), Times.Once());
         }
 
         [Fact]
@@ -69,9 +70,9 @@ namespace Pims.Api.Test.Controllers
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
             var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ITenantRepository>>();
             var tenant = EntityHelper.CreateTenant(1, "TEST");
-            service.Setup(m => m.Tenant.GetTenant(tenant.Code)).Returns<Entity.PimsTenant>(null);
+            repository.Setup(m => m.GetTenant(tenant.Code)).Returns<Entity.PimsTenant>(null);
 
             // Act
             var result = controller.Settings();
@@ -79,7 +80,7 @@ namespace Pims.Api.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<NoContentResult>(result);
             actionResult.StatusCode.Should().Be(204);
-            service.Verify(m => m.Tenant.GetTenant(tenant.Code), Times.Once());
+            repository.Verify(m => m.GetTenant(tenant.Code), Times.Once());
         }
 
         [Fact]
@@ -93,8 +94,8 @@ namespace Pims.Api.Test.Controllers
             mockOptions.Setup(m => m.CurrentValue).Returns(options);
             var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
-            service.Setup(m => m.Tenant.GetTenant(null)).Returns<Entity.PimsTenant>(null);
+            var repository = helper.GetService<Mock<ITenantRepository>>();
+            repository.Setup(m => m.GetTenant(null)).Returns<Entity.PimsTenant>(null);
 
             // Act
             var result = controller.Settings();
@@ -102,7 +103,7 @@ namespace Pims.Api.Test.Controllers
             // Assert
             var actionResult = Assert.IsType<NoContentResult>(result);
             actionResult.StatusCode.Should().Be(204);
-            service.Verify(m => m.Tenant.GetTenant(null), Times.Once());
+            repository.Verify(m => m.GetTenant(null), Times.Once());
         }
         #endregion
 
@@ -114,10 +115,10 @@ namespace Pims.Api.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<TenantController>(Permissions.SystemAdmin);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ITenantRepository>>();
             var mapper = helper.GetService<IMapper>();
             var tenant = EntityHelper.CreateTenant(1, "TEST");
-            service.Setup(m => m.Tenant.UpdateTenant(It.IsAny<Entity.PimsTenant>())).Returns(tenant);
+            repository.Setup(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>())).Returns(tenant);
 
             var model = mapper.Map<Model.TenantModel>(tenant);
 
@@ -129,7 +130,7 @@ namespace Pims.Api.Test.Controllers
             var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
             Assert.Null(actionResult.StatusCode);
             model.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Tenant.UpdateTenant(It.IsAny<Entity.PimsTenant>()), Times.Once());
+            repository.Verify(m => m.UpdateTenant(It.IsAny<Entity.PimsTenant>()), Times.Once());
         }
         #endregion
         #endregion

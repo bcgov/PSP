@@ -5,6 +5,7 @@ import { useTenant } from 'tenants/useTenant';
 import { useGetProperty } from '../features/mapSideBar/tabs/propertyDetails/hooks/useGetProperty';
 import { useFullyAttributedParcelMapLayer } from './pims-api/useFullyAttributedParcelMapLayer';
 import { useGeoServer } from './pims-api/useGeoServer';
+import { useBcAssessmentLayer } from './useBcAssessmentLayer';
 import useDeepCompareCallback from './useDeepCompareCallback';
 import { useLtsa } from './useLtsa';
 import { usePropertyAssociations } from './usePropertyAssociations';
@@ -14,6 +15,7 @@ export enum PROPERTY_TYPES {
   PARCEL_MAP = 'PARCEL_MAP',
   LTSA = 'LTSA',
   ASSOCIATIONS = 'ASSOCIATIONS',
+  BC_ASSESSMENT = 'BC_ASSESSMENT',
 }
 
 export const ALL_PROPERTY_TYPES = Object.values(PROPERTY_TYPES);
@@ -33,12 +35,13 @@ export const useComposedProperties = ({
   const { getPropertyWfsWrapper } = useGeoServer();
   const getLtsaWrapper = useLtsa();
   const getPropertyAssociationsWrapper = usePropertyAssociations();
-  const { parcelMapFullyAttributed } = useTenant();
+  const { parcelMapFullyAttributed, bcAssessment } = useTenant();
   const { findByPid, findByPin, getAllFeaturesWrapper } = useFullyAttributedParcelMapLayer(
     parcelMapFullyAttributed.url,
     parcelMapFullyAttributed.name,
   );
-  const retrievedPid = pid?.toString() ?? getApiPropertyWrapper?.response?.pid?.toString();
+  const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
+  const retrievedPid = getApiPropertyWrapper?.response?.pid?.toString();
   const retrievedPin = getApiPropertyWrapper?.response?.pin?.toString();
 
   const typeCheckWrapper = useDeepCompareCallback(
@@ -68,15 +71,28 @@ export const useComposedProperties = ({
   ]);
 
   const executeGetLtsa = getLtsaWrapper.execute;
+  const executeBcAssessmentSummary = getSummaryWrapper.execute;
 
   useEffect(() => {
     if (!!retrievedPid) {
       typeCheckWrapper(() => executeGetLtsa(retrievedPid), PROPERTY_TYPES.LTSA);
       typeCheckWrapper(() => findByPid(retrievedPid), PROPERTY_TYPES.PARCEL_MAP);
+      typeCheckWrapper(
+        () => executeBcAssessmentSummary(retrievedPid),
+        PROPERTY_TYPES.BC_ASSESSMENT,
+      );
     } else if (!!retrievedPin) {
-      typeCheckWrapper(() => findByPin(retrievedPin), PROPERTY_TYPES.PARCEL_MAP);
+      typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
-  }, [findByPid, findByPin, executeGetLtsa, retrievedPid, retrievedPin, typeCheckWrapper]);
+  }, [
+    findByPid,
+    findByPin,
+    executeGetLtsa,
+    retrievedPid,
+    retrievedPin,
+    typeCheckWrapper,
+    executeBcAssessmentSummary,
+  ]);
 
   return {
     id: id,
@@ -87,11 +103,13 @@ export const useComposedProperties = ({
     propertyAssociationWrapper: getPropertyAssociationsWrapper,
     parcelMapWrapper: getAllFeaturesWrapper,
     geoserverWrapper: getPropertyWfsWrapper,
+    bcAssessmentWrapper: getSummaryWrapper,
     composedLoading:
       getLtsaWrapper?.loading ||
       getApiPropertyWrapper?.loading ||
       getPropertyAssociationsWrapper?.loading ||
       getAllFeaturesWrapper?.loading ||
-      getPropertyWfsWrapper?.loading,
+      getPropertyWfsWrapper?.loading ||
+      getSummaryWrapper?.loading,
   };
 };

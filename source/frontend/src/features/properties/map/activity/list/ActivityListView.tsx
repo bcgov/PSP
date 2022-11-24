@@ -3,6 +3,7 @@ import { ModalContent } from 'components/common/GenericModal';
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { FileTypes } from 'constants/fileTypes';
+import { Section } from 'features/mapSideBar/tabs/Section';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from 'hooks/useModalContext';
 import { defaultActivityFilter, IActivityFilter } from 'interfaces/IActivityResults';
@@ -16,7 +17,6 @@ import { useActivityRepository } from '../hooks/useActivityRepository';
 import { ActivityFilterForm } from './ActivityFilter/ActivityFilterForm';
 import { ActivityResults } from './ActivityResults/ActivityResults';
 import { AddActivityForm } from './ActivityResults/AddActivityForm';
-import * as Styled from './styles';
 
 export interface IActivityListViewProps {
   fileId: number;
@@ -144,32 +144,29 @@ export const ActivityListView: React.FunctionComponent<IActivityListViewProps> =
 
   return (
     <>
-      <Styled.ListPage>
-        <Styled.Scrollable vertical={true}>
-          <Styled.PageHeader>Activities</Styled.PageHeader>
-          {hasClaim(Claims.ACTIVITY_ADD) && (
-            <AddActivityForm
-              onAddActivity={(activityTypeId: number) => {
-                saveActivity(activityTypeId);
-              }}
-              templateTypes={templateTypes}
-            ></AddActivityForm>
-          )}
-          <ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />
-          <ActivityResults
-            results={sortedFilteredActivities}
-            loading={fileActivitiesLoading || saveFileActivityLoading || deleteActivityLoading}
-            sort={sort}
-            setSort={setSort}
-            onShowActivity={(activity: Api_Activity) => {
-              history.push(`${match.url}/activity/${activity?.id}`);
+      <Section header="Activities">
+        {hasClaim(Claims.ACTIVITY_ADD) && (
+          <AddActivityForm
+            onAddActivity={(activityTypeId: number) => {
+              saveActivity(activityTypeId);
             }}
-            onDelete={onDeleteActivity}
-            getFilePropertyIndexById={getFilePropertyIndexById}
-            fileProperties={file?.fileProperties ?? []}
-          />
-        </Styled.Scrollable>
-      </Styled.ListPage>
+            templateTypes={templateTypes}
+          ></AddActivityForm>
+        )}
+        <ActivityFilterForm onSetFilter={setFilters} activityFilter={filters} />
+        <ActivityResults
+          results={sortedFilteredActivities}
+          loading={fileActivitiesLoading || saveFileActivityLoading || deleteActivityLoading}
+          sort={sort}
+          setSort={setSort}
+          onShowActivity={(activity: Api_Activity) => {
+            history.push(`${match.url}/activity/${activity?.id}`);
+          }}
+          onDelete={onDeleteActivity}
+          getFilePropertyIndexById={getFilePropertyIndexById}
+          fileProperties={file?.fileProperties ?? []}
+        />
+      </Section>
     </>
   );
 };

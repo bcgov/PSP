@@ -1,8 +1,13 @@
+import {
+  MapState,
+  MapStateActionTypes,
+  MapStateContext,
+} from 'components/maps/providers/MapStateContext';
 import Claims from 'constants/claims';
 import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
 import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
-import * as React from 'react';
+import { memo, useContext, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';
 
@@ -17,23 +22,55 @@ interface IMapRouterProps {
   onZoom?: (apiProperty?: Api_Property) => void;
 }
 
-export const MapRouter: React.FunctionComponent<IMapRouterProps> = React.memo(props => {
+export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
   const location = useLocation();
   const history = useHistory();
+  const { setState } = useContext(MapStateContext);
 
-  let matched = matchPath(location.pathname, {
-    path: '/mapview/sidebar/*',
-    exact: true,
-    strict: true,
-  });
+  const matched = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
 
-  React.useEffect(() => {
+  const isResearch = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/research/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
+  const isAcquisition = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/acquisition/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+  const setShowSideBar = props.setShowSideBar;
+
+  useEffect(() => {
     if (matched !== null) {
-      props.setShowSideBar(true);
+      if (isAcquisition) {
+        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.ACQUISITION_FILE });
+      } else if (isResearch) {
+        setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.RESEARCH_FILE });
+      }
+      setShowSideBar(true);
     } else {
-      props.setShowSideBar(false);
+      setShowSideBar(false);
+      setState({ type: MapStateActionTypes.MAP_STATE, mapState: MapState.MAP });
     }
-  }, [matched, props]);
+  }, [isAcquisition, isResearch, matched, setShowSideBar, setState]);
 
   const onClose = () => {
     history.push('/mapview');

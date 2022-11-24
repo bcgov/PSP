@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 export type BaseLayer = {
   name: string;
-  url: string;
+  urls: string[];
   attribution: string;
   thumbnail: string;
 };
@@ -14,7 +14,7 @@ export type BasemapToggleEvent = {
   previous: BaseLayer;
 };
 
-type BasemapToggleProps = {
+export type BasemapToggleProps = {
   baseLayers: BaseLayer[];
   onToggle?: (e: BasemapToggleEvent) => void;
 };

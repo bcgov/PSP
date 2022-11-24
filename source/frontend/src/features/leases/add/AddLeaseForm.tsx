@@ -1,9 +1,10 @@
 import { Formik, FormikProps } from 'formik';
-import { defaultAddFormLease, IAddFormLease, ILease } from 'interfaces';
+import { IProperty } from 'interfaces';
+import { Api_Lease } from 'models/api/Lease';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 
-import { addFormLeaseToApiLease } from '../leaseUtils';
+import { FormLease, FormLeaseProperty, getDefaultFormLease } from '../models';
 import SaveCancelButtons from '../SaveCancelButtons';
 import { LeaseSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
@@ -15,22 +16,40 @@ import * as Styled from './styles';
 
 interface IAddLeaseFormProps {
   onCancel: () => void;
-  onSubmit: (lease: ILease) => void;
-  formikRef: React.Ref<FormikProps<IAddFormLease>>;
-  initialValues?: IAddFormLease;
+  onSubmit: (lease: Api_Lease) => void;
+  formikRef: React.Ref<FormikProps<FormLease>>;
+  propertyInfo: IProperty | null;
 }
 
 const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
   onCancel,
   onSubmit,
   formikRef,
-  initialValues,
+  propertyInfo,
 }) => {
+  const defaultFormLease = getDefaultFormLease();
+  if (propertyInfo) {
+    defaultFormLease.properties = [];
+    defaultFormLease.properties.push(
+      FormLeaseProperty.fromApi({
+        property: {
+          pid: propertyInfo.pid ? +propertyInfo.pid : undefined,
+          pin: propertyInfo?.pin ? +propertyInfo.pin : undefined,
+          latitude: propertyInfo.latitude,
+          longitude: propertyInfo.longitude,
+          location: { coordinate: { x: propertyInfo.longitude, y: propertyInfo.latitude } },
+        },
+        leaseArea: propertyInfo.landArea,
+        areaUnitType: { id: propertyInfo.areaUnit },
+      }),
+    );
+    defaultFormLease.region = propertyInfo.regionId ? { id: propertyInfo.regionId } : undefined;
+  }
   return (
-    <Formik<IAddFormLease>
-      initialValues={defaultAddFormLease ?? initialValues}
-      onSubmit={async (values: IAddFormLease, formikHelpers) => {
-        const apiLease = addFormLeaseToApiLease(values);
+    <Formik<FormLease>
+      initialValues={defaultFormLease}
+      onSubmit={async (values: FormLease, formikHelpers) => {
+        const apiLease = values.toApi();
         formikHelpers.setSubmitting(false);
         onSubmit(apiLease);
       }}
