@@ -12,4 +12,5 @@ GO
 INSERT INTO PIMS_LESSOR_TYPE (LESSOR_TYPE_CODE, DESCRIPTION)
 VALUES
   (N'PER', N'Person'),
-  (N'ORG', N'Organization');
+  (N'ORG', N'Organization'),
+  (N'UNK', N'Unknown');
