@@ -1,5 +1,7 @@
 import { Claims } from 'constants/claims';
+import { DocumentRelationshipType } from 'constants/documentRelationshipType';
 import { FileTypes } from 'constants/fileTypes';
+import DocumentListContainer from 'features/documents/list/DocumentListContainer';
 import { FileTabNames, FileTabs, TabFileView } from 'features/mapSideBar/tabs/FileTabs';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_AcquisitionFile } from 'models/api/AcquisitionFile';
@@ -48,6 +50,20 @@ export const AcquisitionFileTabs: React.FunctionComponent<IAcquisitionFileTabsPr
       ),
       key: FileTabNames.activities,
       name: 'Activities',
+    });
+  }
+
+  if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <DocumentListContainer
+          parentId={acquisitionFile?.id}
+          relationshipType={DocumentRelationshipType.ACQUISITION_FILES}
+          disableAdd
+        />
+      ),
+      key: FileTabNames.documents,
+      name: 'Documents',
     });
   }
 

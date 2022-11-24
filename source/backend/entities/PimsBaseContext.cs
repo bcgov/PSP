@@ -101,12 +101,18 @@ namespace Pims.Dal
         public virtual DbSet<PimsAddressHist> PimsAddressHists { get; set; }
         public virtual DbSet<PimsAddressUsageType> PimsAddressUsageTypes { get; set; }
         public virtual DbSet<PimsAreaUnitType> PimsAreaUnitTypes { get; set; }
+        public virtual DbSet<PimsBusinessFunctionCode> PimsBusinessFunctionCodes { get; set; }
+        public virtual DbSet<PimsBusinessFunctionCodeHist> PimsBusinessFunctionCodeHists { get; set; }
+        public virtual DbSet<PimsChartOfAccountsCode> PimsChartOfAccountsCodes { get; set; }
+        public virtual DbSet<PimsChartOfAccountsCodeHist> PimsChartOfAccountsCodeHists { get; set; }
         public virtual DbSet<PimsClaim> PimsClaims { get; set; }
         public virtual DbSet<PimsClaimHist> PimsClaimHists { get; set; }
         public virtual DbSet<PimsContactMethod> PimsContactMethods { get; set; }
         public virtual DbSet<PimsContactMethodHist> PimsContactMethodHists { get; set; }
         public virtual DbSet<PimsContactMethodType> PimsContactMethodTypes { get; set; }
         public virtual DbSet<PimsContactMgrVw> PimsContactMgrVws { get; set; }
+        public virtual DbSet<PimsCostTypeCode> PimsCostTypeCodes { get; set; }
+        public virtual DbSet<PimsCostTypeCodeHist> PimsCostTypeCodeHists { get; set; }
         public virtual DbSet<PimsCountry> PimsCountries { get; set; }
         public virtual DbSet<PimsDataSourceType> PimsDataSourceTypes { get; set; }
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
@@ -116,6 +122,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsDocumentTyp> PimsDocumentTyps { get; set; }
         public virtual DbSet<PimsDocumentTypHist> PimsDocumentTypHists { get; set; }
         public virtual DbSet<PimsFenceType> PimsFenceTypes { get; set; }
+        public virtual DbSet<PimsFinancialActivityCode> PimsFinancialActivityCodes { get; set; }
+        public virtual DbSet<PimsFinancialActivityCodeHist> PimsFinancialActivityCodeHists { get; set; }
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
@@ -211,6 +219,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsResearchFilePurposeHist> PimsResearchFilePurposeHists { get; set; }
         public virtual DbSet<PimsResearchFileStatusType> PimsResearchFileStatusTypes { get; set; }
         public virtual DbSet<PimsResearchPurposeType> PimsResearchPurposeTypes { get; set; }
+        public virtual DbSet<PimsResponsibilityCode> PimsResponsibilityCodes { get; set; }
+        public virtual DbSet<PimsResponsibilityCodeHist> PimsResponsibilityCodeHists { get; set; }
         public virtual DbSet<PimsRole> PimsRoles { get; set; }
         public virtual DbSet<PimsRoleClaim> PimsRoleClaims { get; set; }
         public virtual DbSet<PimsRoleClaimHist> PimsRoleClaimHists { get; set; }
@@ -237,6 +247,10 @@ namespace Pims.Dal
         public virtual DbSet<PimsUserRoleHist> PimsUserRoleHists { get; set; }
         public virtual DbSet<PimsVolumeUnitType> PimsVolumeUnitTypes { get; set; }
         public virtual DbSet<PimsVolumetricType> PimsVolumetricTypes { get; set; }
+        public virtual DbSet<PimsWorkActivityCode> PimsWorkActivityCodes { get; set; }
+        public virtual DbSet<PimsWorkActivityCodeHist> PimsWorkActivityCodeHists { get; set; }
+        public virtual DbSet<PimsYearlyFinancialCode> PimsYearlyFinancialCodes { get; set; }
+        public virtual DbSet<PimsYearlyFinancialCodeHist> PimsYearlyFinancialCodeHists { get; set; }
         public virtual DbSet<PimsxTableDefinition> PimsxTableDefinitions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -2439,6 +2453,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityTemplate)
                     .WithMany(p => p.PimsActivityInstances)
                     .HasForeignKey(d => d.ActivityTemplateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTTMP_PIM_ACTINS_FK");
             });
 
@@ -2627,6 +2642,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.ActivityTemplateTypeCodeNavigation)
                     .WithMany(p => p.PimsActivityTemplates)
                     .HasForeignKey(d => d.ActivityTemplateTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ACTTTY_PIM_ACTTMP_FK");
             });
 
@@ -2827,6 +2843,112 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code value is still active or is now disabled.");
             });
 
+            modelBuilder.Entity<PimsBusinessFunctionCode>(entity =>
+            {
+                entity.HasComment("Code and description of the business function codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_BUSINESS_FUNCTION_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code).HasComment("Name of the code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsBusinessFunctionCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.BusinessFunctionCodeHistId)
+                    .HasName("PIMS_BIZFCN_H_PK");
+
+                entity.Property(e => e.BusinessFunctionCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_BUSINESS_FUNCTION_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsChartOfAccountsCode>(entity =>
+            {
+                entity.HasComment("Code and description of the chart of accounts codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CHART_OF_ACCOUNTS_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code).HasComment("Name of the code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsChartOfAccountsCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.ChartOfAccountsCodeHistId)
+                    .HasName("PIMS_CHRTAC_H_PK");
+
+                entity.Property(e => e.ChartOfAccountsCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CHART_OF_ACCOUNTS_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsClaim>(entity =>
             {
                 entity.HasKey(e => e.ClaimId)
@@ -2934,6 +3056,59 @@ namespace Pims.Dal
                 entity.ToView("PIMS_CONTACT_MGR_VW");
 
                 entity.Property(e => e.Id).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<PimsCostTypeCode>(entity =>
+            {
+                entity.HasComment("Code and description of the cost type codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COST_TYPE_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code).HasComment("Name of the code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsCostTypeCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.CostTypeCodeHistId)
+                    .HasName("PIMS_COSTYP_H_PK");
+
+                entity.Property(e => e.CostTypeCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COST_TYPE_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsCountry>(entity =>
@@ -3176,6 +3351,59 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is inactive.");
+            });
+
+            modelBuilder.Entity<PimsFinancialActivityCode>(entity =>
+            {
+                entity.HasComment("Code and description of the financial activity codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FINANCIAL_ACTIVITY_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code).HasComment("Value of the code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsFinancialActivityCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.FinancialActivityCodeHistId)
+                    .HasName("PIMS_FINACT_H_PK");
+
+                entity.Property(e => e.FinancialActivityCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsInsurance>(entity =>
@@ -3446,7 +3674,7 @@ namespace Pims.Dal
 
                 entity.HasComment("Associative entity between leases/licenses and activity instances.");
 
-                entity.Property(e => e.LeaseActivityInstanceId).HasDefaultValueSql("('NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]')");
+                entity.Property(e => e.LeaseActivityInstanceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -5949,6 +6177,61 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code is disabled.");
             });
 
+            modelBuilder.Entity<PimsResponsibilityCode>(entity =>
+            {
+                entity.HasComment("Code and description of the responsibility codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESPONSIBILITY_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESPONSIBILITY_CODE_SEQ])")
+                    .HasComment("Name of the code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsResponsibilityCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.ResponsibilityCodeHistId)
+                    .HasName("PIMS_RESPCD_H_PK");
+
+                entity.Property(e => e.ResponsibilityCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESPONSIBILITY_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.Entity<PimsRole>(entity =>
             {
                 entity.HasKey(e => e.RoleId)
@@ -6625,6 +6908,112 @@ namespace Pims.Dal
                     .HasComment("Indicates if the code is disabled.");
             });
 
+            modelBuilder.Entity<PimsWorkActivityCode>(entity =>
+            {
+                entity.HasComment("Code and description of the work activity codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORK_ACTIVITY_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code).HasComment("Name of the code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsWorkActivityCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.WorkActivityCodeHistId)
+                    .HasName("PIMS_WRKACT_H_PK");
+
+                entity.Property(e => e.WorkActivityCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORK_ACTIVITY_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsYearlyFinancialCode>(entity =>
+            {
+                entity.HasComment("Code and description of the chart of accounts codes.");
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_YEARLY_FINANCIAL_CODE_ID_SEQ])")
+                    .HasComment("System-generated primary key.");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Code).HasComment("Standard Object of Expenditure (STOB) code.");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description).HasComment("Descriptive value  of the STOB code.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+
+                entity.Property(e => e.EffectiveDate)
+                    .HasDefaultValueSql("(getutcdate())")
+                    .HasComment("Date the code became effective.");
+
+                entity.Property(e => e.ExpiryDate).HasComment("Date the code ceased to be in effect.");
+            });
+
+            modelBuilder.Entity<PimsYearlyFinancialCodeHist>(entity =>
+            {
+                entity.HasKey(e => e.YearlyFinancialCodeHistId)
+                    .HasName("PIMS_YRFINC_H_PK");
+
+                entity.Property(e => e.YearlyFinancialCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_YEARLY_FINANCIAL_CODE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
             modelBuilder.HasSequence("BCA_DATA_ADVICE_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -6807,6 +7196,22 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_BUSINESS_FUNCTION_CODE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_BUSINESS_FUNCTION_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_CHART_OF_ACCOUNTS_CODE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_CHART_OF_ACCOUNTS_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_CLAIM_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -6823,6 +7228,14 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_COST_TYPE_CODE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_COST_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_DOCUMENT_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -6836,6 +7249,14 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_DOCUMENT_TYPE_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
@@ -7155,6 +7576,19 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_SEQ")
+                .StartsAt(991)
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_RESPONSIBILITY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_RFILE_NUMBER_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
@@ -7271,11 +7705,23 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_WORK_ACTIVITY_CODE_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_WORK_ACTIVITY_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_WORKFLOW_MODEL_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_WORKFLOW_MODEL_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_YEARLY_FINANCIAL_CODE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

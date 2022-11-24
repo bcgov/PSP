@@ -112,6 +112,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Lease with minimum fields")]
         public void MinimumLeaseLicense()
         {
+            /**TEST COVERAGE: PSP-2637, PSP-2677, PSP-2755, PSP-2915, PSP-2918, PSP-2921, PSP-2922, PSP-3494, PSP-3498, PSP-3499
+             * PSP-4558
+            **/
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -151,11 +155,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Inserting Payment for first term
             payments.AddPayment(firstTermPaymentSentDate, firstTermPaymentReceived, firstTermPaymentStatus);
 
-            //INSURANCE
+            //IMPROVEMENTS
             //Navigate to Improvements
-            insurance.NavigateToInsuranceSection();
+            improvements.NavigateToImprovementSection();
 
             //Edit Improvement Section
+            improvements.EditImprovements();
+
+            //Add Commercial Improvements
+            improvements.AddCommercialImprovement(improvementCommercialAddress, improvementCommercialSize, improvementCommercialSize);
+
+            //Save Improvements
+            improvements.SaveImproments();
+
+            //INSURANCE
+            //Navigate to Insurance Section
+            insurance.NavigateToInsuranceSection();
+
+            //Edit Insurance Section
             insurance.EditInsurance();
 
             //Add Vehicle Insurance
@@ -163,6 +180,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add Other Insurance
             insurance.AddOtherInsurance(insuranceOtherType, insuranceOtherLimit, insuranceOtherExpiryDate, insuranceOtherDescription);
+
+            //Save Insurances
+            insurance.SaveInsurance();
+
+            //DEPOSITS
+            //Navigate to Deposits
+            deposits.NavigateToDepositSection();
+
+            //Add Deposit
+            deposits.AddDeposit(depositDescription, depositAmount, depositPaidDate, depositHolder);
+
+            //Add Return
+            deposits.AddReturn(depositReturnTerminationDate, depositReturnClaims, depositRetunedAmount, depositReturnInterestPaid, depositReturnDate, depositReturnPayeeName);
 
             //Get new lease's code
             leaseCode = surplus.GetLeaseCode();
@@ -172,6 +202,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Lease with all fields")]
         public void MaximumLeaseLicense()
         {
+            /**TEST COVERAGE: PSP-2637, PSP-2677, PSP-2755, PSP-2915, PSP-2918, PSP-2921, PSP-2922, PSP-3494, PSP-3495, PSP-3498
+             * PSP-3499, PSP-4558
+            **/
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -310,6 +344,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an existing lease")]
         public void EditExistingLease()
         {
+            //TEST COVERAGE: PSP-2637, PSP-2638, PSP-2923, PSP-4195, PSP-4196, PSP-4558
+
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -363,6 +399,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new lease is created successfully")]
         public void NewLeaseCreated()
         {
+            //TEST COVERAGE: PSP-2466, PSP-2993
+
             searchLease.NavigateToSearchLicense();
             searchLease.SearchLicenseByLFile(leaseCode);
 

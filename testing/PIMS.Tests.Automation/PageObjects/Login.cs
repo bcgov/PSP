@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void LoginUsingIDIR(string user, string password)
         {
-            webDriver.FindElement(loginIdirBttn).Click();
+            //webDriver.FindElement(loginIdirBttn).Click();
 
             Wait();
 

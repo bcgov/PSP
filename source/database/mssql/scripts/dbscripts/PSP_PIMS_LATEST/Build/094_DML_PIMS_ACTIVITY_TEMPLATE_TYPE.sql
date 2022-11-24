@@ -14,5 +14,6 @@ VALUES
   (N'GENERAL', N'General'),
   (N'SURVEY',  N'Survey'),
   (N'SITEVIS', N'Site Visit'),
-  (N'GENLTR',  N'Generate Letter');
+  (N'GENLTR',  N'Generate Letter'),
+  (N'FILEDOC', N'File Document');
 GO
