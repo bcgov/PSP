@@ -32,9 +32,9 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const initialForm = useMemo(() => {
     const acquisitionForm = new AcquisitionForm();
     if (!!selectedFileFeature) {
-      acquisitionForm.properties = [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
-      ];
+      const property = PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature));
+      acquisitionForm.properties = [property];
+      acquisitionForm.region = property.region?.toString();
     }
     return acquisitionForm;
   }, [selectedFileFeature]);
