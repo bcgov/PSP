@@ -143,6 +143,18 @@ describe('Generic table component', () => {
       expect(getByLabelText('Page 2')).toBeVisible();
     });
 
+    it('page size works as expected when changing page size and then changing page', async () => {
+      const { getByLabelText, getByTitle, container } = setup({
+        props: { manualPagination: false },
+      });
+
+      userEvent.click(getByTitle('menu-item-5'));
+      const tableRows = container.querySelectorAll('.table .tbody .tr-wrapper');
+      expect(tableRows).toHaveLength(5);
+      userEvent.click(getByLabelText('Page 2'));
+      expect(getByLabelText('Page 2 is your current page')).toBeVisible();
+    });
+
     it('page size works as expected when using manual pagination', async () => {
       const onPageSizeChange = jest.fn();
       const { getByTitle } = setup({

@@ -111,8 +111,11 @@ namespace Pims.Api.Services
                 _researchFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
                 {
-                    int propertyCount = _researchFilePropertyRepository.GetResearchFilePropertyRelatedCount(deletedProperty.PropertyId);
-                    if (propertyCount == 1)
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAssociations(deletedProperty.PropertyId);
+                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
+                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
+                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
+                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 1)
                     {
                         _propertyRepository.Delete(deletedProperty.Property);
                     }

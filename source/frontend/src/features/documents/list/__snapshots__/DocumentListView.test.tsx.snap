@@ -418,7 +418,7 @@ exports[`Document List View renders as expected 1`] = `
                   data-testid="search"
                   id="search-button"
                   title="search"
-                  type="submit"
+                  type="button"
                 >
                   <div
                     class="Button__icon"
@@ -1439,7 +1439,7 @@ exports[`Document List View renders as expected 2`] = `
                   data-testid="search"
                   id="search-button"
                   title="search"
-                  type="submit"
+                  type="button"
                 >
                   <div
                     class="Button__icon"
