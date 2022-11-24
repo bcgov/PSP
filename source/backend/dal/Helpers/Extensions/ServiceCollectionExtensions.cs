@@ -53,6 +53,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IActivityRepository, Repositories.ActivityRepository>();
             repositories.AddScoped<Repositories.IActivityTemplateRepository, Repositories.ActivityTemplateRepository>();
             repositories.AddScoped<Repositories.ISequenceRepository, Repositories.SequenceRepository>();
+            repositories.AddScoped<Repositories.IPropertyLeaseRepository, Repositories.PropertyLeaseRepository>();
             return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.
         }
 

@@ -65,6 +65,56 @@ describe('UpdateProperties component', () => {
     expect(document.body).toMatchSnapshot();
   });
 
+  it('renders a row with an address', async () => {
+    const { getByText } = setup({
+      file: {
+        ...getMockResearchFile(),
+        fileProperties: [
+          {
+            id: 3,
+            isDisabled: false,
+            property: {
+              id: 443,
+              anomalies: [],
+              tenures: [],
+              roadTypes: [],
+              adjacentLands: [],
+              region: {
+                id: 1,
+                description: 'South Coast Region',
+                isDisabled: false,
+              },
+              district: {
+                id: 2,
+                description: 'Vancouver Island District',
+                isDisabled: false,
+              },
+              dataSourceEffectiveDate: '2022-10-05T00:00:00',
+              isSensitive: false,
+              isRwyBeltDomPatent: false,
+              address: {
+                id: 1,
+                streetAddress1: '45 - 904 Hollywood Crescent',
+                streetAddress2: 'Living in a van',
+                streetAddress3: 'Down by the River',
+                municipality: 'Hollywood North',
+                postal: 'V6Z 5G7',
+                rowVersion: 2,
+              },
+              isOwned: false,
+              isVisibleToOtherAgencies: false,
+              landArea: 0,
+              isVolumetricParcel: false,
+              rowVersion: 3,
+            },
+            rowVersion: 1,
+          },
+        ],
+      },
+    });
+    expect(getByText(/Address: 45 - 904 Ho/g)).toBeVisible();
+  });
+
   it('save button displays modal', async () => {
     const { getByText } = setup({});
     const saveButton = getByText('Save');

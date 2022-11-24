@@ -1,5 +1,5 @@
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
 import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { Formik, FormikProps } from 'formik';
@@ -25,10 +25,8 @@ export interface IAddResearchContainerProps {
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
-  const {
-    selectedFileFeature: selectedResearchFeature,
-    setSelectedFileFeature: setSelectedResearchFeature,
-  } = React.useContext(SelectedPropertyContext);
+  const { selectedFileFeature: selectedResearchFeature, setState } =
+    React.useContext(MapStateContext);
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (!!selectedResearchFeature) {
@@ -49,9 +47,9 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       ]);
     }
     return () => {
-      setSelectedResearchFeature(null);
+      setState({ type: MapStateActionTypes.SELECTED_FILE_FEATURE, selectedFileFeature: null });
     };
-  }, [initialForm, selectedResearchFeature, setSelectedResearchFeature]);
+  }, [initialForm, selectedResearchFeature, setState]);
 
   const saveResearchFile = async (researchFile: Api_ResearchFile) => {
     const response = await addResearchFile(researchFile);
@@ -103,7 +101,8 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
               when={
                 formikProps.dirty ||
                 (formikProps.values.properties !== initialForm.properties &&
-                  formikProps.submitCount === 0)
+                  formikProps.submitCount === 0) ||
+                (!formikProps.values.id && formikProps.values.properties.length > 0)
               }
               message="You have made changes on this form. Do you wish to leave without saving?"
             />

@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react';
 import {
-  ISelectedPropertyContext,
-  SelectedPropertyContextProvider,
-} from 'components/maps/providers/SelectedPropertyContext';
+  IMapStateContext,
+  MapStateContextProvider,
+} from 'components/maps/providers/MapStateContext';
 import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
@@ -30,19 +30,18 @@ jest.mock('react-visibility-sensor', () => {
 
 describe('AddResearchContainer component', () => {
   const setup = (
-    renderOptions: RenderOptions & IAddResearchContainerProps & Partial<ISelectedPropertyContext>,
+    renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateContext>,
   ) => {
     // render component under test
     const component = render(
-      <SelectedPropertyContextProvider
+      <MapStateContextProvider
         values={{
           selectedFileFeature: renderOptions.selectedFileFeature,
-          setDraftProperties: renderOptions.setDraftProperties,
-          setSelectedFileFeature: renderOptions.setSelectedFileFeature,
+          setState: renderOptions.setState,
         }}
       >
         <AddResearchContainer onClose={renderOptions.onClose} />
-      </SelectedPropertyContextProvider>,
+      </MapStateContextProvider>,
       {
         ...renderOptions,
         store: store,
@@ -91,14 +90,17 @@ describe('AddResearchContainer component', () => {
     } = setup({
       onClose: noop,
       selectedFeature: null,
-      setDraftProperties: setDraftMarkers,
+      setState: setDraftMarkers,
     });
 
     const closeButton = getByTitle('close');
 
     await waitFor(async () => {
       userEvent.click(closeButton);
-      expect(setDraftMarkers).toHaveBeenCalledWith([]);
+      expect(setDraftMarkers).toHaveBeenCalledWith({
+        draftProperties: [],
+        type: 'DRAFT_PROPERTIES',
+      });
     });
   });
 
@@ -110,14 +112,17 @@ describe('AddResearchContainer component', () => {
     } = setup({
       onClose: noop,
       selectedFeature: null,
-      setSelectedFileFeature: setSelectedResearchFeature,
+      setState: setSelectedResearchFeature,
     });
 
     const closeButton = getByTitle('close');
     userEvent.click(closeButton);
     unmount();
     await waitFor(async () => {
-      expect(setSelectedResearchFeature).toHaveBeenCalledWith(null);
+      expect(setSelectedResearchFeature).toHaveBeenCalledWith({
+        selectedFileFeature: null,
+        type: 'SELECTED_FILE_FEATURE',
+      });
     });
   });
 
@@ -125,7 +130,7 @@ describe('AddResearchContainer component', () => {
     setup({
       onClose: noop,
       selectedFeature: null,
-      setSelectedFileFeature: noop,
+      setState: noop,
     });
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });

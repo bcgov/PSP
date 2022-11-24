@@ -23,7 +23,7 @@ namespace Pims.Core.Exceptions
         /// <summary>
         /// get - The HTTP request client the exception originated from.
         /// </summary>
-        public IHttpRequestClient Client { get; }
+        public HttpClient Client { get; }
         #endregion
 
         #region Constructors
@@ -35,7 +35,7 @@ namespace Pims.Core.Exceptions
         /// <param name="exception"></param>
         /// <param name="client"></param>
         /// <param name="error"></param>
-        public LtsaException(HttpClientRequestException exception, IHttpRequestClient client, Error error)
+        public LtsaException(HttpClientRequestException exception, HttpClient client, Error error)
             : base($"{exception.Message}{Environment.NewLine}", exception, exception.StatusCode.Value)
         {
             if (exception?.Response?.Content != null)

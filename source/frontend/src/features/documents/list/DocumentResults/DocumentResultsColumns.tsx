@@ -1,14 +1,16 @@
 import { StyledRemoveLinkButton } from 'components/common/buttons';
 import { Button } from 'components/common/buttons/Button';
-import { ColumnWithProps, DateCell, renderTypeCode } from 'components/Table';
+import TooltipIcon from 'components/common/TooltipIcon';
+import { ColumnWithProps, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/index';
 import DownloadDocumentButton from 'features/documents/DownloadDocumentButton';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Api_Document, Api_DocumentType } from 'models/api/Document';
 import { Col, Row } from 'react-bootstrap';
-import { FaEye, FaTrash } from 'react-icons/fa';
+import { FaEye, FaTrash, FaUserAlt } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 
 export interface IDocumentColumnProps {
   onViewDetails: (values: Api_Document) => void;
@@ -25,45 +27,29 @@ export const getDocumentColumns = ({
       accessor: 'documentType',
       align: 'left',
       sortable: true,
-      minWidth: 40,
-      maxWidth: 40,
       Cell: renderDocumentType,
     },
     {
       Header: 'File name',
       accessor: 'fileName',
       sortable: true,
-      width: 40,
-      maxWidth: 40,
       Cell: renderFileName(onViewDetails),
     },
     {
-      Header: 'Upload date',
+      Header: 'Uploaded',
       accessor: 'appCreateTimestamp',
       sortable: true,
-      width: 20,
-      maxWidth: 20,
-      Cell: DateCell,
-    },
-    {
-      Header: 'Uploaded by',
-      accessor: 'appCreateUserid',
-      sortable: true,
-      width: 20,
-      maxWidth: 20,
+      Cell: renderUploaded,
     },
     {
       Header: 'Status',
       accessor: 'statusTypeCode',
       sortable: true,
-      width: 20,
-      maxWidth: 20,
       Cell: renderTypeCode,
     },
     {
       Header: 'Actions',
-      minWidth: 17,
-      maxWidth: 17,
+      width: '90',
       Cell: renderActions(onViewDetails, onDelete),
     },
   ];
@@ -93,6 +79,25 @@ const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
     );
   };
 };
+
+//export const DateCell = ({ cell: { value } }: CellProps<Date, string>) => prettyFormatDate(value);
+
+function renderUploaded(cell: CellProps<Api_Document, string>) {
+  return (
+    <Row className="no-gutters">
+      <Col>{prettyFormatDate(cell.row.original.appCreateTimestamp)}</Col>
+      <Col xs="auto">
+        <StyledIcon>
+          <TooltipIcon
+            toolTipId="initiator-tooltip"
+            toolTip={cell.row.original.appCreateUserid}
+            customToolTipIcon={<FaUserAlt size={15} />}
+          />
+        </StyledIcon>
+      </Col>
+    </Row>
+  );
+}
 
 const renderActions = (
   onViewDetails: (values: Api_Document) => void,
@@ -145,5 +150,11 @@ const StyledIconsRow = styled(Row)`
     background-color: transparent;
     padding: 0;
     margin-left: 0.5rem;
+  }
+`;
+
+const StyledIcon = styled.span`
+  .tooltip-icon {
+    color: ${({ theme }) => theme.css.subtleColor};
   }
 `;

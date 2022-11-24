@@ -4,6 +4,7 @@ import { IFormLease, IProperty } from 'interfaces';
 import React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
+import { FormLeaseProperty } from '../models';
 import PropertyRow from './PropertyRow';
 
 export interface IPropertyRowsProps {
@@ -31,7 +32,7 @@ export const PropertyRows: React.FunctionComponent<IPropertyRowsProps> = ({ name
           ))}
           <LinkButton
             onClick={() => {
-              push({ pid: '', pin: '', areaUnitId: '' });
+              push(new FormLeaseProperty(values.id));
             }}
           >
             + Add another property

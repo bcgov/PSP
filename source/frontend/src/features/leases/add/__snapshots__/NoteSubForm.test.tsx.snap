@@ -45,7 +45,6 @@ exports[`NoteSubForm component renders as expected 1`] = `
           class="form-control"
           id="input-note"
           name="note"
-          title=""
         />
       </div>
     </div>

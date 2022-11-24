@@ -386,7 +386,7 @@ exports[`MapView Renders the map 1`] = `
 }
 
 <div
-    class="c0"
+    class="c0 default"
     data-test="map-view"
   >
     <div

@@ -67,7 +67,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 
   const submit = async (leaseToUpdate: ILease) => {
     try {
-      const updatedLease = await updateLease(leaseToUpdate, undefined, undefined, 'tenants');
+      const updatedLease = await updateLease(leaseToUpdate, 'tenants');
       if (!!updatedLease?.id) {
         formikRef?.current?.resetForm({ values: apiLeaseToFormLease(updatedLease) });
         setLease(updatedLease);
@@ -90,7 +90,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   return (
     <>
       <AddLeaseTenantForm
-        initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease) }}
+        initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease as ILease) }}
         selectedTenants={selectedTenants}
         setSelectedTenants={setSelectedTenantsWithPersonData}
         onCancel={onCancel}

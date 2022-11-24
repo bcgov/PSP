@@ -25,8 +25,8 @@ namespace Pims.Api.Controllers
     public class DocumentRelationshipController : ControllerBase
     {
         #region Variables
-        private readonly IDocumentService _documentService;
         private readonly IDocumentActivityService _documentActivityService;
+        private readonly IDocumentLeaseService _documentLeaseService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -35,13 +35,16 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instance of a DocumentRelationshipController class.
         /// </summary>
-        /// <param name="documentService"></param>
         /// <param name="documentActivityService"></param>
+        /// <param name="documentLeaseService"></param>
         /// <param name="mapper"></param>
-        public DocumentRelationshipController(IDocumentService documentService, IDocumentActivityService documentActivityService, IMapper mapper)
+        public DocumentRelationshipController(
+            IDocumentActivityService documentActivityService,
+            IDocumentLeaseService documentLeaseService,
+            IMapper mapper)
         {
-            _documentService = documentService;
             _documentActivityService = documentActivityService;
+            _documentLeaseService = documentLeaseService;
             _mapper = mapper;
         }
         #endregion
@@ -63,6 +66,14 @@ namespace Pims.Api.Controllers
         {
             switch (relationshipType)
             {
+                case DocumentRelationType.ResearchFiles:
+                    var researchActivityDocuments = _documentActivityService.GetFileDocuments(FileType.Research, parentId);
+                    var mappedResearchFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(researchActivityDocuments);
+                    return new JsonResult(mappedResearchFileActivityDocuments);
+                case DocumentRelationType.AcquisitionFiles:
+                    var aquistionFileActivityDocuments = _documentActivityService.GetFileDocuments(FileType.Acquisition, parentId);
+                    var mappedAquisitionFileActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(aquistionFileActivityDocuments);
+                    return new JsonResult(mappedAquisitionFileActivityDocuments);
                 case DocumentRelationType.Activities:
                     var activityDocuments = _documentActivityService.GetActivityDocuments(parentId);
                     var mappedActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(activityDocuments);
@@ -71,6 +82,10 @@ namespace Pims.Api.Controllers
                     var templateDocuments = _documentActivityService.GetActivityTemplateDocuments(parentId);
                     var mappedTemplateDocuments = _mapper.Map<List<DocumentRelationshipModel>>(templateDocuments);
                     return new JsonResult(mappedTemplateDocuments);
+                case DocumentRelationType.Leases:
+                    var leaseDocuments = _documentLeaseService.GetLeaseDocuments(parentId);
+                    var mappedLeaseDocuments = _mapper.Map<List<DocumentRelationshipModel>>(leaseDocuments);
+                    return new JsonResult(mappedLeaseDocuments);
                 default:
                     throw new BadRequestException("Relationship type not valid for retrieve.");
             }
@@ -101,40 +116,11 @@ namespace Pims.Api.Controllers
                 case DocumentRelationType.Templates:
                     var templateReponse = await _documentActivityService.UploadActivityTemplateDocumentAsync(parentId, uploadRequest);
                     return new JsonResult(templateReponse);
+                case DocumentRelationType.Leases:
+                    var leaseReponse = await _documentLeaseService.UploadLeaseDocumentAsync(parentId, uploadRequest);
+                    return new JsonResult(leaseReponse);
                 default:
                     throw new BadRequestException("Relationship type not valid for upload.");
-            }
-        }
-
-        /// <summary>
-        /// Updates document metadata and status.
-        /// </summary>
-        /// <param name="documentId">Used to identify document.</param>
-        /// <param name="relationshipType">Used to identify document type.</param>
-        /// <param name="updateRequest">Contains information about the document metadata.</param>
-        /// <returns></returns>
-        [HttpPut("{documentId}/relationship/{relationshipType}/metadata")]
-        [Produces("application/json")]
-        [HasPermission(Permissions.DocumentEdit)]
-        [ProducesResponseType(typeof(DocumentUpdateResponse), 200)]
-        [SwaggerOperation(Tags = new[] { "documents" })]
-        public async Task<IActionResult> UpdateDocumentMetadata(
-            long documentId,
-            DocumentRelationType relationshipType,
-            [FromBody] DocumentUpdateRequest updateRequest)
-        {
-            if (documentId != updateRequest.DocumentId)
-            {
-                throw new BadRequestException("Invalid id.");
-            }
-
-            switch (relationshipType)
-            {
-                case DocumentRelationType.Activities:
-                    var response = await _documentService.UpdateDocumentAsync(updateRequest);
-                    return new JsonResult(response);
-                default:
-                    throw new BadRequestException("Relationship type not valid for update.");
             }
         }
 
@@ -161,6 +147,10 @@ namespace Pims.Api.Controllers
                     var templateRelationship = _mapper.Map<PimsActivityTemplateDocument>(model);
                     var templateResult = await _documentActivityService.DeleteActivityTemplateDocumentAsync(templateRelationship);
                     return new JsonResult(templateResult);
+                case DocumentRelationType.Leases:
+                    var leaseRelationship = _mapper.Map<PimsActivityInstanceDocument>(model);
+                    var leaseResult = await _documentLeaseService.DeleteLeaseDocumentAsync(leaseRelationship);
+                    return new JsonResult(leaseResult);
                 default:
                     throw new BadRequestException("Relationship type not valid for delete.");
             }

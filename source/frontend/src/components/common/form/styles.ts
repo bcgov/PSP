@@ -1,3 +1,4 @@
+import { YesNoSelect } from 'components/common/form/YesNoSelect';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -50,6 +51,15 @@ export const InlineInput = styled(Input)`
 `;
 
 export const InlineSelect = styled(Select)`
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  .form-label {
+    flex-shrink: 0;
+  }
+`;
+
+export const InlineYesNoSelect = styled(YesNoSelect)`
   display: flex;
   align-items: baseline;
   gap: 0.8rem;

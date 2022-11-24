@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
 using Pims.Dal.Entities;
@@ -11,6 +12,8 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentActivityService
     {
+        IList<PimsActivityInstanceDocument> GetFileDocuments(FileType fileType, long fileId);
+
         IList<PimsActivityInstanceDocument> GetActivityDocuments(long activityId);
 
         IList<PimsActivityTemplateDocument> GetActivityTemplateDocuments(long activityTemplateId);

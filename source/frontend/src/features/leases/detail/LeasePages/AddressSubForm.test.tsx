@@ -9,10 +9,15 @@ import AddressSubForm, { IAddressSubFormProps } from './AddressSubForm';
 
 const history = createMemoryHistory();
 
-const defaultLeaseWithPropertyAddress = (address: Partial<IAddress>) => {
+const defaultLeaseWithPropertyAddress = (address?: Partial<IAddress>) => {
   return {
     ...defaultFormLease,
-    properties: [{ ...mockParcel, address: { ...mockParcel.address, ...address } }],
+    properties: [
+      {
+        ...mockParcel,
+        address: address !== undefined ? { ...mockParcel.address, ...address } : (undefined as any),
+      },
+    ],
   };
 };
 
@@ -187,5 +192,14 @@ describe('AddressSubForm component', () => {
     const country = container.querySelector(`input[name="properties.0.address.country"]`);
 
     expect(country).toBeVisible();
+  });
+
+  it('renders the warning text if the address is not defined', () => {
+    const { component } = setup({
+      nameSpace: 'properties.0.address',
+      lease: defaultLeaseWithPropertyAddress(undefined),
+    });
+    const { getByText } = component;
+    expect(getByText('Address not available in PIMS')).toBeVisible();
   });
 });

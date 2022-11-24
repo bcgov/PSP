@@ -80,7 +80,7 @@ export const TermPaymentsContainer: React.FunctionComponent<ITermPaymentsContain
   const onEdit = useCallback(
     (values: IFormLeaseTerm) => {
       if (lease?.terms?.length === 0) {
-        values = { ...values, startDate: lease?.startDate };
+        values = { ...values, startDate: lease?.startDate ?? '' };
       }
       setEditModalValues(values);
     },

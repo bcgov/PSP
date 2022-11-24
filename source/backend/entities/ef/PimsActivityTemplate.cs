@@ -21,6 +21,7 @@ namespace Pims.Dal.Entities
         [Key]
         [Column("ACTIVITY_TEMPLATE_ID")]
         public long ActivityTemplateId { get; set; }
+        [Required]
         [Column("ACTIVITY_TEMPLATE_TYPE_CODE")]
         [StringLength(20)]
         public string ActivityTemplateTypeCode { get; set; }

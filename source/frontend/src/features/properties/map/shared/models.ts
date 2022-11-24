@@ -2,7 +2,7 @@ import { IMapProperty } from 'features/properties/selector/models';
 import { Api_File } from 'models/api/File';
 import { Api_Property } from 'models/api/Property';
 import { Api_PropertyFile } from 'models/api/PropertyFile';
-import { pidParser } from 'utils';
+import { formatApiAddress, pidParser } from 'utils';
 import { toTypeCode } from 'utils/formUtils';
 
 export class FileForm {
@@ -103,6 +103,7 @@ export class PropertyForm {
     newForm.isDisabled = model.isDisabled;
     newForm.displayOrder = model.displayOrder;
     newForm.isOwned = model.property?.isOwned;
+    newForm.address = formatApiAddress(model.property?.address);
 
     return newForm;
   }

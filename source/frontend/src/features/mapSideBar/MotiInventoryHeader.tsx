@@ -2,7 +2,8 @@ import { StyledIconButton } from 'components/common/buttons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import ComposedProperty from 'features/properties/map/propertyInformation/ComposedProperty';
-import { AssociatedPlan } from 'interfaces/ltsaModels';
+import { mapFeatureToProperty } from 'features/properties/selector/components/MapClickMonitor';
+import { IMapProperty } from 'features/properties/selector/models';
 import { Api_Property } from 'models/api/Property';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -19,16 +20,14 @@ export interface IMotiInventoryHeaderProps {
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
-  const ltsaData = props.composedProperty.ltsaWrapper?.response;
-  const planNumbers =
-    ltsaData === undefined
-      ? []
-      : (
-          (ltsaData?.parcelInfo?.orderedProduct.fieldedData.associatedPlans ??
-            []) as AssociatedPlan[]
-        ).map(x => x.planNumber);
+  const parcelMapData = props.composedProperty.parcelMapWrapper?.response;
+  let property: IMapProperty | null = null;
+  if (parcelMapData?.features[0]) {
+    property = mapFeatureToProperty(parcelMapData?.features[0]);
+  }
 
-  const isLoading = props.composedProperty.composedLoading;
+  const isLoading =
+    props.composedProperty.ltsaWrapper?.loading || props.composedProperty.apiWrapper?.loading;
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
@@ -49,7 +48,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           <Row className="no-gutters">
             <Col xs="8">
               <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
-                {planNumbers.join(', ')}
+                {property?.planNumber}
               </HeaderField>
             </Col>
             <Col>

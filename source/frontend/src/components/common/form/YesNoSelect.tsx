@@ -20,13 +20,15 @@ export interface IYesNoSelectProps {
   /* (Optional) Whether or not to display errors in a tooltip instead of below the control */
   displayErrorTooltips?: boolean;
   /** (Optional) Class name of the outer form group wrapper */
-  formGroupClassName?: string;
+  className?: string;
   /** (Optional) Change event handler */
   onChange?: React.FormEventHandler;
+  /** (Optional) Whether this field is disabled */
+  disabled?: boolean;
 }
 
 export const YesNoSelect: React.FC<IYesNoSelectProps> = props => {
-  const { field, label, formGroupClassName, required, tooltip, displayErrorTooltips, onChange } =
+  const { field, label, className, required, tooltip, displayErrorTooltips, onChange, disabled } =
     props;
 
   const { values, errors, touched, handleBlur, setFieldValue } = useFormikContext();
@@ -43,10 +45,7 @@ export const YesNoSelect: React.FC<IYesNoSelectProps> = props => {
   };
 
   return (
-    <Form.Group
-      controlId={`input-${field}`}
-      className={cx({ required: required }, formGroupClassName)}
-    >
+    <Form.Group controlId={`input-${field}`} className={cx({ required: required }, className)}>
       {label && <Form.Label>{label}</Form.Label>}
       {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
@@ -57,6 +56,7 @@ export const YesNoSelect: React.FC<IYesNoSelectProps> = props => {
           value={nullableBooleanToString(value)}
           onBlur={handleBlur}
           onChange={handleChange}
+          disabled={disabled}
         >
           <option value="null">Unknown</option>
           <option value="true">Yes</option>

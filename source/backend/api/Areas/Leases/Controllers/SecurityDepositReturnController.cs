@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Lease.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities;
@@ -56,7 +55,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddDepositReturn(long leaseId, long depositId, [FromBody] ParentConcurrencyGuardModel<SecurityDepositReturnModel> addRequest)
+        public IActionResult AddDepositReturn(long leaseId, long depositId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositReturnModel> addRequest)
         {
             if (leaseId != addRequest.ParentId)
             {
@@ -84,7 +83,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateDepositReturn(long leaseId, long depositId, long depositReturnId, ParentConcurrencyGuardModel<SecurityDepositReturnModel> updateRequest)
+        public IActionResult UpdateDepositReturn(long leaseId, long depositId, long depositReturnId, ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositReturnModel> updateRequest)
         {
             if (leaseId != updateRequest.ParentId)
             {
@@ -111,7 +110,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteDepositReturn(long leaseId, long depositId, [FromBody] ParentConcurrencyGuardModel<SecurityDepositReturnModel> deleteRequest)
+        public IActionResult DeleteDepositReturn(long leaseId, long depositId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositReturnModel> deleteRequest)
         {
             if (leaseId != deleteRequest.ParentId)
             {

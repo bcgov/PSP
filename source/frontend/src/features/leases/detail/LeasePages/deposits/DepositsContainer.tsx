@@ -58,7 +58,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
   const onEditDeposit = (id: number) => {
     var deposit = securityDeposits.find(x => x.id === id);
     if (deposit) {
-      setEditDepositValue(FormLeaseDeposit.createFromModel(deposit));
+      setEditDepositValue(FormLeaseDeposit.fromApi(deposit));
       setShowEditModal(true);
     }
   };
@@ -66,7 +66,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
   const onDeleteDeposit = (id: number) => {
     var deposit = securityDeposits.find(x => x.id === id);
     if (deposit) {
-      setDepositToDelete(FormLeaseDeposit.createFromModel(deposit));
+      setDepositToDelete(FormLeaseDeposit.fromApi(deposit));
       setDeleteModalWarning(true);
     }
   };
@@ -84,7 +84,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       const updatedLease = await removeLeaseDeposit({
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
-        payload: depositToDelete.toInterfaceModel(),
+        payload: depositToDelete.toApi(),
       });
       if (!!updatedLease?.id) {
         setDepositToDelete(undefined);
@@ -118,7 +118,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       let request: IParentConcurrencyGuard<Api_SecurityDeposit> = {
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
-        payload: depositForm.toInterfaceModel(),
+        payload: depositForm.toApi(),
       };
       const updatedLease = await updateLeaseDeposit(request);
       if (!!updatedLease?.id) {

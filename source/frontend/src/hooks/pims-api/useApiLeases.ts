@@ -1,5 +1,6 @@
 import { ILeaseFilter } from 'features/leases';
 import { ILease, ILeaseSearchResult, IPagedItems } from 'interfaces';
+import { Api_Lease } from 'models/api/Lease';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -19,9 +20,12 @@ export const useApiLeases = () => {
           `/leases/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getLease: (id: number) => api.get<ILease>(`/leases/${id}`),
-      postLease: (lease: ILease, userOverride: boolean = false) =>
-        api.post<ILease>(`/leases?userOverride=${userOverride}`, lease),
-      putLease: (lease: ILease, subRoute?: string, userOverride?: boolean) =>
+      getApiLease: (id: number) => api.get<Api_Lease>(`/leases/concept/${id}`),
+      postLease: (lease: Api_Lease, userOverride: boolean = false) =>
+        api.post<Api_Lease>(`/leases?userOverride=${userOverride}`, lease),
+      putApiLease: (lease: Api_Lease, userOverride?: boolean) =>
+        api.put<Api_Lease>(`/leases/${lease.id}?userOverride=${userOverride}`, lease),
+      putLease: (lease: ILease, subRoute: string, userOverride?: boolean) =>
         api.put<ILease>(
           `/leases/${lease.id}/${subRoute ?? ''}?userOverride=${userOverride}`,
           lease,

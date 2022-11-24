@@ -1,8 +1,9 @@
 import * as Styled from 'components/common/styles';
 import {
   MapCursors,
-  SelectedPropertyContext,
-} from 'components/maps/providers/SelectedPropertyContext';
+  MapStateActionTypes,
+  MapStateContext,
+} from 'components/maps/providers/MapStateContext';
 import { Section } from 'features/mapSideBar/tabs/Section';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -20,7 +21,7 @@ const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorF
   onSelectedProperty,
   initialSelectedProperty,
 }) => {
-  const { setCursor } = React.useContext(SelectedPropertyContext);
+  const { setState, cursor } = React.useContext(MapStateContext);
 
   const [selectedProperty, setSelectedProperty] = React.useState<IMapProperty | undefined>(
     initialSelectedProperty,
@@ -33,11 +34,13 @@ const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorF
   }, [initialSelectedProperty]);
 
   const onClickDraftMarker = () => {
-    setCursor(MapCursors.DRAFT);
+    setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: true });
   };
 
   const onClickAway = () => {
-    setCursor(undefined);
+    if (cursor !== MapCursors.DEFAULT) {
+      setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false });
+    }
   };
 
   const addProperty = (property: IMapProperty) => {

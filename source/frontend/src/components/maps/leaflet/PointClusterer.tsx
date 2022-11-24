@@ -13,7 +13,7 @@ import Supercluster from 'supercluster';
 
 import useSupercluster from '../hooks/useSupercluster';
 import { useFilterContext } from '../providers/FIlterProvider';
-import { SelectedPropertyContext } from '../providers/SelectedPropertyContext';
+import { MapStateActionTypes, MapStateContext } from '../providers/MapStateContext';
 import { ICluster, PointFeature } from '../types';
 import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
 import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
@@ -99,8 +99,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const featureGroupRef = useRef<L.FeatureGroup>(null);
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
-  const selectedPropertyContext = React.useContext(SelectedPropertyContext);
-  const { propertyInfo: selected } = selectedPropertyContext;
+  const mapStateContext = React.useContext(MapStateContext);
+  const { selectedInventoryProperty: selected } = mapStateContext;
 
   const [currentSelected, setCurrentSelected] = useState(selected);
   const [currentCluster, setCurrentCluster] = useState<
@@ -304,7 +304,10 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   convertedProperty && onMarkerClick(convertedProperty); //open information slideout
                   setCurrentSelected(convertedProperty);
 
-                  selectedPropertyContext.setPropertyInfo(convertedProperty);
+                  mapStateContext.setState({
+                    type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+                    selectedInventoryProperty: convertedProperty,
+                  });
                 },
               }}
             />
@@ -313,29 +316,38 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
         {/**
          * Render markers from a spiderfied cluster click
          */}
-        {spider.markers?.map((m: any, index: number) => (
-          <Marker
-            {...m.properties}
-            key={index}
-            position={m.position}
-            //highlight pin if currently selected
-            icon={getMarkerIcon(m, (m.properties.id as number) === (selected?.id as number))}
-            eventHandlers={{
-              click: e => {
-                //sets this pin as currently selected
-                const convertedProperty = convertToProperty(
-                  m.properties,
-                  m.geometry.coordinates[1],
-                  m.geometry.coordinates[0],
-                );
+        {spider.markers?.map((m: any, index: number) => {
+          return (
+            <Marker
+              {...m.properties}
+              key={index}
+              position={m.position}
+              //highlight pin if currently selected
+              icon={getMarkerIcon(
+                m,
+                (m.properties.PROPERTY_ID as number) === (selected?.id as number),
+              )}
+              eventHandlers={{
+                click: e => {
+                  //sets this pin as currently selected
+                  const convertedProperty = convertToProperty(
+                    m.properties,
+                    m.geometry.coordinates[1],
+                    m.geometry.coordinates[0],
+                  );
 
-                if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                  convertedProperty && onMarkerClick(convertedProperty); //open information slideout
-                }
-              },
-            }}
-          />
-        ))}
+                  if (keycloak.canUserViewProperty(m.properties as IProperty)) {
+                    convertedProperty && onMarkerClick(convertedProperty); //open information slideout
+                    mapStateContext.setState({
+                      type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+                      selectedInventoryProperty: convertedProperty,
+                    });
+                  }
+                },
+              }}
+            />
+          );
+        })}
         {/**
          * Render lines/legs from a spiderfied cluster click
          */}
@@ -356,7 +368,10 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               map={mapInstance}
               eventHandlers={{
                 click: () => {
-                  selectedPropertyContext.setPropertyInfo(selected);
+                  mapStateContext.setState({
+                    type: MapStateActionTypes.SELECTED_INVENTORY_PROPERTY,
+                    selectedInventoryProperty: selected,
+                  });
                   selected && onMarkerClick(selected);
                 },
               }}

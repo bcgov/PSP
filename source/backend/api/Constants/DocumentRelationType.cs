@@ -8,9 +8,13 @@ namespace Pims.Api.Constants
     {
         [EnumMember(Value = "activities")]
         Activities,
-        [EnumMember(Value = "files")]
-        Files,
         [EnumMember(Value = "templates")]
         Templates,
+        [EnumMember(Value = "researchfiles")]
+        ResearchFiles,
+        [EnumMember(Value = "acquisitionfiles")]
+        AcquisitionFiles,
+        [EnumMember(Value = "leases")]
+        Leases,
     }
 }
