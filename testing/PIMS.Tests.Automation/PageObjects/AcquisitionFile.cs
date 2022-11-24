@@ -26,12 +26,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
         private By acquisitionFileModalOkButton = By.CssSelector("button[title='ok-modal']");
 
+        private By acquisitionFileHeaderCode = By.XPath("//label[contains(text(), 'File #:')]/parent::div/following-sibling::div[1]/strong");
+
         private SharedSelectContact sharedSelectContact;
+        private SharedModals sharedModals;
 
 
         public AcquisitionFile(IWebDriver webDriver) : base(webDriver)
         {
             sharedSelectContact = new SharedSelectContact(webDriver);
+            sharedModals = new SharedModals(webDriver);
         }
 
         public void NavigateToCreateNewAcquisitionFile()
@@ -78,10 +82,23 @@ namespace PIMS.Tests.Automation.PageObjects
             AddTeamMembers(teamMember2);
         }
 
+        public void EditAcquisitionFile()
+        {
+
+        }
+
         public void SaveAcquisitionFile()
         {
             Wait();
             ButtonElement("Save");
+
+            Wait();
+            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            {
+                Assert.True(sharedModals.ModalHeader().Equals("Different Ministry region"));
+                Assert.True(sharedModals.ModalContent().Equals("Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"));
+                sharedModals.ModalClickOKBttn();
+            }
 
             WaitUntil(acquisitionFileEditButton);
             Assert.True(webDriver.FindElement(acquisitionFileEditButton).Displayed);
@@ -113,6 +130,13 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
             sharedSelectContact.SelectContact(contactName);
 
+        }
+
+        //Get the acquisition file number
+        public string GetAcquisitionFileCode()
+        {
+            WaitUntil(acquisitionFileHeaderCode);
+            return webDriver.FindElement(acquisitionFileHeaderCode).Text;
         }
     }
 }

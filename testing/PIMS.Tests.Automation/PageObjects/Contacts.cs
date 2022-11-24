@@ -15,6 +15,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactIndLastNameInput = By.Id("input-surname");
         private By contactIndPrefNameInput = By.Id("input-preferredName");
         private By contactIndOrgInput = By.Id("typeahead-organization");
+        private By contactIndOrgListOptions = By.CssSelector("div[id='typeahead-organization']");
         private By contactOrgNameSelect = By.Id("typeahead-organization-item-0");
 
         private By contactOrgNameInput = By.Id("input-name");
@@ -60,8 +61,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactDuplicateModal = By.CssSelector("div[class='modal-dialog']");
         private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
 
+        private SharedModals sharedModals;
+
         public Contacts(IWebDriver webDriver) : base(webDriver)
-        { }
+        {
+            sharedModals = new SharedModals(webDriver);
+        }
 
         //Navigates to Create a new Contact
         public void NavigateToCreateNewContact()
@@ -126,6 +131,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(contactIndPrefNameInput).SendKeys(prefName);
             webDriver.FindElement(contactIndOrgInput).SendKeys(orgName);
 
+            WaitUntil(contactIndOrgListOptions);
             Wait();
             webDriver.FindElement(contactOrgNameSelect).Click();
 
@@ -169,10 +175,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption("input-billingAddress.countryId", billingCountry);
 
             webDriver.FindElement(contactBillingCityInput).SendKeys(billingCity);
-
             webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(specifyCountry);
-            //ChooseRandomOption(provinceBillingElement, "input-billingAddress.provinceId", 2);
-
             webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(billingPostalCode);
 
             //Inserting comments
@@ -263,10 +266,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption("input-billingAddress.countryId", billingCountry);
 
             webDriver.FindElement(contactBillingCityInput).SendKeys(billingCity);
-
             webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(billingSpecifyCountry);
-            //ChooseRandomOption(provinceBillingElement, "input-billingAddress.provinceId", 2);
-
             webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(billingPostalCode);
 
             //Inserting comments
@@ -304,6 +304,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(contactDuplicateModal).Count > 0)
             {
+                Assert.True(sharedModals.ModalHeader().Equals("Duplicate Contact"));
+                Assert.True(sharedModals.ModalContent().Equals("A contact matching this information already exists in the system."));
                 ButtonElement("Continue Save");
             }
 

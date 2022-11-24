@@ -7,7 +7,8 @@ namespace PIMS.Tests.Automation.PageObjects
     public abstract class PageObjectBase
     {
         protected readonly IWebDriver webDriver;
-       
+
+        protected By toastifyMessage = By.CssSelector("div[class='Toastify__toast-body']");
 
         protected PageObjectBase(IWebDriver webDriver)
         {
@@ -114,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
-        protected void ChooseMultiSelectRandomOpions(By element, string optionsContainerName, int options)
+        protected void ChooseMultiSelectRandomOptions(By element, string optionsContainerName, int options)
         {
             Random random = new Random();
             var js = (IJavaScriptExecutor)webDriver;
