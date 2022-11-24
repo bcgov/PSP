@@ -6,7 +6,6 @@ using Pims.Api.Areas.Lease.Models.Lease;
 using Pims.Api.Areas.Leases.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Dal.Entities;
@@ -27,7 +26,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class SecurityDepositController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly ISecurityDepositService _securityDepositService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -36,12 +35,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <summary>
         /// Creates a new instance of a SecurityDepositController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="securityDepositService"></param>
         /// <param name="mapper"></param>
         ///
-        public SecurityDepositController(IPimsService pimsService, IMapper mapper)
+        public SecurityDepositController(ISecurityDepositService securityDepositService, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _securityDepositService = securityDepositService;
             _mapper = mapper;
         }
         #endregion
@@ -57,7 +56,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<SecurityDepositModel> addRequest)
+        public IActionResult AddDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> addRequest)
         {
             if (leaseId != addRequest.ParentId)
             {
@@ -66,7 +65,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(addRequest.Payload);
             depositEntity.LeaseId = leaseId;
 
-            var updatedLease = _pimsService.SecurityDepositService.AddLeaseDeposit(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositService.AddLeaseDeposit(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
@@ -80,7 +79,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateDeposit(long leaseId, long depositId, ParentConcurrencyGuardModel<SecurityDepositModel> updateRequest)
+        public IActionResult UpdateDeposit(long leaseId, long depositId, ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> updateRequest)
         {
             if (leaseId != updateRequest.ParentId)
             {
@@ -95,7 +94,7 @@ namespace Pims.Api.Areas.Lease.Controllers
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(updateRequest.Payload);
             depositEntity.LeaseId = leaseId;
 
-            var updatedLease = _pimsService.SecurityDepositService.UpdateLeaseDeposit(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositService.UpdateLeaseDeposit(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
@@ -109,14 +108,14 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<SecurityDepositModel> deleteRequest)
+        public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<Pims.Api.Models.Concepts.SecurityDepositModel> deleteRequest)
         {
             if (leaseId != deleteRequest.ParentId)
             {
                 throw new BadRequestException($"Concurrency parent id mismatch.");
             }
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(deleteRequest.Payload);
-            var updatedLease = _pimsService.SecurityDepositService.DeleteLeaseDeposit(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
+            var updatedLease = _securityDepositService.DeleteLeaseDeposit(deleteRequest.ParentId, deleteRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
@@ -132,7 +131,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [SwaggerOperation(Tags = new[] { "lease" })]
         public IActionResult DeleteDeposit(long leaseId, [FromBody] ParentConcurrencyGuardModel<DepositNoteModel> depositNoteModel)
         {
-            var updatedLease = _pimsService.SecurityDepositService.UpdateLeaseDepositNote(depositNoteModel.ParentId, depositNoteModel.ParentRowVersion, depositNoteModel.Payload.Note);
+            var updatedLease = _securityDepositService.UpdateLeaseDepositNote(depositNoteModel.ParentId, depositNoteModel.ParentRowVersion, depositNoteModel.Payload.Note);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Auth;
 
@@ -22,7 +22,7 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
-        private readonly IPimsRepository _pimsService;
+        private readonly IUserRepository _userRepository;
         #endregion
 
         #region Constructors
@@ -31,11 +31,11 @@ namespace Pims.Api.Controllers
         /// Creates a new instance of a AuthController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="optionsKeycloak"></param>
-        /// <param name="pimsService"></param>
-        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IPimsRepository pimsService)
+        /// <param name="userRepository"></param>
+        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IUserRepository userRepository)
         {
             _optionsKeycloak = optionsKeycloak.CurrentValue;
-            _pimsService = pimsService;
+            _userRepository = userRepository;
         }
         #endregion
 
@@ -56,9 +56,9 @@ namespace Pims.Api.Controllers
         public IActionResult Activate()
         {
             var key = this.User.GetUserKey();
-            var exists = _pimsService.User.UserExists(key);
+            var exists = _userRepository.UserExists(key);
 
-            var user = _pimsService.User.Activate();
+            var user = _userRepository.Activate();
             if (!exists)
             {
                 return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user));

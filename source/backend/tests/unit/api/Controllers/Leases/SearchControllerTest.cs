@@ -11,6 +11,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -55,10 +56,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
+            repository.Setup(m => m.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
             var result = controller.GetLeases(filter);
@@ -68,7 +69,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Lease.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -84,10 +85,10 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
+            repository.Setup(m => m.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
             var result = controller.GetLeases();
@@ -97,7 +98,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Lease.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -112,12 +113,12 @@ namespace Pims.Api.Test.Controllers.Lease
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetLeases());
-            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -130,12 +131,12 @@ namespace Pims.Api.Test.Controllers.Lease
             var helper = new TestHelper();
             var controller = helper.CreateController<SearchController>(Permissions.LeaseView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<ILeaseRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetLeases(null));
-            service.Verify(m => m.Lease.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>()), Times.Never());
         }
         #endregion
         #endregion

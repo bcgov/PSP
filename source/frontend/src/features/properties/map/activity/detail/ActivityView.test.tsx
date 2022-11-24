@@ -33,9 +33,9 @@ describe('ActivityView test', () => {
               fileType: FileTypes.Acquisition,
             }
           }
+          isEditable={true}
           activity={renderOptions?.activity ?? { ...getMockActivityResponse(), id: 2 }}
           editMode={renderOptions?.editMode ?? false}
-          setEditMode={renderOptions?.setEditMode ?? noop}
           onEditRelatedProperties={onEditRelatedProperties}
         />
       </Formik>,

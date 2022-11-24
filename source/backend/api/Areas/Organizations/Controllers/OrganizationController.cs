@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
-using Pims.Dal;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -23,8 +23,8 @@ namespace Pims.Api.Areas.Organizations.Controllers
     public class OrganizationController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
-        private readonly IPimsRepository _pimsRepository;
+        private readonly IOrganizationService _organizationService;
+        private readonly ILookupRepository _lookupRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -33,14 +33,14 @@ namespace Pims.Api.Areas.Organizations.Controllers
         /// <summary>
         /// Creates a new instance of a PersonController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
-        /// <param name="pimsRepository"></param>
+        /// <param name="organizationService"></param>
+        /// <param name="lookupRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public OrganizationController(IPimsService pimsService, IPimsRepository pimsRepository, IMapper mapper)
+        public OrganizationController(IOrganizationService organizationService, ILookupRepository lookupRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
-            _pimsRepository = pimsRepository;
+            _organizationService = organizationService;
+            _lookupRepository = lookupRepository;
             _mapper = mapper;
         }
         #endregion
@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [SwaggerOperation(Tags = new[] { "organization" })]
         public IActionResult GetOrganization(int id)
         {
-            var organization = _pimsService.OrganizationService.GetOrganization(id);
+            var organization = _organizationService.GetOrganization(id);
             return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(organization));
         }
 
@@ -75,7 +75,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
-            var otherCountry = _pimsRepository.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
+            var otherCountry = _lookupRepository.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
             foreach (var address in model?.Addresses)
             {
                 if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
@@ -87,7 +87,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
             var entity = _mapper.Map<Dal.Entities.PimsOrganization>(model);
             try
             {
-                var createdOrganization = _pimsService.OrganizationService.AddOrganization(entity, userOverride);
+                var createdOrganization = _organizationService.AddOrganization(entity, userOverride);
                 var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);
@@ -110,7 +110,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         public IActionResult UpdateOrganization([FromBody] Models.Organization.OrganizationModel organizationModel)
         {
             var orgEntity = _mapper.Map<Pims.Dal.Entities.PimsOrganization>(organizationModel);
-            var updatedOrganization = _pimsService.OrganizationService.UpdateOrganization(orgEntity, organizationModel.RowVersion);
+            var updatedOrganization = _organizationService.UpdateOrganization(orgEntity, organizationModel.RowVersion);
 
             return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(updatedOrganization));
         }

@@ -11,6 +11,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -63,10 +64,10 @@ namespace Pims.Api.Test.Controllers.Contact
 
             var contacts = new[] { EntityHelper.CreateContact("1", firstName: "person") };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IContactRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Contact.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
+            repository.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
 
             // Act
             var result = controller.GetContacts(filter);
@@ -76,7 +77,7 @@ namespace Pims.Api.Test.Controllers.Contact
             var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -92,10 +93,10 @@ namespace Pims.Api.Test.Controllers.Contact
 
             var contacts = new[] { EntityHelper.CreateContact("1", firstName: "person") };
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IContactRepository>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Contact.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
+            repository.Setup(m => m.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
 
             // Act
             var result = controller.GetContacts();
@@ -105,7 +106,7 @@ namespace Pims.Api.Test.Controllers.Contact
             var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
             var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
             expectedResult.Should().BeEquivalentTo(actualResult);
-            service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
+            repository.Verify(m => m.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -120,12 +121,12 @@ namespace Pims.Api.Test.Controllers.Contact
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IContactRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetContacts());
-            service.Verify(m => m.Contact.GetPage(It.IsAny<Entity.Models.ContactFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.ContactFilter>()), Times.Never());
         }
 
         /// <summary>
@@ -138,12 +139,12 @@ namespace Pims.Api.Test.Controllers.Contact
             var helper = new TestHelper();
             var controller = helper.CreateController<SearchController>(Permissions.ContactView);
 
-            var service = helper.GetService<Mock<IPimsRepository>>();
+            var repository = helper.GetService<Mock<IContactRepository>>();
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.GetContacts(null));
-            service.Verify(m => m.Contact.GetPage(It.IsAny<Entity.Models.ContactFilter>()), Times.Never());
+            repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.ContactFilter>()), Times.Never());
         }
         #endregion
         #endregion

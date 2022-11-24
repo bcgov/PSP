@@ -6,6 +6,8 @@ using Pims.Api.Models;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -32,7 +34,7 @@ namespace Pims.Api.Services
         {
             this.Logger.LogInformation("Getting supported file Types");
 
-            // this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+            this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
             ExternalResult<FileTypes> result = await documentGenerationRepository.GetFileTypesAsync();
             return result;
         }
@@ -41,7 +43,7 @@ namespace Pims.Api.Services
         {
             this.Logger.LogInformation("Uploading template document");
 
-            // this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+            this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
             await this.avService.ScanAsync(fileRaw);
             ExternalResult<string> result = await documentGenerationRepository.UploadTemplateAsync(fileRaw);
             return result;

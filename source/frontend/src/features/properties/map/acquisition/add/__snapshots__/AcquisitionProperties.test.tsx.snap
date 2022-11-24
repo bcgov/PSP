@@ -350,7 +350,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
 
 .c0 .tab-content .tab-pane {
   position: relative;
-  height: 100%;
 }
 
 .c1 {

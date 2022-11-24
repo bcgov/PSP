@@ -4,6 +4,7 @@ import AreaContainer from 'components/measurements/AreaContainer';
 import VolumeContainer from 'components/measurements/VolumeContainer';
 import * as API from 'constants/API';
 import { Claims, PropertyAdjacentLandTypes, PropertyTenureTypes } from 'constants/index';
+import { getPrettyLatLng } from 'features/properties/selector/utils';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
@@ -102,6 +103,9 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
               style={readOnlyMultiSelectStyle}
             />
           </SectionField>
+          <SectionField label="Coordinates" labelWidth="2">{`${getPrettyLatLng(
+            property?.location,
+          )}`}</SectionField>
         </Section>
 
         <Section header="Tenure Status">
@@ -158,6 +162,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           <SectionField label="Area" labelWidth="2">
             <AreaContainer landArea={property?.landArea} unitCode={property?.areaUnit?.id} />
           </SectionField>
+
           <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
             <Form.Check
               inline

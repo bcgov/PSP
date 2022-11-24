@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/index';
 import { mockLookups } from 'mocks/mockLookups';
 import { mockNoteResponse } from 'mocks/mockNoteResponses';
+import { Api_Note } from 'models/api/Note';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
 
@@ -51,7 +52,7 @@ describe('NoteDetailsFormModal component', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   it('renders as expected', () => {
@@ -79,6 +80,16 @@ describe('NoteDetailsFormModal component', () => {
     userEvent.click(getModalCloseButton());
 
     expect(onClose).toBeCalled();
+  });
+
+  it(`should not display the Last Updated info for system-generated notes`, async () => {
+    const systemNote: Api_Note = {
+      ...mockNoteResponse(1),
+      isSystemGenerated: true,
+    };
+    const { queryByText } = setup({ ...BASIC_PROPS, note: systemNote }, { claims: [] });
+    const lastUpdated = queryByText(/last updated/i);
+    expect(lastUpdated).toBeNull();
   });
 
   it(`should not render Edit button when user doesn't have edit permissions`, async () => {

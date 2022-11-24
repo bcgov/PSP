@@ -31,10 +31,10 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col md={1}>
+            <Col xs="auto">
               <label>Filter by:</label>
             </Col>
-            <Col md={4}>
+            <Col xs={4}>
               <Select
                 data-testid="activity-type"
                 field="activityTypeId"
@@ -42,7 +42,7 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
                 options={activityTypeOptions}
               />
             </Col>
-            <Col md={4}>
+            <Col xs={4}>
               <Select
                 field="status"
                 data-testid="activity-status"
@@ -50,10 +50,10 @@ export const ActivityFilterForm = (props: IActivityFilterFormProps) => {
                 options={activityStatusTypeOptions}
               />
             </Col>
-            <Col md={1}>
+            <Col xs={1}>
               <SearchButton disabled={formikProps.isSubmitting} />
             </Col>
-            <Col md={1}>
+            <Col xs={1}>
               <ResetButton
                 disabled={formikProps.isSubmitting}
                 onClick={() => {

@@ -1,4 +1,4 @@
-import { SelectedPropertyContext } from 'components/maps/providers/SelectedPropertyContext';
+import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import React, { useCallback, useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -20,8 +20,7 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
   onViewPropertyInfo,
 }) => {
   const history = useHistory();
-  const { setSelectedFileFeature: setSelectedResearchFeature, selectedFeature } =
-    useContext(SelectedPropertyContext);
+  const { setState, selectedFeature, selectedInventoryProperty } = useContext(MapStateContext);
 
   // We are interested in the PID field that comes back from parcel map layer attributes
   const pid = layerPopup?.data?.PID;
@@ -38,13 +37,30 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
   };
 
   const handleCreateResearchFile = () => {
-    selectedFeature && setSelectedResearchFeature(selectedFeature);
+    selectedFeature &&
+      setState({
+        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
+        selectedFileFeature: selectedFeature,
+      });
     history.push('/mapview/sidebar/research/new');
   };
 
   const handleCreateAcquisitionFile = () => {
-    selectedFeature && setSelectedResearchFeature(selectedFeature);
+    selectedFeature &&
+      setState({
+        type: MapStateActionTypes.SELECTED_FILE_FEATURE,
+        selectedFileFeature: selectedFeature,
+      });
     history.push('/mapview/sidebar/acquisition/new');
+  };
+
+  const handleCreateLeaseLicence = () => {
+    selectedFeature &&
+      setState({
+        type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
+        selectedLeaseProperty: selectedInventoryProperty,
+      });
+    history.push('/lease/new');
   };
 
   return (
@@ -59,9 +75,11 @@ export const LayerPopupContainer: React.FC<ILayerPopupContainerProps> = ({
       {showFlyout && (
         <StyledFlyoutContainer>
           <LayerPopupFlyout
+            pimsPropertyId={id}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
+            onCreateLeaseLicense={handleCreateLeaseLicence}
           />
         </StyledFlyoutContainer>
       )}

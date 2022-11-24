@@ -9,11 +9,13 @@ import { ActivityModel } from './models';
 
 export interface IActivityDescriptionProps {
   editMode?: boolean;
+  isEditable?: boolean;
   nameSpace?: string;
 }
 
 export const ActivityDescription: React.FunctionComponent<IActivityDescriptionProps> = ({
   editMode,
+  isEditable,
   nameSpace,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
@@ -21,12 +23,12 @@ export const ActivityDescription: React.FunctionComponent<IActivityDescriptionPr
   const fieldNameSpace = withNameSpace(nameSpace, 'description');
   const description = getIn(values, fieldNameSpace);
 
-  return !editMode || !hasClaim(Claims.ACTIVITY_EDIT) ? (
-    <p>{description}</p>
-  ) : (
+  return isEditable && editMode && hasClaim(Claims.ACTIVITY_EDIT) ? (
     <>
       <TextArea field={fieldNameSpace} />
     </>
+  ) : (
+    <p>{description}</p>
   );
 };
 

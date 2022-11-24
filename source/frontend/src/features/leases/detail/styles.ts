@@ -120,6 +120,14 @@ export const FormControl = styled(Form.Control)`
   border-radius: 0;
 `;
 
+export const FieldValue = styled.p`
+  grid-column: controls;
+  border-left: 1px solid black !important;
+  padding: 0.6rem 1.2rem;
+  color: #495057;
+  font-family: 'BCSans-Bold';
+`;
+
 export const FormGrid = styled.div`
   display: grid;
   grid-template-columns: [labels] minMax(min-content, 1fr) [controls] 5fr;
@@ -129,7 +137,7 @@ export const FormGrid = styled.div`
     margin: 0 0.5rem 0 0;
   }
 
-  & > .input,
+  & > .form-group,
   & > .notes {
     grid-column: controls;
     grid-row: auto;

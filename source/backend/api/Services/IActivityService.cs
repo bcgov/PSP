@@ -12,6 +12,8 @@ namespace Pims.Api.Services
 
         IList<PimsActivityInstance> GetAllByAcquisitionFileId(long acquisitionFileId);
 
+        IList<PimsActivityInstance> GetAllByLeaseId(long leaseId);
+
         IList<PimsActivityTemplate> GetAllActivityTemplates();
 
         PimsActivityInstance Add(PimsActivityInstance instance);

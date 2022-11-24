@@ -31,10 +31,13 @@ const Login = () => {
   if (keycloak?.authenticated) {
     if (activated?.status === 201 || !keyCloakWrapper?.roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
+    } else if (typeof redirect === 'string' && redirect.length) {
+      return <Redirect to={redirect} />;
     } else if (keyCloakWrapper.roles?.length === 1 && keyCloakWrapper.hasRole(Roles.FINANCE)) {
       return <Redirect to="/lease/list" />;
+    } else {
+      return <Redirect to={'/mapview'} />;
     }
-    return <Redirect to={{ pathname: (redirect as string) || '/mapview' }} />;
   }
   if (isIE) {
     return <Redirect to={{ pathname: '/ienotsupported' }} />;
@@ -50,7 +53,7 @@ const Login = () => {
             <h1>{tenant.login.title}</h1>
             <h6>{tenant.login.heading}</h6>
             <p>{tenant.login.body}</p>
-            <Button variant="primary" onClick={() => keycloak.login()}>
+            <Button variant="primary" onClick={() => keycloak.login({ idpHint: 'idir' })}>
               Sign In
             </Button>
             <p>Sign into PIMS with your government issued IDIR</p>

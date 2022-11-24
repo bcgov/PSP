@@ -23,34 +23,41 @@ export const PropertyRow: React.FunctionComponent<IPropertyRowProps> = ({
   const { getOptionsByType } = useLookupCodeHelpers();
   const areaUnitTypes = getOptionsByType(API.AREA_UNIT_TYPES);
   const { values } = useFormikContext<IFormLease>();
-  const pid = getIn(values, `${withNameSpace(nameSpace, 'pid')}`);
-  const pin = getIn(values, `${withNameSpace(nameSpace, 'pin')}`);
+  const pid = getIn(values, `${withNameSpace(nameSpace, 'property.pid')}`);
+  const pin = getIn(values, `${withNameSpace(nameSpace, 'property.pin')}`);
+  const coordinates = getIn(values, `${withNameSpace(nameSpace, 'property.coordinates')}`);
   return (
     <Row key={nameSpace}>
       <Styled.PropertyCol>
         <Styled.SmallInlineInput
           disabled={!!pin && !pid}
           label="PID:"
-          field={withNameSpace(nameSpace, 'pid')}
+          field={withNameSpace(nameSpace, 'property.pid')}
           type="number"
           displayErrorTooltips={true}
         />
         <Styled.SmallInlineInput
           disabled={!!pid && !pin}
           label="PIN:"
-          field={withNameSpace(nameSpace, 'pin')}
+          field={withNameSpace(nameSpace, 'property.pin')}
           type="number"
+          displayErrorTooltips={true}
+        />
+        <Styled.SmallInlineInput
+          disabled={!!pid || !!pin}
+          label="Coordinates:"
+          field={withNameSpace(nameSpace, 'property.coordinates')}
           displayErrorTooltips={true}
         />
 
         <StyledInlineFlexDiv>
           <Styled.SmallInlineInput
-            disabled={!pid && !pin}
+            disabled={!pid && !pin && !coordinates}
             label="Lease Area:"
             field={withNameSpace(nameSpace, 'landArea')}
           />
           <Styled.SmallInlineSelect
-            disabled={!pid && !pin}
+            disabled={!pid && !pin && !coordinates}
             options={areaUnitTypes}
             field={withNameSpace(nameSpace, 'areaUnitType.id')}
             placeholder=" "

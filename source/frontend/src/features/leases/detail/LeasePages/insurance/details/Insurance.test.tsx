@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { IInsurance, TypeCodeUtils } from 'interfaces';
@@ -6,6 +7,17 @@ import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
 import InsuranceDetailsView from './Insurance';
+
+jest.mock('@react-keycloak/web');
+(useKeycloak as jest.Mock).mockReturnValue({
+  keycloak: {
+    subject: 'test',
+    authenticated: true,
+    userInfo: {
+      roles: [],
+    },
+  },
+});
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },

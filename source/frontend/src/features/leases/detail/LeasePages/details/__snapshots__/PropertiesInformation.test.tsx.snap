@@ -40,7 +40,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c1 > .input,
+.c1 > .form-group,
 .c1 > .notes {
   grid-column: controls;
   grid-row: auto;

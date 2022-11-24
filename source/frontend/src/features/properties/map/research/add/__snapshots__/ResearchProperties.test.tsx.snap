@@ -360,7 +360,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
 
 .c0 .tab-content .tab-pane {
   position: relative;
-  height: 100%;
 }
 
 .c1 {

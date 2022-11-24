@@ -408,7 +408,6 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 
 .c10 .tab-content .tab-pane {
   position: relative;
-  height: 100%;
 }
 
 .c11 {

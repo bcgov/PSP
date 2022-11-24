@@ -62,14 +62,14 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-paymentReceivableType"
+          for="input-paymentReceivableType.id"
         >
           Receivable or Payable: 
         </label>
         <select
           class="form-select form-control"
-          id="input-paymentReceivableType"
-          name="paymentReceivableType"
+          id="input-paymentReceivableType.id"
+          name="paymentReceivableType.id"
           required=""
         >
           <option
@@ -176,14 +176,14 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-region"
+          for="input-region.id"
         >
           MOTI Region: 
         </label>
         <select
           class="form-select form-control"
-          id="input-region"
-          name="region"
+          id="input-region.id"
+          name="region.id"
           required=""
         >
           <option
@@ -263,14 +263,14 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-programType"
+          for="input-programType.id"
         >
           Program: 
         </label>
         <select
           class="form-select form-control"
-          id="input-programType"
-          name="programType"
+          id="input-programType.id"
+          name="programType.id"
           required=""
         >
           <option
@@ -392,14 +392,14 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-type"
+          for="input-type.id"
         >
           Type: 
         </label>
         <select
           class="form-select form-control"
-          id="input-type"
-          name="type"
+          id="input-type.id"
+          name="type.id"
           required=""
         >
           <option
@@ -539,14 +539,14 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-purposeType"
+          for="input-purposeType.id"
         >
           Purpose: 
         </label>
         <select
           class="form-select form-control"
-          id="input-purposeType"
-          name="purposeType"
+          id="input-purposeType.id"
+          name="purposeType.id"
           required=""
         >
           <option
@@ -821,13 +821,13 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-initiatorType"
+          for="input-initiatorType.id"
         >
           Initiator: 
           <span
             class="tooltip-icon"
             data-testid="tooltip-icon"
-            id="initiatorType-tooltip"
+            id="initiatorType.id-tooltip"
           >
             <svg
               class="tooltip-icon"
@@ -847,8 +847,8 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
         </label>
         <select
           class="form-select form-control"
-          id="input-initiatorType"
-          name="initiatorType"
+          id="input-initiatorType.id"
+          name="initiatorType.id"
         >
           <option
             value=""
@@ -946,13 +946,13 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       >
         <label
           class="form-label"
-          for="input-responsibilityType"
+          for="input-responsibilityType.id"
         >
           Responsibility: 
           <span
             class="tooltip-icon"
             data-testid="tooltip-icon"
-            id="responsibilityType-tooltip"
+            id="responsibilityType.id-tooltip"
           >
             <svg
               class="tooltip-icon"
@@ -972,8 +972,8 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
         </label>
         <select
           class="form-select form-control"
-          id="input-responsibilityType"
-          name="responsibilityType"
+          id="input-responsibilityType.id"
+          name="responsibilityType.id"
         >
           <option
             value=""
@@ -1055,7 +1055,6 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
           class="form-control"
           id="input-description"
           name="description"
-          title=""
         />
       </div>
     </div>
