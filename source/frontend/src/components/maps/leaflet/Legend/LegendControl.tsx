@@ -30,7 +30,7 @@ export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Control position="topleft">
       <ClickAwayListener onClickAway={() => setVisible(false)}>
-        <>
+        <div>
           <TooltipWrapper
             toolTipId="marker-legendId"
             toolTip={visible ? undefined : 'Marker legend'}
@@ -53,7 +53,7 @@ export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {
               );
             }}
           </Overlay>
-        </>
+        </div>
       </ClickAwayListener>
     </Control>
   );
