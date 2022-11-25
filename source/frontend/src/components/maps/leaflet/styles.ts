@@ -17,6 +17,11 @@ export const MapContainer = styled.div`
     /* Subtract the header, nav-bar and footer sizes */
     height: 100%;
     margin: auto;
+    font-size: 1.2rem;
+
+    .leaflet-control-attribution {
+      font-size: 1.1rem;
+    }
 
     .leaflet-popup-content-wrapper {
       border-radius: 0;
