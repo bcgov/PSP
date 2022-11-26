@@ -14,7 +14,11 @@ type DisplayErrorProps = {
 /**
  * Formik-connected, thin wrapper around React-Bootstrap to display form validation errors
  */
-export const DisplayError: React.FC<DisplayErrorProps> = ({ field, errorPrompt, className }) => {
+export const DisplayError: React.FC<React.PropsWithChildren<DisplayErrorProps>> = ({
+  field,
+  errorPrompt,
+  className,
+}) => {
   const { errors, touched } = useFormikContext();
   const error = !!field ? getIn(errors, field) : null;
   const touch = !!field ? getIn(touched, field) : null;

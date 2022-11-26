@@ -29,7 +29,7 @@ interface MapViewProps {
   onMarkerPopupClosed?: (obj: IProperty) => void;
 }
 
-const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
+const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = (props: MapViewProps) => {
   const history = useHistory();
   const [loadedProperties, setLoadedProperties] = useState(false);
   const [mapInstance, setMapInstance] = useState<L.Map | undefined>();

@@ -57,7 +57,7 @@ export type FastSelectProps = FormControlProps & OptionalAttributes & RequiredAt
  * Formik-connected <Select> form control. Uses memo and cleanup inspired by
  * https://jaredpalmer.com/formik/docs/api/fastfield
  */
-export const FastSelect: React.FC<FastSelectProps> = memo(
+export const FastSelect: React.FC<React.PropsWithChildren<FastSelectProps>> = memo(
   ({
     field,
     label,

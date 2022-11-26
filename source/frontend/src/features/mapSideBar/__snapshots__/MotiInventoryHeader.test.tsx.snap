@@ -8,9 +8,6 @@ exports[`MotiInventoryHeader component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0.btn {
   display: -webkit-box;
   display: -webkit-flex;

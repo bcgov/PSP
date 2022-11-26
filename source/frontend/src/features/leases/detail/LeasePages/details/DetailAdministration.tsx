@@ -19,10 +19,9 @@ export interface IDetailAdministrationProps {
  * Sub-form containing lease detail administration fields
  * @param {IDetailAdministrationProps} param0
  */
-export const DetailAdministration: React.FunctionComponent<IDetailAdministrationProps> = ({
-  nameSpace,
-  disabled,
-}) => {
+export const DetailAdministration: React.FunctionComponent<
+  React.PropsWithChildren<IDetailAdministrationProps>
+> = ({ nameSpace, disabled }) => {
   const { values } = useFormikContext<IFormLease>();
   return (
     <li>

@@ -16,7 +16,9 @@ import AddLeaseForm from './AddLeaseForm';
 
 export interface IAddLeaseContainerProps {}
 
-export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps> = props => {
+export const AddLeaseContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseContainerProps>
+> = props => {
   const leasePage = leasePages.get(LeasePageNames.DETAILS);
   const { setTrayPage } = useContext(SidebarStateContext);
   const { setState } = useContext(MapStateContext);

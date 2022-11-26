@@ -26,7 +26,9 @@ export interface IUpdateSummaryFormProps {
   formikProps: FormikProps<UpdateResearchSummaryFormModel>;
 }
 
-const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = props => {
+const UpdateSummaryForm: React.FunctionComponent<
+  React.PropsWithChildren<IUpdateSummaryFormProps>
+> = props => {
   const { values } = useFormikContext<UpdateResearchSummaryFormModel>();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const requestSourceTypeOptions = getOptionsByType(API.REQUEST_SOURCE_TYPES);

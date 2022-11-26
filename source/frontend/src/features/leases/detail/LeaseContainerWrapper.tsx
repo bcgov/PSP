@@ -7,9 +7,9 @@ interface ILeaseContainerWrapperProps {
   match?: any;
 }
 
-export const LeaseContainerWrapper: React.FunctionComponent<ILeaseContainerWrapperProps> = ({
-  match,
-}) => {
+export const LeaseContainerWrapper: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseContainerWrapperProps>
+> = ({ match }) => {
   return (
     <LeaseContextProvider>
       <LeaseContainer match={match} />

@@ -12,7 +12,10 @@ interface IProps {
   request: IAccessRequestModel;
   onClose: () => void;
 }
-export const AccessRequestDetails: React.FC<IProps> = ({ request, onClose }) => {
+export const AccessRequestDetails: React.FC<React.PropsWithChildren<IProps>> = ({
+  request,
+  onClose,
+}) => {
   return (
     <Container>
       <Modal show={!!request} onHide={onClose}>

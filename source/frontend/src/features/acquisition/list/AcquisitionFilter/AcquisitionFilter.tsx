@@ -30,7 +30,10 @@ export const defaultAcquisitionFilter: IAcquisitionFilter = {
  * Filter bar for acquisition files.
  * @param {IAcquisitionFilterProps} props
  */
-export const AcquisitionFilter: React.FC<IAcquisitionFilterProps> = ({ filter, setFilter }) => {
+export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFilterProps>> = ({
+  filter,
+  setFilter,
+}) => {
   const onSearchSubmit = (
     values: IAcquisitionFilter,
     formikHelpers: FormikHelpers<IAcquisitionFilter>,

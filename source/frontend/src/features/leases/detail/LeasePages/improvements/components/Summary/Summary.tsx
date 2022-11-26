@@ -12,7 +12,9 @@ export interface ISummaryProps {
  * Sub-form containing lease improvements summary
  * @param {ISummaryProps} param0
  */
-export const Summary: React.FunctionComponent<ISummaryProps> = ({ disabled }) => {
+export const Summary: React.FunctionComponent<React.PropsWithChildren<ISummaryProps>> = ({
+  disabled,
+}) => {
   const { values } = useFormikContext<IFormLease>();
   const isResidential = getIn(values, 'isResidential');
   const isCommercial = getIn(values, 'isCommercialBuilding');

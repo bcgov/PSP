@@ -21,7 +21,7 @@ interface IAddLeaseFormProps {
   propertyInfo: IProperty | null;
 }
 
-const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
+const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFormProps>> = ({
   onCancel,
   onSubmit,
   formikRef,

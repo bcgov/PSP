@@ -4,7 +4,10 @@ interface IMapSideBarProps {
   showWindow: boolean;
 }
 
-const MapActionWindow: React.FunctionComponent<IMapSideBarProps> = ({ showWindow, ...props }) => {
+const MapActionWindow: React.FunctionComponent<React.PropsWithChildren<IMapSideBarProps>> = ({
+  showWindow,
+  ...props
+}) => {
   return (
     <StyledMapWindow show={showWindow} data-testid="map-action-window">
       <>{props.children}</>

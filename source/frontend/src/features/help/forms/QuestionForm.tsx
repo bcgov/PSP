@@ -27,7 +27,10 @@ const defaultHelpFormValues: IQuestionForm = {
 /**
  * Form allowing user to ask a question. The state of this form is synchronized with the parent's mailto.
  */
-const QuestionForm: React.FunctionComponent<QuestionFormProps> = ({ formValues, setMailto }) => {
+const QuestionForm: React.FunctionComponent<React.PropsWithChildren<QuestionFormProps>> = ({
+  formValues,
+  setMailto,
+}) => {
   const initialValues = { ...defaultHelpFormValues, ...formValues };
   return (
     <Formik

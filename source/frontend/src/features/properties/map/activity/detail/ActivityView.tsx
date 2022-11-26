@@ -19,7 +19,7 @@ export interface IActivityViewProps {
   onEditRelatedProperties: () => void;
 }
 
-export const ActivityView: React.FunctionComponent<IActivityViewProps> = ({
+export const ActivityView: React.FunctionComponent<React.PropsWithChildren<IActivityViewProps>> = ({
   file,
   activity,
   editMode,

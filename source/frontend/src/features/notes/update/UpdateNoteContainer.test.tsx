@@ -6,7 +6,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { mockNoteResponse } from 'mocks/mockNoteResponses';
 import { Api_Note } from 'models/api/Note';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { NoteForm } from '../models';
 import { IUpdateNoteContainerProps, UpdateNoteContainer } from './UpdateNoteContainer';
@@ -100,7 +100,7 @@ describe('UpdateNoteContainer component', () => {
     userEvent.type(textarea, formValues.note);
 
     mockAxios.onPut().reply(200, mockNoteResponse(1));
-    await waitFor(() => userEvent.click(getSaveButton()));
+    await act(() => userEvent.click(getSaveButton()));
 
     const axiosData: Api_Note = JSON.parse(mockAxios.history.put[0].data);
     const expectedValues = formValues.toApi();
@@ -122,7 +122,7 @@ describe('UpdateNoteContainer component', () => {
     userEvent.type(textarea, formValues.note);
 
     mockAxios.onPut().reply(200, mockNoteResponse(1));
-    await waitFor(() => userEvent.click(getSaveButton()));
+    await act(() => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();
     expect(mockAxios.history.put[0].url).toBe('/notes/file/1');

@@ -12,6 +12,10 @@ export interface IMapProperty {
   districtName?: string;
 }
 
+export interface SelectableProperty extends IMapProperty {
+  id: string;
+}
+
 export interface ILayerSearchCriteria {
   pid?: string;
   pin?: string;

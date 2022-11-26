@@ -1,4 +1,6 @@
+import axios, { AxiosError } from 'axios';
 import { useApiLeaseDepositReturns } from 'hooks/pims-api/useApiLeaseDepositsReturn';
+import { IApiError } from 'interfaces/IApiError';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
 import { Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { useDispatch } from 'react-redux';
@@ -28,11 +30,14 @@ export const useLeaseDepositReturns = () => {
       );
       toast.success('Lease return deposit saved');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error saving lease return deposit, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error saving lease return deposit, refresh your page and try again');
+        }
       }
     } finally {
       dispatch(hideLoading());
@@ -51,11 +56,14 @@ export const useLeaseDepositReturns = () => {
       );
       toast.success('Lease return deposit deleted');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error deleting lease return  deposit, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error deleting lease return  deposit, refresh your page and try again');
+        }
       }
     } finally {
       dispatch(hideLoading());

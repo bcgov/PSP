@@ -9,7 +9,9 @@ interface IRemoveButtonProps {
   onRemove: () => void;
 }
 
-export const RemoveButton: React.FunctionComponent<IRemoveButtonProps> = ({ onRemove }) => {
+export const RemoveButton: React.FunctionComponent<React.PropsWithChildren<IRemoveButtonProps>> = ({
+  onRemove,
+}) => {
   return (
     <StyledRemoveLinkButton onClick={onRemove}>
       <MdClose data-testid="remove-button" size="2rem" title="remove" />{' '}

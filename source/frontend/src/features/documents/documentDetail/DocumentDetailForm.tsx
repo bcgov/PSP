@@ -37,7 +37,9 @@ export interface IDocumentDetailFormProps {
 /**
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
-export const DocumentDetailForm: React.FunctionComponent<IDocumentDetailFormProps> = props => {
+export const DocumentDetailForm: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentDetailFormProps>
+> = props => {
   const { hasClaim } = useKeycloakWrapper();
 
   const { getOptionsByType } = useLookupCodeHelpers();

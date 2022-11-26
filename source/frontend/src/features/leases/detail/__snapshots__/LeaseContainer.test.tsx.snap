@@ -32,21 +32,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
 <div
     class="container"
   />
-  @media only screen and (max-width:1250px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
-}
-
-@media only screen and (max-width:1250px) {
-
-}
-
-<div
-    class="Toastify"
-  />
   .c2 {
   display: -webkit-box;
   display: -webkit-flex;

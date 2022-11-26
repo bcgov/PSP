@@ -8,7 +8,9 @@ export interface IResearchMenuProps {
   onChange: (index: number) => void;
 }
 
-const ResearchMenu: React.FunctionComponent<IResearchMenuProps> = props => {
+const ResearchMenu: React.FunctionComponent<
+  React.PropsWithChildren<IResearchMenuProps>
+> = props => {
   const handleClick = (index: number) => {
     props.onChange(index);
   };

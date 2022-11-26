@@ -32,7 +32,9 @@ import { onValidateOrganization } from '../../utils/contactUtils';
 /**
  * Formik-connected form to Update Organizational Contacts
  */
-export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
+export const UpdateOrganizationForm: React.FC<React.PropsWithChildren<{ id: number }>> = ({
+  id,
+}) => {
   const history = useHistory();
   const { updateOrganization } = useUpdateContact();
   const { otherCountryId } = useAddressHelpers();
@@ -96,15 +98,9 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
 /**
  * Sub-component that is wrapped by Formik
  */
-const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
-  values,
-  errors,
-  touched,
-  dirty,
-  resetForm,
-  submitForm,
-  initialValues,
-}) => {
+const UpdateOrganization: React.FC<
+  React.PropsWithChildren<FormikProps<IEditableOrganizationForm>>
+> = ({ values, errors, touched, dirty, resetForm, submitForm, initialValues }) => {
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 

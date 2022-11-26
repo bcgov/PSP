@@ -18,7 +18,7 @@ export type TextAreaProps = InputProps & {
 /**
  * Formik-connected <Input> form control
  */
-export const TextArea: React.FC<TextAreaProps> = ({
+export const TextArea: React.FC<React.PropsWithChildren<TextAreaProps>> = ({
   field,
   label,
   placeholder,

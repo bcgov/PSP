@@ -8,9 +8,6 @@ exports[`LayersControl View renders correctly 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -254,7 +251,7 @@ exports[`LayersControl View renders correctly 1`] = `
     style="width: 500px; height: 500px;"
   >
     <div
-      class="leaflet-container leaflet-grab leaflet-touch-drag"
+      class="leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
       style="position: relative;"
       tabindex="0"
     >
@@ -276,7 +273,6 @@ exports[`LayersControl View renders correctly 1`] = `
               <img
                 alt=""
                 class="leaflet-tile"
-                role="presentation"
                 src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23ff9800&width=256&height=256&srs=EPSG%3A3857&bbox=-13734205.24228047,6178557.870347368,-13731759.257375345,6181003.855252495"
                 style="width: 256px; height: 256px; left: -75px; top: -242px;"
               />
@@ -284,10 +280,10 @@ exports[`LayersControl View renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="leaflet-pane leaflet-shadow-pane"
+          class="leaflet-pane leaflet-overlay-pane"
         />
         <div
-          class="leaflet-pane leaflet-overlay-pane"
+          class="leaflet-pane leaflet-shadow-pane"
         />
         <div
           class="leaflet-pane leaflet-marker-pane"
@@ -309,22 +305,32 @@ exports[`LayersControl View renders correctly 1`] = `
             class="leaflet-control-zoom leaflet-bar leaflet-control"
           >
             <a
+              aria-disabled="false"
               aria-label="Zoom in"
               class="leaflet-control-zoom-in"
               href="#"
               role="button"
               title="Zoom in"
             >
-              +
+              <span
+                aria-hidden="true"
+              >
+                +
+              </span>
             </a>
             <a
+              aria-disabled="false"
               aria-label="Zoom out"
               class="leaflet-control-zoom-out"
               href="#"
               role="button"
               title="Zoom out"
             >
-              −
+              <span
+                aria-hidden="true"
+              >
+                −
+              </span>
             </a>
           </div>
         </div>
@@ -577,9 +583,30 @@ exports[`LayersControl View renders correctly 1`] = `
           >
             <a
               href="https://leafletjs.com"
-              title="A JS library for interactive maps"
+              title="A JavaScript library for interactive maps"
             >
-              Leaflet
+              <svg
+                aria-hidden="true"
+                class="leaflet-attribution-flag"
+                height="8"
+                viewBox="0 0 12 8"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h12v4H0z"
+                  fill="#4C7BE1"
+                />
+                <path
+                  d="M0 4h12v3H0z"
+                  fill="#FFD500"
+                />
+                <path
+                  d="M0 7h12v1H0z"
+                  fill="#E0BC00"
+                />
+              </svg>
+               Leaflet
             </a>
           </div>
         </div>

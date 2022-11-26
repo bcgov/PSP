@@ -10,7 +10,9 @@ export interface IAcquisitionPropertiesProps {
   maxDisplayCount: number;
 }
 
-const AcquisitionProperties: React.FunctionComponent<IAcquisitionPropertiesProps> = props => {
+const AcquisitionProperties: React.FunctionComponent<
+  React.PropsWithChildren<IAcquisitionPropertiesProps>
+> = props => {
   const [isExpanded, setExpanded] = useState(false);
 
   const acquisitionProperties = props.acquisitionProperties || [];

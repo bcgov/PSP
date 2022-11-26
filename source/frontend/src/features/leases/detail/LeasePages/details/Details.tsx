@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 export interface IDetailsProps {}
 
-export const Details: React.FunctionComponent<IDetailsProps> = () => {
+export const Details: React.FunctionComponent<React.PropsWithChildren<IDetailsProps>> = () => {
   return (
     <StyledDetails>
       <FormSectionOne>

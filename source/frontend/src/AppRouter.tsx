@@ -53,7 +53,7 @@ const AcquisitionListView = lazy(() =>
   componentLoader(import('features/acquisition/list/AcquisitionListView'), 2),
 );
 
-const AppRouter: React.FC = () => {
+const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
   const location = useLocation();
   useLayoutEffect(() => {
     window.scrollTo(0, 0);

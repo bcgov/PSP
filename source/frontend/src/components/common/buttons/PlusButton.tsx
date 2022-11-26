@@ -16,7 +16,11 @@ interface IPlusButtonProps extends ButtonProps {
  * PlusButton displaying a plus button, used to add new items.
  * @param param0
  */
-export const PlusButton: React.FC<IPlusButtonProps> = ({ toolId, toolText, ...props }) => {
+export const PlusButton: React.FC<React.PropsWithChildren<IPlusButtonProps>> = ({
+  toolId,
+  toolText,
+  ...props
+}) => {
   return (
     <TooltipWrapper toolTipId={toolId} toolTip={toolText}>
       <StyledAddButton className="primary" {...props} icon={<FaPlus size={20} />} />

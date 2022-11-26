@@ -8,9 +8,6 @@ exports[`ResearchProperties component renders as expected when provided no prope
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -443,16 +440,14 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     <div
                       class="d-flex flex-column align-items-center"
                     >
-                      <div>
-                        <svg
-                          class="c6"
-                          height="97"
-                          title="select properties on the map"
-                          width="97"
-                        >
-                          icon-draft.svg
-                        </svg>
-                      </div>
+                      <svg
+                        class="c6"
+                        height="97"
+                        title="select properties on the map"
+                        width="97"
+                      >
+                        icon-draft.svg
+                      </svg>
                       <ol>
                         <li>
                           Click pin above
@@ -923,7 +918,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             <div
               class="col-md-3"
             >
-              <p
+              <div
                 class="mb-0 d-flex align-items-center"
               >
                 <svg
@@ -996,13 +991,12 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     1
                   </title>
                 </svg>
-              </p>
-              <div
-                class="c19 pl-3"
-              >
-                PID: 123-456-789
+                <div
+                  class="c19 pl-3"
+                >
+                  PID: 123-456-789
+                </div>
               </div>
-              <p />
             </div>
             <div
               class="col-md-7"
@@ -1065,7 +1059,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
             <div
               class="col-md-3"
             >
-              <p
+              <div
                 class="mb-0 d-flex align-items-center"
               >
                 <svg
@@ -1138,13 +1132,12 @@ exports[`ResearchProperties component renders as expected when provided no prope
                     2
                   </title>
                 </svg>
-              </p>
-              <div
-                class="c19 pl-3"
-              >
-                PIN: 1111222
+                <div
+                  class="c19 pl-3"
+                >
+                  PIN: 1111222
+                </div>
               </div>
-              <p />
             </div>
             <div
               class="col-md-7"

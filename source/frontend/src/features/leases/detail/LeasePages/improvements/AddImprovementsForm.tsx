@@ -14,12 +14,9 @@ export interface IAddImprovementsFormProps {
   formikRef: React.Ref<FormikProps<IFormLease>>;
 }
 
-export const AddImprovementsForm: React.FunctionComponent<IAddImprovementsFormProps> = ({
-  onCancel,
-  onSubmit,
-  initialValues,
-  formikRef,
-}) => {
+export const AddImprovementsForm: React.FunctionComponent<
+  React.PropsWithChildren<IAddImprovementsFormProps>
+> = ({ onCancel, onSubmit, initialValues, formikRef }) => {
   return (
     <>
       <Formik

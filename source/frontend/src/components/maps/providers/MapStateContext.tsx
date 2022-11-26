@@ -100,10 +100,9 @@ interface IMapStateContextComponent {
   values?: Partial<IMapStateContext>;
 }
 
-export const MapStateContextProvider: React.FC<IMapStateContextComponent> = ({
-  children,
-  values,
-}) => {
+export const MapStateContextProvider: React.FC<
+  React.PropsWithChildren<IMapStateContextComponent>
+> = ({ children, values }) => {
   const mapStateReducer = useCallback(
     (prevState: IMapStateContext, action: MapStateActions): IMapStateContext => {
       console.debug('MapStateContext', prevState, action);

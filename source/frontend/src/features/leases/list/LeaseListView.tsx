@@ -26,7 +26,7 @@ import * as Styled from './styles';
 /**
  * Page that displays leases information.
  */
-export const LeaseListView: React.FunctionComponent = () => {
+export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();
   const { getLeases } = useApiLeases();
   const { hasClaim } = useKeycloakWrapper();

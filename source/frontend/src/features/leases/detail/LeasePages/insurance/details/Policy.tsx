@@ -18,7 +18,7 @@ interface PolicyView {
   insuranceType?: string;
 }
 
-const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
+const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({ insurance }) => {
   const columnWidth = 5;
   const policy: PolicyView = {
     insuranceInPlace: insurance.isInsuranceInPlace ? 'Yes' : 'No',

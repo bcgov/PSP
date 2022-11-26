@@ -38,7 +38,7 @@ export class DepositListEntry {
   }
 }
 
-function renderHolder({ row: { original } }: CellProps<DepositListEntry, string>) {
+function renderHolder({ row: { original } }: CellProps<DepositListEntry, Api_Contact | undefined>) {
   if (original.contactHolder !== undefined) {
     const holder = original.contactHolder;
     if (holder.person !== undefined) {
@@ -52,7 +52,7 @@ function renderHolder({ row: { original } }: CellProps<DepositListEntry, string>
     }
   }
 
-  return '';
+  return <></>;
 }
 
 function depositActions(

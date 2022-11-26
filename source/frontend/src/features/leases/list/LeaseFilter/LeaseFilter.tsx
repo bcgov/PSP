@@ -43,7 +43,10 @@ export const defaultFilter: ILeaseFilter = {
  * Filter bar for leases and license.
  * @param {ILeaseFilterProps} props
  */
-export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter, setFilter }) => {
+export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILeaseFilterProps>> = ({
+  filter,
+  setFilter,
+}) => {
   const onSearchSubmit = (values: ILeaseFilter, { setSubmitting }: any) => {
     const selectedPrograms: MultiSelectOption[] = multiselectProgramRef.current?.getSelectedItems();
     const selectedStatuses: MultiSelectOption[] = multiselectStatusRef.current?.getSelectedItems();

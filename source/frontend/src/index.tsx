@@ -13,7 +13,7 @@ import { ModalContextProvider } from 'contexts/modalContext';
 import LoginLoading from 'features/account/LoginLoading';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import EmptyLayout from 'layouts/EmptyLayout';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { store } from 'store/store';
@@ -58,7 +58,8 @@ const Index = () => {
   );
 };
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root') as Element);
+root.render(<Index />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

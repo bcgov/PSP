@@ -8,9 +8,6 @@ exports[`TermsForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -414,9 +411,6 @@ exports[`TermsForm component renders with data as expected 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   .c6.btn {
   display: -webkit-box;

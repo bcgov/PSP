@@ -17,10 +17,9 @@ export interface IAcquisitionFileTabsProps {
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
-export const AcquisitionFileTabs: React.FunctionComponent<IAcquisitionFileTabsProps> = ({
-  acquisitionFile,
-  setContainerState,
-}) => {
+export const AcquisitionFileTabs: React.FunctionComponent<
+  React.PropsWithChildren<IAcquisitionFileTabsProps>
+> = ({ acquisitionFile, setContainerState }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
 

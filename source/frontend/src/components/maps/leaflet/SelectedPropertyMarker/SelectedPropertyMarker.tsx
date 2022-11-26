@@ -6,7 +6,9 @@ import { Marker, MarkerProps } from 'react-leaflet';
 /**
  * Wrapper of the React Leaflet marker to auto open the popup for a selected property
  */
-const SelectedPropertyMarker: React.FC<MarkerProps & { map: L.Map; className: string }> = props => {
+const SelectedPropertyMarker: React.FC<
+  React.PropsWithChildren<MarkerProps & { map: L.Map; className: string }>
+> = props => {
   const { map, position, icon, className } = props;
   const ref = useRef<L.Marker>(null);
 

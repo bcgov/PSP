@@ -9,8 +9,8 @@ interface BaseAppRoute extends RouteProps {
   title: string;
 }
 interface ComponentRoute extends BaseAppRoute {
-  customComponent: React.ComponentType<any>;
-  layout?: React.ComponentType<any>;
+  customComponent: React.ComponentType<React.PropsWithChildren<any>>;
+  layout?: React.ComponentType<React.PropsWithChildren<any>>;
 }
 
 interface RenderRoute extends BaseAppRoute {
@@ -22,7 +22,7 @@ function isRenderRoute(route: RenderRoute | ComponentRoute): route is RenderRout
   return (route as RenderRoute).customRender !== undefined;
 }
 
-const AppRoute: React.FC<IAppRouteProps> = props => {
+const AppRoute: React.FC<React.PropsWithChildren<IAppRouteProps>> = props => {
   document.title = props.title;
 
   if (!!props.protected) {
