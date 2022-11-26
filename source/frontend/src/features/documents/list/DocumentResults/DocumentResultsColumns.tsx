@@ -80,9 +80,7 @@ const renderFileName = (onViewDetails: (values: Api_Document) => void) => {
   };
 };
 
-//export const DateCell = ({ cell: { value } }: CellProps<Date, string>) => prettyFormatDate(value);
-
-function renderUploaded(cell: CellProps<Api_Document, string>) {
+function renderUploaded(cell: CellProps<Api_Document, string | undefined>) {
   return (
     <Row className="no-gutters">
       <Col>{prettyFormatDate(cell.row.original.appCreateTimestamp)}</Col>
