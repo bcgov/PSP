@@ -2,15 +2,8 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import 'jest-styled-components';
-
-// Unofficial adapter for React 17 for Enzyme.
-// See https://github.com/enzymejs/enzyme/issues/2429 for details
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure } from 'enzyme';
-
-configure({ adapter: new Adapter() });
 
 var localStorageMock = (function () {
   var store: any = {};

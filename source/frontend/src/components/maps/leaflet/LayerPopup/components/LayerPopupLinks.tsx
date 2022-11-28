@@ -12,7 +12,7 @@ export interface ILayerPopupLinksProps {
   onEllipsisClick?: () => void;
 }
 
-export const LayerPopupLinks: React.FC<ILayerPopupLinksProps> = ({
+export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksProps>> = ({
   layerPopup,
   onEllipsisClick,
 }) => {

@@ -8,9 +8,6 @@ exports[`ActivityControlsBar test Renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;

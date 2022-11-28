@@ -23,7 +23,9 @@ export interface IAddNotesContainerProps {
   onSuccess?: () => void;
 }
 
-export const AddNotesContainer: React.FC<IAddNotesContainerProps> = props => {
+export const AddNotesContainer: React.FC<
+  React.PropsWithChildren<IAddNotesContainerProps>
+> = props => {
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
   const formikRef = useRef<FormikProps<EntityNoteForm>>(null);
 

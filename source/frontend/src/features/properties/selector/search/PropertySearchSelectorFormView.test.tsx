@@ -136,18 +136,18 @@ describe('PropertySearchSelectorFormView component', () => {
     });
 
     it('can reset the search criteria', async () => {
-      await act(async () => {
-        const { getByTitle, findByText, queryByDisplayValue, container } = setup({});
-        expect(await findByText('No results found for your search criteria.')).toBeInTheDocument();
-        await fillInput(container, 'searchby', 'pid', 'select');
-        await fillInput(container, 'pid', '123-456-789');
-        expect(queryByDisplayValue('123-456-789')).toBeVisible(); //ensure that expected input value is present.
+      const { getByTitle, findByText, queryByDisplayValue, container } = setup({});
+      expect(await findByText('No results found for your search criteria.')).toBeInTheDocument();
+      await fillInput(container, 'searchby', 'pid', 'select');
+      await fillInput(container, 'pid', '123-456-789');
+      expect(queryByDisplayValue('123-456-789')).toBeVisible(); //ensure that expected input value is present.
 
-        const resetButton = getByTitle('reset-button');
+      const resetButton = getByTitle('reset-button');
+      act(() => {
         userEvent.click(resetButton);
-        expect(onSearch).toHaveBeenCalledWith(defaultLayerFilter);
-        expect(queryByDisplayValue('123-456-789')).toBeNull(); //input value should now be cleared.
       });
+      expect(onSearch).toHaveBeenCalledWith(defaultLayerFilter);
+      expect(queryByDisplayValue('123-456-789')).toBeNull(); //input value should now be cleared.
     });
   });
   describe('search results display', () => {

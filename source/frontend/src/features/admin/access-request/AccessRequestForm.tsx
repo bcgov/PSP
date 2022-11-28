@@ -23,11 +23,9 @@ interface IAccessRequestFormProps {
   onCancel?: () => void;
 }
 
-export const AccessRequestForm: React.FunctionComponent<IAccessRequestFormProps> = ({
-  initialValues,
-  addAccessRequest,
-  onCancel,
-}) => {
+export const AccessRequestForm: React.FunctionComponent<
+  React.PropsWithChildren<IAccessRequestFormProps>
+> = ({ initialValues, addAccessRequest, onCancel }) => {
   const { getPublicByType, getOptionsByType } = useLookupCodeHelpers();
   const roles = getPublicByType(API.ROLE_TYPES);
   const selectRegions = getOptionsByType(API.REGION_TYPES).filter(

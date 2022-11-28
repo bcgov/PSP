@@ -31,7 +31,9 @@ interface IDocumentUploadFormProps {
 /**
  * Component that provides functionality to see document information. Can be embedded as a widget.
  */
-const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = props => {
+const DocumentUploadForm: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentUploadFormProps>
+> = props => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const documentTypes = props.documentTypes.map<SelectOption>(x => {

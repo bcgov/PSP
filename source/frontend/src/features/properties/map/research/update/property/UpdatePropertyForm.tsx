@@ -21,7 +21,9 @@ export interface IUpdatePropertyFormProps {
   formikProps: FormikProps<UpdatePropertyFormModel>;
 }
 
-const UpdatePropertyForm: React.FunctionComponent<IUpdatePropertyFormProps> = props => {
+const UpdatePropertyForm: React.FunctionComponent<
+  React.PropsWithChildren<IUpdatePropertyFormProps>
+> = props => {
   const { values } = useFormikContext<UpdatePropertyFormModel>();
   const { getByType } = useLookupCodeHelpers();
 

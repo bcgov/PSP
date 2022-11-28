@@ -6,11 +6,13 @@ import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from 'compon
 import { Claims } from 'constants/claims';
 import { getIn } from 'formik';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { IFormLease, IFormLeasePayment, ILeasePayment } from 'interfaces';
+import { IFormLeasePayment, ILeasePayment } from 'interfaces';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdReceipt } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { stringToFragment } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 import { formatMoney } from 'utils/numberFormatUtils';
 
@@ -18,7 +20,7 @@ const actualsActions = (
   onEdit: (values: IFormLeasePayment) => void,
   onDelete: (values: IFormLeasePayment) => void,
 ) => {
-  return function ({ row: { original, index } }: CellProps<IFormLeasePayment, string>) {
+  return function ({ row: { original, index } }: CellProps<IFormLeasePayment, unknown>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
@@ -57,7 +59,7 @@ export const getActualsColumns = ({
   isReceivable,
   isGstEligible,
   nameSpace,
-}: IPaymentColumnProps): ColumnWithProps<ILeasePayment>[] => {
+}: IPaymentColumnProps): ColumnWithProps<IFormLeasePayment>[] => {
   return [
     {
       Header: isReceivable ? 'Received date' : 'Sent date',
@@ -110,8 +112,8 @@ export const getActualsColumns = ({
       align: 'right',
       accessor: 'amountGst',
       maxWidth: 35,
-      Cell: ({ value, row }: CellProps<ILeasePayment, number>) => {
-        return isGstEligible ? formatMoney(value) : '-';
+      Cell: ({ value, row }: CellProps<IFormLeasePayment, NumberFieldValue>) => {
+        return stringToFragment(isGstEligible ? formatMoney(value) : '-');
       },
       Footer: ({ properties }: { properties: ILeasePayment[] }) =>
         isGstEligible
@@ -154,12 +156,12 @@ export const getActualsColumns = ({
       maxWidth: 40,
       accessor: 'note',
       align: 'center',
-      Cell: ({ value, row }: CellProps<ILeasePayment, boolean>) => {
+      Cell: ({ value, row }: CellProps<IFormLeasePayment, string | undefined>) => {
         return (
           <NotesModal
             title="Payment Notes"
             notesLabel="Notes:"
-            onSave={(values: IFormLease) => {
+            onSave={(values: IFormLeasePayment) => {
               const valuesToSave = getIn(values, withNameSpace(nameSpace, `${row.index}`));
               onSave(valuesToSave);
             }}

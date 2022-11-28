@@ -24,7 +24,7 @@ export enum FileTabNames {
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
  * @param param0 object containing all react components for the corresponding tabs.
  */
-export const FileTabs: React.FunctionComponent<IFileTabsProps> = ({
+export const FileTabs: React.FunctionComponent<React.PropsWithChildren<IFileTabsProps>> = ({
   defaultTabKey,
   tabViews,
   activeTab,

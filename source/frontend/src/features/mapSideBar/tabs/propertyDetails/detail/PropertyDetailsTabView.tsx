@@ -28,11 +28,9 @@ export interface IPropertyDetailsTabView {
  * Provides basic property information, as displayed under "Property Details" tab on the Property Information slide-out
  * @returns the rendered property details panel
  */
-export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTabView> = ({
-  property,
-  loading,
-  setEditMode,
-}) => {
+export const PropertyDetailsTabView: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyDetailsTabView>
+> = ({ property, loading, setEditMode }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { hasClaim } = useKeycloakWrapper();
 

@@ -8,7 +8,9 @@ interface IDocumentDetailHeaderProps {
   document: ComposedDocument;
 }
 
-const DocumentDetailHeader: React.FunctionComponent<IDocumentDetailHeaderProps> = props => {
+const DocumentDetailHeader: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentDetailHeaderProps>
+> = props => {
   const documentTypeLabel = props.document.pimsDocument?.documentType?.documentType;
   const documentFileName = props.document.pimsDocument?.fileName;
   const mayanDocumentId = props.document.pimsDocument?.mayanDocumentId || -1;

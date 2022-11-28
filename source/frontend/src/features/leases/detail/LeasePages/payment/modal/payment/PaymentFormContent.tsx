@@ -15,10 +15,9 @@ interface IPaymentFormContentProps {
   isGstEligible?: boolean;
 }
 
-const PaymentFormContent: React.FunctionComponent<IPaymentFormContentProps> = ({
-  isReceived,
-  isGstEligible,
-}) => {
+const PaymentFormContent: React.FunctionComponent<
+  React.PropsWithChildren<IPaymentFormContentProps>
+> = ({ isReceived, isGstEligible }) => {
   const formikProps = useFormikContext<IFormLeasePayment>();
   const lookups = useLookupCodeHelpers();
   useCalculateActualGst(isGstEligible);

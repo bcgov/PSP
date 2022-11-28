@@ -17,7 +17,7 @@ export interface IExportAggregatedLeasesContainer {
 }
 
 export const ExportAggregatedLeasesContainer: React.FunctionComponent<
-  IExportAggregatedLeasesContainerProps
+  React.PropsWithChildren<IExportAggregatedLeasesContainerProps>
 > = props => {
   const { exportAggregatedLeases } = useLeaseExport();
   const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());

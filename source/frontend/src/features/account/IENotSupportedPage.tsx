@@ -7,7 +7,7 @@ import { useTenant } from 'tenants';
  * if they are using any version of Internet Explorer, as most
  * libraries no longer support IE.
  */
-export const IENotSupportedPage: React.FC = () => {
+export const IENotSupportedPage: React.FC<React.PropsWithChildren<unknown>> = () => {
   const tenant = useTenant();
   return (
     <Container className="unauth" fluid={true}>

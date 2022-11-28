@@ -8,9 +8,6 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   font-family: 'BcSans-Bold';
   font-size: 2rem;

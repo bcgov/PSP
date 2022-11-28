@@ -8,9 +8,6 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c1.required::before {
   content: '*';
   position: absolute;

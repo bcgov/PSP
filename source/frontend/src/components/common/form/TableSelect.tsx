@@ -18,7 +18,7 @@ type RequiredAttributes<T extends object> = {
   /** The items that are currently selected in the passed selectComponent */
   selectedItems: T[];
   /** A header for the second table that contains selected items */
-  selectedTableHeader: React.FC<ISelectedTableHeaderProps>;
+  selectedTableHeader: React.FC<React.PropsWithChildren<ISelectedTableHeaderProps>>;
   /** The columns that should be used for the secondary, "saved items" table */
   columns: ColumnWithProps<T>[];
   /** child component that handles selection */

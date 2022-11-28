@@ -1,4 +1,6 @@
+import axios, { AxiosError } from 'axios';
 import { useApiLeaseDeposits } from 'hooks/pims-api/useApiLeaseDeposits';
+import { IApiError } from 'interfaces/IApiError';
 import { IParentConcurrencyGuard } from 'interfaces/IParentConcurrencyGuard';
 import { Api_SecurityDeposit } from 'models/api/SecurityDeposit';
 import { useDispatch } from 'react-redux';
@@ -21,11 +23,14 @@ export const useLeaseDeposits = () => {
       const response = await handleAxiosResponse(dispatch, 'UpdateLeaseDeposit', axiosPromise);
       toast.success('Lease deposit saved');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error saving lease deposit, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error saving lease deposit, refresh your page and try again');
+        }
       }
     }
   };
@@ -36,11 +41,14 @@ export const useLeaseDeposits = () => {
       const response = await handleAxiosResponse(dispatch, 'UpdateLeaseDepositNote', axiosPromise);
       toast.success('Lease deposit note saved');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error saving lease deposit note, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error saving lease deposit note, refresh your page and try again');
+        }
       }
     }
   };
@@ -51,11 +59,14 @@ export const useLeaseDeposits = () => {
       const response = await handleAxiosResponse(dispatch, 'DeleteLeaseDeposit', axiosPromise);
       toast.success('Lease deposit deleted');
       return response;
-    } catch (axiosError) {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response?.data.error);
-      } else {
-        toast.error('Error deleting lease deposit, refresh your page and try again');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response?.data.error);
+        } else {
+          toast.error('Error deleting lease deposit, refresh your page and try again');
+        }
       }
     }
   };

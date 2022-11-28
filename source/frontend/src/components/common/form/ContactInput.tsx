@@ -30,7 +30,7 @@ type OptionalAttributes = {
 
 export type ContactInputProps = FormControlProps & OptionalAttributes & RequiredAttributes;
 
-export const ContactInput: React.FC<ContactInputProps> = ({
+export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> = ({
   field,
   setShowContactManager,
   onClear,

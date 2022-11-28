@@ -8,9 +8,6 @@ exports[`Access request details Snapshot matches 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   <div>
     <div
       class="container"

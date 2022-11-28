@@ -12,7 +12,9 @@ export interface ISectionListHeaderProps {
   claims: Claims[];
 }
 
-export const SectionListHeader: React.FunctionComponent<ISectionListHeaderProps> = props => {
+export const SectionListHeader: React.FunctionComponent<
+  React.PropsWithChildren<ISectionListHeaderProps>
+> = props => {
   const { hasClaim } = useKeycloakWrapper();
   const onClick = () => props.onAdd && props.onAdd();
 

@@ -3,6 +3,9 @@ import { FaRegTimesCircle } from 'react-icons/fa';
 
 import { ColumnWithProps } from '../components/Table/types';
 
+// React 18 typings do not support returning strings - workaround is to wrap it in a React fragment
+export const stringToFragment = (value?: string | number) => <>{value}</>;
+
 export const getColumnsWithRemove = <T extends object>(
   setRows: (rows: T[]) => void,
   cols: ColumnWithProps<T>[],

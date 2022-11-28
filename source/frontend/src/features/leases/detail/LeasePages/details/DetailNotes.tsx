@@ -12,7 +12,7 @@ export interface IDetailNotesProps {
  * Displays all notes directly associated with this lease.
  * @param {IDetailNotesProps} param0
  */
-export const DetailNotes: React.FunctionComponent<IDetailNotesProps> = ({
+export const DetailNotes: React.FunctionComponent<React.PropsWithChildren<IDetailNotesProps>> = ({
   nameSpace,
   disabled,
 }) => {

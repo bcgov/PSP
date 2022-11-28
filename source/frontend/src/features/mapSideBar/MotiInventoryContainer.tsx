@@ -22,7 +22,7 @@ export interface IMotiInventoryContainerProps {
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
 export const MotiInventoryContainer: React.FunctionComponent<
-  IMotiInventoryContainerProps
+  React.PropsWithChildren<IMotiInventoryContainerProps>
 > = props => {
   const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
 

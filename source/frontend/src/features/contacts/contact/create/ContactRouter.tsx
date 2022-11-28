@@ -28,7 +28,7 @@ export const pages = new Map<ContactTypes, IContactPage>([
   ],
 ]);
 
-export const ContactRouter: React.FunctionComponent = () => {
+export const ContactRouter: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   // The `path` lets us build <Route> paths that are relative to the parent route, while
   // the `url` lets us build relative links.
   const { path, url } = useRouteMatch();

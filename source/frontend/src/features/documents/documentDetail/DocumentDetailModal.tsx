@@ -14,7 +14,9 @@ export interface IDocumentDetailModalProps {
   onClose: () => void;
 }
 
-export const DocumentDetailModal: React.FunctionComponent<IDocumentDetailModalProps> = props => {
+export const DocumentDetailModal: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentDetailModalProps>
+> = props => {
   return (
     <GenericModal
       display={props.display}

@@ -24,7 +24,7 @@ interface IHelpSubmitBoxProps {
 /**
  * A component that displays a list of Help Ticket types as well as a form corresponding to the active Help Ticket type
  */
-const HelpSubmitBox: React.FunctionComponent<IHelpSubmitBoxProps> = ({
+const HelpSubmitBox: React.FunctionComponent<React.PropsWithChildren<IHelpSubmitBoxProps>> = ({
   setActiveTicketType,
   activeTicketType,
   setMailto,

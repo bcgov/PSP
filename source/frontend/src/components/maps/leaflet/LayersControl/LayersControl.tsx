@@ -93,7 +93,7 @@ export type ILayersControl = {
  * Component to display the layers control on the map
  * @example ./LayersControl.md
  */
-const LayersControl: React.FC<ILayersControl> = ({ open, setOpen }) => {
+const LayersControl: React.FC<React.PropsWithChildren<ILayersControl>> = ({ open, setOpen }) => {
   useEffect(() => {
     const elem = L.DomUtil.get('layersContainer');
     if (elem) {

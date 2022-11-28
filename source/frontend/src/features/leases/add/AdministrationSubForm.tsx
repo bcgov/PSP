@@ -19,9 +19,9 @@ export interface IAdministrationSubFormProps {
   formikProps: FormikProps<FormLease>;
 }
 
-const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps> = ({
-  formikProps,
-}) => {
+const AdministrationSubForm: React.FunctionComponent<
+  React.PropsWithChildren<IAdministrationSubFormProps>
+> = ({ formikProps }) => {
   const { values, setFieldValue } = formikProps;
   const { categoryType, type, purposeType, programType } = values;
   const { getOptionsByType } = useLookupCodeHelpers();

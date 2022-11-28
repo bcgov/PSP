@@ -31,7 +31,9 @@ interface IGeocoderAutoCompleteProps {
   outerClassName?: string;
 }
 
-export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
+export const GeocoderAutoComplete: React.FC<
+  React.PropsWithChildren<IGeocoderAutoCompleteProps>
+> = ({
   field,
   placeholder,
   disabled,
@@ -148,7 +150,10 @@ interface IDebounceInputProps extends FormControlProps {
   };
 }
 
-const InputControl: React.FC<IDebounceInputProps> = ({ onTextChange, ...props }) => {
+const InputControl: React.FC<React.PropsWithChildren<IDebounceInputProps>> = ({
+  onTextChange,
+  ...props
+}) => {
   const onChange = (value: string) => {
     onTextChange(value);
   };

@@ -17,10 +17,9 @@ export interface IPropertyMapSelectorFormViewProps {
   initialSelectedProperty?: IMapProperty;
 }
 
-const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorFormViewProps> = ({
-  onSelectedProperty,
-  initialSelectedProperty,
-}) => {
+const PropertyMapSelectorFormView: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyMapSelectorFormViewProps>
+> = ({ onSelectedProperty, initialSelectedProperty }) => {
   const { setState, cursor } = React.useContext(MapStateContext);
 
   const [selectedProperty, setSelectedProperty] = React.useState<IMapProperty | undefined>(
@@ -38,9 +37,13 @@ const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorF
   };
 
   const onClickAway = () => {
-    if (cursor !== MapCursors.DEFAULT) {
-      setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false });
-    }
+    // Prevent this handler from getting triggered immediately.
+    // We need a timeout here to give the map time to process its own click event while selecting properties on the map.
+    setTimeout(() => {
+      if (cursor !== MapCursors.DEFAULT) {
+        setState({ type: MapStateActionTypes.IS_SELECTING, isSelecting: false });
+      }
+    }, 100);
   };
 
   const addProperty = (property: IMapProperty) => {

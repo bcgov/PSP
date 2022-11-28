@@ -11,11 +11,9 @@ interface IPrimaryContactWarningModalProps {
   onCancel?: Function;
 }
 
-const PrimaryContactWarningModal: React.FunctionComponent<IPrimaryContactWarningModalProps> = ({
-  saveCallback,
-  lease,
-  onCancel,
-}) => {
+const PrimaryContactWarningModal: React.FunctionComponent<
+  React.PropsWithChildren<IPrimaryContactWarningModalProps>
+> = ({ saveCallback, lease, onCancel }) => {
   const warningOrgs = lease ? getOrgsWithNoPrimaryContact(lease) : [];
   const warningOrgNames = warningOrgs.map(org => org.summary);
   return (

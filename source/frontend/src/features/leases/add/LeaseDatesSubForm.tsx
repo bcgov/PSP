@@ -14,9 +14,9 @@ export interface ILeaseDatesSubFormProps {
   formikProps: FormikProps<FormLease>;
 }
 
-export const LeaseDatesSubForm: React.FunctionComponent<ILeaseDatesSubFormProps> = ({
-  formikProps,
-}) => {
+export const LeaseDatesSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseDatesSubFormProps>
+> = ({ formikProps }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const leaseStatusTypes = getOptionsByType(API.LEASE_STATUS_TYPES);
   return (

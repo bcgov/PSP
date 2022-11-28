@@ -2,7 +2,7 @@ import { NoteTypes } from 'constants/index';
 import NoteListView from 'features/notes/list/NoteListView';
 import { Col, Container, Row } from 'react-bootstrap';
 
-export const TestNotes: React.FC = () => {
+export const TestNotes: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Container>
       <Row>

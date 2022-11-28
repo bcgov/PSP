@@ -7,7 +7,7 @@ import styled from 'styled-components';
 interface ISelectedPropertyHeaderRowProps {}
 
 export const SelectedPropertyHeaderRow: React.FunctionComponent<
-  ISelectedPropertyHeaderRowProps
+  React.PropsWithChildren<ISelectedPropertyHeaderRowProps>
 > = props => {
   return (
     <HeaderRow>

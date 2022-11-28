@@ -9,9 +9,6 @@ exports[`CreatePersonForm renders as expected 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="container"
   />
   .c10.btn {

@@ -18,12 +18,9 @@ export enum SelectorTabNames {
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
  * @param param0 object containing all react components for the corresponding tabs.
  */
-export const PropertySelectorTabsView: React.FunctionComponent<IPropertySelectorTabsViewProps> = ({
-  MapSelectorView,
-  ListSelectorView,
-  activeTab,
-  setActiveTab,
-}) => {
+export const PropertySelectorTabsView: React.FunctionComponent<
+  React.PropsWithChildren<IPropertySelectorTabsViewProps>
+> = ({ MapSelectorView, ListSelectorView, activeTab, setActiveTab }) => {
   return (
     <StyledTabView
       defaultActiveKey={SelectorTabNames.map}

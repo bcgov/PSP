@@ -25,7 +25,7 @@ export interface IPropertyResearchTabViewProps {
 }
 
 export const PropertyResearchTabView: React.FunctionComponent<
-  IPropertyResearchTabViewProps
+  React.PropsWithChildren<IPropertyResearchTabViewProps>
 > = props => {
   const detail: PropertyResearchFile = {
     id: props.researchFile.id || 0,

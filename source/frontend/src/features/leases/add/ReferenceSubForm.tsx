@@ -7,7 +7,9 @@ import * as Styled from './styles';
 
 interface IReferenceSubFormProps {}
 
-const ReferenceSubForm: React.FunctionComponent<IReferenceSubFormProps> = props => {
+const ReferenceSubForm: React.FunctionComponent<
+  React.PropsWithChildren<IReferenceSubFormProps>
+> = props => {
   return (
     <>
       <Row>

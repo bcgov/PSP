@@ -22,7 +22,9 @@ export interface IAddResearchContainerProps {
   onClose: () => void;
 }
 
-export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
+export const AddResearchContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAddResearchContainerProps>
+> = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const { selectedFileFeature: selectedResearchFeature, setState } =

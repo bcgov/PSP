@@ -7,7 +7,7 @@ import { PropertyRows } from './PropertyRows';
 export interface IPropertyInformationSubFormProps {}
 
 const PropertyInformationSubForm: React.FunctionComponent<
-  IPropertyInformationSubFormProps
+  React.PropsWithChildren<IPropertyInformationSubFormProps>
 > = () => {
   return (
     <>

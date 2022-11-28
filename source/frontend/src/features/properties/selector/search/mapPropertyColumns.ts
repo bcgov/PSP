@@ -1,9 +1,9 @@
 import { ColumnWithProps } from 'components/Table';
 import { PidCell } from 'components/Table/PidCell';
 
-import { IMapProperty } from '../models';
+import { SelectableProperty } from '../models';
 
-const columns: ColumnWithProps<IMapProperty>[] = [
+const columns: ColumnWithProps<SelectableProperty>[] = [
   {
     Header: 'PID',
     accessor: 'pid',

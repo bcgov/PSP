@@ -15,7 +15,9 @@ export interface IPropertyRowsProps {
  * Formik Field array wrapper around leased properties.
  * @param {IPropertyRowsProps} param0
  */
-export const PropertyRows: React.FunctionComponent<IPropertyRowsProps> = ({ nameSpace }) => {
+export const PropertyRows: React.FunctionComponent<React.PropsWithChildren<IPropertyRowsProps>> = ({
+  nameSpace,
+}) => {
   const { values } = useFormikContext<IFormLease>();
   const properties: IProperty[] = getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
   return (

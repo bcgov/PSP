@@ -8,7 +8,10 @@ import FooterStyled from './Footer';
 import HeaderStyled from './Header';
 import * as Styled from './styles';
 
-const PublicLayout: React.FC<React.HTMLAttributes<HTMLElement>> = ({ children, ...rest }) => {
+const PublicLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({
+  children,
+  ...rest
+}) => {
   return (
     <>
       <LoadingBar style={{ zIndex: 9999, backgroundColor: '#fcba19', height: '.3rem' }} />

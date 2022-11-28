@@ -16,7 +16,7 @@ interface IPropertyRowProps {
   onRemove: () => void;
 }
 
-export const PropertyRow: React.FunctionComponent<IPropertyRowProps> = ({
+export const PropertyRow: React.FunctionComponent<React.PropsWithChildren<IPropertyRowProps>> = ({
   nameSpace,
   onRemove,
 }) => {

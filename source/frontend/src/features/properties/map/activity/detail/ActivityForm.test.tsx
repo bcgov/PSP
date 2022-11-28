@@ -10,7 +10,7 @@ import { mockAcquisitionFileResponse } from 'mocks/mockAcquisitionFiles';
 import { getMockActivityResponse } from 'mocks/mockActivities';
 import { act } from 'react-test-renderer';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent, waitFor } from 'utils/test-utils';
+import { fillInput, render, RenderOptions, userEvent } from 'utils/test-utils';
 import * as Yup from 'yup';
 
 import { ActivityForm, IActivityFormProps } from './ActivityForm';
@@ -100,10 +100,10 @@ describe('ActivityForm test', () => {
     await findByText('No matching Documents found');
     const saveButton = getByText('Save').closest('button');
     await fillInput(container, 'description', 'another description', 'textarea');
-    await waitFor(() => expect(saveButton).not.toBeDisabled());
-    userEvent.click(getByText('Save'));
+    expect(saveButton).not.toBeDisabled();
+    await act(() => userEvent.click(getByText('Save')));
 
-    await waitFor(() => expect(saveButton).toBeDisabled());
+    expect(saveButton).toBeDisabled();
   });
 
   it('calls onCancel when form is not dirty and cancel is clicked', async () => {
@@ -111,7 +111,7 @@ describe('ActivityForm test', () => {
     await findByText('No matching Documents found');
 
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(() => userEvent.click(cancelButton));
 
     expect(setEditMode).toHaveBeenCalledWith(false);
   });
@@ -122,7 +122,7 @@ describe('ActivityForm test', () => {
 
     await fillInput(container, 'description', 'another description', 'textarea');
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(() => userEvent.click(cancelButton));
 
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     expect(await findByDisplayValue('another description')).toBeVisible();
@@ -134,12 +134,10 @@ describe('ActivityForm test', () => {
 
     await fillInput(container, 'description', 'another description', 'textarea');
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(() => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const confirmButton = getByText('Confirm');
-    act(() => {
-      userEvent.click(confirmButton);
-    });
+    await act(() => userEvent.click(confirmButton));
 
     expect(setEditMode).toHaveBeenCalledWith(false);
     expect(await findByDisplayValue('test description')).toBeVisible();
@@ -151,12 +149,10 @@ describe('ActivityForm test', () => {
 
     await fillInput(container, 'description', 'another description', 'textarea');
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(() => userEvent.click(cancelButton));
     expect(screen.getByText('Unsaved Changes')).toBeVisible();
     const noButton = getByText('No');
-    act(() => {
-      userEvent.click(noButton);
-    });
+    await act(() => userEvent.click(noButton));
 
     expect(setEditMode).not.toHaveBeenCalled();
     expect(await findByDisplayValue('another description')).toBeVisible();
@@ -176,7 +172,7 @@ describe('ActivityForm test', () => {
       });
       await findByText('No matching Documents found');
 
-      userEvent.click(getByText('Test'));
+      await userEvent.click(getByText('Test'));
 
       expect(getByText('Site Visit(View)')).toBeVisible();
     });
@@ -214,7 +210,7 @@ describe('ActivityForm test', () => {
       });
       await findByText('No matching Documents found');
 
-      userEvent.click(getByText('Test'));
+      await userEvent.click(getByText('Test'));
 
       expect(getByText('test string')).toBeVisible();
     });
@@ -234,14 +230,12 @@ describe('ActivityForm test', () => {
 
       await fillInput(container, 'activityData.test', 'test string');
       const saveButton = getByText('Save').closest('button');
-      await waitFor(() => expect(saveButton).not.toBeDisabled());
-      userEvent.click(saveButton!);
+      expect(saveButton).not.toBeDisabled();
+      await act(() => userEvent.click(saveButton!));
 
-      await waitFor(() => {
-        expect(onSave).toHaveBeenCalledWith(
-          expect.objectContaining({ activityDataJson: '{"test":"test string","version":"1.0"}' }),
-        );
-      });
+      expect(onSave).toHaveBeenCalledWith(
+        expect.objectContaining({ activityDataJson: '{"test":"test string","version":"1.0"}' }),
+      );
     });
     it('displays validation errors and does not save when given a validation schema', async () => {
       const { getByText, findByText, container } = setup({
@@ -262,8 +256,8 @@ describe('ActivityForm test', () => {
 
       await fillInput(container, 'description', 'another description', 'textarea');
       const saveButton = getByText('Save').closest('button');
-      await waitFor(() => expect(saveButton).not.toBeDisabled());
-      userEvent.click(saveButton!);
+      expect(saveButton).not.toBeDisabled();
+      await act(() => userEvent.click(saveButton!));
 
       expect(await findByText('test is required')).toBeVisible();
     });
@@ -284,8 +278,8 @@ describe('ActivityForm test', () => {
 
       await fillInput(container, 'description', 'another description', 'textarea');
       const saveButton = getByText('Save').closest('button');
-      await waitFor(() => expect(saveButton).not.toBeDisabled());
-      userEvent.click(saveButton!);
+      expect(saveButton).not.toBeDisabled();
+      await act(() => userEvent.click(saveButton!));
 
       expect(await findByText('test is required')).toBeVisible();
     });

@@ -21,7 +21,9 @@ export interface IActivityPropertyModalProps {
   onSave: (activity: ActivityModel) => Promise<Api_Activity | undefined>;
 }
 
-export const ActivityPropertyModal: React.FunctionComponent<IActivityPropertyModalProps> = ({
+export const ActivityPropertyModal: React.FunctionComponent<
+  React.PropsWithChildren<IActivityPropertyModalProps>
+> = ({
   display,
   setDisplay,
   activityModel,
@@ -100,7 +102,7 @@ interface IModalContentProps {
   setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
 }
 
-const ModalContent: React.FC<IModalContentProps> = ({
+const ModalContent: React.FC<React.PropsWithChildren<IModalContentProps>> = ({
   allProperties,
   selectedFileProperties,
   setSelectedFileProperties,
