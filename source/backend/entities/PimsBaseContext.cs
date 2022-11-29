@@ -2420,6 +2420,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ActivityInstanceStatusTypeCode).HasDefaultValueSql("('NOSTART')");
 
+                entity.Property(e => e.ActivityTemplateId).HasDefaultValueSql("((-1))");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -2616,6 +2618,8 @@ namespace Pims.Dal
                 entity.Property(e => e.ActivityTemplateJson)
                     .HasDefaultValueSql("('<Empty>')")
                     .HasComment("JSON structure desribing how to construct the activity UI.");
+
+                entity.Property(e => e.ActivityTemplateTypeCode).HasDefaultValueSql("('GENERAL')");
 
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3136,7 +3140,7 @@ namespace Pims.Dal
 
                 entity.HasComment("Describes the source system of the data (PAIMS, LIS, etc.)");
 
-                entity.Property(e => e.DataSourceTypeCode).HasComment("Code val;ue of the source system of the data (PAIMS, LIS, etc.)");
+                entity.Property(e => e.DataSourceTypeCode).HasComment("Code vallue of the source system of the data (PAIMS, LIS, etc.)");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
