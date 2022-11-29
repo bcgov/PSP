@@ -31,7 +31,7 @@ export const useBcAssessmentLayer = (
     setModalContent({
       title: 'SiteMinder Session Expired',
       message:
-        'Your SiteMinder Session has expired. In order to access BC Assessment data, you will need to logout and log back in to the application.',
+        'Your SiteMinder Session has expired, you have not been authorized to access BC Assessment, or BC Assessment is offline. In order to access BC Assessment data, you may try to logout and log back in to the application. If you continue to see this error, contact an administrator',
       okButtonText: 'Log out',
       cancelButtonText: 'Continue working',
       handleOk: () => {
@@ -102,8 +102,13 @@ export const useBcAssessmentLayer = (
       } catch (e: any) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
-          if (axiosError.response === undefined) {
-            setDisplayModal(true);
+          try {
+            // Test to see if the service is at all available.
+            await axios.get(url, { withCredentials: true });
+          } catch (err) {
+            if (axiosError.response === undefined && axiosError.code === undefined) {
+              setDisplayModal(true);
+            }
           }
         }
       }
@@ -185,6 +190,7 @@ export const useBcAssessmentLayer = (
       getSales,
       getLegalDescriptions,
       setDisplayModal,
+      url,
     ],
   );
 
@@ -198,7 +204,7 @@ export const useBcAssessmentLayer = (
 };
 
 export const LAYER_UNAVAILABLE = [
-  'The BC Assessment map layers used in this application are unavailable at this time.',
+  'Error returned from BC Assessment.',
   'Please notify ',
   'pims@gov.bc.ca',
   ' if this problem persists.',
