@@ -6,12 +6,14 @@ import { Claims } from 'constants/claims';
 import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import { createMemoryHistory } from 'history';
 import { defaultLease, ILease } from 'interfaces';
+import { mockLookups } from 'mocks';
 import {
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
   getMockPerson,
 } from 'mocks/mockContacts';
 import { getMockLease } from 'mocks/mockLease';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   act,
   fillInput,
@@ -30,7 +32,9 @@ jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
 describe('AddLeaseTenantContainer component', () => {
   const setup = async (renderOptions: RenderOptions & { lease?: ILease } = {}) => {
     // render component under test
@@ -40,6 +44,7 @@ describe('AddLeaseTenantContainer component', () => {
       </LeaseContextProvider>,
       {
         ...renderOptions,
+        store: storeState,
         history,
       },
     );

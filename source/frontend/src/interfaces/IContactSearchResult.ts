@@ -1,6 +1,7 @@
 import { Api_Contact } from 'models/api/Contact';
 import { Api_Organization } from 'models/api/Organization';
 import { Api_Person } from 'models/api/Person';
+import Api_TypeCode from 'models/api/TypeCode';
 
 export interface IContactSearchResult {
   id: string;
@@ -22,6 +23,7 @@ export interface IContactSearchResult {
   note?: string;
   landline?: string;
   mobile?: string;
+  tenantTypeCode?: Api_TypeCode<string>;
 }
 
 export function fromContact(baseModel: Api_Contact): IContactSearchResult {

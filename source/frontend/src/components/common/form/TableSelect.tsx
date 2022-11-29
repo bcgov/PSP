@@ -38,6 +38,8 @@ type OptionalAttributes = {
   custom?: boolean;
   /** Optional label to be assigned to the add button */
   addLabel?: string;
+
+  disableButton?: boolean;
 };
 
 export type TableSelectProps<T extends object> = FormControlProps &
@@ -55,30 +57,40 @@ export const TableSelect = <T extends { id?: string | number }>({
   selectedTableHeader: SelectedTableHeader,
   columns,
   addLabel,
+  disableButton,
 }: TableSelectProps<T>) => {
   const { values, setFieldValue } = useFormikContext<any>();
-  const existingItems: T[] = getIn(values, field) ?? [];
+  const existingItems: T[] = useMemo(() => {
+    return getIn(values, field) ?? [];
+  }, [values, field]);
   const columnsWithRemove = useMemo(
     () => getColumnsWithRemove<T>((rows: T[]) => setFieldValue(field, rows), [...columns]),
     [columns, field, setFieldValue],
   );
-
+  React.useEffect(() => {
+    setFieldValue(
+      field,
+      _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
+    );
+  }, [existingItems, selectedItems, field, setFieldValue]);
   return (
     <Container className="col-md-12">
       {!disabled && (
         <div>
           {children}
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setFieldValue(
-                field,
-                _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
-              );
-            }}
-          >
-            {addLabel ?? 'Add Selected'}
-          </Button>
+          {!disableButton && (
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setFieldValue(
+                  field,
+                  _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
+                );
+              }}
+            >
+              {addLabel ?? 'Add Selected'}
+            </Button>
+          )}
         </div>
       )}
       <Styled.SaveTableWrapper>

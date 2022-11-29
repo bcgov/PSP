@@ -7,7 +7,9 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { IFormLease } from 'interfaces';
 import { noop } from 'lodash';
+import { mockLookups } from 'mocks';
 import { getMockLease } from 'mocks/mockLease';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
   getAllByRole as getAllByRoleBase,
   mockKeycloak,
@@ -24,7 +26,9 @@ jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
 describe('AddLeaseTenantForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
@@ -49,6 +53,7 @@ describe('AddLeaseTenantForm component', () => {
       </Formik>,
       {
         ...renderOptions,
+        store: storeState,
         history,
       },
     );
