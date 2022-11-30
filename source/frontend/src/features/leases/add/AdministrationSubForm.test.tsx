@@ -123,7 +123,6 @@ describe('AdministrationSubForm component', () => {
     expect(otherField).toBeNull();
 
     await fillInput(container, 'programTypeCode', 'OTHER', 'select');
-    console.log(container.outerHTML);
     const otherText = await getByText('Other Program:');
     expect(otherText).toBeVisible();
     otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
