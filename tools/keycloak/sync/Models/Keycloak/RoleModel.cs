@@ -23,9 +23,6 @@ namespace Pims.Tools.Keycloak.Sync.Models.Keycloak
         public RoleModel(RoleOptions role)
         {
             this.Name = role.Name;
-            this.Description = role.Description;
-            this.Composite = role.Composite;
-            this.ClientRole = role.ClientRole;
         }
         #endregion
     }
