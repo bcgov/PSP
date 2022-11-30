@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, findByText, getByRole, renderAsync, RenderOptions } from 'utils/test-utils';
+import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
@@ -117,7 +117,7 @@ describe('AdministrationSubForm component', () => {
 
   it('displays other program text if "Other" is selected', async () => {
     const {
-      component: { container, getByText, getByRole },
+      component: { container, getByText },
     } = await setup({});
     let otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
     expect(otherField).toBeNull();
