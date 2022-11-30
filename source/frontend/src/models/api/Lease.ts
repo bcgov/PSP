@@ -17,6 +17,7 @@ export interface Api_Lease {
   initiatorType?: Api_TypeCode<string>;
   type?: Api_TypeCode<string>;
   statusType?: Api_TypeCode<string>;
+  accountType?: Api_TypeCode<string>;
   region?: Api_TypeCode<number>;
   programType?: Api_TypeCode<string>;
   otherType?: string;

@@ -43,31 +43,38 @@ describe('PropertyInformationSubForm component', () => {
 
   it('unit type and area are disabled by default', async () => {
     const {
-      component: { getByLabelText },
+      component: { getByText, getByLabelText },
     } = await setup({});
+
+    userEvent.click(getByText('+ Add another property'));
+
     expect(getByLabelText('Lease Area:')).toBeDisabled();
   });
 
   it('unit type and area are enabled when pid entered', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByText, getByLabelText, container },
     } = await setup({});
+    userEvent.click(getByText('+ Add another property'));
     await fillInput(container, 'properties.0.property.pid', '1');
     expect(getByLabelText('Lease Area:')).not.toBeDisabled();
   });
 
   it('pin is disabled when pid is valued', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByText, getByLabelText, container },
     } = await setup({});
+    userEvent.click(getByText('+ Add another property'));
     await fillInput(container, 'properties.0.property.pid', '1');
     expect(getByLabelText('PIN:')).toBeDisabled();
   });
 
   it('pid is disabled when pin is valued', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByText, getByLabelText, container },
     } = await setup({});
+    userEvent.click(getByText('+ Add another property'));
+
     await fillInput(container, 'properties.0.property.pin', '1');
     expect(getByLabelText('PID:')).toBeDisabled();
   });
@@ -77,13 +84,15 @@ describe('PropertyInformationSubForm component', () => {
       component: { getByText, findAllByText },
     } = await setup({});
     userEvent.click(getByText('+ Add another property'));
-    expect(await (await findAllByText('PID:')).length).toBe(2);
+    expect(await (await findAllByText('PID:')).length).toBe(1);
   });
 
   it('can remove a row', async () => {
     const {
       component: { getByText, queryByText },
     } = await setup({});
+    userEvent.click(getByText('+ Add another property'));
+
     userEvent.click(getByText('Remove'));
     await waitFor(() => {
       expect(queryByText('PID:')).toBeNull();

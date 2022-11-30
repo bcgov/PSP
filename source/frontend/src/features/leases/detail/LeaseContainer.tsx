@@ -19,7 +19,7 @@ import {
   LeaseRouter,
   useLeaseDetail,
 } from '..';
-import { LeaseSchema } from '../add/AddLeaseYupSchema';
+import { AddLeaseYupSchema } from '../add/AddLeaseYupSchema';
 import LeaseEditButton from './LeaseEditButton';
 import DepositsContainer from './LeasePages/deposits/DepositsContainer';
 import DetailContainer from './LeasePages/details/DetailContainer';
@@ -68,7 +68,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
           <LeaseEditButton linkTo="?edit=true" />
         </>
       ),
-      validation: LeaseSchema,
+      validation: AddLeaseYupSchema,
     },
   ],
   [

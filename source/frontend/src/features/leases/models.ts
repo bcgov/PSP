@@ -9,12 +9,12 @@ import { Api_Property } from 'models/api/Property';
 import { Api_PropertyLease } from 'models/api/PropertyLease';
 import Api_TypeCode from 'models/api/TypeCode';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
-import { stringToNull } from 'utils/formUtils';
+import { fromTypeCode, stringToNull, toTypeCode } from 'utils/formUtils';
 import { pidParser } from 'utils/propertyUtils';
 
 import { getPrettyLatLng } from './../properties/selector/utils';
 
-export class FormLease {
+export class LeaseFormModel {
   id?: number;
   lFileNo?: string;
   psFileNo?: string;
@@ -23,19 +23,19 @@ export class FormLease {
   renewalDate?: string;
   startDate?: string;
   responsibilityEffectiveDate?: string;
-  paymentReceivableType?: Api_TypeCode<string>;
-  categoryType?: Api_TypeCode<string>;
-  purposeType?: Api_TypeCode<string>;
-  responsibilityType?: Api_TypeCode<string>;
-  initiatorType?: Api_TypeCode<string>;
-  type?: Api_TypeCode<string>;
-  statusType?: Api_TypeCode<string>;
-  region?: Api_TypeCode<number>;
-  programType?: Api_TypeCode<string>;
-  otherType?: string;
-  otherProgramType?: string;
-  otherCategoryType?: string;
-  otherPurposeType?: string;
+  paymentReceivableTypeCode?: string;
+  categoryTypeCode?: string;
+  purposeTypeCode?: string;
+  responsibilityTypeCode?: string;
+  initiatorTypeCode?: string;
+  leaseTypeCode?: string;
+  statusTypeCode?: string;
+  regionId?: number;
+  programTypeCode?: string;
+  otherLeaseTypeDescription?: string;
+  otherProgramTypeDescription?: string;
+  otherCategoryTypeDescription?: string;
+  otherPurposeTypeDescription?: string;
   note?: string;
   programName?: string;
   motiName?: string;
@@ -53,8 +53,8 @@ export class FormLease {
   properties?: FormLeaseProperty[] = [];
   rowVersion?: number;
 
-  static fromApi(apiModel?: Api_Lease): FormLease {
-    const leaseDetail = new FormLease();
+  static fromApi(apiModel?: Api_Lease): LeaseFormModel {
+    const leaseDetail = new LeaseFormModel();
 
     leaseDetail.id = apiModel?.id;
     leaseDetail.lFileNo = apiModel?.lFileNo;
@@ -64,15 +64,15 @@ export class FormLease {
     leaseDetail.startDate = apiModel?.startDate;
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate;
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
-    leaseDetail.paymentReceivableType = apiModel?.paymentReceivableType;
-    leaseDetail.categoryType = apiModel?.categoryType;
-    leaseDetail.purposeType = apiModel?.purposeType;
-    leaseDetail.responsibilityType = apiModel?.responsibilityType;
-    leaseDetail.initiatorType = apiModel?.initiatorType || { id: LeaseInitiatorTypes.Hq };
-    leaseDetail.statusType = apiModel?.statusType;
-    leaseDetail.type = apiModel?.type;
-    leaseDetail.region = apiModel?.region;
-    leaseDetail.programType = apiModel?.programType;
+    leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType);
+    leaseDetail.categoryTypeCode = fromTypeCode(apiModel?.categoryType);
+    leaseDetail.purposeTypeCode = fromTypeCode(apiModel?.purposeType);
+    leaseDetail.responsibilityTypeCode = fromTypeCode(apiModel?.responsibilityType);
+    leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || LeaseInitiatorTypes.Hq;
+    leaseDetail.statusTypeCode = fromTypeCode(apiModel?.statusType);
+    leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type);
+    leaseDetail.regionId = fromTypeCode(apiModel?.region);
+    leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType);
     leaseDetail.note = apiModel?.note;
     leaseDetail.returnNotes = apiModel?.returnNotes;
     leaseDetail.documentationReference = apiModel?.documentationReference;
@@ -85,10 +85,10 @@ export class FormLease {
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement;
     leaseDetail.rowVersion = apiModel?.rowVersion;
     leaseDetail.description = apiModel?.description;
-    leaseDetail.otherCategoryType = apiModel?.otherCategoryType;
-    leaseDetail.otherProgramType = apiModel?.otherProgramType;
-    leaseDetail.otherPurposeType = apiModel?.otherPurposeType;
-    leaseDetail.otherType = apiModel?.otherType;
+    leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType;
+    leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType;
+    leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType;
+    leaseDetail.otherLeaseTypeDescription = apiModel?.otherType;
 
     return leaseDetail;
   }
@@ -103,15 +103,15 @@ export class FormLease {
       startDate: this.startDate,
       responsibilityEffectiveDate: stringToNull(this.responsibilityEffectiveDate),
       amount: parseFloat(this.amount?.toString() ?? '') || 0.0,
-      paymentReceivableType: this.paymentReceivableType,
-      categoryType: this.categoryType?.id ? this.categoryType : undefined,
-      purposeType: this.purposeType,
-      responsibilityType: this.responsibilityType,
-      initiatorType: this.initiatorType || { id: LeaseInitiatorTypes.Hq },
-      statusType: this.statusType,
-      type: this.type,
-      region: this.region,
-      programType: this.programType,
+      paymentReceivableType: toTypeCode(this.paymentReceivableTypeCode),
+      categoryType: this.categoryTypeCode ? toTypeCode(this.categoryTypeCode) : undefined,
+      purposeType: toTypeCode(this.purposeTypeCode),
+      responsibilityType: toTypeCode(this.responsibilityTypeCode),
+      initiatorType: toTypeCode(this.initiatorTypeCode),
+      statusType: toTypeCode(this.statusTypeCode),
+      type: toTypeCode(this.leaseTypeCode),
+      region: toTypeCode(this.regionId),
+      programType: toTypeCode(this.programTypeCode),
       note: this.note,
       returnNotes: this.returnNotes,
       documentationReference: this.documentationReference,
@@ -124,10 +124,10 @@ export class FormLease {
       isOtherImprovement: this.isOtherImprovement,
       description: this.description,
       rowVersion: this.rowVersion,
-      otherCategoryType: this.otherCategoryType,
-      otherProgramType: this.otherProgramType,
-      otherPurposeType: this.otherPurposeType,
-      otherType: this.otherType,
+      otherCategoryType: stringToNull(this.otherCategoryTypeDescription),
+      otherProgramType: stringToNull(this.otherProgramTypeDescription),
+      otherPurposeType: stringToNull(this.otherPurposeTypeDescription),
+      otherType: stringToNull(this.otherLeaseTypeDescription),
     };
   }
 }
@@ -232,9 +232,9 @@ export class FormProperty {
   }
 }
 
-export const getDefaultFormLease: () => FormLease = () =>
-  FormLease.fromApi({
-    properties: [{}],
+export const getDefaultFormLease: () => LeaseFormModel = () =>
+  LeaseFormModel.fromApi({
+    properties: [],
     startDate: '',
     expiryDate: '',
     lFileNo: '',
@@ -249,4 +249,5 @@ export const getDefaultFormLease: () => FormLease = () =>
     hasDigitalLicense: undefined,
     hasPhysicalLicense: undefined,
     statusType: { id: 'DRAFT' },
+    paymentReceivableType: { id: 'RCVBL' },
   });

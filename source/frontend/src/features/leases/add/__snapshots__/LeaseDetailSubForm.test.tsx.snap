@@ -1,0 +1,278 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeaseDetailSubForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c4 textarea.form-control {
+  min-width: 80rem;
+  height: 7rem;
+  resize: none;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <div
+      class="collapse show"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-2"
+        >
+          <label
+            class="c1"
+          >
+            Status:
+          </label>
+        </div>
+        <div
+          class="c2 required text-left col-4"
+        >
+          <div
+            class="required form-group"
+          >
+            <select
+              class="form-select form-control"
+              id="input-statusTypeCode"
+              name="statusTypeCode"
+              required=""
+            >
+              <option
+                value=""
+              >
+                Select Status
+              </option>
+              <option
+                class="option"
+                value="ACTIVE"
+              >
+                Active
+              </option>
+              <option
+                class="option"
+                value="DISCARD"
+              >
+                Discarded
+              </option>
+              <option
+                class="option"
+                value="DRAFT"
+              >
+                Draft
+              </option>
+              <option
+                class="option"
+                value="INACTIVE"
+              >
+                Inactive
+              </option>
+              <option
+                class="option"
+                value="TERMINATED"
+              >
+                Terminated
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-2"
+        >
+          <label
+            class="c1"
+          >
+            Account type:
+          </label>
+        </div>
+        <div
+          class="c2 required text-left col-5"
+        >
+          <div
+            class="form-group"
+          >
+            <select
+              class="form-select form-control"
+              id="input-paymentReceivableTypeCode"
+              name="paymentReceivableTypeCode"
+            >
+              <option
+                class="option"
+                value="PYBLBCTFA"
+              >
+                Payable (BCTFA as tenant)
+              </option>
+              <option
+                class="option"
+                value="PYBLMOTI"
+              >
+                Payable (MOTI as tenant)
+              </option>
+              <option
+                class="option"
+                value="RCVBL"
+              >
+                Receivable
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c1"
+              >
+                Start Date:
+              </label>
+            </div>
+            <div
+              class="c2 required text-left col"
+            >
+              <div
+                class="required form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c3 form-control date-picker"
+                      id="datepicker-startDate"
+                      name="startDate"
+                      placeholder="--/--/----"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c1"
+              >
+                Expiry Date:
+              </label>
+            </div>
+            <div
+              class="c2 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="c3 form-control date-picker"
+                      id="datepicker-expiryDate"
+                      name="expiryDate"
+                      placeholder="--/--/----"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c1"
+          >
+            Description:
+          </label>
+        </div>
+        <div
+          class="c2 text-left col"
+        >
+          <div
+            class="c4 textarea input form-group"
+          >
+            <textarea
+              class="form-control"
+              id="input-description"
+              name="description"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

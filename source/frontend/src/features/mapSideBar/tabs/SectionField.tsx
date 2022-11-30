@@ -44,6 +44,7 @@ function renderTooltip(tooltip?: React.ReactNode): React.ReactNode {
 }
 
 export const StyledCol = styled(Col)`
+  //border: 1px solid green;
   &.required::before {
     content: '*';
     position: absolute;

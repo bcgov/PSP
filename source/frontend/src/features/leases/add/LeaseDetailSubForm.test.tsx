@@ -6,20 +6,24 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
-import { LeaseSchema } from './AddLeaseYupSchema';
-import LeaseDatesSubForm, { ILeaseDatesSubFormProps } from './LeaseDatesSubForm';
+import { AddLeaseYupSchema } from './AddLeaseYupSchema';
+import LeaseDetailSubForm, { ILeaseDetailsSubFormProps } from './LeaseDetailSubForm';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('LeaseDatesSubForm component', () => {
-  const setup = async (renderOptions: RenderOptions & Partial<ILeaseDatesSubFormProps> = {}) => {
+describe('LeaseDetailSubForm component', () => {
+  const setup = async (renderOptions: RenderOptions & Partial<ILeaseDetailsSubFormProps> = {}) => {
     // render component under test
     const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={getDefaultFormLease()} validationSchema={LeaseSchema}>
-        {formikProps => <LeaseDatesSubForm formikProps={formikProps} />}
+      <Formik
+        onSubmit={noop}
+        initialValues={getDefaultFormLease()}
+        validationSchema={AddLeaseYupSchema}
+      >
+        {formikProps => <LeaseDetailSubForm formikProps={formikProps} />}
       </Formik>,
       {
         ...renderOptions,

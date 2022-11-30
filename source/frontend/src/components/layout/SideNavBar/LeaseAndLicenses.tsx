@@ -25,7 +25,7 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
           </Link>
         )}
         {hasClaim(Claims.LEASE_ADD) && (
-          <Link onClick={onLinkClick} to="/lease/new">
+          <Link onClick={onLinkClick} to="/mapview/sidebar/lease/new">
             Create a Lease/License File
           </Link>
         )}
