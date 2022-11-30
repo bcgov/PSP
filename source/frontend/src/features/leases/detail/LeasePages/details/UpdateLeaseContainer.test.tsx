@@ -9,7 +9,7 @@ import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { defaultApiLease } from 'models/api/Lease';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+import { renderAsync, RenderOptions } from 'utils/test-utils';
 
 import { UpdateLeaseContainer } from './UpdateLeaseContainer';
 

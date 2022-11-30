@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import _, { noop } from 'lodash';
+import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
