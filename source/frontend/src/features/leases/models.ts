@@ -16,79 +16,79 @@ import { getPrettyLatLng } from './../properties/selector/utils';
 
 export class LeaseFormModel {
   id?: number;
-  lFileNo?: string;
-  psFileNo?: string;
-  tfaFileNumber?: string;
-  expiryDate?: string;
-  renewalDate?: string;
-  startDate?: string;
-  responsibilityEffectiveDate?: string;
-  paymentReceivableTypeCode?: string;
-  categoryTypeCode?: string;
-  purposeTypeCode?: string;
-  responsibilityTypeCode?: string;
-  initiatorTypeCode?: string;
-  leaseTypeCode?: string;
-  statusTypeCode?: string;
-  regionId?: number;
-  programTypeCode?: string;
-  otherLeaseTypeDescription?: string;
-  otherProgramTypeDescription?: string;
-  otherCategoryTypeDescription?: string;
-  otherPurposeTypeDescription?: string;
-  note?: string;
-  programName?: string;
-  motiName?: string;
-  amount?: NumberFieldValue;
-  renewalCount?: NumberFieldValue;
-  description?: string;
-  isResidential?: boolean;
-  isCommercialBuilding?: boolean;
-  isOtherImprovement?: boolean;
-  returnNotes?: string; // security deposit notes (free form text)
-  documentationReference?: string;
+  lFileNo: string = '';
+  psFileNo: string = '';
+  tfaFileNumber: string = '';
+  expiryDate: string = '';
+  renewalDate: string = '';
+  startDate: string = '';
+  responsibilityEffectiveDate: string = '';
+  paymentReceivableTypeCode: string = '';
+  categoryTypeCode: string = '';
+  purposeTypeCode: string = '';
+  responsibilityTypeCode: string = '';
+  initiatorTypeCode: string = '';
+  leaseTypeCode: string = '';
+  statusTypeCode: string = '';
+  regionId: number = 0;
+  programTypeCode: string = '';
+  otherLeaseTypeDescription: string = '';
+  otherProgramTypeDescription: string = '';
+  otherCategoryTypeDescription: string = '';
+  otherPurposeTypeDescription: string = '';
+  note: string = '';
+  programName: string = '';
+  motiName: string = '';
+  amount: NumberFieldValue = '';
+  renewalCount: NumberFieldValue = '';
+  description: string = '';
+  isResidential: boolean = false;
+  isCommercialBuilding: boolean = false;
+  isOtherImprovement: boolean = false;
+  returnNotes: string = ''; // security deposit notes (free form text)
+  documentationReference: string = '';
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
-  tenantNotes?: string[] = [];
-  properties?: FormLeaseProperty[] = [];
-  rowVersion?: number;
+  tenantNotes: string[] = [];
+  properties: FormLeaseProperty[] = [];
+  rowVersion: number = 0;
 
   static fromApi(apiModel?: Api_Lease): LeaseFormModel {
     const leaseDetail = new LeaseFormModel();
 
     leaseDetail.id = apiModel?.id;
-    leaseDetail.lFileNo = apiModel?.lFileNo;
-    leaseDetail.psFileNo = apiModel?.psFileNo;
-    leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber;
-    leaseDetail.expiryDate = apiModel?.expiryDate;
-    leaseDetail.startDate = apiModel?.startDate;
-    leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate;
+    leaseDetail.lFileNo = apiModel?.lFileNo || '';
+    leaseDetail.psFileNo = apiModel?.psFileNo || '';
+    leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
+    leaseDetail.expiryDate = apiModel?.expiryDate || '';
+    leaseDetail.startDate = apiModel?.startDate || '';
+    leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
-    leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType);
-    leaseDetail.categoryTypeCode = fromTypeCode(apiModel?.categoryType);
-    leaseDetail.purposeTypeCode = fromTypeCode(apiModel?.purposeType);
-    leaseDetail.responsibilityTypeCode = fromTypeCode(apiModel?.responsibilityType);
+    leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
+    leaseDetail.categoryTypeCode = fromTypeCode(apiModel?.categoryType) || '';
+    leaseDetail.purposeTypeCode = fromTypeCode(apiModel?.purposeType) || '';
+    leaseDetail.responsibilityTypeCode = fromTypeCode(apiModel?.responsibilityType) || '';
     leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || LeaseInitiatorTypes.Hq;
-    leaseDetail.statusTypeCode = fromTypeCode(apiModel?.statusType);
-    leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type);
-    leaseDetail.regionId = fromTypeCode(apiModel?.region);
-    leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType);
-    leaseDetail.note = apiModel?.note;
-    leaseDetail.returnNotes = apiModel?.returnNotes;
-    leaseDetail.documentationReference = apiModel?.documentationReference;
-    leaseDetail.motiName = apiModel?.motiName;
+    leaseDetail.statusTypeCode = fromTypeCode(apiModel?.statusType) || '';
+    leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type) || '';
+    leaseDetail.regionId = fromTypeCode(apiModel?.region) || 0;
+    leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType) || '';
+    leaseDetail.note = apiModel?.note || '';
+    leaseDetail.returnNotes = apiModel?.returnNotes || '';
+    leaseDetail.documentationReference = apiModel?.documentationReference || '';
+    leaseDetail.motiName = apiModel?.motiName || '';
     leaseDetail.hasDigitalLicense = apiModel?.hasDigitalLicense;
     leaseDetail.hasPhysicalLicense = apiModel?.hasPhysicalLicense;
     leaseDetail.properties = apiModel?.properties?.map(p => FormLeaseProperty.fromApi(p)) ?? [];
-    leaseDetail.isResidential = apiModel?.isResidential;
-    leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding;
-    leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement;
-    leaseDetail.rowVersion = apiModel?.rowVersion;
-    leaseDetail.description = apiModel?.description;
-    leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType;
-    leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType;
-    leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType;
-    leaseDetail.otherLeaseTypeDescription = apiModel?.otherType;
+    leaseDetail.isResidential = apiModel?.isResidential || false;
+    leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding || false;
+    leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement || false;
+    leaseDetail.rowVersion = apiModel?.rowVersion || 0;
+    leaseDetail.description = apiModel?.description || '';
+    leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType || '';
+    leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
+    leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType || '';
+    leaseDetail.otherLeaseTypeDescription = apiModel?.otherType || '';
 
     return leaseDetail;
   }
@@ -112,9 +112,9 @@ export class LeaseFormModel {
       type: toTypeCode(this.leaseTypeCode),
       region: toTypeCode(this.regionId),
       programType: toTypeCode(this.programTypeCode),
-      note: this.note,
+      note: stringToNull(this.note),
       returnNotes: this.returnNotes,
-      documentationReference: this.documentationReference,
+      documentationReference: stringToNull(this.documentationReference),
       motiName: this.motiName,
       hasDigitalLicense: this.hasDigitalLicense,
       hasPhysicalLicense: this.hasPhysicalLicense,
@@ -122,8 +122,8 @@ export class LeaseFormModel {
       isResidential: this.isResidential,
       isCommercialBuilding: this.isCommercialBuilding,
       isOtherImprovement: this.isOtherImprovement,
-      description: this.description,
-      rowVersion: this.rowVersion,
+      description: stringToNull(this.description),
+      rowVersion: this.rowVersion > 0 ? this.rowVersion : undefined,
       otherCategoryType: stringToNull(this.otherCategoryTypeDescription),
       otherProgramType: stringToNull(this.otherProgramTypeDescription),
       otherPurposeType: stringToNull(this.otherPurposeTypeDescription),

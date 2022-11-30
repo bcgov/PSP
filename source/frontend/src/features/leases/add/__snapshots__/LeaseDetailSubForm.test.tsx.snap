@@ -265,6 +265,7 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
               class="form-control"
               id="input-description"
               name="description"
+              title=""
             />
           </div>
         </div>

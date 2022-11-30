@@ -407,6 +407,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                       class="form-control"
                       id="input-description"
                       name="description"
+                      title=""
                     />
                   </div>
                 </div>
@@ -1388,6 +1389,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                       class="form-control"
                       id="input-documentationReference"
                       name="documentationReference"
+                      title=""
                     />
                   </div>
                 </div>
