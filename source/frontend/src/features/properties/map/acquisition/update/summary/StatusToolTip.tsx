@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StatusToolTip: React.FunctionComponent = () => {
+const StatusToolTip: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   return (
     <StyledTooltip>
       <b>Draft</b>

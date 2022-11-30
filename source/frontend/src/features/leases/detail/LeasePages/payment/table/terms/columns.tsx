@@ -9,55 +9,61 @@ import {
 } from 'components/Table';
 import { Claims, LeaseTermStatusTypes } from 'constants/index';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { ILeasePayment } from 'interfaces';
-import { IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
+import { IFormLeaseTerm } from 'interfaces';
 import moment from 'moment';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import { ISystemConstant } from 'store/slices/systemConstants';
 import styled from 'styled-components';
-import { formatMoney, prettyFormatDate } from 'utils';
+import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { formatMoney, prettyFormatDate, stringToFragment } from 'utils';
 
-function initialOrRenewalTerm({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-  return index === 0 ? 'Initial term' : `Renewal ${index}`;
+function initialOrRenewalTerm({ row: { original, index } }: CellProps<IFormLeaseTerm, unknown>) {
+  return stringToFragment(index === 0 ? 'Initial term' : `Renewal ${index}`);
 }
 
-function startAndEndDate({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-  return `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`;
+function startAndEndDate({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
+  return stringToFragment(
+    `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+  );
 }
 
 const renderExpectedTotal = () =>
-  function ({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    return original.paymentAmount !== undefined
-      ? formatMoney(original.paymentAmount + (original?.gstAmount ?? 0))
-      : '-';
+  function ({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
+    return stringToFragment(
+      original.paymentAmount !== undefined
+        ? formatMoney((original.paymentAmount as number) + ((original?.gstAmount as number) ?? 0))
+        : '-',
+    );
   };
 
-function renderGstAmount({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-  return original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-';
+function renderGstAmount({ row: { original } }: CellProps<IFormLeaseTerm, NumberFieldValue>) {
+  return stringToFragment(
+    original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-',
+  );
 }
 
-function renderActualTotal({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
+function renderActualTotal({ row: { original } }: CellProps<IFormLeaseTerm, string>) {
   const total = formatMoney(
-    (original.payments ?? []).reduce((sum: number, p: ILeasePayment) => (sum += p.amountTotal), 0),
+    (original.payments ?? []).reduce((sum: number, p) => (sum += p.amountTotal as number), 0),
   );
-  return original.isTermExercised ? total : '-';
+  return stringToFragment(original.isTermExercised ? total : '-');
 }
 
 const renderExpectedTerm = () =>
-  function ({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
+  function ({ row: { original } }: CellProps<IFormLeaseTerm, string>) {
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
-      return '-';
+      return stringToFragment('-');
     }
     const expectedTerm = calculateExpectedTermAmount(
       original.leasePmtFreqTypeCode?.description ?? '',
       original.startDate,
       original.expiryDate,
-      original.paymentAmount,
-      original.gstAmount ?? 0,
+      original.paymentAmount as number,
+      (original.gstAmount as number) ?? 0,
     );
-    return expectedTerm !== undefined ? formatMoney(expectedTerm) : '-';
+    return stringToFragment(expectedTerm !== undefined ? formatMoney(expectedTerm) : '-');
   };
 
 function getNumberOfIntervals(frequency: string, startDate: string, endDate: string) {

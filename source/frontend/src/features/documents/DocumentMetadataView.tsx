@@ -11,7 +11,9 @@ export interface IDocumentMetadataViewProps {
   formikProps: FormikProps<DocumentUploadFormData> | FormikProps<DocumentUpdateFormData>;
 }
 
-export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataViewProps> = props => {
+export const DocumentMetadataView: React.FunctionComponent<
+  React.PropsWithChildren<IDocumentMetadataViewProps>
+> = props => {
   return (
     <>
       {props.mayanMetadata.length === 0 && <StyledNoData>No additional data</StyledNoData>}

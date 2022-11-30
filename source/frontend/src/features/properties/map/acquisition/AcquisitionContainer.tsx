@@ -40,7 +40,9 @@ const initialState: AcquisitionContainerState = {
   showConfirmModal: false,
 };
 
-export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainerProps> = props => {
+export const AcquisitionContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAcquisitionContainerProps>
+> = props => {
   // Load state from props and side-bar context
   const { acquisitionFileId, onClose } = props;
   const { setFile, setFileLoading } = useContext(SideBarContext);

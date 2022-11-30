@@ -24,9 +24,9 @@ const emailTypes: Dictionary<string> = {};
 emailTypes[ContactMethodTypes.WorkEmail] = 'Work';
 emailTypes[ContactMethodTypes.PersonalEmail] = 'Personal';
 
-const ContactInfoSubForm: React.FunctionComponent<IContactInfoSubFormProps> = ({
-  contactEntity,
-}) => {
+const ContactInfoSubForm: React.FunctionComponent<
+  React.PropsWithChildren<IContactInfoSubFormProps>
+> = ({ contactEntity }) => {
   const phoneNumbers: ContactInfoField[] = getContactInfo(
     phoneTypes,
     contactEntity?.contactMethods,

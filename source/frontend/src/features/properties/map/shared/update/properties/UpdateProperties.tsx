@@ -18,7 +18,9 @@ export interface IUpdatePropertiesProps {
   updateFileProperties: (file: Api_File) => Promise<Api_File | undefined>;
 }
 
-export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
+export const UpdateProperties: React.FunctionComponent<
+  React.PropsWithChildren<IUpdatePropertiesProps>
+> = props => {
   const formikRef = useRef<FormikProps<FileForm>>(null);
   const formFile = FileForm.fromApi(props.file);
 

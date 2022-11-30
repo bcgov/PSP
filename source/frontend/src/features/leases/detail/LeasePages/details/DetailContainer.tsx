@@ -9,7 +9,9 @@ import Details from './Details';
 
 interface IDetailContainerProps {}
 
-const DetailContainer: React.FunctionComponent<IDetailContainerProps> = props => {
+const DetailContainer: React.FunctionComponent<
+  React.PropsWithChildren<IDetailContainerProps>
+> = props => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);
   return !!edit ? (

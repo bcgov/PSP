@@ -13,12 +13,9 @@ interface ISaveCancelButtonsProps {
   className?: string;
 }
 
-const SaveCancelButtons: React.FunctionComponent<ISaveCancelButtonsProps> = ({
-  onCancel,
-  formikProps,
-  onSaveOverride,
-  className,
-}) => {
+const SaveCancelButtons: React.FunctionComponent<
+  React.PropsWithChildren<ISaveCancelButtonsProps>
+> = ({ onCancel, formikProps, onSaveOverride, className }) => {
   return (
     <Styled.FormButtons className={className}>
       <Button variant="secondary" onClick={onCancel}>

@@ -10,9 +10,9 @@ export interface ILeaseStatusSummaryProps {
  * Lease status component, displays file number and lease active status.
  * @param {ILeaseStatusSummaryProps} param0
  */
-export const LeaseStatusSummary: React.FunctionComponent<ILeaseStatusSummaryProps> = ({
-  lease,
-}) => {
+export const LeaseStatusSummary: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseStatusSummaryProps>
+> = ({ lease }) => {
   return !!lease ? (
     <StyledLeaseStatusSummary className={lease?.statusType?.id.toLowerCase()}>
       <b>{lease?.statusType?.description}</b>

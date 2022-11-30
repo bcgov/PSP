@@ -8,9 +8,6 @@ exports[`ActivityView test Renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c1 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
@@ -327,7 +324,7 @@ exports[`ActivityView test Renders as expected 1`] = `
 }
 
 .c5 {
-  border-radius: 0.5rem;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
 }
 
 .c6 {
@@ -513,7 +510,7 @@ exports[`ActivityView test Renders as expected 1`] = `
           novalidate=""
         >
           <div
-            class="row"
+            class="no-gutters row"
           >
             <div
               class="col-lg-auto"
@@ -523,137 +520,145 @@ exports[`ActivityView test Renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="col-lg-3"
-            >
-              <div
-                class="form-group"
-              >
-                <select
-                  class="form-select form-control"
-                  data-testid="document-type"
-                  id="input-documentTypeId"
-                  name="documentTypeId"
-                >
-                  <option
-                    value=""
-                  >
-                    All document types
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="col-lg-3"
-            >
-              <div
-                class="form-group"
-              >
-                <select
-                  class="form-select form-control"
-                  data-testid="document-status"
-                  id="input-status"
-                  name="status"
-                >
-                  <option
-                    value=""
-                  >
-                    All statuses
-                  </option>
-                  <option
-                    class="option"
-                    value="AMENDD"
-                  >
-                    Amended
-                  </option>
-                  <option
-                    class="option"
-                    value="APPROVD"
-                  >
-                    Approved
-                  </option>
-                  <option
-                    class="option"
-                    value="CNCLD"
-                  >
-                    Cancelled
-                  </option>
-                  <option
-                    class="option"
-                    value="DRAFT"
-                  >
-                    Draft
-                  </option>
-                  <option
-                    class="option"
-                    value="FINAL"
-                  >
-                    Final
-                  </option>
-                  <option
-                    class="option"
-                    value="NONE"
-                  >
-                    None
-                  </option>
-                  <option
-                    class="option"
-                    value="RGSTRD"
-                  >
-                    Registered
-                  </option>
-                  <option
-                    class="option"
-                    value="SENT"
-                  >
-                    Sent
-                  </option>
-                  <option
-                    class="option"
-                    value="SIGND"
-                  >
-                    Signed
-                  </option>
-                  <option
-                    class="option"
-                    value="UNREGD"
-                  >
-                    Unregistered
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="col-lg-3"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  data-testid="document-filename"
-                  id="input-filename"
-                  name="filename"
-                  placeholder="File name"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
-            <div
-              class="c6 col-xl-auto"
+              class="px-3 col"
             >
               <div
                 class="row"
               >
                 <div
-                  class="pr-0 col-auto"
+                  class="col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      data-testid="document-type"
+                      id="input-documentTypeId"
+                      name="documentTypeId"
+                    >
+                      <option
+                        value=""
+                      >
+                        All document types
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      data-testid="document-status"
+                      id="input-status"
+                      name="status"
+                    >
+                      <option
+                        value=""
+                      >
+                        All statuses
+                      </option>
+                      <option
+                        class="option"
+                        value="AMENDD"
+                      >
+                        Amended
+                      </option>
+                      <option
+                        class="option"
+                        value="APPROVD"
+                      >
+                        Approved
+                      </option>
+                      <option
+                        class="option"
+                        value="CNCLD"
+                      >
+                        Cancelled
+                      </option>
+                      <option
+                        class="option"
+                        value="DRAFT"
+                      >
+                        Draft
+                      </option>
+                      <option
+                        class="option"
+                        value="FINAL"
+                      >
+                        Final
+                      </option>
+                      <option
+                        class="option"
+                        value="NONE"
+                      >
+                        None
+                      </option>
+                      <option
+                        class="option"
+                        value="RGSTRD"
+                      >
+                        Registered
+                      </option>
+                      <option
+                        class="option"
+                        value="SENT"
+                      >
+                        Sent
+                      </option>
+                      <option
+                        class="option"
+                        value="SIGND"
+                      >
+                        Signed
+                      </option>
+                      <option
+                        class="option"
+                        value="UNREGD"
+                      >
+                        Unregistered
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      data-testid="document-filename"
+                      id="input-filename"
+                      name="filename"
+                      placeholder="File name"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-lg-auto"
+            >
+              <div
+                class="c6 no-gutters pl-2 row"
+              >
+                <div
+                  class="col"
                 >
                   <button
                     class="c3 Button Button--icon-only primary btn btn-primary"
                     data-testid="search"
                     id="search-button"
                     title="search"
-                    type="submit"
+                    type="button"
                   >
                     <div
                       class="Button__icon"
@@ -675,7 +680,7 @@ exports[`ActivityView test Renders as expected 1`] = `
                   </button>
                 </div>
                 <div
-                  class="col-auto"
+                  class="col"
                 >
                   <button
                     class="c3 Button Button--icon-only btn btn-info"
@@ -718,13 +723,13 @@ exports[`ActivityView test Renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 177px;"
+              style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
               <div
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"
@@ -770,7 +775,7 @@ exports[`ActivityView test Renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"
@@ -816,12 +821,12 @@ exports[`ActivityView test Renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"
                 >
-                  Upload date
+                  Uploaded
                   <div
                     class="c7"
                     data-testid="sort-column-appCreateTimestamp"
@@ -862,53 +867,7 @@ exports[`ActivityView test Renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-              >
-                <div
-                  class="sortable-column"
-                >
-                  Uploaded by
-                  <div
-                    class="c7"
-                    data-testid="sort-column-appCreateUserid"
-                  >
-                    <svg
-                      class="c8"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      style="margin-bottom: -8px;"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M128 320l128-128 128 128z"
-                      />
-                    </svg>
-                    <svg
-                      class="c9"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M128 192l128 128 128-128z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="th"
-                colspan="1"
-                role="columnheader"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"
@@ -954,7 +913,7 @@ exports[`ActivityView test Renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 17 0 auto; min-width: 17px; width: 17px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 90 0 auto; min-width: 30px; width: 90px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"

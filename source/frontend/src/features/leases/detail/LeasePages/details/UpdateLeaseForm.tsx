@@ -17,12 +17,9 @@ interface IUpdateLeaseFormProps {
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
 }
 
-export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = ({
-  onCancel,
-  onSubmit,
-  initialValues,
-  formikRef,
-}) => {
+export const UpdateLeaseForm: React.FunctionComponent<
+  React.PropsWithChildren<IUpdateLeaseFormProps>
+> = ({ onCancel, onSubmit, initialValues, formikRef }) => {
   return (
     <Formik
       validationSchema={AddLeaseYupSchema}

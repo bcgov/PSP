@@ -7,14 +7,14 @@ export interface ILeaseHeaderAddressesProps {
   lease?: ILease;
 }
 
-export const LeaseHeaderAddresses: React.FunctionComponent<ILeaseHeaderAddressesProps> = ({
-  lease,
-}) => {
+export const LeaseHeaderAddresses: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseHeaderAddressesProps>
+> = ({ lease }) => {
   return (
     <ExpandableTextList<IProperty>
       items={lease?.properties ?? []}
       keyFunction={(item: IProperty, index: number) =>
-        `lease-property-${item.id}-address-${item?.address?.id}`
+        `lease-property-${item.id}-address-${item?.address?.id ?? index}`
       }
       renderFunction={(item: IProperty) => <>{getFormattedAddress(item)}</>}
       delimiter="; "

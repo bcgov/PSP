@@ -33,7 +33,7 @@ import { onValidatePerson } from '../../utils/contactUtils';
 /**
  * Formik-connected form to Create Individual Contacts
  */
-export const CreatePersonForm: React.FunctionComponent = () => {
+export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();
   const { addPerson } = useAddContact();
 
@@ -96,16 +96,9 @@ export default CreatePersonForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
-  values,
-  errors,
-  touched,
-  dirty,
-  resetForm,
-  submitForm,
-  setFieldValue,
-  initialValues,
-}) => {
+const CreatePersonComponent: React.FC<
+  React.PropsWithChildren<FormikProps<IEditablePersonForm>>
+> = ({ values, errors, touched, dirty, resetForm, submitForm, setFieldValue, initialValues }) => {
   const history = useHistory();
   const { getOrganization } = useApiContacts();
   const [showConfirmation, setShowConfirmation] = useState(false);

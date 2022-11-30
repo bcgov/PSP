@@ -17,7 +17,9 @@ export interface IAccessRequestPageProps {
  * If they have an active access request already submitted, it will allow them to update it until it has been approved or disabled.
  * If their prior request was disabled they will then be able to submit a new request.
  */
-export const AccessRequestPage: React.FunctionComponent<IAccessRequestPageProps> = props => {
+export const AccessRequestPage: React.FunctionComponent<
+  React.PropsWithChildren<IAccessRequestPageProps>
+> = props => {
   return (
     <StyledContainer>
       <Row>

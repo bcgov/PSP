@@ -8,7 +8,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
-  fillInput,
+  act,
   render,
   RenderOptions,
   userEvent,
@@ -73,22 +73,22 @@ describe('EditUserContainer component', () => {
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
 
-    await fillInput(container, 'note', 'test note', 'textarea');
-    const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    const textarea = container.querySelector(`textarea[name="note"]`) as HTMLElement;
+    await act(() => userEvent.type(textarea, 'test note'));
 
-    await waitFor(() => {
-      expect(mockAxios.history.put[0].url).toBe(
-        '/keycloak/users/e81274eb-a007-4f2e-ada3-2817efcdb0a6',
-      );
-      expect({
-        ...JSON.parse(mockAxios.history.put[0].data),
-        approvedById: undefined,
-        issueDate: undefined,
-      }).toEqual({
-        ...new FormUser(getUserMock()).toApi(),
-        note: 'test note',
-      });
+    const saveButton = getByText('Save');
+    await act(() => userEvent.click(saveButton));
+
+    expect(mockAxios.history.put[0].url).toBe(
+      '/keycloak/users/e81274eb-a007-4f2e-ada3-2817efcdb0a6',
+    );
+    expect({
+      ...JSON.parse(mockAxios.history.put[0].data),
+      approvedById: undefined,
+      issueDate: undefined,
+    }).toEqual({
+      ...new FormUser(getUserMock()).toApi(),
+      note: 'test note',
     });
   });
 });

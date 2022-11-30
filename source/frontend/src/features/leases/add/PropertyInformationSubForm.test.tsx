@@ -4,7 +4,14 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
+import {
+  act,
+  fillInput,
+  findAllByText,
+  renderAsync,
+  RenderOptions,
+  waitFor,
+} from 'utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import PropertyInformationSubForm, {
@@ -81,10 +88,14 @@ describe('PropertyInformationSubForm component', () => {
 
   it('can add another row', async () => {
     const {
-      component: { getByText, findAllByText },
+      component: { getByText, getAllByText },
     } = await setup({});
-    userEvent.click(getByText('+ Add another property'));
-    expect(await (await findAllByText('PID:')).length).toBe(1);
+
+    await act(async () => {
+      userEvent.click(getByText('+ Add another property'));
+    });
+
+    expect(getAllByText('PID:')).toHaveLength(2);
   });
 
   it('can remove a row', async () => {
@@ -97,5 +108,7 @@ describe('PropertyInformationSubForm component', () => {
     await waitFor(() => {
       expect(queryByText('PID:')).toBeNull();
     });
+
+    expect(queryByText('PID:')).toBeNull();
   });
 });

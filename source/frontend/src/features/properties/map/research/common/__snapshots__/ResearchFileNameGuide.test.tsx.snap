@@ -8,9 +8,6 @@ exports[`ResearchFileNameGuide renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   font-size: 16px;
   color: #1a5a96;

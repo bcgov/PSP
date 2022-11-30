@@ -16,7 +16,9 @@ export interface IContactManagerModalProps {
   showOnlyIndividuals?: boolean;
 }
 
-export const ContactManagerModal: React.FunctionComponent<IContactManagerModalProps> = props => {
+export const ContactManagerModal: React.FunctionComponent<
+  React.PropsWithChildren<IContactManagerModalProps>
+> = props => {
   return (
     <GenericModal
       display={props.display}

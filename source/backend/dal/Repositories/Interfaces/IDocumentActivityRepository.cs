@@ -12,6 +12,10 @@ namespace Pims.Dal.Repositories
 
         IList<PimsActivityInstanceDocument> GetAllByActivity(long activityId);
 
+        IList<PimsActivityInstanceDocument> GetAllByResearchFile(long fileId);
+
+        IList<PimsActivityInstanceDocument> GetAllByAcquisitionFile(long fileId);
+
         PimsActivityInstanceDocument Add(PimsActivityInstanceDocument activityDocument);
 
         bool Delete(PimsActivityInstanceDocument activityDocument);

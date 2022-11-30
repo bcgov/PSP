@@ -4,7 +4,9 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styled from 'styled-components';
 
-export const ResearchFileNameGuide: React.FunctionComponent = () => {
+export const ResearchFileNameGuide: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = () => {
   const [isCollapsed, setIsCollapsed] = React.useState<boolean>(true);
   return (
     <>

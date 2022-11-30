@@ -20,7 +20,7 @@ export interface IPaymentFormProps {
  * if not initialValues provided. Otherwise will display the passed lease payment. Save/Cancel triggered externally via passed formikRef.
  * @param {IPaymentFormProps} props
  */
-export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
+export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPaymentFormProps>> = ({
   initialValues,
   formikRef,
   onSave,

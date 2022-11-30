@@ -17,7 +17,7 @@ export interface ITenantPersonContactInfoProps {
  * @param {ITenantPersonContactInfoProps} param0
  */
 export const TenantPersonContactInfo: React.FunctionComponent<
-  ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>
+  React.PropsWithChildren<ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
   return (
     <>

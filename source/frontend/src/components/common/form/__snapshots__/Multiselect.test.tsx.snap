@@ -9,9 +9,6 @@ exports[`Multiselect component renders as expected 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="form-group"
   >
     <label

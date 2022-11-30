@@ -31,7 +31,9 @@ export interface IResearchContainerProps {
   onClose: () => void;
 }
 
-export const ResearchContainer: React.FunctionComponent<IResearchContainerProps> = props => {
+export const ResearchContainer: React.FunctionComponent<
+  React.PropsWithChildren<IResearchContainerProps>
+> = props => {
   const {
     retrieveResearchFile: { execute: getResearchFile, loading: loadingResearchFile },
   } = useGetResearch();

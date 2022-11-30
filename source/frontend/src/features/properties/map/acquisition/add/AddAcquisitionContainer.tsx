@@ -20,7 +20,9 @@ export interface IAddAcquisitionContainerProps {
   onClose?: () => void;
 }
 
-export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
+export const AddAcquisitionContainer: React.FC<
+  React.PropsWithChildren<IAddAcquisitionContainerProps>
+> = props => {
   const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
@@ -32,9 +34,9 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const initialForm = useMemo(() => {
     const acquisitionForm = new AcquisitionForm();
     if (!!selectedFileFeature) {
-      acquisitionForm.properties = [
-        PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature)),
-      ];
+      const property = PropertyForm.fromMapProperty(mapFeatureToProperty(selectedFileFeature));
+      acquisitionForm.properties = [property];
+      acquisitionForm.region = property.region?.toString();
     }
     return acquisitionForm;
   }, [selectedFileFeature]);

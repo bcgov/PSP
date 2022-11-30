@@ -20,7 +20,9 @@ interface IAddLeaseParams {
   userOverride?: string;
 }
 
-export const UpdateLeaseContainer: React.FunctionComponent = props => {
+export const UpdateLeaseContainer: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = props => {
   const { lease } = useContext(LeaseStateContext);
   const {
     getApiLeaseById: { execute, response: apiLease, loading },

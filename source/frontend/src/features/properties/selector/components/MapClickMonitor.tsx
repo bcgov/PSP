@@ -13,9 +13,9 @@ interface IMapClickMonitorProps {
   addProperty: (property: IMapProperty) => void;
 }
 
-export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = ({
-  addProperty,
-}) => {
+export const MapClickMonitor: React.FunctionComponent<
+  React.PropsWithChildren<IMapClickMonitorProps>
+> = ({ addProperty }) => {
   const { selectedFeature } = useContext(MapStateContext);
   const previous = usePrevious(selectedFeature);
   useDraftMarkerSynchronizer('properties');

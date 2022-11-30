@@ -8,9 +8,6 @@ exports[`LeaseBreadCrumb component renders as expected with data 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   grid-area: breadcrumb;
 }
@@ -73,9 +70,6 @@ exports[`LeaseBreadCrumb component renders as expected with no data 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   .c0 {
   grid-area: breadcrumb;

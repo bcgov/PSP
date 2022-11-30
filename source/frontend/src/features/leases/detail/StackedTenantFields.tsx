@@ -13,9 +13,9 @@ export interface IStackedTenantFieldsProps {
  * Layout component that displays vertically stacked tenant names
  * @param {IStackedTenantFieldsProps} param0
  */
-export const StackedTenantFields: React.FunctionComponent<IStackedTenantFieldsProps> = ({
-  lease,
-}) => {
+export const StackedTenantFields: React.FunctionComponent<
+  React.PropsWithChildren<IStackedTenantFieldsProps>
+> = ({ lease }) => {
   return (
     <>
       <StyledStackedDivs>

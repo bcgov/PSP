@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 interface IRolesToolTipProps {}
 
-const RolesToolTip: React.FunctionComponent<IRolesToolTipProps> = props => {
+const RolesToolTip: React.FunctionComponent<
+  React.PropsWithChildren<IRolesToolTipProps>
+> = props => {
   return (
     <StyledTooltip>
       <StyledTooltipHeader>Role Descriptions</StyledTooltipHeader>

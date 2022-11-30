@@ -1,5 +1,6 @@
 import { ReactComponent as Fence } from 'assets/images/fence.svg';
 import GenericModal from 'components/common/GenericModal';
+import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
 import { useMapSearch } from 'components/maps/hooks/useMapSearch';
 import { MapStateActionTypes, MapStateContext } from 'components/maps/providers/MapStateContext';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
@@ -10,6 +11,7 @@ import * as React from 'react';
 import { useMemo, useState } from 'react';
 import { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { LeasePageNames } from '../detail/LeaseContainer';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { LeaseFormModel } from '../models';
@@ -19,7 +21,9 @@ export interface IAddLeaseContainerProps {
   onClose: () => void;
 }
 
-export const AddLeaseContainer: React.FunctionComponent<IAddLeaseContainerProps> = props => {
+export const AddLeaseContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseContainerProps>
+> = props => {
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const { setState } = React.useContext(MapStateContext);

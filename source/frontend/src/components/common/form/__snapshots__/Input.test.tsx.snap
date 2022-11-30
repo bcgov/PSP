@@ -9,9 +9,6 @@ exports[`Input component renders as expected 1`] = `
     class="container"
   />
   <div
-    class="Toastify"
-  />
-  <div
     class="input form-group"
   >
     <label

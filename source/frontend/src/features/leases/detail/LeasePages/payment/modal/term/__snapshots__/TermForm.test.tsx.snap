@@ -8,9 +8,6 @@ exports[`TermForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c2.c2.form-control.is-valid {
   background-image: none;
 }
@@ -375,9 +372,6 @@ exports[`TermForm component renders with data as expected 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   .c2.c2.form-control.is-valid {
   background-image: none;

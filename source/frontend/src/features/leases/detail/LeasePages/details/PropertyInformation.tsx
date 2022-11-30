@@ -18,7 +18,7 @@ export interface IPropertyInformationProps {
  * @param {IPropertyInformationProps} param0
  */
 export const PropertyInformation: React.FunctionComponent<
-  IPropertyInformationProps & Partial<FieldArrayRenderProps>
+  React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled }) => {
   const formikProps = useFormikContext<IFormLease>();
 

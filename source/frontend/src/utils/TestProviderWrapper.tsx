@@ -9,10 +9,9 @@ interface TestProviderWrapperParams {
 }
 
 /** Simple Wrapper that provides all required boilerplate to include a mocked store for a given component test. */
-const TestProviderWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
-  children,
-  store,
-}) => {
+const TestProviderWrapper: React.FunctionComponent<
+  React.PropsWithChildren<TestProviderWrapperParams>
+> = ({ children, store }) => {
   const mockStore = configureMockStore([thunk]);
   const mockedStore = !!store?.getState ? store : mockStore(store ?? {});
 

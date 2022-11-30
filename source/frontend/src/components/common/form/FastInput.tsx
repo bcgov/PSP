@@ -51,7 +51,7 @@ export type FastInputProps = FormControlProps & OptionalAttributes & RequiredAtt
  * Formik-connected <Input> form control. Uses memo and cleanup inspired by
  * https://jaredpalmer.com/formik/docs/api/fastfield
  */
-export const FastInput: React.FC<FastInputProps> = memo(
+export const FastInput: React.FC<React.PropsWithChildren<FastInputProps>> = memo(
   ({
     field,
     label,

@@ -8,9 +8,6 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c3 {
   float: right;
   cursor: pointer;

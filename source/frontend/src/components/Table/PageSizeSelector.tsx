@@ -16,7 +16,12 @@ interface IProps {
   alignTop: boolean;
 }
 
-export const TablePageSizeSelector: React.FC<IProps> = ({ options, value, onChange, alignTop }) => {
+export const TablePageSizeSelector: React.FC<React.PropsWithChildren<IProps>> = ({
+  options,
+  value,
+  onChange,
+  alignTop,
+}) => {
   const [selected, setSelected] = React.useState(value);
 
   const handleValueChange = (newSelection: number) => {

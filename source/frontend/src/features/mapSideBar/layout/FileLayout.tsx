@@ -7,7 +7,7 @@ interface IFileLayoutProps {
   bodyComponent: React.ReactNode;
 }
 
-const FileLayout: React.FunctionComponent<IFileLayoutProps> = ({
+const FileLayout: React.FunctionComponent<React.PropsWithChildren<IFileLayoutProps>> = ({
   leftComponent,
   bodyComponent,
 }) => {

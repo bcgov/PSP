@@ -34,7 +34,7 @@ export interface IPropertyFilterProps {
  * Property filter bar to search for properties.
  * Applied filter will be added to the URL query parameters and stored in a redux store.
  */
-export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
+export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterProps>> = ({
   defaultFilter,
   onChange,
   sort,

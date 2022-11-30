@@ -404,9 +404,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
       class="container"
     />
     <div
-      class="Toastify"
-    />
-    <div
       class=""
     >
       <div
@@ -492,16 +489,14 @@ exports[`UpdateProperties component renders as expected 1`] = `
                           <div
                             class="d-flex flex-column align-items-center"
                           >
-                            <div>
-                              <svg
-                                class="c10"
-                                height="97"
-                                title="select properties on the map"
-                                width="97"
-                              >
-                                icon-draft.svg
-                              </svg>
-                            </div>
+                            <svg
+                              class="c10"
+                              height="97"
+                              title="select properties on the map"
+                              width="97"
+                            >
+                              icon-draft.svg
+                            </svg>
                             <ol>
                               <li>
                                 Click pin above
@@ -721,7 +716,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
                                     title=""
                                     value=""
                                   />
-                                  
                                 </div>
                               </div>
                             </div>
@@ -979,7 +973,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
                   <div
                     class="col-md-3"
                   >
-                    <p
+                    <div
                       class="mb-0 d-flex align-items-center"
                     >
                       <svg
@@ -1057,7 +1051,7 @@ exports[`UpdateProperties component renders as expected 1`] = `
                       >
                         PID: 123-456-789
                       </div>
-                    </p>
+                    </div>
                   </div>
                   <div
                     class="col-md-7"

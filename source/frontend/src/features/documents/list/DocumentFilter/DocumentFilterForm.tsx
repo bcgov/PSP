@@ -36,35 +36,43 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
     >
       {formikProps => (
         <FilterBoxForm className="p-3">
-          <Row>
+          <Row className="no-gutters">
             <Col lg="auto">
               <label>Filter by:</label>
             </Col>
-            <Col lg={3}>
-              <Select
-                data-testid="document-type"
-                field="documentTypeId"
-                placeholder="All document types"
-                options={typeOptions}
-              />
-            </Col>
-            <Col lg={3}>
-              <Select
-                field="status"
-                data-testid="document-status"
-                placeholder="All statuses"
-                options={documentStatusTypeOptions}
-              />
-            </Col>
-            <Col lg={3}>
-              <Input field="filename" data-testid="document-filename" placeholder="File name" />
-            </Col>
-            <ColButtons xl="auto">
+            <Col className="px-3">
               <Row>
-                <Col xs="auto" className="pr-0">
-                  <SearchButton disabled={formikProps.isSubmitting} />
+                <Col>
+                  <Select
+                    data-testid="document-type"
+                    field="documentTypeId"
+                    placeholder="All document types"
+                    options={typeOptions}
+                  />
                 </Col>
-                <Col xs="auto">
+                <Col>
+                  <Select
+                    field="status"
+                    data-testid="document-status"
+                    placeholder="All statuses"
+                    options={documentStatusTypeOptions}
+                  />
+                </Col>
+                <Col>
+                  <Input field="filename" data-testid="document-filename" placeholder="File name" />
+                </Col>
+              </Row>
+            </Col>
+            <Col lg="auto">
+              <ColButtons className="no-gutters pl-2">
+                <Col>
+                  <SearchButton
+                    onClick={() => formikProps.handleSubmit()}
+                    type="button"
+                    disabled={formikProps.isSubmitting}
+                  />
+                </Col>
+                <Col>
                   <ResetButton
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
@@ -73,8 +81,8 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                     }}
                   />
                 </Col>
-              </Row>
-            </ColButtons>
+              </ColButtons>
+            </Col>
           </Row>
         </FilterBoxForm>
       )}
@@ -84,9 +92,9 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
 
 const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
-  border-radius: 0.5rem;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
 `;
 
-const ColButtons = styled(Col)`
+const ColButtons = styled(Row)`
   border-left: 0.2rem solid white;
 `;

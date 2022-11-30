@@ -18,7 +18,9 @@ export interface IMotiInventoryHeaderProps {
   onZoom?: (apiProperty?: Api_Property | undefined) => void;
 }
 
-export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
+export const MotiInventoryHeader: React.FunctionComponent<
+  React.PropsWithChildren<IMotiInventoryHeaderProps>
+> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapWrapper?.response;
   let property: IMapProperty | null = null;
@@ -27,7 +29,9 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   }
 
   const isLoading =
-    props.composedProperty.ltsaWrapper?.loading || props.composedProperty.apiWrapper?.loading;
+    props.composedProperty.ltsaWrapper?.loading ||
+    props.composedProperty.apiWrapper?.loading ||
+    props.composedProperty.parcelMapWrapper?.loading;
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
