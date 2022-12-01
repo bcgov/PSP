@@ -19,7 +19,9 @@ export const parcelIcon = L.icon({
 
 // not owned property icon (red)
 export const notOwnedPropertyIcon = L.icon({
-  iconUrl: require('assets/images/pins/land-erp.png') ?? 'assets/images/pins/land-erp.png',
+  iconUrl:
+    require('assets/images/pins/marker-info-orange.png') ??
+    'assets/images/pins/marker-info-orange.png',
   shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -28,8 +30,10 @@ export const notOwnedPropertyIcon = L.icon({
 });
 
 // not owned property icon (orange)
-export const notOwnedPropertyIcon = L.icon({
-  iconUrl: require('assets/images/pins/info-orange.png') ?? 'assets/images/pins/info-orange.png',
+export const notOwnedPropertyIconSelect = L.icon({
+  iconUrl:
+    require('assets/images/pins/marker-info-orange-highlight.png') ??
+    'assets/images/pins/marker-info-orange-highlight.png',
   shadowUrl: require('assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
