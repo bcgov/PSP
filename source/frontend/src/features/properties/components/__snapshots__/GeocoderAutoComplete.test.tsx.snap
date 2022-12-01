@@ -11,19 +11,17 @@ exports[`renders correctly... 1`] = `
   <div
     class="GeocoderAutoComplete"
   >
-    <div>
-      <div
-        class="form-group"
-      >
-        <input
-          class="form-control"
-          data-testid="geocoder-input"
-          field="test"
-          id="input-test"
-          name="test"
-          value=""
-        />
-      </div>
+    <div
+      class="form-group"
+    >
+      <input
+        class="form-control"
+        data-testid="geocoder-input"
+        field="test"
+        id="input-test"
+        name="test"
+        value=""
+      />
     </div>
   </div>
 </DocumentFragment>

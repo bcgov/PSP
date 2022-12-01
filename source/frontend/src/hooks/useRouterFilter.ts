@@ -54,6 +54,8 @@ export interface IRouterFilterProps<T> {
   key: string;
   sort?: TableSort<any>;
   setSorting?: (sort: TableSort<any>) => void;
+  /** if specified, changes will be ignored unless the current path matches this path exactly. */
+  exactPath?: string;
 }
 
 /**
@@ -70,6 +72,7 @@ export const useRouterFilter = <T extends object>({
   key,
   sort,
   setSorting,
+  exactPath,
 }: IRouterFilterProps<T>) => {
   const history = useHistory();
   const reduxSearch = useAppSelector(state => state.filter);
@@ -80,7 +83,7 @@ export const useRouterFilter = <T extends object>({
   // Extract the query parameters to initialize the filter.
   // This will only occur the first time the component loads to ensure the URL query parameters are applied.
   useEffect(() => {
-    if (setFilter) {
+    if (setFilter && (!exactPath || exactPath === history.location.pathname)) {
       const params = queryString.parse(history.location.search);
       // Check if query contains filter params.
       const filterProps = Object.keys(filter);

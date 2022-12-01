@@ -53,6 +53,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     key: 'propertyFilter',
     sort: sort,
     setSorting: onSorting,
+    exactPath: '/mapview',
   });
 
   const history = useHistory();
