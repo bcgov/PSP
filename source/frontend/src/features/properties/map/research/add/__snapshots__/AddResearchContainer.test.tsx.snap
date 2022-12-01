@@ -1269,6 +1269,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 .c0 {
   position: -webkit-sticky;
   position: sticky;
+  padding-top: 2rem;
   bottom: 0;
   background: white;
   z-index: 10;

@@ -68,7 +68,6 @@ namespace Pims.Api.Services
         /// </summary>
         /// <param name="lease"></param>
         /// <param name="userOverride"></param>
-        /// <param name="newLeaseProperties"></param>
         /// <returns></returns>
         private PimsLease AssociatePropertyLeases(PimsLease lease, bool userOverride = false)
         {
@@ -88,7 +87,7 @@ namespace Pims.Api.Services
                     var coords = _coordinateService.TransformCoordinates(propertyLease.Property.Location.SRID, SpatialReference.BC_ALBERS, propertyLease.Property.Location.Coordinate);
                     var geom = GeometryHelper.CreatePoint(coords.X, coords.Y, SpatialReference.BC_ALBERS);
                     property = _propertyRepository.GetByLocation(geom);
-                    if(property == null)
+                    if (property == null)
                     {
                         throw new InvalidOperationException($"Unable to find property for given lat/lng");
                     }

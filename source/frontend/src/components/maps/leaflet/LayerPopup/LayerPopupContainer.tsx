@@ -58,7 +58,7 @@ export const LayerPopupContainer: React.FC<React.PropsWithChildren<ILayerPopupCo
         type: MapStateActionTypes.SELECTED_LEASE_PROPERTY,
         selectedLeaseProperty: selectedInventoryProperty,
       });
-    history.push('/lease/new');
+    history.push('/mapview/sidebar/lease/new');
   };
 
   return (

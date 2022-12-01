@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import PropertyInformationSubForm, {
@@ -43,38 +43,48 @@ describe('PropertyInformationSubForm component', () => {
 
   it('unit type and area are disabled by default', async () => {
     const {
-      component: { getByLabelText },
+      component: { getByText, getByLabelText },
     } = await setup({});
+
+    await act(async () => {
+      userEvent.click(getByText('+ Add another property'));
+    });
+
     expect(getByLabelText('Lease Area:')).toBeDisabled();
   });
 
   it('unit type and area are enabled when pid entered', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByText, getByLabelText, container },
     } = await setup({});
     await act(async () => {
-      fillInput(container, 'properties.0.property.pid', '1');
+      userEvent.click(getByText('+ Add another property'));
     });
+    await fillInput(container, 'properties.0.property.pid', '1');
     expect(getByLabelText('Lease Area:')).not.toBeDisabled();
   });
 
   it('pin is disabled when pid is valued', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByText, getByLabelText, container },
     } = await setup({});
     await act(async () => {
-      fillInput(container, 'properties.0.property.pid', '1');
+      userEvent.click(getByText('+ Add another property'));
     });
+
+    await fillInput(container, 'properties.0.property.pid', '1');
     expect(getByLabelText('PIN:')).toBeDisabled();
   });
 
   it('pid is disabled when pin is valued', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByText, getByLabelText, container },
     } = await setup({});
     await act(async () => {
-      fillInput(container, 'properties.0.property.pin', '1');
+      userEvent.click(getByText('+ Add another property'));
     });
+
+    await fillInput(container, 'properties.0.property.pin', '1');
     expect(getByLabelText('PID:')).toBeDisabled();
   });
 
@@ -90,13 +100,20 @@ describe('PropertyInformationSubForm component', () => {
     expect(getAllByText('PID:')).toHaveLength(2);
   });
 
-  it('can remove a row', async () => {
+  it.only('can remove a row', async () => {
     const {
       component: { getByText, queryByText },
     } = await setup({});
+    await waitFor(() => {
+      userEvent.click(getByText('+ Add another property'));
+    });
 
     await act(async () => {
       userEvent.click(getByText('Remove'));
+    });
+
+    await waitFor(() => {
+      expect(queryByText('PID:')).toBeNull();
     });
 
     expect(queryByText('PID:')).toBeNull();

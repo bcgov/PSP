@@ -8,7 +8,6 @@ import { ContactListPage } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
-import { AddLeaseContainer } from 'features/leases';
 import { ResearchListView } from 'features/research/list/ResearchListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
@@ -180,15 +179,6 @@ const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.LEASE_VIEW}
             title={getTitle('View Lease & Licenses')}
-          />
-          <AppRoute
-            protected
-            path="/lease/new"
-            exact
-            customComponent={AddLeaseContainer}
-            layout={AuthLayout}
-            claim={Claims.LEASE_ADD}
-            title={getTitle('Create/Edit Lease & Licenses')}
           />
           <AppRoute
             protected
