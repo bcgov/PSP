@@ -5,6 +5,7 @@ import {
 } from 'components/maps/providers/MapStateContext';
 import Claims from 'constants/claims';
 import { AddLeaseContainer } from 'features/leases';
+import { LeaseContextProvider } from 'features/leases/context/LeaseContext';
 import MotiInventoryContainer from 'features/mapSideBar/MotiInventoryContainer';
 import { Api_Property } from 'models/api/Property';
 import queryString from 'query-string';
@@ -14,6 +15,7 @@ import AppRoute from 'utils/AppRoute';
 
 import AcquisitionContainer from './acquisition/AcquisitionContainer';
 import AddAcquisitionContainer from './acquisition/add/AddAcquisitionContainer';
+import LeaseContainer from './lease/LeaseContainer';
 import AddResearchContainer from './research/add/AddResearchContainer';
 import ResearchContainer from './research/ResearchContainer';
 
@@ -158,6 +160,17 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         exact
         key={'NewLease'}
         title={'Create Lease'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/lease/:id`}
+        customRender={({ match }) => (
+          <LeaseContextProvider>
+            <LeaseContainer leaseId={Number(match.params.id)} onClose={onClose} />
+          </LeaseContextProvider>
+        )}
+        claim={Claims.LEASE_VIEW}
+        key={'LeaseLicense'}
+        title={'Lease / License File'}
       />
     </Switch>
   );

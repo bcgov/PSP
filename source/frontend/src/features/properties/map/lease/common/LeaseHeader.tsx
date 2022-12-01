@@ -1,7 +1,11 @@
 import { InlineFlexDiv } from 'components/common/styles';
 import { UserNameTooltip } from 'components/common/UserNameTooltip';
 import { LeaseHeaderAddresses } from 'features/leases/detail/LeaseHeaderAddresses';
-import { HeaderField } from 'features/mapSideBar/tabs/HeaderField';
+import {
+  HeaderContentCol,
+  HeaderField,
+  HeaderLabelCol,
+} from 'features/mapSideBar/tabs/HeaderField';
 import { ILease } from 'interfaces';
 import moment from 'moment';
 import React from 'react';
@@ -25,25 +29,27 @@ const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
         <Col xs="7">
           <Row className="no-gutters">
             <Col>
-              <HeaderField label="Lease/License #:" labelWidth="3" contentWidth="9">
+              <HeaderField label="Lease/License #" labelWidth="3" contentWidth="9">
                 <StyledInlineDiv>
                   <span>{lease?.lFileNo ?? ''}</span>
-                  <span>{lease?.paymentReceivableType?.description ?? ''}</span>
+                  <StyledGreenText>
+                    {lease?.paymentReceivableType?.description ?? ''}
+                  </StyledGreenText>
                 </StyledInlineDiv>
               </HeaderField>
             </Col>
           </Row>
           <Row className="no-gutters">
             <Col>
-              <HeaderField label="Property:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderAddresses lease={lease} />
+              <HeaderField label="Property:" labelWidth="2" contentWidth="9">
+                <LeaseHeaderAddresses lease={lease} maxCollapsedLength={1} delimiter={<br />} />
               </HeaderField>
             </Col>
           </Row>
           <Row className="no-gutters">
             <Col>
-              <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderTenants lease={lease} />
+              <HeaderField label="Tenant:" labelWidth="2" contentWidth="9">
+                <LeaseHeaderTenants lease={lease} maxCollapsedLength={1} delimiter={<br />} />
               </HeaderField>
             </Col>
           </Row>
@@ -81,17 +87,19 @@ const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <HeaderField label="Start date:" labelWidth="3" contentWidth="9">
-            {prettyFormatDate(lease?.startDate)}
-          </HeaderField>
+        <Col xs="7">
+          <Row className="no-gutters">
+            <HeaderLabelCol label="Start date:" labelWidth="2" />
+            <HeaderContentCol contentWidth="4">
+              {prettyFormatDate(lease?.startDate)}
+            </HeaderContentCol>
+            <HeaderLabelCol label="Expiry date:" />
+            <HeaderContentCol>
+              <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
+            </HeaderContentCol>
+          </Row>
         </Col>
-        <Col>
-          <HeaderField label="Expiry date:" labelWidth="3" contentWidth="9">
-            {prettyFormatDate(lease?.expiryDate)}
-          </HeaderField>
-        </Col>
-        <Col>
+        <Col xs="5">
           {isExpired && (
             <ExpiredWarning>
               <AiOutlineExclamationCircle size={16} />
@@ -124,6 +132,10 @@ const StyledInlineDiv = styled(InlineFlexDiv)`
   width: 100%;
 `;
 
+const StyledGreenText = styled.span`
+  color: ${props => props.theme.css.completedColor};
+`;
+
 export const ExpiredWarning = styled(InlineFlexDiv)`
   color: ${props => props.theme.css.dangerColor};
   background-color: ${props => props.theme.css.dangerBackgroundColor};
@@ -134,4 +146,5 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   align-items: center;
+  width: fit-content;
 `;

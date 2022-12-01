@@ -6,9 +6,15 @@ import { formatNames } from 'utils/personUtils';
 
 export interface ILeaseHeaderTenantsProps {
   lease?: ILease;
+  delimiter?: React.ReactElement | string;
+  maxCollapsedLength?: number;
 }
 
-export const LeaseHeaderTenants: React.FC<ILeaseHeaderTenantsProps> = ({ lease }) => {
+export const LeaseHeaderTenants: React.FC<ILeaseHeaderTenantsProps> = ({
+  lease,
+  delimiter = '; ',
+  maxCollapsedLength = 2,
+}) => {
   return (
     <ExpandableTextList<Api_Person>
       items={lease?.persons ?? []}
@@ -16,8 +22,8 @@ export const LeaseHeaderTenants: React.FC<ILeaseHeaderTenantsProps> = ({ lease }
       renderFunction={(p: Api_Person) => (
         <>{formatNames([p?.firstName, p?.middleNames, p?.surname])}</>
       )}
-      delimiter="; "
-      maxCollapsedLength={2}
+      delimiter={delimiter}
+      maxCollapsedLength={maxCollapsedLength}
     />
   );
 };

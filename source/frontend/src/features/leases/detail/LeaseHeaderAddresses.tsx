@@ -9,9 +9,11 @@ export interface ILeaseHeaderAddressesProps {
   maxCollapsedLength?: number;
 }
 
-export const LeaseHeaderAddresses: React.FunctionComponent<
-  React.PropsWithChildren<ILeaseHeaderAddressesProps>
-> = ({ lease, delimiter = '; ', maxCollapsedLength = 2 }) => {
+export const LeaseHeaderAddresses: React.FC<ILeaseHeaderAddressesProps> = ({
+  lease,
+  delimiter = '; ',
+  maxCollapsedLength = 2,
+}) => {
   return (
     <ExpandableTextList<IProperty>
       items={lease?.properties ?? []}
