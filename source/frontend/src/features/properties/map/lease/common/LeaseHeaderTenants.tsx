@@ -1,6 +1,5 @@
 import ExpandableTextList from 'components/common/ExpandableTextList';
-import { getPropertyName } from 'features/properties/selector/utils';
-import { ILease, IProperty } from 'interfaces';
+import { ILease } from 'interfaces';
 import { Api_Person } from 'models/api/Person';
 import * as React from 'react';
 import { formatNames } from 'utils/personUtils';

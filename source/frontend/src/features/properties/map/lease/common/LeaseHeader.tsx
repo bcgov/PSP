@@ -10,6 +10,8 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
 
+import { LeaseHeaderTenants } from './LeaseHeaderTenants';
+
 export interface ILeaseHeaderProps {
   lease?: ILease;
 }
@@ -24,7 +26,10 @@ const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           <Row className="no-gutters">
             <Col>
               <HeaderField label="Lease/License #:" labelWidth="3" contentWidth="9">
-                {lease?.lFileNo ?? ''}
+                <StyledInlineDiv>
+                  <span>{lease?.lFileNo ?? ''}</span>
+                  <span>{lease?.paymentReceivableType?.description ?? ''}</span>
+                </StyledInlineDiv>
               </HeaderField>
             </Col>
           </Row>
@@ -37,37 +42,39 @@ const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease }) => {
           </Row>
           <Row className="no-gutters">
             <Col>
-              <HeaderField label="Tenant:" labelWidth="3" contentWidth="9"></HeaderField>
+              <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
+                <LeaseHeaderTenants lease={lease} />
+              </HeaderField>
             </Col>
           </Row>
         </Col>
         <Col xs="5">
           <Row className="no-gutters">
             <Col className="text-right">
-              <StyleSmallText>
+              <StyledSmallText>
                 Created: <strong>{prettyFormatDate(lease?.appCreateTimestamp)}</strong> by{' '}
                 <UserNameTooltip
                   userName={lease?.appCreateUserid}
                   userGuid={lease?.appCreateUserGuid}
                 />
-              </StyleSmallText>
+              </StyledSmallText>
             </Col>
           </Row>
           <Row className="no-gutters">
             <Col className="text-right">
-              <StyleSmallText>
+              <StyledSmallText>
                 Last updated: <strong>{prettyFormatDate(lease?.appLastUpdateTimestamp)}</strong> by{' '}
                 <UserNameTooltip
                   userName={lease?.appLastUpdateUserid}
                   userGuid={lease?.appLastUpdateUserGuid}
                 />
-              </StyleSmallText>
+              </StyledSmallText>
             </Col>
           </Row>
           <Row className="no-gutters">
             <Col>
               <HeaderField className="justify-content-end" label="Status:">
-                {lease?.fileStatusTypeCode?.description}
+                {lease?.statusType?.description}
               </HeaderField>
             </Col>
           </Row>
@@ -107,9 +114,14 @@ const Container = styled.div`
   border-bottom-width: 0.1rem;
 `;
 
-const StyleSmallText = styled.span`
+const StyledSmallText = styled.span`
   font-size: 0.87em;
   line-height: 1.9;
+`;
+
+const StyledInlineDiv = styled(InlineFlexDiv)`
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const ExpiredWarning = styled(InlineFlexDiv)`

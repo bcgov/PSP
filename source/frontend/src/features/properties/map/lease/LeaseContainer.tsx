@@ -1,6 +1,7 @@
 import { ReactComponent as Fence } from 'assets/images/fence.svg';
+import { useLeaseDetail } from 'features/leases';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 import LeaseHeader from './common/LeaseHeader';
@@ -11,6 +12,7 @@ export interface ILeaseContainerProps {
 
 export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClose }) => {
   const close = useCallback(() => onClose && onClose(), [onClose]);
+  const { lease } = useLeaseDetail(leaseId);
 
   return (
     <MapSideBarLayout
