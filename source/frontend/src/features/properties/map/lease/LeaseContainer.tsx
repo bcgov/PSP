@@ -2,16 +2,38 @@ import { ReactComponent as Fence } from 'assets/images/fence.svg';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { useLeaseDetail } from 'features/leases';
 import MapSideBarLayout from 'features/mapSideBar/layout/MapSideBarLayout';
-import React, { useCallback } from 'react';
+import { FormikProps } from 'formik';
+import React, { useCallback, useReducer, useRef } from 'react';
 import styled from 'styled-components';
 
 import LeaseHeader from './common/LeaseHeader';
+import ViewSelector from './ViewSelector';
+
 export interface ILeaseContainerProps {
   leaseId: number;
   onClose?: () => void;
 }
 
+// Interface for our internal state
+export interface LeaseContainerState {
+  isEditing: boolean;
+}
+
+const initialState: LeaseContainerState = {
+  isEditing: false,
+};
+
 export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClose }) => {
+  // keep track of our internal container state
+  const [containerState, setContainerState] = useReducer(
+    (prevState: LeaseContainerState, newState: Partial<LeaseContainerState>) => ({
+      ...prevState,
+      ...newState,
+    }),
+    initialState,
+  );
+
+  const formikRef = useRef<FormikProps<any>>(null);
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease } = useLeaseDetail(leaseId);
 
@@ -35,7 +57,14 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       }
       header={<LeaseHeader lease={lease} />}
     >
-      <StyledFormWrapper></StyledFormWrapper>
+      <StyledFormWrapper>
+        <ViewSelector
+          ref={formikRef}
+          lease={lease}
+          isEditing={containerState.isEditing}
+          setContainerState={setContainerState}
+        />
+      </StyledFormWrapper>
     </MapSideBarLayout>
   );
 };
