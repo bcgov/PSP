@@ -1,4 +1,63 @@
+PSP_PIMS S41.00 Sprint 43 2022-Nov-29
+*** ******************************************************************* ***
+*** THIS RELEASE REPLACES THE DEPRECATED S41.00 AND THE S41.01 RELEASES ***
+*** ******************************************************************* ***
+- Altered tables:
+  - PIMS_ACTIVITY_INSTANCE
+    - Set ACTIVITY_TEMPLATE_ID to NOT NULL
+  - PIMS_ACTIVITY_TEMPLATE
+    - Set ACTIVITY_TEMPLATE_TYPE_CODE to NOT NULL
+  - PIMS_PROPERTY
+    - Added index to PID
+- Added tables:
+  - PIMS_BUSINESS_FUNCTION_CODE
+  - PIMS_BUSINESS_FUNCTION_CODE_HIST
+  - PIMS_CHART_OF_ACCOUNTS_CODE
+  - PIMS_CHART_OF_ACCOUNTS_CODE_HIST
+  - PIMS_COST_TYPE_CODE
+  - PIMS_COST_TYPE_CODE_HIST
+  - PIMS_FINANCIAL_ACTIVITY_CODE
+  - PIMS_FINANCIAL_ACTIVITY_CODE_HIST
+  - PIMS_RESPONSIBILITY_CODE
+  - PIMS_RESPONSIBILITY_CODE_HIST
+  - PIMS_WORK_ACTIVITY_CODE
+  - PIMS_WORK_ACTIVITY_CODE_HIST
+  - PIMS_YEARLY_FINANCIAL_CODE
+  - PIMS_YEARLY_FINANCIAL_CODE_HIST
+- Added seed scripts:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Insert.sql
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE_Delete.sql
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE_Insert.sql
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE_Delete.sql
+  - 101_DML_PIMS_COST_TYPE_CODE.sql
+  - 102_DML_PIMS_CHART_OF_ACCOUNTS_CODE.sql
+  - 103_DML_PIMS_BUSINESS_FUNCTION_CODE.sql
+  - 104_DML_PIMS_YEARLY_FINANCIAL_CODE.sql
+  - 105_DML_PIMS_RESPONSIBILITY_CODE.sql
+  - 106_DML_SET_PIMS_RESPONSIBILITY_CODE_SEQ.sql
+  - 107_DML_PIMS_FINANCIAL_ACTIVITY_CODE.sql
+  - 108_DML_PIMS_WORK_ACTIVITY_CODE.sql
+- Altered seed script:
+  - 094_DML_PIMS_ACTIVITY_TEMPLATE_TYPE.sql
+    - Added 'File Document'
+  - 100_DML_PIMS_ACTIVITY_TEMPLATE.sql
+    - Added 'File Document'
+- Requires additional metadata to meet standards
+
+PSP_PIMS S41.01 Sprint 43 2022-Nov-25
+*** ********** ***
+*** DEPRECATED ***
+*** ********** ***
+- Altered tables:
+  - Added named default contrants to the following:
+    - PIMS_ACTIVITY_INSTANCE.ACTIVITY_TEMPLATE_ID
+    - PIMS_ACTIVITY_TEMPLATE.ACTIVITY_TEMPLATE_TYPE_CODE
+- Requires additional metadata to meet standards
+
 PSP_PIMS S41.00 Sprint 40 2022-Oct-31
+*** ********** ***
+*** DEPRECATED ***
+*** ********** ***
 - Altered tables:
   - PIMS_ACTIVITY_INSTANCE
     - Set ACTIVITY_TEMPLATE_ID to NOT NULL
