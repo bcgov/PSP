@@ -4,17 +4,15 @@ INSERT INTO
     (
     LEASE_ID,
     ORGANIZATION_ID,
-    LESSOR_TYPE_CODE,
-    CONCURRENCY_CONTROL_NUMBER
+    LESSOR_TYPE_CODE
     )
-VALUES
-    (45, 2, 'ORG', 1)
+VALUES    
+    (45, 2, 'ORG');
 
 -- Insert contact methods
 INSERT INTO
     PIMS_CONTACT_METHOD
     (
-    CONCURRENCY_CONTROL_NUMBER,
     CONTACT_METHOD_TYPE_CODE,
     PERSON_ID,
     CONTACT_METHOD_VALUE,
@@ -25,7 +23,6 @@ INSERT INTO
     )
 VALUES
     (
-        1,
         'WORKMOBIL',
         1,
         '1111111111',
@@ -33,11 +30,10 @@ VALUES
         'Test Data',
         'Test Data',
         'Test Data'
-    )
+    );
 INSERT INTO
     PIMS_CONTACT_METHOD
     (
-    CONCURRENCY_CONTROL_NUMBER,
     CONTACT_METHOD_TYPE_CODE,
     PERSON_ID,
     CONTACT_METHOD_VALUE,
@@ -48,7 +44,6 @@ INSERT INTO
     )
 VALUES
     (
-        1,
         'WORKPHONE',
         2,
         '2222222222',
@@ -56,11 +51,10 @@ VALUES
         'Test Data',
         'Test Data',
         'Test Data'
-    )
+    );
 INSERT INTO
     PIMS_CONTACT_METHOD
     (
-    CONCURRENCY_CONTROL_NUMBER,
     CONTACT_METHOD_TYPE_CODE,
     PERSON_ID,
     CONTACT_METHOD_VALUE,
@@ -71,7 +65,6 @@ INSERT INTO
     )
 VALUES
     (
-        1,
         'PERSMOBIL',
         2,
         '3333333333',
@@ -79,14 +72,13 @@ VALUES
         'Test Data',
         'Test Data',
         'Test Data'
-    )
+    );
 
 INSERT INTO
     PIMS_PERSON_ORGANIZATION
     (
     PERSON_ID,
     ORGANIZATION_ID,
-    CONCURRENCY_CONTROL_NUMBER,
     APP_CREATE_USERID,
     APP_CREATE_USER_DIRECTORY,
     APP_LAST_UPDATE_USERID,
@@ -96,12 +88,11 @@ VALUES
     (
         2,
         2,
-        1,
         'Test Data',
         'Test Data',
         'Test Data',
         'Test Data'
-    )
+    );
 
 -- Update postal code
 UPDATE
@@ -110,7 +101,7 @@ SET
     POSTAL_CODE = 'V6Z 5G7',
     CONCURRENCY_CONTROL_NUMBER = [CONCURRENCY_CONTROL_NUMBER] + 1
 WHERE
-    ADDRESS_ID = 1
+    ADDRESS_ID = 1;
 
 -- Add notes for lease tenant
 UPDATE
@@ -119,4 +110,4 @@ SET
     [NOTE] = 'These are notes for the organization record',
     [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1
 WHERE
-    [LEASE_TENANT_ID] = 1
+    [LEASE_TENANT_ID] = 1;
