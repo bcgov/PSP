@@ -17,7 +17,7 @@ export interface IPaymentModalProps {
  * Modal displaying form allowing add/update lease terms. Save button triggers internal formik validation and submit.
  * @param {IPaymentModalProps} props
  */
-export const PaymentModal: React.FunctionComponent<IPaymentModalProps> = ({
+export const PaymentModal: React.FunctionComponent<React.PropsWithChildren<IPaymentModalProps>> = ({
   initialValues,
   displayModal,
   onCancel,

@@ -34,7 +34,9 @@ export interface IResearchSummaryViewProps {
   setEditMode: (editable: boolean) => void;
 }
 
-const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
+const ResearchSummaryView: React.FunctionComponent<
+  React.PropsWithChildren<IResearchSummaryViewProps>
+> = props => {
   const keycloak = useKeycloakWrapper();
   const detail: DetailResearchFile = {
     id: props.researchFile?.id,

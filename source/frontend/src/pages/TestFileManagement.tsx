@@ -3,7 +3,7 @@ import DocumentListContainer from 'features/documents/list/DocumentListContainer
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-export const TestFileManagement: React.FunctionComponent = () => {
+export const TestFileManagement: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   return (
     <StyledBody>
       <Row className="no-gutters">

@@ -15,6 +15,7 @@ export enum MapState {
   MAP = 'MAP',
   RESEARCH_FILE = 'RESEARCH_FILE',
   ACQUISITION_FILE = 'ACQUISITION_FILE',
+  LEASE_FILE = 'LEASE_FILE',
 }
 
 export enum MapStateActionTypes {
@@ -100,10 +101,9 @@ interface IMapStateContextComponent {
   values?: Partial<IMapStateContext>;
 }
 
-export const MapStateContextProvider: React.FC<IMapStateContextComponent> = ({
-  children,
-  values,
-}) => {
+export const MapStateContextProvider: React.FC<
+  React.PropsWithChildren<IMapStateContextComponent>
+> = ({ children, values }) => {
   const mapStateReducer = useCallback(
     (prevState: IMapStateContext, action: MapStateActions): IMapStateContext => {
       console.debug('MapStateContext', prevState, action);

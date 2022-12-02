@@ -8,9 +8,6 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   font-size: 2rem;
   line-height: 2.8rem;
@@ -214,9 +211,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
 }
 
 .c15 .table .tr .td:first-of-type,
-.c15 .table .tr .td:nth-of-type(2),
-.c15 .table .tr .th:first-of-type,
-.c15 .table .tr .th:nth-of-type(2) {
+.c15 .table .tr .td:nth-of-type(2),.c15 .table .tr .th:first-of-type,.c15 .table .tr .th:nth-of-type(2) {
   border-left: 0;
   border-right: 0;
   padding: 0;
@@ -1016,9 +1011,13 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="no-rows-message"
+                class="table-loading"
               >
-                No Contacts match the search criteria
+                <div
+                  class="spinner-border"
+                  role="status"
+                  title="table-loading"
+                />
               </div>
             </div>
             <div

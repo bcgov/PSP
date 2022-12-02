@@ -16,12 +16,9 @@ interface IProtectedComponentProps {
  * If the user does not have one of the roles or claims passed into this component, they will be redirected to the 401 page for the app.
  * @param param0
  */
-export const ProtectedComponent: React.FunctionComponent<IProtectedComponentProps> = ({
-  roles,
-  claims,
-  hideIfNotAuthorized,
-  children,
-}) => {
+export const ProtectedComponent: React.FunctionComponent<
+  React.PropsWithChildren<IProtectedComponentProps>
+> = ({ roles, claims, hideIfNotAuthorized, children }) => {
   const history = useHistory();
   const { hasRole, hasClaim } = useKeycloakWrapper();
   const isAuthorized = hasRole(roles) || hasClaim(claims);

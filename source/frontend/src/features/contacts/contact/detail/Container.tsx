@@ -17,7 +17,9 @@ interface IContactViewContainerProps {
   match?: any;
 }
 
-const ContactViewContainer: React.FunctionComponent<IContactViewContainerProps> = props => {
+const ContactViewContainer: React.FunctionComponent<
+  React.PropsWithChildren<IContactViewContainerProps>
+> = props => {
   const { contact } = useContactDetail(props?.match?.params?.id);
   const history = useHistory();
   return (

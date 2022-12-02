@@ -6,6 +6,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { mockNoteResponse } from 'mocks/mockNoteResponses';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
+  act,
   render,
   RenderOptions,
   userEvent,
@@ -120,15 +121,26 @@ describe('NoteContainer component', () => {
     });
 
     it('changes to edit mode when Edit button is clicked', async () => {
-      const { getEditButton, getSaveButton, getCancelButton, findByText, findByLabelText } =
-        setup();
+      const {
+        getEditButton,
+        getSaveButton,
+        getCancelButton,
+        findByText,
+        findByLabelText,
+        getByTestId,
+      } = setup();
+
+      const spinner = getByTestId('filter-backdrop-loading');
+      await waitForElementToBeRemoved(spinner);
+
       const modalTitle = await findByText(/Notes/i);
       expect(modalTitle).toBeVisible();
 
-      userEvent.click(getEditButton());
-      const textarea = await findByLabelText(/Type a note/i);
+      act(() => {
+        userEvent.click(getEditButton());
+      });
 
-      expect(modalTitle).toBeVisible();
+      const textarea = await findByLabelText(/Type a note/i);
       expect(textarea).toBeVisible();
       expect(textarea.tagName).toBe('TEXTAREA');
       expect(textarea).not.toHaveAttribute('readonly');
@@ -195,7 +207,7 @@ describe('NoteContainer component', () => {
       userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
 
       mockAxios.onPut().reply(200, mockNoteResponse(1));
-      await waitFor(() => userEvent.click(getSaveButton()));
+      await act(() => userEvent.click(getSaveButton()));
 
       expect(closeModal).toBeCalled();
       expect(onSuccess).toBeCalled();

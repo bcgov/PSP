@@ -17,7 +17,7 @@ export interface ITermModalProps {
  * Modal displaying form allowing add/update lease terms. Save button triggers internal formik validation and submit.
  * @param {ITermModalProps} props
  */
-export const TermModal: React.FunctionComponent<ITermModalProps> = ({
+export const TermModal: React.FunctionComponent<React.PropsWithChildren<ITermModalProps>> = ({
   initialValues,
   displayModal,
   onCancel,

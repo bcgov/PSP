@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 
-const ResearchProperties: React.FunctionComponent = () => {
+const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values } = useFormikContext<ResearchForm>();
 
   return (

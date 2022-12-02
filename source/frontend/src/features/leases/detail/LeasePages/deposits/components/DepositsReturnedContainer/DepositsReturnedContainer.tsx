@@ -12,12 +12,9 @@ export interface IDepositsReturnedContainerProps {
   onDelete: (id: number) => void;
 }
 
-const DepositsReturnedContainer: React.FC<IDepositsReturnedContainerProps> = ({
-  securityDeposits,
-  depositReturns,
-  onEdit,
-  onDelete,
-}) => {
+const DepositsReturnedContainer: React.FC<
+  React.PropsWithChildren<IDepositsReturnedContainerProps>
+> = ({ securityDeposits, depositReturns, onEdit, onDelete }) => {
   const columns = getColumns({ onEdit, onDelete });
   const dataSource = depositReturns.reduce(
     (accumulator: ReturnListEntry[], returnDeposit: Api_SecurityDepositReturn) => {

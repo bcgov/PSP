@@ -1,5 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import ModalContainer from 'components/common/ModalContainer';
+import { MapStateContextProvider } from 'components/maps/providers/MapStateContext';
 import { ModalContextProvider } from 'contexts/modalContext';
 import { MemoryHistory } from 'history';
 import { IOrganization } from 'interfaces';
@@ -25,14 +26,9 @@ interface TestProviderWrapperParams {
  * The purpose of this wrapper is to provide mock context provider functionality for common functionality within the project, such as redux, router, etc.
  * Reduces the amount of boilerplate required for a given test, and allows each test file to focus on test-specific logic.
  */
-const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
-  children,
-  store,
-  claims,
-  roles,
-  organizations,
-  history,
-}) => {
+const TestCommonWrapper: React.FunctionComponent<
+  React.PropsWithChildren<TestProviderWrapperParams>
+> = ({ children, store, claims, roles, organizations, history }) => {
   if (!!roles || !!claims || !!organizations) {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
@@ -57,16 +53,18 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css: {} }}>
                 <ModalContextProvider>
-                  <ToastContainer
-                    autoClose={5000}
-                    hideProgressBar
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss={false}
-                  />
-                  <ModalContainer />
-                  {children}
+                  <MapStateContextProvider>
+                    <ToastContainer
+                      autoClose={5000}
+                      hideProgressBar
+                      newestOnTop={false}
+                      closeOnClick={false}
+                      rtl={false}
+                      pauseOnFocusLoss={false}
+                    />
+                    <ModalContainer />
+                    {children}
+                  </MapStateContextProvider>
                 </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>

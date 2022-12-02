@@ -12,10 +12,9 @@ export interface IActivityHeaderProps {
   activity: Api_Activity;
 }
 
-export const ActivityHeader: React.FunctionComponent<IActivityHeaderProps> = ({
-  file,
-  activity,
-}) => {
+export const ActivityHeader: React.FunctionComponent<
+  React.PropsWithChildren<IActivityHeaderProps>
+> = ({ file, activity }) => {
   const leftColumnWidth = '5';
   const leftColumnLabel = '3';
   return (

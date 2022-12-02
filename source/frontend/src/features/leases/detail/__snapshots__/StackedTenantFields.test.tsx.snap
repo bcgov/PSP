@@ -16,13 +16,6 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 <div
     class="container"
   />
-  @media only screen and (max-width:1250px) {
-
-}
-
-<div
-    class="Toastify"
-  />
   .c2 {
   white-space: nowrap;
   overflow: hidden;
@@ -90,13 +83,6 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
 
 <div
     class="container"
-  />
-  @media only screen and (max-width:1250px) {
-
-}
-
-<div
-    class="Toastify"
   />
   .c2 {
   white-space: nowrap;

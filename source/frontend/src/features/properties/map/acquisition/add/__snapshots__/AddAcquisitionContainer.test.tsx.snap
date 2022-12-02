@@ -8,9 +8,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c0 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -636,16 +633,14 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                 <div
                                   class="d-flex flex-column align-items-center"
                                 >
-                                  <div>
-                                    <svg
-                                      class="c14"
-                                      height="97"
-                                      title="select properties on the map"
-                                      width="97"
-                                    >
-                                      icon-draft.svg
-                                    </svg>
-                                  </div>
+                                  <svg
+                                    class="c14"
+                                    height="97"
+                                    title="select properties on the map"
+                                    width="97"
+                                  >
+                                    icon-draft.svg
+                                  </svg>
                                   <ol>
                                     <li>
                                       Click pin above
@@ -1514,6 +1509,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 .c0 {
   position: -webkit-sticky;
   position: sticky;
+  padding-top: 2rem;
   bottom: 0;
   background: white;
   z-index: 10;

@@ -5,7 +5,10 @@ interface IDraftMarkerProps {
   text?: string;
 }
 
-export const DraftMarker: React.FunctionComponent<IDraftMarkerProps> = ({ text, children }) => {
+export const DraftMarker: React.FunctionComponent<React.PropsWithChildren<IDraftMarkerProps>> = ({
+  text,
+  children,
+}) => {
   return (
     <StyledMarker
       id="Layer_2"

@@ -39,10 +39,9 @@ export const defaultResearchFilter: IResearchFilter = {
  * Filter bar for research files.
  * @param {IResearchFilterProps} props
  */
-export const ResearchFilter: React.FunctionComponent<IResearchFilterProps> = ({
-  filter,
-  setFilter,
-}) => {
+export const ResearchFilter: React.FunctionComponent<
+  React.PropsWithChildren<IResearchFilterProps>
+> = ({ filter, setFilter }) => {
   const onSearchSubmit = (values: IResearchFilter, { setSubmitting }: any) => {
     values = { ...values };
     setFilter(values);

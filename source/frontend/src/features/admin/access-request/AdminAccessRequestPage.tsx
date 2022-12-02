@@ -19,7 +19,7 @@ export interface IAdminAccessRequestPageProps {
  * If their prior request was disabled they will then be able to submit a new request.
  */
 export const AdminAccessRequestPage: React.FunctionComponent<
-  IAdminAccessRequestPageProps
+  React.PropsWithChildren<IAdminAccessRequestPageProps>
 > = props => {
   const history = useHistory();
   return (

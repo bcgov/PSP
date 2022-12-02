@@ -24,7 +24,7 @@ export interface IAddressProps {
  * Displays addresses directly associated with this Contact Person.
  * @param {IAddressProps} param0
  */
-export const Address: React.FunctionComponent<IAddressProps> = ({
+export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressProps>> = ({
   namespace,
   disabled = false,
 }) => {
@@ -154,13 +154,9 @@ interface IProvinceOrCountryName {
   disabled?: boolean;
 }
 
-const ProvinceOrCountryName: React.FunctionComponent<IProvinceOrCountryName> = ({
-  selectedCountry,
-  provinces,
-  formLabels,
-  namespace,
-  disabled = false,
-}) => {
+const ProvinceOrCountryName: React.FunctionComponent<
+  React.PropsWithChildren<IProvinceOrCountryName>
+> = ({ selectedCountry, provinces, formLabels, namespace, disabled = false }) => {
   if (selectedCountry === CountryCodes.Other) {
     return (
       <Input

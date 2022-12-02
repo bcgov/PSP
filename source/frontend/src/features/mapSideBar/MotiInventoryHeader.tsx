@@ -18,7 +18,9 @@ export interface IMotiInventoryHeaderProps {
   onZoom?: (apiProperty?: Api_Property | undefined) => void;
 }
 
-export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
+export const MotiInventoryHeader: React.FunctionComponent<
+  React.PropsWithChildren<IMotiInventoryHeaderProps>
+> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapWrapper?.response;
   let property: IMapProperty | null = null;

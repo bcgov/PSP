@@ -21,10 +21,9 @@ interface IPropertyContextComponent {
   values?: Partial<IPropertyContext>;
 }
 
-export const PropertyContextProvider: React.FC<IPropertyContextComponent> = ({
-  children,
-  values,
-}) => {
+export const PropertyContextProvider: React.FC<
+  React.PropsWithChildren<IPropertyContextComponent>
+> = ({ children, values }) => {
   const [properties, setProperties] = React.useState<PointFeature[]>(values?.properties ?? []);
   const [propertiesLoading, setPropertiesLoading] = React.useState<boolean>(
     values?.propertiesLoading ?? false,

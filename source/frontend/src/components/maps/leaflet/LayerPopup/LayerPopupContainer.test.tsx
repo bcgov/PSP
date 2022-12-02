@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { useMap } from 'react-leaflet';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from 'utils/test-utils';
+import { act, render, RenderOptions, userEvent } from 'utils/test-utils';
 
 import { ILayerPopupProps } from './LayerPopup';
 import { LayerPopupContainer } from './LayerPopupContainer';
@@ -16,7 +16,6 @@ const storeState = {
 };
 
 const onViewPropertyInfo = jest.fn();
-const onClose = jest.fn();
 const history = createMemoryHistory();
 (useMap as jest.Mock).mockReturnValue({});
 
@@ -27,7 +26,6 @@ describe('LayerPopupContainer component', () => {
       <LayerPopupContainer
         layerPopup={renderOptions.layerPopup}
         onViewPropertyInfo={renderOptions.onViewPropertyInfo}
-        onClose={onClose}
       />,
       {
         ...renderOptions,
@@ -68,7 +66,7 @@ describe('LayerPopupContainer component', () => {
         onViewPropertyInfo: onViewPropertyInfo,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      userEvent.click(ellipsis);
+      act(() => userEvent.click(ellipsis));
       expect(getByText('View more property info')).toBeVisible();
     });
 
@@ -81,9 +79,9 @@ describe('LayerPopupContainer component', () => {
         onViewPropertyInfo: onViewPropertyInfo,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      userEvent.click(ellipsis);
+      act(() => userEvent.click(ellipsis));
       const link = getByText('View more property info');
-      userEvent.click(link);
+      act(() => userEvent.click(link));
       expect(onViewPropertyInfo).toHaveBeenCalledWith('123456789', 1);
     });
 
@@ -93,9 +91,9 @@ describe('LayerPopupContainer component', () => {
         onViewPropertyInfo: onViewPropertyInfo,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      userEvent.click(ellipsis);
+      act(() => userEvent.click(ellipsis));
       const link = getByText('View more property info');
-      userEvent.click(link);
+      act(() => userEvent.click(link));
       expect(onViewPropertyInfo).toHaveBeenCalledWith('123456789', undefined);
     });
 
@@ -106,9 +104,9 @@ describe('LayerPopupContainer component', () => {
         claims: [Claims.RESEARCH_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      userEvent.click(ellipsis);
+      act(() => userEvent.click(ellipsis));
       const link = getByText('Research File - Create new');
-      userEvent.click(link);
+      act(() => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
     });
 
@@ -119,9 +117,9 @@ describe('LayerPopupContainer component', () => {
         claims: [Claims.ACQUISITION_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      userEvent.click(ellipsis);
+      act(() => userEvent.click(ellipsis));
       const link = getByText('Acquisition File - Create new');
-      userEvent.click(link);
+      act(() => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
     });
   });

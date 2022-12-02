@@ -27,11 +27,9 @@ export interface IActivityListViewProps {
 /**
  * Page that displays Activity information.
  */
-export const ActivityListView: React.FunctionComponent<IActivityListViewProps> = ({
-  fileId,
-  defaultFilters,
-  fileType,
-}: IActivityListViewProps) => {
+export const ActivityListView: React.FunctionComponent<
+  React.PropsWithChildren<IActivityListViewProps>
+> = ({ fileId, defaultFilters, fileType }: IActivityListViewProps) => {
   const history = useHistory();
   const match = useRouteMatch();
   const activityMatch = useRouteMatch<{ activityId?: string }>(`${match.url}/activity/:activityId`);

@@ -10,10 +10,9 @@ interface IPropertyInfoLayoutProps {
   setShowSideBar: (show: boolean) => void;
 }
 
-const PropertyInfoLayout: React.FunctionComponent<IPropertyInfoLayoutProps> = ({
-  children,
-  setShowSideBar,
-}) => {
+const PropertyInfoLayout: React.FunctionComponent<
+  React.PropsWithChildren<IPropertyInfoLayoutProps>
+> = ({ children, setShowSideBar }) => {
   return (
     <StyledPropertyInfoLayout>
       <TitleBar>

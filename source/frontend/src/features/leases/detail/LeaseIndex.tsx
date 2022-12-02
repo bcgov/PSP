@@ -15,10 +15,9 @@ export interface ILeaseAndLicenseIndexProps {
  * left navigation "index" to allow navigation of lease sub-pages.
  * @param {ILeaseAndLicenseIndexProps} param0
  */
-export const LeaseIndex: React.FunctionComponent<ILeaseAndLicenseIndexProps> = ({
-  currentPageName,
-  leaseId,
-}) => {
+export const LeaseIndex: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseAndLicenseIndexProps>
+> = ({ currentPageName, leaseId }) => {
   const { url } = useRouteMatch();
   const { hasClaim } = useKeycloakWrapper();
   return (

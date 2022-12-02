@@ -24,11 +24,9 @@ export interface IReturnDepositFormProps {
  * Internal Form intended to be displayed within a modal window.
  * @param {IReturnDepositFormProps} props
  */
-export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps> = ({
-  initialValues,
-  formikRef,
-  onSave,
-}) => {
+export const ReturnDepositForm: React.FunctionComponent<
+  React.PropsWithChildren<IReturnDepositFormProps>
+> = ({ initialValues, formikRef, onSave }) => {
   const initialContacts =
     initialValues.contactHolder !== undefined ? [initialValues.contactHolder] : [];
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);

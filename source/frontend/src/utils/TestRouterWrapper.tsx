@@ -14,10 +14,9 @@ const history = createMemoryHistory({
 });
 
 /** Simple Wrapper that provides all required boilerplate to include a mocked memory history router for a given component test. */
-const TestRouterWrapper: React.FunctionComponent<TestRouterWrapperParams> = ({
-  children,
-  history: paramHistory,
-}) => {
+const TestRouterWrapper: React.FunctionComponent<
+  React.PropsWithChildren<TestRouterWrapperParams>
+> = ({ children, history: paramHistory }) => {
   return <Router history={paramHistory ?? history}>{children}</Router>;
 };
 

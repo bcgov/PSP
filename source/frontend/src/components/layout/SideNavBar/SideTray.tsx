@@ -44,7 +44,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   const TrayPage = () => (context ? sideTrayPages.get(context) ?? <></> : <></>);
   return (
     <ReactVisibilitySensor
-      onChange={isVisible => {
+      onChange={(isVisible: boolean) => {
         !isVisible && setContext(undefined);
       }}
     >

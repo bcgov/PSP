@@ -19,7 +19,7 @@ export type BasemapToggleProps = {
   onToggle?: (e: BasemapToggleEvent) => void;
 };
 
-const BasemapToggle: React.FC<BasemapToggleProps> = props => {
+const BasemapToggle: React.FC<React.PropsWithChildren<BasemapToggleProps>> = props => {
   // TODO: PSP-4391 fade out when map is panning/zooming
   const [updating] = useState(false);
   const [currentBasemap, secondaryBasemap] = props.baseLayers;

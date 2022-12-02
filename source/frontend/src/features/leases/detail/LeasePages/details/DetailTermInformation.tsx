@@ -16,9 +16,9 @@ export interface IDetailTermInformationProps {
  * Sub-form displaying the original and renewal term information presented in styled boxes.
  * @param {IDetailTermInformationProps} param0
  */
-export const DetailTermInformation: React.FunctionComponent<IDetailTermInformationProps> = ({
-  nameSpace,
-}) => {
+export const DetailTermInformation: React.FunctionComponent<
+  React.PropsWithChildren<IDetailTermInformationProps>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<IFormLease>();
   const startDate = getIn(values, withNameSpace(nameSpace, 'startDate'));
   const expiryDate = getIn(values, withNameSpace(nameSpace, 'expiryDate'));

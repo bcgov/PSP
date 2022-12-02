@@ -16,12 +16,9 @@ export interface ISelectedPropertyRowProps {
   property: IMapProperty;
 }
 
-export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
-  nameSpace,
-  onRemove,
-  index,
-  property,
-}) => {
+export const SelectedPropertyRow: React.FunctionComponent<
+  React.PropsWithChildren<ISelectedPropertyRowProps>
+> = ({ nameSpace, onRemove, index, property }) => {
   const propertyName = getPropertyName(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
@@ -41,10 +38,10 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   return (
     <NoPaddingRow className="align-items-center mb-3">
       <Col md={3}>
-        <p className="mb-0 d-flex align-items-center">
+        <div className="mb-0 d-flex align-items-center">
           <DraftCircleNumber text={(index + 1).toString()} />
           <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
-        </p>
+        </div>
       </Col>
       <Col md={7}>
         <InlineInput

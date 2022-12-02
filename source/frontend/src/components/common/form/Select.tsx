@@ -58,7 +58,7 @@ export type SelectOptions = SelectOption[];
 /**
  * Formik-connected <Select> form control
  */
-export const Select: React.FC<SelectProps> = ({
+export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
   field,
   label,
   as: is, // `as` is reserved in typescript

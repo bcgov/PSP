@@ -32,7 +32,11 @@ interface IModalProps {
  *
  * @param props customize the component with custom text, and an operation to take when the component is closed.
  */
-const HelpModal: FunctionComponent<IModalProps> = ({ handleCancel, handleSubmit, show }) => {
+const HelpModal: FunctionComponent<React.PropsWithChildren<IModalProps>> = ({
+  handleCancel,
+  handleSubmit,
+  show,
+}) => {
   const tenantsState = useAppSelector(state => state.tenants);
   const { getSettings } = useTenants();
   const [mailto, setMailto] = React.useState<IMailMessage | undefined>(undefined);

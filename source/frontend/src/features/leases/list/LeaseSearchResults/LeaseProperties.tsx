@@ -13,7 +13,9 @@ export interface ILeasePropertiesProps {
   maxDisplayCount: number;
 }
 
-const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props => {
+const LeaseProperties: React.FunctionComponent<
+  React.PropsWithChildren<ILeasePropertiesProps>
+> = props => {
   const [isExpanded, setExpanded] = useState(false);
 
   const properties = props.properties;

@@ -25,7 +25,9 @@ export interface IPopupContentProps {
  * A component to display the layer details in a popup
  * @param param0
  */
-export const LayerPopupContent: React.FC<IPopupContentProps> = ({ layerPopup }) => {
+export const LayerPopupContent: React.FC<React.PropsWithChildren<IPopupContentProps>> = ({
+  layerPopup,
+}) => {
   const { config, data } = { ...layerPopup };
   const rows = React.useMemo(() => keys(config), [config]);
 

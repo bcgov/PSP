@@ -9,6 +9,7 @@ import { mockActivitiesResponse } from 'mocks/mockActivities';
 import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import {
+  act,
   render,
   RenderOptions,
   userEvent,
@@ -145,16 +146,14 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     const viewButton = getAllByTitle('View Activity')[0];
-    userEvent.click(viewButton);
+    await act(() => userEvent.click(viewButton));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    userEvent.click(deleteButton);
+    await act(() => userEvent.click(deleteButton));
     expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
-    userEvent.click(continueButton);
+    await act(() => userEvent.click(continueButton));
 
-    await waitFor(async () => {
-      expect(history.location.pathname).toBe('/');
-    });
+    expect(history.location.pathname).toBe('/');
   });
 
   it('should not hide the view activity screen if deleting an activity that is not being viewed', async () => {
@@ -164,17 +163,15 @@ describe('Activity List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     const viewButton = getAllByTitle('View Activity')[1];
-    userEvent.click(viewButton);
+    await act(() => userEvent.click(viewButton));
     const deleteButton = getAllByTitle('Delete Activity')[0];
-    userEvent.click(deleteButton);
+    await act(() => userEvent.click(deleteButton));
     expect(await screen.findByText(/You have chosen to delete this activity/g)).toBeVisible();
     const continueButton = await screen.findByText('Continue');
-    userEvent.click(continueButton);
+    await act(() => userEvent.click(continueButton));
 
-    await waitFor(async () => {
-      //note, the extra '/' is an artifact of no research file id being present in the test logic.
-      expect(history.location.pathname).toBe('//activity/2');
-    });
+    //note, the extra '/' is an artifact of no research file id being present in the test logic.
+    expect(history.location.pathname).toBe('//activity/2');
   });
 
   it('should close the delete modal if deletion is cancelled', async () => {

@@ -8,9 +8,6 @@ exports[`LayerFilter component renders as expected - search by legal description
   <div
     class="container"
   />
-  <div
-    class="Toastify"
-  />
   .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -339,9 +336,6 @@ exports[`LayerFilter component renders as expected 1`] = `
   />
   <div
     class="container"
-  />
-  <div
-    class="Toastify"
   />
   .c3.btn {
   display: -webkit-box;

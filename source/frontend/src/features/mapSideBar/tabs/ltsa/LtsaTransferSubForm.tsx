@@ -9,9 +9,9 @@ export interface ILtsaTransferSubFormProps {
   nameSpace?: string;
 }
 
-export const LtsaTransferSubForm: React.FunctionComponent<ILtsaTransferSubFormProps> = ({
-  nameSpace,
-}) => {
+export const LtsaTransferSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILtsaTransferSubFormProps>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const transfers = getIn(values, withNameSpace(nameSpace, 'titleTransfersOrDispositions')) ?? [];
   return (

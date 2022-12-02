@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import CustomAxios from 'customAxios';
 import L from 'leaflet';
 
@@ -12,7 +11,7 @@ class WmsHeaders extends L.TileLayer.WMS {
     const url = this.getTileUrl(coords);
     const img = document.createElement('img');
     const axios = CustomAxios();
-    axios.get(url, { responseType: 'blob' }).then((response: AxiosResponse) => {
+    axios.get<Blob>(url, { responseType: 'blob' }).then(response => {
       if (response.headers['content-type'] === 'image/png') {
         img.src = URL.createObjectURL(response.data);
       }

@@ -9,9 +9,9 @@ export interface ILtsaLegalNotationsSubFormProps {
   nameSpace?: string;
 }
 
-const LtsaLegalNotationsSubForm: React.FunctionComponent<ILtsaLegalNotationsSubFormProps> = ({
-  nameSpace,
-}) => {
+const LtsaLegalNotationsSubForm: React.FunctionComponent<
+  React.PropsWithChildren<ILtsaLegalNotationsSubFormProps>
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const notations = getIn(values, withNameSpace(nameSpace, 'legalNotationsOnTitle')) ?? [];
   return (

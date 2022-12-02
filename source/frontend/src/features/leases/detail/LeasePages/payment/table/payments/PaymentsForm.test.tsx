@@ -13,6 +13,7 @@ import {
   IFormLeasePayment,
 } from 'interfaces';
 import { noop } from 'lodash';
+import { act } from 'react-dom/test-utils';
 import {
   fillInput,
   getAllByRole as getAllByRoleBase,
@@ -268,11 +269,14 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
-      userEvent.click(notesButton);
+      act(() => {
+        userEvent.click(notesButton);
+      });
       await fillInput(document.body, 'terms.0.payments.0.note', 'a test note', 'textarea');
       const saveButton = getByText('Save');
-      userEvent.click(saveButton);
-
+      act(() => {
+        userEvent.click(saveButton);
+      });
       expect(onSave).toHaveBeenCalledWith({ ...defaultTestFormLeasePayment, note: 'a test note' });
     });
     it('Does not update note content if note modal is cancelled', async () => {
@@ -283,12 +287,16 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
-      userEvent.click(notesButton);
+      act(() => {
+        userEvent.click(notesButton);
+      });
       await fillInput(document.body, 'terms.0.payments.0.note', 'a test note', 'textarea');
       await screen.findByDisplayValue('a test note');
       const cancelButton = getByText('Cancel');
-      userEvent.click(cancelButton);
-      userEvent.click(notesButton);
+      act(() => {
+        userEvent.click(cancelButton);
+        userEvent.click(notesButton);
+      });
       //expect that the note content should have returned to the original value.
       const noteText = await screen.findByDisplayValue('note');
       expect(noteText).toBeVisible();

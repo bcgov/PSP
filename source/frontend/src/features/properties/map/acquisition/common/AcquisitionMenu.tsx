@@ -16,7 +16,9 @@ export interface IAcquisitionMenuProps {
   setContainerState: (value: Partial<AcquisitionContainerState>) => void;
 }
 
-const AcquisitionMenu: React.FunctionComponent<IAcquisitionMenuProps> = props => {
+const AcquisitionMenu: React.FunctionComponent<
+  React.PropsWithChildren<IAcquisitionMenuProps>
+> = props => {
   const { hasClaim } = useKeycloakWrapper();
   const handleClick = (index: number) => {
     props.onChange(index);

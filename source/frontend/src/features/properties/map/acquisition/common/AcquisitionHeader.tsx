@@ -10,9 +10,9 @@ export interface IAcquisitionHeaderProps {
   acquisitionFile?: Api_AcquisitionFile;
 }
 
-export const AcquisitionHeader: React.FunctionComponent<IAcquisitionHeaderProps> = ({
-  acquisitionFile,
-}) => {
+export const AcquisitionHeader: React.FunctionComponent<
+  React.PropsWithChildren<IAcquisitionHeaderProps>
+> = ({ acquisitionFile }) => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
 

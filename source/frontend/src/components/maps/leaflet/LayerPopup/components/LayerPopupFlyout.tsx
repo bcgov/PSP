@@ -13,7 +13,7 @@ export interface ILayerPopupFlyoutProps {
   onCreateLeaseLicense?: () => void;
 }
 
-export const LayerPopupFlyout: React.FC<ILayerPopupFlyoutProps> = ({
+export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyoutProps>> = ({
   pimsPropertyId,
   onViewPropertyInfo,
   onCreateResearchFile,

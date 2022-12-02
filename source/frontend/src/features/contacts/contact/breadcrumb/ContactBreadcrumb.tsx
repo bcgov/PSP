@@ -10,7 +10,7 @@ interface IContactAndLicenseBreadCrumbProps {}
  * @param {IContactAndLicenseBreadCrumbProps} param0
  */
 export const ContactBreadcrumb: React.FunctionComponent<
-  IContactAndLicenseBreadCrumbProps
+  React.PropsWithChildren<IContactAndLicenseBreadCrumbProps>
 > = props => {
   return (
     <CommonStyled.Breadcrumb>
