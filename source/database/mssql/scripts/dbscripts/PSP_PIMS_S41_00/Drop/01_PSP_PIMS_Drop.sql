@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 13.0.1                     */
+/* Script generated with: DeZign for Databases 12.4.2                     */
 /* Target DBMS:           MS SQL Server 2017                              */
 /* Project file:          PIMS S41.00.dez                                 */
 /* Project name:          MoTI Property Services Project                  */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2022-11-08 15:04                                */
+/* Created on:            2022-11-25 11:13                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -1154,6 +1154,90 @@ GO
 
 
 DROP TRIGGER [dbo].[PIMS_LSACIN_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_WRKACT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_WRKACT_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_WRKACT_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_BIZFCN_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_BIZFCN_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_BIZFCN_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_FINACT_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_FINACT_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_FINACT_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_CHRTAC_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_CHRTAC_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_CHRTAC_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_COSTYP_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_COSTYP_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_COSTYP_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_RESPCD_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_RESPCD_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_RESPCD_I_S_U_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_YRFINC_A_S_IUD_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_YRFINC_I_S_I_TR]
+GO
+
+
+DROP TRIGGER [dbo].[PIMS_YRFINC_I_S_U_TR]
 GO
 
 
@@ -3593,6 +3677,10 @@ ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE] DROP CONSTRAINT [ACTINS_ACTIVITY_INST
 GO
 
 
+ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE] DROP CONSTRAINT [ACTINS_ACTIVITY_TEMPLATE_ID_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_ACTIVITY_INSTANCE] DROP CONSTRAINT [ACTINS_ACTIVITY_INSTANCE_STATUS_TYPE_CODE_DEF]
 GO
 
@@ -4248,6 +4336,10 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE] DROP CONSTRAINT [ACTTMP_ACTIVITY_TEMPLATE_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACTIVITY_TEMPLATE] DROP CONSTRAINT [ACTTMP_ACTIVITY_TEMPLATE_TYPE_CODE_DEF]
 GO
 
 
@@ -6144,6 +6236,188 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_YEARLY_FINANCIAL_CODE_HIST"                       */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_YEARLY_FINANCIAL_CODE_HIST] DROP CONSTRAINT [DF__PIMS_YEAR___YEAR__385A3EEA]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_YEARLY_FINANCIAL_CODE_HIST] DROP CONSTRAINT [DF__PIMS_YEAR__EFFEC__394E6323]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_YEARLY_FINANCIAL_CODE_HIST] DROP CONSTRAINT [PIMS_YRFINC_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_YEARLY_FINANCIAL_CODE_HIST] DROP CONSTRAINT [PIMS_YRFINC_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_YEARLY_FINANCIAL_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_WORK_ACTIVITY_CODE_HIST"                          */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_WORK_ACTIVITY_CODE_HIST] DROP CONSTRAINT [DF__PIMS_WORK___WORK__263B8EAF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_WORK_ACTIVITY_CODE_HIST] DROP CONSTRAINT [DF__PIMS_WORK__EFFEC__272FB2E8]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_WORK_ACTIVITY_CODE_HIST] DROP CONSTRAINT [PIMS_WRKACT_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_WORK_ACTIVITY_CODE_HIST] DROP CONSTRAINT [PIMS_WRKACT_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_WORK_ACTIVITY_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_RESPONSIBILITY_CODE_HIST"                         */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_RESPONSIBILITY_CODE_HIST] DROP CONSTRAINT [DF__PIMS_RESP___RESP__75CD617E]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_RESPONSIBILITY_CODE_HIST] DROP CONSTRAINT [DF__PIMS_RESP__EFFEC__76C185B7]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_RESPONSIBILITY_CODE_HIST] DROP CONSTRAINT [PIMS_RESPCD_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_RESPONSIBILITY_CODE_HIST] DROP CONSTRAINT [PIMS_RESPCD_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_RESPONSIBILITY_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_FINANCIAL_ACTIVITY_CODE_HIST"                     */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST] DROP CONSTRAINT [DF__PIMS_FINA___FINA__0BD1B136]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST] DROP CONSTRAINT [DF__PIMS_FINA__EFFEC__0CC5D56F]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST] DROP CONSTRAINT [PIMS_FINACT_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST] DROP CONSTRAINT [PIMS_FINACT_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_COST_TYPE_CODE_HIST"                              */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_COST_TYPE_CODE_HIST] DROP CONSTRAINT [DF__PIMS_COST___COST__6A70BD6B]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_COST_TYPE_CODE_HIST] DROP CONSTRAINT [DF__PIMS_COST__EFFEC__6B64E1A4]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_COST_TYPE_CODE_HIST] DROP CONSTRAINT [PIMS_COSTYP_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_COST_TYPE_CODE_HIST] DROP CONSTRAINT [PIMS_COSTYP_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_COST_TYPE_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_CHART_OF_ACCOUNTS_CODE_HIST"                      */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_CHART_OF_ACCOUNTS_CODE_HIST] DROP CONSTRAINT [DF__PIMS_CHAR___CHAR__3414ACBA]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CHART_OF_ACCOUNTS_CODE_HIST] DROP CONSTRAINT [DF__PIMS_CHAR__EFFEC__3508D0F3]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CHART_OF_ACCOUNTS_CODE_HIST] DROP CONSTRAINT [PIMS_CHRTAC_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CHART_OF_ACCOUNTS_CODE_HIST] DROP CONSTRAINT [PIMS_CHRTAC_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_CHART_OF_ACCOUNTS_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_BUSINESS_FUNCTION_CODE_HIST"                      */
+/* ---------------------------------------------------------------------- */
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_BUSINESS_FUNCTION_CODE_HIST] DROP CONSTRAINT [DF__PIMS_BUSI___BUSI__21F5FC7F]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_BUSINESS_FUNCTION_CODE_HIST] DROP CONSTRAINT [DF__PIMS_BUSI__EFFEC__22EA20B8]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_BUSINESS_FUNCTION_CODE_HIST] DROP CONSTRAINT [PIMS_BIZFCN_H_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_BUSINESS_FUNCTION_CODE_HIST] DROP CONSTRAINT [PIMS_BIZFCN_H_UK]
+GO
+
+
+DROP TABLE [dbo].[PIMS_BUSINESS_FUNCTION_CODE_HIST]
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_YEARLY_FINANCIAL_CODE"                            */
 /* ---------------------------------------------------------------------- */
 
@@ -6811,11 +7085,11 @@ GO
 
 /* Drop constraints */
 
-ALTER TABLE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [DF__PIMS_LEAS___LEAS__37B03374]
+ALTER TABLE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [DF__PIMS_LEAS___LEAS__0D84EF7E]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [DF__PIMS_LEAS__EFFEC__38A457AD]
+ALTER TABLE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE_HIST] DROP CONSTRAINT [DF__PIMS_LEAS__EFFEC__0E7913B7]
 GO
 
 
@@ -12745,6 +13019,62 @@ GO
 /* Drop sequences                                                         */
 /* ---------------------------------------------------------------------- */
 
+DROP SEQUENCE [dbo].[PIMS_FINANCIAL_ACTIVITY_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_WORK_ACTIVITY_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_CHART_OF_ACCOUNTS_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_COST_TYPE_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_RESPONSIBILITY_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_BUSINESS_FUNCTION_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_RESPONSIBILITY_CODE_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_RESPONSIBILITY_CODE_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_WORK_ACTIVITY_CODE_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_YEARLY_FINANCIAL_CODE_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_BUSINESS_FUNCTION_CODE_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_CHART_OF_ACCOUNTS_CODE_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_COST_TYPE_CODE_H_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ]
+GO
+
+
 DROP SEQUENCE [dbo].[PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ]
 GO
 
@@ -13403,32 +13733,3 @@ GO
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
 GO
-
-
-DROP SEQUENCE [dbo].[PIMS_FINANCIAL_ACTIVITY_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_WORK_ACTIVITY_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_CHART_OF_ACCOUNTS_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_COST_TYPE_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_RESPONSIBILITY_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_BUSINESS_FUNCTION_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_RESPONSIBILITY_CODE_SEQ]
-GO
-
